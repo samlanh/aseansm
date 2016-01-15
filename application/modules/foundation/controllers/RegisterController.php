@@ -1,5 +1,5 @@
 <?php
-class Foundation_indexController extends Zend_Controller_Action {
+class Foundation_RegisterController extends Zend_Controller_Action {
 	
 	
     public function init()
@@ -7,11 +7,8 @@ class Foundation_indexController extends Zend_Controller_Action {
      /* Initialize action controller here */
     	header('content-type: text/html; charset=utf8');
 	}
-
-    public function indexAction()
-    {
-    	
-    
+	public function indexAction(){
+		
 	}
 	function addAction(){
 		$_model =new Foundation_Model_DbTable_DbNewStudent();
@@ -52,6 +49,4 @@ class Foundation_indexController extends Zend_Controller_Action {
 		// 		$this->view->scholarship=$scholarship;
 	}
 	
-	
-
 }

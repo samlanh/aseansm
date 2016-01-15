@@ -24,7 +24,14 @@ Class Foundation_Form_FrmStudent extends Zend_Dojo_Form {
 		$_khname->setAttribs(array(
 				'dojoType'=>$this->tvalidate,'class'=>'fullside','required'=>'true',
 		));
-		
+		$place_of_birth= new Zend_Dojo_Form_Element_TextBox('place_of_birth');
+		$place_of_birth->setAttribs(array(
+				'dojoType'=>$this->tvalidate,'class'=>'fullside','required'=>'true',
+		));
+		$address_now= new Zend_Dojo_Form_Element_TextBox('address_now');
+		$address_now->setAttribs(array(
+				'dojoType'=>$this->tvalidate,'class'=>'fullside','required'=>'true',
+		));
 		$_enname = new Zend_Dojo_Form_Element_TextBox('en_name');
 		$_enname->setAttribs(array('dojoType'=>$this->tvalidate,
 				'required'=>'true',
@@ -54,6 +61,10 @@ Class Foundation_Form_FrmStudent extends Zend_Dojo_Form {
 		
 		$_phone = new Zend_Dojo_Form_Element_TextBox('phone');
 		$_phone->setAttribs(array('dojoType'=>$this->text,'class'=>'fullside',));
+		$national = new Zend_Dojo_Form_Element_FilteringSelect('national');
+		$national->setAttribs(array(
+				'dojoType'=>'dijit.form.FilteringSelect',
+				'class'=>'fullside',));
 		
 		$_degree =  new Zend_Dojo_Form_Element_FilteringSelect('degree');
 		$arr_opt = array(
@@ -168,19 +179,19 @@ Class Foundation_Form_FrmStudent extends Zend_Dojo_Form {
 				'dojoType'=>$this->text,'class'=>'fullside',
 		));
 		
-		$rows_school = $_db->getGlobalDb("SELECT 
-					CONCAT(school_name,' - '
-					,(SELECT province_en_name FROM rms_province AS p 
-					WHERE p.province_id= sp.province_id)) AS school_province,school_id 
-					FROM rms_school_province AS sp WHERE status=1 ORDER BY sp.province_id");
-		$opt_school = "";
-		if(!empty($rows_school))foreach($rows_school AS $row) $opt_school[$row['school_id']]=$row['school_province'];
-		$_from_school = new Zend_Dojo_Form_Element_FilteringSelect("from_school");
-		$_from_school->setMultiOptions($opt_school);
-		$_from_school->setAttribs(array(
-				'dojoType'=>$this->filter,
-				'required'=>'true',
-				'class'=>'fullside',));
+// 		$rows_school = $_db->getGlobalDb("SELECT 
+// 					CONCAT(school_name,' - '
+// 					,(SELECT province_en_name FROM rms_province AS p 
+// 					WHERE p.province_id= sp.province_id)) AS school_province,school_id 
+// 					FROM rms_school_province AS sp WHERE status=1 ORDER BY sp.province_id");
+// 		$opt_school = "";
+// 		if(!empty($rows_school))foreach($rows_school AS $row) $opt_school[$row['school_id']]=$row['school_province'];
+// 		$_from_school = new Zend_Dojo_Form_Element_FilteringSelect("from_school");
+// 		$_from_school->setMultiOptions($opt_school);
+// 		$_from_school->setAttribs(array(
+// 				'dojoType'=>$this->filter,
+// 				'required'=>'true',
+// 				'class'=>'fullside',));
 		
 		$rows_provice = $_db->getGlobalDb("SELECT province_id,province_en_name FROM rms_province WHERE is_active=1 AND province_en_name!=''");
 		$opt_province = "";
@@ -245,7 +256,7 @@ Class Foundation_Form_FrmStudent extends Zend_Dojo_Form {
 				'class'=>'fullside'));
 		
 		$this->addElements(array(
-			  $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,$_phone,
+			  $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,$_phone,$national,$place_of_birth,$address_now,
 			  $_dept,$_batch,$_year,$_session,$_dept,$_major,$_from_school,$_student_add,$_student_from,$_situation,$_father_tel,
 			  $_mother_tel, $_bacc_exam, $_bacc_code, $_bacc_score, $_from_school,$_remark,
 			  $_pob, $_curr_add, $_composition, $_age, $_mention, $_status));
