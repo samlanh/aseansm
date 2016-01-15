@@ -15,12 +15,12 @@ fieldset{  background:none;}
 </style>
 <?php $recept = $this->frm_recept;?>
 <form id='receipt' action="<?php echo $this->url(array('module'=>'transfer','controller'=>'index','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-<table  cellspacing="10" style="margin: 0 auto; width: 65%;" >
+<table  cellspacing="10" style="margin: 0 auto; width: 100%;" >
 	<tr>
 		<td>
 		<fieldset>
 					<legend align="center"><strong><?php echo $tr->translate("OFFICIAL_RECEIPT");?></strong></legend>
-					<table style="margin: 0 auto; width: 100%; background:#DFF7FD;" cellspacing="5">
+					<table style="margin: 0 auto; width: 100%; " cellspacing="5">
 						<tr>
 							
 							<td style="width: 170px"><?php echo $tr->translate("RECEIPT_NO")."<sup>o</sup>";?></td>

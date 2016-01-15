@@ -272,7 +272,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$rows = $_db->getAllFecultyName();
 		//$rows = $_db->getGlobalDb('SELECT en_name,dept_id FROM rms_dept WHERE is_active=1 AND en_name !="" ');
-		$opt = "";
+		$opt = array();
 		if(!empty($rows))foreach($rows AS $row) $opt[$row['dept_id']]=$row['en_name'];
 			
 		$_dept = new Zend_Dojo_Form_Element_FilteringSelect("dept");
@@ -284,7 +284,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 				'class'=>'fullside',));
 		
 		$rows = $_db->getAllstudentRequest();
-		$re_opt = "";
+		$re_opt = array();
 		if(!empty($rows))foreach($rows AS $row) $re_opt[$row['service_id']]=$row['title'];
 			
 		$_request = new Zend_Dojo_Form_Element_FilteringSelect("request_id");

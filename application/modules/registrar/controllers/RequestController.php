@@ -1,5 +1,5 @@
 <?php
-class Registrar_WurequestController extends Zend_Controller_Action {
+class Registrar_RequestController extends Zend_Controller_Action {
 	
 	
     public function init()
@@ -13,7 +13,7 @@ class Registrar_WurequestController extends Zend_Controller_Action {
     {
         
     }
-	public function wuRequestAction()
+	public function addAction()
     {
     	$frm = new Registrar_Form_FrmRegister();
     	$frm_request=$frm->FrmStudentRequest();
@@ -27,12 +27,5 @@ class Registrar_WurequestController extends Zend_Controller_Action {
     	$frm_request=$frm->FrmTestNew();
     	$this->view->frmtest = $frm_request;
     	
-    }
-    public function runAddAction(){
-    	
-    	 $frmrun= new Registrar_Form_Frmrunadd();
-    	 $frmrun->FrmStudentRequest();
-    	 $this->view->runview=$frmrun->FrmStudentRequest();
-    	 
     }
 }

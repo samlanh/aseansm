@@ -40,7 +40,7 @@ class Registrar_indexController extends Zend_Controller_Action {
     	}
     }
     
-    public function wuReceiptAction()
+    public function addAction()
     {
     	$frm = new Registrar_Form_FrmRecept();
     	$frm_recept=$frm->FrmRecept();
