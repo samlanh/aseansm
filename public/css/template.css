@@ -17,7 +17,7 @@ fieldset th.tdheader {
     white-space: nowrap;
 }
 fieldset th.tdheader-delete {
-    background: url("../images/tbheader-bg1.jpg") repeat-x scroll center top #F1F1F1;
+    //background: url("../images/tbheader-bg1.jpg") repeat-x scroll center top #F1F1F1;
     border: 1px solid #CCCCCC;
     color: #333333;
     font-family: Arial,Helvetica,sans-serif;
@@ -228,7 +228,7 @@ td.field-no-border {
     word-wrap: break-word;
 	border: none;
 }
-fieldset{ border:1px solid #ccc;}
+fieldset{ border:1px solid #fff;}
 td.field-member {
     color: #333333;
     font-family: "Lucida Grande",Tahoma,"Bitstream Vera Sans",Arial,sans-serif;
