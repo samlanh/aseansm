@@ -85,54 +85,42 @@ dojo.require("dojo.parser");
             });
 
 </script>
-    <?php $class='tundra';?>
-    <!-- <body class="soria">
-    <body class="soria"> -->
+    <?php $class='tundra';
+    $session_user=new Zend_Session_Namespace('auth');
+    $username = $session_user->first_name;
+    $them_style =  $session_user->theme_style;
+    ?>
     <body class="<?php echo $class;?>">
-        <div dojoType="dijit.layout.BorderContainer" style="width: 100%; height: 100%;">
-            <!-- <div dojoType="dijit.layout.ContentPane" region="top">
-             <img src='<?php echo $base_url;?>images/logo.png' height="100px"/
-            <?php 
-				//$session_user=new Zend_Session_Namespace('auth');
-			    //$username = $session_user->first_name;
-        						?>
-				កំពុង​ប្រើ​ប្រាស់ ដោយ: <a href="<?php //echo $this->url(array('module'=>'','controller'=>'index','action'=>'changepassword')); ?>"><font color="#006600"><?php //echo $username;?></font></a>
-				 | <a href="<?php //echo $this->url(array('module'=>'','controller'=>'index','action'=>'logout','value'=>'1')); ?>"><font color="#006600">ចាក​ចេញ </font></a>
-            </div>>-->
-            <div dojoType="dijit.layout.ContentPane" region="top">
-                <?php echo $this->render('header.phtml')?>
-                 <?php //echo $this->render('toolbar.phtml')?>
-            </div>
-             <?php if($module!='home'){?>
-            <div dojoType="dijit.layout.ContentPane" region="left">
-            
-             <?php echo $this->render('menuleft.phtml')?>
-             
-             <?php //echo $this->render('subtoolbar.phtml')?>
-            <!-- <div splitter="true" id="leftmenu" dojoType="dijit.layout.AccordionContainer" region="leading">
-               
-                <div class="mleft" style="background:#d0e9fc;" dojoType="dijit.layout.AccordionPane" title="pane #1">
-                </div>
-                <div dojoType="dijit.layout.AccordionPane" title="pane #2">
-                    accordion pane #2
-                </div>
-                <div dojoType="dijit.layout.AccordionPane" title="pane #3">
-                    accordion pane #3
-                </div> 
-            </div>-->
-            </div>
-            <?php }?>
-            <div dojoType="dijit.layout.AccordionPane" region="center">
-                <?php echo $this->layout()->content;  ?>
-            </div>
-            <div dojoType="dijit.layout.ContentPane" region="bottom">
-               <!--  <ul>
-					<li><?php //echo $tr->translate("COPY_RIGHT")." &copy; ".$tr->translate("COPY_RIGHT_BY");?></li>
-					<li><?php //echo $tr->translate("VERSION");?></li>
-					<li><?php //echo $tr->translate("POWER_BY");?></li>
-				</ul> -->
-            </div>
-        </div>
+        <table style="height: 100%;" width="100%" >
+            <tr height="45px" >
+            	<td colspan="2" valign="top"> <?php echo $this->render('header.phtml')?>
+            	 <p style="font-size:13px !important; ">
+						              <span style="padding-left: 3px;padding-right: 3px;float: left; font-weight:600;"><?php echo $tr->translate("USING_BY");?><a href="<?php echo $this->url(array('module'=>'','controller'=>'index','action'=>'changepassword')); ?>"><?php echo $username;?></a></span>  
+							<a href="<?php echo $this->url(array('module'=>'','controller'=>'index','action'=>'logout','value'=>'1')); ?>"> | <?php echo $tr->translate("SIGN_OUT");?></a>
+			                 <?php if($action=='index' AND $module!='report' AND $module!='home'){?>
+			                 <a class='add-link' style="float:right;" href="<?php echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'add'),null,true); ?>"><?php echo $tr->translate('ADD');?></a>
+							<?php }elseif($action=='add' OR $action=='edit' OR $module=='report'){?>
+							 <span style="padding-left: 3px;padding-right: 3px; float: right; font-weight:600;"><a class='add-link' href="<?php echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'index'),null,true); ?>"><?php echo $tr->translate('GO_BACK');?></a></span>
+							<?php }?>
+							</p>
+            	</td>
+            </tr>
+             <tr>
+             	<?php if($module!='home'){?>
+            	<td width="200px" valign="top" style="border:1px solid #ccc;"><?php echo $this->render('menuleft.phtml')?></td>
+            	<?php }?>
+            	<td valign="top" style="border:1px solid #ccc; background:#D4D4D4"><?php echo $this->layout()->content;  ?></td>
+            </tr>
+             <tr height="30px" style="border:1px solid #ccc;background:#B9B9CC; color: #008;">
+             	<td colspan="2" align="center">
+             		<?php echo $tr->translate("COPY_RIGHT")." &copy; ".$tr->translate("COPY_RIGHT_BY");?>
+					<?php echo $tr->translate("VERSION");?>
+					Developed by Cam App Technology | <?php echo $tr->translate("អភិវឌ្ឍន៏ដោយ ខេម អ៊ែប តិចណូឡូជី");?>
+					
+				</ul>
+             	</td>
+             </tr>
+        </table>
     </body>
 </html>
 <script type="text/javascript">
