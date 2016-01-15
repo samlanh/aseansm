@@ -250,15 +250,15 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
    	if($id==null)return $opt_term;
    	else return $opt_term[$id];
    }
-   public static function getSessionById($id){
-   	$tr= Application_Form_FrmLanguages::getCurrentlanguage();
-   	$arr_opt = array(
-   			1=>$tr->translate('MORNING'),
-			2=>$tr->translate('AFTERNOON'),
-			3=>$tr->translate('EVERNING'),
-			4=>$tr->translate('WEEKEND'));
-   	return $arr_opt[$id];
-   }
+//    public static function getSessionById($id){
+//    	$tr= Application_Form_FrmLanguages::getCurrentlanguage();
+//    	$arr_opt = array(
+//    			1=>$tr->translate('MORNING'),
+// 			2=>$tr->translate('AFTERNOON'),
+// 			3=>$tr->translate('EVERNING'),
+// 			4=>$tr->translate('WEEKEND'));
+//    	return $arr_opt[$id];
+//    }
    public static function getAllMention($id=null){
    	$tr= Application_Form_FrmLanguages::getCurrentlanguage();
     $opt_rank = array(
@@ -320,6 +320,92 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
    	return $db->fetchOne($sql);
    	
    }
+   function getTeacherCode(){
+   	$db = $this->getAdapter();
+   	$sql ="SELECT COUNT(id) AS number FROM `rms_teacher` LIMIT 1 ";
+   	$acc_no = $db->fetchOne($sql);
+   
+   	$new_acc_no= (int)$acc_no+1;
+   	$acc_no= strlen((int)$acc_no+1);
+   	$pre="L";
+   	for($i = $acc_no;$i<3;$i++){
+   		$pre.='0';
+   	}
+   	return $pre.$new_acc_no;
+   }
+   function getPrefixCode(){
+   	$db  = $this->getAdapter();
+   	$sql = " SELECT prefix FROM `ln_branch` ";
+   	return $db->fetchOne($sql);
+   }
+   function getallComposition(){
+   	$db  = $this->getAdapter();
+   	$sql = " SELECT occupation_id AS id,occu_name AS name FROM `rms_occupation` WHERE occu_name!='' AND status=1 ORDER BY id DESC ";
+   	return $db->fetchAll($sql);
+   
+   }
+   function getallSituation(){
+   	$db  = $this->getAdapter();
+   	$sql = " SELECT situ_id AS id ,situ_name AS name FROM `rms_situation` WHERE situ_name!='' AND status=1 ORDER BY id DESC ";
+   	return $db->fetchAll($sql);
+   }
+   function getAllProvince($opt=null,$option=null){
+   	$db= $this->getAdapter();
+   	$sql="SELECT province_id AS id,province_en_name AS province_name FROM rms_province WHERE is_active=1 AND province_en_name!=''";
+   	$rows =  $db->fetchAll($sql);
+   	if($opt==null){
+   		return $rows;
+   	}else{
+   		if($option!=null){
+   			$opt_province = array(-1=>"Please Select Location");
+   		}else{$opt_province=array();
+   		}
+   		if(!empty($rows))foreach($rows AS $row) $opt_province[$row['id']]=$row['province_name'];
+   		return $opt_province;
+   	}
+   	
+   }
+   public function getAllsubject(){
+   	$db = $this->getAdapter();
+   	$sql = "SELECT id ,CONCAT(subject_titleen,'-',subject_titlekh) AS  subject_name
+   	FROM `rms_subject` WHERE status=1 AND(subject_titleen!='' OR subject_titlekh!='')";
+   	return $db->fetchAll($sql);
+   }
+   function getAllMajor(){
+   	$db = $this->getAdapter();
+   	$sql = "SELECT major_id AS id ,CONCAT(major_enname,'-',major_khname) AS name,CONCAT(major_enname,'-',major_khname) AS major_name FROM `rms_major`
+   	WHERE is_active=1 AND (major_khname!='' OR major_enname!='') Order BY major_id DESC";
+   	return $db->fetchAll($sql);
+   }
+   public function getAllRoom(){
+   	$db = $this->getAdapter();
+   	$sql=" SELECT room_id AS id ,room_name As name FROM `rms_room` WHERE is_active=1 AND room_name!='' order by room_id DESC ";
+   	return $db->fetchAll($sql);
+   }
+    
+   public function getAllTeacherSubject(){
+   	$db = $this->getAdapter();
+   	$sql = "SELECT ts.id,
+   	(SELECT CONCAT(t.teacher_name_kh,'-',t.teacher_name_kh)
+   	FROM `rms_teacher` AS t WHERE t.id=ts.teacher_id  AND status=1 LIMIT 1) AS teacher_name ,
+   	(SELECT CONCAT(s.subject_titleen,'-',s.subject_titlekh)
+   	FROM `rms_subject` AS s WHERE s.id=ts.subject_id  AND status=1 LIMIT 1) AS subject_name
+   	FROM `rms_teacher_subject` AS ts WHERE status=1";
+   	return $db->fetchAll($sql);
+   }
+   public static function getSessionById($id=null){
+   	$tr= Application_Form_FrmLanguages::getCurrentlanguage();
+   	$arr_opt = array(
+   			1=>$tr->translate('MORNING'),
+   			2=>$tr->translate('AFTERNOON'),
+   			3=>$tr->translate('EVERNING'),
+   			4=>$tr->translate('WEEKEND'));
+   	if($id!=null){
+   		return $arr_opt[$id];
+   	}return $arr_opt;
+   
+   }
+
    
 }
 ?>

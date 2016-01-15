@@ -250,5 +250,28 @@ class Application_Model_GlobalClass  extends Zend_Db_Table_Abstract
 			}
 			return $rows;
 		}
+		public function getsunjectOption(){
+			$_db = new Application_Model_DbTable_DbGlobal();
+			$rows = $_db->getAllsubject();
+			//array_unshift($rows, array('id'=>-1,'subject_name'=>"Add New"));
+			$options = '';
+			if(!empty($rows))foreach($rows as $value){
+				$options .= '<option value="'.$value['id'].'" >'.htmlspecialchars($value['subject_name'], ENT_QUOTES).'</option>';
+			}
+			$options .= '<option Value="-1">Add New</option>';
+			return $options;
+		}
+		public function getTeachersunjectOption(){
+			$_db = new Application_Model_DbTable_DbGlobal();
+			$rows = $_db->getAllTeacherSubject();
+			//array_unshift($rows, array('id'=>-1,'subject_name'=>"Add New"));
+			$options = '';
+			if(!empty($rows))foreach($rows as $value){
+				$options .= '<option value="'.$value['id'].'" >'.htmlspecialchars($value['subject_name'].' , '.$value['teacher_name'], ENT_QUOTES).'</option>';
+			}
+			$options .= '<option Value="-1">Add New</option>';
+			return $options;
+		}
+		
 }
 
