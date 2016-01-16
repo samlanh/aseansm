@@ -1,5 +1,5 @@
 <?php
-class Foundation_RegisterController extends Zend_Controller_Action {
+class Foundation_KindergartenController extends Zend_Controller_Action {
 	
 	
     public function init()
