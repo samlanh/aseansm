@@ -28,41 +28,88 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 						<tr>
 							<td style="width: 100px"><?php echo $tr->translate("Lecturer Code")?></td>
 							<td><?php  echo $techer->getElement('code');?></td>
-						    <td style="width: 100px"><?php echo $tr->translate("TEACHER_KH_NAME")?></td>
+						    <td style="width: 100px"><?php echo $tr->translate("Group")?></td>
+						    <td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="group" name="group" value="" type="text"></td>
+							<!-- <td><?php echo $techer->getElement('Group');?></td> -->
+							<td style="width: 5px"><?php echo $tr->translate("ID Card No")?></td>
+							<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="idcard" name="idcard" value="" type="text"></td>
+							<!--<td><?php  echo $techer->getElement('idcard');?></td>-->
+						</tr>
+						<tr>
+						    <td style="width: 100px"><?php echo $tr->translate("Name/kh")?></td>
 							<td><?php  echo $techer->getElement('kh_name');?></td>
-							<td style="width: 100px"><?php echo $tr->translate("TEACHER_EN_NAME")?></td>
+							<td style="width: 100px"><?php echo $tr->translate("Home")?></td>
+							<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="home" name="home" value="" type="text"></td>
+							<!--<td><?php echo $techer->getElement('Home');?></td>-->
+							<td style="width: 5px"><?php echo $tr->translate("Issued Date")?></td>
+							<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="issusd" name="issusd" value="" type="text"></td>
+							<!--<td><?php  echo $techer->getElement('Issued');?></td>-->
+						</tr>
+						<tr>
+							<td style="width: 100px"><?php echo $tr->translate("Name/eng")?></td>
 							<td><?php  echo $techer->getElement('en_name');?></td>
-							
+							<td style="width: 100px"><?php echo $tr->translate("Commnue")?></td>
+							<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="commnue" name="commnue" value="" type="text"></td>
+							<!--<td><?php echo $techer->getElement('Commnue');?></td>-->
+							<td style="width: 5px"><?php echo $tr->translate("Expired")?></td>
+							<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="expired" name="expired" value="" type="text"></td>
+							<!--<td><?php echo $techer->getElement('expired');?></td>-->
 						</tr>
 						<tr>
 							<td style="width: 100px"><?php echo $tr->translate("sex")?></td>
 							<td><?php echo $techer->getElement('sex');?></td>
-							<td style="width: 100px"><?php echo $tr->translate("tel")?></td>
-							<td><?php echo $techer->getElement('phone');?></td>
+							<td style="width: 100px"><?php echo $tr->translate("District")?></td>
+							<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="district" name="district" value="" type="text"></td>
+							<!-- <td><?php echo $techer->getElement('District');?></td> -->
+							<td style="width: 5px"><?php echo $tr->translate("Pars ID")?></td>
+							<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="pars" name="pars" value="" type="text"></td>
+							<!--<td><?php  echo $techer->getElement('pars');?></td>-->
+						</tr>
+						<tr>
 							<td style="width: 100px"><?php echo $tr->translate("pob")?></td>
 							<td><?php echo $techer->getElement('pob');?></td>
-							
+							<td style="width: 5px"><?php echo $tr->translate("Province")?></td>
+							<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="province" name="province" value="" type="text"></td>
+							<!--<td><?php  echo $techer->getElement('province');?></td>-->
+							<td style="width: 100px"><?php echo $tr->translate("Pasc No")?></td>
+							<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="pasc" name="pasc" value="" type="text"></td>
+							<td><?php echo $techer->getElement('pasc');?></td>
 						</tr>
 						<tr>
-						<td style="width: 100px"><?php echo $tr->translate("dob")?></td>
+							<td style="width: 100px"><?php echo $tr->translate("dob")?></td>
 							<td><?php echo $techer->getElement('dob');?></td>
-							<td style="width: 100px"><?php echo $tr->translate("address")?></td>
-							<td><?php  echo $techer->getElement('address');?></td>
+							<td style="width: 100px"><?php echo $tr->translate("tel")?></td>
+							<td><?php echo $techer->getElement('phone');?></td>
+							<td style="width: 5px"><?php echo $tr->translate("Issued Date")?></td>
+							<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="Issued" name="Issued" value="" type="text"></td></td>
+							<!--<td><?php  echo $techer->getElement('Issued');?></td>-->
+					    </tr>
+					    <tr>
+							<td style="width: 100px"><?php echo $tr->translate("Nationality")?></td>
+							<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="nationality" name="nationality" value="" type="text"></td>
+							<!-- <td><?php echo $techer->getElement('nationality');?></td> -->
 							<td style="width: 5px"><?php echo $tr->translate("email")?></td>
 							<td><?php  echo $techer->getElement('email');?></td>
-						</tr>
-						<tr>
-							<td style="width: 5px"><?php echo $tr->translate("degree")?></td>
+							<td style="width: 5px"><?php echo $tr->translate("Expired")?></td>
+							<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="exp" name="exp" value="" type="text"></td>
+							<td><?php  echo $techer->getElement('expired');?></td>
+					    </tr>
+					    <tr>
+					    	<td style="width: 5px"><?php echo $tr->translate("degree")?></td>
 							<td><?php  echo $techer->getElement('degree');?></td>
-							<td style="width: 5px"><?php echo $tr->translate("note")?></td>
-							<td><?php echo $techer->getElement('note');?></td>
-							<td style="width: 5px"><?php echo $tr->translate("photo")?></td>
-							<td><?php  echo $techer->getElement('photo');?></td>
-						</tr>
-						<tr>
+							<td style="width: 100px"><?php echo $tr->translate("address")?></td>
+							<td><?php  echo $techer->getElement('address');?></td>
+					    </tr>
+					    <tr>	
 							<td style="width: 5px"><?php echo $tr->translate("STATUS")?></td>
 							<td><?php  echo $techer->getElement('status');?></td>
-						</tr>
+							<td style="width: 5px"><?php echo $tr->translate("note")?></td>
+							<td><?php echo $techer->getElement('note');?></td>
+					    </tr>
+					    <tr>
+					    	<td style="width: 5px"><?php echo $tr->translate("photo")?></td>
+							<td><?php  echo $techer->getElement('photo');?></td>
+					    </tr>
 						<tr>
 							<td align="center" colspan="6">
 									<input type="hidden" dojoType="dijit.form.TextBox" id="record_row" name="record_row" />
