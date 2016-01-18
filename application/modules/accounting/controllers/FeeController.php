@@ -85,7 +85,7 @@ class Accounting_feeController extends Zend_Controller_Action {
     }
     public function headAddRecordTuitionFee($rs,$key){
     	$result[$key] = array(
-    						'id' 	  	  	=> $rs['id'],
+    						'id' 	  => $rs['id'],
     						'academic'=> $rs['academic'],
     						'generation'=> $rs['generation'],	
     						'class'=>'',
