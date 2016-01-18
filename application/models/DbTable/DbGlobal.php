@@ -226,10 +226,11 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
    }
    public function getAllPaymentTerm($id=null){
    	$opt_term = array(
+   			
    			1=>$this->tr->translate('QUARTER'),
    			2=>$this->tr->translate('SEMESTER'),
    			3=>$this->tr->translate('YEAR'),
-   			4=>$this->tr->translate('FULL_FEE')
+   			
    	);
    	if($id==null)return $opt_term;
    	else return $opt_term[$id]; 

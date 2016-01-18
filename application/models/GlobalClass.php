@@ -193,11 +193,11 @@ class Application_Model_GlobalClass  extends Zend_Db_Table_Abstract
 		}
 		public function getAllFacultyOption(){
 			$_db = new Application_Model_DbTable_DbGlobal();
-			$rows = $_db->getAllFecultyName();
-			array_unshift($rows, array('dept_id'=>-1,'en_name'=>"Add New"));
+			$rows = $_db->getAllMajor();
+			array_unshift($rows, array('id'=>-1,'name'=>"Add New"));
 			$options = '';
 			if(!empty($rows))foreach($rows as $value){
-				$options .= '<option value="'.$value['dept_id'].'" >'.htmlspecialchars($value['en_name'], ENT_QUOTES).'</option>';
+				$options .= '<option value="'.$value['id'].'" >'.htmlspecialchars($value['name'], ENT_QUOTES).'</option>';
 			}
 			return $options;
 		}
