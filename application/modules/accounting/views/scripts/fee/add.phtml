@@ -35,8 +35,8 @@ table .set-style tr.st1{ background: none repeat scroll 0% 0% rgba(218, 250, 255
 									<?php }?>
 								</select>
 							</td>
-							<td style="white-space: nowrap; "><?php echo $tr->translate("TO");?></td>
-							<td>
+							<td style="white-space: nowrap;text-align: right; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $tr->translate("TO");?></td>
+							<td align="center">
 								<select dojoType="dijit.form.FilteringSelect" required="true"  id="to_year" name="to_year" type="text">
 									<?php for($i=2015;$i<=date('Y')+2;$i++){?>
 										<option value="<?php echo $i;?>"><?php echo $i; ?></option>
@@ -45,6 +45,19 @@ table .set-style tr.st1{ background: none repeat scroll 0% 0% rgba(218, 250, 255
 							</td>
 							<td style="white-space: nowrap;"><?php echo $tr->translate("CREATED_DATE");?></td>
 							<td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="create_date" name="create_date" value="2016-01-16" type="text"></td>
+						</tr>
+						<tr>
+						
+							<td style="white-space: nowrap;"><?php echo $tr->translate("GENERATION");?></td>
+							<td width="200px" ><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="generation" name="generation"  type="text"></td>
+							
+							<td>&nbsp;</td>
+							<td></td>	
+							
+							<td  style="white-space: nowrap;"><?php echo $tr->translate("NOTE");?></td>
+							<td align="right"><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="note" name="note"  type="text"></td>
+						
+							
 						</tr>
 						<tr>
 							<td></td>
