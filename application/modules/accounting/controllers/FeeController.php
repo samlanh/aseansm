@@ -32,6 +32,8 @@ class Accounting_feeController extends Zend_Controller_Action {
     							if($payment_tran['payment_term']==1){
     								$rs_rows[$key]=$this->headAddRecordTuitionFee($rs,$key);
     								$term = $model->getAllPaymentTerm($fee_row);
+    								
+    								$rs_rows[$key]['class'] = $payment_tran['class'];
     								$rs_rows[$key]['quarter'] = $payment_tran['tuition_fee'];
     								$key_old=$key;
     								$key++;
@@ -71,7 +73,7 @@ class Accounting_feeController extends Zend_Controller_Action {
     				'module'=>'accounting','controller'=>'fee','action'=>'edit-feetuition',
     		);
     		$urlEdit = BASE_URL ."/product/index/update";
-    		$this->view->list=$list->getCheckList(1, $collumns, $rs_rows, array('degree'=>$link));
+    		$this->view->list=$list->getCheckList(0, $collumns, $rs_rows, array('degree'=>$link));
     	}catch (Exception $e){
     		Application_Form_FrmMessage::message("APPLICATION_ERROR");
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
@@ -83,8 +85,14 @@ class Accounting_feeController extends Zend_Controller_Action {
     }
     public function headAddRecordTuitionFee($rs,$key){
     	$result[$key] = array(
-    						'id'=> $rs['id'],
-    						'generation'=> $rs['generation'],
+    						'id' 	  	  	=> $rs['id'],
+    						'academic'=> $rs['academic'],
+    						'generation'=> $rs['generation'],	
+    						'class'=>'',
+    						'quarter'=>'',
+			    			'semester'=>'',
+			    			'year'=>'',
+    						'date'=>$rs['create_date'],
     						'status'=> Application_Model_DbTable_DbGlobal::getAllStatus($rs['status'])
     				);
     	return $result[$key];
