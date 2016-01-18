@@ -20,33 +20,30 @@ class Global_CarController extends Zend_Controller_Action {
 						'status' => $_data['status_search']);
 			}
 			else{
-	
+			
 				$search = array(
 						'title' => '',
 						'status' => -1,
 				);
-	
+			
 			}
-			$db = new Global_Model_DbTable_DbProvince();
-			$rs_rows= $db->getAllProvince($search);
+			$db = new Global_Model_DbTable_DbCar();
+			$rs_rows= $db->getAllCars($search);
 	
 			$glClass = new Application_Model_GlobalClass();
 			$rs = $glClass->getImgActive($rs_rows, BASE_URL, true);
 	
 			$list = new Application_Form_Frmtable();
-			$collumns = array("EN_PROVINCE","KH_PROVINCE","MODIFY_DATE","STATUS","BY_USER");
+			$collumns = array("CarID","Car Name","Driver Name","Tel","Zone","Note","Status");
 			$link=array(
-					'module'=>'global','controller'=>'province','action'=>'edit',
+					'module'=>'global','controller'=>'car','action'=>'edit',
 			);
-			$this->view->list=$list->getCheckList(0, $collumns, $rs,array('province_kh_name'=>$link,'province_en_name'=>$link));
+			$this->view->list=$list->getCheckList(0, $collumns, $rs,array('carname'=>$link));
 		}catch (Exception $e){
 			Application_Form_FrmMessage::message("Application Error");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
-		$frm = new Global_Form_FrmSearchMajor();
-		$frm =$frm->searchProvinnce();
-		Application_Model_Decorator::removeAllDecorator($frm);
-		$this->view->frm_search = $frm;
+		
 	}
 	
 	function addAction()
@@ -54,37 +51,33 @@ class Global_CarController extends Zend_Controller_Action {
 		if($this->getRequest()->isPost()){
 			$_data = $this->getRequest()->getPost();
 			try {
-				$_dbmodel = new Global_Model_DbTable_DbProvince();
-				$_dbmodel->addNewProvince($_data);
-				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/global/province/index");
+				$_dbcar = new Global_Model_DbTable_DbCar();
+				$_dbcar->addcar($_data);
+				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/global/car/add");
 			}catch (Exception $e) {
 				Application_Form_FrmMessage::message("INSERT_FAIL");
 				$err =$e->getMessage();
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
 			}
 		}
-		$provine=new Global_Form_FrmProvince();
-		$frm_province=$provine->FrmProvince();
-		Application_Model_Decorator::removeAllDecorator($frm_province);
-		$this->view->frm_province = $frm_province;
+		
 	}
 	
 	public function editAction()
 	{
+		
+		$db=new Global_Model_DbTable_DbCar();
 		$id=$this->getRequest()->getParam("id");
-		$db=new Global_Model_DbTable_DbProvince();
-		$row=$db->getProvinceById($id);
+		$this->view->rs = $row=$db->getCarById($id);
 		if($this->getRequest()->isPost())
 		{
 			$data = $this->getRequest()->getPost();
-			$db = new Global_Model_DbTable_DbProvince();
-			$db->updateProvince($data,$id);
+			$db = new Global_Model_DbTable_DbCar();
+			$db->updateCar($data,$id);
 			Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/global/province/index");
 		}
-		$frm= new Global_Form_FrmProvince();
-		$update=$frm->FrmProvince($row);
-		$this->view->frm_province=$update;
-		Application_Model_Decorator::removeAllDecorator($update);
+		
+		
 	}
 }
 
