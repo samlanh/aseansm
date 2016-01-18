@@ -42,6 +42,7 @@ class Global_LecturerController extends Zend_Controller_Action {
 	{
 		if($this->getRequest()->isPost()){
 			$_data = $this->getRequest()->getPost();
+			print_r($_data);exit();
 			try {
 				$_dbmodel = new Global_Model_DbTable_DbTeacher();
 				$_major_id = $_dbmodel->AddNewTeacher($_data);

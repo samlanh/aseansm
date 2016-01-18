@@ -30,20 +30,20 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 					'user_id'	  => $this->getUserId()
 			);
 			
-			$teacher_id = $this->insert($_arr);
-			$this->_name='rms_teacher_subject';
-			$ids = explode(',', $_data['record_row']);
-			foreach ($ids as $i){
-				$arr = array(
-						'subject_id'=>$_data['subject_id'.$i],
-						'teacher_id'=>$teacher_id,
-						'status'   => $_data['status'],
-						'date' => Zend_Date::now(),
-						'user_id'	  => $this->getUserId()
+// 			$teacher_id = $this->insert($_arr);
+// 			$this->_name='rms_teacher_subject';
+// 			$ids = explode(',', $_data['record_row']);
+// 			foreach ($ids as $i){
+// 				$arr = array(
+// 						'subject_id'=>$_data['subject_id'.$i],
+// 						'teacher_id'=>$teacher_id,
+// 						'status'   => $_data['status'],
+// 						'date' => Zend_Date::now(),
+// 						'user_id'	  => $this->getUserId()
 						
-				);
-				$this->insert($arr);
-			}
+// 				);
+// 				$this->insert($arr);
+// 			}
 			return $db->commit();
 		}catch (Exception $e){
 			$db->rollBack();
