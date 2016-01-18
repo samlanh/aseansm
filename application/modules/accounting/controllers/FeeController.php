@@ -36,11 +36,11 @@ class Accounting_feeController extends Zend_Controller_Action {
     								$rs_rows[$key]['quarter'] = $payment_tran['tuition_fee'];
     								$key_old=$key;
     								$key++;
-    							}elseif($payment_tran['payment_type']==2){
+    							}elseif($payment_tran['payment_type']==3){
     								$term = $model->getAllPaymentTerm($payment_tran['payment_type']);
     								$rs_rows[$key_old]['semester'] = $payment_tran['tuition_fee'];
     								
-    							}elseif($payment_tran['payment_type']==3){
+    							}elseif($payment_tran['payment_type']==2){
     								$term = $model->getAllPaymentTerm($payment_tran['payment_type']);
     								$rs_rows[$key_old]['year'] = $payment_tran['tuition_fee'];
     							}
@@ -92,7 +92,7 @@ class Accounting_feeController extends Zend_Controller_Action {
     				);
     	return $result[$key];
     }
-    public function addFeetuitionAction()
+    public function addAction()
     {
     	if($this->getRequest()->isPost()){
     		try {
@@ -105,10 +105,7 @@ class Accounting_feeController extends Zend_Controller_Action {
 	   			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
     		}
     	}
-    	$frm = new Accounting_Form_FrmServicePrice();
-    	$frm_set_pric=$frm->FrmSetServicePrice();
-    	Application_Model_Decorator::removeAllDecorator($frm_set_pric);
-    	$this->view->frm_set_price = $frm_set_pric;
+    	
     	$_model = new Application_Model_GlobalClass();
     	$this->view->all_metion = $_model ->getAllMetionOption();
     	$this->view->all_faculty = $_model ->getAllFacultyOption();
@@ -120,7 +117,7 @@ class Accounting_feeController extends Zend_Controller_Action {
     	Application_Model_Decorator::removeAllDecorator($frm);
     	$this->view->add_dept = $frm;
     }
- 	public function editFeetuitionAction()
+ 	public function editAction()
     {
     	if($this->getRequest()->isPost()){
     		try {
