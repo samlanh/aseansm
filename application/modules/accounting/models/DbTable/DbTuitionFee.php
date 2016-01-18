@@ -11,13 +11,12 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     }
     function getAllTuitionFee($search=''){
     	$db=$this->getAdapter();
-    	$sql = "SELECT fee_id as id,batch,degree,
-    		(SELECT en_name FROM `rms_dept` WHERE dept_id=faculty_id)as faculty_name
-    		,degree_type,status,
-    			create_date,user_id 
+    	$sql = "SELECT id,CONCAT(from_academic,'-',to_academic) AS academic,
+    		generation,
+    			create_date ,status
     			FROM `rms_tuitionfee`
     			WHERE 1";
-    	$order=" ORDER BY degree";
+    	$order=" ORDER BY id DESC ";
     	$where = '';
     	if(empty($search)){
     		return $db->fetchAll($sql.$order);
@@ -36,7 +35,9 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     }
     function getFeebyOther($fee_id){
     	$db = $this->getAdapter();
-    	$sql = "select * from rms_tuitionfee_detail where fee_id =".$fee_id." ORDER BY id";
+    	$sql = "select *,
+		(SELECT major_enname FROM `rms_major` WHERE major_id=rms_tuitionfee_detail.class_id) as class
+    	from rms_tuitionfee_detail where fee_id =".$fee_id." ORDER BY id";
     	return $db->fetchAll($sql);
     }
     ////////////////
@@ -44,21 +45,18 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	$db->beginTransaction();
     	try{
-    		if($_data['degree']!=2){
-    			$_data['faculty']=0;
-    			$degree_type=0;
-    		}else{
-    			$degree_type=1;
-    		}
+    		
     		$_arr = array(
-    				'degree'=>$_data['degree'],
-    				'batch'=>$_data['batch'],
-    				'faculty_id'=>$_data['faculty'],
-    				'degree_type'=>$degree_type,
+    				'from_academic'=>$_data['from_year'],
+    				'to_academic'=>$_data['to_year'],
+    				'generation'=>$_data['generation'],
+    				'note'=>$_data['note'],
     				'status'=>1,
     				'create_date'=>$_data['create_date'],
-    				'user_id'=>$this->getUserId());
+    				'user_id'=>$this->getUserId()
+    				);
     		$fee_id = $this->insert($_arr);
+    		
     		$this->_name='rms_tuitionfee_detail';
     		$ids = explode(',', $_data['identity']);
     		$id_term =explode(',', $_data['iden_term']);
@@ -66,8 +64,8 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     			foreach ($id_term as $j){
     				$_arr = array(
     						'fee_id'=>$fee_id,
-    						'metion'=>$_data['metion'.$i],
-    						'payment_type'=>$j,
+    						'class_id'=>$_data['class_'.$i],
+    						'payment_term'=>$j,
     						'tuition_fee'=>$_data['fee'.$i.'_'.$j],
     						'remark'=>$_data['remark'.$i]
     				);
