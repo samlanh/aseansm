@@ -14,6 +14,7 @@ dojo.require("dojo.data.ItemFileWriteStore");
 dojo.require("dijit.form.NumberTextBox");
 dojo.require("dijit.form.Textarea");
 dojo.require("dijit.form.DateTextBox");
+dojo.require("dijit.form.CheckBox");
 dojo.ready(function(){
 	new dijit.form.FilteringSelect({
 		   // store: make_store,
@@ -205,43 +206,43 @@ dojo.ready(function(){
 					       <div class="tabContentSection" dojoType="dijit.layout.ContentPane" title="<?php echo $tr->translate("SERVICES");?>" selected="false">
 					     	<table width="100%" style="margin:0 auto;" cellspacing="5">
 					      		<tr>
-									<td colspan="6" style="border-bottom:1px solid #ccc;"><strong>ព័ត៏មានឪពុក</strong></td>
+									<td colspan="6" style="border-bottom:1px solid #ccc;"><strong>ព័ត៏មានកីឡា</strong></td>
 								</tr>
 					      		<tr>
-					      			<td width="12%"><?php echo $tr->translate("NAME_KH");?>*</td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="fa_name_kh" name="fa_name_kh" value="" type="text" required="required"></td>
-									<td ><?php echo $tr->translate("NAME_EN");?>*</td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="fa_name_en" name="fa_name_en" value="" type="text" required="required"></td>
-									<td><?php echo $tr->translate("AGE");?></td>
-									<td><input tabindex="15" dojoType="dijit.form.TextBox"  id="fa_age" name="fa_age" value="" type="text" ></td>
+									<td ><input  dojoType="dijit.form.CheckBox"  id="check_ka" name="check_ka" value=""  ><?php echo $tr->translate("ការ៉ាតេដូ");?></td>
+									<td><input  dojoType="dijit.form.CheckBox"  id="check_football" name="check_football" value=""  ><?php echo $tr->translate("បាល់ទាត់");?></td>
+									<td><input  dojoType="dijit.form.CheckBox"  id="ckeck_bos" name="ckeck_bos" value=""  ><?php echo $tr->translate("បាល់បោះ");?></td>
+									<td><input  dojoType="dijit.form.CheckBox"  id="check_swim" name="check_swim" value=""  ><?php echo $tr->translate("ហែលទឹក");?></td>
+									<td><input  dojoType="dijit.form.CheckBox"  id="check_hockey" name="check_hockey" value=""  ><?php echo $tr->translate("វាយកូនបាល់");?></td>
+					      		    <td ><input  dojoType="dijit.form.CheckBox"  id="check_table" name="check_table" value=""  ><?php echo $tr->translate("រាយកូនឃ្លីលើតុ");?></td>
 					      		</tr>
-					      		<tr>
-					      			<td><?php echo $tr->translate("មុខរបរ");?></td>
-									<td><input  dojoType="dijit.form.TextBox"  id="fa_job" name="fa_job" value="" type="text" ></td>
-									<td><?php echo $tr->translate("PHONE");?>*</td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="fa_phone" name="fa_phone" value="" type="text" required="required" ></td>
-									<td><?php echo $tr->translate("សញ្ជាតិ");?></td>
-								    <td><input tabindex="15" dojoType="dijit.form.TextBox"  id="fa_national" name="fa_national" value="" type="text" required="required" ></td>
-								</tr>
 								<tr>
-									<td colspan="6" style="border-bottom:1px solid #ccc;"><strong>ព័ត៏មានម្ថាយ</strong></td>
+									<td colspan="6" style="border-bottom:1px solid #ccc;"><strong>ជំនាញបំណិនជីវិត</strong></td>
 								</tr>
 					      		<tr>
-					      			<td width="12%"><?php echo $tr->translate("NAME_KH");?>*</td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="mom_name_kh" name="mom_name_kh" value="" type="text" required="required"></td>
-									<td ><?php echo $tr->translate("NAME_EN");?>*</td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="mom_name_en" name="mom_name_en" value="" type="text" required="required"></td>
-									<td><?php echo $tr->translate("AGE");?></td>
-									<td><input tabindex="15" dojoType="dijit.form.TextBox"  id="age" name="age" value="" type="text" ></td>
+									<td ><input  dojoType="dijit.form.CheckBox"  id="check_arts" name="check_arts" value="" type="CheckBox"><?php echo $tr->translate("គេហកិច្ច-អប់រំសិល្បៈ");?></td>
+									<td><input  dojoType="dijit.form.CheckBox"  id="check_paint" name="check_paint" value=""  ><?php echo $tr->translate("គំនូរ និងហត្ថកម្ម");?></td>
+									<td><input  dojoType="dijit.form.CheckBox"  id="ckeck_music" name="ckeck_music" value=""  ><?php echo $tr->translate("តូរ្យតន្ត្រី");?></td>
+									<td><input  dojoType="dijit.form.CheckBox"  id="check_dance" name="check_dance" value=""  ><?php echo $tr->translate("សិស្បៈរបាំ");?></td>
 					      		</tr>
-					      		<tr>
-					      			<td><?php echo $tr->translate("មុខរបរ");?></td>
-									<td><input  dojoType="dijit.form.TextBox"  id="mom_job" name="mom_job" value="" type="text" ></td>
-									<td><?php echo $tr->translate("PHONE");?>*</td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="mon_phone" name="mon_phone" value="" type="text" required="required" ></td>
-									<td><?php echo $tr->translate("សញ្ជាតិ");?></td>
-								    <td><input tabindex="15" dojoType="dijit.form.TextBox"  id="mom_national" name="mom_national" value="" type="text" required="required" ></td>
+					            <tr>
+									<td colspan="6" style="border-bottom:1px solid #ccc;"><strong>ព័ត៏មានឡាន</strong></td>
 								</tr>
+					      		<tr>
+									<td ><input  dojoType="dijit.form.CheckBox"  id="check_fee" name="check_fee" value="" type="CheckBox"><?php echo $tr->translate("ADMIN_FEE");?></td>
+									<td><input  dojoType="dijit.form.CheckBox"  id="check_car" name="check_car" value=""  ><?php echo $tr->translate("CAR");?></td>
+									<td colspan="3">
+									    <select tabindex="24" name="type_car" id="type_car" dojoType="dijit.form.FilteringSelect" >
+										    <option value="1" label="Active">Camary</option>
+										    <option value="2" label="Deactive">Torise</option>
+										    <option value="2" label="Deactive">Corola</option>
+										    <option value="2" label="Deactive">Lan</option>
+										</select>
+									</td>
+									<td></td>
+									<td></td>
+									<td></td>
+					      		</tr>
 					      	</table>
 					      </div>
 					   </div>
