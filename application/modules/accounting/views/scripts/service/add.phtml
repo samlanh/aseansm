@@ -7,7 +7,7 @@
 	dojo.require("dijit.form.Textarea");
 </script>
 <?php  $item= $this->frm;?>
-<form  id='acc_item' action="<?php echo $this->url(array('module'=>'accounting','controller'=>'program','action'=>'add-program')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form  id='acc_item' action="<?php echo $this->url(array('module'=>'accounting','controller'=>'service','action'=>'add-program')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 		<table cellspacing="10" width="50%" style="margin: 0 auto;">
 			<tr>
 				<td>
@@ -15,11 +15,7 @@
 					<legend align="center" ><?php echo $tr->translate("ADD_SERVICE_PROGRAG");?></legend><br />
 					<table style="margin: 0 auto; width: 95%;" cellspacing="5">
 						<tr>
-							<td style="width:100px"><?php echo $tr->translate("TYPE")?></td>
-							<td><?php  echo $item->getElement('type');?></td>
-						</tr>
-						<tr>
-							<td style="width:100px"><?php echo $tr->translate("SERVICE_PROGRAMER_CATE")?></td>
+							<td style="width:100px"><?php echo $tr->translate("មុខវិជ្ជាសិក្សា")?></td>
 							<td><?php  echo $item->getElement('title');?></td>
 						</tr>
 						<tr>
@@ -36,9 +32,9 @@
 						</tr>
 						<tr>
 							<td colspan="2" align="center">
-							<input iconClass="dijitIconUndo" type="button" value="<?php echo $tr->translate("ត្រលប់ក្រោយ");?>" 
+							<input iconClass="dijitIconUndo" type="button" value="<?php echo $tr->translate("áž�áŸ’ážšáž›áž”áŸ‹áž€áŸ’ážšáŸ„áž™");?>" 
 											label="<?php echo $tr->translate("GO_BACK");?>" dojoType="dijit.form.Button" onclick="window.location = '<?php echo $this->url(array('module'=>'accounting','controller'=>"program",'action'=>'index'),null,true); ?>';"/>
-							<input type="submit" label="<?php echo $tr->translate('GO_SAVE');?>"​​​​ value="<?php echo $tr->translate('GO_SAVE');?>" id="submitButton" dojoType="dijit.form.Button" 
+							<input type="submit" label="<?php echo $tr->translate('GO_SAVE');?>"â€‹â€‹â€‹â€‹ value="<?php echo $tr->translate('GO_SAVE');?>" id="submitButton" dojoType="dijit.form.Button" 
 								 iconClass="dijitEditorIcon dijitEditorIconSave"/>
 							</td>
 						</tr>

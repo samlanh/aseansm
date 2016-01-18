@@ -10,7 +10,7 @@
 	<?php echo $frm->getElement('cate_name');?>
 	<?php echo $frm->getElement("title");?>
 	<?php echo $frm->getElement('status_search');?>
-	<input class="right" type="button"​ id="add-service-type" Iconclass="dijitIconNewTask" value="<?php echo $tr->translate("ADD_TECHER_NAME");?>" label="<?php echo $tr->translate("ADD_NEW");?>" dojoType="dijit.form.Button" onclick="window.location = '<?php echo $this->url(array('module'=>"accounting",'controller'=>"program",'action'=>'add')); ?>';"/>
+	<input class="right" type="button"​ id="add-service-type" Iconclass="dijitIconNewTask" value="<?php echo $tr->translate("ADD_TECHER_NAME");?>" label="<?php echo $tr->translate("ADD_NEW");?>" dojoType="dijit.form.Button" onclick="window.location = '<?php echo $this->url(array('module'=>"accounting",'controller'=>"service",'action'=>'add')); ?>';"/>
 </div>
 <?php echo $this->list;?>
 </form>
