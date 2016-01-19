@@ -11,11 +11,8 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     }
     function getAllTuitionFee($search=''){
     	$db=$this->getAdapter();
-    	$sql = "SELECT id,CONCAT(from_academic,'-',to_academic) AS academic,
-    		generation,
-    			create_date ,status
-    			FROM `rms_tuitionfee`
-    			WHERE 1";
+    	$sql = "SELECT id,CONCAT(from_academic,' - ',to_academic) AS academic,
+    		    generation,create_date ,status FROM `rms_tuitionfee` WHERE 1";
     	$order=" ORDER BY id DESC ";
     	$where = '';
     	if(empty($search)){
