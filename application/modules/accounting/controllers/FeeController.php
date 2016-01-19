@@ -1,5 +1,5 @@
 <?php
-class Accounting_feeController extends Zend_Controller_Action {
+class Accounting_FeeController extends Zend_Controller_Action {
 	public function init()
     {    	
     	header('content-type: text/html; charset=utf8');
@@ -74,7 +74,7 @@ class Accounting_feeController extends Zend_Controller_Action {
     				'module'=>'accounting','controller'=>'fee','action'=>'edit',
     		);
     		$urlEdit = BASE_URL ."/product/index/update";
-    		$this->view->list=$list->getCheckList(0, $collumns, $rs_rows, array('academic'=>$link,'class'=>$link,'generation'=>$link));
+    		$this->view->list=$list->getCheckList(0, $collumns, $rs_rows , array('academic'=>$link,'class'=>$link,'generation'=>$link));
     	}catch (Exception $e){
     		Application_Form_FrmMessage::message("APPLICATION_ERROR");
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
