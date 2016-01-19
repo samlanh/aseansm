@@ -23,14 +23,26 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 					'address' => $_data['address'],
 					'email' => $_data['email'],
 					'degree' => $_data['degree'],
-					//'photo' => $_data['kh_subject'],
+					'address' => $_data['address'],
 					'note'=>$_data['note'],
 					'date' => Zend_Date::now(),
 					'status'   => $_data['status'],
-					'user_id'	  => $this->getUserId()
+					'user_id'	  => $this->getUserId(),
+					'nationality'  => $_data['nationality'],
+					'group'  => $_data['group'],
+					'home'  => $_data['home'],
+					'commnue'  => $_data['commnue'],
+					'district' => $_data['district'],
+					'province'	=> $_data['province'],
+					'id_card_no' => $_data['idcard'],
+					'issued_date' => $_data['issued'],
+					'expired' => $_data['expired'],
+					'pars_id' => $_data['pars'],
+					'issued_date1' => $_data['issued1'],
+					'expired1' => $_data['expired1'],
+					
 			);
-			
-// 			$teacher_id = $this->insert($_arr);
+			$teacher_id = $this->insert($_arr);
 // 			$this->_name='rms_teacher_subject';
 // 			$ids = explode(',', $_data['record_row']);
 // 			foreach ($ids as $i){
@@ -76,37 +88,31 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 					'address' => $_data['address'],
 					'email' => $_data['email'],
 					'degree' => $_data['degree'],
-					//'photo' => $_data['kh_subject'],
+					'address' => $_data['address'],
 					'note'=>$_data['note'],
 					'date' => Zend_Date::now(),
 					'status'   => $_data['status'],
-					'user_id'	  => $this->getUserId()
+					'user_id'	  => $this->getUserId(),
+					'nationality'  => $_data['nationality'],
+					'group'  => $_data['group'],
+					'home'  => $_data['home'],
+					'commnue'  => $_data['commnue'],
+					'district' => $_data['district'],
+					'province'	=> $_data['province'],
+					'id_card_no' => $_data['idcard'],
+					'issued_date' => $_data['issued'],
+					'expired' => $_data['expired'],
+					'pars_id' => $_data['pars'],
+					'issued_date1' => $_data['issued1'],
+					'expired1' => $_data['expired1'],
 		);
 		$where=$this->getAdapter()->quoteInto("id=?", $_data["id"]);
+		
 		$this->update($_arr, $where);
-		
-		$this->_name='rms_teacher_subject';
-		$ids = explode(',', $_data['record_row']);
-		foreach ($ids as $i){
-			$arr = array(
-					'subject_id'=>$_data['subject_id'.$i],
-					'teacher_id'=>$_data["id"],
-					'status'   => $_data['status'.$i],
-					'date' => Zend_Date::now(),
-					'user_id'	  => $this->getUserId()
-		
-			);
-			if(!empty($_data['subexist_id'.$i])){
-				$where=$this->getAdapter()->quoteInto("id=?", $_data['subexist_id'.$i]);
-				$this->update($arr, $where);
-			}else{
-				$this->insert($arr);
-			}
-		}
 		return $db->commit();
 		}catch (Exception $e){
 			$db->rollBack();
-			echo $e->getMessage();exit();
+			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
 	}
 	
@@ -163,7 +169,7 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 					'subject_titleen' => $_data['subject_en'],
 					'date' 	=> Zend_Date::now(),
 					'status'   	=> 1,
-					'user_id'	  	=> $this->getUserId()
+					'user_id'	  => $this->getUserId()
 			);
 			 $subject_id = $this->insert($_arr);
 	

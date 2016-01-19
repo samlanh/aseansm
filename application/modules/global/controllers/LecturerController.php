@@ -42,7 +42,7 @@ class Global_LecturerController extends Zend_Controller_Action {
 	{
 		if($this->getRequest()->isPost()){
 			$_data = $this->getRequest()->getPost();
-			print_r($_data);exit();
+			
 			try {
 				$_dbmodel = new Global_Model_DbTable_DbTeacher();
 				$_major_id = $_dbmodel->AddNewTeacher($_data);
@@ -69,12 +69,12 @@ class Global_LecturerController extends Zend_Controller_Action {
 	}
 	public function editAction()
 	{
-		$id=$this->getRequest()->getParam("id");
+		
 		if($this->getRequest()->isPost())
 		{
 			try{
 				$data = $this->getRequest()->getPost();
-				$data["id"]=$id;
+			
 				$db = new Global_Model_DbTable_DbTeacher();
 				$db->updateTeacher($data);
 				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/global/lecturer");
@@ -84,7 +84,7 @@ class Global_LecturerController extends Zend_Controller_Action {
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
 			}
 		}
-
+		$id=$this->getRequest()->getParam("id");
 		$db=new Global_Model_DbTable_DbTeacher();
 		$row=$db->getTeacherById($id);
 		
@@ -96,6 +96,7 @@ class Global_LecturerController extends Zend_Controller_Action {
 		$this->view->subject_opt = $dbs->getsunjectOption();
 		
 		$this->view->teacher_subject = $db->getallSubjectTeacherById($id);
+		$this->view->rs = $row;
 	}
 	function addteacherAction(){
 		if($this->getRequest()->isPost()){
