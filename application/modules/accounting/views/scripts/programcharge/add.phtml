@@ -62,7 +62,10 @@ $frm_set_price = $this->frm_set_charge;?>
 							
 							<td style="white-space: nowrap;text-align: right;"><?php echo $tr->translate("YEARS");?></td>
 							<td width="200px"><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="create_date" name="create_date" value="2016-01-16" type="text"></td>
-							
+							<td><?php echo $tr->translate("TYPE");?></td>
+							<td><?php echo $frm_set_price->getElement('type_hour');?></td>						
+						</tr>
+						<tr>
 							<td style="white-space: nowrap;text-align: right;"><?php echo $tr->translate("STATUS");?></td>
 							<td>
 								<select dojoType="dijit.form.FilteringSelect" required="true"  id="status" name="status" type="text">								
@@ -70,11 +73,6 @@ $frm_set_price = $this->frm_set_charge;?>
 										<option value="0">Deactive</option>
 								</select>
 							</td>	
-													
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
 							<td colspan="2">
 							</td>
 						</tr>
