@@ -154,7 +154,7 @@ class Accounting_Model_DbTable_DbServiceCharge extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	if($type!=null){
     		$sql = "SELECT * FROM `rms_servicefee_detail` WHERE service_id=".$service_id." 
-    		GROUP BY service_id,price,type_hour,level
+    		GROUP BY service_id,price
     		ORDER BY service_id";
     		 
     	}else{

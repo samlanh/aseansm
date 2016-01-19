@@ -34,7 +34,7 @@ class Accounting_Model_DbTable_DbProgramCharge extends Zend_Db_Table_Abstract
 //     	return $db->fetchAll($sql.$where.$order);
 
 //     }
-    public function addServiceCharge($_data){
+    public function addProgramCharge($_data){
     	$db = $this->getAdapter();
     	$db->beginTransaction();
     	try{
@@ -80,54 +80,54 @@ class Accounting_Model_DbTable_DbProgramCharge extends Zend_Db_Table_Abstract
     		return false;
     	}
     }
-//     public function updateServiceCharge($_data){
-//     	$db = $this->getAdapter();
-//     	$db->beginTransaction();
-//     	try{
-//     		$ids =explode(',', $_data['identity']);//main
-//     		$id_term =explode(',', $_data['iden_term']);//sub
-//     		foreach ($ids as $i){
-//     			foreach ($id_term as $j){
-//     				$rs=$this->setServiceChargeExist($_data['service_id'.$i],$j);
-//     				if(!empty($rs)){
-//     					$_arr= array(
-//     							'price'=>$_data['fee'.$i.'_'.$j],
-//     							'remark'=>$_data['remark'.$i]
-//     					);
-//     					$where = 'servicefee_id='.$rs['servicefee_id'];
-//     					$this->update($_arr, $where);
-//     				}else{
-//     					$_db = new Application_Model_DbTable_DbGlobal();
-//     					$rs_serfee = $_db->getServiceFeeByServiceWtPayType($_data['id'],$j);
-//     					if(!empty($rs_serfee)){
-//     						$_arr= array(
-//     								'service_id'=>$_data['service_id'.$i],
-//     								'pay_type'=>$j,
-//     								'price'=>$_data['fee'.$i.'_'.$j],
-//     								'remark'=>$_data['remark'.$i]
-//     						);
-//     						$where = 'servicefee_id='.$rs_serfee['servicefee_id'];
-//     						$this->update($_arr, $where);
-//     					}
-//     				}
+    public function updateProgramCharge($_data){
+    	$db = $this->getAdapter();
+    	$db->beginTransaction();
+    	try{
+    		$ids =explode(',', $_data['identity']);//main
+    		$id_term =explode(',', $_data['iden_term']);//sub
+    		foreach ($ids as $i){
+    			foreach ($id_term as $j){
+    				$rs=$this->setServiceChargeExist($_data['service_id'.$i],$j);
+    				if(!empty($rs)){
+    					$_arr= array(
+    							'price'=>$_data['fee'.$i.'_'.$j],
+    							'remark'=>$_data['remark'.$i]
+    					);
+    					$where = 'servicefee_id='.$rs['servicefee_id'];
+    					$this->update($_arr, $where);
+    				}else{
+    					$_db = new Application_Model_DbTable_DbGlobal();
+    					$rs_serfee = $_db->getServiceFeeByServiceWtPayType($_data['id'],$j);
+    					if(!empty($rs_serfee)){
+    						$_arr= array(
+    								'service_id'=>$_data['service_id'.$i],
+    								'pay_type'=>$j,
+    								'price'=>$_data['fee'.$i.'_'.$j],
+    								'remark'=>$_data['remark'.$i]
+    						);
+    						$where = 'servicefee_id='.$rs_serfee['servicefee_id'];
+    						$this->update($_arr, $where);
+    					}
+    				}
     				
-//     			}
-//     		}
-//     		$db->commit();
-//     		return true;
-//     	}catch (Exception $e){
-//     		$db->rollBack();
-//     		echo $e->getMessage();exit();
-//     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
-//     		return false;
-//     	}
-//     }
-//     function getServiceFeebyId($service_id){
-//     	$db = $this->getAdapter();
-//     	$sql = "SELECT * FROM `rms_servicefee_detail` WHERE service_id=".$service_id." ORDER BY service_id";
-//     	return $db->fetchAll($sql);
+    			}
+    		}
+    		$db->commit();
+    		return true;
+    	}catch (Exception $e){
+    		$db->rollBack();
+    		echo $e->getMessage();exit();
+    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+    		return false;
+    	}
+    }
+    function getServiceFeebyId($service_id){
+    	$db = $this->getAdapter();
+    	$sql = "SELECT * FROM `rms_servicefee_detail` WHERE service_id=".$service_id." ORDER BY service_id";
+    	return $db->fetchAll($sql);
     	 
-//     }
+    }
     public function getProgramPriceExist($service_id,$level,$pay_type,$type_hour){//
     	$db = $this->getAdapter();
     	$sql = "SELECT servicefee_id,price FROM `rms_servicefee_detail` WHERE service_id=$service_id 

@@ -73,7 +73,6 @@ Class Accounting_Form_FrmServicePrice extends Zend_Dojo_Form {
 		  		'required'=>'true',
 		  		'class'=>'fullside',));
 		  $_create_date->setValue(date("Y-m-d"));
-		  
 		  $_rank = new Zend_Dojo_Form_Element_FilteringSelect("rank");
 		  $opt_rank = $_db->getAllMention();
 		  $_rank->setMultiOptions($opt_rank);
@@ -114,6 +113,16 @@ Class Accounting_Form_FrmServicePrice extends Zend_Dojo_Form {
 				'class'=>'fullside',));
 		$_create_date->setValue(date("Y-m-d"));
 		$id= new Zend_Form_Element_Hidden("id");
+		$acadimic_year2=new Zend_Dojo_Form_Element_TextBox('acadimic_year2');
+	    $acadimic_year2->setAttribs(array(
+	                  'dojoType'=>'dijit.form.TextBox',
+	    		      'class'=>'fullside'
+	    		));
+	    $acadimic_year1=new Zend_Dojo_Form_Element_TextBox('acadimic_year1');
+	    $acadimic_year1->setAttribs(array(
+	    		'dojoType'=>'dijit.form.TextBox',
+	    		'class'=>'fullside'
+	    ));
 		if($data!=null){
 			$id->setValue($data[0]['service_id']);
 			
@@ -125,7 +134,7 @@ Class Accounting_Form_FrmServicePrice extends Zend_Dojo_Form {
 			$_create_date->setValue($newDate);
 			
 		}
-		$this->addElements(array($_service_name,$_status,$id,$_create_date));
+		$this->addElements(array($_service_name,$acadimic_year2,$acadimic_year1,$_status,$id,$_create_date));
 		return $this;
 	}
 	public function frmAddProgramCharge($data=null){
