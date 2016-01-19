@@ -22,14 +22,14 @@ class Accounting_ProgramChargeController extends Zend_Controller_Action {
     		}else{
     			$search='';
     		}
-    		$db = new Accounting_Model_DbTable_DbServiceCharge();
+    		$db = new Accounting_Model_DbTable_DbProgramCharge();
     		$service= $db->getAllTuitionFee($search,2);
     		
     		$model = new Application_Model_DbTable_DbGlobal();
     		$row=0;$indexterm=1;$test = 0;$key=0;
     		if(!empty($service)){
     			foreach ($service as $i => $rs) {
-    				$rows = $db->getServiceFeebyId($rs['id'],2);
+    				$rows = $db->getProgramFeebyId($rs['id'],2);
     				if(empty($rows)){ continue;}
     				$fee_row=1;
     				if(!empty($rows))foreach($rows as $payment_tran){
@@ -42,25 +42,25 @@ class Accounting_ProgramChargeController extends Zend_Controller_Action {
     						$term = $model->getAllGEPPrgramPayment($fee_row);
     						//$rs_rows[$key]['program_name'].=$payment_tran['level'];
     						//$rs_rows[$key]['level'] = $payment_tran['level'];
-    						$rs_rows[$key]['fee'] = $payment_tran['price'];
+    						$rs_rows[$key]['fee'] = $payment_tran['fee'];
     						$key_old=$key;
     						$key++;
     						//echo 2;
     					}elseif($payment_tran['pay_type']==2){
     						$term = $model->getAllGEPPrgramPayment($payment_tran['pay_type']);
     					//	$rs_rows[$key]['level'] = $payment_tran['level'];
-    						$rs_rows[$key_old]['2term'] = $payment_tran['price'];
+    						$rs_rows[$key_old]['2term'] = $payment_tran['fee'];
     						//echo 3333;
     	
     					}elseif($payment_tran['pay_type']==3){
     						$term = $model->getAllGEPPrgramPayment($payment_tran['pay_type']);
     						//$rs_rows[$key]['level'] = $payment_tran['level'];
-    						$rs_rows[$key_old]['3term'] = $payment_tran['price'];
+    						$rs_rows[$key_old]['3term'] = $payment_tran['fee'];
     					}
     					else{
     						$term = $model->getAllGEPPrgramPayment($payment_tran['pay_type']);
     						//$rs_rows[$key]['level'] = $payment_tran['level'];
-    						$rs_rows[$key_old]['full_fee'] = $payment_tran['price'];
+    						$rs_rows[$key_old]['full_fee'] = $payment_tran['fee'];
     					}
     				}
     			}
@@ -74,7 +74,7 @@ class Accounting_ProgramChargeController extends Zend_Controller_Action {
     		}
     		$pay_term = $model->getAllGEPPrgramPayment();
     		$list = new Application_Form_Frmtable();
-    		$collumns = array("SERVICE_NAME","TYPE","STATUS");
+    		$collumns = array("PROGRAM_NAME","TYPE","STATUS");
     		$end = end(array_keys($collumns));
     		$payment_term='';$key=1;//for merch array for collumn
     		    foreach ($pay_term as $value){
@@ -111,8 +111,7 @@ class Accounting_ProgramChargeController extends Zend_Controller_Action {
 				$_model = new Accounting_Model_DbTable_DbProgramCharge();
 				//print_r($_data);exit();
 				$rs =  $_model->addProgramCharge($_data);
-				if(!empty($rs))Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/ProgramCharge/add-program-charge");
-				else Application_Form_FrmMessage::Sucessfull("INSERT_FAIL","/accounting/ProgramCharge/add-program-charge");
+				if(!empty($rs))Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/programcharge/add");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
@@ -146,44 +145,46 @@ class Accounting_ProgramChargeController extends Zend_Controller_Action {
 				$_data = $this->getRequest()->getPost();
 				$_model = new Accounting_Model_DbTable_DbProgramCharge();
 				$rs =  $_model->updateProgramCharge($_data);
-				if(!empty($rs))Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/accounting/ServiceCharge/index");
+				if(!empty($rs))Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/accounting/programcharge/index");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}
 		$id = $this->getRequest()->getParam('id');
-		$_model = new Accounting_Model_DbTable_DbServiceCharge();
-		$_rs = $_model->getServiceChargeById($id);
+		$_model = new Accounting_Model_DbTable_DbProgramCharge();
+		$this->view->rs = $_model->getServiceChargeById($id);
 		
+		$_rs=array();
 		
-		$db = new Accounting_Model_DbTable_DbServiceCharge();
+		$db = new Accounting_Model_DbTable_DbProgramCharge();
 		$model = new Application_Model_DbTable_DbGlobal();
 		$row=0;$key=0;
 		if(!empty($_rs)){
 			foreach ($_rs as $id => $rs){
-				$rows = $db->getServiceFeebyId($rs['service_id']);
+				$rows = $db->getProgramFeebyId($rs['service_id']);
 				$fee_row=1;
 				if(!empty($rows))foreach($rows as $payment_tran){
 					if($payment_tran['pay_type']==1){
 						$rs_rows[$key]=$this->headAddRecordService($rs,$key);
 						
-						$rs_rows[$key]['remark'] = $payment_tran['remark'];
+						$rs_rows[$key]['total_hour']=$payment_tran['total_hour'];
+						$rs_rows[$key]['remark'] = $payment_tran['note'];
 						$term = $model->getAllServicePayment($fee_row);
-						$rs_rows[$key]['price_'.$payment_tran['pay_type']] = $payment_tran['price'];
+						$rs_rows[$key]['price_'.$payment_tran['pay_type']] = $payment_tran['fee'];
 						
 						$key_old=$key;
 						$key++;
 					}elseif($payment_tran['pay_type']==2){
 						$term = $model->getAllServicePayment($payment_tran['pay_type']);
-						$rs_rows[$key_old]['price_'.$payment_tran['pay_type']] = $payment_tran['price'];
+						$rs_rows[$key_old]['price_'.$payment_tran['pay_type']] = $payment_tran['fee'];
 					}elseif($payment_tran['pay_type']==3){
 						$term = $model->getAllServicePayment($payment_tran['pay_type']);
-						$rs_rows[$key_old]['price_'.$payment_tran['pay_type']] = $payment_tran['price'];
+						$rs_rows[$key_old]['price_'.$payment_tran['pay_type']] = $payment_tran['fee'];
 					}
 					else{
 						$term = $model->getAllServicePayment($payment_tran['pay_type']);
-						$rs_rows[$key_old]['price_4'] = $payment_tran['price'];
+						$rs_rows[$key_old]['price_4'] = $payment_tran['fee'];
 					}
 				}
 			}
@@ -192,6 +193,7 @@ class Accounting_ProgramChargeController extends Zend_Controller_Action {
 		$this->view->service_exist = $rs_rows;
 		$frm = new Accounting_Form_FrmServicePrice();
 		$frm_set_price=$frm->frmAddServiceCharge($_rs);
+		
 // 		Application_Model_Decorator::removeAllDecorator($frm_set_price);
 // 		$this->view->frm_set_charge = $frm_set_price;
 // 		$_model = new Application_Model_GlobalClass();
