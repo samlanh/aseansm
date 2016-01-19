@@ -106,6 +106,8 @@ $frm_set_price = $this->frm_set_charge;?>
 									 iconClass="dijitIconUndo" onclick="window.location = '<?php echo $this->url(array('module'=>'accounting','controller'=>"programcharge",'action'=>'index'),null,true); ?>';" />
 									<input type="submit" label="<?php echo $tr->translate('SAVE');?>" id="save_new" dojoType="dijit.form.Button" 
 								 		iconClass="dijitEditorIcon dijitEditorIconSave"/>
+								 	<input type="submit" dojoType="dijit.form.Button" onclick="CheckFormSubmit();dijit.byId('servicecharge').submit();" label="<?php echo $tr->translate('SAVE CLOSE');?>" id="save_close"
+								 		iconClass="dijitEditorIcon dijitEditorIconSave"/>
 								</td>
 							</tr>
 						</tfoot>
@@ -227,7 +229,7 @@ function addRow() {
 			temp+='<th><?php echo $tr->translate("DEL");?></th>';
 			temp+='<th><?php echo $tr->translate("N_O");?></th>';
 			temp+='<th id="lbl_titlemetion" width="250px"><?php echo $tr->translate("PROGRAM_NAME");?></th>';
-			temp+='<th id="lbl_titlelevel"><?php echo $tr->translate("LEVEL");?></th>';
+			temp+='<th id="lbl_titlelevel"><?php echo $tr->translate("ចំនួនម៉ោង");?></th>';
 			<?php $s=0; ?>
 			<?php foreach ($payment_term as $value){?>
 			<?php echo"temp+='<th>$value</th>';"; ?>
