@@ -82,8 +82,8 @@ table .set-style tr.st1{ background: none repeat scroll 0% 0% rgba(218, 250, 255
 									<?php $id++;if($i==0)$term = $id;
 									else{$term.=','.$id;} ?>
 								<?php }?>
-									<input type="text" name="iden_term" id="iden_term"  value="<?php echo $term;?>" >
-									<input type="text" name="identity" id="identity"  value="" >
+									<input type="hidden" name="iden_term" id="iden_term"  value="<?php echo $term;?>" >
+									<input type="hidden" name="identity" id="identity"  value="" >
 								 </td>
 							</tr>
 							<tr>
