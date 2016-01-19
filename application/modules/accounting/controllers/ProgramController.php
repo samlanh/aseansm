@@ -18,8 +18,7 @@ class Accounting_ProgramController extends Zend_Controller_Action {
 						'title' => $_data['title'],
 						'txtsearch' => $_data['title'],
 						'cate_name' => $_data['cate_name'],
-						'status' => $_data['status_search'],
-						'type' => $_data['type']);
+						'status' => $_data['status_search']);
 			}
 			else{
 				$search='';
@@ -38,7 +37,7 @@ class Accounting_ProgramController extends Zend_Controller_Action {
 			$link=array(
 					'module'=>'accounting','controller'=>'program','action'=>'edit',
 			);
-			$this->view->list=$list->getCheckList(1, $collumns, $rs_rows,array('cate_name'=>$link,'title'=>$link));
+			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('cate_name'=>$link,'title'=>$link));
 		}catch (Exception $e){
 			Application_Form_FrmMessage::message("APPLICATION_ERROR");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
@@ -64,7 +63,7 @@ public function addAction(){
 	$this->view->frm=$frm->addProgramName();
 	Application_Model_Decorator::removeAllDecorator($frm->addProgramName());
 }
-public function editProgramAction(){
+public function editAction(){
 	$id=$this->getRequest()->getParam("id");
 	$db = new Accounting_Model_DbTable_DbProgram();
 	$row = $db->getProgramById($id);

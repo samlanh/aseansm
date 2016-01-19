@@ -52,7 +52,7 @@ class Accounting_ServicesController extends Zend_Controller_Action {
     	$this->view->frm_search = $frm;
     	
     }
-	function addServiceTypeAction()
+	function addAction()
 	{
 		if($this->getRequest()->isPost()){
 			try{

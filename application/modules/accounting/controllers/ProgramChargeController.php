@@ -24,6 +24,7 @@ class Accounting_ProgramChargeController extends Zend_Controller_Action {
     		}
     		$db = new Accounting_Model_DbTable_DbServiceCharge();
     		$service= $db->getAllTuitionFee($search,2);
+    		
     		$model = new Application_Model_DbTable_DbGlobal();
     		$row=0;$indexterm=1;$test = 0;$key=0;
     		if(!empty($service)){
@@ -81,7 +82,7 @@ class Accounting_ProgramChargeController extends Zend_Controller_Action {
     		    	$key++;
     		    }
     		$link=array(
-    				'module'=>'accounting','controller'=>'ProgramCharge','action'=>'edit-program-charge',
+    				'module'=>'accounting','controller'=>'programcharge','action'=>'edit',
     		);
     		$this->view->list=$list->getCheckList(1, $collumns, $rs_rows, array('cate_name'=>$link,'program_name'=>$link));
     	}catch (Exception $e){
@@ -103,13 +104,13 @@ class Accounting_ProgramChargeController extends Zend_Controller_Action {
     	);
     	return $result[$key];
     }
-	public function addProgramChargeAction(){
+	public function addAction(){
 		if($this->getRequest()->isPost()){
 			try {
 				$_data = $this->getRequest()->getPost();
 				$_model = new Accounting_Model_DbTable_DbProgramCharge();
 				//print_r($_data);exit();
-				$rs =  $_model->addServiceCharge($_data);
+				$rs =  $_model->addProgramCharge($_data);
 				if(!empty($rs))Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/ProgramCharge/add-program-charge");
 				else Application_Form_FrmMessage::Sucessfull("INSERT_FAIL","/accounting/ProgramCharge/add-program-charge");
 			}catch(Exception $e){
@@ -139,12 +140,12 @@ class Accounting_ProgramChargeController extends Zend_Controller_Action {
 		$this->view->rate =$model->getRate();
 		
 	}
-	public function editProgramChargeAction(){
+	public function editAction(){
 		if($this->getRequest()->isPost()){
 			try {
 				$_data = $this->getRequest()->getPost();
-				$_model = new Accounting_Model_DbTable_DbServiceCharge();
-				$rs =  $_model->upDateServiceCharge($_data);
+				$_model = new Accounting_Model_DbTable_DbProgramCharge();
+				$rs =  $_model->updateProgramCharge($_data);
 				if(!empty($rs))Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/accounting/ServiceCharge/index");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");

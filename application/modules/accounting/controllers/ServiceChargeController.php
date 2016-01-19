@@ -93,17 +93,17 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
     	return $result[$key];
     }
 	public function addServiceChargeAction(){
-		if($this->getRequest()->isPost()){
-			try {
-				$_data = $this->getRequest()->getPost();
-				$_model = new Accounting_Model_DbTable_DbServiceCharge();
-				$rs =  $_model->addServiceCharge($_data);
-				if(!empty($rs))Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/ServiceCharge/add-service-charge");
-			}catch(Exception $e){
-				Application_Form_FrmMessage::message("INSERT_FAIL");
-				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
-			}
-		}
+// 		if($this->getRequest()->isPost()){
+// 			try {
+// 				$_data = $this->getRequest()->getPost();
+// 				$_model = new Accounting_Model_DbTable_DbServiceCharge();
+// 				$rs =  $_model->addServiceCharge($_data);
+// 				if(!empty($rs))Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/ServiceCharge/add-service-charge");
+// 			}catch(Exception $e){
+// 				Application_Form_FrmMessage::message("INSERT_FAIL");
+// 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+// 			}
+// 		}
 		$frm = new Accounting_Form_FrmServicePrice();
 		$frm_set_price=$frm->frmAddServiceCharge();
 		Application_Model_Decorator::removeAllDecorator($frm_set_price);
@@ -114,17 +114,16 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
 		$model = new Application_Model_DbTable_DbGlobal();
 		$this->view->payment_term = $model->getAllServicePayment();
 		
-		$frm=new Application_Form_FrmPopupGlobal();
-		$frm_service = $frm->addProgramName();
-		Application_Model_Decorator::removeAllDecorator($frm_service);
-		$this->view->frm_service_name=$frm_service;
+// 		$frm=new Application_Form_FrmPopupGlobal();
+// 		$frm_service = $frm->addProgramName();
+// 		Application_Model_Decorator::removeAllDecorator($frm_service);
+// 		$this->view->frm_service_name=$frm_service;
 		
-		$frm_ser_category = $frm->addProServiceCategory();
-		Application_Model_Decorator::removeAllDecorator($frm_ser_category);
-		$this->view->frm_ser_category=$frm_ser_category;
+// 		$frm_ser_category = $frm->addProServiceCategory();
+// 		Application_Model_Decorator::removeAllDecorator($frm_ser_category);
+// 		$this->view->frm_ser_category=$frm_ser_category;
 		
-		$this->view->rate =$model->getRate();
-		
+// 		$this->view->rate =$model->getRate();
 	}
 	public function editServiceChargeAction(){
 		if($this->getRequest()->isPost()){
