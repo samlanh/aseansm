@@ -63,10 +63,11 @@ $frm_set_price = $this->frm_set_charge;?>
 							<td width="200px"><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="create_date" name="create_date" value="<?php echo $this->rs['date'];?>" type="text"></td>
 							<td><?php echo $tr->translate("TYPE");?></td>
 							<td>
-								<?php echo $frm_set_price->getElement('type_hour');									
-								?>
-							
-													
+								<select dojoType="dijit.form.FilteringSelect" required="true"  id="type_hour" name="type_hour" type="text">	
+									<option value="1"<?php if($this->rs['study_type']==1){{ echo "selected='selected'"; }} ?> ><?php echo $tr->translate("FULL_TIME")?></option>							
+									<option value="0"<?php if($this->rs['study_type']==0){{ echo "selected='selected'"; }} ?> ><?php echo $tr->translate("PART_TIME")?></option>	
+								</select>
+							</td>
 						</tr>
 						<tr>
 							<td style="white-space: nowrap;text-align: right;"><?php echo $tr->translate("STATUS");?></td>
