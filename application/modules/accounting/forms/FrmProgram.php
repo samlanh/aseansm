@@ -17,7 +17,12 @@ Class Accounting_Form_FrmProgram extends Zend_Dojo_Form {
 	}
 	public function addProgramName($data=null){
 		$_db = new Application_Model_DbTable_DbGlobal();
-		$rows=$_db->getServiceType();
+		 $request=Zend_Controller_Front::getInstance()->getRequest();
+		 $type=2;
+		 if($request->getControllerName()=='service'){
+		 	$type=1;
+		 }
+		 $rows=$_db->getServiceType($type);
 		$opt=array();
 		if(!empty($rows)){foreach($rows AS $row) $opt[$row['id']]=$row['title'];}
 		
