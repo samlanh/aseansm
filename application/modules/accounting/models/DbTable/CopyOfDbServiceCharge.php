@@ -3,7 +3,7 @@
 class Accounting_Model_DbTable_DbServiceCharge extends Zend_Db_Table_Abstract
 {
 
-    protected $_name = 'rms_servicefee';
+    protected $_name = 'rms_servicefee_detail';
     public function getUserId(){
     	$session_user=new Zend_Session_Namespace('auth');
     	return $session_user->user_id;
@@ -29,13 +29,20 @@ class Accounting_Model_DbTable_DbServiceCharge extends Zend_Db_Table_Abstract
     	echo $sql.$where.$order;exit();
     	return $sql.$where.$order;
     }
-    function getAllServiceFee($search,$type=null){
-    	$db=$this->getAdapter();
-    	$sql = "SELECT id,CONCAT(from_academic,' - ',to_academic) AS academic,
-    		    generation,create_date ,status FROM `rms_servicefee` WHERE 1";
-    	$order=" ORDER BY id DESC ";
+    function getAllTuitionFee($search,$type=null){
+    	$db = $this->getAdapter();
+    	$sql = 'SELECT p.service_id as id,p.`title` AS service_name,
+    		p.status,t.title as cate_name FROM `rms_program_name` AS p,
+    		`rms_program_type` AS t
+    	WHERE t.id=p.ser_cate_id ';
+    	if($type!=null){
+    		$sql.=" AND t.type = $type ";
+    	}else{ $sql.=" AND t.type = 1";}
+    	
+    	$order=' ORDER BY p.title';
     	$where = '';
     	if(empty($search)){
+    		 $sql.$order;
     		return $db->fetchAll($sql.$order);
     	}
     	if(!empty($search['txtsearch'])){
@@ -47,8 +54,6 @@ class Accounting_Model_DbTable_DbServiceCharge extends Zend_Db_Table_Abstract
     	if($search['status']>-1){
     		$where.= " AND status = '".$search['status']."'";
     	}
-    	echo $sql.$where.$order;
-    	return $db->fetchAll($sql.$where.$order);
     	//echo $sql.$where.$order;exit();
     	//return $sql.$where.$order;
     	return $db->fetchAll($sql.$where.$order);
@@ -64,37 +69,37 @@ class Accounting_Model_DbTable_DbServiceCharge extends Zend_Db_Table_Abstract
 //     	return($_db ->getGlobalResultList($sql_rs,$sql_count));
     }
     public function addServiceCharge($_data){
-    	
     	$db = $this->getAdapter();
     	$db->beginTransaction();
-    	try{   		
-    		$_arr = array(
-    				'from_academic'=>$_data['from_year'],
-    				'to_academic'=>$_data['to_year'],
-    				'generation'=>$_data['generation'],
-    				'note'=>$_data['note'],
-    				'status'=>$_data['status'],
-    				'create_date'=>$_data['create_date'],
-    				'user_id'=>$this->getUserId()
-    				);
-    		$fee_id = $this->insert($_arr);
-    		
-    		$this->_name='rms_servicefee_detail';
-    		$ids = explode(',', $_data['identity']);
-    		$id_term =explode(',', $_data['iden_term']);
+    	try{
+    		$ids =explode(',', $_data['identity']);//main
+    		$id_term =explode(',', $_data['iden_term']);//sub
     		foreach ($ids as $i){
     			foreach ($id_term as $j){
-    				$_arr = array(
-    						'service_feeid'=>$fee_id,
-    						'service_id'=>$_data['class_'.$i],
-    						'payment_term'=>$j,
-    						'price_fee'=>$_data['fee'.$i.'_'.$j],
-    						'remark'=>$_data['remark'.$i]
-    				);
-    				$this->insert($_arr);
+    				$rs=$this->setServiceChargeExist($_data['service_id'.$i],$j);
+    				if(!empty($rs)){
+    					$_arr= array(
+    							'price'=>$_data['fee'.$i.'_'.$j],
+    							'remark'=>$_data['remark'.$i]
+    					);
+    					$where = 'servicefee_id='.$rs['servicefee_id'];
+    					$this->update($_arr, $where);
+    				}else{
+	    				$_arr= array(
+	    						'service_id'=>$_data['service_id'.$i],
+	    						'pay_type'=>$j,
+	    						'price'=>$_data['fee'.$i.'_'.$j],
+	    						'remark'=>$_data['remark'.$i]
+	    				);
+	    				$this->insert($_arr);
+	    				$code=$db->lastInsertId();
+	    				
+	    				$data = array('service_code'=>"S".$code.$j);
+	    				$where='servicefee_id = '.$code;
+	    				$this->update($data, $where);
+    				}
     			}
     		}
-    		
     	    $db->commit();
     	    return true;
     	}catch (Exception $e){
@@ -145,14 +150,16 @@ class Accounting_Model_DbTable_DbServiceCharge extends Zend_Db_Table_Abstract
     		return false;
     	}
     }
-    function getServiceFeebyId($service_id){
+    function getServiceFeebyId($service_id,$type=null){
     	$db = $this->getAdapter();
-//     	if($type!=null){
-    		$sql = "SELECT * FROM `rms_servicefee_detail` WHERE service_feeid=".$service_id." ORDER BY service_id ";
+    	if($type!=null){
+    		$sql = "SELECT * FROM `rms_servicefee_detail` WHERE service_id=".$service_id." 
+    		GROUP BY service_id,price,type_hour,level
+    		ORDER BY service_id";
     		 
-//     	}else{
-//     		$sql = "SELECT * FROM `rms_servicefee_detail` WHERE service_id=".$service_id." ORDER BY service_id";
-//     	}
+    	}else{
+    		$sql = "SELECT * FROM `rms_servicefee_detail` WHERE service_id=".$service_id." ORDER BY service_id";
+    	}
     	return $db->fetchAll($sql);
     	 
     }
