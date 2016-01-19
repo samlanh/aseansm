@@ -73,7 +73,7 @@ class Accounting_feeController extends Zend_Controller_Action {
     				'module'=>'accounting','controller'=>'fee','action'=>'edit-feetuition',
     		);
     		$urlEdit = BASE_URL ."/product/index/update";
-    		$this->view->list=$list->getCheckList(0, $collumns, $rs_rows, array('degree'=>$link));
+    		$this->view->list=$list->getCheckList(0, $collumns, $rs_rows, array('academic'=>$link,'class'=>$link,'generation'=>$link));
     	}catch (Exception $e){
     		Application_Form_FrmMessage::message("APPLICATION_ERROR");
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
