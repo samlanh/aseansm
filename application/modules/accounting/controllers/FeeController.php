@@ -60,6 +60,7 @@ class Accounting_feeController extends Zend_Controller_Action {
     			}
     		}
     		else{
+    			$rs_rows=array();
     			$result = Application_Model_DbTable_DbGlobal::getResultWarning();
     		}
     		$pay_term = $model->getAllPaymentTerm();
@@ -70,7 +71,7 @@ class Accounting_feeController extends Zend_Controller_Action {
     		$list = new Application_Form_Frmtable();
     		$collumns = array("YEARS","BATCH","CLASS_ID","QUARTER","SEMESTER","YEAR","CREATED_DATE","STATUS");
     		$link=array(
-    				'module'=>'accounting','controller'=>'fee','action'=>'edit-feetuition',
+    				'module'=>'accounting','controller'=>'fee','action'=>'edit',
     		);
     		$urlEdit = BASE_URL ."/product/index/update";
     		$this->view->list=$list->getCheckList(0, $collumns, $rs_rows, array('academic'=>$link,'class'=>$link,'generation'=>$link));
@@ -104,7 +105,7 @@ class Accounting_feeController extends Zend_Controller_Action {
 	    		$_data = $this->getRequest()->getPost();
 	    		$_model = new Accounting_Model_DbTable_DbTuitionFee();
 	    		$rs =  $_model->addTuitionFee($_data);
-    		if(!empty($rs))Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/fee/add-feetuition");
+    		if(!empty($rs))Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/fee/add");
     		}catch(Exception $e){
     			Application_Form_FrmMessage::message("INSERT_FAIL");
 	   			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
@@ -122,34 +123,66 @@ class Accounting_feeController extends Zend_Controller_Action {
     	Application_Model_Decorator::removeAllDecorator($frm);
     	$this->view->add_dept = $frm;
     }
- 	public function editAction()
-    {
-    	if($this->getRequest()->isPost()){
-    		try {
-	    		$_data = $this->getRequest()->getPost();
-	    		$_model = new Accounting_Model_DbTable_DbTuitionFee();
-	    		$rs =  $_model->addTuitionFee($_data);
-    		if(!empty($rs))Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/fee/add-feetuition");
-    		}catch(Exception $e){
-    			Application_Form_FrmMessage::message("INSERT_FAIL");
-	   			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
-    		}
-    	}
-    		$id = $this->getRequest()->getParam('id');
-    		if(!empty($id)){
-    			$_model = new Accounting_Model_DbTable_DbTuitionFee();
-    			$_rs =  $_model->addTuitionFee($_data);
-    		}else{
-    			$this->_redirect("/accounting/fee/");
-    		}
-	    	$frm = new Accounting_Form_FrmServicePrice();
-	    	$frm_set_pric=$frm->FrmSetServicePrice();
-	    	Application_Model_Decorator::removeAllDecorator($frm_set_pric);
-	    	$this->view->frm_set_price = $frm_set_pric;
-	    	$_model = new Application_Model_GlobalClass();
-	    	$this->view->all_metion = $_model ->getAllMetionOption();
-	    	$this->view->all_faculty = $_model ->getAllFacultyOption();
-	    	$model = new Application_Model_DbTable_DbGlobal();
-	    	$this->view->payment_term = $model->getAllPaymentTerm();
-    }
+ 	
+    public function editAction()
+	{
+
+		if($this->getRequest()->isPost()){
+			try {
+				$_data = $this->getRequest()->getPost();
+				$_model = new Accounting_Model_DbTable_DbTuitionFee();
+				$rs =  $_model->updateTuitionFee($_data);
+				if(!empty($rs))Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/fee");
+			}catch(Exception $e){
+				Application_Form_FrmMessage::message("INSERT_FAIL");
+				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			}
+		}
+		 
+		$_model = new Application_Model_GlobalClass();
+		$this->view->all_metion = $_model ->getAllMetionOption();
+		$this->view->all_faculty = $_model ->getAllFacultyOption();
+		$model = new Application_Model_DbTable_DbGlobal();
+		$this->view->payment_term = $model->getAllPaymentTerm();
+		 
+		$frm = new Application_Form_FrmOther();
+		$frm =  $frm->FrmAddDept(null);
+		Application_Model_Decorator::removeAllDecorator($frm);
+		$this->view->add_dept = $frm;
+		
+		$db=new Accounting_Model_DbTable_DbTuitionFee();
+		$id=$this->getRequest()->getParam("id");
+		$this->view->rs =$db->getFeeById($id);
+
+		$row=0;$indexterm=1;$key=0;
+
+				$rows = $db->getFeeDetailById($id);
+				$fee_row=1;$rs_rows=array();
+				if(!empty($rows))foreach($rows as $payment_tran){
+					if($payment_tran['payment_term']==1){
+						
+						$rs_rows[$key] = array(
+								'class_id'=>$payment_tran['class_id'],
+								'quarter'=>$payment_tran['tuition_fee'],
+								'semester'=>'',
+								'year'=>'',
+								'note'=>$payment_tran['remark'],
+						);
+						
+						//$rs_rows[$key]['quarter'] = $payment_tran['tuition_fee'];
+						$key_old=$key;
+						$key++;
+					}elseif($payment_tran['payment_term']==3){
+						$rs_rows[$key_old]['year'] = $payment_tran['tuition_fee'];
+		
+					}elseif($payment_tran['payment_term']==2){
+						$rs_rows[$key_old]['semester'] = $payment_tran['tuition_fee'];
+					}
+	
+				}
+				
+			   $this->view->rows =$rs_rows;
+			   
+	}
+    
 }
