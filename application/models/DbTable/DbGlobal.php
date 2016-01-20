@@ -272,11 +272,20 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
     if($id==null)return $opt_rank;
     else return $opt_rank[$id];
    }
+   public function getProgramAndServiceType($type=null){
+   	$db = $this->getAdapter();
+   	$sql ="SELECT DISTINCT title,id FROM rms_program_name WHERE title!='' AND status=1 ";
+   	if(!empty($type)){
+   		$sql.=" AND type=$type";
+   	}
+   	$order = " ORDER BY title ";
+   	return $db->fetchAll($sql.$order);
+   }
    public function getServiceType($type=null){
    	$db = $this->getAdapter();
    	$sql ="SELECT DISTINCT title,id FROM rms_program_type WHERE title!='' AND status=1 ";
    	if(!empty($type)){$sql.=" AND type=$type";}
-   	$order = " ORDER BY title";
+   	$order = " ORDER BY title ";
    	return $db->fetchAll($sql.$order);
    }
    public function getAllTypeCategory($id = null){
@@ -294,6 +303,10 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
    }
    public function getServiceFeeByServiceWtPayType($service_id,$pay_type){
    	$sql = "SELECT * FROM rms_servicefee_detail WHERE service_id = $service_id AND pay_type =$pay_type LIMIT 1";
+   	return $this->getAdapter()->fetchRow($sql);
+   }
+   public function getProgramFeeByServiceWtPayType($service_id,$pay_type){
+   	$sql = "SELECT * FROM mrs_programfee_detail WHERE programfeeid = $service_id AND pay_type =$pay_type LIMIT 1";
    	return $this->getAdapter()->fetchRow($sql);
    }
    public function getRate(){
