@@ -33,6 +33,7 @@ class Accounting_FeeController extends Zend_Controller_Action {
     								$rs_rows[$key]=$this->headAddRecordTuitionFee($rs,$key);
     								$term = $model->getAllPaymentTerm($fee_row);
     								
+    								$rs_rows[$key]['status'] = Application_Model_DbTable_DbGlobal::getAllStatus($payment_tran['status']);
     								$rs_rows[$key]['class'] = $payment_tran['class'];
     								$rs_rows[$key]['quarter'] = $payment_tran['tuition_fee'];
     								$key_old=$key;
@@ -94,7 +95,7 @@ class Accounting_FeeController extends Zend_Controller_Action {
 			    			'semester'=>'',
 			    			'year'=>'',
     						'date'=>$rs['create_date'],
-    						'status'=> Application_Model_DbTable_DbGlobal::getAllStatus($rs['status'])
+    						'status'=>''
     				);
     	return $result[$key];
     }
@@ -167,6 +168,7 @@ class Accounting_FeeController extends Zend_Controller_Action {
 								'semester'=>'',
 								'year'=>'',
 								'note'=>$payment_tran['remark'],
+								'status'=>$payment_tran['status'],
 						);
 						
 						//$rs_rows[$key]['quarter'] = $payment_tran['tuition_fee'];
