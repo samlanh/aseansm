@@ -87,8 +87,8 @@ $frm_set_price = $this->frm_set_charge;?>
 									<?php $id++;if($i==0)$term = $id;
 									else{$term.=','.$id;} ?>
 								<?php }?>
-									<input type="text" name="iden_term" id="iden_term"  value="<?php echo $term;?>" >
-									<input type="text" name="identity" id="identity"  value="" >
+									<input type="hidden" name="iden_term" id="iden_term"  value="<?php echo $term;?>" >
+									<input type="hidden" name="identity" id="identity"  value="" >
 								 </td>
 							</tr>
 							<tr>
