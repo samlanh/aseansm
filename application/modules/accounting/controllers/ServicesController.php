@@ -38,7 +38,7 @@ class Accounting_ServicesController extends Zend_Controller_Action {
     		$collumns = array("PROGRAM_TITLE","DISCRIPTION","TYPE","STATUS","MODIFY_DATE","BY_USER");
     		$link=array(
     				'module'=>'accounting','controller'=>'services','action'=>'edit-service-type');
-    		$this->view->list=$list->getCheckList(1, $collumns, $rs_rows,array('cate_name'=>$link,'title'=>$link));
+    		$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('cate_name'=>$link,'title'=>$link));
     		
     	}catch (Exception $e){
     		Application_Form_FrmMessage::message("APPLICATION_ERROR");

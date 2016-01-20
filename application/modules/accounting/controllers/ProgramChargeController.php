@@ -84,7 +84,7 @@ class Accounting_ProgramChargeController extends Zend_Controller_Action {
     		$link=array(
     				'module'=>'accounting','controller'=>'programcharge','action'=>'edit',
     		);
-    		$this->view->list=$list->getCheckList(1, $collumns, $rs_rows, array('cate_name'=>$link,'program_name'=>$link));
+    		$this->view->list=$list->getCheckList(0, $collumns, $rs_rows, array('cate_name'=>$link,'program_name'=>$link));
     	}catch (Exception $e){
     		Application_Form_FrmMessage::message("APPLICATION_ERROR");
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
