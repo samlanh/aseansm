@@ -121,7 +121,7 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 								<legend align="center">Document Information</legend>
 									<table style="width:330px;" cellspacing="6">
 										<tr>
-											<td style="width: 5px"><?php echo $tr->translate("ID Card")?></td>
+											<td style="width: 5px"><?php echo $tr->translate("ID Card No")?></td>
 											<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="idcard" name="idcard" value="<?php echo $this->rs['id_card_no']?>" type="text"></td>
 											<td><?php  echo $techer->getElement('idcard');?></td>
 										</tr>
@@ -157,12 +157,7 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 								</table>
 							</fieldset>
 						</td>
-						<tr>
-							<td align="center" colspan="6">
-									<input type="hidden" dojoType="dijit.form.TextBox" id="record_row" name="record_row" />
-									<div  id="test"></div>
-									<input iconClass="dijitIconClear" type="button" onClick="addSubjectRow();" label="<?php echo $tr->translate('ADD');?>" dojoType="dijit.form.Button"/></td>
-				    	<tr>	
+	
 						<tr>
 							<td colspan="6" align="center">
 								<input iconClass="dijitIconClear" type="reset" value="សំអាត" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
