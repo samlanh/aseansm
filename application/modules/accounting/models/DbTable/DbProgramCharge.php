@@ -3,75 +3,72 @@
 class Accounting_Model_DbTable_DbProgramCharge extends Zend_Db_Table_Abstract
 {
 
-    protected $_name = 'rms_servicefee_detail';
+    protected $_name = 'mrs_program_fee';
     public function getUserId(){
     	$session_user=new Zend_Session_Namespace('auth');
     	return $session_user->user_id;
     	 
     }
 	
-//     function getAllTuitionFee($search){
-//     	$db = $this->getAdapter();
-//     	$sql = "SELECT p.service_id as id,p.`title` AS service_name,
-//     		p.status,t.title as cate_name FROM `rms_program_name` AS p,
-//     		`rms_program_type` AS t
-//     	WHERE t.id=p.ser_cate_id ";
-//     	$order=" ORDER BY p.title";
-//     	$where = '';
-//     	if(empty($search)){
-//     		 $sql.$order;
-//     		return $db->fetchAll($sql.$order);
-//     	}
-//     	if(!empty($search['txtsearch'])){
-//     		$where.=" AND title LIKE '%".$search['txtsearch']."%'";
-//     	}
-//     	if($search['type']>-1){
-//     		$where.= " AND type = ".$search['type'];
-//     	}
-//     	if($search['status']>-1){
-//     		$where.= " AND status = '".$search['status']."'";
-//     	}
-//     	return $db->fetchAll($sql.$where.$order);
+    function getAllTuitionFee($search){
+    	$db = $this->getAdapter();
+    	$sql = "SELECT p.service_id as id,p.`title` AS service_name,
+    		p.status,t.title as cate_name FROM `rms_program_name` AS p,
+    		`rms_program_type` AS t
+    	WHERE t.id=p.ser_cate_id ";
+    	$order=" ORDER BY p.title";
+    	$where = '';
+    	
+    	if(empty($search)){
+    		 $sql.$order;
+    		return $db->fetchAll($sql.$order);
+    	}
+    	if(!empty($search['txtsearch'])){
+    		$where.=" AND title LIKE '%".$search['txtsearch']."%'";
+    	}
+    	if($search['type']>-1){
+    		$where.= " AND type = ".$search['type'];
+    	}
+    	if($search['status']>-1){
+    		$where.= " AND status = '".$search['status']."'";
+    	}
+    	return $db->fetchAll($sql.$where.$order);
 
-//     }
+    }
     public function addProgramCharge($_data){
     	$db = $this->getAdapter();
     	$db->beginTransaction();
     	try{
+    		$arr = array(
+    			'start_year' 	=> $_data['from_year'],
+    			'end_year' 	=> $_data['to_year'],
+    			'batch' => $_data['generation'],
+    			'study_type'=> $_data['type_hour'],
+    			'note' => $_data['note'],
+    			'status' => $_data['status'],
+    			'date'=>$_data['create_date'],
+    			'user_id'=>$this->getUserId()
+    			);
+    		
+    		$id =$this->insert($arr);
+    		
+    		$this->_name='mrs_programfee_detail';
     		$ids =explode(',', $_data['identity']);//main
     		$id_term =explode(',', $_data['iden_term']);//sub
-    		foreach ($ids as $i){
-	    				$levels = explode(',', $_data['level'.$i]);
-	    		foreach ($levels as $level){
-	    					foreach ($id_term as $j){
-	    				$rs=$this->getProgramPriceExist($_data['service_id'.$i],$level,$j,$_data['type_hour']);
-	    				if(!empty($rs)){
-	    					$_arr= array(
-	    							'price'=>$_data['fee'.$i.'_'.$j],
-	    							'remark'=>$_data['remark'.$i]
-	    					);
-	    					$where = 'servicefee_id='.$rs['servicefee_id'];
-	    					$this->update($_arr, $where);
-	    				}else{
-		    				$_arr= array(
-		    						'service_id'=>$_data['service_id'.$i],
-		    						'pay_type'=>$j,
-		    						'level'=>$level,
-		    						'type_hour'=>$_data['type_hour'],
-		    						'total_hour'=>$_data['total_hour'],
-		    						'price'=>$_data['fee'.$i.'_'.$j],
-		    						'remark'=>$_data['remark'.$i]
-		    				       );
-		    				$this->insert($_arr);
-		    				$code=$db->lastInsertId();
-		    				
-		    				$data = array('service_code'=>"P".$code.$level.$_data['type_hour'].$j);
-		    				$where='servicefee_id = '.$code;
-		    				$this->update($data, $where);
- 	    				}
-	    			}
-    			}
-    		}
+	    		foreach ($ids as $i){
+		    					foreach ($id_term as $j){
+			    				$_arr= array(
+			    						'programfeeid'=>$id,
+			    						'subject_id'=>$_data['service_id'.$i],
+			    						'pay_type'=>$j,
+			    						'total_hour'=>$_data['level'.$i],
+			    						'fee'=>$_data['fee'.$i.'_'.$j],
+			    						'note'=>$_data['remark'.$i],
+			    						'status'=>$_data['status'.$i],
+			    				       );
+			    				$this->insert($_arr);
+		    			}
+	    		}
     	    $db->commit();
     	    return true;
     	}catch (Exception $e){
@@ -84,35 +81,42 @@ class Accounting_Model_DbTable_DbProgramCharge extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	$db->beginTransaction();
     	try{
+    		$_arr = array(
+    			'start_year' 	=> $_data['from_year'],
+    			'end_year' 	=> $_data['to_year'],
+    			'batch' => $_data['generation'],
+    			'study_type'=> $_data['type_hour'],
+    			'note' => $_data['note'],
+    			'status' => $_data['status'],
+    			'date'=>$_data['create_date'],
+    			'user_id'=>$this->getUserId()
+    				
+    		);
+    		$where=$this->getAdapter()->quoteInto("id=?", $_data['id']);
+    		$this->update($_arr, $where);
+    		
+    		$this->_name='mrs_programfee_detail';
+    		
+    		$where=$this->getAdapter()->quoteInto("programfeeid=?", $_data['id']);
+    		$this->delete($where);
+    		
     		$ids =explode(',', $_data['identity']);//main
     		$id_term =explode(',', $_data['iden_term']);//sub
-    		foreach ($ids as $i){
-    			foreach ($id_term as $j){
-    				$rs=$this->setServiceChargeExist($_data['service_id'.$i],$j);
-    				if(!empty($rs)){
-    					$_arr= array(
-    							'price'=>$_data['fee'.$i.'_'.$j],
-    							'remark'=>$_data['remark'.$i]
-    					);
-    					$where = 'servicefee_id='.$rs['servicefee_id'];
-    					$this->update($_arr, $where);
-    				}else{
-    					$_db = new Application_Model_DbTable_DbGlobal();
-    					$rs_serfee = $_db->getServiceFeeByServiceWtPayType($_data['id'],$j);
-    					if(!empty($rs_serfee)){
-    						$_arr= array(
-    								'service_id'=>$_data['service_id'.$i],
-    								'pay_type'=>$j,
-    								'price'=>$_data['fee'.$i.'_'.$j],
-    								'remark'=>$_data['remark'.$i]
-    						);
-    						$where = 'servicefee_id='.$rs_serfee['servicefee_id'];
-    						$this->update($_arr, $where);
-    					}
-    				}
-    				
+	    		foreach ($ids as $i){
+	    			foreach ($id_term as $j){
+	    					$_db = new Application_Model_DbTable_DbGlobal();
+	    						$_arr= array(
+	    								'programfeeid'=>$_data['id'],
+	    								'subject_id'=>$_data['service_id'.$i],
+	    								'pay_type'=>$j,
+	    								'total_hour'=>$_data['level'.$i],
+	    								'fee'=>$_data['fee'.$i.'_'.$j],
+	    								'note'=>$_data['remark'.$i],
+	    								'status'=>$_data['status'],
+	    						);
+	    						$this->insert($_arr);
+	    				}
     			}
-    		}
     		$db->commit();
     		return true;
     	}catch (Exception $e){
@@ -122,25 +126,26 @@ class Accounting_Model_DbTable_DbProgramCharge extends Zend_Db_Table_Abstract
     		return false;
     	}
     }
-    function getServiceFeebyId($service_id){
+    function getProgramFeebyId($program){
     	$db = $this->getAdapter();
-    	$sql = "SELECT * FROM `rms_servicefee_detail` WHERE service_id=".$service_id." ORDER BY service_id";
+    	$sql = "SELECT * FROM `mrs_programfee_detail` WHERE programfeeid=".$program." ORDER BY subject_id ";
     	return $db->fetchAll($sql);
     	 
     }
-    public function getProgramPriceExist($service_id,$level,$pay_type,$type_hour){//
+    
+    public function getProgramPriceExist($service_id,$pay_type){//
     	$db = $this->getAdapter();
-    	$sql = "SELECT servicefee_id,price FROM `rms_servicefee_detail` WHERE service_id=$service_id 
-    	AND level = $level AND pay_type=$pay_type AND type_hour = $type_hour LIMIT 1  ";
+    	$sql = "SELECT programfeeid,fee FROM `mrs_programfee_detail` WHERE subject_id=$service_id 
+    	AND pay_type=$pay_type LIMIT 1  ";
     	return $db->fetchRow($sql);
     }
-//     public function getServiceChargeById($service_id){
-//     	$db = $this->getAdapter();
-//     	$sql = "SELECT * FROM rms_program_name WHERE service_id=$service_id LIMIT 1";
+    public function getServiceChargeById($service_id){
+    	$db = $this->getAdapter();
+    	$sql = "SELECT * FROM mrs_program_fee WHERE id=$service_id LIMIT 1";
     	
-//     	return $db->fetchAll($sql);
+    	return $db->fetchRow($sql);
     
-//     }
+    }
 }
 
 
