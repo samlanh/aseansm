@@ -57,7 +57,15 @@ protected $tr;
 	public function addProServiceCategory($data=null){
 		$_title = new Zend_Dojo_Form_Element_ValidationTextBox('servicetype_title');
 		$_title->setAttribs(array('dojoType'=>$this->tvalidate,'class'=>'fullside','required'=>'true'));
-	
+		
+		$_db = new Application_Model_DbTable_DbGlobal();
+		if(!empty($type)){
+			$rows = $_db->getProgramAndServiceType(2);
+		}else{
+			$rows = $_db->getProgramAndServiceType(1);
+		}
+		
+		
 		$_tem_desc = new Zend_Dojo_Form_Element_TextBox('item_desc');
 		$_tem_desc->setAttribs(array('dojoType'=>$this->text,'required'=>'true','class'=>'fullside',));
 	
