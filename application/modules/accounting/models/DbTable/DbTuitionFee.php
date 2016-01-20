@@ -107,7 +107,8 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     						'class_id'=>$_data['class_'.$i],
     						'payment_term'=>$j,
     						'tuition_fee'=>$_data['fee'.$i.'_'.$j],
-    						'remark'=>$_data['remark'.$i]
+    						'remark'=>$_data['remark'.$i],
+    						'status'=>$_data['status_'.$i]
     				);
      				$this->insert($_arr);
     				
