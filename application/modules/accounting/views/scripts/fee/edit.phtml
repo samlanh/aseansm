@@ -195,6 +195,7 @@ function addRow() {
 			<?php echo"temp+='<th>$value</th>';"; ?>			
 			<?php }?>
 			temp+='<th><?php echo $tr->translate("REMARK");?></th>';
+			temp+='<th><?php echo $tr->translate("STATUS");?></th>';
 			dojo.query("#head-title").append(temp);
 			title=1;
 		}
@@ -207,6 +208,8 @@ function addRow() {
 				template+='<td width="15%"><input type="text" required="true" id="fee'+col+'_'+column+'" name="fee'+col+'_'+column+'" dojoType="dijit.form.NumberTextBox" style="width: 100%;" /></td>';
 			}
 			template+='<td <input type="text" required="true" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ"style=""/><label id="subsub"></label></td>';
+			template+='<td><select dojoType="dijit.form.FilteringSelect" id="status_'+col+'" name="status_'+col+'"><option value="1">Active</option><option value="0">Deactive</option></select></td>';			
+			
 		tmp='<tr id="row'+col+'">';
 		tmp+="</tr>";
 		dojo.query("#table_row").append(tmp);
@@ -242,6 +245,7 @@ function initailize(){
 		<?php echo"temp+='<th>$value</th>';"; ?>			
 		<?php }?>
 		temp+='<th><?php echo $tr->translate("REMARK");?></th>';
+		temp+='<th><?php echo $tr->translate("STATUS");?></th>';
 		dojo.query("#head-title").append(temp);
 		title=1;
 	}
@@ -255,6 +259,8 @@ function initailize(){
 			
 		}
 		template+='<td <input type="text" required="true" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ"style=""/><label id="subsub"></label></td>';
+		template+='<td><select dojoType="dijit.form.FilteringSelect" id="status_'+col+'" name="status_'+col+'"><option value="1">Active</option><option value="0">Deactive</option></select></td>';			
+		
 	tmp='<tr id="row'+col+'">';
 	tmp+="</tr>";
 	dojo.query("#table_row").append(tmp);
@@ -271,6 +277,8 @@ function initailize(){
 	dijit.byId('fee'+col+'_2').attr('value',<?php echo $row['semester']?>);
 	dijit.byId('fee'+col+'_3').attr('value',<?php echo $row['year']?>);
 	dijit.byId('remark'+col).attr('value','<?php echo $row['note']?>');
+	dijit.byId('status_'+col).attr('value','<?php echo $row['status']?>');
+	
 	<?php } }?>
 }
 function showPopupFaculty(r_key){
