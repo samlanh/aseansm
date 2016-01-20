@@ -18,7 +18,7 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 <table width="100%">
 	<tr>
 		<td>
-				<fieldset style="margin-top:-13px;">
+			<fieldset style="margin-top:-13px;">
 					<legend align="center" ><strong><?php echo $tr->translate("ADD_TECHER_NAME");?></strong></legend>
 					<table style="margin: 0 auto; width: 100%;" cellspacing="10">
 						<td valign="top">
@@ -109,10 +109,7 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 											<td style="width: 100px"><?php echo $tr->translate("Address")?></td>
 											<td><?php  echo $techer->getElement('address');?></td>
 										</tr>
-										<tr>
-											<td style="width: 5px"><?php echo $tr->translate("Note")?></td>
-											<td><?php echo $techer->getElement('note');?></td>
-										</tr>
+									
 								</table>
 							</fieldset>
 						</td>
@@ -136,7 +133,7 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 											<td><?php  echo $techer->getElement('expired');?></td>
 										</tr>
 										<tr>
-											<td style="width: 5px"><?php echo $tr->translate("Pars ID")?></td>
+											<td style="width: 5px"><?php echo $tr->translate("Passport ID")?></td>
 											<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="pars" name="pars" value="<?php echo $this->rs['pars_id']?>" type="text"></td>
 											<!--<td><?php  echo $techer->getElement('pars');?></td>-->
 										</tr>
@@ -154,10 +151,13 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 											<td style="width: 5px"><?php echo $tr->translate("STATUS")?></td>
 											<td><?php  echo $techer->getElement('status');?></td>
 										</tr>
+										<tr>
+											<td style="width: 5px"><?php echo $tr->translate("Note")?></td>
+											<td><?php echo $techer->getElement('note');?></td>
+										</tr>
 								</table>
 							</fieldset>
 						</td>
-	
 						<tr>
 							<td colspan="6" align="center">
 								<input iconClass="dijitIconClear" type="reset" value="សំអាត" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>

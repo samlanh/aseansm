@@ -56,7 +56,7 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 					'expired1' => $_data['expired1'],
 					
 			);
-				$this->insert($arr);
+				$this->insert($_arr);
 // 			}
 			return $db->commit();
 		}catch (Exception $e){
@@ -175,7 +175,7 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 					'note'=>$_data['note'],
 					'date' => Zend_Date::now(),
 					'status'   => 1,
-					'user_id'	  => $this->getUserId()
+					'user_id'	=> $this->getUserId()
 			);
 			$teacher_id = $this->insert($_arr);
 			
