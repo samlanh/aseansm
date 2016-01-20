@@ -18,33 +18,57 @@ class Registrar_RegisterController extends Zend_Controller_Action {
       if($this->getRequest()->isPost()){
       	$_data = $this->getRequest()->getPost();
       	$_model = new Registrar_Model_DbTable_DbwuRegister();
-      	//print_r($_data);exit();
       	$_model->AddNewStudent($_data);
       }
        $frm = new Registrar_Form_FrmRegister();
        $frm_register=$frm->FrmRegistarWU();
        Application_Model_Decorator::removeAllDecorator($frm_register);
        $this->view->frm_register = $frm_register;
-//        $_marjor =array();
-//        $this->view->marjorlist = $_marjor;
-//        $model = new Application_Model_DbTable_DbGlobal();
-//        $_marjorlist = $model->getMarjorById();
-       
-//        $this->view->marjorlist = $_marjorlist;
-       
        $key = new Application_Model_DbTable_DbKeycode();
        $this->view->keycode=$key->getKeyCodeMiniInv(TRUE);
        $model = new Application_Form_FrmGlobal();
        $this->view->footer=$model->getReceiptFooter();
-       
        $this->view->invoice_no = Application_Model_GlobalClass::getInvoiceNo();
-      // echo Application_Model_GlobalClass::getInvoiceNo();
-       
        $__student_card = array();
        $this->view->student_card = $__student_card;
        $db = new Registrar_Model_DbTable_DbwuRegister();
        $this->view->invoice_num = $db->getGaneratInvoiceWU();
-      // echo $db->getGaneratInvoiceWU();
+       //get all dept
+       $_db = new Application_Model_DbTable_DbGlobal();
+       $this->view->all_dept = $_db->getAllFecultyName();
+    }
+    public function oldaddAction()
+    {
+    	if($this->getRequest()->isPost()){
+    		$_data = $this->getRequest()->getPost();
+    		$_model = new Registrar_Model_DbTable_DbwuRegister();
+    		//print_r($_data);exit();
+    		$_model->AddNewStudent($_data);
+    	}
+    	$frm = new Registrar_Form_FrmRegister();
+    	$frm_register=$frm->FrmRegistarWU();
+    	Application_Model_Decorator::removeAllDecorator($frm_register);
+    	$this->view->frm_register = $frm_register;
+    	//        $_marjor =array();
+    	//        $this->view->marjorlist = $_marjor;
+    	//        $model = new Application_Model_DbTable_DbGlobal();
+    	//        $_marjorlist = $model->getMarjorById();
+    	 
+    	//        $this->view->marjorlist = $_marjorlist;
+    	 
+    	$key = new Application_Model_DbTable_DbKeycode();
+    	$this->view->keycode=$key->getKeyCodeMiniInv(TRUE);
+    	$model = new Application_Form_FrmGlobal();
+    	$this->view->footer=$model->getReceiptFooter();
+    	 
+    	$this->view->invoice_no = Application_Model_GlobalClass::getInvoiceNo();
+    	// echo Application_Model_GlobalClass::getInvoiceNo();
+    	 
+    	$__student_card = array();
+    	$this->view->student_card = $__student_card;
+    	$db = new Registrar_Model_DbTable_DbwuRegister();
+    	$this->view->invoice_num = $db->getGaneratInvoiceWU();
+    	// echo $db->getGaneratInvoiceWU();
     }
     public function wuReceiptAction()
     {
@@ -63,5 +87,26 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     		exit();
     	}
     }
-   
+    function getGradeAction(){
+    	if($this->getRequest()->isPost()){
+    		$data=$this->getRequest()->getPost();
+    		$db = new Registrar_Model_DbTable_DbRegister();
+    		$grade = $db->getAllGrade($data['dept_id']);
+    		//print_r($grade);exit();
+    		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
+    		print_r(Zend_Json::encode($grade));
+    		exit();
+    	}
+    }
+    function getPaymentTermAction(){
+    	if($this->getRequest()->isPost()){
+    		$data=$this->getRequest()->getPost();
+    		$db = new Registrar_Model_DbTable_DbRegister();
+    		$payment = $db->getPaymentTerm($data['generat_id'],$data['pay_id'],$data['grade_id']);
+    		//print_r($grade);exit();
+    		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
+    		print_r(Zend_Json::encode($payment));
+    		exit();
+    	}
+    }
 }

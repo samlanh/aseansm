@@ -11,129 +11,8 @@
 	dojo.require("dojo.store.Memory");
 	dojo.require("dojo.data.ObjectStore");
 	dojo.require('dojox.form.BusyButton');
-	var dept_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->all_dept));?> );
-	dojo.ready(function(){
-	new dijit.form.FilteringSelect({
-	    store: dept_store,
-	    autoComplete: true,                        
-	    required: true,
-	    id: "dept",
-	    name: "dept",           
-	    class: 'fullside',  
-	    placeHolder:"Selected Class",          
-	    onChange: function() {  
-	    	dept_id = dijit.byId('dept').get('value');
-	    	dijit.byId('grade').attr('value','');
-	    	getallModel(dept_id); 
-	    }
-	}, "dept");
-    
-	new dijit.form.FilteringSelect({
-	    //store: dept_store,
-	    autoComplete: true,                        
-	    id: "grade",
-	    name: "grade",           
-	    class: 'fullside',  
-	    placeHolder:"Selected Grade",          
-	    onChange: function() {  
-	    	make_id = dijit.byId('grade').get('value');
-	    	paymentTerm();
-	    }
-	}, "grade");
-
-	});	
-	var grade_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
-	var url_dept = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-grade')); ?>';
-	function getallModel(dept_id){
-			dojo.xhrPost({
-				url:url_dept,
-				content:{
-					'dept_id':dept_id
-					},
-				handleAs:"json",
-				load: function(data) {
-					//alert(data);
-					grade_store  = getDataStorefromJSON('id','name', data);
-				    dijit.byId('grade').set('store',grade_store);   
-
-				},
-				error: function(err) {
-					alert(err);
-				}
-			});
-	}
-	function paymentTerm(){
-		generat=dijit.byId('generation').get('value');
-		payment_term=dijit.byId('payment_term').get('value');
-		grade=dijit.byId('grade').get('value');
-		if(generat!='' && payment_term !='' && grade !=''){
-			getPaymentTerms(generat,payment_term,grade);
-		}
-	}
-	var payment_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
-	var url_getpaymentterm = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-payment-term')); ?>';
-	function getPaymentTerms(generat,pay,grade){
-			dojo.xhrPost({
-				url:url_getpaymentterm,
-				content:{
-					'generat_id':generat,
-					'pay_id':pay,
-					'grade_id':grade
-					},
-				handleAs:"json",
-				load: function(data) {
-				      if(data){
-				    	dijit.byId('tuitionfee').attr('value',data.tuition_fee);
-				    	dijit.byId('total').attr('value',data.tuition_fee);
-				    	dijit.byId('discount').attr('value','0');
-				    	dijit.byId('books').attr('value','0');
-				    	dijit.byId('addmin_fee').attr('value','0');
-				    	dijit.byId('remaining').attr('value','0');
-				      }else {
-				    	 dijit.byId('tuitionfee').attr('value','0'); 
-				    	 dijit.byId('total').attr('value','0'); 
-				    	 dijit.byId('discount').attr('value','0');
-				    	 dijit.byId('books').attr('value','0');
-					     dijit.byId('addmin_fee').attr('value','0');
-					     dijit.byId('remaining').attr('value','0');
-				      }
-				},
-				error: function(err) {
-					alert(err);
-				}
-			});
-	}
-	//set value totale 
-	function getTotale(){
-		tuitionfee=dijit.byId('tuitionfee').get('value');
-		discount=dijit.byId('discount').get('value');
-		pc=discount/100;
-		ds=tuitionfee*pc;
-		totale=tuitionfee - ds;
-		if(discount<=100){
-		   dijit.byId('total').attr('value',totale);
-		   dijit.byId('books').attr('value','0');
-		   dijit.byId('addmin_fee').attr('value','0');
-		   dijit.byId('remaining').attr('value','0');
-		}else{ 
-			alert('No more than a hundred of disccount!');
-			dijit.byId('discount').attr('value','100');
-			getTotale();
-			dijit.byId('books').attr('value','0');
-		    dijit.byId('addmin_fee').attr('value','0');
-		    dijit.byId('remaining').attr('value','0');
-		}
-		
-	}
-	//set value remaining
-	function getRemaining(){
-		  total=dijit.byId('total').get('value');
-		  books=dijit.byId('books').get('value');
-		  addmin_fee=dijit.byId('addmin_fee').get('value');
-		  pay_to=parseFloat(books) + parseFloat(addmin_fee);
-		  remaining = total - pay_to;
-		  dijit.byId('remaining').attr('value',remaining.toFixed(2));
-	}
+	//dojo.require("dijit.Dialog");
+	
 	var major_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode(array()));?> );
 	var stucard_store = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->student_card));?> );
 
@@ -156,17 +35,17 @@
 
 	var batch = dojo.byId("batch"); 
 		dojo.connect(batch, "onkeyup", function(evt){			
-			//getTuitionFee();
+			getTuitionFee();
 	});	
 
-	//value_invoice = '<?php echo $this->invoice_num;?>';
-	//dijit.byId('reciept_no').attr('value',value_invoice);
-	//dijit.byId('reciept_no').set('readOnly',true);
+	value_invoice = '<?php echo $this->invoice_num;?>';
+	dijit.byId('reciept_no').attr('value',value_invoice);
+	dijit.byId('reciept_no').set('readOnly',true);
 	}); 
 
 	var txtstudent_card = dojo.byId("stu_id"); 
 	dojo.connect(txtstudent_card, "onkeyup", function(evt){	
-			//getStudentBYId();
+			getStudentBYId();
 			
 	});
 	
@@ -199,7 +78,7 @@
 	}
 	function setValueTo(){
 		if(dijit.byId('kh_name').item != null){
-		//alert(items.name);
+		alert(items.name);
 		dijit.byId("sender_code_no").attr('value', dijit.byId('sender_name').item.code_no);
 		}
 	}
@@ -222,68 +101,64 @@ fieldset{  background:none;}
 							<td><?php echo $register->getElement('is_new');?>
 								&nbsp;&nbsp;&nbsp;&nbsp;<label for='is_subsped'>Subspend</label><?php echo $register->getElement('is_hold');?>
 							</td>
+							<td style="width: 160px"><?php echo $tr->translate("RECEIPT_NO");?></td>
+							<td><?php echo $register->getElement('reciept_no');?></td>
+						</tr>
+						<tr>
+							<td><?php echo $tr->translate("NAME_EN");?></td>
+							<td><?php echo $register->getElement('en_name');?></td>
+							<td><?php echo $tr->translate("NAME_KH");?></td>
+							<td><?php echo $register->getElement('kh_name');?></td>
 						</tr>
 						<tr>
 							<td><?php echo $tr->translate("STUDENT_ID");?></td>
 							<td><?php echo $register->getElement('stu_id');?></td>
-							<td style="width: 160px"><?php echo $tr->translate("GENERATION");?></td>
-							<td><?php echo $register->getElement('generation');?></td>
-						</tr>
-						<tr>
-						    <td><?php echo $tr->translate("NAME_KH");?></td>
-							<td><?php echo $register->getElement('kh_name');?></td>
-							<td><?php echo $tr->translate("NAME_EN");?></td>
-							<td><?php echo $register->getElement('en_name');?></td>
-						</tr>
-						<tr>
 							<td><?php echo $tr->translate("SEX");?></td>
-							<td><?php echo $register->getElement('sex');?></td>
+							<td><?php echo $register->getElement('sex');?>
+							</td>
+						</tr>
+						<tr>
+							<td><?php echo $tr->translate("DOB");?></td>
+							<td><?php echo $register->getElement('dob');?></td>
+							<td><?php echo $tr->translate("PHONE");?></td>
+							<td><?php echo $register->getElement('phone');?></td>
+						</tr>
+						<tr>
+							<td><?php echo $tr->translate("DEGREE");?><label class="red">*</label></td>
+							<td><?php echo $register->getElement('degree');?></td>
+							<td><?php echo $tr->translate("BATCH");?><label class="red">*</label></td>
+							<td><?php echo $register->getElement('batch');?></td>
+						</tr>
+						<tr>
+							<td><?php echo $tr->translate("FACULTIES");?><label class="red">*</label></td>
+							<td><?php echo $register->getElement('dept');?></td>
+							<td><?php echo $tr->translate("MAJOR_C");?><label class="red">*</label></td>
+							<td><!--<input id="major" >--><?php echo $register->getElement('metion');?></td>
+						</tr>
+						<tr>
+							<td><?php echo $tr->translate("YEARTH");?></td>
+							<td><?php echo $register->getElement('year');?></td>
 							<td><?php echo $tr->translate("SESSION");?></td>
 							<td><?php echo $register->getElement('session');?></td>
 						</tr>
 						<tr>
-							<td><?php echo $tr->translate("CLASS");?><label class="red">*</label></td>
-							<td><input id="dept" /><?php //echo $register->getElement('dept');?></td>
-							<td><?php echo $tr->translate("CLASSES");?><label class="red">*</label></td>
-							<td><input id="grade" /><?php //echo $register->getElement('metion');?></td>
-						</tr>
-						<tr>
-						    <td><?php echo $tr->translate("PAYMENT_TERM");?><label class="red">*</label></td>
+							<td><?php echo $tr->translate("PAYMENT_TERM");?><label class="red">*</label></td>
 							<td><?php echo $register->getElement('payment_term');?></td>
-						    <td><?php echo $tr->translate("TUITION_FEE");?></td>
+							<td><?php echo $tr->translate("TUITION_FEE");?></td>
 							<td><?php echo $register->getElement('tuitionfee');?></td>
 						</tr>
-						<tr>
-						    <td><?php echo $tr->translate("ADMIN_FEE");?></td>
-							<td title='Ex: 20 or 10%'><?php echo $register->getElement('addmin_fee');?></td>	
-							<td><?php echo $tr->translate("OTHERS_PRICE");?></td>
-							<td><?php echo $register->getElement('remark');;?></td>
-						</tr>
 						<tr>	
-							<td><?php echo $tr->translate("TOTALE");?></td>
-							<td title='Ex: 20 or 10%'><?php echo $register->getElement('total');?></td>
 							<td><?php echo $tr->translate("DISCOUND");?></td>
 							<td title='Ex: 20 or 10%'><?php echo $register->getElement('discount');?></td>
-						</tr>
-						<tr>	
-							<td><?php echo $tr->translate("BOOKS");?></td>
-							<td><?php echo $register->getElement('books');;?></td>
-							<td><?php echo $tr->translate("REMAINING");?></td>
-							<td><?php echo $register->getElement('remaining');;?></td>
-						</tr>
-						<tr>	
-							<td><?php echo $tr->translate("CHAR_PRICE");?></td>
-							<td title='Ex: 20 or 10%' colspan="4"><?php echo $register->getElement('char_price');?></td>
-						</tr>
-						<tr>	
-							<td><?php echo $tr->translate("NOT");?></td>
-							<td title='Ex: 20 or 10%' colspan="4"><?php echo $register->getElement('not');?></td>
+							<td><?php echo $tr->translate("AMOUNT_PAID");?></td>
+							<td><?php echo $register->getElement('payment_paid');?>
+							
 						</tr>
 						<tr>
-							<td><?php echo $tr->translate("START_DATE");?></td>
-							<td><?php echo $register->getElement('start_date');?></td>
-							<td><?php echo $tr->translate("ENT_DATE");?></td>
-							<td><?php echo $register->getElement('end_date');?></td>
+							<td><?php echo $tr->translate('IN_WORDS');?></td>
+							<td><?php echo $register->getElement('paid_kh');?></td>
+							<td><?php echo $tr->translate("REMARK");?></td>
+							<td><?php echo $register->getElement('remark');;?></td>
 						</tr>
 						<tr>
 							<td colspan="4" align="center">
@@ -483,7 +358,7 @@ function calculatePrice() {
 				after_discount = total - discount;
 				return after_discount;
 			}else{
-				//batch
+				batch
 				after_discount = total;
 				return after_discount;
 				}
@@ -497,8 +372,6 @@ function doPrint() {
     dijit.byId("terms").hide();	//hideDialog();
 }
 function CheckAmount(){
-	
-	//alert('hello');
 	remain=calculatePrice();
 	if(dijit.byId('tuitionfee').get('value') < dijit.byId('discount').get('value')){
 		alert("Discount cannot greather than fee value!");
@@ -508,16 +381,16 @@ function CheckAmount(){
 	else{
 		//remain = dijit.byId('tuitionfee').get('value')-dijit.byId('discount').get('value');
 	}
-	b=dijit.byId('tuitionfee').get('value');
-	a = dojo.number.format(b);
-	money_khmer=read_money_in_khmer(a);
-	dijit.byId('char_price').attr('value',money_khmer.trim()+'ដុល្លាគត់');
+	dojo.byId("payment_paid").value = dojo.number.format(remain);
+	money_kh = $('#payment_paid').val();
+	money_khmer=read_money_in_khmer(money_kh);
+	dijit.byId('paid_kh').attr('value',money_khmer.trim()+'ដុល្លាគត់');
 }
 function getNewStudent(){
 	if (dojo.byId("is_new").checked){
 		dojo.byId("year").value = dojo.number.format(1);
 		dojo.byId("batch").value = dojo.number.format(11);
-		//getTuitionFee()
+		getTuitionFee()
 	}else{
 		dojo.byId("year").value = "";
 		dojo.byId("batch").value = "";
@@ -526,7 +399,7 @@ function getNewStudent(){
 
 var url_major = '<?php echo $this->url(array('module'=>'registrar','controller'=>'index','action'=>'get-majors')); ?>';
 function changeMajor(){
-	//getTuitionFee();
+	getTuitionFee();
 	/*dept_id = dijit.byId('dept').get('value');
 			dojo.xhrPost({
 			    url: url_major,			    
@@ -570,5 +443,37 @@ function saveSender(){
 				}); 
 }
 var url_add_getfee = '<?php echo $this->url(array('module'=>'global','controller'=>'globals','action'=>'get-tuitionfee')); ?>';//for get payment date of sender 
-
+function getTuitionFee(){
+	degree=dijit.byId('degree').get('value');
+	faculty_id=dijit.byId('dept').get('value');
+	//major=dijit.byId('major').value;
+	batch=dijit.byId('batch').get('value');
+	metion=dijit.byId('metion').get('value');
+	payment_term=dijit.byId('payment_term').get('value');
+	
+	//if(degree=='' || faculty_id=='' || major=='' || batch=='' || payment_term==''){
+	if(degree=='' || faculty_id=='' || batch=='' || payment_term==''){
+		
+	}else{
+		dojo.xhrPost({
+		    url: url_add_getfee,	
+		    content : { 
+			    'degree':degree ,
+			    'faculty_id':faculty_id,
+			    //'major':major,
+			    'batch':batch,
+			    'payment_term':payment_term ,
+			    'metion':metion,
+			},		    
+			handleAs:"json", 
+		    load: function(response) {	
+		    	dijit.byId('tuitionfee').attr('value',response.fee);
+		    	CheckAmount();
+		    },
+		    error: function(e) {
+			    alert(e);
+		    }
+		});
+	}			 
+}
 </script>

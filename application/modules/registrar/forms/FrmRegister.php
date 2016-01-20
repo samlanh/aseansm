@@ -58,7 +58,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		$this->_degree->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
-				'onchange'=>'getTuitionFee();'
+				//'onchange'=>'getTuitionFee();'
 		
 		));
 		$arr_opt = Application_Model_DbTable_DbGlobal::getAllDegreeById();
@@ -137,11 +137,20 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 				'class'=>'fullside'
 				));
 		
+		$generation = new Zend_Dojo_Form_Element_NumberTextBox('generation');
+		$generation->setAttribs(array('dojoType'=>'dijit.form.NumberTextBox','class'=>'fullside',
+				//'onkeyup'=>'CheckReceipt()'
+				'required'=>'true',
+				'class'=>'fullside',
+				'onkeyup'=>'paymentTerm();',
+		));
+		
 		$rs_metion_opt = Application_Model_DbTable_DbGlobal::getAllMention();
 		$metion = new Zend_Dojo_Form_Element_FilteringSelect('metion');
 		$metion->setAttribs(array('dojoType'=>$this->filter,
 				'class'=>'fullside',
-				'onchange'=>'getTuitionFee();'));
+				//'onchange'=>'getTuitionFee();]
+		));
 		$metion->setMultiOptions($rs_metion_opt);
 		
 		$_new_student = new Zend_Form_Element_Checkbox('is_new');
@@ -203,21 +212,85 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		  		'dojoType'=>$this->filter,
 		  		'required'=>'true',
 		  		'class'=>'fullside',
-		  		'onchange'=>'getTuitionFee();'));
+		  		'onchange'=>'paymentTerm();'
+		  		));
 		
 		$_fee = new Zend_Dojo_Form_Element_NumberTextBox('tuitionfee');
 		$_fee->setAttribs(array(
 				'dojoType'=>$this->t_num,
 				'required'=>'true','class'=>'fullside',
-				'onkeyup'=>'CheckAmount();'
+				'onkeyup'=>'CheckAmount();getTotale();',
+		        //'onkeyup'=>'getTotale();'
 				));
 
 		$_disc = new Zend_Dojo_Form_Element_NumberTextBox('discount');
 		$_disc->setAttribs(array(
 				'dojoType'=>$this->text,
 				'class'=>'fullside',
-				'onkeyup'=>'CheckAmount();'));
+				//'onkeyup'=>'CheckAmount();'
+				'onkeyup'=>'getTotale();',
+				));
 		$_disc->setValue(0);
+		
+		$total = new Zend_Dojo_Form_Element_NumberTextBox('total');
+		$total->setAttribs(array(
+				'dojoType'=>$this->text,
+				'class'=>'fullside',
+				));
+		$total->setValue(0);
+		
+		$remaining = new Zend_Dojo_Form_Element_NumberTextBox('remaining');
+		$remaining->setAttribs(array(
+				'dojoType'=>$this->text,
+				'class'=>'fullside',
+		));
+		$remaining->setValue(0);
+		
+		$addmin_fee = new Zend_Dojo_Form_Element_NumberTextBox('addmin_fee');
+		$addmin_fee->setAttribs(array(
+				'dojoType'=>$this->text,
+				'class'=>'fullside',
+				'onkeyup'=>'getRemaining();'
+		));
+		$addmin_fee->setValue(0);
+		
+		$books = new Zend_Dojo_Form_Element_NumberTextBox('books');
+		$books->setAttribs(array(
+				'dojoType'=>$this->text,
+				'class'=>'fullside',
+				'onkeyup'=>'getRemaining();'
+		));
+		$books->setValue(0);
+		
+		$not = new Zend_Dojo_Form_Element_TextBox('not');
+		$not->setAttribs(array(
+				'dojoType'=>$this->text,
+				'class'=>'fullside',
+				'style'=>'width: 99%'
+		));
+		
+		$char_price = new Zend_Dojo_Form_Element_TextBox('char_price');
+		$char_price->setAttribs(array(
+				'dojoType'=>$this->text,
+				'class'=>'fullside',
+				'style'=>'width: 99%'
+		));
+		
+		$start_date= new Zend_Dojo_Form_Element_DateTextBox('start_date');
+		$date = date("Y-m-d")-1;
+		$start_date->setAttribs(array(
+				'data-dojo-Type'=>"dijit.form.DateTextBox",
+				'data-dojo-props'=>"value:'$date','class':'fullside','name':'dob'",
+				'required'=>true));
+		$start_date->setValue($date);
+		
+		$end_date= new Zend_Dojo_Form_Element_DateTextBox('end_date');
+		$date = date("Y-m-d");
+		$end_date->setAttribs(array(
+				'data-dojo-Type'=>"dijit.form.DateTextBox",
+				'data-dojo-props'=>"value:'$date','class':'fullside','name':'dob'",
+				'required'=>true));
+		$end_date->setValue($date);
 		
 		$_paid = new Zend_Dojo_Form_Element_NumberTextBox('payment_paid');
 		$_paid->setAttribs(array(
@@ -229,7 +302,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 				'dojoType'=>$this->text,'class'=>'fullside',));
 		
 		$this->addElements(array(
-			  $_year_one,$_new_student,$_invoice_no, $_pay_date, $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,$metion,
+			  $generation,$char_price,$end_date,$start_date,$not,$books,$addmin_fee,$remaining,$total, $_year_one,$_new_student,$_invoice_no, $_pay_date, $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,$metion,
 			  $_phone,$_dept,$_major,$_batch,$_year,$_session,$_term,$_fee,$_disc,$_paid,$_paid_kh,$_remark,$_is_hold ));
 		
 		return $this;
