@@ -10,7 +10,6 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
 	}
     public function indexAction()
     {
-    	
     	try{
     		if($this->getRequest()->isPost()){
     			$_data = $this->getRequest()->getPost();
@@ -20,7 +19,7 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
     					'status' => $_data['status_search'],
     					'type' => $_data['type'],
     			);
-    		}
+ 		}
     		else{
     			$search='';
     		}
@@ -175,75 +174,64 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
 
 	}
 	public function editAction(){
-		if($this->getRequest()->isPost()){
+	if($this->getRequest()->isPost()){
 			try {
 				$_data = $this->getRequest()->getPost();
 				$_model = new Accounting_Model_DbTable_DbServiceCharge();
-				$rs =  $_model->upDateServiceCharge($_data);
-				if(!empty($rs))Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/accounting/ServiceCharge/index");
+				$rs =  $_model->updateServiceCharge($_data);
+				if(!empty($rs))Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/servicecharge/index");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}
-		$id = $this->getRequest()->getParam('id');
-		$_model = new Accounting_Model_DbTable_DbServiceCharge();
-		$_rs = $_model->getServiceChargeById($id);
-		
-		
-		$db = new Accounting_Model_DbTable_DbServiceCharge();
+		 
+		$_model = new Application_Model_GlobalClass();
+		$this->view->all_metion = $_model ->getAllMetionOption();
+		$this->view->all_faculty = $_model->getAllServiceItemOption(2);
+// 		$this->view->all_faculty = $_model ->getAllFacultyOption();
 		$model = new Application_Model_DbTable_DbGlobal();
-		$row=0;$key=0;
-		if(!empty($_rs)){
-			foreach ($_rs as $id => $rs){
-				$rows = $db->getServiceFeebyId($rs['service_id']);
-				$fee_row=1;
+		$this->view->payment_term = $model->getAllPaymentTerm();
+		 
+		$frm = new Application_Form_FrmOther();
+		$frm =  $frm->FrmAddDept(null);
+		Application_Model_Decorator::removeAllDecorator($frm);
+		$this->view->add_dept = $frm;
+		
+		$db=new Accounting_Model_DbTable_DbServiceCharge();
+		$id=$this->getRequest()->getParam("id");
+		$this->view->rs =$db->getServiceChargeById($id);
+
+		$row=0;$indexterm=1;$key=0;
+
+				$rows = $db->getServiceFeebyId($id);
+				$fee_row=1;$rs_rows=array();
 				if(!empty($rows))foreach($rows as $payment_tran){
-					if($payment_tran['pay_type']==1){
-						$rs_rows[$key]=$this->headAddRecordService($rs,$key);
+					if($payment_tran['payment_term']==1){
 						
-						$rs_rows[$key]['remark'] = $payment_tran['remark'];
-						$term = $model->getAllServicePayment($fee_row);
-						$rs_rows[$key]['price_'.$payment_tran['pay_type']] = $payment_tran['price'];
+						$rs_rows[$key] = array(
+								'service_id'=>$payment_tran['service_id'],
+								'quarter'=>$payment_tran['price_fee'],
+								'semester'=>'',
+								'year'=>'',
+								'note'=>$payment_tran['remark'],
+						);
 						
+						//$rs_rows[$key]['quarter'] = $payment_tran['tuition_fee'];
 						$key_old=$key;
 						$key++;
-					}elseif($payment_tran['pay_type']==2){
-						$term = $model->getAllServicePayment($payment_tran['pay_type']);
-						$rs_rows[$key_old]['price_'.$payment_tran['pay_type']] = $payment_tran['price'];
-					}elseif($payment_tran['pay_type']==3){
-						$term = $model->getAllServicePayment($payment_tran['pay_type']);
-						$rs_rows[$key_old]['price_'.$payment_tran['pay_type']] = $payment_tran['price'];
+					}elseif($payment_tran['payment_term']==3){
+						$rs_rows[$key_old]['year'] = $payment_tran['price_fee'];
+		
+					}elseif($payment_tran['payment_term']==2){
+						$rs_rows[$key_old]['semester'] = $payment_tran['price_fee'];
 					}
-					else{
-						$term = $model->getAllServicePayment($payment_tran['pay_type']);
-						$rs_rows[$key_old]['price_4'] = $payment_tran['price'];
-					}
+	
 				}
-			}
-		}
-		
-		$this->view->service_exist = $rs_rows;
-		$frm = new Accounting_Form_FrmServicePrice();
-		$frm_set_price=$frm->frmAddServiceCharge($_rs);
-		Application_Model_Decorator::removeAllDecorator($frm_set_price);
-		$this->view->frm_set_charge = $frm_set_price;
-		$_model = new Application_Model_GlobalClass();
-		$this->view->service_options = $_model->getAllServiceItemOption();
+				
+			   $this->view->rows =$rs_rows;
+			   
 	
-		$model = new Application_Model_DbTable_DbGlobal();
-		$this->view->payment_term = $model->getAllServicePayment();
-	
-		$frm=new Application_Form_FrmPopupGlobal();
-		$frm_service = $frm->addProgramName();
-		Application_Model_Decorator::removeAllDecorator($frm_service);
-		$this->view->frm_service_name=$frm_service;
-	
-		$frm_ser_category = $frm->addProServiceCategory();
-		Application_Model_Decorator::removeAllDecorator($frm_ser_category);
-		$this->view->frm_ser_category=$frm_ser_category;
-		
-		$this->view->rate =$model->getRate();
 	}
 	public function headAddRecordService($rs,$key){
 		$result[$key] = array(
