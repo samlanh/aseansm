@@ -135,9 +135,8 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
    public function getAllstudentRequest($type=null){
    	$db = $this->getAdapter();
    	if($type!=null){
-   		$sql = "SELECT service_id,pn.title FROM `rms_program_type` AS pt,`rms_program_name` AS pn
-   		WHERE pt.id = pn.ser_cate_id AND pt.type=$type
-   		AND pn.status = 1 AND pn.title!=''";
+   		$sql = " SELECT service_id,title FROM `rms_program_name` WHERE
+   		 type=$type AND status = 1 AND title!=''";
    		return $db->fetchAll($sql);
    	}else{
    	$sql = 'SELECT service_id,pn.title FROM `rms_program_type` AS pt,`rms_program_name` AS pn 
