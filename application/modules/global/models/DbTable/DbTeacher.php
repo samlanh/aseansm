@@ -12,12 +12,26 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
+			
+			$photoname = str_replace(" ", "_", $_data['en_name'].'-teacher') . '.jpg';
+			$upload = new Zend_File_Transfer();
+			$upload->addFilter('Rename',
+					array('target' => PUBLIC_PATH . '/images/'. $photoname, 'overwrite' => true) ,'photo');
+			$receive = $upload->receive();
+			if($receive)
+			{
+				$_data['photo'] = $photoname;
+			}
+			else{
+				$_data['photo']="";
+			}
 			$_arr=array(
 					'teacher_code' => $_data['code'],
 					'teacher_name_en' => $_data['en_name'],
 					'teacher_name_kh' => $_data['kh_name'],
 					'sex' => $_data['sex'],
 					'phone' => $_data['phone'],
+					"photo"=>$_data['photo'],
 					'dob' => $_data['dob'],
 					'pob' => $_data['pob'],
 					'address' => $_data['address'],
@@ -42,19 +56,7 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 					'expired1' => $_data['expired1'],
 					
 			);
-			$teacher_id = $this->insert($_arr);
-// 			$this->_name='rms_teacher_subject';
-// 			$ids = explode(',', $_data['record_row']);
-// 			foreach ($ids as $i){
-// 				$arr = array(
-// 						'subject_id'=>$_data['subject_id'.$i],
-// 						'teacher_id'=>$teacher_id,
-// 						'status'   => $_data['status'],
-// 						'date' => Zend_Date::now(),
-// 						'user_id'	  => $this->getUserId()
-						
-// 				);
-// 				$this->insert($arr);
+				$this->insert($arr);
 // 			}
 			return $db->commit();
 		}catch (Exception $e){
@@ -77,12 +79,26 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
+			$photoname = str_replace(" ", "_", $_data['en_name'].'-teacher') . '.jpg';
+			$upload = new Zend_File_Transfer();
+			$upload->addFilter('Rename',
+					array('target' => PUBLIC_PATH . '/images/'. $photoname, 'overwrite' => true) ,'photo');
+			$receive = $upload->receive();
+			if($receive)
+			{
+				$_data['photo'] = $photoname;
+			}
+			else{
+				$_data['photo']=$_data['photo'];
+			}
+			
 		$_arr=array(
 					'teacher_code' => $_data['code'],
 					'teacher_name_en' => $_data['en_name'],
 					'teacher_name_kh' => $_data['kh_name'],
 					'sex' => $_data['sex'],
 					'phone' => $_data['phone'],
+					"photo" => $_data['photo'],
 					'dob' => $_data['dob'],
 					'pob' => $_data['pob'],
 					'address' => $_data['address'],

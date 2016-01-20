@@ -7,7 +7,7 @@ $techer= $this->frm_techer;
 ?>
 <script src="<?php echo $baseurl;?>/js/help.js"></script>
 <form id='frm_add_tran' action="<?php echo $this->url(array('module'=>'global','controller'=>'lecturer','action'=>'edit')); ?>" 
-dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 <script type="dojo/method" event="onSubmit">			
 			if(this.validate()) {
 				return true;
@@ -26,6 +26,7 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 								<legend align="center">Lacturer Information</legend>
 									<table style="width:330px;" cellspacing="6">
 										<tr>
+											<input type="hidden" name="photo" value="<?php echo $this->rs['photo']; ?>">
 											<td style="width: 100px;"><?php echo $tr->translate("Lecturer/Code")?></td>
 											<td><?php  echo $techer->getElement('code');?></td>
 										</tr>
