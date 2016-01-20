@@ -13,7 +13,7 @@ class Accounting_ProgramChargeController extends Zend_Controller_Action {
     	try{
     		if($this->getRequest()->isPost()){
     			$_data=$this->getRequest()->getPost();
-    			print_r($_data);exit();
+    			
     			$search = array(
     					//'title' => $session_servicetype->txtsearch,
     					'txtsearch' => $_data['title'],
@@ -23,17 +23,17 @@ class Accounting_ProgramChargeController extends Zend_Controller_Action {
     			$search='';
     		}
     		$db = new Accounting_Model_DbTable_DbProgramCharge();
-    		$service= $db->getAllTuitionFee($search,2);
+    		$service= $db->getAllTuitionFee($search);
     		
     		$model = new Application_Model_DbTable_DbGlobal();
     		$row=0;$indexterm=1;$test = 0;$key=0;
     		if(!empty($service)){
     			foreach ($service as $i => $rs) {
-    				$rows = $db->getProgramFeebyId($rs['id'],2);
+    				$rows = $db->getProgramFeebyId($rs['id']);
     				if(empty($rows)){ continue;}
     				$fee_row=1;
     				if(!empty($rows))foreach($rows as $payment_tran){
-    					echo $payment_tran['pay_type'];
+    					
     					if($payment_tran['pay_type']==1){
     						$rs_rows[$key]=$this->headAddRecordTuitionFee($rs,$key);
     						//if($rs_rows[$key_old]['id']==$rs_rows[$key]['id']){
@@ -75,7 +75,7 @@ class Accounting_ProgramChargeController extends Zend_Controller_Action {
     		$pay_term = $model->getAllGEPPrgramPayment();
     		$list = new Application_Form_Frmtable();
     		$collumns = array("PROGRAM_NAME","TYPE","STATUS");
-    		$end = end(array_keys($collumns));
+    		$end = @end(array_keys($collumns));
     		$payment_term='';$key=1;//for merch array for collumn
     		    foreach ($pay_term as $value){
     		        $collumns[$end+$key]=$value;
@@ -160,77 +160,39 @@ class Accounting_ProgramChargeController extends Zend_Controller_Action {
 		$db = new Accounting_Model_DbTable_DbProgramCharge();
 		$model = new Application_Model_DbTable_DbGlobal();
 		$row=0;$key=0;
-		if(!empty($_rs)){
-			foreach ($_rs as $id => $rs){
-				$rows = $db->getProgramFeebyId($rs['service_id']);
+		
+				$rows = $db->getProgramFeebyId($id);
 				$fee_row=1;
 				if(!empty($rows))foreach($rows as $payment_tran){
 					if($payment_tran['pay_type']==1){
-						$rs_rows[$key]=$this->headAddRecordService($rs,$key);
+						$rs_rows[$key]=array(
+								'subject_id'=>$payment_tran['subject_id'],
+								'term1'=>$payment_tran['fee'],
+								'term2'=>'',
+								'term3'=>'',
+								'total_hour'=>$payment_tran['total_hour'],
+								'note'=>$payment_tran['note']
+								);
 						
-						$rs_rows[$key]['total_hour']=$payment_tran['total_hour'];
-						$rs_rows[$key]['remark'] = $payment_tran['note'];
-						$term = $model->getAllServicePayment($fee_row);
 						$rs_rows[$key]['price_'.$payment_tran['pay_type']] = $payment_tran['fee'];
 						
 						$key_old=$key;
 						$key++;
 					}elseif($payment_tran['pay_type']==2){
-						$term = $model->getAllServicePayment($payment_tran['pay_type']);
-						$rs_rows[$key_old]['price_'.$payment_tran['pay_type']] = $payment_tran['fee'];
+						$rs_rows[$key_old]['term2'] = $payment_tran['fee'];
 					}elseif($payment_tran['pay_type']==3){
-						$term = $model->getAllServicePayment($payment_tran['pay_type']);
-						$rs_rows[$key_old]['price_'.$payment_tran['pay_type']] = $payment_tran['fee'];
+						$rs_rows[$key_old]['term3'] = $payment_tran['fee'];
 					}
-					else{
-						$term = $model->getAllServicePayment($payment_tran['pay_type']);
-						$rs_rows[$key_old]['price_4'] = $payment_tran['fee'];
-					}
-				}
-			}
+				
 		}
 		
-		$this->view->service_exist = $rs_rows;
-		$frm = new Accounting_Form_FrmServicePrice();
-		$frm_set_price=$frm->frmAddServiceCharge($_rs);
+		$this->view->programerfee = $rs_rows;
 		
-// 		Application_Model_Decorator::removeAllDecorator($frm_set_price);
-// 		$this->view->frm_set_charge = $frm_set_price;
-// 		$_model = new Application_Model_GlobalClass();
-// 		$this->view->service_options = $_model->getAllServiceItemOption();
-	
-// 		$model = new Application_Model_DbTable_DbGlobal();
-// 		$this->view->payment_term = $model->getAllServicePayment();
-	
-// 		$frm=new Application_Form_FrmPopupGlobal();
-// 		$frm_service = $frm->addProgramName();
-// 		Application_Model_Decorator::removeAllDecorator($frm_service);
-// 		$this->view->frm_service_name=$frm_service;
-	
-// 		$frm_ser_category = $frm->addProServiceCategory();
-// 		Application_Model_Decorator::removeAllDecorator($frm_ser_category);
-		
-		
-		
-		$frm = new Accounting_Form_FrmServicePrice();
-		$frm_set_price=$frm->frmAddProgramCharge();
-		Application_Model_Decorator::removeAllDecorator($frm_set_price);
-		$this->view->frm_set_charge = $frm_set_price;
 		$_model = new Application_Model_GlobalClass();
 		$this->view->service_options = $_model->getAllServiceItemOption(2);
 		
 		$model = new Application_Model_DbTable_DbGlobal();
 		$this->view->payment_term = $model->getAllGEPPrgramPayment();
-		
-		$frm=new Application_Form_FrmPopupGlobal();
-		$frm_service = $frm->addProgramName(null,2);
-		Application_Model_Decorator::removeAllDecorator($frm_service);
-		$this->view->frm_service_name=$frm_service;
-		
-		$frm_ser_category = $frm->addProServiceCategory();
-		Application_Model_Decorator::removeAllDecorator($frm_ser_category);
-		$this->view->frm_ser_category=$frm_ser_category;
-		
 	}
 	public function headAddRecordService($rs,$key){
 		$result[$key] = array(
