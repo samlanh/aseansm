@@ -66,7 +66,7 @@ var url_dept = '<?php echo $this->url(array('module'=>'registrar','controller'=>
 					      	<table  cellspacing="5" style="margin:0 auto;" width="100%">
 					      		<tr>
 					      			<td  title="ឈ្មោះជាភាសារខ្មែរ"><?php echo $tr->translate("NAME_KH");?>*</td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="name_kh" name="name_kh" value="" type="text" required="required"></td>	
+									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="name_kh" name="name_kh" value="<?php echo $this->rs['stu_khname'];?>" type="text" required="required"></td>	
 									<td  title="ឈ្មោះជាភាសារអង់គ្លេស"><?php echo $tr->translate("NAME_EN");?>*</td>
 									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="name_en" name="name_en" value="" type="text" required="required"></td>
 									<td title="បញ្ជូលភេទនិស្សិត"><?php echo $tr->translate("SEX");?>*</td>
