@@ -227,11 +227,10 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
    public static function getAllDegreeById($id=null){
    	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
    	$rs = array(
-   			1=>$tr->translate("ASSOCIATE"),
-   			2=>$tr->translate("BACHELOR"),
-   			3=>$tr->translate('MASTER'),
-   			4=>$tr->translate('DOCTORATE'),
-   			5=>$tr->translate('INTERNATION_PROGRAM'));
+   			1=>$tr->translate("Grade School"),
+   			2=>$tr->translate("Pramary School"),
+   			3=>$tr->translate('Other'),
+   			);
    	if($id==null)return $rs;
    	return $rs[$id];
    }
