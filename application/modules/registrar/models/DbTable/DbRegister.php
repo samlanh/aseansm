@@ -17,9 +17,8 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     }
     function getPaymentTerm($generat,$payment_term,$grade){
     	$db = $this->getAdapter();
-    	$sql = "SELECT tuition_fee FROM rms_tuitionfee_detail WHERE class_id=$grade AND payment_term=$payment_term AND fee_id=$generat";
-    	$order=' ORDER BY id DESC';
-    	//return  $sql;
+    	$sql="SELECT td.tuition_fee FROM rms_tuitionfee_detail AS td,`rms_tuitionfee` AS tu
+    	WHERE tu.id= td.fee_id AND td.class_id=$grade AND td.payment_term=$payment_term AND tu.generation=$generat LIMIT 1";
     	return $db->fetchRow($sql);
     }
 }
