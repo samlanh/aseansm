@@ -114,11 +114,23 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
    		WHERE `dept_id` = ".$db->quote($dept_id);
    		return $db->fetchRow($sql);
    }
+   public function getProvince(){
+   	$db = $this->getAdapter();
+   	$sql ="SELECT DISTINCT province_kh_name,province_id FROM rms_province WHERE is_active=1 AND province_kh_name!='' ORDER BY province_kh_name";
+   	return $db->fetchAll($sql);
+   }
+   public function getOccupation(){
+   	$db = $this->getAdapter();
+   	$sql ="SELECT DISTINCT occu_name,occupation_id FROM rms_occupation WHERE status=1 AND occu_name!='' ORDER BY occu_name";
+   	return $db->fetchAll($sql);
+   }
+   
    public function getAllFecultyName(){
    	$db = $this->getAdapter();
    	$sql ="SELECT dept_id As id, en_name As name,en_name,dept_id,shortcut FROM rms_dept WHERE is_active=1 AND en_name!='' ORDER BY en_name";
    	return $db->fetchAll($sql);
    }
+   
    public function getAllServiceItemsName($status=1,$type=null){
    	$db = $this->getAdapter();
    	if($status==1){
@@ -271,15 +283,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
     if($id==null)return $opt_rank;
     else return $opt_rank[$id];
    }
-   public function getProgramAndServiceType($type=null){
-   	$db = $this->getAdapter();
-   	$sql ="SELECT DISTINCT title,id FROM rms_program_name WHERE title!='' AND status=1 ";
-   	if(!empty($type)){
-   		$sql.=" AND type=$type";
-   	}
-   	$order = " ORDER BY title ";
-   	return $db->fetchAll($sql.$order);
-   }
+ 
    public function getServiceType($type=null){
    	$db = $this->getAdapter();
    	$sql ="SELECT DISTINCT title,id FROM rms_program_type WHERE title!='' AND status=1 ";
