@@ -83,7 +83,7 @@ class Registrar_Model_DbTable_DbwuRegister extends Zend_Db_Table_Abstract
 	}	
 	public function getGaneratInvoiceWU(){
 		$db = $this->getAdapter();
-		$sql = "SELECT invoice FROM rms_student_payment ORDER BY pay_id DESC LIMIT 1";
+		$sql = "SELECT receipt_number FROM rms_student_payment ORDER BY payfor_type DESC LIMIT 1";
 		$rs = $db->fetchOne($sql);
 		$invoice = (int)$rs;
 		$invoice_new = (int)$rs+1;
