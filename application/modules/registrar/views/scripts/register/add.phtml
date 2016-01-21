@@ -89,6 +89,7 @@
 				    	dijit.byId('books').attr('value','0');
 				    	dijit.byId('addmin_fee').attr('value','0');
 				    	dijit.byId('remaining').attr('value','0');
+				    	dijit.byId('remark').attr('value','0');
 				      }else {
 				    	 dijit.byId('tuitionfee').attr('value','0'); 
 				    	 dijit.byId('total').attr('value','0'); 
@@ -96,6 +97,7 @@
 				    	 dijit.byId('books').attr('value','0');
 					     dijit.byId('addmin_fee').attr('value','0');
 					     dijit.byId('remaining').attr('value','0');
+					     dijit.byId('remark').attr('value','0');
 				      }
 				},
 				error: function(err) {
@@ -105,25 +107,24 @@
 	}
 	//set value totale 
 	function getTotale(){
+		//old % totale
 		tuitionfee=dijit.byId('tuitionfee').get('value');
 		discount=dijit.byId('discount').get('value');
 		pc=discount/100;
 		ds=tuitionfee*pc;
-		totale=tuitionfee - ds;
-		if(discount<=100){
-		   dijit.byId('total').attr('value',totale);
-		   dijit.byId('books').attr('value','0');
-		   dijit.byId('addmin_fee').attr('value','0');
-		   dijit.byId('remaining').attr('value','0');
-		}else{ 
-			alert('No more than a hundred of disccount!');
-			dijit.byId('discount').attr('value','100');
-			getTotale();
-			dijit.byId('books').attr('value','0');
-		    dijit.byId('addmin_fee').attr('value','0');
-		    dijit.byId('remaining').attr('value','0');
+		old_totale=tuitionfee - ds;
+		//alert('hello');
+		remark=dijit.byId('remark').get('value');
+		addmin_fee=dijit.byId('addmin_fee').get('value');
+		totals=parseFloat(old_totale)+parseFloat(remark)+parseFloat(addmin_fee);
+		if(remark=isNaN){
+			dijit.byId('remark').attr('value','0');
 		}
-		
+		if(addmin_fee=isNaN){
+			dijit.byId('addmin_fee').attr('value','0');
+		}else{
+		  dijit.byId('total').attr('value',totals.toFixed(2));
+		}
 	}
 	//set value remaining
 	function getRemaining(){
@@ -133,6 +134,22 @@
 		  pay_to=parseFloat(books) + parseFloat(addmin_fee);
 		  remaining = total - pay_to;
 		  dijit.byId('remaining').attr('value',remaining.toFixed(2));
+	}
+	function getDisccount(){
+		tuitionfee=dijit.byId('tuitionfee').get('value');
+		discount=dijit.byId('discount').get('value');
+		pc=discount/100;
+		ds=tuitionfee*pc;
+		totale=tuitionfee - ds;
+		if(discount<=100){
+			   dijit.byId('total').attr('value',totale.toFixed(2));
+			//   dijit.byId('remaining').attr('value','0');
+			}else{ 
+				alert('No more than a hundred of disccount!');
+				dijit.byId('discount').attr('value','100');
+				//getTotale();
+			  //  dijit.byId('remaining').attr('value','0');
+			}
 	}
 	var major_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode(array()));?> );
 	var stucard_store = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->student_card));?> );
@@ -254,16 +271,16 @@ fieldset{  background:none;}
 							<td><?php echo $register->getElement('tuitionfee');?></td>
 						</tr>
 						<tr>
-						    <td><?php echo $tr->translate("ADMIN_FEE");?></td>
-							<td title='Ex: 20 or 10%'><?php echo $register->getElement('addmin_fee');?></td>	
+						    <td><?php echo $tr->translate("DISCOUND");?></td>
+							<td title='Ex: 20 or 10%'><?php echo $register->getElement('discount');?></td>
 							<td><?php echo $tr->translate("OTHERS_PRICE");?></td>
 							<td><?php echo $register->getElement('remark');;?></td>
 						</tr>
 						<tr>	
+							<td><?php echo $tr->translate("ADMIN_FEE");?></td>
+							<td title='Ex: 20 or 10%'><?php echo $register->getElement('addmin_fee');?></td>	
 							<td><?php echo $tr->translate("TOTALE");?></td>
 							<td title='Ex: 20 or 10%'><?php echo $register->getElement('total');?></td>
-							<td><?php echo $tr->translate("DISCOUND");?></td>
-							<td title='Ex: 20 or 10%'><?php echo $register->getElement('discount');?></td>
 						</tr>
 						<tr>	
 							<td><?php echo $tr->translate("BOOKS");?></td>

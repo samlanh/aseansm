@@ -106,11 +106,12 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		$this->_pay_date->setAttribs(array('dojoType'=>$this->t_date,'class'=>'fullside',
 				'constraints'=>'{datePattern:"dd/MM/yyyy"'
 				));
-		$this->_remark = new Zend_Dojo_Form_Element_TextBox('remark');
+		$this->_remark = new Zend_Dojo_Form_Element_NumberTextBox('remark');
 		$this->_remark->setAttribs(array(
-				'dojoType'=>$this->text,'class'=>'fullside',
+				'dojoType'=>'dijit.form.NumberTextBox','class'=>'fullside',
+				'onkeyup'=>'getTotale();',
 		));
-		
+		$this->_remark->setValue(0);
 		$this->_pay_date = new Zend_Dojo_Form_Element_TextBox('pay_date');
 		$this->_pay_date->setAttribs(array('dojoType'=>$this->t_date,'class'=>'fullside',
 				//	'constraints'=>'{datePattern:"dd/MM/yyyy"'
@@ -217,9 +218,9 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		
 		$_fee = new Zend_Dojo_Form_Element_NumberTextBox('tuitionfee');
 		$_fee->setAttribs(array(
-				'dojoType'=>$this->t_num,
+				'dojoType'=>'dijit.form.NumberTextBox',
 				'required'=>'true','class'=>'fullside',
-				'onkeyup'=>'CheckAmount();getTotale();',
+				'onkeyup'=>'CheckAmount();',
 		        //'onkeyup'=>'getTotale();'
 				));
 
@@ -227,8 +228,9 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		$_disc->setAttribs(array(
 				'dojoType'=>$this->text,
 				'class'=>'fullside',
+				'onkeyup'=>'getDisccount();getTotale();'
 				//'onkeyup'=>'CheckAmount();'
-				'onkeyup'=>'getTotale();',
+				//'onkeyup'=>'getTotale();',
 				));
 		$_disc->setValue(0);
 		
@@ -236,6 +238,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		$total->setAttribs(array(
 				'dojoType'=>$this->text,
 				'class'=>'fullside',
+				'style'=>'color:red;'
 				));
 		$total->setValue(0);
 		
@@ -248,9 +251,9 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		
 		$addmin_fee = new Zend_Dojo_Form_Element_NumberTextBox('addmin_fee');
 		$addmin_fee->setAttribs(array(
-				'dojoType'=>$this->text,
+				'dojoType'=>'dijit.form.NumberTextBox',
 				'class'=>'fullside',
-				'onkeyup'=>'getRemaining();'
+				'onkeyup'=>'getTotale();'
 		));
 		$addmin_fee->setValue(0);
 		
@@ -258,7 +261,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		$books->setAttribs(array(
 				'dojoType'=>$this->text,
 				'class'=>'fullside',
-				'onkeyup'=>'getRemaining();'
+				//'onkeyup'=>'getRemaining();'
 		));
 		$books->setValue(0);
 		
