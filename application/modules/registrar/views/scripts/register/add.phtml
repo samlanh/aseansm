@@ -90,6 +90,7 @@
 				    	dijit.byId('addmin_fee').attr('value','0');
 				    	dijit.byId('remaining').attr('value','0');
 				    	dijit.byId('remark').attr('value','0');
+				    	dijit.byId('char_price').attr('value','0');
 				      }else {
 				    	 dijit.byId('tuitionfee').attr('value','0'); 
 				    	 dijit.byId('total').attr('value','0'); 
@@ -98,6 +99,7 @@
 					     dijit.byId('addmin_fee').attr('value','0');
 					     dijit.byId('remaining').attr('value','0');
 					     dijit.byId('remark').attr('value','0');
+					     dijit.byId('char_price').attr('value','0');
 				      }
 				},
 				error: function(err) {
@@ -115,25 +117,27 @@
 		old_totale=tuitionfee - ds;
 		//alert('hello');
 		remark=dijit.byId('remark').get('value');
+		remark=isNaN(remark)?0:remark;
 		addmin_fee=dijit.byId('addmin_fee').get('value');
+		addmin_fee=isNaN(addmin_fee)?0:addmin_fee;
 		totals=parseFloat(old_totale)+parseFloat(remark)+parseFloat(addmin_fee);
-		if(remark=isNaN){
-			dijit.byId('remark').attr('value','0');
-		}
-		if(addmin_fee=isNaN){
-			dijit.byId('addmin_fee').attr('value','0');
-		}else{
 		  dijit.byId('total').attr('value',totals.toFixed(2));
-		}
+		  getRemaining();
 	}
 	//set value remaining
 	function getRemaining(){
 		  total=dijit.byId('total').get('value');
+		  total=isNaN(total)?0:total;
 		  books=dijit.byId('books').get('value');
-		  addmin_fee=dijit.byId('addmin_fee').get('value');
-		  pay_to=parseFloat(books) + parseFloat(addmin_fee);
-		  remaining = total - pay_to;
-		  dijit.byId('remaining').attr('value',remaining.toFixed(2));
+		  books=isNaN(books)?0:books;
+		  remaining=parseFloat(total) - parseFloat(books);
+		  if(total<books){
+			 alert('Deposit must be smaller than the total money!');
+			 dijit.byId('books').attr('value',total);
+		  }else{
+		     dijit.byId('remaining').attr('value',remaining.toFixed(2));
+		  }
+		  CheckAmount();
 	}
 	function getDisccount(){
 		tuitionfee=dijit.byId('tuitionfee').get('value');
@@ -289,12 +293,10 @@ fieldset{  background:none;}
 							<td><?php echo $register->getElement('remaining');;?></td>
 						</tr>
 						<tr>	
+						    <td><?php echo $tr->translate("NOT");?></td>
+							<td title='Ex: 20 or 10%' ><?php echo $register->getElement('not');?></td>	
 							<td><?php echo $tr->translate("CHAR_PRICE");?></td>
-							<td title='Ex: 20 or 10%' colspan="4"><?php echo $register->getElement('char_price');?></td>
-						</tr>
-						<tr>	
-							<td><?php echo $tr->translate("NOT");?></td>
-							<td title='Ex: 20 or 10%' colspan="4"><?php echo $register->getElement('not');?></td>
+							<td title='Ex: 20 or 10%' ><?php echo $register->getElement('char_price');?></td>
 						</tr>
 						<tr>
 							<td><?php echo $tr->translate("START_DATE");?></td>
@@ -525,7 +527,7 @@ function CheckAmount(){
 	else{
 		//remain = dijit.byId('tuitionfee').get('value')-dijit.byId('discount').get('value');
 	}
-	b=dijit.byId('tuitionfee').get('value');
+	b=dijit.byId('total').get('value');
 	a = dojo.number.format(b);
 	money_khmer=read_money_in_khmer(a);
 	dijit.byId('char_price').attr('value',money_khmer.trim()+'ដុល្លាគត់');

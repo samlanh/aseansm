@@ -138,14 +138,17 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 				'class'=>'fullside'
 				));
 		
-		$generation = new Zend_Dojo_Form_Element_NumberTextBox('generation');
-		$generation->setAttribs(array('dojoType'=>'dijit.form.NumberTextBox','class'=>'fullside',
+		$generation = new Zend_Dojo_Form_Element_FilteringSelect('generation');
+		$generation->setAttribs(array('dojoType'=>'dijit.form.FilteringSelect','class'=>'fullside',
 				//'onkeyup'=>'CheckReceipt()'
 				'required'=>'true',
 				'class'=>'fullside',
-				'onkeyup'=>'paymentTerm();',
+				'onchange'=>'paymentTerm();',
 		));
-		
+		$gener = array(
+				1=>$this->tr->translate("First"),
+				2=>$this->tr->translate("SECOND"));
+		$generation->setMultiOptions($gener);
 		$rs_metion_opt = Application_Model_DbTable_DbGlobal::getAllMention();
 		$metion = new Zend_Dojo_Form_Element_FilteringSelect('metion');
 		$metion->setAttribs(array('dojoType'=>$this->filter,
@@ -220,8 +223,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		$_fee->setAttribs(array(
 				'dojoType'=>'dijit.form.NumberTextBox',
 				'required'=>'true','class'=>'fullside',
-				'onkeyup'=>'CheckAmount();',
-		        //'onkeyup'=>'getTotale();'
+				//'onkeyup'=>'CheckAmount();',
 				));
 
 		$_disc = new Zend_Dojo_Form_Element_NumberTextBox('discount');
@@ -246,6 +248,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		$remaining->setAttribs(array(
 				'dojoType'=>$this->text,
 				'class'=>'fullside',
+				'style'=>'color:blue'
 		));
 		$remaining->setValue(0);
 		
@@ -259,9 +262,9 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		
 		$books = new Zend_Dojo_Form_Element_NumberTextBox('books');
 		$books->setAttribs(array(
-				'dojoType'=>$this->text,
+				'dojoType'=>'dijit.form.NumberTextBox',
 				'class'=>'fullside',
-				//'onkeyup'=>'getRemaining();'
+				'onkeyup'=>'getRemaining();'
 		));
 		$books->setValue(0);
 		
@@ -269,14 +272,12 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		$not->setAttribs(array(
 				'dojoType'=>$this->text,
 				'class'=>'fullside',
-				'style'=>'width: 99%'
 		));
 		
 		$char_price = new Zend_Dojo_Form_Element_TextBox('char_price');
 		$char_price->setAttribs(array(
 				'dojoType'=>$this->text,
 				'class'=>'fullside',
-				'style'=>'width: 99%'
 		));
 		
 		$start_date= new Zend_Dojo_Form_Element_DateTextBox('start_date');
