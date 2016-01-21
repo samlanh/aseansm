@@ -69,8 +69,8 @@ $frm_set_price = $this->frm_set_charge;?>
 							<td style="white-space: nowrap;text-align: right;"><?php echo $tr->translate("STATUS");?></td>
 							<td>
 								<select dojoType="dijit.form.FilteringSelect" required="true"  id="status" name="status" type="text">								
-										<option value="1">Active</option>
-										<option value="0">Deactive</option>
+										<option value="1"><?php echo $tr->translate("Active");?></option>
+										<option value="0"><?php echo $tr->translate("Deactive");?></option>
 								</select>
 							</td>	
 							<td colspan="2">
