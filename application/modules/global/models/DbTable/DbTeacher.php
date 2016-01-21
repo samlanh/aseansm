@@ -31,7 +31,7 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 					'teacher_name_kh' => $_data['kh_name'],
 					'sex' => $_data['sex'],
 					'phone' => $_data['phone'],
-					"photo"=>$_data['photo'],
+					"photo" =>$_data['photo'],
 					'dob' => $_data['dob'],
 					'pob' => $_data['pob'],
 					'address' => $_data['address'],
