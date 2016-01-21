@@ -116,7 +116,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
    }
    public function getAllFecultyName(){
    	$db = $this->getAdapter();
-   	$sql ="SELECT DISTINCT en_name,dept_id,shortcut FROM rms_dept WHERE is_active=1 AND en_name!='' ORDER BY en_name";
+   	$sql ="SELECT dept_id As id, en_name As name,en_name,dept_id,shortcut FROM rms_dept WHERE is_active=1 AND en_name!='' ORDER BY en_name";
    	return $db->fetchAll($sql);
    }
    public function getAllServiceItemsName($status=1,$type=null){
