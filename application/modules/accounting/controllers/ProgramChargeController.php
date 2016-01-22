@@ -122,7 +122,7 @@ class Accounting_ProgramChargeController extends Zend_Controller_Action {
 		Application_Model_Decorator::removeAllDecorator($frm_set_price);
 		$this->view->frm_set_charge = $frm_set_price;
 		$_model = new Application_Model_GlobalClass();
-		$this->view->service_options = $_model->getAllServiceItemOption(2);
+		$this->view->service_options = $_model->getAllServiceItemOption(1);
 		
 		$model = new Application_Model_DbTable_DbGlobal();
 		$this->view->payment_term = $model->getAllGEPPrgramPayment();
@@ -189,7 +189,7 @@ class Accounting_ProgramChargeController extends Zend_Controller_Action {
 		$this->view->programerfee = $rs_rows;
 		
 		$_model = new Application_Model_GlobalClass();
-		$this->view->service_options = $_model->getAllServiceItemOption(2);
+		$this->view->service_options = $_model->getAllServiceItemOption(1);
 		
 		$model = new Application_Model_DbTable_DbGlobal();
 		$this->view->payment_term = $model->getAllGEPPrgramPayment();
