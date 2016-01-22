@@ -124,5 +124,11 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 		$where=$this->getAdapter()->quoteInto("stu_id=?", $_data["id"]);
 		$this->update($_arr, $where);
 	}
+	function getAllGrade($grade_id){
+		$db = $this->getAdapter();
+		$sql = "SELECT major_id As id,major_enname As name FROM rms_major WHERE dept_id=".$grade_id;
+		$order=' ORDER BY id DESC';
+		return $db->fetchAll($sql.$order);
+	}
 }
 
