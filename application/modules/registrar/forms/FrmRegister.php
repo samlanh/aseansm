@@ -138,17 +138,19 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 				'class'=>'fullside'
 				));
 		
-		$generation = new Zend_Dojo_Form_Element_FilteringSelect('generation');
+		$generation = new Zend_Dojo_Form_Element_FilteringSelect('study_year');
 		$generation->setAttribs(array('dojoType'=>'dijit.form.FilteringSelect','class'=>'fullside',
 				//'onkeyup'=>'CheckReceipt()'
 				'required'=>'true',
 				'class'=>'fullside',
 				'onchange'=>'paymentTerm();',
 		));
-		$gener = array(
-				1=>$this->tr->translate("First"),
-				2=>$this->tr->translate("SECOND"));
-		$generation->setMultiOptions($gener);
+		$db_years=new Registrar_Model_DbTable_DbRegister();
+        $years=$db_years->getAllYears();
+        $opt = array(-1=>$this->tr->translate("SELECT_YEAR"));
+        if(!empty($years))foreach($years AS $row) $opt[$row['id']]=$row['years'];
+		$generation->setMultiOptions($opt);
+		
 		$rs_metion_opt = Application_Model_DbTable_DbGlobal::getAllMention();
 		$metion = new Zend_Dojo_Form_Element_FilteringSelect('metion');
 		$metion->setAttribs(array('dojoType'=>$this->filter,

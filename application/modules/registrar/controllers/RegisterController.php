@@ -13,10 +13,10 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     {
         
     }
-    public function addAction()
-    {
+    public function addAction(){
       if($this->getRequest()->isPost()){
       	$_data = $this->getRequest()->getPost();
+      	print_r($_data);exit();
       	$_model = new Registrar_Model_DbTable_DbwuRegister();
       	$_model->AddNewStudent($_data);
       }
@@ -32,7 +32,7 @@ class Registrar_RegisterController extends Zend_Controller_Action {
        $__student_card = array();
        $this->view->student_card = $__student_card;
        $db = new Registrar_Model_DbTable_DbwuRegister();
-       $this->view->invoice_num = $db->getGaneratInvoiceWU();
+       //$this->view->invoice_num = $db->getGaneratInvoiceWU();
        //get all dept
        $_db = new Application_Model_DbTable_DbGlobal();
        $this->view->all_dept = $_db->getAllFecultyName();

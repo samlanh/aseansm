@@ -63,7 +63,7 @@
 			});
 	}
 	function paymentTerm(){
-		generat=dijit.byId('generation').get('value');
+		generat=dijit.byId('study_year').get('value');
 		payment_term=dijit.byId('payment_term').get('value');
 		grade=dijit.byId('grade').get('value');
 		if(generat!='' && payment_term !='' && grade !=''){
@@ -170,7 +170,7 @@
 			//getTuitionFee();
 	});	
 
-	//value_invoice = '<?php echo $this->invoice_num;?>';
+	//value_invoice = '<?php //echo $this->invoice_num;?>';
 	//dijit.byId('reciept_no').attr('value',value_invoice);
 	//dijit.byId('reciept_no').set('readOnly',true);
 	}); 
@@ -221,7 +221,7 @@ fieldset{  background:none;}
 .red{ color: red; padding-left:5px;}
 </style>
 <?php $register = $this->frm_register;?>
-<form id='office_receipt' action="<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'wu-register')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form id='office_receipt' action="<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 <table  cellspacing="10" style="margin: 0 auto; width: 100%;">
 	<tr>
 		<td>
@@ -237,8 +237,8 @@ fieldset{  background:none;}
 						<tr>
 							<td><?php echo $tr->translate("STUDENT_ID");?></td>
 							<td><?php echo $register->getElement('stu_id');?></td>
-							<td style="width: 160px"><?php echo $tr->translate("GENERATION");?></td>
-							<td><?php echo $register->getElement('generation');?></td>
+							<td style="width: 160px"><?php echo $tr->translate("STUDY_YEAR");?></td>
+							<td><?php echo $register->getElement('study_year');?></td>
 						</tr>
 						<tr>
 						    <td><?php echo $tr->translate("NAME_KH");?></td>
@@ -320,7 +320,7 @@ function SubmitRegister(){
 }
 function printSave(){		
 	if(dijit.byId('office_receipt').validate()) {
-		dojo.byId("lb_receipt_no").innerHTML = dijit.byId("reciept_no").get('value');
+		/*dojo.byId("lb_receipt_no").innerHTML = dijit.byId("reciept_no").get('value');
 		//dojo.byId("lb_paydate").innerHTML = dijit.byId("pay_date").value;
 		dojo.byId("lb_kh_stuname").innerHTML = dijit.byId("kh_name").get('value');
 		dojo.byId("lb_en_stuname").innerHTML = dijit.byId("en_name").get('value');
@@ -342,6 +342,7 @@ function printSave(){
 		dojo.byId("lb_amount_paid").innerHTML = dijit.byId("payment_paid").get('value');
 		//dojo.byId("lb_in_khmer").innerHTML = dijit.byId("paid_kh").value;
 		//dojo.byId("lb_byuser").innerHTML = dijit.byId("kh_name").value;
+		*/
 		dijit.byId("terms").show();	
 	}
 	
@@ -373,26 +374,18 @@ function printSave(){
 			</style>	
 			<table class="print" bgcolor="fef7e4" cellspacing="5" style="width: 21cm;height: 14cm; font-size:13px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;">
 					<tr height="50px">
-						<td><img src="<?php echo $base_url.'/images/logo-letter.gif';?>" width="100%"/></td>
-					   	<td align="center" colspan="2">	
+					   	<td align="center" colspan="4">	
 				            <strong style="font:bold 20px 'Kh Muol';"><?php echo $keycode['reciept_kh'];?></strong><br/>
 							<strong style="font-size: 20px;font-weight:bold"><?php echo $keycode['reciept_en'];?></strong><br/>
 			            </td>
-			            <td></td>
 				   </tr>
-				   <tr height="50px">
-						<td>
-							<div style="border:1px solid #e14109;font-size:8pt; width:170px;; padding:10px; text-align: center;">
-			            		<label style=" color:#e14109;">ប្រាក់ដែលបង់រួចមិនអាចដកវិញបានទេ</label><br />
-			            		<label style=" color:#e14109; text-align: center">Nonrefundable</label>
-			            	</div></td>
-					   	<td></td>
-			            <td align="center" colspan="2">
-			            	<div style="border:1px solid rgba(14, 0, 107, 1);font-size:12; width:160px; border-radius:10px; padding:10px;">
-			            		Receipt N<sup>o</sup> : <label style=" color:#e14109;" id="lb_receipt_no"></label><br />
-			            		Date : <?php echo date("d-M-Y");?>
-			            	</div>
-			            </td>
+				   <tr>
+						<td ><label class="khmerbold">នាម - គោត្តនាម</label><div class="h"></div>Name(First|Last):</td>
+						<td >&nbsp;<label class="value khmerbold" id="lb_kh_stuname" ></label></td>
+						<td></td>
+						<td></td>
+						<td><label class="khmerbold">អក្សរឡាតាំង </label><div class="h"></div>In English</td>
+					   	<td><strong>&nbsp; <label id="lb_en_stuname" class="value"></label></strong></td>
 				   </tr>
 					<tr>
 						<td width="15%"><label class="khmerbold">នាម - គោត្តនាម</label><div class="h"></div>Name(First|Last):</td>
@@ -459,7 +452,6 @@ function printSave(){
 						<td>Paid Date</td>
 						<td>&nbsp; : 23/02/2014</td>
 				   </tr>
-				  <?php echo $this->footer;?>
 			</table>
 		</div>
 		<iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>	
