@@ -12,13 +12,11 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 		$rs_rows = $db_student->getAllStudent();
 		$list = new Application_Form_Frmtable();
 		if(!empty($rs_rows)){
-				$glClass = new Application_Model_GlobalClass();
-				$rs_rows = $glClass->getImgActive($rs_rows, BASE_URL, true);
 			} 
 			else{
 				$result = Application_Model_DbTable_DbGlobal::getResultWarning();
 			}
-			$collumns = array("STUDENT NAME EU","STUDENT NAME KH","GENDER","BATCH","SEMESTER");
+			$collumns = array("STUDENT NAME","ឈ្មោះសិស្ស","SEX","GRADE","NATIONALITY","DOB","PHONE","EMAIL","STATUS");
 			$link=array(
 					'module'=>'foundation','controller'=>'register','action'=>'edit',
 			);
@@ -26,6 +24,18 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 			
 	}
 	function addAction(){
+		if($this->getRequest()->isPost()){
+			try{
+				$_data = $this->getRequest()->getPost();
+				$_add = new Foundation_Model_DbTable_DbStudent();
+				$_add->addStudent($_data);
+				Application_Form_FrmMessage::message("INSERT_SUCCESS");
+			}catch(Exception $e){
+				Application_Form_FrmMessage::message("INSERT_FAIL");
+				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			}
+		}
+		
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$this->view->degree = $rows = $_db->getAllFecultyName();
 		$this->view->occupation = $row =$_db->getOccupation();
@@ -35,6 +45,7 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 		$id=$this->getRequest()->getParam("id");
 		$db= new Foundation_Model_DbTable_DbStudent();
 		$row = $db->getStudentById($id);
+		
 		if($this->getRequest()->isPost())
 		{
 			try{
@@ -42,6 +53,7 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 				$data["id"]=$id;
 				$db = new Foundation_Model_DbTable_DbStudent();
 				$row=$db->updateStudent($data);
+				
 				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/foundation/register/index");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("EDIT_FAIL");
