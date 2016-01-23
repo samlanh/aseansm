@@ -9,50 +9,49 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	 
     }
 	function addRegister($data){
-		print_r($data);exit();
 		$db = $this->getAdapter();//ស្ពានភ្ជាប់ទៅកាន់Data Base
 		$db->beginTransaction();//ទប់ស្កាត់មើលការErrore , មានErrore វាមិនអោយចូល
 			try{
 			$arr=array(
-						'client_id'=>$data['send_name'],
-						'payment_term'=>$data['pay_term'],
-						'date_keeping'=>$data['date'],
-						'amount_keeping'=>$data['amount_month'],
-						'exp_date'=>$data['epx_date'],
-						'invoice_number'=>$data['report'],
-						
-						'status'=>$data['withdraw_dollar'],
-						'date'=>$data['withdraw_bath'],
-						'user_id'=>$data['withdraw_riel'],
+						'stu_code'=>$data['stu_id'],
+						'academic_year'=>$data['study_year'],
+						'stu_khname'=>$data['kh_name'],
+						'stu_enname'=>$data['en_name'],
+						'sex'=>$data['sex'],
+						'session'=>$data['session'],
+						'degree'=>$data['dept'],
+						'grade'=>$data['grade'],
+						'user_id'=>$this->getUserId(),
 				);
-// 			print_r($arr);exit();
-			$id=$this->insert($arr);
+			  $id= $this->insert($arr);
 				$this->_name='rms_student_payment';
-				$ids = explode(',',$data['record_row']);
-				//print_r($ids);exit();
-				foreach ($ids as $i){
-					$arr = array(
-							'keeping_id'=>$id,
-							'currency_type'=>$data['type_money'.$i],
-							'money_inacc'=>$data['money_inacc'.$i],
-							'cut_money'=>empty($data['is_spacial'.$i])?0:1,
-							'commission'=>$data['commission'.$i],
-							'total_amount'=>$data['total_amount'.$i],
-							'recieve_amount'=>$data['recieve_amount'.$i],
-							'lbltotal_return'=>$data['lbltotal_return'.$i],
-							'recieve_amount'=>$data['amount_exchanged'.$i],
-							'note'=>$data['note'.$i],
-					);
-					$this->insert($arr);
-				}
+				$arr=array(
+						'student_id'=>$id,
+						'receipt_number'=>$data['reciept_no'],
+						'payment_term'=>$data['payment_term'],
+						'tuition_fee'=>$data['tuitionfee'],
+						'discount_percent'=>$data['discount'],
+						'other_fee'=>$data['remark'],
+						'admin_fee'=>$data['addmin_fee'],
+						'total'=>$data['total'],
+						'paid_amount'=>$data['books'],
+						'balance_due'=>$data['remaining'],
+						'note'=>$data['not'],
+						'amount_in_khmer'=>$data['char_price'],
+						'user_id'=>$this->getUserId(),
+				);
+				$this->insert($arr);
 				$db->commit();//if not errore it do....
 			}catch (Exception $e){
 				$db->rollBack();//អោយវាវិលត្រលប់ទៅដើមវីញពេលណាវាជួបErrore
 			}
 		}
+    function getAllStudentRegister(){
+    	
+    }
     function getAllGrade($grade_id){
     	$db = $this->getAdapter();
-    	$sql = "SELECT major_id As id,major_enname As name FROM $this->_name WHERE dept_id=".$grade_id;
+    	$sql = "SELECT major_id As id,major_enname As name FROM rms_major WHERE dept_id=".$grade_id;
     	$order=' ORDER BY id DESC';
     	return $db->fetchAll($sql.$order);
     }
@@ -67,6 +66,41 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	$sql = "SELECT id,CONCAT(from_academic,'-',to_academic) AS years FROM rms_tuitionfee WHERE `status`=1";
     	$order=' ORDER BY id DESC';
     	return $db->fetchAll($sql.$order);
+    }
+    public function getNewAccountNumber($type){
+    	$db = $this->getAdapter();
+    	$sql="  SELECT stu_id  FROM rms_student ORDER BY  stu_id DESC LIMIT 1 ";
+    	$acc_no = $db->fetchOne($sql);
+    	$new_acc_no= (int)$acc_no+1;
+    	//echo $new_acc_no;exit();
+    	$acc_no= strlen((int)$acc_no+1);
+    	if($type==1){
+    		$pre='K';
+    	}
+    	else if($type==2){
+    		$pre='P';
+    	}
+    	else if($type==3){
+    		$pre='S';
+    	}else {
+    		$pre='H';
+    	}
+    	for($i = $acc_no;$i<5;$i++){
+    		$pre.='0';
+    	}
+    	return $pre.$new_acc_no;
+    }
+    public function getRecieptNo(){
+    	$db = $this->getAdapter();
+    	$sql="SELECT id  FROM rms_student_payment ORDER BY  id DESC LIMIT 1 ";
+    	$acc_no = $db->fetchOne($sql);
+    	$new_acc_no= (int)$acc_no+1;
+    	$acc_no= strlen((int)$acc_no+1);
+    	$pre=0;
+    	for($i = $acc_no;$i<5;$i++){
+    		$pre.='0';
+    	}
+    	return $pre.$new_acc_no;
     }
 }
 

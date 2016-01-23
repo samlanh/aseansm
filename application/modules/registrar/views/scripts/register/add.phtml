@@ -25,6 +25,7 @@
 	    	dept_id = dijit.byId('dept').get('value');
 	    	dijit.byId('grade').attr('value','');
 	    	getallModel(dept_id); 
+	    	getStudentNo(dept_id);
 	    }
 	}, "dept");
     
@@ -55,6 +56,25 @@
 					//alert(data);
 					grade_store  = getDataStorefromJSON('id','name', data);
 				    dijit.byId('grade').set('store',grade_store);   
+
+				},
+				error: function(err) {
+					alert(err);
+				}
+			});
+	}
+	var url_getstuno = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-stu-no')); ?>';
+	function getStudentNo(dept_id){
+			dojo.xhrPost({
+				url:url_getstuno,
+				content:{
+					'dept_id':dept_id
+					},
+				handleAs:"json",
+				load: function(data) {
+					//alert(data);
+					//url_getstuno  = getDataStorefromJSON('id','name', data);
+					 dijit.byId('stu_id').attr('value',data);   
 
 				},
 				error: function(err) {
@@ -233,6 +253,8 @@ fieldset{  background:none;}
 							<td><?php echo $register->getElement('is_new');?>
 								&nbsp;&nbsp;&nbsp;&nbsp;<label for='is_subsped'>Subspend</label><?php echo $register->getElement('is_hold');?>
 							</td>
+							<td><?php echo $tr->translate("RECEIPT_NO");?></td>
+							<td><?php echo $register->getElement('reciept_no');?></td>
 						</tr>
 						<tr>
 							<td><?php echo $tr->translate("STUDENT_ID");?></td>
@@ -296,7 +318,7 @@ fieldset{  background:none;}
 						</tr>
 						<tr>
 							<td colspan="4" align="center">
-								<input type="button" onclick="SubmitRegister();" value="រក្សាទុក" label="រក្សាទុក" id="submitButton" dojoType="dijit.form.Button" 
+								<input type="submit" name="save_new" id="save_new" value="រក្សាទុក" label="រក្សាទុក"  dojoType="dijit.form.Button" 
 								 iconClass="dijitEditorIcon dijitEditorIconSave" />
 								 <input type="button" value="រក្សាទុក & បោះពុម្ព" label="រក្សាទុក & បោះពុម្ព" id="busyButton" dojoType="dijit.form.Button" 
 									iconClass="dijitEditorIcon dijitEditorIconPrint" onclick="printSave();"/> 
@@ -374,18 +396,26 @@ function printSave(){
 			</style>	
 			<table class="print" bgcolor="fef7e4" cellspacing="5" style="width: 21cm;height: 14cm; font-size:13px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;">
 					<tr height="50px">
-					   	<td align="center" colspan="4">	
+						<td><img src="<?php echo $base_url.'/images/logo-letter.gif';?>" width="100%"/></td>
+					   	<td align="center" colspan="2">	
 				            <strong style="font:bold 20px 'Kh Muol';"><?php echo $keycode['reciept_kh'];?></strong><br/>
 							<strong style="font-size: 20px;font-weight:bold"><?php echo $keycode['reciept_en'];?></strong><br/>
 			            </td>
+			            <td></td>
 				   </tr>
-				   <tr>
-						<td ><label class="khmerbold">នាម - គោត្តនាម</label><div class="h"></div>Name(First|Last):</td>
-						<td >&nbsp;<label class="value khmerbold" id="lb_kh_stuname" ></label></td>
-						<td></td>
-						<td></td>
-						<td><label class="khmerbold">អក្សរឡាតាំង </label><div class="h"></div>In English</td>
-					   	<td><strong>&nbsp; <label id="lb_en_stuname" class="value"></label></strong></td>
+				   <tr height="50px">
+						<td>
+							<div style="border:1px solid #e14109;font-size:8pt; width:170px;; padding:10px; text-align: center;">
+			            		<label style=" color:#e14109;">ប្រាក់ដែលបង់រួចមិនអាចដកវិញបានទេ</label><br />
+			            		<label style=" color:#e14109; text-align: center">Nonrefundable</label>
+			            	</div></td>
+					   	<td></td>
+			            <td align="center" colspan="2">
+			            	<div style="border:1px solid rgba(14, 0, 107, 1);font-size:12; width:160px; border-radius:10px; padding:10px;">
+			            		Receipt N<sup>o</sup> : <label style=" color:#e14109;" id="lb_receipt_no"></label><br />
+			            		Date : <?php echo date("d-M-Y");?>
+			            	</div>
+			            </td>
 				   </tr>
 					<tr>
 						<td width="15%"><label class="khmerbold">នាម - គោត្តនាម</label><div class="h"></div>Name(First|Last):</td>
@@ -452,6 +482,7 @@ function printSave(){
 						<td>Paid Date</td>
 						<td>&nbsp; : 23/02/2014</td>
 				   </tr>
+				  <?php echo $this->footer;?>
 			</table>
 		</div>
 		<iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>	

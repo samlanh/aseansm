@@ -135,8 +135,12 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		$_invoice_no->setAttribs(array('dojoType'=>$this->tvalidate,'class'=>'fullside',
 				//'onkeyup'=>'CheckReceipt()'
 				'required'=>'true',
-				'class'=>'fullside'
+				'readonly'=>'true',
+				'style'=>'color:red;'
 				));
+		$reciept=new Registrar_Model_DbTable_DbRegister();
+		$opt=$reciept->getRecieptNo();
+		$_invoice_no->setValue($opt);
 		
 		$generation = new Zend_Dojo_Form_Element_FilteringSelect('study_year');
 		$generation->setAttribs(array('dojoType'=>'dijit.form.FilteringSelect','class'=>'fullside',
@@ -176,7 +180,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 				'Onchange'=>"getNewStudent();"));
 		
 		$_studid = new Zend_Dojo_Form_Element_TextBox('stu_id');
-		$_studid->setAttribs(array('dojoType'=>$this->text,'class'=>'fullside',));
+		$_studid->setAttribs(array('dojoType'=>$this->text,'class'=>'fullside','style'=>'color:red;','readonly'=>'true'));
 		
 		$_sex =  new Zend_Dojo_Form_Element_FilteringSelect('sex');
 		$_sex->setAttribs(array('dojoType'=>$this->filter,'class'=>'fullside',));
@@ -331,7 +335,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 				//'onkeyup'=>'CheckReceipt()'
 				'dojoType'=>$this->t_num,
 				'required'=>'true',
-				'class'=>'fullside'
+				'style'=>'color: red;'
 				));
 		
 		$_studid = new Zend_Dojo_Form_Element_TextBox('stu_id');

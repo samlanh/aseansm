@@ -1,24 +1,59 @@
 <?php
 class Registrar_RegisterController extends Zend_Controller_Action {
-	
-	
+	protected $tr;
+	const REDIRECT_URL ='/registrar';
     public function init()
     {    	
      /* Initialize action controller here */
     	header('content-type: text/html; charset=utf8');
+    	$this->tr=Application_Form_FrmLanguages::getCurrentlanguage();
+    	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
     	
 	}
-
-    public function indexAction()
-    {
-        
+    public function indexAction(){
+    	try{
+    		$db = new Registrar_Model_DbTable_DbRegister();
+    		//     		if($this->getRequest()->isPost()){
+    		//     			$search=$this->getRequest()->getPost();
+    		//     		}
+    		//     		else{
+    		//     			$search = array(
+    		//     					'adv_search' => '',
+    		//     					'search_status' => -1,
+    		//     					'start_date'=> date('Y-m-01'),
+    		//     					'end_date'=>date('Y-m-d'));
+    		//     		}
+    		$rs_rows= $db->getAllRoomType();
+    		$glClass = new Application_Model_GlobalClass();
+    		$rs_rows = $glClass->getImgActive($rs_rows, BASE_URL, true);
+    		$list = new Application_Form_Frmtable();
+    		$collumns = array("ROOM_TYPE","STATUS");
+    		$link=array(
+    				'module'=>'room','controller'=>'index','action'=>'edit',
+    		);
+    		$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('type'=>$link));
+    	}catch (Exception $e){
+    		Application_Form_FrmMessage::message("Application Error");
+    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+    	}
     }
     public function addAction(){
       if($this->getRequest()->isPost()){
       	$_data = $this->getRequest()->getPost();
-      	print_r($_data);exit();
-      	$_model = new Registrar_Model_DbTable_DbwuRegister();
-      	$_model->AddNewStudent($_data);
+      	try {
+      		$db = new Registrar_Model_DbTable_DbRegister();
+      		if(isset($_data['save_new'])){
+      			$db->addRegister($_data);
+      			Application_Form_FrmMessage::message($this->tr->translate('INSERT_SUCCESS'));
+      		}else{
+      			$db->addRegister($_data);
+      			Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL . '/register/index');
+      		}
+      	} catch (Exception $e) {
+      		Application_Form_FrmMessage::message($this->tr->translate('INSERT_FAIL'));
+      		$err =$e->getMessage();
+      		Application_Model_DbTable_DbUserLog::writeMessageError($err);
+      	}
       }
        $frm = new Registrar_Form_FrmRegister();
        $frm_register=$frm->FrmRegistarWU();
@@ -95,6 +130,15 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     		//print_r($grade);exit();
     		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
     		print_r(Zend_Json::encode($grade));
+    		exit();
+    	}
+    }
+    function getStuNoAction(){
+    	if($this->getRequest()->isPost()){
+    		$data=$this->getRequest()->getPost();
+    		$db = new Registrar_Model_DbTable_DbRegister();
+    		$stu_no = $db->getNewAccountNumber($data['dept_id']);
+    		print_r(Zend_Json::encode($stu_no));
     		exit();
     	}
     }
