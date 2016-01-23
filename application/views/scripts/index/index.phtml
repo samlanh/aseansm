@@ -19,28 +19,23 @@ $base_url = Application_Form_FrmMessage::getUrl("/");
 	}
 </style>
 <link rel="stylesheet" href="css/stylelogin.css"/>
-<link rel="shortcut icon" href="images/icon.ico" type="image/x-icon"/>
+<link rel="shortcut icon" href="images/icon.png" type="image/x-icon"/>
 <script type="text/javascript">	
 	dojo.require("dijit.form.ValidationTextBox");
 	dojo.require('dijit.form.Form');	
 	dojo.require('dijit.form.Button');
-
-	dojo.require("dijit.layout.BorderContainer");
-	dojo.require("dijit.layout.TabContainer");
-	dojo.require("dijit.layout.AccordionContainer");
-	dojo.require("dijit.layout.ContentPane");
-	dojo.require("dojo.parser");
 	
 </script>
 </head>
 <body class="tundra">
 <div id="header">
-	<table>
-		<tr align="center">
-			<td class="title"><label class="textgreen footertitle"​ style="font:bold 22px 'Khmer OS Muol Light'; text-align: center;"><?php echo $this->data["system_name"];//echo"ប្រព័ន្ធចុះឈ្មោះនិស្សិត ​";//echo"ážŸáž¶áž€áž›ážœáž·áž‘áŸ’áž™áž¶áž›áŸ�áž™ ážœáŸ�ážŸáŸ’áž‘áž¾áž“";//echo $this->data['mainbranch'];?></label></td>
-		</tr>
+	<table width="100%">
 		<tr>
-			<td class="textblue" align="center"></td>
+			<td class="title" width="33%"><label class="textgreen footertitle"​ style="font:bold 22px 'Khmer OS Muol Light'; text-align: center;"><img src="<?php echo $this->baseUrl()."/images/logo.png"?>" height="70px" /></label></td>
+			<td class="textblue" align="center">
+				<div class="textgreen footertitle"​ style="text-align: center; font-weight:bold;font-family: Arial Black;color:#BDC5CD; font-size: 22px;font-family:'Khmer MEF2'">ប្រព័ន្ធគ្រប់គ្រង ការចុះឈ្មោះសិស្ស</div>
+				<label class="textgreen footertitle"​ style="text-align: right; font-weight:bold;font-family: Arial Black;color:#BDC5CD; font-size: 22px;line-height: 17px;"><strong>S</strong>tudent <strong>M</strong>anagement <strong>S</strong>ystem</label></td>
+			<td class="textblue" align="left" width="33%"></td>
 		</tr>
 	</table>
 </div>
@@ -51,7 +46,8 @@ $base_url = Application_Form_FrmMessage::getUrl("/");
 	<table cellpadding="0" cellspacing="0" id="main">
 		<tr>
 			<td style="width: 472px;padding-left:50px;" >				
-				<img alt="<?php ?>" src="<?php echo $base_url.$this->data['logo-path-name']?>">
+				<img alt="<?php ?>" src="<?php //echo $base_url.$this->data['logo-path-name']?>">
+				<img src="<?php echo $this->baseUrl()."/images/camapp.png"?>" height="70px" />
 			</td>
 			<td valign="top" style="width: 120px">
 				<label class="lblheader"></label>
@@ -121,7 +117,7 @@ $base_url = Application_Form_FrmMessage::getUrl("/");
 	</table>	
 </div>
 <div id="footer">
-	<table id="main">
+	<table id="main" border="1">
 		<tr>
 			<td><br />
 				<label class="textgreen footertitle">អាសយដ្ឋាន​ ៖</label>
@@ -138,6 +134,7 @@ $base_url = Application_Form_FrmMessage::getUrl("/");
 				<br />
 			</td>
 			<td align="right" class="textwithe" rowspan="2" valign="bottom">
+			<img src="<?php echo $this->baseUrl()."/images/camapp.png"?>" height="70px" />
 				<label class="textgreen footertitle">បង្កើតដោយ៖</label>
 				<a href="http://western.edu.kh/" target="_blank"><label class="textyellow footertitle">
 					<?php echo $this->data['power_by']?>
