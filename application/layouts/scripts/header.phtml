@@ -13,7 +13,9 @@
 	  $backup=$this->url(array('module'=>'backup','controller'=>'index','action'=>'index'), null, true);
       $user=$this->url(array('module'=>'user','controller'=>'index','action'=>'index'), null, true);
       $acl=$this->url(array('module'=>'rsvAcl','controller'=>'index','action'=>'index'), null, true);
-	  $module=Zend_Controller_Front::getInstance()->getRequest()->getModuleName();
+      $setting=$this->url(array('module'=>'setting','controller'=>'index','action'=>'index'), null, true);
+       
+      $module=Zend_Controller_Front::getInstance()->getRequest()->getModuleName();
 	  
 	  $item_arr=array(
 		'index'=>'<li class="link">
@@ -51,21 +53,17 @@
 							<span>'.$tr->translate("របាយការណ៏").'</span>
 						</a>
 					   </li>',
-	    'backup'=>'<li class="link">
-						<a title="BACKUP DATABASE" href="'.$backup.'">
-							<span>'.$tr->translate("BACKUP DB").'</span>
-						</a>
-					 </li>',	  
 	  	'rsvAcl'=>'<li class="link">
 				  		<a title="acl" href="'.$acl.'">
 				  		<span>'.$tr->translate("ACL").'</span>
 				  		</a>
 				  		</li>',
-	  'logout'=>'<li class="link">
-	  		<a title="USER" href="'.$user.'">
-	  		<span>'.$tr->translate("LOGOUT").'</span>
+	  		'setting'=>'<li class="link">
+	  		<a title="USER" href="'.$setting.'">
+	  		<span>'.$tr->translate("SETTING").'</span>
 	  		</a>
 	  		</li>',
+	 
 	  );
 ?>  
 <div id="menu">
@@ -80,5 +78,11 @@
 				}
 			} 
 		?>
+		<li style="float: right;">
+			<a href="" class="langiconen" onclick="changeLange(2);"></a>
+		</li>
+		<li style="float: right;  border-left: 1px solid #fff; border-right: 1px solid #fff;">
+		<a href="" class="langiconkh" onclick="changeLange(1);"></a>
+		</li>
 	</ul>
 </div>
