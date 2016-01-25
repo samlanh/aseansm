@@ -26,7 +26,7 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 										<tr>
 											<?php //print_r($this->rs);?>
 											<td style="width: 100px"><?php echo $tr->translate("From Year")?></td>
-											<td><select dojoType="dijit.form.FilteringSelect" required="true"  id="from_year" name="from_year" type="text" >
+											<td><select dojoType="dijit.form.FilteringSelect" required="true" class="fullside"  id="from_year" name="from_year" type="text" >
          										<?php 
         											 for($i=2014;$i<=date('Y')+1;$i++){?>
           											<option value="<?php echo $i;?>"<?php if($i==$this->rs['from_year']) echo 'selected="selected"';?> ><?php echo $i; ?></option>
@@ -36,7 +36,7 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 										</tr>
 										<tr>
 											<td style="width: 100px"><?php echo $tr->translate("To Year")?></td>
-											<td><select dojoType="dijit.form.FilteringSelect" required="true"  id="toyear" name="toyear" type="text" >
+											<td><select dojoType="dijit.form.FilteringSelect" required="true" class="fullside"  id="toyear" name="toyear" type="text" >
          										<?php 
          											for($i=2014;$i<=date('Y')+1;$i++){?>
           											<option value="<?php echo $i;?>"<?php if($i==$this->rs['toyear']) echo 'selected="selected"';?> ><?php echo $i; ?></option>
@@ -70,7 +70,7 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 										</tr>
 										<tr>
 											<td style="width: 5px"><?php echo $tr->translate("Status")?></td>
-											<td><select dojoType="dijit.form.FilteringSelect" required="true"  id="status" name="status" type="text">								
+											<td><select dojoType="dijit.form.FilteringSelect" required="true"  class="fullside" id="status" name="status" type="text">								
 												<option value="1"><?php echo $tr->translate("Active");?></option>
 												<option value="0"><?php echo $tr->translate("Deactive");?></option>
 										</select></td>
