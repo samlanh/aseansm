@@ -55,22 +55,21 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 											<td></td>
 										</tr>
 										<tr>
-											<td style="width: 100px"><?php echo $tr->translate("Academic/End")?></td>
-											<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="start_end" name="start_end" value=""></td>
-										</tr>
-										<tr>
 											<td style="width: 5px"><?php echo $tr->translate("Duration")?></td>
 											<td><input dojoType="dijit.form.TextBox" class="fullside" id="duration" name="duration" value="" type="text"></td>
 											<td><?php  //echo $techer->getElement('issued1');?></td>
 										</tr>
-										
+										<tr>
+											<td style="width: 100px"><?php echo $tr->translate("Academic/End")?></td>
+											<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="start_end" name="start_end" value=""></td>
+										</tr>
 										<tr>
 											<td style="width: 5px"><?php echo $tr->translate("Note")?></td>
 											<td><input dojoType="dijit.form.TextBox" class="fullside" id="note" name="note" value="" type="text"></td>
 											<td><?php  //echo $techer->getElement('province');?></td>
 										</tr>
 										<tr>
-											<td style="width: 5px"><?php echo $tr->translate("Stature")?></td>
+											<td style="width: 5px"><?php echo $tr->translate("Status")?></td>
 											<td><select dojoType="dijit.form.FilteringSelect" required="true"  id="status" name="status" type="text">								
 												<option value="1"><?php echo $tr->translate("Active");?></option>
 												<option value="0"><?php echo $tr->translate("Deactive");?></option>
@@ -121,7 +120,7 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 								<table style="width:330px; margin-left:130px;" cellspacing="6">
 									<fieldset>
 										<td>
-											<legend align="center"><th>Year Ly</th></legend>
+											<legend align="center"><th>Yearly</th></legend>
 												<tr>
 													<td style="width: 100px"><?php echo $tr->translate("Start Date")?></td>
 													<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="yearly_start" name="yearly_start" value="" ></td>
