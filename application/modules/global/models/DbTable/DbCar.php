@@ -18,7 +18,8 @@ class Global_Model_DbTable_DbCar extends Zend_Db_Table_Abstract
     			'tel'=>$data['Tel'],
     			'zone'=>$data['Zone'],
     			'note'=>$data['Note'],
-    			'userid'=>$this->getUserId()
+    			'userid'=>$this->getUserId(),
+    			'status'=>$data['status']
     			);  	
     	$this->insert($arr);   	
     }
@@ -45,17 +46,19 @@ class Global_Model_DbTable_DbCar extends Zend_Db_Table_Abstract
     	$row=$db->fetchRow($sql);
     	return $row;
     }
-    public function updateCar($data,$id){
+    public function updateCar($data){
     	$_arr=array(
+    			
     			'carid'=>$data['Car_ID'],
     			'carname'=>$data['Car_Name'],
     			'drivername'=>$data['Driver_Name'],
     			'tel'=>$data['Tel'],
     			'zone'=>$data['Zone'],
     			'note'=>$data['Note'],
+    			'status'=>$data['status']
     			
     	);
-    	$where=$this->getAdapter()->quoteInto("id=?", $id);
+    	$where=$this->getAdapter()->quoteInto("id=?", $data['id']);
     	$this->update($_arr, $where);
     }
     
