@@ -1,0 +1,154 @@
+<?php
+$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+echo $this->headTitle($tr->translate("Add Academiyear"));
+$baseurl =  Zend_Controller_Front::getInstance()->getBaseUrl();
+?>
+<script src="<?php echo $baseurl;?>/js/help.js"></script>
+<form id='frm_add_tran' action="<?php echo $this->url(array('module'=>'global','controller'=>'academicyear','action'=>'add')); ?>" 
+dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
+<script type="dojo/method" event="onSubmit">			
+			if(this.validate()) {
+				return true;
+			}else {
+				return false;
+			}
+</script>
+<table width="100%">
+	<tr>
+		<td>
+			<fieldset style="margin-top:-13px;">
+					<legend align="center" ><strong><?php echo $tr->translate("Academic Year");?></strong></legend>
+					<table style="margin: 0 auto; width: 100%;" cellspacing="10">
+						<td valign="top">
+							<fieldset>
+								<legend align="center">Academic</legend>
+									<table style="width:330px;" cellspacing="6">
+										<tr>
+											<?php //print_r($this->rs);?>
+											<td style="width: 100px"><?php echo $tr->translate("From Year")?></td>
+											<td><select dojoType="dijit.form.FilteringSelect" required="true"  id="from_year" name="from_year" type="text" >
+         										<?php 
+        											 for($i=2014;$i<=date('Y')+1;$i++){?>
+          											<option value="<?php echo $i;?>"<?php if($i==$this->rs['from_year']) echo 'selected="selected"';?> ><?php echo $i; ?></option>
+         											<?php }?>
+        										</select></td>
+											<td><?php //echo $techer->getElement('commnue');?></td>
+										</tr>
+										<tr>
+											<td style="width: 100px"><?php echo $tr->translate("To Year")?></td>
+											<td><select dojoType="dijit.form.FilteringSelect" required="true"  id="toyear" name="toyear" type="text" >
+         										<?php 
+         											for($i=2014;$i<=date('Y')+1;$i++){?>
+          											<option value="<?php echo $i;?>"<?php if($i==$this->rs['toyear']) echo 'selected="selected"';?> ><?php echo $i; ?></option>
+         										<?php }?>
+        										</select></td>
+											<td><?php //echo $techer->getElement('home');?></td>
+										</tr>
+										<tr>
+											<td style="width: 100px;"><?php echo $tr->translate("Generation")?></td>
+								    		<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="generation" name="generation" value="" type="text"></td>
+								    		<td><?php //echo $academicyear->getElement('generation');?></td>
+										</tr>
+										<tr>
+											<td style="width: 100px"><?php echo $tr->translate("Academic/Start")?></td>
+											<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="study_start" name="study_start" value="" ></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td style="width: 100px"><?php echo $tr->translate("Academic/End")?></td>
+											<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="start_end" name="start_end" value=""></td>
+										</tr>
+										<tr>
+											<td style="width: 5px"><?php echo $tr->translate("Duration")?></td>
+											<td><input dojoType="dijit.form.TextBox" class="fullside" id="duration" name="duration" value="" type="text"></td>
+											<td><?php  //echo $techer->getElement('issued1');?></td>
+										</tr>
+										
+										<tr>
+											<td style="width: 5px"><?php echo $tr->translate("Note")?></td>
+											<td><input dojoType="dijit.form.TextBox" class="fullside" id="note" name="note" value="" type="text"></td>
+											<td><?php  //echo $techer->getElement('province');?></td>
+										</tr>
+										<tr>
+											<td style="width: 5px"><?php echo $tr->translate("Stature")?></td>
+											<td><select dojoType="dijit.form.FilteringSelect" required="true"  id="status" name="status" type="text">								
+												<option value="1"><?php echo $tr->translate("Active");?></option>
+												<option value="0"><?php echo $tr->translate("Deactive");?></option>
+										</select></td>
+										</tr>										
+								</table>
+							</fieldset>
+						</td>
+						<td valign="top">
+						<fieldset>
+							<legend align="center">Tem Period</legend>
+								<table style="width:330px;" cellspacing="6">
+								<td>
+									<fieldset>
+										<legend align="center"><b>Quarter Period</b></legend>
+										<table style="width:330px;" cellspacing="6">
+											<tr>
+												<td style="width: 100px"><?php echo $tr->translate("Start Date")?></td>
+												<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="quarter_start" name="quarter_start" value="" ></td>
+												<td></td>
+											</tr>
+											
+											<tr>
+												<td style="width: 100px"><?php echo $tr->translate("End Date")?></td>
+												<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="quarter_end" name="quarter_end" value="" ></td>
+												<td></td>
+											</tr>
+										</table>
+									</fieldset>
+								</td>
+								<td valign="top">
+									<fieldset>
+										<legend align="center"><b>Semester</b></legend>
+										<table style="width:330px;" cellspacing="6">
+											<tr>
+												<td style="width: 100px"><?php echo $tr->translate("Start Date")?></td>
+												<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="semester_start" name="semester_start" value="" ></td>
+												<td></td>
+											</tr>
+											<tr>
+												<td style="width: 100px"><?php echo $tr->translate("End Date")?></td>
+												<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="semester_end" name="semester_end" value="" ></td>
+												<td></td>
+											</tr>
+										</table>
+									</fieldset>
+								</td>
+								<table style="width:330px; margin-left:130px;" cellspacing="6">
+									<fieldset>
+										<td>
+											<legend align="center"><th>Year Ly</th></legend>
+												<tr>
+													<td style="width: 100px"><?php echo $tr->translate("Start Date")?></td>
+													<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="yearly_start" name="yearly_start" value="" ></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td style="width: 5px"><?php echo $tr->translate("End Date")?></td>
+													<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="yearly_end" name="yearly_end" value="" type="text"></td>
+													<td><?php  //echo $techer->getElement('issued1');?></td>
+												</tr>
+										</td>
+									</fieldset>
+								</table>
+							</table>
+						</fieldset>
+						<tr>
+							<td colspan="6" align="center">
+								<input iconClass="dijitIconClear" type="reset" value="សំអាត" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
+									<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('SAVECLOSE');?>" dojoType="dijit.form.Button" 
+										iconClass="dijitEditorIcon dijitEditorIconSave" />
+									<input type="submit" value="save_new" name="save_new" label="<?php echo $tr->translate('SAVENEW');?>" dojoType="dijit.form.Button" 
+										iconClass="dijitEditorIcon dijitEditorIconSave" />
+							</td>
+						</tr>
+					</table>
+				</fieldset>
+		</td>
+	</tr>
+</table>
+</form>
