@@ -13,7 +13,7 @@ class Global_Model_DbTable_DbAcademicyear extends Zend_Db_Table_Abstract
 		$db->beginTransaction();
 		try{
 			$_arr=array(
-					'fromyear' => $_data['fromyear'],
+					'fromyear' => $_data['from_year'],
 					'toyear' => $_data['toyear'],
 					'batch' => $_data['generation'],
 					'study_start' => $_data['study_start'],
@@ -49,7 +49,7 @@ class Global_Model_DbTable_DbAcademicyear extends Zend_Db_Table_Abstract
 		$db->beginTransaction();
 		try{
 		$_arr=array(
-					'fromyear' => $_data['fromyear'],
+					'fromyear' => $_data['from_year'],
 					'toyear' => $_data['toyear'],
 					'batch' => $_data['generation'],
 					'study_start' => $_data['study_start'],
