@@ -70,30 +70,30 @@ dojo.ready(function(){
 					      		</tr>
 					      		<tr>
 					      			<td  title="ឈ្មោះជាភាសារខ្មែរ"><?php echo $tr->translate("NAME_KH");?>*</td>
-									<td><input class="fullside" tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="name_kh" name="name_kh" value="" type="text" required="required"></td>	
+									<td><input class="fullside" tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="name_kh" name="name_kh" value="<?php echo $this->rs['stu_khname'];?>" type="text" required="required"></td>	
 									<td  title="ឈ្មោះជាភាសារអង់គ្លេស"><?php echo $tr->translate("NAME_EN");?>*</td>
-									<td><input class="fullside"  tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="name_en" name="name_en" value="" type="text" required="required"></td>
+									<td><input class="fullside"  tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="name_en" name="name_en" value="<?php echo $this->rs['stu_enname'];?>" type="text" required="required"></td>
 									<td title="បញ្ជូលភេទនិស្សិត"><?php echo $tr->translate("SEX");?>*</td>
 									<td>
 									    <select class="fullside"  tabindex="24" name="sex" id="sex" dojoType="dijit.form.FilteringSelect" >
-										    <option value="1" label="Active">Male</option>
-										    <option value="2" label="Deactive">Female</option>
+										    <option value="1" <?php if($this->rs['sex']==1){{ echo "selected='selected'"; }} ?>>Male</option>
+										    <option value="2"<?php if($this->rs['sex']==2){{ echo "selected='selected'"; }} ?>>Female</option>
 										</select>
 									</td>
 					      		</tr>
 					      		<tr>
 									<td title="សញ្ឃាតិ"><?php echo $tr->translate("សញ្ជាតិ");?></td>
-									<td><input class="fullside"  dojoType="dijit.form.TextBox"  id="studen_national" name="studen_national" value="" type="text" ></td>
+									<td><input class="fullside"  dojoType="dijit.form.TextBox"  id="studen_national" name="studen_national" value="<?php echo $this->rs['nationality'];?>" type="text" ></td>
 									<td title="ថ្ងៃខែឆ្នាំកំនើត"><?php echo $tr->translate("DOB");?></td>
-									<td><input class="fullside"  tabindex="20"  name="date_of_birth" id="date_of_birth" dojoType="dijit.form.DateTextBox"  value="now" type="text"/></td>
+									<td><input class="fullside"  tabindex="20"  name="date_of_birth" id="date_of_birth" dojoType="dijit.form.DateTextBox"  value="<?php echo $this->rs['dob'];?>" type="text"/></td>
 									<td title="លេខទូរស័ព្ទ"><?php echo $tr->translate("លេខទូរស័ព្ទ*");?></td>
-									<td><input class="fullside"  tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="st_phone" name="st_phone" value="" type="text" required="required" ></td>
+									<td><input class="fullside"  tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="st_phone" name="st_phone" value="<?php echo $this->rs['tel'];?>" type="text" required="required" ></td>
 					      		</tr>
 					      		<tr>
 									<td title="ទីកន្លែងកំណើត"><?php echo $tr->translate("ទីកន្លែងកំណើត ");?>*</td>
 									<td  colspan="6" >
 										<textarea class="fullside"   style="width: 100%;height: 60px !important;"
-										tabindex="21" dojoType=""  id="place_of_birth" name="place_of_birth" required="required"></textarea>
+										tabindex="21" dojoType=""  id="place_of_birth" name="place_of_birth" required="required"><?php echo $this->rs['address'];?></textarea>
 									</td>
 					      		</tr>
 					      		<tr>
@@ -101,23 +101,23 @@ dojo.ready(function(){
 					      		</tr>
 					      		<tr>
 					      			<td>លេខផ្ទះ</td>
-									<td><input class="fullside"  dojoType="dijit.form.TextBox"  id="home_note" name="home_note" value="" ></td>
+									<td><input class="fullside"  dojoType="dijit.form.TextBox"  id="home_note" name="home_note" value="<?php echo $this->rs['home_num'];?>" ></td>
 									<td>លេខផ្លូវ</td>
-									<td><input class="fullside"  dojoType="dijit.form.TextBox"  id="way_note" name="way_note" value="" type="text" ></td>
+									<td><input class="fullside"  dojoType="dijit.form.TextBox"  id="way_note" name="way_note" value="<?php echo $this->rs['street_num'];?>" type="text" ></td>
 									<td>ភូមិ</td>
-									<td><input class="fullside"  dojoType="dijit.form.TextBox"  id="village_note" name="village_note" value="" type="text" ></td>
+									<td><input class="fullside"  dojoType="dijit.form.TextBox"  id="village_note" name="village_note" value="<?php echo $this->rs['village_name'];?>" type="text" ></td>
 									
 								</tr>
 								<tr>								
 									<td>ឃុំ/សង្កាត់</td>
-									<td><input class="fullside"  dojoType="dijit.form.TextBox"  id="commun_note" name="commun_note" value="" type="text" ></td>
+									<td><input class="fullside"  dojoType="dijit.form.TextBox"  id="commun_note" name="commun_note" value="<?php echo $this->rs['commune_name'];?>" type="text" ></td>
 									<td>ស្រុក/ខ័ណ្ឌ</td>
-									<td><input class="fullside"  dojoType="dijit.form.TextBox"  id="distric_note" name="distric_note" value="" type="text" ></td>
+									<td><input class="fullside"  dojoType="dijit.form.TextBox"  id="distric_note" name="distric_note" value="<?php echo $this->rs['district_name'];?>" type="text" ></td>
 									<td>ខេត្ត/ក្រុង</td>
 									<td>
 										<select class="fullside"  name="student_province" id="student_province" dojoType="dijit.form.FilteringSelect"">
 											<?php if(!empty($this->province))foreach ($this->province as $row){?>
-											<option value="<?php echo $row['province_id']?>"><?php echo $row['province_kh_name']?></option>
+											<option value="<?php echo $row['province_id']?>"<?php if($row['province_id']==$this->rs['province_id']) echo 'selected="selected"';?>><?php echo $row['province_kh_name']?></option>
 											<?php }?>
 										</select>
 									</td>
@@ -129,7 +129,7 @@ dojo.ready(function(){
 					      		</tr>
 					      		<tr>
 					      			<td title="បញ្ជូលលេខសំគាល់និស្សិត"><?php echo $tr->translate("STUDENT_ID");?>*</td>
-									<td><input class="fullside"  dojoType="dijit.form.TextBox"  id="student_id" name="student_id" value="" type="text" ></td>
+									<td><input class="fullside"  dojoType="dijit.form.TextBox"  id="student_id" name="student_id" value="<?php echo $this->rs['stu_code']; ?>" type="text" ></td>
 									<td><?php echo $tr->translate("DEGREE");?>*</td>
 									<td>
 										<select class="fullside"  name="degree" id="degree" dojoType="dijit.form.FilteringSelect">
@@ -140,9 +140,9 @@ dojo.ready(function(){
 									</td>
 									<td><?php echo $tr->translate("SESSION");?>*</td>
 									<td>
-										 <select class="fullside"  tabindex="24" name="level" id="level" dojoType="dijit.form.FilteringSelect" >
-										    <option value="1" label="FULL_TIME"><?php echo $tr->translate("FULL_TIME");?></option>
-										    <option value="2" label="PART_TIME"><?php echo $tr->translate("PART_TIME");?></option>
+										 <select class="fullside"  tabindex="24" name="session" id="session" dojoType="dijit.form.FilteringSelect" >
+										    <option value="1"<?php if($this->row['session']==1) {{ echo "selected='selected'"; }}  ?> label="FULL_TIME"><?php echo $tr->translate("FULL_TIME");?></option>
+										    <option value="2"<?php if($this->row['session']==2) {{ echo "selected='selected'"; }}  ?> label="PART_TIME"><?php echo $tr->translate("PART_TIME");?></option>
 										</select>
 										
 								
@@ -153,20 +153,20 @@ dojo.ready(function(){
 									<td>
 									     <select class="fullside"  tabindex="24" name="from_time" id="from_time" dojoType="dijit.form.FilteringSelect" >
 										  <?php $i=0; foreach ($this->hour As $key=>$hour){ $i++;?> 
-										    <option value="<?php echo $key?>"><?php echo $hour; ?></option>
+										    <option value="<?php echo $key?>"<?php if($key==$this->row['from_time'])echo 'selected="selected"'?>><?php echo $hour; ?></option>
 										 <?php }?>
 										</select>
 									</td>
 									<td><?php echo $tr->translate("ដល់ម៉ោង");?>*</td>
 									<td>
 									    <select class="fullside"  tabindex="24" name="to_time" id="to_time" dojoType="dijit.form.FilteringSelect" >
-										  <?php $i=0; foreach ($this->hour As $key=>$hour){ $i++;?> 
-										    <option value="<?php echo $key?>"><?php echo $hour; ?></option>
+										  <?php $i=0; foreach ($this->hour As $key=>$hour){?> 
+										    <option value="<?php echo $key?>"<?php if($key==$this->row['to_time'])echo 'selected="selected"'?>><?php echo $hour; ?></option>
 										 <?php }?>
 										</select>
 									</td>
 									<td><?php echo $tr->translate("ថ្ងៃចូលរៀន");?></td>
-									<td ><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="start_date" name="start_date" value="" type="text"></td>
+									<td ><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="start_date" name="start_date" value="<?php echo $this->row['start_date'];?>" type="text"></td>
 								
 					      		</tr>
 					      		<tr>
@@ -174,9 +174,14 @@ dojo.ready(function(){
 					      			<td title="ស្ថានការណ៍"><?php echo $tr->translate("STATUS");?>*</td>
 									<td>
 										<select class="fullside"  dojoType="dijit.form.FilteringSelect" required="true"  id="status" name="status" type="text">								
-											<option value="1" ><?php echo $this->translate("Active")?></option>
-											<option value="0" ><?php echo $this->translate("Deactive")?></option>
+											<option value="1" <?php if($this->rs['status']==1){{ echo "selected='selected'"; }}?> ><?php echo $this->translate("Active")?></option>
+											<option value="0" <?php if($this->rs['status']==0){{ echo "selected='selected'"; }}?> ><?php echo $this->translate("Deactive")?></option>
 										</select>
+									</td>
+									<td title="ពណ៌នា"><?php echo $tr->translate("REMARK");?>*</td>
+									<td  colspan="4" >
+										<textarea class="fullside" class="fullside"   style="width: 644px;height: 60px !important;"
+										tabindex="21" dojoType=""  id="remark" name="remark" required="required"><?php echo $this->rs['remark'];?></textarea>
 									</td>
 					      		</tr>
 					      	</table>
@@ -193,113 +198,4 @@ dojo.ready(function(){
 					  </tr>
 					  </table>
 </form>
-<div class="dijitHidden">
-	<div data-dojo-type="dijit.Dialog" data-dojo-type="dijit.Dialog" id="pop_major" >
-		<form id='frm_major' dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<table class="height" >
-			<tr>
-				<td>មហាវិទ្យាល័យ</td>
-				<td><input dojoType="dijit.form.TextBox"  id="facultyid" name="facultyid" value="" type="hidden">
-				<input dojoType="dijit.form.TextBox" readonly="readonly"  id="lbl_faculty" name="lbl_faculty" value="" type="text"></td>
-				</td>
-			</tr>
-			<tr>
-				<td>ជំនាញ/EN</td>
-				<td><input dojoType="dijit.form.ValidationTextBox" required="true" missingMessage="Invalid Module!" class="full height-text" id="major_en" name="major_en" value="" type="text"></td>
-			</tr>
-			<tr>
-				<td>ជំនាញ/KH</td>
-				<td><input dojoType="dijit.form.ValidationTextBox" required="true" missingMessage="Invalid Module!" class="full height-text" id="major_kh" name="major_kh" value="" type="text"></td>
-			</tr>
-			<tr>
-				<td>អក្សរកាត់</td>
-				<td><input dojoType="dijit.form.ValidationTextBox" required="true" class=" fullside height-text" missingMessage="ភ្លេច​បំពេញ​ពាក្យកាត់!" id="shortcut" name="shortcut" value="" type="text"></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-				  	<input type="button"  label="រក្សាទុក" dojoType="dijit.form.Button" 
-				 	iconClass="dijitEditorIcon dijitEditorIconSave" onclick="addNewMajor();"/>
-				</td>
-			</tr>
-		</table>
-		</form>
-	</div>
-</div>
-<div class="dijitHidden">
-	<div data-dojo-type="dijit.Dialog" data-dojo-type="dijit.Dialog" id="pop_situation" >
-		<form id='frm_situation' dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<table class="height" >
-			<tr>
-				<td>វណ្ណៈក្នុងគ្រួសារ</td>
-				<td><input dojoType="dijit.form.ValidationTextBox" required="true" id="txt_situation" name="txt_situation" value="" type="text"></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-				  	<input type="button"  label="រក្សាទុក" dojoType="dijit.form.Button" 
-				 	iconClass="dijitEditorIcon dijitEditorIconSave" onclick="addsituation();"/>
-				</td>
-			</tr>
-		</table>
-		</form>
-	</div>
-</div>
-<div class="dijitHidden">
-	<div data-dojo-type="dijit.Dialog" data-dojo-type="dijit.Dialog" id="pop_composition" >
-		<form id='frm_composition' dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<table class="height" >
-			<tr>
-				<td>សមាសភាពនិស្សិត</td>
-				<td><input dojoType="dijit.form.ValidationTextBox" required="true" id="occu_name" name="occu_name" value="" type="text"></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-				  	<input type="button"  label="រក្សាទុក" dojoType="dijit.form.Button" 
-				 	iconClass="dijitEditorIcon dijitEditorIconSave" onclick="addcomposition();"/>
-				</td>
-			</tr>
-		</table>
-		</form>
-	</div>
-</div>
-<div class="dijitHidden">
-	<div data-dojo-type="dijit.Dialog" data-dojo-type="dijit.Dialog" id="pop_school" >
-		<form id='frm_school' dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<table class="height" >
-			<tr>
-				<td>ខេត្ត/រាជធានី</td>
-				<td><input dojoType="dijit.form.TextBox" readonly="readonly" id="from_province" name="from_province" value="" type="text">
-					<input dojoType="dijit.form.TextBox" id="province" name="province" value="" type="text">
-				</td>
-			</tr>
-			<tr>
-				<td>ឈ្មោះសាលា</td>
-				<td><input dojoType="dijit.form.ValidationTextBox" required="true" id="school_name" name="school_name" value="" type="text"></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-				  	<input type="button"  label="រក្សាទុក" dojoType="dijit.form.Button" 
-				 	iconClass="dijitEditorIcon dijitEditorIconSave" onclick="addschool();"/>
-				</td>
-			</tr>
-		</table>
-		</form>
-	</div>
-</div>
-<div class="dijitHidden">
-	<div data-dojo-type="dijit.Dialog" data-dojo-type="dijit.Dialog" id="pop_scholarship" >
-		<form id='frm_scholarship' dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<table class="height" >
-			<tr>
-				<td>ឈ្មោះអាហារូបការណ៏</td>
-				<td><input dojoType="dijit.form.ValidationTextBox" required="true" id="txt_scholarship" name="txt_scholarship" value="" type="text"></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-				  	<input type="button"  label="រក្សាទុក" dojoType="dijit.form.Button" 
-				 	iconClass="dijitEditorIcon dijitEditorIconSave" onclick="addscholarship();"/>
-				</td>
-			</tr>
-		</table>
-		</form>
-	</div>
-</div>
+
