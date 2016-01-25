@@ -22,12 +22,12 @@ class Global_GroupController extends Zend_Controller_Action {
 			$rs_rows= $db->getAllGroup($search);
 			$list = new Application_Form_Frmtable();
 			
-			$collumns = array("GROUP CODE","DEGREE","FACULTY","BATCH","YEAR","SEMESTER","SESSION","ACADEMIC","ROOM","AMOUNT","STATUS");
+			$collumns = array("GROUP CODE","YEARS","SEMESTER","DEGREE","GRADE","SESSION","ROOM","START DATE","END DATE","NOTE","STATUS");
 			
 			$link=array(
 					'module'=>'global','controller'=>'group','action'=>'edit',
 			);
-			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('group_code'=>$link,'degree'=>$link,'major_name'=>$link));
+			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('group_code'=>$link,'academic'=>$link,'grade'=>$link));
 		}catch (Exception $e){
 			Application_Form_FrmMessage::message("Application Error");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
@@ -46,7 +46,7 @@ class Global_GroupController extends Zend_Controller_Action {
 				$db= new Global_Model_DbTable_DbGroup();
 				$db->AddNewGroup($data);
 				if(!empty($data['save_close'])){
-					Application_Form_FrmMessage::Sucessfull("ការ​បញ្ចូល​ជោគ​ជ័យ !", '/global/group');
+					Application_Form_FrmMessage::Sucessfull("ការ​បញ្ចូល​ជោគ​ជ័យ !", "/global/group");
 				}
 				Application_Form_FrmMessage::message("ការ​បញ្ចូល​ជោគ​ជ័យ !");
 			} catch (Exception $e) {
@@ -56,25 +56,13 @@ class Global_GroupController extends Zend_Controller_Action {
 			}
 		}
 		
-	 $db = new Application_Model_DbTable_DbGlobal();
-	 $this->view->degree = $db->getAllDegree();	
-	$faculty =  $db->getAllMajor();
-	 array_unshift($faculty, Array('id'=> -1 ,'name' =>'Add New'));
-	 $this->view->faculty =$faculty;
-	 
-	 $room = $db->getAllRoom();
-	 array_unshift($room, Array('id'=> -1 ,'name' =>'Add New'));
-	 $this->view->room =$room;
-	
-	 
-	 $db = new Application_Model_GlobalClass();
-	 $this->view->subject_opt = $db->getTeachersunjectOption();
-	 
-	 $tsub=new Global_Form_FrmTeacher();
-	 $frm_techer=$tsub->FrmTecher();
-	 Application_Model_Decorator::removeAllDecorator($frm_techer);
-	 $this->view->frm_techer = $frm_techer;
+		$_db = new Application_Model_DbTable_DbGlobal();
+		$this->view->degree = $rows = $_db->getAllFecultyName();
+		
+		$this->view->room =$_db->getAllRoom();
 	}
+		
+		
 	function editAction(){
 		$db= new Global_Model_DbTable_DbGroup();
 		
@@ -82,11 +70,11 @@ class Global_GroupController extends Zend_Controller_Action {
 			try {
 				$data = $this->getRequest()->getPost();
 				
-				$db->AddNewGroup($data);
-				if(!empty($data['save_close'])){
-					Application_Form_FrmMessage::Sucessfull("ការ​បញ្ចូល​ជោគ​ជ័យ !", '/global/group');
+				$db->updateGroup($data);
+				if(!empty($data['save'])){
+					Application_Form_FrmMessage::Sucessfull("ការ​បញ្ចូល​ជោគ​ជ័យ !", "/global/group/index");
 				}
-				Application_Form_FrmMessage::message("ការ​បញ្ចូល​ជោគ​ជ័យ !");
+				//Application_Form_FrmMessage::message("ការ​បញ្ចូល​ជោគ​ជ័យ !");
 			} catch (Exception $e) {
 				Application_Form_FrmMessage::message("ការ​បញ្ចូល​មិន​ជោគ​ជ័យ");
 				$err =$e->getMessage();
@@ -95,10 +83,9 @@ class Global_GroupController extends Zend_Controller_Action {
 		}
 		
 		$id=$this->getRequest()->getParam("id");
-		$this->view->row = $db->getGroupById($id);
-		
+		$id=$this->view->rs = $db->getGroupById($id);
 		$db = new Application_Model_DbTable_DbGlobal();
-		$this->view->degree = $db->getAllDegree();
+		$this->view->degree = $rows = $db->getAllFecultyName();
 		$faculty =  $db->getAllMajor();
 		array_unshift($faculty, Array('id'=> -1 ,'name' =>'Add New'));
 		$this->view->faculty =$faculty;

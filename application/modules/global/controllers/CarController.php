@@ -7,9 +7,7 @@ class Global_CarController extends Zend_Controller_Action {
     	header('content-type: text/html; charset=utf8');
     	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
 	}
-	public function start(){
-		return ($this->getRequest()->getParam('limit_satrt',0));
-	}
+	
 	public function indexAction(){
 		try{
 			if($this->getRequest()->isPost()){
@@ -38,7 +36,7 @@ class Global_CarController extends Zend_Controller_Action {
 			$link=array(
 					'module'=>'global','controller'=>'car','action'=>'edit',
 			);
-			$this->view->list=$list->getCheckList(0, $collumns, $rs,array('carname'=>$link));
+			$this->view->list=$list->getCheckList(0, $collumns, $rs,array('carname'=>$link,'carid'=>$link,'drivername'=>$link));
 		}catch (Exception $e){
 			Application_Form_FrmMessage::message("Application Error");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
@@ -73,8 +71,8 @@ class Global_CarController extends Zend_Controller_Action {
 		{
 			$data = $this->getRequest()->getPost();
 			$db = new Global_Model_DbTable_DbCar();
-			$db->updateCar($data,$id);
-			Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/global/province/index");
+			$db->updateCar($data);
+			Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/global/car/index");
 		}
 		
 		
