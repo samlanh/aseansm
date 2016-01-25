@@ -26,7 +26,7 @@ class Global_Model_DbTable_DbAcademicyear extends Zend_Db_Table_Abstract
 					'semester_start' => $_data['semester_start'],
 					'semester_end' => $_data['semester_end'],
 					'yearly_start'=>$_data['yearly_start'],
-					'yearly_start'   => $_data['yearly_start'],
+					'yearly_end'   => $_data['yearly_end'],
 					'date' => Zend_Date::now(),
 					'user_id' => $this->getUserId(),
 				);
@@ -62,10 +62,9 @@ class Global_Model_DbTable_DbAcademicyear extends Zend_Db_Table_Abstract
 					'semester_start' => $_data['semester_start'],
 					'semester_end' => $_data['semester_end'],
 					'yearly_start'=>$_data['yearly_start'],
-					'yearly_start'   => $_data['yearly_start'],
+					'yearly_end'  => $_data['yearly_end'],
 					'date' => Zend_Date::now(),
 					'user_id' => $this->getUserId(),
-				
 		);
 		$where=$this->getAdapter()->quoteInto("id=?", $_data["id"]);
 		
@@ -81,7 +80,6 @@ class Global_Model_DbTable_DbAcademicyear extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$sql = ' SELECT id, fromyear, toyear, batch, study_start, study_end, duration, note, status FROM rms_academicperiod WHERE 1';
 		$where = '';
-		
 		return $db->fetchAll($sql);
 	}
 }
