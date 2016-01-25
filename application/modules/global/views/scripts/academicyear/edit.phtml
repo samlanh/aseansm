@@ -29,7 +29,7 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 											<input type="hidden" name="id" value="<?php echo $this->rs['id']; ?>">
 											<?php //print_r($this->rs);?>
 											<td style="width: 100px"><?php echo $tr->translate("From Year")?></td>
-											<td><select dojoType="dijit.form.FilteringSelect" required="true" class="fullside"  id="fromyear" name="fromyear" type="text" >
+											<td><select dojoType="dijit.form.FilteringSelect" required="true" class="fullside"  id="from_year" name="from_year" type="text" >
          										<?php 
         											 for($i=2014;$i<=date('Y')+1;$i++){?>
           											<option value="<?php echo $i;?>"<?php if($i==$this->rs['fromyear']) echo 'selected="selected"';?> ><?php echo $i; ?></option>
