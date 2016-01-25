@@ -310,9 +310,27 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		$_paid_kh = new Zend_Dojo_Form_Element_Textarea('paid_kh');
 		$_paid_kh->setAttribs(array(
 				'dojoType'=>$this->text,'class'=>'fullside',));
-		
+		$id = new Zend_Form_Element_Hidden('id');
+		if($data!=null){
+			$id->setValue($data['stu_id']);
+			$this->_khname->setValue($data['stu_khname']);
+			$this->_enname->setValue($data['stu_enname']);
+			$_sex->setValue($data['sex']);
+			$_session->setValue($data['session']);
+			$generation->setValue($data['academic_year']);
+			$_term->setValue($data['payment_term']);
+			$_fee->setValue($data['tuition_fee']);
+			$_disc->setValue($data['discount_percent']);
+			$_remark->setValue($data['other_fee']);
+			$addmin_fee->setValue($data['admin_fee']);
+			$total->setValue($data['total']);
+			$books->setValue($data['paid_amount']);
+			$remaining->setValue($data['balance_due']);
+			$char_price->setValue($data['amount_in_khmer']);
+			$not->setValue($data['note']);
+		}
 		$this->addElements(array(
-			  $generation,$char_price,$end_date,$start_date,$not,$books,$addmin_fee,$remaining,$total, $_year_one,$_new_student,$_invoice_no, $_pay_date, $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,$metion,
+			  $id,$generation,$char_price,$end_date,$start_date,$not,$books,$addmin_fee,$remaining,$total, $_year_one,$_new_student,$_invoice_no, $_pay_date, $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,$metion,
 			  $_phone,$_dept,$_major,$_batch,$_year,$_session,$_term,$_fee,$_disc,$_paid,$_paid_kh,$_remark,$_is_hold ));
 		
 		return $this;
