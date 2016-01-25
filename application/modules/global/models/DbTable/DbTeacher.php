@@ -27,8 +27,8 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 			}
 			$_arr=array(
 					'teacher_code' => $_data['code'],
-					'teacher_name_en' => $_data['en_name'],
 					'teacher_name_kh' => $_data['kh_name'],
+					'teacher_name_en' => $_data['en_name'],
 					'sex' => $_data['sex'],
 					'phone' => $_data['phone'],
 					"photo" =>$_data['photo'],
@@ -94,8 +94,8 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 			
 		$_arr=array(
 					'teacher_code' => $_data['code'],
-					'teacher_name_en' => $_data['en_name'],
 					'teacher_name_kh' => $_data['kh_name'],
+					'teacher_name_en' => $_data['en_name'],
 					'sex' => $_data['sex'],
 					'phone' => $_data['phone'],
 					"photo" => $_data['photo'],
@@ -163,8 +163,8 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 			
 			$_arr=array(
 					'teacher_code' => $_data['code'],
-					'teacher_name_en' => $_data['en_name'],
 					'teacher_name_kh' => $_data['kh_name'],
+					'teacher_name_en' => $_data['en_name'],
 					'sex' => $_data['sex'],
 					'phone' => $_data['phone'],
 					'dob' => $_data['dob'],
