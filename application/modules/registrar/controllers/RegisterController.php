@@ -11,8 +11,8 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     	
 	}
     public function indexAction(){
-    	try{
-    		$db = new Registrar_Model_DbTable_DbRegister();
+//     	try{
+//     		$db = new Registrar_Model_DbTable_DbRegister();
     		//     		if($this->getRequest()->isPost()){
     		//     			$search=$this->getRequest()->getPost();
     		//     		}
@@ -23,19 +23,19 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     		//     					'start_date'=> date('Y-m-01'),
     		//     					'end_date'=>date('Y-m-d'));
     		//     		}
-    		$rs_rows= $db->getAllRoomType();
-    		$glClass = new Application_Model_GlobalClass();
-    		$rs_rows = $glClass->getImgActive($rs_rows, BASE_URL, true);
-    		$list = new Application_Form_Frmtable();
-    		$collumns = array("ROOM_TYPE","STATUS");
-    		$link=array(
-    				'module'=>'room','controller'=>'index','action'=>'edit',
-    		);
-    		$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('type'=>$link));
-    	}catch (Exception $e){
-    		Application_Form_FrmMessage::message("Application Error");
-    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
-    	}
+//     		$rs_rows= $db->getAllRoomType();
+//     		$glClass = new Application_Model_GlobalClass();
+//     		$rs_rows = $glClass->getImgActive($rs_rows, BASE_URL, true);
+//     		$list = new Application_Form_Frmtable();
+//     		$collumns = array("ROOM_TYPE","STATUS");
+//     		$link=array(
+//     				'module'=>'room','controller'=>'index','action'=>'edit',
+//     		);
+//     		$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('type'=>$link));
+//     	}catch (Exception $e){
+//     		Application_Form_FrmMessage::message("Application Error");
+//     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+//     	}
     }
     public function addAction(){
       if($this->getRequest()->isPost()){
