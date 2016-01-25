@@ -21,7 +21,7 @@ class Global_AcademicyearController extends Zend_Controller_Action {
 			}
 			$rs_rows= $db->getAllacademicyear($search);
 			$list = new Application_Form_Frmtable();
-			$collumns = array("From Year","To Year","Generation","Academic Start","Academic End","Duration","Note","Stature");
+			$collumns = array("From Year","To Year","Generation","Academic Start","Academic End","Duration","Note","Status");
 			 
 			$link=array(
 					'module'=>'global','controller'=>'academicyear','action'=>'edit',
