@@ -18,7 +18,7 @@ class Foundation_StudentStudyController extends Zend_Controller_Action {
 			}
 			$collumns = array("STUDENT NAME","ឈ្មោះសិស្ស","SEX","NATIONALITY","DOB","PHONE","STATUS");
 			$link=array(
-					'module'=>'foundation','controller'=>'applicationgep','action'=>'edit',
+					'module'=>'foundation','controller'=>'studentstudy','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('stu_enname'=>$link,'stu_khname'=>$link));
 			
@@ -59,7 +59,7 @@ class Foundation_StudentStudyController extends Zend_Controller_Action {
 				$data["id"]=$id;
 				$_db_student = new Foundation_Model_DbTable_DbApplication();
 				$_db_student->updateStudentGep($data);
-				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/foundation/applicationgep/index");
+				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/foundation/studentstudy/index");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("EDIT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
