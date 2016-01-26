@@ -74,7 +74,7 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 						);
 				$id = $this->insert($_arr);
 				
-				$this->_name='rms_studenr_history';
+				$this->_name='rms_study_history';
 				$arr= array(
 						'user_id'=>$this->getUserId(),
 						'stu_id'=>$id,
@@ -145,7 +145,7 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 			$this->update($_arr, $where);
 			
 			
-			$this->_name='rms_studenr_history';
+			$this->_name='rms_study_history';
 			$arr= array(
 					'user_id'=>$this->getUserId(),
 					'stu_code'=>$_data['student_id'],
@@ -154,13 +154,19 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 					'lang_level'=>$_data['level'],
 					'session'=>$_data['session'],
 					'status'=>$_data['status'],
-					'remark'=>$_data['remark']
+					'remark'=>$_data['remark'],
+					
 			);
 			$where=$this->getAdapter()->quoteInto("stu_id=?", $_data["id"]);
 			$this->update($arr, $where);
 		}catch(Exception $e){
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
+	}
+	function getStudyHishotryById($id){
+		$db = $this->getAdapter();
+		$sql="SELECT * FROM rms_study_history where".$id;
+		return $db->fetchRow($sql);
 	}
 	function getAllGrade($grade_id){
 		$db = $this->getAdapter();

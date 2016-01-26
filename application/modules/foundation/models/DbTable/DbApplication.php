@@ -14,7 +14,7 @@ class Foundation_Model_DbTable_DbApplication extends Zend_Db_Table_Abstract
 		$sql ="SELECT `service_id`,`title` FROM `rms_program_name` WHERE status=1 AND `type`=".$type;
 		return $db->fetchAll($sql);
 	}
-	public function addStudentGep($_data){
+	public function addStudent($_data){
 		$db= $this->getAdapter();
 		$_arr= array(
 				'user_id'=>$this->getUserId(),
@@ -38,16 +38,21 @@ class Foundation_Model_DbTable_DbApplication extends Zend_Db_Table_Abstract
 				);
 		$id=$this->insert($_arr);
 
-		$this->_name='rms_studentgep_detail';
+		$this->_name='rms_study_history';
 			$arr= array(
-					'stu_id'=>$id,
-					'level'=>$_data['degree'],
-					'session'=>$_data['session'],
-					'from_time'=>$_data['from_time'],
-					'to_time'=>$_data['to_time'],
-					'start_date'=>$_data['start_date'],
-					'user_id'=>$this->getUserId()
-					);
+						'user_id'=>$this->getUserId(),
+						'stu_id'=>$id,
+						'stu_type' => 2,
+						'stu_code'=>$_data['student_id'],
+						'level'=>$_data['level'],
+						'from_time'=>$_data['from_time'],
+						'to_time'=>$_data['from_time'],
+						'start_date'=>$_data['start_date'],
+						'type_time'=>$_data['type_time'],
+						'status'=>$_data['status'],
+						'remark'=>$_data['remark']
+						);
+				
 			$this->insert($arr);
 	}
 	public function getStudentGepById($id){
@@ -55,7 +60,7 @@ class Foundation_Model_DbTable_DbApplication extends Zend_Db_Table_Abstract
 		$sql = "SELECT * FROM rms_student WHERE stu_id =".$id;
 		return $db->fetchRow($sql);
 	}
-	public function getAllStudentGep($stu_type){
+	public function getAllStudentStudy($stu_type){
 		$_db = $this->getAdapter();
 		$sql = "SELECT stu_id,stu_enname,stu_khname,
 		(SELECT name_kh FROM `rms_view` WHERE type=2 AND key_code = sex) as sex
@@ -90,15 +95,18 @@ class Foundation_Model_DbTable_DbApplication extends Zend_Db_Table_Abstract
 				$where = $this->getAdapter()->quoteInto("stu_id=?",  $_data["id"]);
 				$this->update($_arr, $where);
 				
-				$this->_name='rms_studentgep_detail';
-				$arr= array(
-						'level'=>$_data['degree'],
-						'session'=>$_data['session'],
+				$this->_name='rms_study_history';
+					$arr= array(
+						'user_id'=>$this->getUserId(),
+						'stu_code'=>$_data['student_id'],
+						'level'=>$_data['level'],
 						'from_time'=>$_data['from_time'],
-						'to_time'=>$_data['to_time'],
+						'to_time'=>$_data['from_time'],
 						'start_date'=>$_data['start_date'],
-						'user_id'=>$this->getUserId()
-				);
+						'type_time'=>$_data['type_time'],
+						'status'=>$_data['status'],
+						'remark'=>$_data['remark']
+						);
 				$where = $this->getAdapter()->quoteInto("stu_id=?",  $_data["id"]);
 				$this->update($arr, $where);
 				
@@ -108,7 +116,7 @@ class Foundation_Model_DbTable_DbApplication extends Zend_Db_Table_Abstract
 	}
 	public function getStudetnGepdetail($id){
 		$_db = $this->getAdapter();
-		$sql="SELECT * From rms_studentgep_detail where stu_id = ".$id;
+		$sql="SELECT * From rms_study_history where stu_id = ".$id;
 		return $_db->fetchRow($sql);
 	}
 }
