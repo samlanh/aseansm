@@ -58,9 +58,9 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 							
 						</tr>
 						<tr>
-							<td><?php echo $tr->translate("Semester")?></td>
+							<td><?php echo $tr->translate("SEMESTER")?></td>
 							<td><input dojoType="dijit.form.ValidationTextBox" required="true" name="semester" value="<?php echo $this->rs['semester'];?>" type="text"></td>
-							<td><?php echo $tr->translate("Session")?></td>
+							<td><?php echo $tr->translate("SESSION")?></td>
 							<td>
 								<select name="session" id="session" dojoType="dijit.form.FilteringSelect">
 								<?php $row=Application_Model_DbTable_DbGlobal::getSessionById();
@@ -87,7 +87,7 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 							</td>
 							
 							
-							<td><?php echo $tr->translate("ROOM")?></td>
+							<td><?php echo $tr->translate("ROOM_NAME")?></td>
 							<td>
 								<select   name="room" id="room" dojoType="dijit.form.FilteringSelect" >
 										<?php 
@@ -99,11 +99,11 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 							</td>
 						</tr>
 						<tr>
-							<td style="width: 5px"><?php echo $tr->translate("Start Date")?></td>
+							<td style="width: 5px"><?php echo $tr->translate("START_DATE")?></td>
 							<td><input dojoType="dijit.form.DateTextBox" name="start_date" id="start_date" onchange="setEndDate();" value="<?php echo $this->rs['start_date'];?>" type="text"></td>
-							<td><?php echo $tr->translate("Amount Month")?></td>
+							<td><?php echo $tr->translate("AMOUNT_MONTH")?></td>
 							<td><input dojoType="dijit.form.NumberTextBox"   name="amountmonth" id="amountmonth" value="<?php echo $this->rs['amount_month'];?>" onkeyup="setEndDate();" type="text"></td>
-							<td style="width: 5px"><?php echo $tr->translate("End Date")?></td>
+							<td style="width: 5px"><?php echo $tr->translate("END_DATE")?></td>
 							<td><input dojoType="dijit.form.DateTextBox" id="end_date" name="end_date" type="text" readonly="readonly" value="<?php echo $this->rs['expired_date'];?>" ></td>
 						</tr>
 						<tr>
@@ -113,7 +113,7 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 								    <option value="0" <?php if($this->rs['status']==0) echo 'selected="selected"';?>>មិនប្រើប្រាស់</option>
 								</select>
 							</td>
-							<td style="width: 5px"><?php echo $tr->translate("Note")?></td>
+							<td style="width: 5px"><?php echo $tr->translate("NOTE")?></td>
 							<td><input dojoType="dijit.form.TextBox"   name="note" value="<?php echo $this->rs['note'];?>" type="text"></td>
 						</tr>
 						<tr>
