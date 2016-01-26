@@ -12,7 +12,7 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     function getAllTuitionFee($search=''){
     	$db=$this->getAdapter();
     	$sql = "SELECT id,CONCAT(from_academic,' - ',to_academic) AS academic,
-    		    generation,create_date ,status FROM `rms_tuitionfee` WHERE 1";
+    		    generation,(select name_kh from `rms_view` where `rms_view`.`type`=7 and `rms_view`.`key_code`=`rms_tuitionfee`.`time`)AS time,create_date ,status FROM `rms_tuitionfee` WHERE 1";
     	$order=" ORDER BY id DESC ";
     	$where = '';
     	if(empty($search)){
@@ -48,8 +48,9 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     				'to_academic'=>$_data['to_year'],
     				'generation'=>$_data['generation'],
     				'note'=>$_data['note'],
+    				'time'=>$_data['time'],
     				'status'=>$_data['status'],
-    				'create_date'=>$_data['create_date'],
+    				'create_date'=>date("d-m-Y"),
     				'user_id'=>$this->getUserId()
     				);
     		$fee_id = $this->insert($_arr);
@@ -88,7 +89,8 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     				'generation'=>$_data['generation'],
     				'note'=>$_data['note'],
     				'status'=>$_data['status'],
-    				'create_date'=>$_data['create_date'],
+    				'time'=>$_data['time'],
+    				'create_date'=>date("d-m-Y"),
     				'user_id'=>$this->getUserId()
     		);
 //     		$fee_id = $this->insert($_arr);
