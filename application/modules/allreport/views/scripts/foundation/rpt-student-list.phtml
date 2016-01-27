@@ -63,31 +63,31 @@
 												<th align="center"><small>Father</small></th>
 												<th align="center"><small>mother</small></th>
 											</tr><style> td{padding:0 3px; }</style>
-											<?php for ($i=1;$i<25;$i++){?>
+											<?php  $i=0; foreach ($this->rs as $row){ $i++;?>
 											<tr style="font-size:12px;height: 23px;"​ align="center">
 												<td><?php echo $i;?></td>
-												<td align="left">ដារា</td>
-												<td align="left">dara</td>
-												<td>M</td>
-												<td>B88-00<?php echo $i;?></td>
-												<td>02/Jan/1991</td>
+												<td align="left"><?php echo $row['stu_khname'];?></td>
+												<td align="left"><?php echo $row['stu_enname'];?></td>
+												<td><?php echo $row['gender'];?></td>
+												<td><?php echo $row['stu_code'];?></td>
+												<td><?php echo $row['dob'];?></td>
+												<td><?php echo $row['remark'];?></td>
+												<td><?php echo $row['tel'];?></td>
+												<td><?php echo $row['father_phone'];?></td>
+												<td><?php echo $row['mother_phone'];?></td>
 												<td>&nbsp;</td>
-												<td>012332211</td>
-												<td>090332211</td>
-												<td>070332211</td>
-												<td>012321111</td>
-												<td>64.54</td>
-												<td>134</td>
-												<td>Phnom Penh</td>
-												<td>2013</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
 												<td>123013</td>
-												<td></td>
-												<td>2013</td>
-												<td>123013</td>
-												<td></td>
-												<td></td>
-												<td>2013</td>
-												<td>123013</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;<?php echo $row['address'];?></td>
+												<td><?php echo $row['home_num'];?> <?php echo $row['street_num'];?> <?php echo $row['village_name'];?> <?php echo $row['commune_name'];?> <?php  echo $row['pro'];?></td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
+												<td>&nbsp;</td>
 											</tr>
 											<?php }?>	
 										</table>	
