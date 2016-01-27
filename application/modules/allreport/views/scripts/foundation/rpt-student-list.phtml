@@ -37,26 +37,20 @@
 										<table cellpadding="5"​ style="margin:0 auto;width:100%; border-collapse: collapse;"  border="1" >
 											<tr style="font-size:11px; height: 30px;" align="center" >
 												<th rowspan="2">ល.រ</th>
-												<th rowspan="2">គោលនាម-នាម</th>
+												<th rowspan="2">គោត្តនាម-នាម</th>
 												<th rowspan="2">អក្សរឡាតាំង</th>
 												<th rowspan="2">ភេទ</th>
-												<th rowspan="2">អត្តលេខ</th>	
+												<th rowspan="2">អត្តលេខ</th>													
+												<th rowspan="2">សញ្ចាតិ</th>
 												<th rowspan="2">ថ្ងៃខែឆ្នាំកំណើត</th>
-												<th rowspan="2">ផ្សេងៗ</th>
-												<th colspan="3">លេខទូរសព្ទ</th>
-												<th rowspan="2">វណ្ណៈក្នុងគ្រូសារ</th>
-												<th rowspan="2">ឯកទេស</th>
-												<th rowspan="2">ឆ្នាំជាប់បាក់ឌុប</th>					
-												<th rowspan="2">លេខកូដសញ្ញាបត្រ</th>
-												<th rowspan="2">លំដាប់ពិន្ទុសរុប</th>
-												<th rowspan="2">អាគតដ្ឋាន</th>
-												<th rowspan="2">អាគតដ្ឋានតាំងនៅ</th>
 												<th rowspan="2">ទីកន្លែងកំណើត</th>
+												<th colspan="3">លេខទូរសព្ទ</th>
+												<th rowspan="2">កម្រិតសិក្សា</th>
+												<th rowspan="2">ថ្នាក់ទី</th>					
+												<th rowspan="2">វេនសិក្សា</th>
 												<th rowspan="2">អាសយដ្ឋានរបស់និស្សិត</th>
-												<th rowspan="2">សមាសភាពនិស្សិត</th>
-												<th rowspan="2">និស្សិតមកពី</th>
-												<th rowspan="2">អាយុ</th>
 												<th rowspan="2">ឯកសារយោង</th>
+												<th rowspan="2">ផ្សេងៗ</th>
 											</tr>
 											<tr​​>
 												<th align="center"​​><small>Personal</small></th>
@@ -66,28 +60,22 @@
 											<?php  $i=0; foreach ($this->rs as $row){ $i++;?>
 											<tr style="font-size:12px;height: 23px;"​ align="center">
 												<td><?php echo $i;?></td>
-												<td align="left"><?php echo $row['stu_khname'];?></td>
-												<td align="left"><?php echo $row['stu_enname'];?></td>
-												<td><?php echo $row['gender'];?></td>
-												<td><?php echo $row['stu_code'];?></td>
-												<td><?php echo $row['dob'];?></td>
-												<td><?php echo $row['remark'];?></td>
-												<td><?php echo $row['tel'];?></td>
-												<td><?php echo $row['father_phone'];?></td>
-												<td><?php echo $row['mother_phone'];?></td>
-												<td>&nbsp;</td>
-												<td>&nbsp;</td>
-												<td>&nbsp;</td>
-												<td>&nbsp;</td>
-												<td>&nbsp;</td>
-												<td>123013</td>
-												<td>&nbsp;</td>
-												<td>&nbsp;<?php echo $row['address'];?></td>
-												<td><?php echo $row['home_num'];?> <?php echo $row['street_num'];?> <?php echo $row['village_name'];?> <?php echo $row['commune_name'];?> <?php  echo $row['pro'];?></td>
-												<td>&nbsp;</td>
-												<td>&nbsp;</td>
-												<td>&nbsp;</td>
-												<td>&nbsp;</td>
+												<td align="left" style="white-space: nowrap;"><?php echo $row['stu_khname'];?></td>
+												<td align="left" style="white-space: nowrap;"><?php echo $row['stu_enname'];?></td>
+												<td ​style="white-space: nowrap;"><?php echo $row['gender'];?></td>
+												<td style="white-space: nowrap;"><?php echo $row['stu_code'];?></td>	
+												<td style="white-space: nowrap;"><?php echo $row['nationality'];?></td>
+												<td style="white-space: nowrap;"><?php echo $row['dob'];?></td>
+												<td style="white-space: nowrap;"><?php echo $row['address'];?></td>
+												<td style="white-space: nowrap;"><?php echo $row['tel'];?></td>
+												<td style="white-space: nowrap;"><?php echo $row['father_phone'];?></td>
+												<td style="white-space: nowrap;"><?php echo $row['mother_phone'];?></td>
+												<td style="white-space: nowrap;"><?php echo $row['degree'];?></td>
+												<td style="white-space: nowrap;"><?php echo $row['grade'];?></td>
+												<td style="white-space: nowrap;"><?php echo $row['session'];?></td>
+												<td ><?php echo $row['home_num'];?> <?php echo $row['street_num'];?> <?php echo $row['village_name'];?> <?php echo $row['commune_name'];?> <?php  echo $row['pro'];?></td>
+												<td style="white-space: nowrap;">&nbsp;</td>
+												<td style="white-space: nowrap;"><?php echo $row['remark'];?></td>
 											</tr>
 											<?php }?>	
 										</table>	
