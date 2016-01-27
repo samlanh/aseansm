@@ -43,7 +43,7 @@ $frm_set_price = $this->frm_set_charge;?>
 								</select>
 							</td>
 							<td style="white-space: nowrap;"><?php echo $tr->translate("TO");?></td>
-							<td align="center">
+							<td>
 								<select dojoType="dijit.form.FilteringSelect" required="true"  id="to_year" name="to_year" type="text">
 									<?php for($i=2015;$i<=date('Y')+2;$i++){?>
 										<option value="<?php echo $i;?>"><?php echo $i; ?></option>
@@ -241,7 +241,7 @@ function addRow() {
 			template+='<td width="3%" align="center"><img onclick="deleteRecord('+col+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
 			template+='<td width="3%" align="center">'+no+'</td>';
 			template+='<td align="center" id="lbl_metion'+col+'"><label id="lbl_select'+col+'"><select Onchange="showDialog('+col+');" class="full" dojoType="dijit.form.FilteringSelect" name="service_id'+col+'" id="service_id'+col+'" >'+services+'</select></label></td>';
-			template+='<td width="10%"><input type="text" required="true" name="level'+col+'" id="level'+col+'" dojoType="dijit.form.TextBox" placeholder="កំរិត Ex:1,2,3" style="width: 100%;"/></td>';
+			template+='<td width="10%"><input type="text" required="true" name="level'+col+'" id="level'+col+'" dojoType="dijit.form.TextBox" placeholder="" style="width: 100%;"/></td>';
 			column = 0;
 			for(j=0;j<payment_term;j++){ column++;
 				if(column==1){ func = 'onblur="CalculateRate(1,'+col+')"';}if(column==2){ func = 'onblur="CalculateRate(2,'+col+')"';}

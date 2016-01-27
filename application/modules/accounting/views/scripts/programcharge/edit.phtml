@@ -167,7 +167,7 @@ function initList(){
 					template+='<td width="47px"align="center"><img  src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
 					template+='<td width="6%" align="center">'+no+'</td>';
 					template+='<td align="center" id="lbl_metion'+col+'"><label id="lbl_select'+col+'"><select Onchange="showDialog('+col+');" class="full" dojoType="dijit.form.FilteringSelect" name="service_id'+col+'" id="service_id'+col+'" >'+services+'</select></label></td>';
-					template+='<td width="10%"><input type="text" required="true" name="level'+col+'" id="level'+col+'" dojoType="dijit.form.TextBox" placeholder="កំរិត Ex:1,2,3" style="width: 100%;"/></td>';
+					template+='<td width="10%"><input type="text" required="true" name="level'+col+'" id="level'+col+'" dojoType="dijit.form.TextBox" placeholder="" style="width: 100%;"/></td>';
 					column = 0;
 					<?php foreach ($payment_term as $index => $value){?>
 						<?php if($index==1){ $func = 'onblur="CalculateRate(1,1)"';}
