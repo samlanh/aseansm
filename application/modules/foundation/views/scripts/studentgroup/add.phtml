@@ -1,1 +1,241 @@
-add
+<?php
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	echo $this->headTitle($tr->translate('ADDPROGRAM_FEE')); 
+	$payment_term = $this->payment_term;
+	$rate = $this->rate;
+?>	
+<script type="text/javascript" src="js/dojo/dojo.js" djConfig="isDebug: true, parseOnLoad: true"></script>
+<script type="text/javascript">
+    dojo.require("dojo.NodeList-manipulate");
+    dojo.require('dijit.form.Textarea');
+    dojo.require("dojo.parser");
+    //dojo.require("dijit.form.Select"); 
+    //dojo.require("dojo.data.ItemFileWriteStore"); 
+	 
+</script>
+<style>
+select{ width:100%;}
+fieldset{  background:#DFF7FD;}
+table tr.head-title{ background: none repeat scroll 0% 0% rgba(213, 249, 244, 1); padding:2px;}
+table tr td.null-border{ background: #fff; border-left:none !important;}
+table .set-style td,table .set-style th{ padding: 5px; border:1px solid #ccc;}
+table .set-style tr.st1{ background: none repeat scroll 0% 0% rgba(218, 250, 255, 1);}
+</style>
+
+<script type="text/javascript">
+
+dojo.require("dojo.data.ItemFileWriteStore");  
+dojo.ready(function(){
+	new dijit.form.FilteringSelect({
+	    autoComplete: true,                        
+	    id: "grade",
+	    name: "grade",           
+	    class: 'fullside',  
+	    placeHolder:"Selected Grade",          
+	    onChange: function() {  
+	    	make_id = dijit.byId('grade').get('value');
+	    	paymentTerm();
+	    }
+	}, "grade");
+	getallGrade();
+}); 
+var grade_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
+var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=>'studentgroup','action'=>'get-grade')); ?>';
+	function getallGrade(){
+		dept_id = dijit.byId('degree').get('value');
+			dojo.xhrPost({
+				url:url_dept,
+				content:{
+					'dept_id':dept_id
+					},
+				handleAs:"json",
+				load: function(data) {
+					//alert(data);
+					grade_store  = getDataStorefromJSON('id','name', data);
+				    dijit.byId('grade').set('store',grade_store);   
+
+				},
+				error: function(err) {
+					alert(err);
+				}
+			});
+	}
+
+
+</script>
+<?php
+$frm_set_price = $this->frm_set_charge;?>
+<form id='studentgroup' onsubmit="return CheckFormSubmit();" dojoType="dijit.form.Form" action="<?php echo $this->url(array('module'=>'accounting','controller'=>'studentgroup','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<table cellspacing="10" style="margin: 0 auto;width:100%;" >
+	<tr>
+		<td>
+		<fieldset>
+					<legend align="center"><strong>Student Group</strong></legend>
+					<table style="margin: 0 auto; width: 100%; background:#DFF7FD;" cellspacing="10" broder 1>
+							<tr>
+							<td>ឆ្នាំសិក្សា</td>
+							<td>
+								<select class="fullside" dojoType="dijit.form.FilteringSelect" required="true"  id="from_year" name="from_year" type="text">
+									<?php for($i=2014;$i<=date('Y')+1;$i++){?>
+										<option value="<?php echo $i;?>"><?php echo $i; ?></option>
+									<?php }?>
+								</select>
+							</td>
+							<td>ដល់</td>
+							<td>
+								<select class="fullside" dojoType="dijit.form.FilteringSelect" required="true"  id="to_year" name="to_year" type="text">
+									<?php for($i=2015;$i<=date('Y')+2;$i++){?>
+										<option value="<?php echo $i;?>"><?php echo $i; ?></option>
+									<?php }?>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>Degree</td>
+							<td>
+								<select class="fullside"  name="degree" id="degree" dojoType="dijit.form.FilteringSelect" onchange="getallGrade();">
+											<?php if(!empty($this->degree))foreach ($this->degree as $row){?>
+											<option value="<?php echo $row['dept_id']?>"><?php echo $row['en_name']?></option>
+											<?php }?>
+								</select>
+							</td>
+							<td>ថ្នាក់ទី*</td>
+							<td>
+							    <input id="grade" />
+							</td>
+						</tr>
+						<tr>
+							<td>Session</td>
+							<td>
+								 <select class="fullside"  tabindex="24" name="session" id="session" dojoType="dijit.form.FilteringSelect" >
+										    <option value="1" label="morning">ព្រឹក</option>
+										    <option value="2" label="afternoon">រសៀល</option>
+										    <option value="3" label="night">យប់</option>
+										    <option value="4" label="weekend">ចុងសបា្តហ៏</option>
+										</select>
+							</td>
+							<td style="white-space: nowrap;"><?php echo $tr->translate("STATUS");?></td>
+							<td>
+								<select class="fullside" dojoType="dijit.form.FilteringSelect" required="true"  id="status" name="status" type="text">								
+										<option value="1">Active</option>
+										<option value="0">Deactive</option>
+								</select>
+							</td>
+						</tr>
+					
+					</table>
+					<table class="set-style" border="2px" style="border:1px solid #ccc; border-collapse: collapse;margin: 0 auto; width: 100%; background:#DFF7FD;" >
+						<thead>
+							<tr>
+								<td colspan="8" align="left">
+									<input type="button" label="<?php echo $tr->translate('ADD_ROW');?>" dojoType="dijit.form.Button" 
+								 		iconClass="dijitIconEditProperty" onclick="addRow();" />
+									<input type="hidden" name="iden_term" id="iden_term"  value="" >
+									<input type="hidden" name="identity" id="identity"  value="" >
+								 </td>
+							</tr>
+							<tr>
+								<td colspan="8">
+									<table id="table_row" border="1px" style="border-collapse: collapse; border:1px solid #ccc;">
+										<tr id="head-title" class="head-td" align="right"></tr>
+									</table>
+								</td>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<td colspan="8" align="center">
+									<input type="button" label="GO_BACK" id="back" dojoType="dijit.form.Button" 
+									 iconClass="dijitIconUndo" onclick="window.location = '<?php echo $this->url(array('module'=>'accounting','controller'=>"programcharge",'action'=>'index'),null,true); ?>';" />
+									<input type="submit" label="SAVE" id="save_new" dojoType="dijit.form.Button" 
+								 		iconClass="dijitEditorIcon dijitEditorIconSave"/>
+								 	<input type="submit" dojoType="dijit.form.Button"  label="SAVE CLOSE" id="save_close"
+								 		iconClass="dijitEditorIcon dijitEditorIconSave"/>
+								</td>
+							</tr>
+						</tfoot>
+				 </table>
+		</fieldset>		
+		</td>
+	</tr>
+</table>	
+</form>
+
+
+<script type="text/javascript">
+/*if(dijit.byId('office_receipt').validate()){
+	if(dijit.byId('tuitionfee').get('value') < dijit.byId('discount').get('value')){
+		alert("Discount cannot greather than fee value!");
+		return false;
+	}
+	dijit.byId('office_receipt').submit();
+}*/
+
+function ResetRecordRecord() {
+}
+var template = '';
+var services = '<?php echo $this->service_options; ?>';
+
+var col = 0;
+var no = 0;
+var title = 0;
+func='';
+tmp = '';
+temp='';
+function addRow() {
+		col++;no++;
+		template='';
+		if(title!=1){
+			temp+='<th>DEL</th>';
+			temp+='<th>N_O</th>';
+			temp+='<th id="lbl_titlemetion" width="250px">PROGRAM_NAME</th>';
+			temp+='<th id="lbl_titlelevel">ចំនួនម៉ោង</th>';
+			temp+='<th>REMARK</th>';
+			temp+='<th>REMARK</th>';
+			temp+='<th>REMARK</th>';
+			temp+='<th>REMARK</th>';
+			dojo.query("#head-title").append(temp);
+			title=1;
+		}
+			template+='<td width="3%" align="center"><img onclick="deleteRecord('+col+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
+			template+='<td width="3%" align="center">'+no+'</td>';
+			template+='<td align="center" id="lbl_metion'+col+'"><label id="lbl_select'+col+'"><select Onchange="showDialog('+col+');" class="full" dojoType="dijit.form.FilteringSelect" name="service_id'+col+'" id="service_id'+col+'" >'+services+'</select></label></td>';
+			template+='<td width="10%"><input type="text" required="true" name="level'+col+'" id="level'+col+'" dojoType="dijit.form.TextBox" placeholder="" style="width: 100%;"/></td>';
+			template+='<td width="10%"><input type="text" required="true" name="level'+col+'" id="level'+col+'" dojoType="dijit.form.TextBox" placeholder="" style="width: 100%;"/></td>';
+			template+='<td width="10%"><input type="text" required="true" name="level'+col+'" id="level'+col+'" dojoType="dijit.form.TextBox" placeholder="" style="width: 100%;"/></td>';
+			template+='<td width="10%"><input type="text" required="true" name="level'+col+'" id="level'+col+'" dojoType="dijit.form.TextBox" placeholder="" style="width: 100%;"/></td>';
+			template+='<td><input type="text" required="true" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder=""style="width: 100%;"/></td>';
+			
+		tmp='<tr id="row'+col+'">';
+		tmp+="</tr>";
+		dojo.query("#table_row").append(tmp);
+		if($("#identity").val()!="") {
+			var identity = $("#identity").val();
+			$("#identity").val(identity+','+col);
+		} else {$("#identity").val(col);}
+		dojo.html.set(dojo.byId("row"+col),template , {
+		     parseContent: true,
+		     onBegin: function(){
+		    	 
+		          }
+		});
+ }
+dojo.ready(function(){
+	 addRow();
+});
+
+function hideDialog() {		
+	dijit.byId("popup_service").hide();
+}
+ function deleteRecord(index) {
+		var identity = $('#identity').val();
+		var arrays = identity.split(',');
+		for(var i=0;i<arrays.length;i++) {
+		if(arrays[i] == index) arrays.splice(i,1);
+		}
+		var strings = arrays.join(',');
+		$('#identity').val(strings);
+		dojo.query("#row"+index).remove();
+}
+	
+</script>
