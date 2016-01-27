@@ -1,6 +1,6 @@
 <?php
 
-class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
+class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 {
     protected $_name = 'rms_student';
     public function getUserId(){
@@ -8,7 +8,8 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	return $session_user->user_id;
     	 
     }
-	function addRegister($data){
+	function addStudentGep($data){
+		//print_r($data);exit();
 		$db = $this->getAdapter();//ស្ពានភ្ជាប់ទៅកាន់Data Base
 		$db->beginTransaction();//ទប់ស្កាត់មើលការErrore , មានErrore វាមិនអោយចូល
 			try{
@@ -17,10 +18,11 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						'academic_year'=>$data['study_year'],
 						'stu_khname'=>$data['kh_name'],
 						'stu_enname'=>$data['en_name'],
+				    	'session'=>$data['session'],
 						'sex'=>$data['sex'],
-						'session'=>$data['session'],
 						'degree'=>$data['dept'],
 						'grade'=>$data['grade'],
+					    'stu_type'=>2,
 						'user_id'=>$this->getUserId(),
 				);
 			  $id= $this->insert($arr);
@@ -28,6 +30,8 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				$arr=array(
 						'student_id'=>$id,
 						'receipt_number'=>$data['reciept_no'],
+						'start_hour'=>$data['from_time'],
+						'end_hour'=>$data['to_time'],
 						'payment_term'=>$data['payment_term'],
 						'tuition_fee'=>$data['tuitionfee'],
 						'discount_percent'=>$data['discount'],
@@ -37,8 +41,8 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						'paid_amount'=>$data['books'],
 						'balance_due'=>$data['remaining'],
 						'note'=>$data['not'],
-						'payfor_type'=>1,
 						'amount_in_khmer'=>$data['char_price'],
+						'payfor_type'=>2,
 						'user_id'=>$this->getUserId(),
 				);
 				$this->insert($arr);
@@ -60,7 +64,6 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						'session'=>$data['session'],
 						'degree'=>$data['dept'],
 						'grade'=>$data['grade'],
-						'stu_type'=>1,
 						'user_id'=>$this->getUserId(),
 				);
 				$where="stu_id=".$data['id'];
@@ -79,7 +82,6 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						'balance_due'=>$data['remaining'],
 						'note'=>$data['not'],
 						'amount_in_khmer'=>$data['char_price'],
-						'payfor_type'=>1,
 						'user_id'=>$this->getUserId(),
 				);
 				$where="student_id=".$data['id'];
@@ -89,13 +91,13 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				$db->rollBack();//អោយវាវិលត្រលប់ទៅដើមវីញពេលណាវាជួបErrore
 			}
 		}
-    function getAllStudentRegister(){
+    function getAllStudentGep(){
     	$db=$this->getAdapter();
     	$sql=" SELECT s.stu_id,s.stu_code,sp.receipt_number,s.stu_khname,s.stu_enname,s.sex,(SELECT en_name FROM rms_dept WHERE dept_id=s.degree)AS degree,
 		       (SELECT major_enname FROM rms_major WHERE major_id=s.grade ) AS grade,
 		       sp.payment_term,sp.tuition_fee,sp.discount_percent,sp.other_fee,sp.admin_fee,sp.total,sp.paid_amount,
 		       sp.balance_due
- 			   FROM rms_student AS s,rms_student_payment AS sp WHERE s.stu_id=sp.student_id AND s.stu_type=1";
+ 			   FROM rms_student AS s,rms_student_payment AS sp WHERE s.stu_id=sp.student_id AND s.stu_type=2";
     	$order=" ORDER By stu_id DESC ";
     	return $db->fetchAll($sql.$order);
     }
@@ -115,7 +117,13 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     }
     function getPaymentTerm($generat,$payment_term,$grade){
     	$db = $this->getAdapter();
-    	$sql="SELECT id,tuition_fee FROM rms_tuitionfee_detail WHERE fee_id=$generat AND class_id=$grade AND payment_term=$payment_term LIMIT 1";
+    	$sql="SELECT td.tuition_fee FROM rms_tuitionfee_detail AS td,`rms_tuitionfee` AS tu
+    	WHERE tu.id= td.fee_id AND td.class_id=$grade AND td.payment_term=$payment_term AND tu.generation=$generat LIMIT 1";
+    	return $db->fetchRow($sql);
+    }
+    function getPaymentGep($study_year,$levele,$payment_term){
+    	$db = $this->getAdapter();
+    	$sql="SELECT id,tuition_fee FROM rms_tuitionfee_detail WHERE fee_id=$study_year AND class_id=$levele AND payment_term=$payment_term LIMIT 1";
     	return $db->fetchRow($sql);
     }
     function getAllYears(){
@@ -126,7 +134,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     }
     function getAllYearsProgramFee(){
     	$db = $this->getAdapter();
-    	$sql = "SELECT id,CONCAT(from_academic,'-',to_academic) AS years FROM rms_tuitionfee WHERE `status`=1";
+    	$sql = "SELECT id,CONCAT(start_year,'-',end_year) AS years FROM mrs_program_fee WHERE `status`=1";
     	$order=' ORDER BY id DESC';
     	return $db->fetchAll($sql.$order);
     }
@@ -145,10 +153,8 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	}
     	else if($type==3){
     		$pre='S';
-    	}else if($type==4) {
-    		$pre='H';
     	}else {
-    		$pre='CH';
+    		$pre='H';
     	}
     	for($i = $acc_no;$i<5;$i++){
     		$pre.='0';

@@ -1,26 +1,65 @@
 <?php
 class Registrar_CoursestudyController extends Zend_Controller_Action {
-	
-	
-    public function init()
+	protected $tr;
+	const REDIRECT_URL ='/registrar';
+	public function init()
     {    	
      /* Initialize action controller here */
     	header('content-type: text/html; charset=utf8');
+    	$this->tr=Application_Form_FrmLanguages::getCurrentlanguage();
+    	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
     	
 	}
 
     public function indexAction()
     {
-        
+    	try{
+    		$db = new Registrar_Model_DbTable_DbCourStudey();
+//     		    		if($this->getRequest()->isPost()){
+//     		    			$search=$this->getRequest()->getPost();
+//     		    		}
+//     		    		else{
+//     		    			$search = array(
+//     		    					'adv_search' => '',
+//     		    					'search_status' => -1,
+//     		    					'start_date'=> date('Y-m-01'),
+//     		    					'end_date'=>date('Y-m-d'));
+//     		    		}
+    		$rs_rows= $db->getAllStudentGep();
+//     		$glClass = new Application_Model_GlobalClass();
+//     		$rs_rows = $glClass->getImgActive($rs_rows, BASE_URL, true);
+    		$list = new Application_Form_Frmtable();
+    		$collumns = array("STUDENT_ID","RECEIPT_NO","NAME_KH","NAME_EN","SEX","CLASS","CLASSES",
+    				          "PAYMENT_TERM","TUITION_FEE","DISCOUND","OTHERS_PRICE","ADMIN_FEE","TOTALE","BOOKS","REMAINING",);
+    		$link=array(
+    				'module'=>'registrar','controller'=>'register','action'=>'edit',
+    		);
+    		$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('stu_code'=>$link,'receipt_number'=>$link,'stu_khname'=>$link,'stu_enname'=>$link));
+    	}catch (Exception $e){
+    		Application_Form_FrmMessage::message("Application Error");
+    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+    	}
     }
     public function addAction()
     {
-      if($this->getRequest()->isPost()){
+    if($this->getRequest()->isPost()){
       	$_data = $this->getRequest()->getPost();
-      	$_model = new Registrar_Model_DbTable_DbwuRegister();
-      	$_model->AddNewStudent($_data);
+      	try {
+      		$db = new Registrar_Model_DbTable_DbCourStudey();
+      		if(isset($_data['save_new'])){
+      			$db->addStudentGep($_data);
+      			Application_Form_FrmMessage::message($this->tr->translate('INSERT_SUCCESS'));
+      		}else{
+      			$db->addStudentGep($_data);
+      			Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL . '/coursestudy/index');
+      		}
+      	} catch (Exception $e) {
+      		Application_Form_FrmMessage::message($this->tr->translate('INSERT_FAIL'));
+      		$err =$e->getMessage();
+      		Application_Model_DbTable_DbUserLog::writeMessageError($err);
+      	}
       }
-       $frm = new Registrar_Form_FrmRegister();
+       $frm = new Registrar_Form_FrmCourseStudy();
        $frm_register=$frm->FrmRegistarWU();
        Application_Model_Decorator::removeAllDecorator($frm_register);
        $this->view->frm_register = $frm_register;
@@ -36,6 +75,8 @@ class Registrar_CoursestudyController extends Zend_Controller_Action {
        //get all dept
        $_db = new Application_Model_DbTable_DbGlobal();
        $this->view->all_dept = $_db->getAllFecultyName();
+       $_hour = new Application_Model_GlobalClass();
+       $this->view->hour= $row = $_hour->getHours();
     }
     public function oldaddAction()
     {
@@ -98,11 +139,11 @@ class Registrar_CoursestudyController extends Zend_Controller_Action {
     		exit();
     	}
     }
-    function getPaymentTermAction(){
+    function getPaymentGepAction(){
     	if($this->getRequest()->isPost()){
     		$data=$this->getRequest()->getPost();
-    		$db = new Registrar_Model_DbTable_DbRegister();
-    		$payment = $db->getPaymentTerm($data['generat_id'],$data['pay_id'],$data['grade_id']);
+    		$db = new Registrar_Model_DbTable_DbCourStudey();
+    		$payment = $db->getPaymentGep($data['study_year'],$data['levele'],$data['payment_term']);
     		//print_r($grade);exit();
     		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
     		print_r(Zend_Json::encode($payment));

@@ -25,6 +25,7 @@
 	    	dept_id = dijit.byId('dept').get('value');
 	    	dijit.byId('grade').attr('value','');
 	    	getallModel(dept_id); 
+	    	getStudentNo(dept_id);
 	    }
 	}, "dept");
     
@@ -62,23 +63,42 @@
 				}
 			});
 	}
+	var url_getstuno = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-stu-no')); ?>';
+	function getStudentNo(dept_id){
+			dojo.xhrPost({
+				url:url_getstuno,
+				content:{
+					'dept_id':dept_id
+					},
+				handleAs:"json",
+				load: function(data) {
+					//alert(data);
+					//url_getstuno  = getDataStorefromJSON('id','name', data);
+					 dijit.byId('stu_id').attr('value',data);   
+
+				},
+				error: function(err) {
+					alert(err);
+				}
+			});
+	}
 	function paymentTerm(){
-		generat=dijit.byId('generation').get('value');
+		study_year=dijit.byId('study_year').get('value');
 		payment_term=dijit.byId('payment_term').get('value');
-		grade=dijit.byId('grade').get('value');
-		if(generat!='' && payment_term !='' && grade !=''){
-			getPaymentTerms(generat,payment_term,grade);
+		levele=dijit.byId('grade').get('value');
+		if(study_year!='' && payment_term !='' && levele !=''){
+			getPaymentTerms(study_year,levele,payment_term);
 		}
 	}
 	var payment_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
-	var url_getpaymentterm = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-payment-term')); ?>';
-	function getPaymentTerms(generat,pay,grade){
+	var url_getpaymentterm = '<?php echo $this->url(array('module'=>'registrar','controller'=>'coursestudy','action'=>'get-payment-gep')); ?>';
+	function getPaymentTerms(study_year,levele,payment_term){
 			dojo.xhrPost({
 				url:url_getpaymentterm,
 				content:{
-					'generat_id':generat,
-					'pay_id':pay,
-					'grade_id':grade
+					'study_year':study_year,
+					'levele':levele,
+					'payment_term':payment_term
 					},
 				handleAs:"json",
 				load: function(data) {
@@ -90,6 +110,7 @@
 				    	dijit.byId('addmin_fee').attr('value','0');
 				    	dijit.byId('remaining').attr('value','0');
 				    	dijit.byId('remark').attr('value','0');
+				    	dijit.byId('char_price').attr('value','0');
 				      }else {
 				    	 dijit.byId('tuitionfee').attr('value','0'); 
 				    	 dijit.byId('total').attr('value','0'); 
@@ -98,6 +119,7 @@
 					     dijit.byId('addmin_fee').attr('value','0');
 					     dijit.byId('remaining').attr('value','0');
 					     dijit.byId('remark').attr('value','0');
+					     dijit.byId('char_price').attr('value','0');
 				      }
 				},
 				error: function(err) {
@@ -115,25 +137,27 @@
 		old_totale=tuitionfee - ds;
 		//alert('hello');
 		remark=dijit.byId('remark').get('value');
+		remark=isNaN(remark)?0:remark;
 		addmin_fee=dijit.byId('addmin_fee').get('value');
+		addmin_fee=isNaN(addmin_fee)?0:addmin_fee;
 		totals=parseFloat(old_totale)+parseFloat(remark)+parseFloat(addmin_fee);
-		if(remark=isNaN){
-			dijit.byId('remark').attr('value','0');
-		}
-		if(addmin_fee=isNaN){
-			dijit.byId('addmin_fee').attr('value','0');
-		}else{
 		  dijit.byId('total').attr('value',totals.toFixed(2));
-		}
+		  getRemaining();
 	}
 	//set value remaining
 	function getRemaining(){
 		  total=dijit.byId('total').get('value');
+		  total=isNaN(total)?0:total;
 		  books=dijit.byId('books').get('value');
-		  addmin_fee=dijit.byId('addmin_fee').get('value');
-		  pay_to=parseFloat(books) + parseFloat(addmin_fee);
-		  remaining = total - pay_to;
-		  dijit.byId('remaining').attr('value',remaining.toFixed(2));
+		  books=isNaN(books)?0:books;
+		  remaining=parseFloat(total) - parseFloat(books);
+		  if(total<books){
+			 alert('Deposit must be smaller than the total money!');
+			 dijit.byId('books').attr('value',total);
+		  }else{
+		     dijit.byId('remaining').attr('value',remaining.toFixed(2));
+		  }
+		  CheckAmount();
 	}
 	function getDisccount(){
 		tuitionfee=dijit.byId('tuitionfee').get('value');
@@ -166,7 +190,7 @@
 			//getTuitionFee();
 	});	
 
-	//value_invoice = '<?php echo $this->invoice_num;?>';
+	//value_invoice = '<?php //echo $this->invoice_num;?>';
 	//dijit.byId('reciept_no').attr('value',value_invoice);
 	//dijit.byId('reciept_no').set('readOnly',true);
 	}); 
@@ -217,7 +241,7 @@ fieldset{  background:none;}
 .red{ color: red; padding-left:5px;}
 </style>
 <?php $register = $this->frm_register;?>
-<form id='office_receipt' action="<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'wu-register')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form id='office_receipt' action="<?php echo $this->url(array('module'=>'registrar','controller'=>'coursestudy','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 <table  cellspacing="10" style="margin: 0 auto; width: 100%;">
 	<tr>
 		<td>
@@ -229,12 +253,14 @@ fieldset{  background:none;}
 							<td><?php echo $register->getElement('is_new');?>
 								&nbsp;&nbsp;&nbsp;&nbsp;<label for='is_subsped'>Subspend</label><?php echo $register->getElement('is_hold');?>
 							</td>
+							<td><?php echo $tr->translate("RECEIPT_NO");?></td>
+							<td><?php echo $register->getElement('reciept_no');?></td>
 						</tr>
 						<tr>
 							<td><?php echo $tr->translate("STUDENT_ID");?></td>
 							<td><?php echo $register->getElement('stu_id');?></td>
-							<td style="width: 160px"><?php echo $tr->translate("GENERATION");?></td>
-							<td><?php echo $register->getElement('generation');?></td>
+							<td style="width: 160px"><?php echo $tr->translate("STUDY_YEAR");?></td>
+							<td><?php echo $register->getElement('study_year');?></td>
 						</tr>
 						<tr>
 						    <td><?php echo $tr->translate("NAME_KH");?></td>
@@ -246,8 +272,31 @@ fieldset{  background:none;}
 							<td><?php echo $tr->translate("SEX");?></td>
 							<td><?php echo $register->getElement('sex');?></td>
 							<td><?php echo $tr->translate("SESSION");?></td>
-							<td><?php echo $register->getElement('session');?></td>
+							<td>
+								<select class="fullside"  tabindex="24" name="session" id=""session"" dojoType="dijit.form.FilteringSelect" >
+										    <option value="1" label="FULL_TIME"><?php echo $tr->translate("FULL_TIME");?></option>
+										    <option value="2" label="PART_TIME"><?php echo $tr->translate("PART_TIME");?></option>
+										</select>
+							</td>
 						</tr>
+						<tr>
+							<td title="ចាប់ពីម៉ោង"><?php echo $tr->translate("ចាប់ពីម៉ោង");?>*</td>
+									<td>
+									     <select class="fullside"  tabindex="24" name="from_time" id="from_time" dojoType="dijit.form.FilteringSelect" >
+										  <?php $i=0; foreach ($this->hour As $key=>$hour){ $i++;?> 
+										    <option value="<?php echo $key?>"><?php echo $hour; ?></option>
+										 <?php }?>
+										</select>
+									</td>
+									<td><?php echo $tr->translate("ដល់ម៉ោង");?>*</td>
+									<td>
+									    <select class="fullside"  tabindex="24" name="to_time" id="to_time" dojoType="dijit.form.FilteringSelect" >
+										  <?php $i=0; foreach ($this->hour As $key=>$hour){?> 
+										    <option value="<?php echo $key?>"><?php echo $hour; ?></option>
+										 <?php }?>
+										</select>
+									</td>
+					      		</tr>
 						<tr>
 							<td><?php echo $tr->translate("CLASS");?><label class="red">*</label></td>
 							<td><input id="dept" /><?php //echo $register->getElement('dept');?></td>
@@ -279,12 +328,10 @@ fieldset{  background:none;}
 							<td><?php echo $register->getElement('remaining');;?></td>
 						</tr>
 						<tr>	
+						    <td><?php echo $tr->translate("NOT");?></td>
+							<td title='Ex: 20 or 10%' ><?php echo $register->getElement('not');?></td>	
 							<td><?php echo $tr->translate("CHAR_PRICE");?></td>
-							<td title='Ex: 20 or 10%' colspan="4"><?php echo $register->getElement('char_price');?></td>
-						</tr>
-						<tr>	
-							<td><?php echo $tr->translate("NOT");?></td>
-							<td title='Ex: 20 or 10%' colspan="4"><?php echo $register->getElement('not');?></td>
+							<td title='Ex: 20 or 10%' ><?php echo $register->getElement('char_price');?></td>
 						</tr>
 						<tr>
 							<td><?php echo $tr->translate("START_DATE");?></td>
@@ -294,7 +341,7 @@ fieldset{  background:none;}
 						</tr>
 						<tr>
 							<td colspan="4" align="center">
-								<input type="button" onclick="SubmitRegister();" value="រក្សាទុក" label="រក្សាទុក" id="submitButton" dojoType="dijit.form.Button" 
+								<input type="submit" name="save_new" id="save_new" value="រក្សាទុក" label="រក្សាទុក"  dojoType="dijit.form.Button" 
 								 iconClass="dijitEditorIcon dijitEditorIconSave" />
 								 <input type="button" value="រក្សាទុក & បោះពុម្ព" label="រក្សាទុក & បោះពុម្ព" id="busyButton" dojoType="dijit.form.Button" 
 									iconClass="dijitEditorIcon dijitEditorIconPrint" onclick="printSave();"/> 
@@ -318,7 +365,7 @@ function SubmitRegister(){
 }
 function printSave(){		
 	if(dijit.byId('office_receipt').validate()) {
-		dojo.byId("lb_receipt_no").innerHTML = dijit.byId("reciept_no").get('value');
+		/*dojo.byId("lb_receipt_no").innerHTML = dijit.byId("reciept_no").get('value');
 		//dojo.byId("lb_paydate").innerHTML = dijit.byId("pay_date").value;
 		dojo.byId("lb_kh_stuname").innerHTML = dijit.byId("kh_name").get('value');
 		dojo.byId("lb_en_stuname").innerHTML = dijit.byId("en_name").get('value');
@@ -340,6 +387,7 @@ function printSave(){
 		dojo.byId("lb_amount_paid").innerHTML = dijit.byId("payment_paid").get('value');
 		//dojo.byId("lb_in_khmer").innerHTML = dijit.byId("paid_kh").value;
 		//dojo.byId("lb_byuser").innerHTML = dijit.byId("kh_name").value;
+		*/
 		dijit.byId("terms").show();	
 	}
 	
@@ -414,6 +462,7 @@ function printSave(){
 					   	<td>&nbsp; <label id="lb_dob" class="value"></label></td>
 				   </tr>
 				   <tr>
+				   		<td><label class="khmerbold">ជាសិស្សថ្នាក់</label><div class="h"></div>Degree</td>
 				   		<td><label class="khmerbold">ជាសិស្សថ្នាក់</label><div class="h"></div>Degree</td>
 						<td>&nbsp; <label id="lb_degree" class="value khmer"></label></td>
 						<td><label class="khmer">ទូរស័ព្ទ</label><div class="h"></div>Phone</td>
@@ -515,7 +564,7 @@ function CheckAmount(){
 	else{
 		//remain = dijit.byId('tuitionfee').get('value')-dijit.byId('discount').get('value');
 	}
-	b=dijit.byId('tuitionfee').get('value');
+	b=dijit.byId('total').get('value');
 	a = dojo.number.format(b);
 	money_khmer=read_money_in_khmer(a);
 	dijit.byId('char_price').attr('value',money_khmer.trim()+'ដុល្លាគត់');
