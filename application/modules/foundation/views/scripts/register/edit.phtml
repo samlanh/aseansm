@@ -43,7 +43,7 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 					//alert(data);
 					grade_store  = getDataStorefromJSON('id','name', data);
 				    dijit.byId('grade').set('store',grade_store); 
-				    dijit.byId('grade').attr('value',<?php echo $this->rs['grade']; ?>)  
+				    dijit.byId('grade').attr('value','<?php echo $this->rs['grade']; ?>');  
 
 				},
 				error: function(err) {
