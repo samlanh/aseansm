@@ -14,7 +14,7 @@ public function init()
 			
 	}
 	public function rptCarAction(){
-		$group= new allreport_Model_DbTable_DbRptCar();
+		$group= new Allreport_Model_DbTable_DbRptCar();
 		$this->view->rs = $rs_rows = $group->getAllCar();
 			
 	}

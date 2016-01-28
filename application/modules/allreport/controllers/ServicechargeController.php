@@ -15,7 +15,7 @@ public function init()
 	}
 	public function rptServiceChargeAction(){
 		
-// 		$group= new allreport_Model_DbTable_DbRptServiceCharge();
+// 		$group= new Allreport_Model_DbTable_DbRptServiceCharge();
 // 		$this->view->rs = $rs_rows = $group->getAllServiceCharge();
 		
 		$db = new Allreport_Model_DbTable_DbRptServiceCharge();

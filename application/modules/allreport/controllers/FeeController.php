@@ -14,8 +14,8 @@ public function init()
 			
 	}
 	public function rptFeeAction(){
-		$db = new allreport_Model_DbTable_DbRptFee();
-		$group= new allreport_Model_DbTable_DbRptFee();
+		$db = new Allreport_Model_DbTable_DbRptFee();
+		$group= new Allreport_Model_DbTable_DbRptFee();
 		$rs_rows = $group->getAllTuitionFee();
 		
 		$model = new Application_Model_DbTable_DbGlobal();

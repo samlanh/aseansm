@@ -14,7 +14,7 @@ public function init()
 			
 	}
 	public function rptStudentChangeGroupAction(){
-		$group= new allreport_Model_DbTable_DbRptStudentChangeGroup();
+		$group= new Allreport_Model_DbTable_DbRptStudentChangeGroup();
 		$this->view->rs = $rs_rows = $group->getAllStudentChangeGroup();
 			
 	}

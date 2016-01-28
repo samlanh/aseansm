@@ -14,7 +14,7 @@ public function init()
 			
 	}
 	public function rptStudentDropAction(){
-		$group= new allreport_Model_DbTable_DbRptStudentDrop();
+		$group= new Allreport_Model_DbTable_DbRptStudentDrop();
 		$this->view->rs = $rs_rows = $group->getAllStudentDrop();
 			
 	}
