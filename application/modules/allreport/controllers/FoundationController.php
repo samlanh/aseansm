@@ -55,7 +55,7 @@ public function init()
 	}
 	public function rptStudentListAction()
 	{
-		$db = new Foundation_Model_DbTable_DbStudent();
+		$db = new allreport_Model_DbTable_DbStudent();
 		$row = $db->getAllStudentre();
 		$this->view->rs = $row;
 	}
