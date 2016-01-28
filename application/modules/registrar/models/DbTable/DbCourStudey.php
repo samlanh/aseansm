@@ -51,27 +51,30 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 				$db->rollBack();//អោយវាវិលត្រលប់ទៅដើមវីញពេលណាវាជួបErrore
 			}
 		}
-		function updateRegister($data){
-			$db = $this->getAdapter();//ស្ពានភ្ជាប់ទៅកាន់Data Base
-			$db->beginTransaction();//ទប់ស្កាត់មើលការErrore , មានErrore វាមិនអោយចូល
+		function updateStudentGep($data){
+		$db = $this->getAdapter();//ស្ពានភ្ជាប់ទៅកាន់Data Base
+		$db->beginTransaction();//ទប់ស្កាត់មើលការErrore , មានErrore វាមិនអោយចូល
 			try{
-				$arr=array(
+			$arr=array(
 						'stu_code'=>$data['stu_id'],
 						'academic_year'=>$data['study_year'],
 						'stu_khname'=>$data['kh_name'],
 						'stu_enname'=>$data['en_name'],
+				    	'session'=>$data['session'],
 						'sex'=>$data['sex'],
-						'session'=>$data['session'],
 						'degree'=>$data['dept'],
 						'grade'=>$data['grade'],
+					    'stu_type'=>2,
 						'user_id'=>$this->getUserId(),
 				);
-				$where="stu_id=".$data['id'];
-				 $this->update($arr, $where);
+			   $where="stu_id=".$data['id'];
+			   $this->update($arr, $where);
 				$this->_name='rms_student_payment';
 				$arr=array(
 						'student_id'=>$data['id'],
 						'receipt_number'=>$data['reciept_no'],
+						'start_hour'=>$data['from_time'],
+						'end_hour'=>$data['to_time'],
 						'payment_term'=>$data['payment_term'],
 						'tuition_fee'=>$data['tuitionfee'],
 						'discount_percent'=>$data['discount'],
@@ -82,6 +85,7 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 						'balance_due'=>$data['remaining'],
 						'note'=>$data['not'],
 						'amount_in_khmer'=>$data['char_price'],
+						'payfor_type'=>2,
 						'user_id'=>$this->getUserId(),
 				);
 				$where="student_id=".$data['id'];
@@ -101,11 +105,11 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
     	$order=" ORDER By stu_id DESC ";
     	return $db->fetchAll($sql.$order);
     }
-    function getRegisterById($id){
+    function getStuentGepById($id){
     	$db=$this->getAdapter();
-    	$sql=" SELECT s.stu_id,s.stu_code,sp.receipt_number,s.academic_year,s.stu_khname,s.stu_enname,s.sex,s.session,s.degree,s.grade,
+    	$sql=" SELECT s.stu_id,s.stu_code,sp.receipt_number,s.academic_year,s.stu_khname,s.stu_enname,s.sex,s.session,s.degree,s.grade,s.session,
     	sp.payment_term,sp.tuition_fee,sp.discount_percent,sp.other_fee,sp.admin_fee,sp.total,sp.paid_amount,
-    	sp.balance_due,sp.amount_in_khmer,sp.note
+    	sp.balance_due,sp.amount_in_khmer,sp.note,sp.start_hour,sp.end_hour
     	FROM rms_student AS s,rms_student_payment AS sp WHERE s.stu_id=sp.student_id AND s.stu_id=".$id;
     	return $db->fetchRow($sql);
     }

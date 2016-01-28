@@ -32,7 +32,7 @@ class Registrar_CoursestudyController extends Zend_Controller_Action {
     		$collumns = array("STUDENT_ID","RECEIPT_NO","NAME_KH","NAME_EN","SEX","CLASS","CLASSES",
     				          "PAYMENT_TERM","TUITION_FEE","DISCOUND","OTHERS_PRICE","ADMIN_FEE","TOTALE","BOOKS","REMAINING",);
     		$link=array(
-    				'module'=>'registrar','controller'=>'register','action'=>'edit',
+    				'module'=>'registrar','controller'=>'coursestudy','action'=>'edit',
     		);
     		$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('stu_code'=>$link,'receipt_number'=>$link,'stu_khname'=>$link,'stu_enname'=>$link));
     	}catch (Exception $e){
@@ -77,6 +77,46 @@ class Registrar_CoursestudyController extends Zend_Controller_Action {
        $this->view->all_dept = $_db->getAllFecultyName();
        $_hour = new Application_Model_GlobalClass();
        $this->view->hour= $row = $_hour->getHours();
+    }
+    public function editAction()
+    {
+    	$id=$this->getRequest()->getParam('id');
+    	if($this->getRequest()->isPost()){
+    		$_data = $this->getRequest()->getPost();
+    		$_data['id']=$id;
+    		try {
+    			$db = new Registrar_Model_DbTable_DbCourStudey();
+    			if(isset($_data['save_new'])){
+    				$db->updateStudentGep($_data);
+    				Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL . '/coursestudy/index');
+    			}
+    		} catch (Exception $e) {
+    			Application_Form_FrmMessage::message($this->tr->translate('INSERT_FAIL'));
+    			$err =$e->getMessage();
+    			Application_Model_DbTable_DbUserLog::writeMessageError($err);
+    		}
+    	}
+    	$db = new Registrar_Model_DbTable_DbCourStudey();
+    	$row_gep=$db->getStuentGepById($id);
+    	$this->view->row_gep=$row_gep;
+    	$frm = new Registrar_Form_FrmCourseStudy();
+    	$frm_register=$frm->FrmRegistarWU($row_gep);
+    	Application_Model_Decorator::removeAllDecorator($frm_register);
+    	$this->view->frm_register = $frm_register;
+    	$key = new Application_Model_DbTable_DbKeycode();
+    	$this->view->keycode=$key->getKeyCodeMiniInv(TRUE);
+    	$model = new Application_Form_FrmGlobal();
+    	$this->view->footer=$model->getReceiptFooter();
+    	$this->view->invoice_no = Application_Model_GlobalClass::getInvoiceNo();
+    	$__student_card = array();
+    	$this->view->student_card = $__student_card;
+    	$db = new Registrar_Model_DbTable_DbwuRegister();
+    	$this->view->invoice_num = $db->getGaneratInvoiceWU();
+    	//get all dept
+    	$_db = new Application_Model_DbTable_DbGlobal();
+    	$this->view->all_dept = $_db->getAllFecultyName();
+    	$_hour = new Application_Model_GlobalClass();
+    	$this->view->hour= $row = $_hour->getHours();
     }
     public function oldaddAction()
     {

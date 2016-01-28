@@ -88,19 +88,6 @@ Class Registrar_Form_FrmCourseStudy extends Zend_Dojo_Form {
 				'name':'year',
 				'required':true,'class':'fullside',
 				'invalidMessage':'អាចបញ្ជូលពី 1 ដល់  5'"));
-		
-		$this->_session = new Zend_Dojo_Form_Element_FilteringSelect("session");
-		$opt_session = array(
-				1=>$this->tr->translate('MORNING'),
-				2=>$this->tr->translate('AFTERNOON'),
-				3=>$this->tr->translate('EVERNING'),
-				4=>$this->tr->translate('WEEKEND')
-		);
-		$this->_session->setMultiOptions($opt_session);
-		$this->_session->setAttribs(array(
-				'dojoType'=>$this->filter,
-				'required'=>'true',
-				'class'=>'fullside',));
 		//	$pay_date = date('Y-m-d', mktime(date('h'), date('i'), date('s'), date('m'), date('d')+45, date('Y')));
 		$this->_pay_date = new Zend_Dojo_Form_Element_DateTextBox('dob');
 		$this->_pay_date->setAttribs(array('dojoType'=>$this->t_date,'class'=>'fullside',
@@ -201,6 +188,7 @@ Class Registrar_Form_FrmCourseStudy extends Zend_Dojo_Form {
 				'required'=>'true',
 				'class'=>'fullside',
 				'onchange'=>'changeMajor();'));
+		
 		
 		$opt_marjor = array(-1=>$this->tr->translate("SELECT_MAJOR"));
 		$_major = new Zend_Dojo_Form_Element_FilteringSelect("major");
@@ -310,13 +298,27 @@ Class Registrar_Form_FrmCourseStudy extends Zend_Dojo_Form {
 		$_paid_kh = new Zend_Dojo_Form_Element_Textarea('paid_kh');
 		$_paid_kh->setAttribs(array(
 				'dojoType'=>$this->text,'class'=>'fullside',));
+		$session = new Zend_Dojo_Form_Element_FilteringSelect('session');
+		$session->setAttribs(array(
+				'dojoType'=>$this->filter,
+				'required'=>'true',
+				'class'=>'fullside',));
+		$opt_session = array(
+				1=>$this->tr->translate('FULL_TIME'),
+				2=>$this->tr->translate('PART_TIME'),
+		);
+		$session->setMultiOptions($opt_session);
+		
 		$id = new Zend_Form_Element_Hidden('id');
 		if($data!=null){
+			//print_r($data);exit();
 			$id->setValue($data['stu_id']);
+			$_studid->setValue($data['stu_code']);
+			$_invoice_no->setValue($data['receipt_number']);
 			$this->_khname->setValue($data['stu_khname']);
 			$this->_enname->setValue($data['stu_enname']);
 			$_sex->setValue($data['sex']);
-			$_session->setValue($data['session']);
+			$session->setValue($data['session']);
 			$generation->setValue($data['academic_year']);
 			$_term->setValue($data['payment_term']);
 			$_fee->setValue($data['tuition_fee']);
@@ -330,7 +332,7 @@ Class Registrar_Form_FrmCourseStudy extends Zend_Dojo_Form {
 			$not->setValue($data['note']);
 		}
 		$this->addElements(array(
-			  $id,$generation,$char_price,$end_date,$start_date,$not,$books,$addmin_fee,$remaining,$total, $_year_one,$_new_student,$_invoice_no, $_pay_date, $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,$metion,
+			  $session,$id,$generation,$char_price,$end_date,$start_date,$not,$books,$addmin_fee,$remaining,$total, $_year_one,$_new_student,$_invoice_no, $_pay_date, $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,$metion,
 			  $_phone,$_dept,$_major,$_batch,$_year,$_session,$_term,$_fee,$_disc,$_paid,$_paid_kh,$_remark,$_is_hold ));
 		
 		return $this;

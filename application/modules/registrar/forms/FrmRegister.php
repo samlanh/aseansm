@@ -313,6 +313,8 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		$id = new Zend_Form_Element_Hidden('id');
 		if($data!=null){
 			$id->setValue($data['stu_id']);
+			$_studid->setValue($data['stu_code']);
+			$_invoice_no->setValue($data['receipt_number']);
 			$this->_khname->setValue($data['stu_khname']);
 			$this->_enname->setValue($data['stu_enname']);
 			$_sex->setValue($data['sex']);
