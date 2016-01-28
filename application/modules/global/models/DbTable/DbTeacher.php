@@ -30,15 +30,15 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 					'teacher_name_kh' => $_data['kh_name'],
 					'teacher_name_en' => $_data['en_name'],
 					'sex' => $_data['sex'],
-					'phone' => $_data['phone'],
-					"photo" =>$_data['photo'],
+					"photo" => $_data['photo'],
 					'dob' => $_data['dob'],
 					'pob' => $_data['pob'],
+			        'tel'   => $_data['phone'],
 					'address' => $_data['address'],
 					'email' => $_data['email'],
 					'degree' => $_data['degree'],
 					'address' => $_data['address'],
-					'note'=>$_data['note'],
+					'note' => $_data['note'],
 					'date' => Zend_Date::now(),
 					'status'   => $_data['status'],
 					'user_id'	  => $this->getUserId(),
@@ -51,7 +51,7 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 					'id_card_no' => $_data['idcard'],
 					'issued_date' => $_data['issued'],
 					'expired' => $_data['expired'],
-					'pars_id' => $_data['pars'],
+			        'passport_id' => $_data['pars'],
 					'issued_date1' => $_data['issued1'],
 					'expired1' => $_data['expired1'],
 					
@@ -91,13 +91,13 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 			else{
 				$_data['photo']=$_data['photo'];
 			}
-			
+		
 		$_arr=array(
 					'teacher_code' => $_data['code'],
 					'teacher_name_kh' => $_data['kh_name'],
 					'teacher_name_en' => $_data['en_name'],
 					'sex' => $_data['sex'],
-					'phone' => $_data['phone'],
+					'tel' => $_data['phone'],
 					"photo" => $_data['photo'],
 					'dob' => $_data['dob'],
 					'pob' => $_data['pob'],
@@ -134,7 +134,7 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 	
 	function getAllTeacher($search){
 		$db = $this->getAdapter();
-		$sql = ' SELECT * FROM `v_getallteacher` WHERE 1';
+		$sql = ' SELECT * FROM `rms_teacher` WHERE 1';
 		$where = '';
 		if(!empty($search['title'])){
 		    $s_where = array();

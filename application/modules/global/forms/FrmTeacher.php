@@ -94,7 +94,7 @@ Class Global_Form_FrmTeacher extends Zend_Dojo_Form {
 			$_enname->setValue($_data['teacher_name_en']);
 			$_khname->setValue($_data['teacher_name_kh']);
 			$sex->setValue($_data['sex']);
-			$phone->setValue($_data['phone']);
+			$phone->setValue($_data['tel']);
 			$pob->setValue($_data['pob']);
 			$dob->setValue($_data['dob']);
 			$_adress->setValue($_data['address']);
