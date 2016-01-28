@@ -42,6 +42,7 @@ dojo.ready(function(){
 	    }
 	}, "grade");
 	getallGrade();
+	toStudentGroup();
 }); 
 var grade_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=>'studentgroup','action'=>'get-grade')); ?>';
@@ -121,15 +122,37 @@ $frm_set_price = $this->frm_set_charge;?>
 								 		iconClass="dijitEditorIcon dijitEditorIconSearch"/>
 							</td>
 						</tr>
+						
 					
 					</table>
 					<table class="set-style" border="2px" style="border:1px solid #ccc; border-collapse: collapse;margin: 0 auto; width: 100%; background:#DFF7FD;" >
 						<tfoot>
 							<tr>
-								<td>
+								<td><a id="select-all" href="#">select all</a></td>
+								<td><a id="deselect-all" href="#">deselect all</a></td>
+								<td><a id="select-100" href="#">select 100 elems</a></td>
+								<td><a id="deselect-100" href="#">deselect 100 elems</a></td>
+								<td><a id="add-option" href="#">Add option</a></td>
+								<td><a id="refresh" href="#">refresh</a></td>
+							</tr>
+							<tr>
+							<td>Group</td>
+							<td>
+								<select class="fullside"  name="group" id="group" dojoType="dijit.form.FilteringSelect" required="true" type="text" onchange="toStudentGroup();">
+											<?php if(!empty($this->group))foreach ($this->group as $row){?>
+											<option value="<?php echo $row['id']?>"><?php echo $row['group_code']?></option>
+											<?php }?>
+								</select>
+							</td>
+							<td><?php echo $tr->translate("DETAIL")?></td>
+							<td  colspan="3" rowspan="1"><label id="lbldetail" name=lbldetail style="background:#fff;width:100%;height:70px;display:block;"></label></td>
+						</tr> 
+							<tr>
+								<td colspan="8">
 									<select multiple id="public-methods" name="public-methods[]">
 										<?php if(!empty($this->rs)) foreach($this->rs as $row){?>
-										<option value="<?php echo $row['stu_id'];?>"><?php echo $row['stu_code'],$row['stu_enname'],$row['stu_khname']; ?></option>
+										<option value="<?php echo $row['stu_id'];?>">
+										<?php echo $row['stu_code']," ",$row['stu_enname']," ",$row['stu_khname']; ?></option>
 										<?php }?>
 									 </select>
 								</td>
@@ -151,4 +174,52 @@ $frm_set_price = $this->frm_set_charge;?>
 	</tr>
 </table>	
 </form>
+<script type="text/javascript">
+var url_student = '<?php echo $this->url(array('module'=>'foundation','controller'=>'register','action'=>'get-student')); ?>';
+function getStudentInfo(){
+			studentid = dijit.byId('studentid').get('value');
+			dojo.xhrPost({
+				url:url_student,
+				content:{
+					'studentid':studentid
+					},
+				handleAs:"json",
+				load: function(data) {
+					//alert(data.stu_enname);
+					dijit.byId("studentname").attr("value",data.stu_enname);
+					dijit.byId("gender").attr("value",data.sex);
+
+				},
+				error: function(err) {
+					alert(err);
+				}
+			});
+}
+
+var url_to_group = '<?php echo $this->url(array('module'=>'foundation','controller'=>'studentchangegroup','action'=>'get-to-group')); ?>';
+function toStudentGroup(){
+	//alert(type);
+		group = dijit.byId('group').get('value');
+
+	
+	dojo.xhrPost({
+		url:url_to_group,
+		content:{
+			'to_group':group
+			},
+		handleAs:"json",
+		load: function(data) {
+			//alert(data);
+
+				dojo.byId('lbldetail').innerHTML='<span style="color:red;">Academic :  </span>'+data.from_academic+'-'+data.to_academic+'<span style="color:red;">  Degree :  </span>'+data.degree+'<span style="color:red;">  Grade :  </span>'+data.grade+'<span style="color:red;">  Session :  </span>'+data.session+"<br />"+'<span style="color:red;">  Start Date :  </span>'+data.start_date+'<span style="color:red;">  Expired Date :  </span>'+data.expired_date;
+			
+
+		},
+		error: function(err) {
+			alert(err);
+		}
+	});
+}
+</script>
+
 

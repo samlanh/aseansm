@@ -38,6 +38,8 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 		}
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$this->view->degree = $_db->getAllFecultyName();
+		$group = new Foundation_Model_DbTable_DbGroup();
+		$this->view->group = $group->getGroup();
 	}
 	public function editAction(){
 		
