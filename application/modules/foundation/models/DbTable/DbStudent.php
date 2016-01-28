@@ -174,18 +174,21 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 		$order=' ORDER BY id DESC';
 		return $db->fetchAll($sql.$order);
 	}
-	public function getAllStudentre(){
-		$_db = $this->getAdapter();
-		$sql = "SELECT stu_id,stu_enname,stu_khname,
-		(SELECT name_kh FROM `rms_view` WHERE type=2 AND key_code = sex) as gender
-		,stu_code,dob,remark,tel,(SELECT province_kh_name FROM `rms_province` WHERE `province_id`= rms_student.province_id) as pro,
-		father_phone,mother_phone,address,home_num,street_num,village_name,commune_name,district_name,
-		(SELECT name_kh FROM `rms_view` WHERE type=1 AND key_code = status) as status,nationality,
-		(SELECT `kh_name` FROM `rms_dept` WHERE `dept_id`= degree) as degree,(SELECT `major_enname` FROM `rms_major` WHERE `major_id`=grade) as grade,
-		(SELECT `name_kh` FROM `rms_view` WHERE TYPE=4 AND key_code =session)as session
-		FROM rms_student where status = 1";
-		$orderby = " ORDER BY stu_enname ";
-		return $_db->fetchAll($sql.$orderby);
+	function getSearchStudent($data){
+		$db=$this->getAdapter();
+		$sql="SELECT stu_id ,stu_code,stu_enname,stu_khname,sex,degree,grade from rms_student ";
+		 $sql.= ' WHERE `status`=1 ';
+		 if($data['grade']>0){
+		 	$sql.=" AND grade =".$data['grade'];
+		 }
+		 if($data['grade']>0){
+		 	$sql.=" AND grade =".$data['grade'];
+		 }
+		 if($data['session']>0){
+		 	$sql.=" AND session =".$data['session'];
+		 }
+		return $db->fetchAll($sql);
 	}
+
 }
 

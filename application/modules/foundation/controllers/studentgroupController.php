@@ -11,11 +11,33 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 			
 	}
 	function addAction(){
-		$_model = new Application_Model_GlobalClass();
-		$this->view->service_options = $_model->getAllServiceItemOption(1);
+		$db = new 	Foundation_Model_DbTable_DbStudent();
 		
+		try{
+			if($this->getRequest()->isPost()){
+				$_data=$this->getRequest()->getPost();
+				$search = array(
+						
+						'degree' => $_data['degree'],
+						'grade' => $_data['grade'],
+						'session' => $_data['session']);
+				$rs =$db->getSearchStudent($search);
+			}else{
+				$search = array(
+						'degree' => 1,
+						'grade' => 0,
+						'session' => 0);
+				$rs = $db->getSearchStudent($search);
+			}
+			$this->view->rs = $rs;	
+			$this->view->value=$search;
+	
+		}catch(Exception $e){
+			Application_Form_FrmMessage::message("APPLICATION_ERROR");
+			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+		}
 		$_db = new Application_Model_DbTable_DbGlobal();
-		$this->view->degree = $rows = $_db->getAllFecultyName();
+		$this->view->degree = $_db->getAllFecultyName();
 	}
 	public function editAction(){
 		
