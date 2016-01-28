@@ -1,0 +1,115 @@
+<?php
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	$this->headTitle('Currency Smart | Transfer Report page'); 
+	echo $this->headTitle('SRMS | Student Exam Fundation Year'); 
+	
+?>	
+<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'foundation','controller'=>'report','action'=>'rpt-foundation')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+		<table width="100%" style="margin: 0 auto;">
+			<tr>
+				<td>
+				<fieldset style="background: none;height: 600px;scroll;overflow-x:scroll;">
+							<legend align="center" ><strong><?php echo $tr->translate("");?></strong></legend>
+							<table style="background:#fff; margin: 0 auto; border: 1px dotted #ccc;">
+								<tr style="font-size: 13px;">
+									<td colspan="2"></td>
+									<td align="right">
+										<strong>ព្រះរាជាណាចក្រកម្ពុជា</strong><br />
+										<strong>ជាតិ សាសនា ព្រះមហាក្សត្រ</strong><br />
+									</td>
+								</tr>
+								<tr>
+									<td width="20%" align="left">
+										<strong>ក្រសួងអប់រំ យុវជន និងកីឡា</strong><br />
+										<strong>សាកលវិទ្យាល័យ វេស្ទើន</strong><br /><br ><br ><br >
+									</td>
+									<td align="center">
+										<strong>ព្រះរាជាណាចក្រកម្ពុជា</strong><br />
+										<strong>ជាតិ សាសនា ព្រះមហាក្សត្រ</strong><br />
+										<strong style="font-family: Tacteing;">7</strong><br />
+										<strong>បញ្ជីរាយនាមបេក្ខជនប្រលងជ្រើសរើស ចូលរៀនថ្នាក់ឆ្នាំសិក្សា លើកទីមួយ ជំនាន់ទីមួយ</strong><br />
+										<strong>មហាវិទ្យាល័យ សិល្បៈ មនុស្សសាស្រ្ត និងភាសា ,ជំនាញអប់រំភាសាអង់គ្លេស ឆ្នាំសិក្សា 2013-214</strong><br />
+									</td>
+									<td width="20%"></td>
+								</tr>
+								<tr>
+									<td colspan="3">
+										<table cellpadding="5"​ style="margin:0 auto;width:100%; border-collapse: collapse;"  border="1" >
+											<tr style="font-size:10px; height: 30px;" align="center" >
+												<th rowspan="2">ល.រ</th>
+												<th rowspan="2">Student ID</th>
+												<th rowspan="2">Student Name</th>
+												<th rowspan="2">Gender</th>
+												<th colspan="9">From Group</th>
+												<th colspan="6">To Group</th>
+												<th rowspan="2">Moving Date</th>
+												<th rowspan="2">Note</th>
+												
+											</tr>
+											<tr style="font-size:10px; height: 30px;" align="center">
+												<th >Code</th>
+												<th >Academic</th>
+												<th >Grade</th>
+												<th >Room</th>
+												<th >Semester</th>
+												<th >Session</th>
+												<th >Start Date</th>
+												<th >Amount Month</th>
+												<th >Expired Date</th>
+											
+												<th >Code</th>
+												<th >Academic</th>
+												<th >Grade</th>
+												<th >Room</th>
+												<th >Semester</th>
+												<th >Session</th>
+												
+												<!--<th >Start Date</th>-->
+												<!--<th >Amount Month</th>-->
+												<!--<th >Expired Date</th>-->
+											</tr>
+										<?php $i=0; foreach ($this->rs AS $row) { $i++;?>
+											<tr style="font-size:11px; height: 30px;" align="center" >
+												<th ><?php echo $i;?></th>
+												<th ><?php echo $row['stu_id'];?></th>
+												<th ><?php echo $row['name'];?></th>	
+												<th ><?php echo $row['sex'];?></th>
+												<th ><?php echo $row['code'];?></th>
+												<th ><?php echo $row['academic'];?></th>
+												<th ><?php echo $row['grade'];?></th>
+												<th ><?php echo $row['room_name'];?></th>
+												<th ><?php echo $row['semester'];?></th>
+												<th ><?php echo $row['session'];?></th>
+												
+												<th ><?php echo date("d-M-Y",strtotime($row['start_date']));?></th>
+												<th ><?php echo $row['amount_month'];?></th>
+												<th ><?php echo $row['expired_date'];?></th>
+												
+												
+												
+												<th ><?php echo $row['to_code'];?></th>
+												<th ><?php echo $row['to_academic'];?></th>
+												<th ><?php echo $row['to_grade'];?></th>
+												<th ><?php echo $row['to_room_name'];?></th>
+												<th ><?php echo $row['to_semester'];?></th>
+												<th ><?php echo $row['to_session'];?></th>
+												
+												<!--  <th ><?php //echo date("d-M-Y",strtotime($row['start_date']));?></th> -->
+												<!-- <th ><?php //echo $row['amount_month'];?></th> -->
+												<!-- <th ><?php //echo $row['expired_date'];?></th> -->
+												
+												
+												<th ><?php echo $row['moving_date'];?></th>
+												<th ><?php echo $row['note'];?></th>
+												<!-- <th ><?php //echo $row['status'];?></th> -->
+											</tr>
+										<?php }?>	
+										</table>	
+									</td>
+								</tr>
+							</table>
+				</fieldset>		
+				</td>
+			</tr>
+		</table>			
+</form>
