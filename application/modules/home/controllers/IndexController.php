@@ -11,7 +11,7 @@ class Home_IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-       // $this->_helper->layout()->disableLayout();
+       //$this->_helper->layout()->disableLayout();
     }
 
     public function viewAction()
