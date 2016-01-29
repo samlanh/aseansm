@@ -5,7 +5,8 @@ class Allreport_feeController extends Zend_Controller_Action {
 public function init()
     {    	
      /* Initialize action controller here */
-    	//header('content-type: text/html; charset=utf8');
+    	header('content-type: text/html; charset=utf8');
+    	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
 	}
 	
 	public function indexAction(){
@@ -14,9 +15,20 @@ public function init()
 			
 	}
 	public function rptFeeAction(){
+		
+		if($this->getRequest()->isPost()){
+			$_data=$this->getRequest()->getPost();
+			$search = array(
+					'txtsearch' => $_data['txtsearch'],
+			);
+		}
+		else{
+			$search='';
+		}
+		
 		$db = new Allreport_Model_DbTable_DbRptFee();
 		$group= new Allreport_Model_DbTable_DbRptFee();
-		$rs_rows = $group->getAllTuitionFee();
+		$rs_rows = $group->getAllTuitionFee($search);
 		
 		$model = new Application_Model_DbTable_DbGlobal();
 		$row=0;$indexterm=1;$key=0;
