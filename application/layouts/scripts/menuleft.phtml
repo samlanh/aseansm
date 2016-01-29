@@ -2,7 +2,12 @@
 	$request=Zend_Controller_Front::getInstance()->getRequest();
 	$action = $request->getActionName();
 	$baseurl  = $this->baseUrl();
-		/*--------------------URLs link display--------------------------*/
+	$global=$acl=$this->url(array('module'=>'allreport','controller'=>'index','action'=>'index'), null, true);
+	$registrar=$acl=$this->url(array('module'=>'allreport','controller'=>'receiptionist','action'=>'index'), null, true);
+	$accoutning=$acl=$this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'index'), null, true);
+	$fundation=$acl=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'index'), null, true);
+	
+	/*--------------------URLs link display--------------------------*/
 		  $tr=Application_Form_FrmLanguages::getCurrentlanguage();
 		$arr_param_menu=array( 
 			'home'=>array(
@@ -78,6 +83,12 @@
 						'index'=>'<li><a href="">'.$tr->translate("Backup List").'</a></li>',
 				),
 			'allreport'=>array(
+				'global'=>"<li><span class''><a href=".$global.">".$tr->translate("របាយការណ៏ ផ្សេងៗ")."</a></span></li>",
+				'registra'=>"<li><span class''><a href=".$registrar.">".$tr->translate("របាយការណ៏ ការិយាល័យចុះឈ្មោះ")."</a></span></li>",
+				'fundation'=>"<li><span class''><a href=".$fundation.">".$tr->translate("របាយការណ៏ រដ្ឋបាល")."</a></span></li>",
+				'accounting'=>"<li><span class''><a href=".$accoutning.">".$tr->translate("របាយការណ៏ គណនេយ្យ")."</a></span></li>",
+					
+					
 				'rpt-student-list'=>"<li><span class''><a href='".$baseurl."/allreport/foundation/rpt-student-list'>".$tr->translate("បញ្ជីឈ្មោះនិស្សិត")."</a></span></li>",
 				'poc'=>"<li><a href='".$baseurl."/allreport/foundation/rpt-exam-degree'>".$tr->translate('បញ្ជីរាយនាមបេក្ខជនប្រលង')."</a></li>",
 				'legal-document'=>"<li><a href='".$baseurl."/allreport/foundation/rpt-final-exams'>".$tr->translate("បេក្ខជនប្រលងជាប់ជាស្ថាពរ")."</a></li>",
