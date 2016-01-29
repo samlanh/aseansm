@@ -25,6 +25,15 @@
 	<script type="text/javascript" src="<?php echo $this->baseUrl();?>/js/jquery.tablesorter.js"> </script>
 	<script type="text/javascript" src="<?php echo $this->baseUrl();?>/js/jquery.tablesorter.pager.js"> </script>
 
+	<?php if($module=='report'){?>
+	 <script type="text/javascript" src="<?php echo $this->baseUrl();?>/tableexport/tableExport.js"></script>
+	<script type="text/javascript" src="<?php echo $this->baseUrl();?>/tableexport/jquery.base64.js"></script>
+	<script type="text/javascript" src="<?php echo $this->baseUrl();?>/tableexport/html2canvas.js"></script>
+	<script type="text/javascript" src="<?php echo $this->baseUrl();?>/tableexport/jspdf/libs/sprintf.js"></script>
+	<script type="text/javascript" src="<?php echo $this->baseUrl();?>/tableexport/jspdf/jspdf.js"></script>
+	<script type="text/javascript" src="<?php echo $this->baseUrl();?>/tableexport/jspdf/libs/base64.js"></script> 
+      <?php } ?>	
+      
 	<link rel="shortcut icon" href="<?php echo $base_url;?>images/icon.png" type="image/x-icon"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">	
 	<style type="text/css">
@@ -87,7 +96,18 @@ dojo.require("dojo.parser");
              	<?php if($module!='home'){?>
             	<td width="200px" valign="top" style="border:1px solid #ccc;"><?php echo $this->render('menuleft.phtml')?></td>
             	<?php }?>
-            	<td valign="top" style="border:1px solid #ccc; background:#DFF7FD"><?php echo $this->layout()->content;  ?></td>
+            	<td valign="top" style="border:1px solid #ccc; background:#DFF7FD">
+            	<?php if($module=='allreport' AND $action!='index'){?>
+							<div class="menureport">
+								<ul>
+									<li class="preview"><a title="Preview" href="#" onclick="preview();"></a></li>
+									<li class="print"><a href="#" title="Print" onclick="doPrint();" ></a></li>
+									<li class="excel"><a href="#"  title="Export"  onclick="exportExcel();"></a></li>
+								</ul>
+							</div>
+							<div style="clear:both;"></div>
+							<?php }?>
+            	<?php echo $this->layout()->content;  ?></td>
             </tr>
              <tr height="30px" style="border:1px solid #ccc;background:#B9B9CC; color: #008;">
              	<td colspan="2" align="center">
@@ -100,9 +120,37 @@ dojo.require("dojo.parser");
              </tr>
         </table>
     </body>
-</html>
+    <iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>
+<?php if($module=='allreport' AND $action!='index'){?>
 <script type="text/javascript">
+function doPrint() {
+	window.frames["print_frame"].document.body.innerHTML=dojo.byId('divPrint').innerHTML;
+    window.frames["print_frame"].window.focus();
+    window.frames["print_frame"].window.print();
+    hideDialog();
+}
 function hideleft(){
 	(dojo.style("leftmenu","display") == "none") ? 'show':'hide'();
 }
+function preview()
+{ 
+  var disp_setting="toolbar=no,status=no,resizable=no,location=no,directories=yes,menubar=no,"; 
+      disp_setting+="scrollbars=no,width=1100, height=700, left=100, top=25"; 
+  var content_vlue = document.getElementById("divPrint").innerHTML; 
+  
+  var docprint=window.open("","",disp_setting); 
+   docprint.document.open(); 
+   docprint.document.write('<html><head>'); 
+   docprint.document.write('</head><div style=" font-size:16px !important; margin:0px; font-family:Verdana;"><style>table th {font-size:14px !important;} table td{font-size:12px !important;}</style><center>');          
+   docprint.document.write(content_vlue);          
+   docprint.document.write('</center></div></html>'); 
+   docprint.document.close(); 
+   docprint.focus(); 
+}
+function exportExcel(){
+	$('#exportExcel').tableExport({type:'excel',escape:'false'});
+}
 </script>
+<?php }?>
+    
+</html>
