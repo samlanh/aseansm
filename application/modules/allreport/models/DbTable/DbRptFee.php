@@ -9,13 +9,21 @@ class Allreport_Model_DbTable_DbRptFee extends Zend_Db_Table_Abstract
 //     	return $session_user->user_id;
     	 
 //     }
-    function getAllTuitionFee($search=''){
+    function getAllTuitionFee($search){
     	$db=$this->getAdapter();
     	$sql = "SELECT id,CONCAT(from_academic,' - ',to_academic) AS academic,
     		    generation,(select name_kh from `rms_view` where `rms_view`.`type`=7 and `rms_view`.`key_code`=`rms_tuitionfee`.`time`)AS time,create_date ,status FROM `rms_tuitionfee` WHERE 1";
     	$order=" ORDER BY id DESC ";
     	$where = '';
+    	
+    	if(empty($search)){
+    		return $db->fetchAll($sql);
+    	}
+    	if(!empty($search['txtsearch'])){
+    		$where.=" AND rms_tuitionfee.generation LIKE '%".$search['txtsearch']."%'";
+    	}
     	return $db->fetchAll($sql.$where.$order);
+    	
     }
     function getFeebyOther($fee_id){
     	$db = $this->getAdapter();

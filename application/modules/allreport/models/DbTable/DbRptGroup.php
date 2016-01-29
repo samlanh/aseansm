@@ -9,7 +9,7 @@ class Allreport_Model_DbTable_DbRptGroup extends Zend_Db_Table_Abstract
 //     	return $session_user->user_id;
     	 
 //     }
-    public function getAllGroup(){
+    public function getAllGroup($search){
     	$db = $this->getAdapter();
     	$sql = 'SELECT `g`.`id`,`g`.`group_code` AS `group_code`,CONCAT(`g`.`from_academic`," - ",
 		`g`.`to_academic`) AS academic ,`g`.`semester` AS `semester`,
@@ -21,10 +21,18 @@ class Allreport_Model_DbTable_DbRptGroup extends Zend_Db_Table_Abstract
 		`g`.`start_date`,`g`.`expired_date`,`g`.`note`,
 		(SELECT `rms_view`.`name_en` FROM `rms_view` WHERE ((`rms_view`.`type` = 1)
 		AND (`rms_view`.`key_code` = `g`.`status`)) LIMIT 1) AS `status`
-		FROM `rms_group` `g`
-		ORDER BY `g`.`id` DESC ';	
+		FROM `rms_group` `g`  ';	
+    	
     	//$sql.=" LIMIT 1";
-    	return $db->fetchAll($sql);
+    	
+    	$where=' where 1';
+    	if(empty($search)){
+    		return $db->fetchAll($sql);
+    	}
+    	if(!empty($search['txtsearch'])){
+    		$where.=" AND g.group_code LIKE '%".$search['txtsearch']."%'";
+    	}
+    	return $db->fetchAll($sql.$where);
     	 
     }
    
