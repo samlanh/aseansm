@@ -41,6 +41,22 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 		$group = new Foundation_Model_DbTable_DbGroup();
 		$this->view->group = $group->getGroup();
 	}
+	public function submitAction(){
+		if($this->getRequest()->isPost()){
+			try{
+				$_data = $this->getRequest()->getPost();
+				$db = new Foundation_Model_DbTable_DbGroup();
+				$db->addStudentGroup($_data);
+				Application_Form_FrmMessage::message("INSERT_SUCCESS");
+			}catch(Exception $e){
+				Application_Form_FrmMessage::message("INSERT_FAIL");
+				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			}
+		}
+		$this->_redirect('/foundation/studentgroup/add');
+	}
+	
+	
 	public function editAction(){
 		
 	}
