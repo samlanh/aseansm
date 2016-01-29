@@ -21,7 +21,7 @@ class Global_LecturerController extends Zend_Controller_Action {
 			}
 			$rs_rows= $db->getAllTeacher($search);
 			$list = new Application_Form_Frmtable();
-			$collumns = array("CODE","TEACHER_KH_NAME","TEACHER_EN_NAME","sex","phone","email","degree","STATUS","BY_USER");
+			$collumns = array("CODE","TEACHER_EN_NAME","TEACHER_KH_NAME","sex","phone","email","degree","note","STATUS");
 			 
 			$link=array(
 					'module'=>'global','controller'=>'lecturer','action'=>'edit',
@@ -52,7 +52,7 @@ class Global_LecturerController extends Zend_Controller_Action {
 					Application_Form_FrmMessage::message("ការ​បញ្ចូល​ជោគ​ជ័យ !");
 				
 				 
-			} catch (Exception $e) {
+			}catch (Exception $e) {
 				Application_Form_FrmMessage::message("ការ​បញ្ចូល​មិន​ជោគ​ជ័យ");
 				$err =$e->getMessage();
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);

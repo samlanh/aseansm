@@ -27,15 +27,15 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 									<table style="width:330px;" cellspacing="6">
 										<tr>
 											<input type="hidden" name="photo" value="<?php echo $this->rs['photo']; ?>">
-											<td style="width: 100px;"><?php echo $tr->translate("Lecturer/Code")?></td>
+											<td style="width: 100px;"><?php echo $tr->translate("Lecturer Code")?></td>
 											<td><?php  echo $techer->getElement('code');?></td>
 										</tr>
 										<tr>
-											<td style="width: 100px"><?php echo $tr->translate("Name/kh")?></td>
+											<td style="width: 100px"><?php echo $tr->translate("Name kh")?></td>
 											<td><?php  echo $techer->getElement('kh_name');?></td>
 										</tr>
 										<tr>
-											<td style="width: 100px"><?php echo $tr->translate("Name/eng")?></td>
+											<td style="width: 100px"><?php echo $tr->translate("Name eng")?></td>
 											<td><?php  echo $techer->getElement('en_name');?></td>
 										</tr>
 										<tr>
@@ -84,17 +84,17 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 										</tr>
 										<tr>
 											<td style="width: 100px"><?php echo $tr->translate("Commnue")?></td>
-											<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="commnue" name="commnue" value="" type="text"></td>
+											<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="commnue" name="commnue" value="<?php echo $this->rs['commnue']?>" type="text"></td>
 											<td><?php echo $techer->getElement('commnue');?></td>
 										</tr>
 										<tr>
 											<td style="width: 100px"><?php echo $tr->translate("District")?></td>
-											<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="district" name="district" value="" type="text"></td>
+											<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="district" name="district" value="<?php echo $this->rs['district']?>" type="text"></td>
 											<td><?php echo $techer->getElement('district');?></td>
 										</tr>
 										<tr>
 											<td style="width: 5px"><?php echo $tr->translate("Province")?></td>
-											<td><input dojoType="dijit.form.TextBox" class="fullside" id="province" name="province" value="" type="text"></td>
+											<td><input dojoType="dijit.form.TextBox" class="fullside" id="province" name="province" value="<?php echo $this->rs['province']?>" type="text"></td>
 											<td><?php  echo $techer->getElement('province');?></td>
 										</tr>
 										<tr>
@@ -119,32 +119,32 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 									<table style="width:330px;" cellspacing="6">
 										<tr>
 											<td style="width: 5px"><?php echo $tr->translate("ID Card No")?></td>
-											<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="idcard" name="idcard" value="" type="text"></td>
+											<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="idcard" name="idcard" value="<?php echo $this->rs['id_card_no']?>" type="text"></td>
 											<td><?php  echo $techer->getElement('idcard');?></td>
 										</tr>
 										<tr>
 											<td style="width: 5px"><?php echo $tr->translate("Issued/Date")?></td>
-											<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="issued" name="issued" value="" type="text"></td>
+											<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="issued" name="issued" value="<?php echo $this->rs['issued_date']?>" type="text"></td>
 											<td><?php  echo $techer->getElement('issued');?></td>
 										</tr>
 										<tr>
 											<td style="width: 5px"><?php echo $tr->translate("Expired")?></td>
-											<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="expired" name="expired" value="" type="text"></td>
+											<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="expired" name="expired" value="<?php echo $this->rs['expired']?>" type="text"></td>
 											<td><?php  echo $techer->getElement('expired');?></td>
 										</tr>
 										<tr>
 											<td style="width: 5px"><?php echo $tr->translate("Passport ID")?></td>
-											<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="pars" name="pars" value="" type="text"></td>
+											<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="pars" name="pars" value="<?php echo $this->rs['passport_id']?>" type="text"></td>
 											<!--<td><?php  echo $techer->getElement('pars');?></td>-->
 										</tr>
 										<tr>
 											<td style="width: 5px"><?php echo $tr->translate("Issued/Date")?></td>
-											<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="issued1" name="issued1" value="" type="text"></td></td>
+											<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="issued1" name="issued1" value="<?php echo $this->rs['issued_date1']?>" type="text"></td></td>
 											<!--<td><?php  echo $techer->getElement('issued1');?></td>-->
 										</tr>
 										<tr>
 											<td style="width: 5px"><?php echo $tr->translate("Expired")?></td>
-											<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="expired1" name="expired1" value="" type="text"></td>
+											<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="expired1" name="expired1" value="<?php echo $this->rs['expired1']?>" type="text"></td>
 											<td><?php echo $techer->getElement('expired1');?></td>
 										</tr>
 										<tr>

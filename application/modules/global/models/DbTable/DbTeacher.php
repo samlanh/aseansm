@@ -37,11 +37,8 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 					'address' => $_data['address'],
 					'email' => $_data['email'],
 					'degree' => $_data['degree'],
-					'address' => $_data['address'],
 					'note' => $_data['note'],
-					'date' => Zend_Date::now(),
 					'status'   => $_data['status'],
-					'user_id'	  => $this->getUserId(),
 					'nationality'  => $_data['nationality'],
 					'group'  => $_data['group'],
 					'home'  => $_data['home'],
@@ -54,12 +51,15 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 			        'passport_id' => $_data['pars'],
 					'issued_date1' => $_data['issued1'],
 					'expired1' => $_data['expired1'],
+			        'date' => Zend_Date::now(),
+			        'user_id'	  => $this->getUserId(),
 					
 			);
 				$this->insert($_arr);
 // 			}
 			return $db->commit();
 		}catch (Exception $e){
+		    echo $e->getMessage();exit();
 			$db->rollBack();
 		}
 	}
@@ -72,7 +72,7 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 	}
 	public function getallSubjectTeacherById($teacher_id){
 		$db = $this->getAdapter();
-		$sql = "SELECT * FROM `rms_teacher_subject` WHERE teacher_id= ".$db->quote($teacher_id);
+		$sql = "SELECT * FROM `rms_teacher_subject` WHERE id= ".$db->quote($teacher_id);
 		return $db->fetchAll($sql);;
 	}
 	public function updateTeacher($_data){
@@ -97,18 +97,15 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 					'teacher_name_kh' => $_data['kh_name'],
 					'teacher_name_en' => $_data['en_name'],
 					'sex' => $_data['sex'],
-					'tel' => $_data['phone'],
 					"photo" => $_data['photo'],
 					'dob' => $_data['dob'],
 					'pob' => $_data['pob'],
+			        'tel'   => $_data['phone'],
 					'address' => $_data['address'],
 					'email' => $_data['email'],
 					'degree' => $_data['degree'],
-					'address' => $_data['address'],
-					'note'=>$_data['note'],
-					'date' => Zend_Date::now(),
+					'note' => $_data['note'],
 					'status'   => $_data['status'],
-					'user_id'	  => $this->getUserId(),
 					'nationality'  => $_data['nationality'],
 					'group'  => $_data['group'],
 					'home'  => $_data['home'],
@@ -118,9 +115,11 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 					'id_card_no' => $_data['idcard'],
 					'issued_date' => $_data['issued'],
 					'expired' => $_data['expired'],
-					'pars_id' => $_data['pars'],
+			        'passport_id' => $_data['pars'],
 					'issued_date1' => $_data['issued1'],
 					'expired1' => $_data['expired1'],
+			        'date' => Zend_Date::now(),
+			        'user_id'	 => $this->getUserId(),
 		);
 		$where=$this->getAdapter()->quoteInto("id=?", $_data["id"]);
 		
@@ -134,7 +133,7 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 	
 	function getAllTeacher($search){
 		$db = $this->getAdapter();
-		$sql = ' SELECT * FROM `rms_teacher` WHERE 1';
+		$sql = 'SELECT id, teacher_code, teacher_name_en, teacher_name_kh, sex, tel,email, degree, note, status FROM rms_teacher WHERE 1';
 		$where = '';
 		if(!empty($search['title'])){
 		    $s_where = array();
@@ -143,13 +142,12 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 			$s_where[] = " teacher_code LIKE '%{$s_search}%'";
 			$s_where[] = " teacher_name_en LIKE '%{$s_search}%'";
 			$s_where[] = " teacher_name_kh LIKE '%{$s_search}%'";
-			
 			$s_where[] = " sex LIKE '%{$s_search}%'";
-			$s_where[] = " phone LIKE '%{$s_search}%'";
+			$s_where[] = " tel LIKE '%{$s_search}%'";
 			$s_where[] = " email LIKE '%{$s_search}%'";
 			$s_where[] = " degree LIKE '%{$s_search}%'";
 			$s_where[] = " status LIKE '%{$s_search}%'";
-			$s_where[] = " user_name LIKE '%{$s_search}%'";
+			$s_where[] = " user_id LIKE '%{$s_search}%'";
 			
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 			
