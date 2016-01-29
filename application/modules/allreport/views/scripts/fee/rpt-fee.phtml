@@ -4,66 +4,71 @@
 	echo $this->headTitle('SRMS | Student Exam Fundation Year'); 
 	
 ?>	
-<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'foundation','controller'=>'report','action'=>'rpt-foundation')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<table width="100%" style="margin: 0 auto;">
-			<tr>
-				<td>
-				<fieldset style="background: none;height: 600px;scroll;overflow-x:scroll;">
-							<legend align="center" ><strong><?php echo $tr->translate("");?></strong></legend>
-							<table style="background:#fff; margin: 0 auto; border: 1px dotted #ccc;">
-								<tr style="font-size: 13px;">
-									<td colspan="2"></td>
-									<td align="right">
-										<strong>ព្រះរាជាណាចក្រកម្ពុជា</strong><br />
-										<strong>ជាតិ សាសនា ព្រះមហាក្សត្រ</strong><br />
-									</td>
-								</tr>
-								<tr>
-									<td width="20%" align="left">
-										<strong>ក្រសួងអប់រំ យុវជន និងកីឡា</strong><br />
-										<strong>សាកលវិទ្យាល័យ វេស្ទើន</strong><br /><br ><br ><br >
-									</td>
-									<td align="center">
-										<strong>ព្រះរាជាណាចក្រកម្ពុជា</strong><br />
-										<strong>ជាតិ សាសនា ព្រះមហាក្សត្រ</strong><br />
-										<strong style="font-family: Tacteing;">7</strong><br />
-										<strong>បញ្ជីរាយនាមបេក្ខជនប្រលងជ្រើសរើស ចូលរៀនថ្នាក់ឆ្នាំសិក្សា លើកទីមួយ ជំនាន់ទីមួយ</strong><br />
-										<strong>មហាវិទ្យាល័យ សិល្បៈ មនុស្សសាស្រ្ត និងភាសា ,ជំនាញអប់រំភាសាអង់គ្លេស ឆ្នាំសិក្សា 2013-214</strong><br />
-									</td>
-									<td width="20%"></td>
-								</tr>
-								<tr>
-									<td colspan="3">
-										<table cellpadding="5"​ style="margin:0 auto;width:100%; border-collapse: collapse;"  border="1" >
-											<tr style="font-size:11px; height: 30px;" align="center" >
-												<th >ល.រ</th>
-												<th >Academic</th>
-												<th >Generation</th>
-												<th >Grade</th>
-												<th >Term</th>
-												<th >Semester</th>
-												<th >Year</th>
-												<th >Time</th>
-												
-											</tr>
-										<?php $i=0; foreach ($this->rs AS $row) { $i++;?>
-											<tr style="font-size:11px; height: 30px;" align="center" >
-												<th ><?php echo $i;?></th>
-												<th ><?php echo $row['academic'];?></th>
-												<th ><?php echo $row['generation'];?></th>
-												<th ><?php echo $row['class'];?></th>	
-												<th ><?php echo $row['quarter'];?></th>
-												<th ><?php echo $row['semester'];?></th>
-												<th ><?php echo $row['year'];?></th>
-												<th ><?php echo $row['time'];?></th>
-											</tr>
-										<?php }?>	
-										</table>	
-									</td>
-								</tr>
-							</table>
-				</fieldset>		
-				</td>
-			</tr>
-		</table>			
+<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'fee','action'=>'rpt-fee')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+		<input dojoType="dijit.form.TextBox" required="true"  id="txtsearch" name="txtsearch" placeholder="Search by generation....." value="" type="text">
+		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
+		
+			<div id="divPrint">
+				<table width="100%" style="margin: 0 auto;">
+					<tr>
+						<td>
+						<fieldset style="background: none;height: 600px;scroll;overflow-x:scroll;">
+									<legend align="center" ><strong><?php echo $tr->translate("");?></strong></legend>
+									<table style="background:#fff; margin: 0 auto; border: 1px dotted #000;">
+										<tr style="font-size: 13px;">
+											<td colspan="2"></td>
+											<td align="right">
+												<strong></strong><br />
+												<strong></strong><br />
+											</td>
+										</tr>
+										<tr>
+											<td width="20%" align="left">
+												<strong>ក្រសួងអប់រំ យុវជន និងកីឡា</strong><br />
+												<strong>សាកលវិទ្យាល័យ វេស្ទើន</strong><br /><br ><br ><br >
+											</td>
+											<td align="center">
+												<strong></strong><br />
+												<strong></strong><br />
+												<strong style="font-family: Tacteing;"></strong><br />
+												<strong></strong><br />
+												<strong>របាយការណ៏​​ Fee</strong><br />
+											</td>
+											<td width="20%"></td>
+										</tr>
+										<tr>
+											<td colspan="3">
+												<table cellpadding="5"​ style="margin:0 auto;width:100%; border-collapse: collapse;"  border="1" >
+													<tr style="font-size:11px; height: 30px;" align="center" >
+														<th >ល.រ</th>
+														<th >Academic</th>
+														<th >Generation</th>
+														<th >Grade</th>
+														<th >Term</th>
+														<th >Semester</th>
+														<th >Year</th>
+														<th >Time</th>
+														
+													</tr>
+												<?php $i=0; foreach ($this->rs AS $row) { $i++;?>
+													<tr style="font-size:11px; height: 30px;" align="center" >
+														<th ><?php echo $i;?></th>
+														<th ><?php echo $row['academic'];?></th>
+														<th ><?php echo $row['generation'];?></th>
+														<th ><?php echo $row['class'];?></th>	
+														<th ><?php echo $row['quarter'];?></th>
+														<th ><?php echo $row['semester'];?></th>
+														<th ><?php echo $row['year'];?></th>
+														<th ><?php echo $row['time'];?></th>
+													</tr>
+												<?php }?>	
+												</table>	
+											</td>
+										</tr>
+									</table>
+						</fieldset>		
+						</td>
+					</tr>
+				</table>	
+			</div>		
 </form>

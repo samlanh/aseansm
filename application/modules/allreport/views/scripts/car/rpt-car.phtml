@@ -4,31 +4,35 @@
 	echo $this->headTitle('SRMS | Student Exam Fundation Year'); 
 	
 ?>	
-<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'foundation','controller'=>'report','action'=>'rpt-foundation')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'car','action'=>'rpt-car')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+		
+		<input dojoType="dijit.form.TextBox" required="true"  id="txtsearch" name="txtsearch" placeholder="Search by id....." value="" type="text">
+		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
+		<div id="divPrint">
 		<table width="100%" style="margin: 0 auto;">
 			<tr>
 				<td>
 				<fieldset style="background: none;height: 600px;scroll;overflow-x:scroll;">
 							<legend align="center" ><strong><?php echo $tr->translate("");?></strong></legend>
-							<table style="background:#fff; margin: 0 auto; border: 1px dotted #ccc;">
+							<table style="background:#fff; margin: 0 auto; border: 1px dotted #000;">
 								<tr style="font-size: 13px;">
 									<td colspan="2"></td>
 									<td align="right">
-										<strong>ព្រះរាជាណាចក្រកម្ពុជា</strong><br />
-										<strong>ជាតិ សាសនា ព្រះមហាក្សត្រ</strong><br />
+										<strong></strong><br />
+										<strong></strong><br />
 									</td>
 								</tr>
 								<tr>
-									<td width="20%" align="left">
-										<strong>ក្រសួងអប់រំ យុវជន និងកីឡា</strong><br />
-										<strong>សាកលវិទ្យាល័យ វេស្ទើន</strong><br /><br ><br ><br >
-									</td>
+									<td><img src="" /></td>
+<!-- 									<td width="20%" align="left"> -->
+<!-- 										<strong>ក្រសួងអប់រំ យុវជន និងកីឡា</strong><br /> -->
+<!-- 										<strong>សាកលវិទ្យាល័យ វេស្ទើន</strong><br /><br ><br ><br > -->
+<!-- 									</td> -->
 									<td align="center">
-										<strong>ព្រះរាជាណាចក្រកម្ពុជា</strong><br />
-										<strong>ជាតិ សាសនា ព្រះមហាក្សត្រ</strong><br />
-										<strong style="font-family: Tacteing;">7</strong><br />
-										<strong>បញ្ជីរាយនាមបេក្ខជនប្រលងជ្រើសរើស ចូលរៀនថ្នាក់ឆ្នាំសិក្សា លើកទីមួយ ជំនាន់ទីមួយ</strong><br />
-										<strong>មហាវិទ្យាល័យ សិល្បៈ មនុស្សសាស្រ្ត និងភាសា ,ជំនាញអប់រំភាសាអង់គ្លេស ឆ្នាំសិក្សា 2013-214</strong><br />
+										<strong>របាយការណ៏រថយន្ត</strong><br />
+										<strong></strong><br />
+										
+										
 									</td>
 									<td width="20%"></td>
 								</tr>
@@ -65,5 +69,6 @@
 				</fieldset>		
 				</td>
 			</tr>
-		</table>			
+		</table>	
+		</div>		
 </form>
