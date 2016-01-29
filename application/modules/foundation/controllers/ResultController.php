@@ -10,7 +10,7 @@ class Foundation_ResultController extends Zend_Controller_Action {
 	public function indexAction(){
 	
 	}
-	public function rptAllresultAction(){
+	public function addAction(){
 		
 	}
 }

@@ -10,7 +10,7 @@ class Foundation_CertificateController extends Zend_Controller_Action {
 	public function indexAction(){
 		
 	}
-	public function printCertificateAction(){
+	public function addAction(){
 		
 	}
 	
