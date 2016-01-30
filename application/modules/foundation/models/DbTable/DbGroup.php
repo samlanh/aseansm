@@ -16,11 +16,10 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 	}
 	public function getGroup(){
 		$db = $this->getAdapter();
-		$sql="SELECT id,group_code FROM rms_group WHERE status = 1 ";
+		$sql="SELECT id,group_code as name FROM rms_group WHERE status = 1 ";
 		return $db->fetchAll($sql);
 	}
 	public function addGroup($_data){
-		$this->_name='rms_group';
 		$db = $this->getAdapter();
 		$arr = array(
 				'group_code' => $_data['group_code'],
@@ -40,7 +39,9 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 				'user_id'	  => $this->getUserId()
 				
 				);
+		$this->_name='rms_group';
 		return $this->insert($arr);
+		 
 	}
 	public function addStudentGroup($_data){
 		$db = $this->getAdapter();

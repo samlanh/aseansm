@@ -8,13 +8,11 @@
  <link href="<?php echo $this->baseUrl()."/jsmultiselect"?>/bootstrap.css" media="screen" rel="stylesheet" type="text/css" />
  <link href="<?php echo $this->baseUrl()."/jsmultiselect"?>/multi-select.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
-<script type="text/javascript" src="js/dojo/dojo.js" djConfig="isDebug: true, parseOnLoad: true"></script>
 <script type="text/javascript">
     dojo.require("dojo.NodeList-manipulate");
     dojo.require('dijit.form.Textarea');
     dojo.require("dojo.parser");
-    //dojo.require("dijit.form.Select"); 
-    //dojo.require("dojo.data.ItemFileWriteStore"); 
+    dojo.require("dojo.data.ItemFileWriteStore"); 
 	 
 </script>
 <style>
@@ -27,7 +25,7 @@ table .set-style tr.st1{ background: none repeat scroll 0% 0% rgba(218, 250, 255
 </style>
 
 <script type="text/javascript">
-
+var group_store  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->group));?> );
 dojo.require("dojo.data.ItemFileWriteStore");  
 dojo.ready(function(){
 	new dijit.form.FilteringSelect({
@@ -54,6 +52,24 @@ dojo.ready(function(){
 	    }
 	}, "grade_group");
 	getallGrade(1);
+
+	new dijit.form.FilteringSelect({
+	    store: group_store,
+	    autoComplete: true,                        
+	    required: true,
+	    id: "group",
+	    name: "group",           
+	    class: 'fullside',            
+	    onChange: function() {  
+	     group_id = dijit.byId('group').get('value');
+	     if(group_id==-1){
+	    	 dijit.byId("popup_dept").show();
+	      }
+	     else {
+	      
+	     }           
+	    }
+	}, "group");
 	//toStudentGroup();
 }); 
 var grade_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
@@ -168,12 +184,7 @@ $frm_set_price = $this->frm_set_charge;?>
 							<tr>
 							<td>Group</td>
 							<td>
-								<select class="fullside"  name="group" id="group" dojoType="dijit.form.FilteringSelect" required="true" type="text" onchange="toStudentGroup();">
-											<option value="-1">add new</option>
-											<?php if(!empty($this->group))foreach ($this->group as $row){?>
-											<option value="<?php echo $row['id']?>"><?php echo $row['group_code']?></option>
-											<?php }?>
-								</select>
+							<input id="group" />
 							</td>
 							<td><?php echo $tr->translate("DETAIL")?></td>
 							<td  colspan="3" rowspan="1"><label id="lbldetail" name=lbldetail style="background:#fff;width:100%;height:70px;display:block;"></label></td>
@@ -343,13 +354,20 @@ function getStudentInfo(){
 }
 var url_add_group = '<?php echo $this->url(array('module'=>'foundation','controller'=>'studentgroup','action'=>'add-group')); ?>';
 function addGroup(){
-	//group = diji.byId('id').get('value');
+	group_code= dijit.byId('group_code').get('value');
 	dojo.xhrPost({
 			url:url_add_group,
 			form: dojo.byId("frm_add_tran"),
-			handleAs:"json",
+			andleAs:"json",
 			load: function(data) {
-				alert(data);
+				var Itemmake = {     
+					      id: data,
+					         name: dijit.byId('group_code').get('value')
+					    };
+		   addDataToSelectbox(dijit.byId('group'), group_store, Itemmake, data);
+		   dijit.byId('frm_add_tran').reset();
+		   dijit.byId("popup_dept").hide();
+				
 			},
 			error: function(err) {
 				alert(err);

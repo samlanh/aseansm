@@ -39,7 +39,9 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$this->view->degree = $_db->getAllFecultyName();
 		$group = new Foundation_Model_DbTable_DbGroup();
-		$this->view->group = $group->getGroup();
+		$group_option = $group->getGroup();
+		array_unshift($group_option, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
+		$this->view->group = $group_option;
 		$this->view->room = $group->getRoom();
 	}
 	public function submitAction(){
@@ -78,6 +80,7 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 			$data=$this->getRequest()->getPost();
 			$db = new Foundation_Model_DbTable_DbGroup();
 			$group = $db->addGroup($data);
+			$result = array("id"=>$group);
 			print_r(Zend_Json::encode($group));
 			exit();
 		}
