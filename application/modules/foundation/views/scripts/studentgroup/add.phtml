@@ -38,6 +38,7 @@ dojo.ready(function(){
 	    	make_id = dijit.byId('grade').get('value');
 	    	paymentTerm();
 	    }
+		
 	}, "grade");
 
 	new dijit.form.FilteringSelect({
@@ -60,15 +61,16 @@ dojo.ready(function(){
 	    id: "group",
 	    name: "group",           
 	    class: 'fullside',            
-	    onChange: function() {  
+	    onChange: function() { 
 	     group_id = dijit.byId('group').get('value');
 	     if(group_id==-1){
 	    	 dijit.byId("popup_dept").show();
 	      }
 	     else {
 	      
-	     }           
-	    }
+	     }  
+	     toStudentGroup();          
+	    } 
 	}, "group");
 	//toStudentGroup();
 }); 
