@@ -5,9 +5,11 @@
 	
 ?>	
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'studentdrop','action'=>'rpt-student-drop')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<table width="100%" style="margin: 0 auto;">
+		<input dojoType="dijit.form.TextBox" required="true"  id="txtsearch" name="txtsearch" placeholder="Search....." value="" type="text">
 		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
-		<input dojoType="dijit.form.TextBox" required="true"  id="reason" name="reason" placeholder="Search....." value="" type="text">
+		<div id="divPrint">
+				
+		<table width="100%" style="margin: 0 auto;">
 			<tr>
 				<td>
 				<fieldset style="background: none;height: 600px;scroll;overflow-x:scroll;">
@@ -16,8 +18,8 @@
 								<tr style="font-size: 13px;">
 									<td colspan="2"></td>
 									<td align="right">
-										<strong>ព្រះរាជាណាចក្រកម្ពុជា</strong><br />
-										<strong>ជាតិ សាសនា ព្រះមហាក្សត្រ</strong><br />
+										<strong></strong><br />
+										<strong></strong><br />
 									</td>
 								</tr>
 								<tr>
@@ -26,11 +28,11 @@
 										<strong>សាកលវិទ្យាល័យ វេស្ទើន</strong><br /><br ><br ><br >
 									</td>
 									<td align="center">
-										<strong>ព្រះរាជាណាចក្រកម្ពុជា</strong><br />
-										<strong>ជាតិ សាសនា ព្រះមហាក្សត្រ</strong><br />
-										<strong style="font-family: Tacteing;">7</strong><br />
-										<strong>បញ្ជីរាយនាមបេក្ខជនប្រលងជ្រើសរើស ចូលរៀនថ្នាក់ឆ្នាំសិក្សា លើកទីមួយ ជំនាន់ទីមួយ</strong><br />
-										<strong>មហាវិទ្យាល័យ សិល្បៈ មនុស្សសាស្រ្ត និងភាសា ,ជំនាញអប់រំភាសាអង់គ្លេស ឆ្នាំសិក្សា 2013-214</strong><br />
+										<strong></strong><br />
+										<strong></strong><br />
+										<strong style="font-family: Tacteing;"></strong><br />
+										<strong>របាយការណ៏  Student Drop</strong><br />
+										<strong></strong><br />
 									</td>
 									<td width="20%"></td>
 								</tr>
@@ -40,26 +42,22 @@
 											<tr style="font-size:11px; height: 30px;" align="center" >
 												<th >ល.រ</th>
 												<th >Student ID</th>
-												<th >Student KHName</th>
-												<th>Student ENName</th>
+												<th >Student Name</th>
 												<th >Gender</th>
 												<th >Type</th>
 												<th >Date Stop</th>
 												<th >Note</th>
-												<th >Status</th>
 												
 											</tr>
 										<?php $i=0; foreach ($this->rs AS $row) { $i++;?>
 											<tr style="font-size:11px; height: 30px;" align="center" >
 												<th ><?php echo $i;?></th>
 												<th ><?php echo $row['stu_id'];?></th>
-												<th ><?php echo $row['kh_name'];?></th>
-												<th ><?php echo $row['en_name'];?></th>	
+												<th ><?php echo $row['name'];?></th>
 												<th ><?php echo $row['sex'];?></th>
 												<th ><?php echo $row['type'];?></th>
 												<th ><?php echo $row['date'];?></th>
 												<th ><?php echo $row['note'];?></th>
-												<th ><?php echo $row['status'];?></th>
 											</tr>
 										<?php }?>	
 										</table>	
@@ -69,5 +67,6 @@
 				</fieldset>		
 				</td>
 			</tr>
-		</table>			
+		</table>	
+		</div>		
 </form>
