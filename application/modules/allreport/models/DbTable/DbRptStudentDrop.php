@@ -21,10 +21,24 @@ class Allreport_Model_DbTable_DbRptStudentDrop extends Zend_Db_Table_Abstract
     	if(empty($search)){
     		return $db->fetchAll($sql);
     	}
-    	if(!empty($search['txtsearch'])){
-    		$where.=" AND (SELECT CONCAT(stu_khname,' - ',stu_enname) FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_drop`.`stu_id` limit 1) LIKE '%".$search['txtsearch']."%'";
-    	}
+//     	if(!empty($search['txtsearch'])){
+//     		$where.=" AND (SELECT CONCAT(stu_khname,' - ',stu_enname) FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_drop`.`stu_id` limit 1) LIKE '%".$search['txtsearch']."%'";
+//     	}
     	
+    	$searchs=$search['txtsearch'];
+    	
+    	if($search['searchby']==0){
+    		$where.='';
+    	}
+    	if($search['searchby']==1){
+    		$where.=" AND stu_id  LIKE  '%".$searchs."%' ";
+    	}
+    	if($search['searchby']==2){
+    		$where.=" AND (SELECT CONCAT(stu_khname,' - ',stu_enname) FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_drop`.`stu_id`) LIKE '%".$searchs."%'";
+    	}
+    	if($search['searchby']==3){
+    		$where.=" AND (SELECT name_kh FROM `rms_view` WHERE `rms_view`.`type`=5 and `rms_view`.`key_code`=`rms_student_drop`.`type`) LIKE '%".$searchs."%'";
+    	}
     	
     	return $db->fetchAll($sql.$where);
     	 

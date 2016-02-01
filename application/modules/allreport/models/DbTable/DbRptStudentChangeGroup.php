@@ -38,8 +38,18 @@ class Allreport_Model_DbTable_DbRptStudentChangeGroup extends Zend_Db_Table_Abst
     	if(empty($search)){
     		return $db->fetchAll($sql);
     	}
-    	if(!empty($search['txtsearch'])){
-    		$where.=" AND (SELECT CONCAT(stu_khname,' - ',stu_enname) FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id` limit 1)  LIKE '%".$search['txtsearch']."%'";
+//     	if(!empty($search['txtsearch'])){
+//     		$where.=" AND (SELECT CONCAT(stu_khname,' - ',stu_enname) FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id` limit 1)  LIKE '%".$search['txtsearch']."%'";
+//     	}
+    	$searchs = $search['txtsearch'];
+    	if($search['searchby']==0){
+    		$where.='';
+    	}
+    	if($search['searchby']==1){
+    		$where.=" AND stu_id  LIKE  '%".$searchs."%'";
+    	}
+    	if($search['searchby']==2){
+    		$where.=" AND (SELECT CONCAT(stu_khname,' - ',stu_enname) FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id` limit 1) LIKE  '%".$searchs."%'";
     	}
     	
     	return $db->fetchAll($sql.$where);
