@@ -8,23 +8,34 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
     	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
 	}
 	public function indexAction(){
+			$db = new Foundation_Model_DbTable_DbGroup();
+			$rs= $db->getGroupDetail();
+			$list = new Application_Form_Frmtable();
 			
+			if(!empty($rs)){
+			}
+			else{
+				$result = Application_Model_DbTable_DbGlobal::getResultWarning();
+			}
+			$collumns = array("GROUP NAME","YEARS","SEMESTER","DEGREE","GRADE","SESSION","ROOM","START DATE","END DATE","NOTE","STATUS","ចំនួនសិស្ស");
+			$link=array(
+					'module'=>'foundation','controller'=>'studentgroup','action'=>'edit',
+			);
+			$this->view->list=$list->getCheckList(0, $collumns, $rs,array('group_code'=>$link,'room_name'=>$link));
 	}
 	function addAction(){
 		$db = new 	Foundation_Model_DbTable_DbStudent();
-		
 		try{
 			if($this->getRequest()->isPost()){
 				$_data=$this->getRequest()->getPost();
 				$search = array(
-						
 						'degree' => $_data['degree'],
 						'grade' => $_data['grade'],
 						'session' => $_data['session']);
 				$rs =$db->getSearchStudent($search);
 			}else{
 				$search = array(
-						'degree' => 1,
+						'degree' => 0,
 						'grade' => 0,
 						'session' => 0);
 				$rs = $db->getSearchStudent($search);
@@ -59,9 +70,58 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 		$this->_redirect('/foundation/studentgroup/add');
 	}
 	
-	
-	public function editAction(){
+	public function submit1Action(){
+		$id=$this->getRequest()->getParam("id");
+		if($this->getRequest()->isPost()){
+			try{
+				$_data = $this->getRequest()->getPost();
+				$db = new Foundation_Model_DbTable_DbGroup();
+				$row = $db->editStudentGroup($_data, $id);
+				
+				Application_Form_FrmMessage::message("INSERT_SUCCESS");
+			}catch(Exception $e){
+				Application_Form_FrmMessage::message("INSERT_FAIL");
+				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			}
+		}
+		$this->_redirect('/foundation/studentgroup/index');
+	}
+	function editAction(){
+		$id=$this->getRequest()->getParam("id");
+		$db = new 	Foundation_Model_DbTable_DbStudent();
+		$_db = new Foundation_Model_DbTable_DbGroup();
+		$this->view->id = $id;
+		$row = $_db->getStudentGroup($id);
+		$this->view->rr = $row;
+			try{
+				if($this->getRequest()->isPost()){
+				$_data=$this->getRequest()->getPost();
+					$search = array(
+							'degree' => $_data['degree'],
+							'grade' => $_data['grade'],
+							'session' => $_data['session']);
+					$rs =$db->getSearchStudent($search);
+				}else{
+					$search = array(
+							'degree' => 0,
+							'grade' => 0,
+							'session' => 0);
+					$rs = $db->getSearchStudent($search);
+				}
+				$this->view->rs = $rs;
+				$this->view->value=$search;
 		
+			}catch(Exception $e){
+				Application_Form_FrmMessage::message("APPLICATION_ERROR");
+				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			}
+		$_db = new Application_Model_DbTable_DbGlobal();
+		$this->view->degree = $_db->getAllFecultyName();
+		$group = new Foundation_Model_DbTable_DbGroup();
+		$group_option = $group->getGroup();
+		array_unshift($group_option, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
+		$this->view->group = $group_option;
+		$this->view->room = $group->getRoom();
 	}
 	function getGradeAction(){
 		if($this->getRequest()->isPost()){
