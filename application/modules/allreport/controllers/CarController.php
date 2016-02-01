@@ -20,15 +20,11 @@ public function init()
 			$_data=$this->getRequest()->getPost();
 			$search = array(
 					'txtsearch' => $_data['txtsearch'],
+					'searchby'=> $_data['searchby'],
 					);
 		}
 		else{
-			$search=array(
-					'Car_ID'=>'',
-					'Car_Name'=>'',
-					'Driver_Name' =>'',
-					'txtsearch' => '',
-					);;
+			$search='';
 		}
 		$group= new Allreport_Model_DbTable_DbRptCar();
 		$this->view->rs = $rs_rows = $group->getAllCar($search);
