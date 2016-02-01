@@ -5,7 +5,14 @@
 	
 ?>	
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'group','action'=>'rpt-group')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<input dojoType="dijit.form.TextBox" required="true"  id="txtsearch" name="txtsearch" placeholder="Search by group code....." value="" type="text">
+		<select dojoType="dijit.form.FilteringSelect" id="searchby" name="searchby" placeholder="Search by ....." value="" type="text">
+			<option value="0">All</option>
+			<option value="1">Group Code</option>
+			<option value="2">Room Name</option>
+			<option value="3">Session</option>
+			<option value="4">Grade</option>
+		</select>
+		<input dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Search by group code....." value="" type="text">
 		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
 		<div id="divPrint">
 		<table width="100%" style="margin: 0 auto;">
@@ -42,7 +49,7 @@
 											<tr style="font-size:11px; height: 30px;" align="center" >
 												<th >ល.រ</th>
 												<th >Group Code</th>
-												<th >Room ID</th>
+												<th >Room Name</th>
 												<th>Academic</th>
 												<th >Semester</th>
 												<th >Session</th>
@@ -58,16 +65,16 @@
 											<tr style="font-size:11px; height: 30px;" align="center" >
 												<th ><?php echo $i;?></th>
 												<th ><?php echo $row['group_code'];?></th>
-												<th ><?php echo $row['room_name'];?></th>
+												<th align="left"><?php echo $row['room_name'];?></th>
 												<th ><?php echo $row['academic'];?></th>	
 												<th ><?php echo $row['semester'];?></th>
 												<th ><?php echo $row['session'];?></th>
-												<th ><?php echo $row['degree'];?></th>
-												<th ><?php echo $row['grade'];?></th>
+												<th align="left"><?php echo $row['degree'];?></th>
+												<th align="left"><?php echo $row['grade'];?></th>
 												<th ><?php echo $row['amount_month'];?></th>
 												<th ><?php echo $row['start_date'];?></th>					
 												<th ><?php echo $row['expired_date'];?></th>
-												<th ><?php echo $row['note'];?></th>
+												<th align="left"><?php echo $row['note'];?></th>
 											</tr>
 										<?php }?>	
 										</table>	

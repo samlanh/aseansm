@@ -5,6 +5,12 @@
 	
 ?>	
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'studentdrop','action'=>'rpt-student-drop')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+		<select dojoType="dijit.form.FilteringSelect" id="searchby" name="searchby" placeholder="Search by ....." value="" type="text">
+			<option value="0">All</option>
+			<option value="1">Student ID</option>
+			<option value="2">Student Name</option>
+			<option value="3">Type</option>
+		</select>
 		<input dojoType="dijit.form.TextBox" required="true"  id="txtsearch" name="txtsearch" placeholder="Search....." value="" type="text">
 		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
 		<div id="divPrint">
