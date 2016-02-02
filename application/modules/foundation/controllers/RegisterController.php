@@ -62,9 +62,9 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 			}
 		}	
 		$_db = new Application_Model_DbTable_DbGlobal();
-		$this->view->degree = $rows = $_db->getAllFecultyName();
-		$this->view->occupation = $row =$_db->getOccupation();
-		$this->view->province = $row =$_db->getProvince();
+		$this->view->degree = $_db->getAllFecultyName();
+		$this->view->occupation = $_db->getOccupation();
+		$this->view->province = $_db->getProvince();
 		$this->view->rs = $db->getStudentById($id);
 	}
 	function getGradeAction(){

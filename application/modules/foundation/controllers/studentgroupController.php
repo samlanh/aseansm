@@ -33,14 +33,15 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 						'grade' => $_data['grade'],
 						'session' => $_data['session']);
 				$rs =$db->getSearchStudent($search);
+				$this->view->rs = $rs;
 			}else{
 				$search = array(
 						'degree' => 0,
 						'grade' => 0,
 						'session' => 0);
-				$rs = $db->getSearchStudent($search);
+				//$rs = $db->getSearchStudent($search);
 			}
-			$this->view->rs = $rs;	
+			
 			$this->view->value=$search;
 	
 		}catch(Exception $e){
@@ -90,7 +91,8 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 		$id=$this->getRequest()->getParam("id");
 		$db = new 	Foundation_Model_DbTable_DbStudent();
 		$_db = new Foundation_Model_DbTable_DbGroup();
-		$this->view->id = $id;
+		$g_id = $_db->getGroupById($id);
+		$this->view->id = $g_id;
 		$row = $_db->getStudentGroup($id);
 		$this->view->rr = $row;
 			try{
@@ -101,14 +103,15 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 							'grade' => $_data['grade'],
 							'session' => $_data['session']);
 					$rs =$db->getSearchStudent($search);
+					$this->view->rs = $rs;
 				}else{
 					$search = array(
 							'degree' => 0,
 							'grade' => 0,
 							'session' => 0);
-					$rs = $db->getSearchStudent($search);
+				//	$rs = $db->getSearchStudent($search);
 				}
-				$this->view->rs = $rs;
+			
 				$this->view->value=$search;
 		
 			}catch(Exception $e){
@@ -118,7 +121,7 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$this->view->degree = $_db->getAllFecultyName();
 		$group = new Foundation_Model_DbTable_DbGroup();
-		$group_option = $group->getGroup();
+		$group_option = $group->getGroupToEdit();
 		array_unshift($group_option, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
 		$this->view->group = $group_option;
 		$this->view->room = $group->getRoom();

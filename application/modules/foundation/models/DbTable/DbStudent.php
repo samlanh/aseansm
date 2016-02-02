@@ -181,9 +181,6 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 		 if($data['grade']>0){
 		 	$sql.=" AND grade =".$data['grade'];
 		 }
-		 if($data['grade']>0){
-		 	$sql.=" AND grade =".$data['grade'];
-		 }
 		 if($data['session']>0){
 		 	$sql.=" AND session =".$data['session'];
 		 }

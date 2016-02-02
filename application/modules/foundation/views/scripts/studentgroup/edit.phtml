@@ -73,8 +73,11 @@ dojo.ready(function(){
 	    } 
 	}, "group");
 	//toStudentGroup();
-	dijit.byId('group').attr('value','<?php echo $this->id?>')
-}); 
+	<?php foreach($this->group as $row){
+	?>
+	dijit.byId('group').attr('value','<?php echo $row['id']?>'<?php if($row['id']==$this->id['id'])?>);	
+	<?php } ?>
+	}); 
    
 var grade_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=>'studentgroup','action'=>'get-grade')); ?>';
@@ -401,7 +404,6 @@ function toStudentGroup(){
 			//alert(data);
 			//dijit.byId('group').attr('value','<?php // echo $this->rr['group_id']; ?>');
 			dojo.byId('lbldetail').innerHTML='<span style="color:red;">Academic :  </span>'+data.from_academic+'-'+data.to_academic+'<span style="color:red;">  Degree :  </span>'+data.degree+'<span style="color:red;">  Grade :  </span>'+data.grade+'<span style="color:red;">  Session :  </span>'+data.session+"<br />"+'<span style="color:red;">  Start Date :  </span>'+data.start_date+'<span style="color:red;">  Expired Date :  </span>'+data.expired_date;
-			dijit.byId('group').attr('value','<?php echo $this->id ?>');
 		},
 		error: function(err) {
 			alert(err);

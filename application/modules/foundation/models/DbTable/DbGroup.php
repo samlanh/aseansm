@@ -16,9 +16,16 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 	}
 	public function getGroup(){
 		$db = $this->getAdapter();
-		$sql="SELECT id,group_code as name FROM rms_group WHERE status = 1 ";
+		$sql="SELECT id,group_code as name FROM rms_group WHERE status = 1 AND is_use = 0 ";
 		return $db->fetchAll($sql);
 	}
+	
+	public function getGroupToEdit(){
+		$db = $this->getAdapter();
+		$sql="SELECT id,group_code as name FROM rms_group WHERE status = 1 AND is_use = 1 ";
+		return $db->fetchAll($sql);
+	}
+	
 	public function addGroup($_data){
 		$db = $this->getAdapter();
 		$arr = array(
@@ -43,7 +50,13 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		return $this->insert($arr);
 		 
 	}
+	public function getGroupById($id){
+		$db = $this->getAdapter();
+		$sql = "
+		SELECT id,group_code FROM rms_group WHERE id=".$id;
+		return $db->fetchRow($sql);
 	
+	}
 	public function getStudentGroup($id){
 		$db = $this->getAdapter();
 		$sql = "
@@ -56,16 +69,21 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 	}
 	
 	public function editStudentGroup($_data,$id){
+		//print_r($_data);exit();
 		$db = $this->getAdapter();
-		$rs = $this->getStudentGroup($id);	
-		if(!empty($this->$rs))foreach($this->$rs as $row){
-			$data=array(
-					'is_setgroup'=> 0,
-			);
-			$where='stu_id = '.$rs;
-			$this->_name='rms_student';
-			$this->update($data, $where);
-		}
+		$rr = $this->getStudentGroup($id);
+		$this->_name='rms_student';
+		if(!empty($rr)){
+			foreach($rr as $row){
+				$data=array(
+						'is_setgroup' => 0,
+				);
+				$where='stu_id = '.$row['stu_id'];
+				$this->update($data, $where);
+		    }
+		}else{
+			
+		    }
 		
 		$where = $this->getAdapter()->quoteInto("group_id=?", $id);
 		$this->_name='rms_group_detail_student';
@@ -78,7 +96,7 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 					'group_id'=>$_data['group'],
 					'stu_id'=>$rs,
 					'status'=>1,
-					'date'=>date('d-m-Y')
+					'date'=>date('Y-m-d')
 			);
 			$this->_name='rms_group_detail_student';
 			$this->insert($arr);
@@ -92,6 +110,7 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		}
 	}
 	public function addStudentGroup($_data){
+		//print_r($_data);exit();
 		$db = $this->getAdapter();
 		$a = $_data['public-methods'];
 		foreach ($a as $rs){
@@ -100,7 +119,7 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 					'group_id'=>$_data['group'],
 					'stu_id'=>$rs,
 					'status'=>1,
-					'date'=>date('d-m-Y')
+					'date'=>date('Y-m-d')
 			);
 			$this->_name='rms_group_detail_student';
 			$this->insert($arr);
@@ -112,6 +131,12 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 			$where='stu_id = '.$rs;
 			$this->update($data, $where);
 		}
+		$this->_name = 'rms_group';
+		$data_gro = array(
+				'is_use'=> 1,
+		);
+		$where = 'id = '.$_data['group'];
+		$this->update($data_gro, $where);
 
 	}
 	public function getGroupDetail(){
