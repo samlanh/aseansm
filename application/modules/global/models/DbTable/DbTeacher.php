@@ -48,7 +48,7 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 					'id_card_no' => $_data['idcard'],
 					'issued_date' => $_data['issued'],
 					'expired' => $_data['expired'],
-			        'passport_id' => $_data['pars'],
+			        'pars_id' => $_data['pars'],
 					'issued_date1' => $_data['issued1'],
 					'expired1' => $_data['expired1'],
 			        'date' => Zend_Date::now(),
@@ -79,18 +79,18 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
-			$photoname = str_replace(" ", "_", $_data['en_name'].'-teacher') . '.jpg';
-			$upload = new Zend_File_Transfer();
-			$upload->addFilter('Rename',
-					array('target' => PUBLIC_PATH . '/images/'. $photoname, 'overwrite' => true) ,'photo');
-			$receive = $upload->receive();
-			if($receive)
-			{
-				$_data['photo'] = $photoname;
-			}
-			else{
-				$_data['photo']=$_data['photo'];
-			}
+// 			$photoname = str_replace(" ", "_", $_data['en_name'].'-teacher') . '.jpg';
+// 			$upload = new Zend_File_Transfer();
+// 			$upload->addFilter('Rename',
+// 					array('target' => PUBLIC_PATH . '/images/'. $photoname, 'overwrite' => true) ,'photo');
+// 			$receive = $upload->receive();
+// 			if($receive)
+// 			{
+// 				$_data['photo'] = $photoname;
+// 			}
+// 			else{
+// 				$_data['photo']=$_data['photo'];
+// 			}
 		
 		$_arr=array(
 					'teacher_code' => $_data['code'],
@@ -115,7 +115,7 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 					'id_card_no' => $_data['idcard'],
 					'issued_date' => $_data['issued'],
 					'expired' => $_data['expired'],
-			        'passport_id' => $_data['pars'],
+			        'pars_id' => $_data['pars'],
 					'issued_date1' => $_data['issued1'],
 					'expired1' => $_data['expired1'],
 			        'date' => Zend_Date::now(),
@@ -126,6 +126,7 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 		$this->update($_arr, $where);
 		return $db->commit();
 		}catch (Exception $e){
+// 			echo $e->getMessage();exit();
 			$db->rollBack();
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}

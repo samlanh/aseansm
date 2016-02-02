@@ -159,41 +159,16 @@ class Global_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 //   		$sql = ' SELECT * FROM `v_getallgroup` WHERE 1';
 // 		$sql = ' SELECT group_code , CONCAT(from_academic,'-',to_academic) as year,semester,session,degree,grade,room_id,start_date,expired_date,note,status FROM `rms_group` WHERE 1';
 		
-		$sql = 'SELECT
-		`g`.`id`,
-		`g`.`group_code`    AS `group_code`,
-		
-		CONCAT(`g`.`from_academic`," - ",`g`.`to_academic`) AS academic ,
-		
-		`g`.`semester` AS `semester`,
-		
-		(SELECT kh_name
-		 FROM `rms_dept`
-		 WHERE (`rms_dept`.`dept_id`=`g`.`degree`)),
-		
-		(SELECT major_khname
-		 FROM `rms_major`
-		 WHERE (`rms_major`.`major_id`=`g`.`grade`)),
-		
-		(SELECT
-		`rms_view`.`name_en`
-		FROM `rms_view`
-		WHERE ((`rms_view`.`type` = 4)
-		AND (`rms_view`.`key_code` = `g`.`session`))
-		LIMIT 1) AS `session`,
-		(SELECT
-		`r`.`room_name`
-		FROM `rms_room` `r`
-		WHERE (`r`.`room_id` = `g`.`room_id`)) AS `room_name`,
-		`g`.`start_date`,
-		`g`.`expired_date`,
-		`g`.`note`,
-		(SELECT
-		`rms_view`.`name_en`
-		FROM `rms_view`
-		WHERE ((`rms_view`.`type` = 1)
-		AND (`rms_view`.`key_code` = `g`.`status`))
-		LIMIT 1) AS `status`
+		$sql = 'SELECT `g`.`id`,`g`.`group_code` AS `group_code`,CONCAT(`g`.`from_academic`," - ",
+		`g`.`to_academic`) AS academic ,`g`.`semester` AS `semester`,
+		(SELECT kh_name FROM `rms_dept` WHERE (`rms_dept`.`dept_id`=`g`.`degree`)) AS degree,
+		(SELECT major_khname FROM `rms_major` WHERE (`rms_major`.`major_id`=`g`.`grade`))AS grade,
+		(SELECT`rms_view`.`name_en`	FROM `rms_view`	WHERE ((`rms_view`.`type` = 4)
+		AND (`rms_view`.`key_code` = `g`.`session`))LIMIT 1) AS `session`,
+		(SELECT `r`.`room_name`	FROM `rms_room` `r`	WHERE (`r`.`room_id` = `g`.`room_id`)) AS `room_name`,
+		`g`.`start_date`,`g`.`expired_date`,`g`.`note`,
+		(SELECT `rms_view`.`name_en` FROM `rms_view` WHERE ((`rms_view`.`type` = 1)
+		AND (`rms_view`.`key_code` = `g`.`status`)) LIMIT 1) AS `status`
 		FROM `rms_group` `g`
 		ORDER BY `g`.`id` DESC ';	
 
