@@ -20,6 +20,7 @@ class Global_LecturerController extends Zend_Controller_Action {
 						'title' => '');
 			}
 			$rs_rows= $db->getAllTeacher($search);
+			//print_r($rs_rows);exit();
 			$list = new Application_Form_Frmtable();
 			$collumns = array("CODE","TEACHER_EN_NAME","TEACHER_KH_NAME","sex","phone","email","degree","note","STATUS");
 			 
@@ -28,8 +29,10 @@ class Global_LecturerController extends Zend_Controller_Action {
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('teacher_code'=>$link,'teacher_name_kh'=>$link,'teacher_name_en'=>$link));
 		}catch (Exception $e){
+			//echo $e->getMessage();exit();
 			Application_Form_FrmMessage::message("Application Error");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			
 		}
 		$frm = new Application_Form_FrmOther();
 		$this->view->add_major = $frm->FrmAddMajor(null);
@@ -77,6 +80,7 @@ class Global_LecturerController extends Zend_Controller_Action {
 			
 				$db = new Global_Model_DbTable_DbTeacher();
 				$db->updateTeacher($data);
+// 				print_r($db);exit();
 				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/global/lecturer");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("EDIT_FAIL");
