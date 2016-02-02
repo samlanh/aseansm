@@ -270,6 +270,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		$books->setAttribs(array(
 				'dojoType'=>'dijit.form.NumberTextBox',
 				'class'=>'fullside',
+				'style'=>'color:red',
 				'onkeyup'=>'getRemaining();'
 		));
 		$books->setValue(0);

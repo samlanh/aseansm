@@ -266,6 +266,7 @@ Class Registrar_Form_FrmCourseStudy extends Zend_Dojo_Form {
 		$books->setAttribs(array(
 				'dojoType'=>'dijit.form.NumberTextBox',
 				'class'=>'fullside',
+				'style'=>'color:red',
 				'onkeyup'=>'getRemaining();'
 		));
 		$books->setValue(0);
@@ -338,6 +339,7 @@ Class Registrar_Form_FrmCourseStudy extends Zend_Dojo_Form {
 			$remaining->setValue($data['balance_due']);
 			$char_price->setValue($data['amount_in_khmer']);
 			$not->setValue($data['note']);
+			$room->setValue($data['room_id']);
 		}
 		$this->addElements(array(
 			  $room,$session,$id,$generation,$char_price,$end_date,$start_date,$not,$books,$addmin_fee,$remaining,$total, $_year_one,$_new_student,$_invoice_no, $_pay_date, $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,$metion,

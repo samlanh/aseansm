@@ -150,6 +150,7 @@
 		addmin_fee=isNaN(addmin_fee)?0:addmin_fee;
 		totals=parseFloat(old_totale)+parseFloat(remark)+parseFloat(addmin_fee);
 		  dijit.byId('total').attr('value',totals.toFixed(2));
+		  dijit.byId('books').attr('value',totals.toFixed(2));
 		  getRemaining();
 	}
 	//set value remaining
@@ -361,17 +362,17 @@ function printSave(){
 		//var mkh = new Array('មករា', 'កុម្ភៈ', 'មីនា', 'មេសា', 'ឧសភា', 'មិថុនា', 'កក្កដា', 'សីហា', 'កញ្ញា', 'តុលា', 'វិច្ឆិកា', 'ធ្នូរ');
 		dojo.byId("lb_dept").innerHTML = dijit.byId('dept').attr('displayedValue');
 		dojo.byId("lb_grade").innerHTML = dijit.byId("grade").attr('displayedValue');
-		dojo.byId("lb_tuitionfee").innerHTML = dijit.byId('tuitionfee').get('value');
+		dojo.byId("lb_tuitionfee").innerHTML ="$"+dijit.byId('tuitionfee').get('value');
 		dojo.byId("lb_payment_term").innerHTML = dijit.byId("payment_term").attr('displayedValue');
-		dojo.byId("lb_discount").innerHTML = dijit.byId("discount").get('value');
-		dojo.byId("lb_remark").innerHTML = dijit.byId('remark').attr('value');
-		dojo.byId("lb_total").innerHTML = dijit.byId('total').attr('value');
-		dojo.byId("lb_books").innerHTML = dijit.byId("books").get('value');
-		dojo.byId("lb_addmin_fee").innerHTML = dijit.byId("addmin_fee").get('value');
-		dojo.byId("lb_remaining").innerHTML = dijit.byId("remaining").get('value');
+		dojo.byId("lb_discount").innerHTML = dijit.byId("discount").get('value')+"%";
+		dojo.byId("lb_remark").innerHTML ="$"+ dijit.byId('remark').attr('value');
+		dojo.byId("lb_total").innerHTML ="$"+dijit.byId('total').attr('value');
+		dojo.byId("lb_books").innerHTML = "$"+dijit.byId("books").get('value');
+		dojo.byId("lb_addmin_fee").innerHTML ="$"+dijit.byId("addmin_fee").get('value');
+		dojo.byId("lb_remaining").innerHTML = "$"+dijit.byId("remaining").get('value');
 		
-		 dojo.byId("lb_note").innerHTML = dijit.byId("not").value;
-		 //dojo.byId("lb_start_date").innerHTML = dijit.byId("start_date").value;
+		 dojo.byId("lb_note").innerHTML = dijit.byId("not").get('value');
+		 dojo.byId("lb_char").innerHTML = dijit.byId("char_price").get('value');
 		 var d = dojo.byId("start_date").value.split('/');
 		 dojo.byId("lb_start_date").innerHTML = d[1] + "/" + d[0] +"/"+d[2];
 		 var d = dojo.byId("end_date").value.split('/');
@@ -384,10 +385,16 @@ function printSave(){
 <div class="dijitHidden">
 <?php $keycode = $this->keycode;?>
 	<div data-dojo-type="dijit.Dialog" style="width:7cm;" align="center" data-dojo-props="title:'<?php echo $tr->translate("STUDENT_PAYMENT_RECEIPT");?>'" id="terms" >
-		<div >
-		
+		<div class="header">
+		     <table     bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;  font-size:14px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;">
+		          <tr>
+		              <td colspan="8"  align="center"><strong style="font-family:'Khmer OS Muol';font-size: 20px;color: rgb(47, 70, 149);"> សាលារៀន &nbsp;<font style="color: rgb(246, 86, 74);">អាស៊ាន </font>&nbsp;ហ៊ែរីថេជ</strong>
+		              ​​​​​<br/><strong style="font-size: 20px;font-weight:bold;color: rgb(47, 70, 149);">ASEAN <font style="color: rgb(246, 86, 74);">HERITAGE</font> SCHOOL</strong>
+		              </td>
+		          </tr>
+		     </table>
 		</div>
-		<div id="divPrint" style="width: 21cm; height: 14cm ; padding: 0px; margin: 0px;">
+		<div id="divPrint" style="width: 21cm; height: 11cm ; padding: 0px; margin: 0px;">
 			<style>
 				.fontbig{
 					font-size: 15px;	
@@ -409,7 +416,7 @@ function printSave(){
 			   .khmer{font:12px 'Khmer OS Battambang';}
 			   .one{white-space:nowrap;}
 			</style>	
-			<table  class="print" bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;height: 10cm; font-size:12px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;">
+			<table  class="print" bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;height: 11cm; font-size:12px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;">
 				<tr>
 				    <td colspan="8"  style="font:bold 20px 'Kh Muol';" align="center"><u><b><strong>បង្កាន់ដៃបង់ប្រាក់</strong></b></u>
 				        <br/><strong style="font-size: 20px;font-weight:bold">OFFICAL RECEIPT</strong>
@@ -445,20 +452,31 @@ function printSave(){
 				    <td class="one khmerbold">&nbsp;&nbsp;តម្លៃនៅសល់</td><td width="25%"><strong>&nbsp;<label id="lb_remaining" class="value"></label></strong></td>
 				</tr>
 				<tr>
-				    <td class="one khmerbold">សម្គាល់</td><td  colspan="7"><strong >&nbsp; <label style="width: 97% ! important;" id="lb_note" class="value"></label></strong></td>
+				    <td class="one khmerbold">តម្លៃជាអក្សរ</td><td  colspan="3"><strong >&nbsp; <label style="width: 99% ! important;" id="lb_char" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;&nbsp;សម្គាល់</td><td  colspan="3"><strong >&nbsp; <label style="width: 99% ! important;" id="lb_note" class="value"></label></strong></td>
 				</tr>
 				<tr>
 				    <td class="one khmerbold">&nbsp;&nbsp;ថ្ងៃចាប់ផ្តើម</td><td width="25%"><strong>&nbsp; <label id="lb_start_date" class="value"></label></strong></td>
 				    <td class="one khmerbold">&nbsp;&nbsp;ថ្ងៃបញ្ចប់</td><td width="25%"><strong>&nbsp; <label id="lb_end_date" class="value"></label></strong></td>
 				</tr>
 				<tr>
-				    <td colspan="8" align="right">
+				    <td colspan="8" align="right" class="khmerbold">
 				        <hr style="margin-bottom: -26px !important;" align="right" width="20%"/><br/>
 				        <h3 style="padding-right: 62px ! important;margin-bottom: -16px  !important;">បេឡា</h3><br/> 26/Dec/2015 08:05AM Tip Rachna<br/>
 				        បញ្ជាក់ៈទឹកប្រាក់ដែលបង់ហើយ  មិនអាចផ្ទេរ ឬ ដកវិញបានទែ  Note: All fees are not transferable or refundable . 
 				    </td>
 				</tr>
 			</table>
+		</div>
+		<div class="footer_re"  >
+		<table  bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;  font-size:14px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;" >
+		    <tr>
+				 <td colspan="8" > 
+				       <hr style="background: rgba(251, 239, 13, 0.87) none repeat scroll 0% 0%; height: 4px; border: medium none rgb(240, 255, 0);"/>
+				       <p class=" khmerbold">អាគារលេខ១៤៧​K ផ្លូវ៥៩៨ សង្កាត់ទូលសង្កែ ខណ្ឌឬស្សីកែង រាជធានីភ្នំពេញ ព្រះរាជាណាចក្រកម្ពុជា</p>
+				 </td>
+				</tr>
+		</table>
 		</div>
 		<iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>	
 		<button dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconPrint"

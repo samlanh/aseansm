@@ -42,6 +42,7 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 						'balance_due'=>$data['remaining'],
 						'note'=>$data['not'],
 						'amount_in_khmer'=>$data['char_price'],
+						'room_id'=>$data['room'],
 						'payfor_type'=>2,
 						'user_id'=>$this->getUserId(),
 				);
@@ -85,6 +86,7 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 						'balance_due'=>$data['remaining'],
 						'note'=>$data['not'],
 						'amount_in_khmer'=>$data['char_price'],
+						'room_id'=>$data['room'],
 						'payfor_type'=>2,
 						'user_id'=>$this->getUserId(),
 				);
@@ -109,7 +111,7 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
     	$db=$this->getAdapter();
     	$sql=" SELECT s.stu_id,s.stu_code,sp.receipt_number,s.academic_year,s.stu_khname,s.stu_enname,s.sex,s.session,s.degree,s.grade,s.session,
     	sp.payment_term,sp.tuition_fee,sp.discount_percent,sp.other_fee,sp.admin_fee,sp.total,sp.paid_amount,
-    	sp.balance_due,sp.amount_in_khmer,sp.note,sp.start_hour,sp.end_hour
+    	sp.balance_due,sp.amount_in_khmer,sp.note,sp.start_hour,sp.end_hour,sp.room_id
     	FROM rms_student AS s,rms_student_payment AS sp WHERE s.stu_id=sp.student_id AND s.stu_id=".$id;
     	return $db->fetchRow($sql);
     }

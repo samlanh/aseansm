@@ -146,6 +146,7 @@
 		addmin_fee=isNaN(addmin_fee)?0:addmin_fee;
 		totals=parseFloat(old_totale)+parseFloat(remark)+parseFloat(addmin_fee);
 		  dijit.byId('total').attr('value',totals.toFixed(2));
+		  dijit.byId('books').attr('value',totals.toFixed(2));
 		  getRemaining();
 	}
 	//set value remaining
@@ -377,31 +378,35 @@ function printSave(){
 		 dojo.byId("lb_term_start").innerHTML = d[1] + "/" + d[0] +"/"+d[2];
 		 var d = dojo.byId("end_date").value.split('/');
 		 dojo.byId("lb_term_end").innerHTML = d[1] + "/" + d[0] +"/"+d[2];
- dojo.byId("lb_student").innerHTML = dijit.byId("en_name").get('value');
- dojo.byId("lb_student_id").innerHTML = dijit.byId("stu_id").get('value');
- dojo.byId("lb_level").innerHTML = dijit.byId("grade").attr('displayedValue');
- 
- dojo.byId("lb_time_study").innerHTML = dijit.byId("from_time").attr('displayedValue')+"-"+dijit.byId("to_time").attr('displayedValue');
- dojo.byId("lb_room").innerHTML = dijit.byId("dept").attr('displayedValue');
- dojo.byId("lb_note").innerHTML = dijit.byId("not").get('value');
- dojo.byId("lb_course_cost").innerHTML ="$"+dijit.byId("tuitionfee").get('value');
- dojo.byId("lb_discount").innerHTML ="$"+dijit.byId("discount").get('value');
- dojo.byId("lb_total").innerHTML ="$"+dijit.byId("total").get('value');
- dojo.byId("lb_book").innerHTML ="$"+dijit.byId("books").get('value');
- dojo.byId("lb_balance").innerHTML ="$"+dijit.byId("remaining").get('value');
-	dijit.byId("terms").show();	
+		 dojo.byId("lb_student").innerHTML = dijit.byId("en_name").get('value');
+		 dojo.byId("lb_student_id").innerHTML = dijit.byId("stu_id").get('value');
+		 dojo.byId("lb_level").innerHTML = dijit.byId("grade").attr('displayedValue');
+		 dojo.byId("lb_time_study").innerHTML = dijit.byId("from_time").attr('displayedValue')+"-"+dijit.byId("to_time").attr('displayedValue');
+		 dojo.byId("lb_room").innerHTML = dijit.byId("room").attr('displayedValue');
+		 dojo.byId("lb_note").innerHTML = dijit.byId("not").get('value');
+		 dojo.byId("lb_course_cost").innerHTML ="$"+dijit.byId("tuitionfee").get('value').toFixed(2);
+		 dojo.byId("lb_discount").innerHTML ="$"+dijit.byId("discount").get('value')+"%";
+		 dojo.byId("lb_total").innerHTML ="$"+dijit.byId("total").get('value');
+		 dojo.byId("lb_book").innerHTML ="$"+dijit.byId("books").get('value').toFixed(2);
+		 dojo.byId("lb_balance").innerHTML ="$"+dijit.byId("remaining").get('value');
+			dijit.byId("terms").show();	
 	
 }
-
 }
 </script>
- <div class="dijitHidden">
+<div class="dijitHidden">
 <?php $keycode = $this->keycode;?>
 	<div data-dojo-type="dijit.Dialog" style="width:7cm;" align="center" data-dojo-props="title:'<?php echo $tr->translate("STUDENT_PAYMENT_RECEIPT");?>'" id="terms" >
-		<div >
-		
+		 <div class="header">
+		     <table     bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;  font-size:14px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;">
+		          <tr>
+		              <td colspan="8"  align="center"><strong style="font-family:'Khmer OS Muol';font-size: 20px;color: rgb(47, 70, 149);"> សាលារៀន &nbsp;<font style="color: rgb(246, 86, 74);">អាស៊ាន </font>&nbsp;ហ៊ែរីថេជ</strong>
+		              ​​​​​<br/><strong style="font-size: 20px;font-weight:bold;color: rgb(47, 70, 149);">ASEAN <font style="color: rgb(246, 86, 74);">HERITAGE</font> SCHOOL</strong>
+		              </td>
+		          </tr>
+		     </table>
 		</div>
-		<div id="divPrint" style="width: 21cm; height: 14cm ; padding: 0px; margin: 0px;">
+		<div id="divPrint" style="width: 21cm; height: 12cm ; padding: 0px; margin: 0px;">
 			<style>
 				.fontbig{
 					font-size: 15px;	
@@ -489,6 +494,16 @@ function printSave(){
 				</tr>
 			</table>
 		</div>
+		<div class="footer_re"  >
+		<table  bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;  font-size:14px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;" >
+		    <tr>
+				 <td colspan="8" > 
+				       <hr style="background: rgba(251, 239, 13, 0.87) none repeat scroll 0% 0%; height: 4px; border: medium none rgb(240, 255, 0);"/>
+				       <p class=" khmerbold">អាគារលេខ១៤៧​K ផ្លូវ៥៩៨ សង្កាត់ទូលសង្កែ ខណ្ឌឬស្សីកែង រាជធានីភ្នំពេញ ព្រះរាជាណាចក្រកម្ពុជា</p>
+				 </td>
+				</tr>
+		</table>
+		</div>
 		<iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>	
 		<button dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconPrint"
 				showLabel="false" type="button" onclick="doPrint();">Print</button>
@@ -496,7 +511,6 @@ function printSave(){
 				showLabel="false" type="button" onclick="hideDialog();">Cancel</button>
 	</div>
 </div>
-
 <script>
 function calculatePrice() {
 	var total = $('#tuitionfee').val();
