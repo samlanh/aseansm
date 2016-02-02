@@ -75,7 +75,7 @@ dojo.ready(function(){
 	//toStudentGroup();
 	<?php foreach($this->group as $row){
 	?>
-	dijit.byId('group').attr('value','<?php echo $row['id']?>'<?php if($row['id']==$this->id['id'])?>);	
+	dijit.byId('group').attr('value','<?php echo $row['id']?>'<?php if($row['id']==$this->id['group_id'])?>);	
 	<?php } ?>
 	}); 
    
@@ -189,13 +189,23 @@ $frm_set_price = $this->frm_set_charge;?>
 								<td><a id="refresh" href="#">refresh</a></td>
 							</tr>
 							<tr>
-							<td>Group</td>
-							<td>
-							<input id="group" />
-							</td>
-							<td><?php echo $tr->translate("DETAIL")?></td>
-							<td  colspan="3" rowspan="1"><label id="lbldetail" name=lbldetail style="background:#fff;width:100%;height:70px;display:block;"></label></td>
-						</tr> 
+								<td>Group</td>
+								<td>
+								<input id="group" />
+								</td>
+								<td><?php echo $tr->translate("DETAIL")?></td>
+								<td  colspan="3" rowspan="1"><label id="lbldetail" name=lbldetail style="background:#fff;width:100%;height:70px;display:block;"></label></td>
+							
+							</tr> 
+							<tr>
+								<td>ស្ថានការណ៍</td>
+								<td>
+									<select class="fullside" dojoType="dijit.form.FilteringSelect" required="true"  id="status" name="status" type="text">								
+										<option value="0"<?php if($this->id['status']==0) echo "selected='selected'"?>><?php echo $tr->translate("Deactive");?></option>
+										<option value="1"<?php if($this->id['status']==1) echo "selected='selected'"?>><?php echo $tr->translate("Active");?></option>
+									</select>
+								</td>
+							</tr>
 							<tr>
 								<td colspan="8">
 									<select multiple id="public-methods" name="public-methods[]">
@@ -203,6 +213,7 @@ $frm_set_price = $this->frm_set_charge;?>
 										<option value="<?php echo $row['stu_id'];?>" >
 										<?php echo $row['stu_code']," ",$row['stu_enname']," ",$row['stu_khname']; ?></option>
 										<?php }?>
+										
 										<?php if(!empty($this->rr)) foreach($this->rr as $row ){?>
 										<option value="<?php echo $row['stu_id'];?>" <?php echo "selected='Selected'";?>>
 										<?php echo $row['code']," ",$row['kh_name']," ",$row['en_name']; ?></option>
@@ -402,7 +413,6 @@ function toStudentGroup(){
 		handleAs:"json",
 		load: function(data) {
 			//alert(data);
-			//dijit.byId('group').attr('value','<?php // echo $this->rr['group_id']; ?>');
 			dojo.byId('lbldetail').innerHTML='<span style="color:red;">Academic :  </span>'+data.from_academic+'-'+data.to_academic+'<span style="color:red;">  Degree :  </span>'+data.degree+'<span style="color:red;">  Grade :  </span>'+data.grade+'<span style="color:red;">  Session :  </span>'+data.session+"<br />"+'<span style="color:red;">  Start Date :  </span>'+data.start_date+'<span style="color:red;">  Expired Date :  </span>'+data.expired_date;
 		},
 		error: function(err) {

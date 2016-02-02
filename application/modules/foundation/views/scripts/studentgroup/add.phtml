@@ -184,13 +184,22 @@ $frm_set_price = $this->frm_set_charge;?>
 								<td><a id="refresh" href="#">refresh</a></td>
 							</tr>
 							<tr>
-							<td>Group</td>
-							<td>
-							<input id="group" />
-							</td>
-							<td><?php echo $tr->translate("DETAIL")?></td>
-							<td  colspan="3" rowspan="1"><label id="lbldetail" name=lbldetail style="background:#fff;width:100%;height:70px;display:block;"></label></td>
-						</tr> 
+								<td>Group</td>
+								<td>
+								<input id="group" />
+								</td>
+								<td><?php echo $tr->translate("DETAIL")?></td>
+								<td  colspan="3" rowspan="1"><label id="lbldetail" name=lbldetail style="background:#fff;width:100%;height:70px;display:block;"></label></td>
+							</tr> 
+							<tr>
+								<td>ស្ថានការណ៍</td>
+								<td>
+									<select class="fullside" dojoType="dijit.form.FilteringSelect" required="true"  id="status" name="status" type="text">								
+										<option value="1"><?php echo $tr->translate("Active");?></option>
+										<option value="0"><?php echo $tr->translate("Deactive");?></option>
+									</select>
+								</td>
+							</tr>
 							<tr>
 								<td colspan="8">
 									<select multiple id="public-methods" name="public-methods[]">

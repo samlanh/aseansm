@@ -53,7 +53,7 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 	public function getGroupById($id){
 		$db = $this->getAdapter();
 		$sql = "
-		SELECT id,group_code FROM rms_group WHERE id=".$id;
+		SELECT group_id,stu_id,status FROM rms_group_detail_student WHERE group_id=".$id;
 		return $db->fetchRow($sql);
 	
 	}
@@ -95,7 +95,7 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 					'user_id'=>$this->getUserId(),
 					'group_id'=>$_data['group'],
 					'stu_id'=>$rs,
-					'status'=>1,
+					'status'=>$_data['status'],
 					'date'=>date('Y-m-d')
 			);
 			$this->_name='rms_group_detail_student';
@@ -118,7 +118,7 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 					'user_id'=>$this->getUserId(),
 					'group_id'=>$_data['group'],
 					'stu_id'=>$rs,
-					'status'=>1,
+					'status'=>$_data['status'],
 					'date'=>date('Y-m-d')
 			);
 			$this->_name='rms_group_detail_student';
