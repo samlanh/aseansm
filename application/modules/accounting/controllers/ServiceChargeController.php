@@ -36,7 +36,7 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
     						$rs_rows[$key]=$this->headAddRecordTuitionFee($rs,$key);
     						$term = $model->getAllPaymentTerm($fee_row);
     	
-    						$rs_rows[$key]['service_id'] = $payment_tran['service_id'];
+    						$rs_rows[$key]['service_id'] = $payment_tran['service_name'];
     						$rs_rows[$key]['quarter'] = $payment_tran['price_fee'];
     						$key_old=$key;
     						$key++;
@@ -91,38 +91,8 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
     	return $result[$key];
     }
 	public function addAction(){
-// 		if($this->getRequest()->isPost()){
-// 			try {
-// 				$_data = $this->getRequest()->getPost();
-// 				$_model = new Accounting_Model_DbTable_DbServiceCharge();
-// 				$rs =  $_model->addServiceCharge($_data);
-// 				if(!empty($rs))Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/ServiceCharge/add-service-charge");
-// 			}catch(Exception $e){
-// 				Application_Form_FrmMessage::message("INSERT_FAIL");
-// 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
-// 			}
-// 		}
-// 		$frm = new Accounting_Form_FrmServicePrice();
-// 		$frm_set_price=$frm->frmAddServiceCharge();
-// 		Application_Model_Decorator::removeAllDecorator($frm_set_price);
-// 		$this->view->frm_set_charge = $frm_set_price;
-		$_model = new Application_Model_GlobalClass();
-		$this->view->all_faculty = $_model->getAllServiceItemOption(2);
 		
-// 		$model = new Application_Model_DbTable_DbGlobal();
-// 		$this->view->payment_term = $model->getAllServicePayment();
 		
-// 		$frm=new Application_Form_FrmPopupGlobal();
-// 		$frm_service = $frm->addProgramName();
-// 		Application_Model_Decorator::removeAllDecorator($frm_service);
-// 		$this->view->frm_service_name=$frm_service;
-		
-// 		$frm_ser_category = $frm->addProServiceCategory();
-// 		Application_Model_Decorator::removeAllDecorator($frm_ser_category);
-// 		$this->view->frm_ser_category=$frm_ser_category;
-		
-// 		$this->view->rate =$model->getRate();
-
 		if($this->getRequest()->isPost()){
 			try {
 				$_data = $this->getRequest()->getPost();
@@ -134,23 +104,12 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}
-
-// 		if($this->getRequest()->isPost()){
-// 			try {
-// 				$_data = $this->getRequest()->getPost();
-// 				$_model = new Accounting_Model_DbTable_DbServiceCharge();
-// 				$rs =  $_model->addServiceCharge($_data);
-// 				if(!empty($rs))Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/ServiceCharge/add-service-charge");
-// 			}catch(Exception $e){
-// 				Application_Form_FrmMessage::message("INSERT_FAIL");
-// 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
-// 			}
-// 		}
+		$_model = new Application_Model_GlobalClass();
+		$this->view->all_faculty = $_model->getAllServiceItemOption(2);
 
 		 
 		$_model = new Application_Model_GlobalClass();
 		$this->view->all_metion = $_model ->getAllMetionOption();
-// 		$this->view->all_faculty = $_model ->getAllFacultyOption();
 		$model = new Application_Model_DbTable_DbGlobal();
 		$this->view->payment_term = $model->getAllPaymentTerm();
 		 
@@ -161,16 +120,6 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
 		
 
 
-// 		$frm=new Application_Form_FrmPopupGlobal();
-// 		$frm_service = $frm->addProgramName();
-// 		Application_Model_Decorator::removeAllDecorator($frm_service);
-// 		$this->view->frm_service_name=$frm_service;
-		
-// 		$frm_ser_category = $frm->addProServiceCategory();
-// 		Application_Model_Decorator::removeAllDecorator($frm_ser_category);
-// 		$this->view->frm_ser_category=$frm_ser_category;
-		
-// 		$this->view->rate =$model->getRate();
 
 	}
 	public function editAction(){
@@ -236,9 +185,6 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
 	public function headAddRecordService($rs,$key){
 		$result[$key] = array(
 				'id' 	  	  	=> $rs['service_id'],
-// 				'cate_name' 	=> $rs['cate_name'],
-// 				'service_name' 	=> ($rs['service_name']),
-			//	'status'	   => Application_Model_DbTable_DbGlobal::getAllStatus($rs['status'])
 		);
 		return $result[$key];
 	}
