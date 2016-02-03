@@ -20,6 +20,7 @@ public function init()
 			$_data=$this->getRequest()->getPost();
 			$search = array(
 					'txtsearch' => $_data['txtsearch'],
+					'searchby' => $_data['searchby'],
 			);
 		}
 		else{
@@ -39,8 +40,10 @@ public function init()
 					if($payment_tran['payment_term']==1){
 						$rs_rows[$key]=$this->headAddRecordTuitionFee($rs,$key);
 						$term = $model->getAllPaymentTerm($fee_row);
-						 
+
 						$rs_rows[$key]['service_id'] = $payment_tran['service_id'];
+						
+						$rs_rows[$key]['service_name'] = $payment_tran['service_name'];
 						$rs_rows[$key]['quarter'] = $payment_tran['price_fee'];
 						$key_old=$key;
 						$key++;

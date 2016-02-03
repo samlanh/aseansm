@@ -20,6 +20,7 @@ public function init()
 			$_data=$this->getRequest()->getPost();
 			$search = array(
 					'txtsearch' => $_data['txtsearch'],
+					'searchby' => $_data['searchby'],
 			);
 		}
 		else{
