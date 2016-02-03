@@ -73,7 +73,43 @@ public function init()
 	{
 	
 	}
+	public function rptStudentGroupAction()
+	{	
+		$id=$this->getRequest()->getParam("id");
+		if($this->getRequest()->isPost()){
+			$_data=$this->getRequest()->getPost();
+			$search = array(
+					'txtsearch' => $_data['txtsearch'],
+					'searchby' => $_data['searchby'],
+			);
+			
+		}
+		else{
+			$search='';
+		}		
+		$db = new Allreport_Model_DbTable_DbRptGroup();
+		$row = $db->getStudentGroup($id,$search);
+		$this->view->rs = $row;
 	
+	}
+	public function studentGroupAction()
+	{
+		$db = new Allreport_Model_DbTable_DbRptGroup();
+			$rs= $db->getGroupDetail();
+			$list = new Application_Form_Frmtable();
+			
+			if(!empty($rs)){
+			}
+			else{
+				$result = Application_Model_DbTable_DbGlobal::getResultWarning();
+			}
+			$collumns = array("GROUP NAME","YEARS","SEMESTER","DEGREE","GRADE","SESSION","ROOM","START DATE","END DATE","NOTE","STATUS","ចំនួនសិស្ស");
+			$link=array(
+					'module'=>'allreport','controller'=>'foundation','action'=>'rpt-student-group',
+			);
+			$this->view->list=$list->getCheckList(0, $collumns, $rs,array('group_code'=>$link,'room_name'=>$link));
+	
+	}
 	
 }
 

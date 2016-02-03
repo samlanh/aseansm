@@ -1,0 +1,82 @@
+<?php
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	$this->headTitle('Currency Smart | Transfer Report1 page'); 
+	echo $this->headTitle();
+	$base_url = Application_Form_FrmMessage::getUrl("/");
+?>	
+<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rpt-student-group')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+		<select dojoType="dijit.form.FilteringSelect" id="searchby" name="searchby" placeholder="Search by ....." value="" type="text">
+			<option value="0">All</option>
+			<option value="1">Kh Name</option>
+			<option value="2">Eng Name</option>
+		</select>
+		<input dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Search by group code....." value="" type="text">
+		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
+</form>
+
+<form>
+	<div id="divPrint" style="width:100%; background:none repeat scroll 0% 0% rgba(234, 255, 253, 1);">
+		<table width="100%" style="margin: 0 auto;">
+			<tr>
+				<td>
+				<fieldset style="background: none;height: 600px;overflow: scroll;overflow-x:hidden;">
+							<legend align="center" ><strong><?php echo $tr->translate("");?></strong></legend>
+							<table style="width:30cm;background:#fff; margin: 0 auto; border: 1px dotted #ccc;">
+								<tr style="font-size: 13px;">
+									<td colspan="2"></td>
+									<td align="right">
+										<strong>ព្រះរាជាណាចក្រកម្ពុជា</strong><br />
+										<strong>ជាតិ សាសនា ព្រះមហាក្សត្រ</strong><br />
+									</td>
+								</tr>
+								<tr>
+									<td width="20%" align="left">
+										<strong>ក្រសួងអប់រំ យុវជន និងកីឡា</strong><br />
+										<strong>សាកលវិទ្យាល័យ វេស្ទើន</strong><br /><br ><br ><br ><br >
+									</td>
+									<td align="center">
+										<strong>បញ្ជីរាយនាមសិស្ស តាមក្រុមនៃឆ្នាំសិក្សា</strong><br />
+										<strong>មហាវិទ្យាល័យ សិល្បៈ មនុស្សសាស្រ្ត និងភាសា ,ជំនាញអប់រំភាសាអង់គ្លេស ឆ្នាំសិក្សា 2013-214</strong><br />
+									</td>
+									<td width="20%"></td>
+								</tr>
+								<tr>
+									<td colspan="3">
+										<table cellpadding="5"​ style="margin:0 auto;width:100%; border-collapse: collapse;"  border="1" >
+											<tr style="font-size:11px; height: 30px;" align="center" >
+												<th rowspan="2">ល.រ</th>
+												<th rowspan="2">គោលនាម-នាម</th>
+												<th rowspan="2">អក្សរឡាតាំង</th>
+												<th rowspan="2">ភេទ</th>
+												<th rowspan="2">ថ្ងៃខែឆ្នាំកំណើត</th>	
+												<th rowspan="2">Group Code</th>
+												<th rowspan="2">Room Name</th>					
+												<th rowspan="2">Academic</th>
+												<th rowspan="2">Session</th>
+											</tr>
+											<tr></tr>
+											<style> td{padding:0 3px; }</style>
+											<?php  $i=0; foreach ($this->rs as $row){ $i++;?>
+											<tr style="font-size:13px;height: 23px;"​ align="center">
+												<td><?php echo $i;?></td>
+												<td align="left"><?php echo $row['kh_name'];?></td>
+												<td align="left"><?php echo $row['en_name'];?></td>
+												<td><?php echo $row['sex'];?></td>
+												<td><?php echo $row['dob'];?></td>
+												<td><?php echo $row['group_code'];?></td>
+												<td><?php echo $row['room'];?></td>
+												<td><?php echo $row['academic'];?></td>
+												<td><?php echo $row['session'];?></td>
+												
+											</tr>
+											<?php }?>	
+										</table>	
+									</td>
+								</tr>
+							</table>
+				</fieldset>		
+				</td>
+			</tr>
+		</table>
+	</div>	
+</form>
