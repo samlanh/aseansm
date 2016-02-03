@@ -7,10 +7,9 @@
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'lecturer','action'=>'rpt-lecturer')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 		<select dojoType="dijit.form.FilteringSelect" id="searchby" name="searchby" placeholder="Search by ....." value="" type="text">
 			<option value="0">All</option>
-			<option value="1">Group Code</option>
-			<option value="2">Room Name</option>
-			<option value="3">Session</option>
-			<option value="4">Grade</option>
+			<option value="1">Teacher Code</option>
+			<option value="2">Teacher Name</option>
+			<option value="3">Degree</option>
 		</select>
 		<input dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Search by group code....." value="" type="text">
 		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
