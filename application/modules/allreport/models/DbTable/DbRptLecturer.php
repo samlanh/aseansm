@@ -12,8 +12,8 @@ class Allreport_Model_DbTable_DbRptLecturer extends Zend_Db_Table_Abstract
     public function getAllLecturer($search){
     	$db = $this->getAdapter();
     	$sql = 'select teacher_code,CONCAT(teacher_name_en," - ",teacher_name_kh)AS name,tel,dob,address,email,nationality,
-    			(select name_en from rms_view where rms_view.type=3 and rms_view.key_code=rms_teacher.degree)AS degree,note,
-    			(select name_en from rms_view where rms_view.type=2 and rms_view.key_code=rms_teacher.sex)AS sex,
+    			(select name_en from rms_view where rms_view.type=3 and rms_view.key_code=rms_teacher.degree limit 1)AS degree,note,
+    			(select name_en from rms_view where rms_view.type=2 and rms_view.key_code=rms_teacher.sex limit 1)AS sex,
 				id_card_no,pars_id from rms_teacher where 1	';	
     	
     	$where='';
@@ -30,17 +30,13 @@ class Allreport_Model_DbTable_DbRptLecturer extends Zend_Db_Table_Abstract
     		$where.='';
     	}
     	if($search['searchby']==1){
-    		$where.= " AND group_code  LIKE  '%".$searchs."%'";
+    		$where.= " AND teacher_code  LIKE  '%".$searchs."%'";
     	}
     	if($search['searchby']==2){
-    		$where.= " AND (SELECT rms_room.room_name FROM rms_room	WHERE (rms_room.room_id = g.room_id)) LIKE '%".$searchs."%'" ;
+    		$where.= " AND CONCAT(teacher_name_en,teacher_name_kh) LIKE '%".$searchs."%'" ;
     	}
     	if($search['searchby']==3){
-    		$where.= " AND (SELECT rms_view.name_en	FROM rms_view WHERE ((rms_view.type = 4)
-		AND (rms_view.key_code = g.session))LIMIT 1)  LIKE '%".$searchs."%'" ;
-    	}
-    	if($search['searchby']==4){
-    		$where.= " AND (SELECT major_khname FROM `rms_major` WHERE (`rms_major`.`major_id`=`g`.`grade`))  LIKE  '%".$searchs."%'";
+    		$where.= " AND (select name_en from rms_view where rms_view.type=3 and rms_view.key_code=rms_teacher.degree limit 1)  LIKE '%".$searchs."%'" ;
     	}
     	
     	return $db->fetchAll($sql.$where);
