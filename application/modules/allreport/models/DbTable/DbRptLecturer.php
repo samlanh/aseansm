@@ -12,7 +12,7 @@ class Allreport_Model_DbTable_DbRptLecturer extends Zend_Db_Table_Abstract
     public function getAllLecturer($search){
     	$db = $this->getAdapter();
     	$sql = 'select teacher_code,CONCAT(teacher_name_en," - ",teacher_name_kh)AS name,tel,dob,address,email,nationality,
-    			(select name_en from rms_view where rms_view.type=3 and rms_view.key_code=rms_teacher.degree)AS degree,
+    			(select name_en from rms_view where rms_view.type=3 and rms_view.key_code=rms_teacher.degree)AS degree,note,
     			(select name_en from rms_view where rms_view.type=2 and rms_view.key_code=rms_teacher.sex)AS sex,
 				id_card_no,pars_id from rms_teacher where 1	';	
     	
