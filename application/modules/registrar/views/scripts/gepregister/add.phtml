@@ -23,9 +23,9 @@ fieldset{  background:none;}
 					<table style="margin: 0 auto; width: 100%; " cellspacing="5">
 						<tr>
 							
-							<td style="width: 170px"><?php echo $tr->translate("RECEIPT_NO")."<sup>o</sup>";?></td>
+							<td style="width: 170px"><?php echo $tr->translate("RECEIPT_NO")."<sup></sup>";?></td>
 							<td><?php echo $recept->getElement('no');?></td>
-							<td><?php echo $tr->translate("DATE");?></td>
+							<td><?php echo $tr->translate("CREATED_DATE");?></td>
 							<td><?php echo $recept->getElement('no_date');?></td>
 						</tr>
 						<tr>
@@ -43,7 +43,7 @@ fieldset{  background:none;}
 						<tr>
 							<td><?php echo $tr->translate("DOB");?></td>
 							<td><?php echo $recept->getElement('dob');?></td>
-							<td><?php echo $tr->translate("TEL");?></td>
+							<td><?php echo $tr->translate("PHONE");?></td>
 							<td><?php echo $recept->getElement('tel');?></td>
 							
 						</tr>
@@ -69,7 +69,7 @@ fieldset{  background:none;}
 						<tr>
 							<td><?php echo $tr->translate("COURSE_OF_STUDY_MATERIALS");?></td>
 							<td><?php echo $recept->getElement('course_of_study_materials');?></td>
-							<td><?php echo $tr->translate("PAYMENT_FOR");?></td>
+							<td><?php echo $tr->translate("PAYMENT_TERM");?></td>
 							<td><?php echo $recept->getElement('payment_for');?></td>
 						</tr>
 						<tr>
