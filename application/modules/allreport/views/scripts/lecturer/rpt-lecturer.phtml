@@ -4,7 +4,7 @@
 	echo $this->headTitle(''); 
 	
 ?>	
-<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'group','action'=>'rpt-group')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'lecturer','action'=>'rpt-lecturer')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 		<select dojoType="dijit.form.FilteringSelect" id="searchby" name="searchby" placeholder="Search by ....." value="" type="text">
 			<option value="0">All</option>
 			<option value="1">Group Code</option>
@@ -43,33 +43,34 @@
 										<table cellpadding="5"​ style="margin:0 auto;width:100%;border1px solid #000; border-collapse: collapse;"  border="1" >
 											<tr style="font-size:11px; height: 30px;" align="center" >
 												<th >ល.រ</th>
-												<th >Group Code</th>
-												<th >Room Name</th>
-												<th>Academic</th>
-												<th >Semester</th>
-												<th >Session</th>
+												<th >Teacher Code</th>
+												<th >Teacher Name</th>
+												<th>Sex</th>
+												<th >Nationality</th>
+												<th >Tel</th>
+												<th >Email</th>
 												<th >Degree</th>
-												<th >Grade</th>
-												<th >Amount Mount</th>
-												<th >Start Date</th>					
-												<th >Expired Date</th>
-												<th >Note</th>
+												<th >Date Of Birth</th>
+												<th >Address</th>
+												<th >ID CARD No.</th>					
+												<th >Passport ID</th>
+												
 												
 											</tr>
 										<?php $i=0; foreach ($this->rs AS $row) { $i++;?>
 											<tr style="font-size:11px; height: 30px;" align="center" >
 												<th ><?php echo $i;?></th>
-												<th ><?php echo $row['group_code'];?></th>
-												<th align="left"><?php echo $row['room_name'];?></th>
-												<th ><?php echo $row['academic'];?></th>	
-												<th ><?php echo $row['semester'];?></th>
-												<th ><?php echo $row['session'];?></th>
+												<th ><?php echo $row['teacher_code'];?></th>
+												<th align="left"><?php echo $row['name'];?></th>
+												<th ><?php echo $row['sex'];?></th>	
+												<th ><?php echo $row['nationality'];?></th>
+												<th ><?php echo $row['tel'];?></th>
+												<th align="left"><?php echo $row['email'];?></th>
 												<th align="left"><?php echo $row['degree'];?></th>
-												<th align="left"><?php echo $row['grade'];?></th>
-												<th ><?php echo $row['amount_month'];?></th>
-												<th ><?php echo $row['start_date'];?></th>					
-												<th ><?php echo $row['expired_date'];?></th>
-												<th align="left"><?php echo $row['note'];?></th>
+												<th ><?php echo date("d-M-Y",strtotime($row['dob']));?></th>
+												<th ><?php echo $row['address'];?></th>					
+												<th ><?php echo $row['id_card_no'];?></th>
+												<th align="left"><?php echo $row['pars_id'];?></th>
 											</tr>
 										<?php }?>	
 										</table>	
