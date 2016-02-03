@@ -1,6 +1,6 @@
 <?php
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-	echo $this->headTitle($tr->translate("SRMS_GROUP"));
+	echo $this->headTitle($tr->translate("ក្រុមសិក្សា"));
 ?>	
 <?php $frm =  $this->frm_search;?>
 <form id="list" name="list" action="<?php echo $this->url(array('module'=>'global','controller'=>'group','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post">
