@@ -37,6 +37,15 @@
 										<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="Note" name="Note" value="" type="text"></td>
 									</tr>
 									<tr>
+										<td><?php echo $tr->translate("Status")?></td>
+										<td>
+											<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside" id="status" name="status" type="text">
+												<option value="1">Active</option>
+												<option value="0">Deactive</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
 										<td colspan="2" align="center">
 											<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('SAVE_CLOSE');?>" dojoType="dijit.form.Button" 
 										iconClass="dijitEditorIcon dijitEditorIconSave" />

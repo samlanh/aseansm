@@ -104,7 +104,7 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 							<td><?php echo $tr->translate("AMOUNT_MONTH")?></td>
 							<td><input dojoType="dijit.form.NumberTextBox"   name="amountmonth" id="amountmonth" value="" onkeyup="setEndDate();" type="text"></td>
 							<td style="width: 5px"><?php echo $tr->translate("END_DATE")?></td>
-							<td><input dojoType="dijit.form.DateTextBox" id="end_date" name="end_date" type="text" readonly="readonly" value="<?php echo date('Y-m-d');?>" ></td>
+							<td><input dojoType="dijit.form.DateTextBox" id="end_date" name="end_date" type="text"  value="<?php echo date('Y-m-d');?>" ></td>
 						</tr>
 						<tr>
 							<td style="width: 5px"><?php echo $tr->translate("STATUS")?></td>
@@ -120,7 +120,6 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 							<td align="center" colspan="6">
 									<input type="hidden" dojoType="dijit.form.TextBox" id="record_row" name="record_row" />
 									<div  id="test"></div>
-									<input iconClass="dijitIconClear" type="button" onClick="addSubjectRow();" label="<?php echo $tr->translate('ADD');?>" dojoType="dijit.form.Button"/>
 							</td>
 				    	<tr>	
 						<tr>

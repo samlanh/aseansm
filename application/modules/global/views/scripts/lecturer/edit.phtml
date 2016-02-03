@@ -72,7 +72,7 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 								<legend align="center">Contact Info</legend>
 									<table style="width:320px;" cellspacing="6">
 										<tr><?php //print_r($this->rs)?>
-											<input type="hidden" name="id" value="<?php echo $this->rs['id']; ?>">
+											<input type="hidden" name="id" value="<?php echo $this->rs['id'];?>" />
 											<td style="width: 100px;"><?php echo $tr->translate("Group")?></td>
 								    		<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="group" name="group" value="<?php echo $this->rs['group']?>" type="text"></td>
 								    		<td><?php echo $techer->getElement('group');?></td>
@@ -134,7 +134,7 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 										</tr>
 										<tr>
 											<td style="width: 5px"><?php echo $tr->translate("Passport ID")?></td>
-											<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="pars" name="pars" value="<?php echo $this->rs['passport_id']?>" type="text"></td>
+											<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="pars" name="pars" value="<?php echo $this->rs['pars_id']?>" type="text"></td>
 											<!--<td><?php  echo $techer->getElement('pars');?></td>-->
 										</tr>
 										<tr>
@@ -162,8 +162,6 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 							<td colspan="6" align="center">
 								<input iconClass="dijitIconClear" type="reset" value="ážŸáŸ†áž¢áž¶áž�" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
 									<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('SAVECLOSE');?>" dojoType="dijit.form.Button" 
-										iconClass="dijitEditorIcon dijitEditorIconSave" />
-									<input type="submit" value="save_new" name="save_new" label="<?php echo $tr->translate('SAVENEW');?>" dojoType="dijit.form.Button" 
 										iconClass="dijitEditorIcon dijitEditorIconSave" />
 							</td>
 						</tr>

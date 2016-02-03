@@ -104,7 +104,7 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 							<td><?php echo $tr->translate("AMOUNT_MONTH")?></td>
 							<td><input dojoType="dijit.form.NumberTextBox"   name="amountmonth" id="amountmonth" value="<?php echo $this->rs['amount_month'];?>" onkeyup="setEndDate();" type="text"></td>
 							<td style="width: 5px"><?php echo $tr->translate("END_DATE")?></td>
-							<td><input dojoType="dijit.form.DateTextBox" id="end_date" name="end_date" type="text" readonly="readonly" value="<?php echo $this->rs['expired_date'];?>" ></td>
+							<td><input dojoType="dijit.form.DateTextBox" id="end_date" name="end_date" type="text" value="<?php echo $this->rs['expired_date'];?>" ></td>
 						</tr>
 						<tr>
 							<td style="width: 5px"><?php echo $tr->translate("STATUS")?></td>
