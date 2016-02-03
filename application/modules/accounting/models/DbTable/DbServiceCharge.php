@@ -26,43 +26,20 @@ class Accounting_Model_DbTable_DbServiceCharge extends Zend_Db_Table_Abstract
     	if($search['status']>-1){
     		$where.= " AND status = '".$search['status']."'";
     	}
-    	echo $sql.$where.$order;exit();
     	return $sql.$where.$order;
     }
-    function getAllServiceFee($search,$type=null){
+    
+    function getAllServiceFee($search){
     	$db=$this->getAdapter();
     	$sql = "SELECT id,CONCAT(from_academic,' - ',to_academic) AS academic,
     		    generation,create_date ,status FROM `rms_servicefee` WHERE 1";
     	$order=" ORDER BY id DESC ";
     	$where = '';
-    	if(empty($search)){
-    		return $db->fetchAll($sql.$order);
-    	}
-    	if(!empty($search['txtsearch'])){
-    		$where.=" AND title LIKE '%".$search['txtsearch']."%'";
-    	}
-    	if($search['type']>-1){
-    		$where.= " AND type = ".$search['type'];
-    	}
-    	if($search['status']>-1){
-    		$where.= " AND status = '".$search['status']."'";
-    	}
-    	echo $sql.$where.$order;
+    	
     	return $db->fetchAll($sql.$where.$order);
-    	//echo $sql.$where.$order;exit();
-    	//return $sql.$where.$order;
-    	return $db->fetchAll($sql.$where.$order);
-//     	$sql_rs = $this->sqltuitionfee($search)." LIMIT ".$start.", ".$limit;
-//     	if ($limit == 'All') {
-//     		$sql_rs = $this->sqltuitionfee($search);
-//     	}
-//     	$sql_count = $this->sqltuitionfee();
-//     	if(!empty($search)){
-//     		$sql_count = $this->sqltuitionfee($search);
-//     	}
-//     	$_db = new Application_Model_DbTable_DbGlobal();
-//     	return($_db ->getGlobalResultList($sql_rs,$sql_count));
     }
+    
+    
     public function addServiceCharge($_data){
     	
     	$db = $this->getAdapter();
@@ -147,13 +124,10 @@ class Accounting_Model_DbTable_DbServiceCharge extends Zend_Db_Table_Abstract
     	}
     }
     function getServiceFeebyId($service_id){
+    	
     	$db = $this->getAdapter();
-//     	if($type!=null){
-    		$sql = "SELECT * FROM `rms_servicefee_detail` WHERE service_feeid=".$service_id." ORDER BY service_id ";
+    	$sql = "SELECT id,service_id,price_fee,payment_term,remark,(select title from rms_program_name where rms_program_name.service_id=rms_servicefee_detail.service_id limit 1)AS service_name FROM `rms_servicefee_detail` WHERE service_feeid=".$service_id." ORDER BY service_id ";
     		 
-//     	}else{
-//     		$sql = "SELECT * FROM `rms_servicefee_detail` WHERE service_id=".$service_id." ORDER BY service_id";
-//     	}
     	return $db->fetchAll($sql);
     	 
     }
