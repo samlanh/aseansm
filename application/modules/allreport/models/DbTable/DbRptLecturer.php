@@ -1,31 +1,22 @@
 <?php
 
-class Allreport_Model_DbTable_DbRptGroup extends Zend_Db_Table_Abstract
+class Allreport_Model_DbTable_DbRptLecturer extends Zend_Db_Table_Abstract
 {
 
-    protected $_name = 'rms_group';
+    protected $_name = 'rms_teacher';
 //     public function getUserId(){
 //     	$session_user=new Zend_Session_Namespace('auth');
 //     	return $session_user->user_id;
     	 
 //     }
-    public function getAllGroup($search){
+    public function getAllLecturer($search){
     	$db = $this->getAdapter();
-    	$sql = 'SELECT `g`.`id`,`g`.`group_code` AS `group_code`,CONCAT(`g`.`from_academic`," - ",
-		`g`.`to_academic`) AS academic ,`g`.`semester` AS `semester`,
-		(SELECT kh_name FROM `rms_dept` WHERE (`rms_dept`.`dept_id`=`g`.`degree`))AS degree,
-		(SELECT major_khname FROM `rms_major` WHERE (`rms_major`.`major_id`=`g`.`grade`)) AS grade,`g`.`amount_month`,
-		(SELECT`rms_view`.`name_en`	FROM `rms_view`	WHERE ((`rms_view`.`type` = 4)
-		AND (`rms_view`.`key_code` = `g`.`session`))LIMIT 1) AS `session`,
-		(SELECT `r`.`room_name`	FROM `rms_room` `r`	WHERE (`r`.`room_id` = `g`.`room_id`)) AS `room_name`,
-		`g`.`start_date`,`g`.`expired_date`,`g`.`note`,
-		(SELECT `rms_view`.`name_en` FROM `rms_view` WHERE ((`rms_view`.`type` = 1)
-		AND (`rms_view`.`key_code` = `g`.`status`)) LIMIT 1) AS `status`
-		FROM `rms_group` `g`  ';	
+    	$sql = 'select teacher_code,CONCAT(teacher_name_en," - ",teacher_name_kh)AS name,tel,dob,address,email,nationality,
+    			(select name_en from rms_view where rms_view.type=3 and rms_view.key_code=rms_teacher.degree)AS degree,
+    			(select name_en from rms_view where rms_view.type=2 and rms_view.key_code=rms_teacher.sex)AS sex,
+				id_card_no,pars_id from rms_teacher where 1	';	
     	
-    	//$sql.=" LIMIT 1";
-    	
-    	$where=' where 1';
+    	$where='';
     	if(empty($search)){
     		return $db->fetchAll($sql);
     	}
