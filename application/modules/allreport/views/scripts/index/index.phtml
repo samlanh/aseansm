@@ -2,7 +2,7 @@
   // report
   $rpt_student_group=$this->url(array('module'=>'allreport','controller'=>'group','action'=>'rpt-group'), null, true);
   $rpt_car=$this->url(array('module'=>'allreport','controller'=>'car','action'=>'rpt-car'), null, true);
-  $rpt_collectfromco=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loan-collectionco'), null, true);
+  $rpt_lecturer=$this->url(array('module'=>'allreport','controller'=>'lecturer','action'=>'rpt-lecturer'), null, true);
   $rpt_loancollect=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loancollect'), null, true);
   $rpt_dailypayment=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-payment'), null, true);
   $rpt_loanincome=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loan-income'), null, true);
@@ -51,7 +51,7 @@
   	
   		<li><a href="<?php echo $rpt_student_group;?>"><?php echo $tr->translate('RPT_STUDENT_GROUP');?></a></li>
   		<li><a href="<?php echo $rpt_writoff;?>"><?php echo $tr->translate('RPT_ACADEMIC_YEAR');?></a></li>
-  		<li><a href="<?php //echo $rpt_loanoustading;?>"><?php echo $tr->translate('RPT_LECTURER');?></a></li>
+  		<li><a href="<?php echo $rpt_lecturer;?>"><?php echo $tr->translate('RPT_LECTURER');?></a></li>
   		<li><a href="<?php echo $rpt_loanincome;?>"><?php echo $tr->translate('RPT_SUBJECT');?></a></li>
   		<li><a href="<?php echo $rpt_payoff;?>"><?php echo $tr->translate('RPT_FACULTY');?></a></li>
   		<li><a href="<?php echo $rpt_reschedule;?>"><?php echo $tr->translate('RPT_MAJOR');?></a></li>
