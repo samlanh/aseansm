@@ -67,8 +67,8 @@
 												<th align="left"><?php echo $row['degree'];?></th>
 												<th align="left"><?php echo $row['grade'];?></th>
 												<th ><?php echo $row['amount_month'];?></th>
-												<th ><?php echo $row['start_date'];?></th>					
-												<th ><?php echo $row['expired_date'];?></th>
+												<th ><?php echo date("d-M-Y",strtotime($row['start_date']));?></th>					
+												<th ><?php echo date("d-M-Y",strtotime($row['expired_date']));?></th>
 												<th align="left"><?php echo $row['note'];?></th>
 											</tr>
 										<?php }?>	
