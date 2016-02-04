@@ -24,18 +24,19 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 			
 	}
 	function addAction(){
+		$db = new Foundation_Model_DbTable_DbStudent();
 		if($this->getRequest()->isPost()){
 			try{
 				$_data = $this->getRequest()->getPost();
-				$_add = new Foundation_Model_DbTable_DbStudent();
-				$_add->addStudent($_data);
+				//$_add = new Foundation_Model_DbTable_DbStudent();
+				$db->addStudent($_data);
 				Application_Form_FrmMessage::message("INSERT_SUCCESS");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}
-		
+		$this->view->row = $db->getDegreeLanguage();
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$this->view->degree = $rows = $_db->getAllFecultyName();
 		$this->view->occupation = $row =$_db->getOccupation();
@@ -52,15 +53,14 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 			try{
 				$data = $this->getRequest()->getPost();
 				$data["id"]=$id;
-				$db = new Foundation_Model_DbTable_DbStudent();
 				$row=$db->updateStudent($data);
-				
 				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/foundation/register/index");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("EDIT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
-		}	
+		}
+		$this->view->row = $db->getDegreeLanguage();
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$this->view->degree = $_db->getAllFecultyName();
 		$this->view->occupation = $_db->getOccupation();

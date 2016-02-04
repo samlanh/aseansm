@@ -146,8 +146,9 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 									<td title="កំរិតភាសា"><?php echo $tr->translate("កំរិតភាសា");?>*</td>
 									<td>
 									    <select class="fullside"  tabindex="24" name="level" id="level" dojoType="dijit.form.FilteringSelect" >
-										    <option value="1" label="Active">Biginer</option>
-										    <option value="2" label="Deactive">Free</option>
+										   <?php if(!empty($this->row)) foreach($this->row as $rr){?>
+										    <option value="<?php echo $rr['id']?>" ><?php echo $rr['title']?></option>
+										    <?php }?>
 										</select>
 									</td>
 									<td><?php echo $tr->translate("SESSION");?>*</td>

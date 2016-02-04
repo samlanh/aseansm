@@ -24,6 +24,16 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 		$sql = "SELECT * FROM rms_student WHERE stu_id =".$id;
 		return $db->fetchRow($sql);
 	}
+	public function getDegreeLanguage(){
+		try{
+			$db = $this->getAdapter();
+			$sql ="SELECT id,title FROM rms_degree_language WHERE status =1";
+			//print_r($db->fetchRow($sql)); exit();
+			return $db->fetchAll($sql);
+		}catch(Exception $e){
+				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+		}
+	}
 	public function addStudent($_data){
 			try{	
 				$_db= $this->getAdapter();
@@ -166,6 +176,7 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 	function getStudyHishotryById($id){
 		$db = $this->getAdapter();
 		$sql="SELECT * FROM rms_study_history where".$id;
+		//print_r($db->fetchRow($sql)); exit();
 		return $db->fetchRow($sql);
 	}
 	function getAllGrade($grade_id){
