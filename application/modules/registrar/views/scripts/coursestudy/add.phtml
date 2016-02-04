@@ -286,7 +286,7 @@ fieldset{  background:none;}
 							</td>
 						</tr>
 						<tr>
-							<td title="ចាប់ពីម៉ោង"><?php echo $tr->translate("ចាប់ពីម៉ោង");?>*</td>
+							<td title="ចាប់ពីម៉ោង"><?php echo $tr->translate("FROM_TIME");?>*</td>
 									<td>
 									     <select class="fullside"  tabindex="24" name="from_time" id="from_time" dojoType="dijit.form.FilteringSelect" >
 										  <?php $i=0; foreach ($this->hour As $key=>$hour){ $i++;?> 
@@ -294,7 +294,7 @@ fieldset{  background:none;}
 										 <?php }?>
 										</select>
 									</td>
-									<td><?php echo $tr->translate("ដល់ម៉ោង");?>*</td>
+									<td><?php echo $tr->translate("TO_TIME");?>*</td>
 									<td>
 									    <select class="fullside"  tabindex="24" name="to_time" id="to_time" dojoType="dijit.form.FilteringSelect" >
 										  <?php $i=0; foreach ($this->hour As $key=>$hour){?> 
