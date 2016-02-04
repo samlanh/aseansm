@@ -252,7 +252,7 @@ fieldset{  background:none;}
 						<tr>
 							<td style="width: 160px"><?php echo $tr->translate("NEW_STUDENT");?></td>
 							<td><?php echo $register->getElement('is_new');?>
-								&nbsp;&nbsp;&nbsp;&nbsp;<label for='is_subsped'>Subspend</label><?php echo $register->getElement('is_hold');?>
+								&nbsp;&nbsp;&nbsp;&nbsp;<label for='is_subsped'><?php echo $tr->translate("SUSPEND");?></label><?php echo $register->getElement('is_hold');?>
 							</td>
 							<td><?php echo $tr->translate("RECEIPT_NO");?></td>
 							<td><?php echo $register->getElement('reciept_no');?></td>
