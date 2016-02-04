@@ -90,6 +90,8 @@ public function init()
 		$db = new Allreport_Model_DbTable_DbRptGroup();
 		$row = $db->getStudentGroup($id,$search);
 		$this->view->rs = $row;
+		$rs= $db->getGroupDetailByID($id);
+		$this->view->rr = $rs;
 	
 	}
 	public function studentGroupAction()
