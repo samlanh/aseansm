@@ -35,7 +35,7 @@
 										<strong>សាកលវិទ្យាល័យ វេស្ទើន</strong><br /><br ><br ><br ><br >
 									</td>
 									<td align="center">
-										<strong>របាយការណ៏ ឈ្មោះសិស្សតាមបន្ទប់ និង ក្រុមសិក្សា</strong><br />
+										<strong>បញ្ជីរាយនាមសិស្ស</strong><br />
 										<strong>កម្រិត <?php echo $this->rr['degree'];?> <?php echo $this->rr['grade'];?> វេនសិក្សា <?php echo $this->rr['session'];?> ឆមាសទី  <?php echo $this->rr['semester'];?> ឆ្នាំសិក្សា  <?php echo $this->rr['academic'];?></strong><br />
 										<strong>លេខកូដក្រុម <?php echo $this->rr['group_code'];?> បន្ទប់ <?php echo $this->rr['room_name'];?> </strong><br />
 									</td>
@@ -46,9 +46,11 @@
 										<table cellpadding="5"​ style="margin:0 auto;width:100%; border-collapse: collapse;"  border="1" >
 											<tr style="font-size:11px; height: 30px;" align="center" >
 												<th rowspan="2">ល.រ</th>
+												<th rowspan="2">អត្តលេខ</th>
 												<th rowspan="2">គោលនាម-នាម</th>
 												<th rowspan="2">អក្សរឡាតាំង</th>
 												<th rowspan="2">ភេទ</th>
+												<th rowspan="2">សញ្ជាតិ</th>
 												<th rowspan="2">ថ្ងៃខែឆ្នាំកំណើត</th>	
 												<th rowspan="2">Group Code</th>
 												<th rowspan="2">Room Name</th>					
@@ -60,9 +62,11 @@
 											<?php  $i=0; foreach ($this->rs as $row){ $i++;?>
 											<tr style="font-size:13px;height: 23px;"​ align="center">
 												<td><?php echo $i;?></td>
+												<td><?php echo $row['stu_code'];?></td>
 												<td align="left"><?php echo $row['kh_name'];?></td>
 												<td align="left"><?php echo $row['en_name'];?></td>
 												<td><?php echo $row['sex'];?></td>
+												<td><?php echo $row['nation'];?></td>
 												<td><?php echo $row['dob'];?></td>
 												<td><?php echo $row['group_code'];?></td>
 												<td><?php echo $row['room'];?></td>

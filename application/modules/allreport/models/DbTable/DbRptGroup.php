@@ -60,8 +60,10 @@ class Allreport_Model_DbTable_DbRptGroup extends Zend_Db_Table_Abstract
    	$db = $this->getAdapter();
    	$sql= 'SELECT 
    	(SELECT `group_code` FROM `rms_group` WHERE id= group_id) AS group_code,
+   	(SELECT `stu_code` FROM `rms_student` WHERE `stu_id` = rms_group_detail_student.stu_id) AS stu_code,
    	(SELECT `stu_khname` FROM `rms_student` WHERE `stu_id` = rms_group_detail_student.stu_id) AS kh_name,
    	(SELECT `stu_enname` FROM `rms_student` WHERE `stu_id` = rms_group_detail_student.stu_id) AS en_name,
+   	(SELECT `nationality` FROM `rms_student` WHERE `stu_id` = rms_group_detail_student.stu_id) AS nation,
    	(SELECT (SELECT `name_kh` FROM `rms_view` WHERE `type` = 2 AND `key_code`= rms_student.sex) FROM `rms_student`WHERE `stu_id`=rms_group_detail_student.`stu_id`) AS sex,
    	(SELECT `dob` FROM `rms_student` WHERE `stu_id` = rms_group_detail_student.stu_id) AS dob,
     (SELECT (SELECT `room_name` FROM `rms_room`WHERE `room_id`= rms_group.`room_id`) FROM `rms_group` WHERE id = `group_id`)AS room ,
