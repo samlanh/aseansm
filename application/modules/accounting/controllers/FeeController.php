@@ -38,11 +38,11 @@ class Accounting_FeeController extends Zend_Controller_Action {
     								$rs_rows[$key]['quarter'] = $payment_tran['tuition_fee'];
     								$key_old=$key;
     								$key++;
-    							}elseif($payment_tran['payment_term']==3){
+    							}elseif($payment_tran['payment_term']==2){
     								$term = $model->getAllPaymentTerm($payment_tran['payment_term']);
     								$rs_rows[$key_old]['semester'] = $payment_tran['tuition_fee'];
     								
-    							}elseif($payment_tran['payment_term']==2){
+    							}elseif($payment_tran['payment_term']==3){
     								$term = $model->getAllPaymentTerm($payment_tran['payment_term']);
     								$rs_rows[$key_old]['year'] = $payment_tran['tuition_fee'];
     							}
