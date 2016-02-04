@@ -162,7 +162,10 @@ Class Registrar_Form_FrmCourseStudy extends Zend_Dojo_Form {
 				));
 		
 		$old_studens =  new Zend_Dojo_Form_Element_FilteringSelect('old_studens');
-		$old_studens->setAttribs(array('dojoType'=>$this->filter,'class'=>'fullside',));
+		$old_studens->setAttribs(array('dojoType'=>$this->filter,
+				'class'=>'fullside',
+				'Onchange'=>"getGepOldStudentById();",
+				));
 		$opt_gep=$reciept->getAllGepOldStudent();
 		$opts=array(-1=>$this->tr->translate("student id"));
 		if(!empty($opt_gep))foreach($opt_gep AS $row) $opts[$row['stu_id']]=$row['stu_code'];
