@@ -421,7 +421,12 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
    	}return $arr_opt;
    
    }
-
+   function getRoom(){
+   	$db=$this->getAdapter();
+   	$sql="SELECT room_id,room_name FROM rms_room ";
+   	return $db->fetchAll($sql.'ORDER  BY room_id DESC');
+   }
+    
    
 }
 ?>
