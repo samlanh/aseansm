@@ -18,6 +18,7 @@
   $rpt_loandisburseco=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loan-disburse-co'), null, true);
   $rpt_npl=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loan-npl'), null, true);
   $rpt_transferloan=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loan-trasfer'), null, true);
+  $student_group=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'student-group'), null, true);
 //   $rpt_exchangemoney=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loan-xchange'), null, true);
   
   
@@ -57,6 +58,7 @@
   		<li><a href="<?php echo $rpt_reschedule;?>"><?php echo $tr->translate('RPT_MAJOR');?></a></li>
   		<li><a href="<?php echo $rpt_car;?>"><?php echo $tr->translate('RPT_CAR');?></a></li>
   		<li><a href="<?php echo $rpt_exchangemoney;?>"><?php echo $tr->translate('RPT_ROOM');?></a></li>
+  		<li><a href="<?php echo $student_group;?>"><?php echo $tr->translate('STUDENTGROUP');?></a></li>
   		
   		
   		
