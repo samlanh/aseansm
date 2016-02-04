@@ -265,7 +265,7 @@ fieldset{  background:none;}
 						<tr>
 							<td><?php echo $tr->translate("STUDENT_ID");?></td>
 							<td><div id="student_id"><?php echo $register->getElement('stu_id');?></div><div id="student_ids"><?php echo $register->getElement('old_studens');?></div></td>
-							<td style="width: 160px"><?php echo $tr->translate("STUDY_YEAR");?></td>
+							<td style="width: 160px"><?php echo $tr->translate("YEARS");?></td>
 							<td><?php echo $register->getElement('study_year');?></td>
 						</tr>
 						<tr>
@@ -304,9 +304,9 @@ fieldset{  background:none;}
 									</td>
 					      		</tr>
 						<tr>
-							<td><?php echo $tr->translate("CLASS");?><label class="red">*</label></td>
+							<td><?php echo $tr->translate("DEGREE");?><label class="red">*</label></td>
 							<td><input id="dept" /><?php //echo $register->getElement('dept');?></td>
-							<td><?php echo $tr->translate("CLASSES");?><label class="red">*</label></td>
+							<td><?php echo $tr->translate("CLASS");?><label class="red">*</label></td>
 							<td><input id="grade" /><?php //echo $register->getElement('metion');?></td>
 						</tr>
 						<tr>
@@ -348,7 +348,7 @@ fieldset{  background:none;}
 						<tr>
 							<td> </td>
 							<td> </td>
-							<td><?php echo $tr->translate("Room");?></td>
+							<td><?php echo $tr->translate("ROOM_NAME");?></td>
 							<td><?php echo $register->getElement('room');?></td>
 						</tr>
 						<tr>
