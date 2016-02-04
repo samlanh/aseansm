@@ -134,7 +134,9 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 	
 	function getAllTeacher($search){
 		$db = $this->getAdapter();
-		$sql = 'SELECT id, teacher_code, teacher_name_en, teacher_name_kh, sex, tel,email, degree, note, status FROM rms_teacher WHERE 1';
+		$sql = 'SELECT id, teacher_code, teacher_name_en, teacher_name_kh, sex, tel,email, 
+				(select name_kh from rms_view where type=3 and rms_view.key_code=rms_teacher.degree)AS degree, 
+				note  FROM rms_teacher WHERE 1';
 		$where = '';
 		if(!empty($search['title'])){
 		    $s_where = array();
