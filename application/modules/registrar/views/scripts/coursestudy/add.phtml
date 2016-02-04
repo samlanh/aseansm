@@ -12,7 +12,7 @@
 	dojo.require("dojo.data.ObjectStore");
 	dojo.require('dojox.form.BusyButton');
 	var dept_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->all_dept));?> );
-	dojo.ready(function(){
+	dojo.ready(function(){ changControll();
 	new dijit.form.FilteringSelect({
 	    store: dept_store,
 	    autoComplete: true,                        
@@ -56,10 +56,9 @@
 					//alert(data);
 					grade_store  = getDataStorefromJSON('id','name', data);
 				    dijit.byId('grade').set('store',grade_store);   
-
 				},
 				error: function(err) {
-					alert(err);
+					//alert(err);
 				}
 			});
 	}
@@ -250,16 +249,22 @@ fieldset{  background:none;}
 					<legend align="center"><strong><?php echo $tr->translate("OFFICIAL_RECEIPT");?></strong></legend>
 					<table style="margin: 0 auto; width: 100%;padding:10px;" cellspacing="7" >
 						<tr>
-							<td style="width: 160px"><?php echo $tr->translate("NEW_STUDENT");?></td>
-							<td><?php echo $register->getElement('is_new');?>
-								&nbsp;&nbsp;&nbsp;&nbsp;<label for='is_subsped'>Subspend</label><?php echo $register->getElement('is_hold');?>
+							<td style="width: 160px"><?php echo $tr->translate("STUDENT_TYPE");?></td>
+							<td><div >
+							     <table style="width:100%;" >
+							     <tr ><td><input type="radio" name="student_type" id="student_type" value="new_student" onclick="changControll();">សិស្សថ្មី</td>
+								      <td> <input type="radio" name="student_type" id="student_type"  value="supspend" onclick="changControll();">subspend</td>
+								      <td> <input type="radio" name="student_type" id="student_type"  value="old_student" onclick="changControll();">សិស្សចាស់</td>
+								  </tr>
+								  </table>
+								</div>
 							</td>
 							<td><?php echo $tr->translate("RECEIPT_NO");?></td>
 							<td><?php echo $register->getElement('reciept_no');?></td>
 						</tr>
 						<tr>
 							<td><?php echo $tr->translate("STUDENT_ID");?></td>
-							<td><?php echo $register->getElement('stu_id');?></td>
+							<td><div id="student_id"><?php echo $register->getElement('stu_id');?></div><div id="student_ids"><?php echo $register->getElement('old_studens');?></div></td>
 							<td style="width: 160px"><?php echo $tr->translate("STUDY_YEAR");?></td>
 							<td><?php echo $register->getElement('study_year');?></td>
 						</tr>
@@ -623,5 +628,46 @@ function saveSender(){
 				}); 
 }
 var url_add_getfee = '<?php echo $this->url(array('module'=>'global','controller'=>'globals','action'=>'get-tuitionfee')); ?>';//for get payment date of sender 
-
+function changControll(){
+	student_type=$("#student_type:checked").val()
+	 if(student_type=='old_student'){
+		 //alert(student_type);
+		 document.getElementById('student_id').style.display="none";
+		 document.getElementById('student_ids').style.display="block";
+	}else{
+		document.getElementById('student_id').style.display="block";
+		document.getElementById('student_ids').style.display="none";
+	} 
+}
+///get gep old student
+var url_getGepoldstudent = '<?php echo $this->url(array('module'=>'registrar','controller'=>'coursestudy','action'=>'get-gep-old-student')); ?>';
+function getGepOldStudentById(){
+	student_id=dijit.byId('old_studens').get('value');
+		dojo.xhrPost({
+			url:url_getGepoldstudent,
+			content:{
+				'student_id':student_id,
+				},
+			handleAs:"json",
+			load: function(data) {
+				  if(data){
+			    	dijit.byId('kh_name').attr('value',data.stu_khname);
+			    	dijit.byId('en_name').attr('value',data.stu_enname);
+			    	dijit.byId('sex').attr('value',data.sex);
+			    	dijit.byId('dept').attr('value',data.degree);
+			    	dijit.byId('grade').attr('value',data.grade);
+			      }else {
+			    	alert('Student Id not found!');
+			    	dijit.byId('kh_name').attr('value','');
+			    	dijit.byId('en_name').attr('value','');
+			    	dijit.byId('sex').attr('value','');
+			    	dijit.byId('dept').attr('value','');
+			    	dijit.byId('grade').attr('value','');
+			      } 
+			},
+			error: function(err) {
+				//alert(err);
+			}
+		});
+}
 </script>
