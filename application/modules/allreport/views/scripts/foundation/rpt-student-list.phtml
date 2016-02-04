@@ -4,38 +4,36 @@
 	echo $this->headTitle('SRMS | Student Exam Fundation Year'); 
 	
 ?>	
-<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'foundation','controller'=>'report','action'=>'rpt-foundation')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-	<div id="divPrint">	
-		<table width="100%" style="margin: 0 auto;">
-			<tr>
-				<td>
-				<fieldset style="background: none;height: 600px;scroll;overflow-x:scroll;">
-							<legend align="center" ><strong><?php echo $tr->translate("");?></strong></legend>
-							<table style="background:#fff; margin: 0 auto; border: 1px dotted #ccc;">
+<div style="border: 1px dotted #000;background: #fff;width: 26cm;margin: 0 auto;min-height: 27cm;">
+		<div id="divPrint">
+							<table style="background:#fff; margin: 0 auto; width: 100%;padding: 1cm; ">
 								<tr style="font-size: 13px;">
-									<td colspan="2"></td>
-									<td align="right">
-										<strong>ព្រះរាជាណាចក្រកម្ពុជា</strong><br />
-										<strong>ជាតិ សាសនា ព្រះមហាក្សត្រ</strong><br />
-									</td>
-								</tr>
-								<tr>
-									<td width="20%" align="left">
-										<strong>ក្រសួងអប់រំ យុវជន និងកីឡា</strong><br />
-										<strong>សាកលវិទ្យាល័យ វេស្ទើន</strong><br /><br ><br ><br >
-									</td>
-									<td align="center">
-										<strong>ព្រះរាជាណាចក្រកម្ពុជា</strong><br />
-										<strong>ជាតិ សាសនា ព្រះមហាក្សត្រ</strong><br />
-										<strong style="font-family: Tacteing;">7</strong><br />
-										<strong>បញ្ជីរាយនាមបេក្ខជនប្រលងជ្រើសរើស ចូលរៀនថ្នាក់ឆ្នាំសិក្សា លើកទីមួយ ជំនាន់ទីមួយ</strong><br />
-										<strong>មហាវិទ្យាល័យ សិល្បៈ មនុស្សសាស្រ្ត និងភាសា ,ជំនាញអប់រំភាសាអង់គ្លេស ឆ្នាំសិក្សា 2013-214</strong><br />
-									</td>
-									<td width="20%"></td>
-								</tr>
-								<tr>
+										<td colspan="2"></td>
+										<td align="right">
+											<strong></strong><br />
+											<strong></strong><br />
+										</td>
+									</tr>
+									<tr>
+										<td width="20%" align="left">
+											<img style="width: 155px;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br /><br />
+										</td>
+										<td width="20%" align="center">
+											<strong>ព្រះរាជាណាចក្រកម្ពុជា</strong><br />
+											<strong>ជាតិ សាសនា ព្រះមហាក្សត្រ</strong><br />
+											<strong style="font-family: Tacteing;">7</strong><br />
+											<strong>បញ្ជីរាយនាមសិស្ស</strong><br />
+											<strong></strong><br />
+										</td>
+										<td width="20%" align="right">
+											<strong>ក្រសួងអប់រំ យុវជន និងកីឡា</strong><br />
+											<strong>សាលា អាស៊ាន ហ៊ែរីថេជ</strong><br /><br >
+										</td>
+										
+									</tr>
+									<tr>
 									<td colspan="3">
-										<table cellpadding="5"​ style="margin:0 auto;width:100%; border-collapse: collapse;"  border="1" >
+										<table cellpadding="5"​ style="margin:0 auto;width:100%;border1px solid #000; border-collapse: collapse;"  border="1" >
 											<tr style="font-size:11px; height: 30px;" align="center" >
 												<th rowspan="2">ល.រ</th>
 												<th rowspan="2">អត្តលេខ</th>	
@@ -59,33 +57,30 @@
 												<th align="center"><small>mother</small></th>
 											</tr><style> td{padding:0 3px; }</style>
 											<?php  $i=0; foreach ($this->rs as $row){ $i++;?>
-											<tr style="font-size:12px;height: 23px;"​ align="center">
+											<tr style="font-size:11px; height: 30px;" align="center">
 												<td><?php echo $i;?></td>
 												<td style="white-space: nowrap;"><?php echo $row['stu_code'];?></td>
 												<td align="left" style="white-space: nowrap;"><?php echo $row['stu_khname'];?></td>
 												<td align="left" style="white-space: nowrap;"><?php echo $row['stu_enname'];?></td>
-												<td ​style="white-space: nowrap;"><?php echo $row['gender'];?></td>
-												<td style="white-space: nowrap;"><?php echo $row['nationality'];?></td>
-												<td style="white-space: nowrap;"><?php echo $row['grade'];?></td>
-												<td style="white-space: nowrap;"><?php echo $row['level'];?></td>
-												<td style="white-space: nowrap;"><?php echo $row['tel'];?></td>
-												<td style="white-space: nowrap;"><?php echo $row['father_phone'];?></td>
-												<td style="white-space: nowrap;"><?php echo $row['mother_phone'];?></td>
-												<td style="white-space: nowrap;"><?php echo $row['dob'];?></td>
-												<td style="white-space: nowrap;"><?php echo $row['address'];?></td>
-												<td style="white-space: nowrap;"><?php echo $row['session'];?></td>
-												<td style="white-space: nowrap;"><?php echo $row['degree'];?></td>
+												<td><?php echo $row['gender'];?></td>
+												<td><?php echo $row['nationality'];?></td>
+												<td><?php echo $row['grade'];?></td>
+												<td><?php echo $row['level'];?></td>
+												<td><?php echo $row['tel'];?></td>
+												<td><?php echo $row['father_phone'];?></td>
+												<td><?php echo $row['mother_phone'];?></td>
+												<td><?php echo $row['dob'];?></td>
+												<td><?php echo $row['address'];?></td>
+												<td><?php echo $row['session'];?></td>
+												<td><?php echo $row['degree'];?></td>
 												<td ><?php echo $row['home_num'];?> <?php echo $row['street_num'];?> <?php echo $row['village_name'];?> <?php echo $row['commune_name'];?> <?php  echo $row['pro'];?></td>
-												<td style="white-space: nowrap;"><?php echo $row['remark'];?></td>
+												<td><?php echo $row['remark'];?></td>
 											</tr>
 											<?php }?>	
-										</table>	
+										</table>
+										
 									</td>
 								</tr>
 							</table>
-				</fieldset>		
-				</td>
-			</tr>
-		</table>
-	</div>	
-</form>
+		</div>
+	</div>
