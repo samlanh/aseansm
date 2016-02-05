@@ -308,6 +308,31 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 				'dojoType'=>$this->t_num,
 				'required'=>'true','class'=>'fullside',));
 		
+		$student_type = new Zend_Dojo_Form_Element_FilteringSelect('student_type');
+		$student_type->setAttribs(array('dojoType'=>'dijit.form.FilteringSelect',
+				'class'=>'fullside',
+				'required'=>'true',
+				'class'=>'fullside',
+				'onchange'=>'changControll();',
+		));
+		$opt = array(   1=>$this->tr->translate('NEW_STUDENT'),
+				  		2=>$this->tr->translate('Subspend'),
+				        3=>$this->tr->translate('OLD_STUDENT') 
+				  );
+	    $student_type->setMultiOptions($opt);
+				
+		$old_studens = new Zend_Dojo_Form_Element_FilteringSelect('old_studens');
+		$old_studens->setAttribs(array('dojoType'=>'dijit.form.FilteringSelect',
+						'class'=>'fullside',
+						'required'=>'true',
+						'class'=>'fullside',
+				        'onchange'=>'getGeneralOldStudentById();',
+				));
+		$opt_ger=$reciept->getAllGerneralOldStudent();
+		$opts=array(-1=>$this->tr->translate("student id"));
+		if(!empty($opt_ger))foreach($opt_ger AS $row) $opts[$row['stu_id']]=$row['stu_code'];
+		$old_studens->setMultiOptions($opts);
+		
 		$_paid_kh = new Zend_Dojo_Form_Element_Textarea('paid_kh');
 		$_paid_kh->setAttribs(array(
 				'dojoType'=>$this->text,'class'=>'fullside',));
@@ -333,7 +358,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 			$not->setValue($data['note']);
 		}
 		$this->addElements(array(
-			  $id,$generation,$char_price,$end_date,$start_date,$not,$books,$addmin_fee,$remaining,$total, $_year_one,$_new_student,$_invoice_no, $_pay_date, $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,$metion,
+			 $old_studens,$student_type,$id,$generation,$char_price,$end_date,$start_date,$not,$books,$addmin_fee,$remaining,$total, $_year_one,$_new_student,$_invoice_no, $_pay_date, $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,$metion,
 			  $_phone,$_dept,$_major,$_batch,$_year,$_session,$_term,$_fee,$_disc,$_paid,$_paid_kh,$_remark,$_is_hold ));
 		
 		return $this;

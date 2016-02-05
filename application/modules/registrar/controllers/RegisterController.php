@@ -224,4 +224,15 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     	$this->view->all_dept = $_db->getAllFecultyName();
     	
     }
+    function getGeneralOldStudentAction(){
+    	if($this->getRequest()->isPost()){
+    		$data=$this->getRequest()->getPost();
+    		$db = new Registrar_Model_DbTable_DbRegister();
+    		$general = $db->getGeneralOldStudentById($data['student_id']);
+    		//print_r($grade);exit();
+    		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
+    		print_r(Zend_Json::encode($general));
+    		exit();
+    	}
+    }
 }

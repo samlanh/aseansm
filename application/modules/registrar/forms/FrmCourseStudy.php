@@ -356,6 +356,7 @@ Class Registrar_Form_FrmCourseStudy extends Zend_Dojo_Form {
 			$char_price->setValue($data['amount_in_khmer']);
 			$not->setValue($data['note']);
 			$room->setValue($data['room_id']);
+			$old_studens->setValue($data['stu_id']);
 		}
 		$this->addElements(array(
 			  $old_studens,$old_student,$room,$session,$id,$generation,$char_price,$end_date,$start_date,$not,$books,$addmin_fee,$remaining,$total, $_year_one,$_new_student,$_invoice_no, $_pay_date, $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,$metion,

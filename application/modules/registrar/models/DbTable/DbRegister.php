@@ -21,6 +21,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						'session'=>$data['session'],
 						'degree'=>$data['dept'],
 						'grade'=>$data['grade'],
+					    'stu_type'=>1,
 						'user_id'=>$this->getUserId(),
 				);
 			  $id= $this->insert($arr);
@@ -37,6 +38,8 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						'paid_amount'=>$data['books'],
 						'balance_due'=>$data['remaining'],
 						'note'=>$data['not'],
+						'student_type'=>$data['student_type'],
+						'create_date'=>	date("d-m-Y"),
 						'payfor_type'=>1,
 						'amount_in_khmer'=>$data['char_price'],
 						'user_id'=>$this->getUserId(),
@@ -179,6 +182,20 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	$db=$this->getAdapter();
     	$sql="SELECT stu_id,stu_enname,stu_khname,sex,`session` As ses,degree,grade FROM rms_student 
     	       WHERE  stu_type=2 AND stu_id=$stu_id LIMIT 1";
+    	return $db->fetchRow($sql);
+    }
+    //select all Gerneral old student
+    function getAllGerneralOldStudent(){
+    	$db=$this->getAdapter();
+    	$sql="SELECT s.stu_id As stu_id,s.stu_code As stu_code FROM rms_student AS s,rms_student_payment AS sp
+    	WHERE s.stu_id=sp.student_id  AND s.stu_type=1 AND sp.payfor_type=1";
+    	return $db->fetchAll($sql);
+    }
+    //select general  old student by id
+    function getGeneralOldStudentById($stu_id){
+    	$db=$this->getAdapter();
+    	$sql="SELECT stu_id,stu_enname,stu_khname,sex,`session` As ses,degree,grade FROM rms_student
+    	WHERE  stu_type=1 AND stu_id=$stu_id LIMIT 1";
     	return $db->fetchRow($sql);
     }
 }

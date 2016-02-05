@@ -13,7 +13,7 @@
 	dojo.require("dojo.data.ObjectStore");
 	dojo.require('dojox.form.BusyButton');
 	var dept_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->all_dept));?> );
-	dojo.ready(function(){
+	dojo.ready(function(){changControll();
 	new dijit.form.FilteringSelect({
 	    store: dept_store,
 	    autoComplete: true,                        
@@ -110,7 +110,7 @@
 				    	dijit.byId('tuitionfee').attr('value',data.tuition_fee);
 				    	dijit.byId('total').attr('value',data.tuition_fee);
 				    	dijit.byId('discount').attr('value','0');
-				    	dijit.byId('books').attr('value','0');
+				    	dijit.byId('books').attr('value',data.tuition_fee);
 				    	dijit.byId('addmin_fee').attr('value','0');
 				    	dijit.byId('remaining').attr('value','0');
 				    	dijit.byId('remark').attr('value','0');
@@ -254,16 +254,22 @@ fieldset{  background:none;}
 					<legend align="center"><strong><?php echo $tr->translate("OFFICIAL_RECEIPT");?></strong></legend>
 					<table style="margin: 0 auto; width: 100%;padding:10px;" cellspacing="7" >
 						<tr>
-							<td style="width: 160px"><?php echo $tr->translate("NEW_STUDENT");?></td>
-							<td><?php echo $register->getElement('is_new');?>
-								&nbsp;&nbsp;&nbsp;&nbsp;<label for='is_subsped'>Subspend</label><?php echo $register->getElement('is_hold');?>
+							<td style="width: 160px"><?php echo $tr->translate("STUDENT_TYPE");?></td>
+							<td><div ><input type="hidden" name="stus_id" id="stus_id" value="<?php echo $this->row_gep['stu_id'];?>"/>
+							     <table style="width:100%;" >
+							     <tr ><td><input type="radio" name="student_type" id="student_type" value="1" class="radio" <?php if ($this->row_gep['student_type']== 1): ?>checked='checked'<?php endif; ?> onclick="changControll();" checked="checked" >សិស្សថ្មី</td>
+								      <td> <input type="radio" name="student_type" id="student_type"  value="2" <?php if ($this->row_gep['student_type']== 2): ?>checked='checked'<?php endif; ?> onclick="changControll();">subspend</td>
+								      <td> <input type="radio" name="student_type" id="student_type"  value="3" <?php if ($this->row_gep['student_type']== 3): ?>checked='checked'<?php endif; ?> onclick="changControll();">សិស្សចាស់</td>
+								  </tr>
+								  </table>
+								</div>
 							</td>
 							<td><?php echo $tr->translate("RECEIPT_NO");?></td>
 							<td><?php echo $register->getElement('reciept_no');?></td>
 						</tr>
 						<tr>
 							<td><?php echo $tr->translate("STUDENT_ID");?></td>
-							<td><?php echo $register->getElement('stu_id');?></td>
+							<td><div id="student_id"><?php echo $register->getElement('stu_id');?></div><div id="student_ids"><?php echo $register->getElement('old_studens');?></div></td>
 							<td style="width: 160px"><?php echo $tr->translate("STUDY_YEAR");?></td>
 							<td><?php echo $register->getElement('study_year');?></td>
 						</tr>
@@ -620,4 +626,14 @@ function saveSender(){
 				}); 
 }
 var url_add_getfee = '<?php echo $this->url(array('module'=>'global','controller'=>'globals','action'=>'get-tuitionfee')); ?>';//for get payment date of sender 
+function changControll(){
+	student_type=$("#student_type:checked").val()
+	 if(student_type==3){
+		 document.getElementById('student_id').style.display="none";
+		 document.getElementById('student_ids').style.display="block";
+	}else{
+		document.getElementById('student_id').style.display="block";
+		document.getElementById('student_ids').style.display="none";
+	} 
+}
 </script>
