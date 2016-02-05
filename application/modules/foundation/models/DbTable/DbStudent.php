@@ -185,6 +185,12 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 		$order=' ORDER BY id DESC';
 		return $db->fetchAll($sql.$order);
 	}
+
+	function getStudentInfoById($stu_id){
+		$db = $this->getAdapter();
+		$sql = "SELECT * FROM `rms_student` WHERE stu_id=$stu_id LIMIT 1 ";
+		return $db->fetchRow($sql);
+	}
 	function getSearchStudent($data){
 		$db=$this->getAdapter();
 		$sql="SELECT stu_id ,stu_code,stu_enname,stu_khname,sex,degree,grade from rms_student ";
