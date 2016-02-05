@@ -98,7 +98,7 @@ table .set-style tr.st1{ background: none repeat scroll 0% 0% rgba(218, 250, 255
 							<tr>
 								<td colspan="8" align="center">
 									<input type="button" label="<?php echo $tr->translate('GO_BACK');?>" id="back" dojoType="dijit.form.Button" 
-									 iconClass="dijitIconUndo" onclick="window.location = '<?php echo $this->url(array('module'=>'accounting','controller'=>"fee",'action'=>'index'),null,true); ?>';" />
+									 iconClass="dijitIconUndo" onclick="window.location = '<?php echo $this->url(array('module'=>'accounting','controller'=>"servicecharge",'action'=>'index'),null,true); ?>';" />
 									<input type="submit" label="<?php echo $tr->translate('SAVE');?>" id="save_new" dojoType="dijit.form.Button" 
 								 		iconClass="dijitEditorIcon dijitEditorIconSave"/>
 								</td>
@@ -187,8 +187,8 @@ function addRow() {
 			temp+='<th><?php echo $tr->translate("DEL");?></th>';
 			temp+='<th><?php echo $tr->translate("N_O");?></th>';
 			
-			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("SERVICE");?></th>';
-			
+			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("SERVICES");?></th>';
+		//	temp+='<th id="lbl_titlemetion" width="50px"><?php //echo $tr->translate("MONTHLY");?></th>';
 			<?php $s=0; ?>
 			<?php  foreach ($payment_term as $value){?>
 			
@@ -203,10 +203,11 @@ function addRow() {
 			template+='<td><select dojoType="dijit.form.FilteringSelect" id="class_'+col+'" name="class_'+col+'">'+faculty+'</select></td>';			
 			
 			column = 0;
+			//template+='<td width="15%"> <input type="text" required="true" name="monthly'+col+'" id="monthly'+col+'" dojoType="dijit.form.NumberTextBox" style=""/><label id="subsub"></label></td>';
 			for(j=0;j<payment_term;j++){ column++;
 				template+='<td width="15%"><input type="text" required="true" id="fee'+col+'_'+column+'" name="fee'+col+'_'+column+'" dojoType="dijit.form.NumberTextBox" style="width: 100%;" /></td>';
 			}
-			template+='<td <input type="text" required="true" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ"style=""/><label id="subsub"></label></td>';
+			template+='<td> <input type="text" required="true" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ"style=""/><label id="subsub"></label></td>';
 		tmp='<tr id="row'+col+'">';
 		tmp+="</tr>";
 		dojo.query("#table_row").append(tmp);

@@ -238,7 +238,7 @@ function initailize(){
 		temp+='<th><?php echo $tr->translate("DEL");?></th>';
 		temp+='<th><?php echo $tr->translate("N_O");?></th>';
 		
-		temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("SERVICE");?></th>';
+		temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("SERVICES");?></th>';
 		
 		<?php $s=0; ?>
 		<?php  foreach ($payment_term as $value){?>
@@ -271,9 +271,10 @@ function initailize(){
 	     parseContent: true,
 	});
 	dijit.byId('class_'+col).attr('value',<?php echo $row['service_id']?>);
-	dijit.byId('fee'+col+'_1').attr('value',<?php echo $row['quarter']?>);
-	dijit.byId('fee'+col+'_2').attr('value',<?php echo $row['semester']?>);
-	dijit.byId('fee'+col+'_3').attr('value',<?php echo $row['year']?>);
+	dijit.byId('fee'+col+'_1').attr('value',<?php echo $row['monthly']?>);
+	dijit.byId('fee'+col+'_2').attr('value',<?php echo $row['quarter']?>);
+	dijit.byId('fee'+col+'_3').attr('value',<?php echo $row['semester']?>);
+	dijit.byId('fee'+col+'_4').attr('value',<?php echo $row['year']?>);
 	dijit.byId('remark'+col).attr('value','<?php echo $row['note']?>');
 	<?php } }?>
 }
