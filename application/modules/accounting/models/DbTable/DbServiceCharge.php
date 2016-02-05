@@ -70,6 +70,14 @@ class Accounting_Model_DbTable_DbServiceCharge extends Zend_Db_Table_Abstract
     				);
     				$this->insert($_arr);
     			}
+//     			$_arr = array(
+//     					'service_feeid'=>$fee_id,
+//     					'service_id'=>$_data['class_'.$i],
+//     					'payment_term'=>4,
+//     					'price_fee'=>$_data['monthly'.$i],
+//     					'remark'=>$_data['remark'.$i]
+//     			);
+//     			$this->insert($_arr);
     		}
     		
     	    $db->commit();
