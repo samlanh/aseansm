@@ -13,7 +13,7 @@
 							<td align="center" valign="top">
 								<table cellspacing="10" width="100%"​>
 									<tr>
-										<td ><?php echo $tr->translate("លេខកូដសិស្ស")?></td>
+										<td ><?php echo $tr->translate("STUDENT_CODE")?></td>
 										<td>
 											<select class="fullside" name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();" >
 										    	<?php if(!empty($this->rs))foreach ($this->rs as $row){?>
@@ -23,12 +23,12 @@
 										</td>
 										
 										
-										<td align="right"><?php echo $tr->translate("ឈ្មោះសិស្ស")?></td>
+										<td align="right"><?php echo $tr->translate("STUDENT_NAME")?></td>
 										<td ><input dojoType="dijit.form.TextBox" readonly="readonly" class="fullside" id="studentname" name="studentname" value="" type="text">
 										</td>
 									 
 									 
-										<td align="right"><?php echo $tr->translate("ភេទ")?></td>
+										<td align="right"><?php echo $tr->translate("SEX")?></td>
 										<td>
 											<select dojoType="dijit.form.FilteringSelect"  readonly="readonly" class="fullside" id="gender" name="gender" type="text">
 												<option value="1">Male</option>
@@ -37,7 +37,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td><?php echo $tr->translate("FROM GROUP")?></td>
+										<td><?php echo $tr->translate("FROM_GROUP")?></td>
 										<td>
 											<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside" id="from_group" name="from_group" type="text" onchange="toStudentGroup(1);">
 												<?php if(!empty($this->row))foreach ($this->row as $_row){?>
@@ -51,7 +51,7 @@
 									</tr>
 									
 									<tr>
-										<td><?php echo $tr->translate("TO GROUP")?></td>
+										<td><?php echo $tr->translate("TO_GROUP")?></td>
 										<td>
 											<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside" id="to_group" name="to_group" type="text" onchange="toStudentGroup(2);">
 												<?php if(!empty($this->row))foreach ($this->row as $_row){?>
@@ -66,7 +66,7 @@
 									
 									
 									<tr>
-										<td><?php echo $tr->translate("Moving Date")?></td>
+										<td><?php echo $tr->translate("MOVING_DATE")?></td>
 										<td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="moving_date" name="moving_date" value="1-26-2016" type="text"></td>
 									
 										<td align="right"><?php echo $tr->translate("NOTE")?></td>

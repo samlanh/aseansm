@@ -1,3 +1,11 @@
-<form id="list" name="list" action="<?php echo $this->url(array('module'=>'foundation','controller'=>'register','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post">
+
+<?php
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	$this->headTitle('សិស្សដែលចុះឈ្មោះ'); 
+	echo $this->headTitle(''); 
+	
+?>	
+
+<form id="list" name="list" action="<?php echo $this->url(array('module'=>'foundation','controller'=>'studentdrop','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post">
 <?php echo $this->list;?>
 </form>
