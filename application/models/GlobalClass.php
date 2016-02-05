@@ -96,30 +96,30 @@ class Application_Model_GlobalClass  extends Zend_Db_Table_Abstract
 		$am = $tr->translate('AM');
 		$pm = $tr->translate('PM');
 		$hours = array(
-				'12:00 '. $pm,
-				'01:00 '. $am,
-				'02:00 '. $am,
-				'03:00 '. $am,
-				'04:00 '. $am,
-				'05:00 '. $am,
-				'06:00 '. $am,
-				'07:00 '. $am,
-				'08:00 '. $am,
-				'09:00 '. $am,
-				'10:00 '. $am,
-				'11:00 '. $am,
-				'12:00 '. $am,
-				'01:00 '. $pm,
-				'02:00 '. $pm,
-				'03:00 '. $pm,
-				'04:00 '. $pm,
-				'05:00 '. $pm,
-				'06:00 '. $pm,
-				'07:00 '. $pm,
-				'08:00 '. $pm,
-				'09:00 '. $pm,
-				'10:00 '. $pm,
-				'11:00 '. $pm				
+				'12:00 '. $pm,'12:30 '. $pm,
+				'01:00 '. $am,'01:30 '. $am,
+				'02:00 '. $am,'02:30 '. $am,
+				'03:00 '. $am,'03:30 '. $am,
+				'04:00 '. $am,'04:30 '. $am,
+				'05:00 '. $am,'05:30 '. $am,
+				'06:00 '. $am,'06:30 '. $am,
+				'07:00 '. $am,'07:30 '. $am,
+				'08:00 '. $am,'08:30 '. $am,
+				'09:00 '. $am,'09:30 '. $am,
+				'10:00 '. $am,'10:30 '. $am,
+				'11:00 '. $am,'11:30 '. $am,
+				'12:00 '. $am,'12:30 '. $am,
+				'01:00 '. $pm,'01:30 '. $pm,
+				'02:00 '. $pm,'02:30 '. $pm,
+				'03:00 '. $pm,'03:30 '. $pm,
+				'04:00 '. $pm,'04:30 '. $pm,
+				'05:00 '. $pm,'05:30 '. $pm,
+				'06:00 '. $pm,'06:30 '. $pm,
+				'07:00 '. $pm,'07:30 '. $pm,
+				'08:00 '. $pm,'08:30 '. $pm,
+				'09:00 '. $pm,'09:30 '. $pm,
+				'10:00 '. $pm,'10:30 '. $pm,
+				'11:00 '. $pm,'11:30 '. $pm				
 				); 
 		if(empty($key)){
 			return $hours;
@@ -245,6 +245,19 @@ class Application_Model_GlobalClass  extends Zend_Db_Table_Abstract
 					}
 					else{
 						$rows[$i]['type']="Program" ;
+					}
+				}
+			}
+			return $rows;
+		}
+		public function getGernder($rows,$base_url, $case=''){
+			if($rows){
+				foreach ($rows as $i =>$row){
+					if($row['sex'] == 1){
+						$rows[$i]['sex']="M" ;
+					}
+					else{
+						$rows[$i]['sex']="F" ;
 					}
 				}
 			}
