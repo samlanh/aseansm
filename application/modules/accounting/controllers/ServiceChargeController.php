@@ -37,14 +37,19 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
     						$term = $model->getAllPaymentTerm($fee_row);
     	
     						$rs_rows[$key]['service_id'] = $payment_tran['service_name'];
-    						$rs_rows[$key]['quarter'] = $payment_tran['price_fee'];
+    						$rs_rows[$key]['monthly'] = $payment_tran['price_fee'];
+//     						$rs_rows[$key]['quarter'] = $payment_tran['price_fee'];
     						$key_old=$key;
     						$key++;
     					}elseif($payment_tran['payment_term']==2){
     						$term = $model->getAllPaymentTerm($payment_tran['payment_term']);
-    						$rs_rows[$key_old]['semester'] = $payment_tran['price_fee'];
+    						$rs_rows[$key_old]['quarter'] = $payment_tran['price_fee'];
     	
     					}elseif($payment_tran['payment_term']==3){
+    						$term = $model->getAllPaymentTerm($payment_tran['payment_term']);
+    						$rs_rows[$key_old]['semester'] = $payment_tran['price_fee'];
+    					}
+    					elseif($payment_tran['payment_term']==4){
     						$term = $model->getAllPaymentTerm($payment_tran['payment_term']);
     						$rs_rows[$key_old]['year'] = $payment_tran['price_fee'];
     					}
@@ -61,7 +66,7 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
     			$payment_term.='"'.$value.'",';
     		}
     		$list = new Application_Form_Frmtable();
-    		$collumns = array("YEARS","BATCH","SERVICE ID","QUARTER","SEMESTER","YEAR","CREATED_DATE","STATUS");
+    		$collumns = array("YEARS","BATCH","SERVICES","MONTHLY","QUARTER","SEMESTER","YEAR","CREATED_DATE","STATUS");
     		$link=array(
     				'module'=>'accounting','controller'=>'servicecharge','action'=>'edit',
     		);
@@ -82,6 +87,7 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
     						'academic'=> $rs['academic'],
     						'generation'=> $rs['generation'],	
     						'service_id'=>'',
+    						'monthly'=>'',
     						'quarter'=>'',
 			    			'semester'=>'',
 			    			'year'=>'',
@@ -158,9 +164,12 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
 				if(!empty($rows))foreach($rows as $payment_tran){
 					if($payment_tran['payment_term']==1){
 						
+// 						$rs_rows[$key]['monthly']=$payment_tran['price_fee'];
+						
 						$rs_rows[$key] = array(
 								'service_id'=>$payment_tran['service_id'],
-								'quarter'=>$payment_tran['price_fee'],
+								'monthly'=>$payment_tran['price_fee'],
+								'quarter'=>'',
 								'semester'=>'',
 								'year'=>'',
 								'note'=>$payment_tran['remark'],
@@ -169,11 +178,14 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
 						//$rs_rows[$key]['quarter'] = $payment_tran['tuition_fee'];
 						$key_old=$key;
 						$key++;
-					}elseif($payment_tran['payment_term']==3){
-						$rs_rows[$key_old]['year'] = $payment_tran['price_fee'];
-		
 					}elseif($payment_tran['payment_term']==2){
+						$rs_rows[$key_old]['quarter'] = $payment_tran['price_fee'];
+		
+					}elseif($payment_tran['payment_term']==3){
 						$rs_rows[$key_old]['semester'] = $payment_tran['price_fee'];
+					}
+					elseif($payment_tran['payment_term']==4){
+						$rs_rows[$key_old]['year'] = $payment_tran['price_fee'];
 					}
 	
 				}

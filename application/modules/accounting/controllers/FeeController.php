@@ -70,7 +70,7 @@ class Accounting_FeeController extends Zend_Controller_Action {
     			$payment_term.='"'.$value.'",';
     		}
     		$list = new Application_Form_Frmtable();
-    		$collumns = array("YEARS","BATCH","CLASS_ID","QUARTER","SEMESTER","YEAR","TIME","CREATED_DATE","STATUS");
+    		$collumns = array("YEARS","BATCH","CLASS","QUARTER","SEMESTER","YEAR","TIME","CREATED_DATE","STATUS");
     		$link=array(
     				'module'=>'accounting','controller'=>'fee','action'=>'edit',
     		);
@@ -118,7 +118,7 @@ class Accounting_FeeController extends Zend_Controller_Action {
     	$this->view->all_metion = $_model ->getAllMetionOption();
     	$this->view->all_faculty = $_model ->getAllFacultyOption();
     	$model = new Application_Model_DbTable_DbGlobal();
-    	$this->view->payment_term = $model->getAllPaymentTerm();
+    	$this->view->payment_term = $model->getAllPaymentTerm(null,1);
     	
     	$frm = new Application_Form_FrmOther();
     	$frm =  $frm->FrmAddDept(null);
@@ -145,7 +145,7 @@ class Accounting_FeeController extends Zend_Controller_Action {
 		$this->view->all_metion = $_model ->getAllMetionOption();
 		$this->view->all_faculty = $_model ->getAllFacultyOption();
 		$model = new Application_Model_DbTable_DbGlobal();
-		$this->view->payment_term = $model->getAllPaymentTerm();
+		$this->view->payment_term = $model->getAllPaymentTerm(null,1);
 		 
 		$frm = new Application_Form_FrmOther();
 		$frm =  $frm->FrmAddDept(null);
