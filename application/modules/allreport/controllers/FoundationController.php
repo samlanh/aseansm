@@ -80,13 +80,14 @@ public function init()
 		if($this->getRequest()->isPost()){
 			$_data=$this->getRequest()->getPost();
 			$search = array(
-					'txtsearch' => $_data['txtsearch'],
-					'searchby' => $_data['searchby'],
+					'txtsearch' => $_data['txtsearch']
 			);
 			
 		}
 		else{
-			$search='';
+			$search = array(
+					'txtsearch' => ""
+			);
 		}		
 		$db = new Allreport_Model_DbTable_DbRptGroup();
 		$row = $db->getStudentGroup($id,$search);

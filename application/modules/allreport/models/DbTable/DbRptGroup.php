@@ -58,41 +58,24 @@ class Allreport_Model_DbTable_DbRptGroup extends Zend_Db_Table_Abstract
     }
    public function getStudentGroup($id,$search){
    	$db = $this->getAdapter();
-   	$sql= 'SELECT 
-   	(SELECT `group_code` FROM `rms_group` WHERE id= group_id) AS group_code,
-   	(SELECT `stu_code` FROM `rms_student` WHERE `stu_id` = rms_group_detail_student.stu_id) AS stu_code,
-   	(SELECT `stu_khname` FROM `rms_student` WHERE `stu_id` = rms_group_detail_student.stu_id) AS kh_name,
-   	(SELECT `stu_enname` FROM `rms_student` WHERE `stu_id` = rms_group_detail_student.stu_id) AS en_name,
-   	(SELECT `nationality` FROM `rms_student` WHERE `stu_id` = rms_group_detail_student.stu_id) AS nation,
-   	(SELECT `address` FROM `rms_student` WHERE `stu_id` = rms_group_detail_student.stu_id) AS pob,
-   	(SELECT `tel` FROM `rms_student` WHERE `stu_id` = rms_group_detail_student.stu_id) AS tel,
-   	(SELECT (SELECT `name_kh` FROM `rms_view` WHERE `type` = 2 AND `key_code`= rms_student.sex) FROM `rms_student`WHERE `stu_id`=rms_group_detail_student.`stu_id`) AS sex,
-   	(SELECT `dob` FROM `rms_student` WHERE `stu_id` = rms_group_detail_student.stu_id) AS dob,
-    (SELECT (SELECT `room_name` FROM `rms_room`WHERE `room_id`= rms_group.`room_id`) FROM `rms_group` WHERE id = `group_id`)AS room ,
-   	(SELECT (SELECT `name_en` FROM `rms_view` WHERE `type`=4 AND key_code = `session`) FROM `rms_group` WHERE id= `group_id`) AS session,
-   	 (SELECT CONCAT(`from_academic`,"-",`to_academic`) FROM `rms_group` WHERE id= `group_id`) AS academic,
-   	status FROM rms_group_detail_student WHERE status = 1 AND group_id='.$id;
-   	$where='';
-
-   	if(empty($search)){
-   		return $db->fetchAll($sql);
-   	}
-   	
-   	$searchs = $search['txtsearch'];
-   	if($search['searchby']==0){
-   		$where.='';
-   	}
-   	if($search['searchby']==1){
-   		$where.= " AND (SELECT rms_student.stu_khname FROM `rms_student` WHERE (rms_student.stu_id = rms_group_detail_student.stu_id))  LIKE  '%".$searchs."%'";
-   	}
-   	$sq = "SELECT (SELECT rms_student.stu_khname FROM rms_student	WHERE rms_student.stu_id = rms_group_detail_student.stu_id) From rms_group_detail_student WHERE status = 1 AND group_id=".$id;
-   	if($search['searchby']==2){
-   		$where.= " AND $sq LIKE '%".$searchs."%'" ;
-   	}
-   
-  	//print_r($db->fetchAll($sq));exit();
-  
-   	return $db->fetchAll($sql,$where);
+   	$sql= 'SELECT * FROM v_getallstudentbygroup '; 
+	$sql.=' WHERE group_id='.$id;
+	   	if(empty($search)){
+	   		return $db->fetchAll($sql);
+	   	}
+	   	if(!empty($search['txtsearch'])){
+	   		$s_where = array();
+	   		$s_search = trim($search['txtsearch']);
+		   		$s_where[] = " en_name LIKE '%{$s_search}%'";
+		   		$s_where[] = " kh_name LIKE '%{$s_search}%'";
+				$s_where[] = " sex LIKE '%{$s_search}%'";
+		   		$s_where[] = " nation LIKE '%{$s_search}%'";
+	    		$s_where[] = " tel LIKE '%{$s_search}%'";
+	   			$s_where[] = " stu_code LIKE '%{$s_search}%'";
+	   		$sql .=' AND ( '.implode(' OR ',$s_where).')';
+	   	
+	   	}
+	  return $db->fetchAll($sql);
    }
    
    public function getGroupDetail(){

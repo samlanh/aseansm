@@ -1,20 +1,21 @@
 <?php
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-	$this->headTitle('SRMS | Report Student Receivable'); 
+	$this->headTitle('SRMS | Report Student Payment'); 
 	echo $this->headTitle();
 	$base_url = Application_Form_FrmMessage::getUrl("/");
 ?>
-<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-studentpayment')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-studentpaymentdetail')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 		<input dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Search by student name....." value="" type="text">
 		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
 </form>
+
 <style>
 #footer{display: none;}
 </style>	
 <div style="border: 1px dotted #000;background: #fff; margin: 0 auto;min-height: 27cm;">
 		<div id="divPrint">
 			<table style="background:#fff; margin: 0 auto; width: 100%; padding: 1cm; ">
-							<tr style="font-size: 13px;">
+							<tr style="font-size: 13px; ">
 								<td colspan="3" align="center">
 									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">ព្រះរាជាណាចក្រកម្ពុជា</strong><br />
 									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">ជាតិ សាសនា ព្រះមហាក្សត្រ</strong><br />
@@ -47,16 +48,15 @@
 										</style>
 
 									<table class="padd" width="99%" border="1" align="center" style="white-space:nowrap;">
-										  <tr style="font-size:11px; height: 30px;" align="center">
+										  <tr style="font-size:11px; height: 30px; align="center" >
 										    <th rowspan="2">ល.រ</th>
 										    <th rowspan="2">លេខ Reciept</th>
-										    <th rowspan="2">អត្តលេខ</th>
 											<th rowspan="2">គោលនាម-នាម</th>
 											<th rowspan="2">អក្សរឡាតាំង</th>
 											<th rowspan="2">ភេទ</th>
-											<th rowspan="2">សញ្ជាតិ</th>
-											<th rowspan="2">ថ្ងៃខែឆ្នាំកំណើត</th>	
-											<th rowspan="2">លេខទូរស័ព្ទ</th>
+											<th rowspan="2">ឈ្មោះសេវាកម្ម</th>
+											<th rowspan="2">ការបង់ប្រាក់ជា</th>
+											<th rowspan="2">Amount</th>
 											<th rowspan="2">បញ្ចុះតម្លៃ</th>
 											<th rowspan="2">ទឹកប្រាក់សរុបដែលត្រូវបង់</th>
 											<th rowspan="2">ទឹកប្រាក់ដែលបានបង់</th>
@@ -73,21 +73,20 @@
 										  <tr style="font-size:13px;height: 23px;"​ align="center">
 										    <td><?php echo $i;?></td>
 										    <td><?php echo $rs['receipt_number']; ?></td>
-										    <td><?php echo $rs['stu_code']; ?></td>
 										    <td style=" white-space:nowrap; text-align:left"><?php echo $rs['kh_name']; ?></td>
 										    <td style=" white-space:nowrap; text-align:left"><?php echo $rs['en_name']; ?></td>
 										    <td><?php echo $rs['sex']; ?></td>
-										    <td><?php echo $rs['nationality']; ?></td>
-										    <td><?php echo $rs['dob']; ?></td>
-										    <td><?php echo $rs['tel']; ?></td>
+										    <td><?php echo $rs['service']; ?></td>
+										    <td><?php echo $rs['payment_term']; ?></td>
+										     <td><?php echo $rs['amount']; ?></td>
 										    <td><?php echo $rs['discount_percent']; ?>%</td>
 										    <td>$ <?php echo $rs['total_payment']; ?></td>
 										    <td>$ <?php echo $rs['paid_amount']; ?></td>
 										    <td>$ <?php echo $rs['balance_due']; ?></td>
-										    <td>$ <?php echo $rs['return_amount']; ?></td>
+										    <td><?php echo $rs['return_amount']; ?></td>
 										    <td><?php echo $rs['amount_in_khmer']; ?></td>
-										    <td><?php echo date('d-m-Y', strtotime($rs['create_date'])); ?></td>
-										    <td><?php echo $rs['USER']; ?></td>
+										    <td><?php echo date('d-m-Y', strtotime($rs['create_date']));?></td>
+										    <td><?php echo $rs['user']; ?></td>
 										   	<td><?php echo $rs['note']; ?></td>
 										  </tr>
 										  <?php } ?>
