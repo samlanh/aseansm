@@ -48,34 +48,32 @@
 										</style>
 
 									<table class="padd" width="99%" border="1" align="center" style="white-space:nowrap;">
-										  <tr style="font-size:11px; height: 30px; align="center" >
-										    <th rowspan="2">ល.រ</th>
-										    <th rowspan="2">លេខ Reciept</th>
-											<th rowspan="2">គោលនាម-នាម</th>
-											<th rowspan="2">អក្សរឡាតាំង</th>
-											<th rowspan="2">ភេទ</th>
-											<th rowspan="2">ឈ្មោះសេវាកម្ម</th>
-											<th rowspan="2">ការបង់ប្រាក់ជា</th>
+										  <tr style="font-size:10px; height: 30px; align="center" >
+										    <th rowspan="2">N.o</th>
+										    <th rowspan="2">Reciept N.o</th>
+											<th rowspan="2">Khmer Name</th>
+											<th rowspan="2">English Name</th>
+											<th rowspan="2">Service Type</th>
+											<th rowspan="2">Payment Term</th>
 											<th rowspan="2">Amount</th>
-											<th rowspan="2">បញ្ចុះតម្លៃ</th>
-											<th rowspan="2">ទឹកប្រាក់សរុបដែលត្រូវបង់</th>
-											<th rowspan="2">ទឹកប្រាក់ដែលបានបង់</th>
-											<th rowspan="2">ទឹកប្រាក់ដែលនៅជំពាក់</th>
-											<th rowspan="2">ទឹកប្រាក់ដែលត្រូវអាប់</th>
-											<th rowspan="2">ចំនួនទឹកប្រាក់សរុបជាភសា</th>
-											<th rowspan="2">ថ្ងៃដែលបានបង់</th>
-											<th rowspan="2">អ្នកទទួល</th>
-											<th rowspan="2">ផ្សេងៗ</th>
+											<th rowspan="2">Discount</th>
+											<th rowspan="2">Total Payment</th>
+											<th rowspan="2">Paid Amount</th>
+											<th rowspan="2">Balance Due</th>
+											<th rowspan="2">Return Amount</th>
+											<th rowspan="2">Amount In Khmer</th>
+											<th rowspan="2">Date Paid</th>
+											<th rowspan="2">User</th>
+											<th rowspan="2">Remark</th>
 										  </tr>
 										  <tr></tr>
 												<style> td{padding:0 3px; }</style>
 										  <?php $i=0; foreach($this->row as $rs){ $i++;?>
-										  <tr style="font-size:13px;height: 23px;"​ align="center">
+										  <tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
 										    <td><?php echo $i;?></td>
 										    <td><?php echo $rs['receipt_number']; ?></td>
 										    <td style=" white-space:nowrap; text-align:left"><?php echo $rs['kh_name']; ?></td>
 										    <td style=" white-space:nowrap; text-align:left"><?php echo $rs['en_name']; ?></td>
-										    <td><?php echo $rs['sex']; ?></td>
 										    <td><?php echo $rs['service']; ?></td>
 										    <td><?php echo $rs['payment_term']; ?></td>
 										     <td><?php echo $rs['amount']; ?></td>

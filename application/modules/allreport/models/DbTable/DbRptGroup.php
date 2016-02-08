@@ -90,10 +90,10 @@ class Allreport_Model_DbTable_DbRptGroup extends Zend_Db_Table_Abstract
    
    	(SELECT kh_name
    	FROM `rms_dept`
-   	WHERE (`rms_dept`.`dept_id`=`g`.`degree`)),
+   	WHERE (`rms_dept`.`dept_id`=`g`.`degree`) LIMIT 1) as degree,
    	(SELECT major_khname
    	FROM `rms_major`
-   	WHERE (`rms_major`.`major_id`=`g`.`grade`)),
+   	WHERE (`rms_major`.`major_id`=`g`.`grade`) LIMIT 1) as grade,
    	(SELECT	`rms_view`.`name_en`
    	FROM `rms_view`
    	WHERE ((`rms_view`.`type` = 4)
@@ -102,7 +102,7 @@ class Allreport_Model_DbTable_DbRptGroup extends Zend_Db_Table_Abstract
    	(SELECT
    	`r`.`room_name`
    	FROM `rms_room` `r`
-   	WHERE (`r`.`room_id` = `g`.`room_id`)) AS `room_name`,
+   	WHERE (`r`.`room_id` = `g`.`room_id`)LIMIT 1) AS `room_name`,
    	`g`.`start_date`,
    	`g`.`expired_date`,
    	`g`.`note`,
