@@ -74,7 +74,7 @@
 										    <td><?php echo $i;?></td>
 										    <td><?php echo $rs['receipt_number']; ?></td>
 										    <td><?php echo $rs['stu_code']; ?></td>
-										    <td style=" white-space:nowrap; text-align:left"><?php echo $rs['kh_name']; ?></td>
+										    <td style=" white-space:nowrap; text-align:left"> <a href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['kh_name']; ?></a></td>
 										    <td style=" white-space:nowrap; text-align:left"><?php echo $rs['en_name']; ?></td>
 										    <td><?php echo $rs['sex']; ?></td>
 										    <td><?php echo $rs['nationality']; ?></td>

@@ -56,14 +56,38 @@ public function init()
 	}
 	public function rptStudentListAction()
 	{
+		if($this->getRequest()->isPost()){
+			$_data=$this->getRequest()->getPost();
+			$search = array(
+					'txtsearch' => $_data['txtsearch']
+			);
+		
+		}
+		else{
+			$search = array(
+					'txtsearch' => ""
+			);
+		}
 		$db = new Allreport_Model_DbTable_DbStudent();
-		$row = $db->getAllStudentre();
+		$row = $db->getAllStudentre($search);
 		$this->view->rs = $row;
 	}
 	public function rptStudentInfoAction()
 	{
+		if($this->getRequest()->isPost()){
+			$_data=$this->getRequest()->getPost();
+			$search = array(
+					'txtsearch' => $_data['txtsearch']
+			);
+		
+		}
+		else{
+			$search = array(
+					'txtsearch' => ""
+			);
+		}
 		$db = new Allreport_Model_DbTable_DbStudent();
-		$row = $db->getStudentInfo();
+		$row = $db->getStudentInfo($search);
 		$this->view->rs = $row;
 	}
 	public function rptAllresultAction()
