@@ -33,14 +33,15 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 				$ids = explode(',', $data['identity']);
     			foreach ($ids as $i){
     				$_arr = array(
-    						'payment_id'=>$id,
-    						'service_id'=>$data['service_'.$i],
-    						'payment_term'=>$data['term_'.$i],
-    						'fee'=>$data['price_'.$i],
-    						'qty'=>$data['qty_'.$i],
-    						'amount'=>$data['total_'.$i],
-    						'discount_fix'=>$data['discount_'.$i],
-    						'note'=>$data['remark'.$i],
+    						'payment_id'	=>$id,
+    						'service_id'	=>$data['service_'.$i],
+    						'payment_term'	=>$data['term_'.$i],
+    						'fee'			=>$data['price_'.$i],
+    						'qty'			=>$data['qty_'.$i],
+    						'amount'		=>$data['total_'.$i],
+    						'discount_fix'	=>$data['discount_'.$i],
+    						'note'			=>$data['remark'.$i],
+    						'type'			=>2,
     				);
     				$this->insert($_arr);
     			}
