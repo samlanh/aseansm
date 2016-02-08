@@ -191,7 +191,11 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     	$sql="select price_fee from rms_servicefee_detail where rms_servicefee_detail.service_id=$serviceid and rms_servicefee_detail.payment_term=$termid limit 1";
     	return $db->fetchRow($sql);
     }
-    
+    public function getAllStudentInfo($studentid){
+    	$db=$this->getAdapter();
+    	$sql="select stu_enname,stu_khname,sex from rms_student where stu_id=$studentid limit 1";
+    	return $db->fetchRow($sql);
+    }
     
 }
 
