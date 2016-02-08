@@ -12,6 +12,7 @@ class Global_Model_DbTable_DbOccupation extends Zend_Db_Table_Abstract
 	public function addNewOccupation($_data){
 		$_arr=array(
 				'occu_name'	  => $_data['occu_name'],
+				'occu_enname'	  => $_data['occu_enname'],
 				'create_date' => Zend_Date::now(),
 				'status'   => $_data['status'],
 				'user_id'	  => $this->getUserId()
@@ -28,6 +29,7 @@ class Global_Model_DbTable_DbOccupation extends Zend_Db_Table_Abstract
 	public function updateOccupation($_data){
 		$_arr=array(
 				'occu_name'	  => $_data['occu_name'],
+				'occu_enname'	  => $_data['occu_enname'],
 				'create_date' => Zend_Date::now(),
 				'status'   => $_data['status'],
 				'user_id'	  => $this->getUserId()
@@ -37,9 +39,8 @@ class Global_Model_DbTable_DbOccupation extends Zend_Db_Table_Abstract
 	}
 	function getAllOccupation($search=null){
 		$db = $this->getAdapter();
-		$sql = " SELECT occupation_id AS id,occu_name, create_date,status,(SELECT  CONCAT(first_name,' ', last_name) FROM rms_users WHERE id=user_id )AS user_name
-		FROM rms_occupation
-		WHERE 1 ";
+		$sql = " SELECT occupation_id AS id,occu_name,occu_enname, create_date,status,(SELECT  CONCAT(first_name,' ', last_name) FROM rms_users WHERE id=user_id )AS user_name
+		FROM rms_occupation	WHERE 1 ";
 		return $db->fetchAll($sql);	
 	}	
 	public function addOccupation($_data){//ajax
