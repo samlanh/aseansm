@@ -234,12 +234,21 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
    	if($id==null)return $rs;
    	return $rs[$id];
    }
-   public function getAllPaymentTerm($id=null){
+   public function getAllPaymentTerm($id=null,$hidemonth=null){
+   	if($hidemonth!=null){
+   		$opt_term = array(
+   				2=>$this->tr->translate('QUARTER'),
+   				3=>$this->tr->translate('SEMESTER'),
+   				4=>$this->tr->translate('YEAR'),
+   		
+   		);
+   		return $opt_term;
+   	}
    	$opt_term = array(
-   			
-   			1=>$this->tr->translate('QUARTER'),
-   			2=>$this->tr->translate('SEMESTER'),
-   			3=>$this->tr->translate('YEAR'),
+   			1=>$this->tr->translate('MONTHLY'),
+   			2=>$this->tr->translate('QUARTER'),
+   			3=>$this->tr->translate('SEMESTER'),
+   			4=>$this->tr->translate('YEAR'),
    			
    	);
    	if($id==null)return $opt_term;
