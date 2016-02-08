@@ -222,4 +222,15 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     	}
     }
     
+    function getStudentAction(){
+    	if($this->getRequest()->isPost()){
+    		$data=$this->getRequest()->getPost();
+    		$db = new Registrar_Model_DbTable_DbStudentServicePayment();
+    		$studentinfo = $db->getAllStudentInfo($data['studentid']);
+    		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
+    		print_r(Zend_Json::encode($studentinfo));
+    		exit();
+    	}
+    }
+    
 }
