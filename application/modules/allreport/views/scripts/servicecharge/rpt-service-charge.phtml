@@ -8,8 +8,7 @@
 		<select dojoType="dijit.form.FilteringSelect"   id="searchby" name="searchby" placeholder="Search by ....." value="" type="text">
 			<option value="0">All</option>
 			<option value="1">Generation</option>
-			<option value="2">Service ID</option>
-			<option value="3">Service Name</option>
+			<option value="2">Service Name</option>
 		</select>
 		<input dojoType="dijit.form.TextBox" required="true"  id="txtsearch" name="txtsearch" placeholder="Search by....." value="" type="text">
 		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
@@ -43,7 +42,6 @@
 												<th >ល.រ</th>
 												<th >Academic</th>
 												<th >Generation</th>
-												<th >Service ID</th>
 												<th>Service Name</th>
 												<th>Monthly</th>
 												<th >Quarter</th>
@@ -55,7 +53,6 @@
 												<th ><?php echo $i;?></th>
 												<th ><?php echo $row['academic'];?></th>
 												<th ><?php echo $row['generation'];?></th>
-												<th ><?php echo $row['service_id'];?></th>
 												<th align="left"><?php echo $row['service_name'];?></th>	
 												<th ><?php echo $row['monthly'];?></th>
 												<th ><?php echo $row['quarter'];?></th>

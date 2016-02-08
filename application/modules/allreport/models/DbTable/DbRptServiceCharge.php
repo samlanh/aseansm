@@ -30,11 +30,10 @@ class Allreport_Model_DbTable_DbRptServiceCharge extends Zend_Db_Table_Abstract
     	}
     	
     	if($search['searchby']==2){
-    		$where.= " AND (select service_id from rms_servicefee_detail where (rms_servicefee_detail.service_feeid=rms_servicefee.id) limit 1) LIKE '%".$searchs."%'";
-    	}
-    	
-    	if($search['searchby']==3){
-    		$where.= " AND (select title from rms_program_name where (rms_program_name.service_id = (select service_id from rms_servicefee_detail where (rms_servicefee_detail.service_feeid = rms_servicefee.id) limit 1))) LIKE '%".$searchs."%'";
+//     		$where.= " AND (select title from rms_program_name where rms_program_name.service_id = (select service_id from rms_servicefee_detail where (rms_servicefee_detail.service_feeid = rms_servicefee.id) limit 1)) LIKE '%".$searchs."%'";
+    		
+    		$where.=" AND (select title from rms_program_name where rms_program_name.service_id=(select service_id from rms_servicefee_detail where rms_servicefee_detail.service_feeid=rms_servicefee.id limit 1) limit 1) LIKE '%".$searchs."%'";
+    		
     	}
     	
     	return $db->fetchAll($sql.$where);

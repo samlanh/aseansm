@@ -41,17 +41,20 @@ public function init()
 						$rs_rows[$key]=$this->headAddRecordTuitionFee($rs,$key);
 						$term = $model->getAllPaymentTerm($fee_row);
 
-						$rs_rows[$key]['service_id'] = $payment_tran['service_id'];
 						
 						$rs_rows[$key]['service_name'] = $payment_tran['service_name'];
-						$rs_rows[$key]['quarter'] = $payment_tran['price_fee'];
+						$rs_rows[$key]['monthly'] = $payment_tran['price_fee'];
 						$key_old=$key;
 						$key++;
 					}elseif($payment_tran['payment_term']==2){
 						$term = $model->getAllPaymentTerm($payment_tran['payment_term']);
-						$rs_rows[$key_old]['semester'] = $payment_tran['price_fee'];
+						$rs_rows[$key_old]['quarter'] = $payment_tran['price_fee'];
 						 
 					}elseif($payment_tran['payment_term']==3){
+						$term = $model->getAllPaymentTerm($payment_tran['payment_term']);
+						$rs_rows[$key_old]['semester'] = $payment_tran['price_fee'];
+					}
+					elseif($payment_tran['payment_term']==4){
 						$term = $model->getAllPaymentTerm($payment_tran['payment_term']);
 						$rs_rows[$key_old]['year'] = $payment_tran['price_fee'];
 					}
@@ -71,7 +74,7 @@ public function init()
 				'id' 	  => $rs['id'],
 				'academic'=> $rs['academic'],
 				'generation'=> $rs['generation'],
-				'service_id'=>'',
+				'monthly'=>'',
 				'quarter'=>'',
 				'semester'=>'',
 				'year'=>'',
