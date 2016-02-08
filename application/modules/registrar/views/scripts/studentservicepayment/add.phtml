@@ -48,23 +48,7 @@
 			//getStudentBYId();
 		});
 	dojo.ready(function(){
-	
-
-	var batch = dojo.byId("batch"); 
-		dojo.connect(batch, "onkeyup", function(evt){			
-			//getTuitionFee();
-	});	
-
-	//value_invoice = '<?php //echo $this->invoice_num;?>';
-	//dijit.byId('reciept_no').attr('value',value_invoice);
-	//dijit.byId('reciept_no').set('readOnly',true);
 	}); 
-
-	var txtstudent_card = dojo.byId("stu_id"); 
-	dojo.connect(txtstudent_card, "onkeyup", function(evt){	
-			//getStudentBYId();
-			
-	});
 	
 	var url_getstu_info = '<?php echo $this->url(array('module'=>'global','controller'=>'globals','action'=>'get-studentinfo')); ?>';
 	function getStudentBYId(){
@@ -93,12 +77,7 @@
 				    }
 				});
 	}
-	function setValueTo(){
-		if(dijit.byId('kh_name').item != null){
-		//alert(items.name);
-		dijit.byId("sender_code_no").attr('value', dijit.byId('sender_name').item.code_no);
-		}
-	}
+	
 </script>
 <style>
 select{ width:100%;}
@@ -198,18 +177,9 @@ fieldset{  background:none;}
 </table>	
 </form>
 <script type="text/javascript">
-function SubmitRegister(){
-	if(dijit.byId('office_receipt').validate()){
-		if(dijit.byId('tuitionfee').get('value') < dijit.byId('discount').get('value')){
-			alert("Discount cannot greather than fee value!");
-			return false;
-		}
-		dijit.byId('office_receipt').submit();
-	}
-}
 function printSave(){		
 		if(dijit.byId('office_receipt').validate()) {
-			dojo.byId("lb_term").innerHTML = dijit.byId("payment_term").attr('displayedValue');
+			/*dojo.byId("lb_term").innerHTML = dijit.byId("payment_term").attr('displayedValue');
 			dojo.byId("lb_enroll_id").innerHTML = dijit.byId("reciept_no").get('value');
 			 var d = dojo.byId("start_date").value.split('/');
 			 dojo.byId("lb_term_start").innerHTML = d[1] + "/" + d[0] +"/"+d[2];
@@ -226,8 +196,8 @@ function printSave(){
 	 dojo.byId("lb_discount").innerHTML ="$"+dijit.byId("discount").get('value')+"%";
 	 dojo.byId("lb_total").innerHTML ="$"+dijit.byId("total").get('value');
 	 dojo.byId("lb_book").innerHTML ="$"+dijit.byId("books").get('value').toFixed(2);
-	 dojo.byId("lb_balance").innerHTML ="$"+dijit.byId("remaining").get('value');
-		dijit.byId("terms").show();	
+	 dojo.byId("lb_balance").innerHTML ="$"+dijit.byId("remaining").get('value');*/
+		dijit.byId("studentpaymentreceipt").show();	
 		
 	}
 	
@@ -235,7 +205,7 @@ function printSave(){
 </script>
 <div class="dijitHidden">
 <?php $keycode = $this->keycode;?>
-	<div data-dojo-type="dijit.Dialog" style="width:7cm;" align="center" data-dojo-props="title:'<?php echo $tr->translate("STUDENT_PAYMENT_RECEIPT");?>'" id="terms" >
+	<div data-dojo-type="dijit.Dialog" style="width:7cm;" align="center" data-dojo-props="title:'<?php echo $tr->translate("STUDENT_PAYMENT_RECEIPT");?>'" id="studentpaymentreceipt" >
 		 <div class="header">
 		     <table     bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;  font-size:14px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;">
 		          <tr>
@@ -379,10 +349,10 @@ function addRow() {
 			template+='<td><select onchange="getservicefee('+col+');" dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'" style="width:120px;"><option value="1">Monthly</option><option value="2">Quarter</option><option value="3">Semester</option><option value="4">Yearly</option></select></td>';
 			column = 0;
 			template+='<td> <input type="text" required="true" onkeyup="calculateTotal('+col+');" name="price_'+col+'" id="price_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="subsub"></label></td>';
-			template+='<td> <input type="text" required="true" onkeyup="calculateTotal('+col+');" name="qty_'+col+'" id="qty_'+col+'" dojoType="dijit.form.TextBox" style="width:100px;" /><label id="qty"></label></td>';
-			template+='<td> <input type="text" required="true" readonly="readonly" name="total_'+col+'" id="total_'+col+'" dojoType="dijit.form.TextBox" style="width:100px;" /><label id="qty"></label></td>';
-			template+='<td> <input type="text" required="true" onkeyup="calculateDiscount('+col+');" name="discount_'+col+'" id="discount_'+col+'" dojoType="dijit.form.TextBox" style="width:100px;" /><label id="subsub"></label></td>';
-			template+='<td> <input type="text" required="true" readonly="readonly" name="subtotal_'+col+'" id="subtotal_'+col+'" dojoType="dijit.form.TextBox" style="width:100px;" /><label id="qty"></label></td>';
+			template+='<td> <input type="text" required="true" onkeyup="calculateTotal('+col+');" name="qty_'+col+'" id="qty_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="qty"></label></td>';
+			template+='<td> <input type="text" required="true" readonly="readonly" name="total_'+col+'" id="total_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="qty"></label></td>';
+			template+='<td> <input type="text" required="true" onkeyup="calculateDiscount('+col+');" name="discount_'+col+'" id="discount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="subsub"></label></td>';
+			template+='<td> <input type="text" required="true" readonly="readonly" name="subtotal_'+col+'" id="subtotal_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="qty"></label></td>';
 			template+='<td> <input type="text" required="true" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" /><label id="subsub"></label></td>';
 		tmp='<tr id="row'+col+'">';
 		tmp+="</tr>";
@@ -399,6 +369,8 @@ function addRow() {
 function calculateTotal(index){
 	price = dijit.byId('price_'+index).get('value');
 	qty = dijit.byId('qty_'+index).get('value');
+	qty=isNaN(qty)?1:qty;
+	if(qty==1){dijit.byId('qty_'+index).attr('value',qty);}
 	total = price*qty;
 	dijit.byId('total_'+index).attr('value',total);
 	calculateDiscount(index);
@@ -406,7 +378,25 @@ function calculateTotal(index){
 function calculateDiscount(index){
 	total = dijit.byId('total_'+index).get('value');
 	discount = dijit.byId('discount_'+index).get('value');
+	discount=isNaN(discount)?0:discount;
 	dijit.byId('subtotal_'+index).attr('value',total-discount);
+	netTotal();
+}
+function netTotal() {
+	var netTotal=0;
+	var rowId = $('#identity').val();
+	var rowIDArray = rowId.split(',');
+	for(var n = 0; n < rowIDArray.length; n++) {
+		netTotal += Number($('#subtotal_'+rowIDArray[n]).val());
+	}
+	$('#grand_total').val(netTotal);
+	$('#total_received').val(netTotal);
+	calculatBalance();
+}
+function calculatBalance(){
+	totalreceived = dijit.byId('total_received').get('value');
+	grand_total = dijit.byId('grand_total').get('value');
+	dijit.byId('total_return').attr('value',totalreceived-grand_total);
 }
 
 var url_student_info = "<?php echo $this->url(array('module'=>'registrar','controller'=>'studentservicepayment','action'=>'get-student')); ?>";
@@ -446,7 +436,8 @@ function getservicefee(key){
 				handleAs:"json",
 				load: function(data) {
 					dijit.byId("price_"+key).attr("value",data.price_fee);
-					dijit.byId("total_"+key).attr("value",data.price_fee);
+					//dijit.byId("total_"+key).attr("value",data.price_fee);
+					calculateTotal(key);
 
 				},
 				error: function(err) {
