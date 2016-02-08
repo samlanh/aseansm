@@ -105,8 +105,10 @@ select{ width:100%;}
 fieldset{  background:none;}
 .red{ color: red; padding-left:5px;}
 </style>
-<?php $register = $this->frm_register;?>
-<form id='office_receipt' action="<?php echo $this->url(array('module'=>'registrar','controller'=>'coursestudy','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<?php $register = $this->frm_register;
+//print_r($register);
+?>
+<form id='office_receipt' action="<?php echo $this->url(array('module'=>'registrar','controller'=>'studentservicepayment','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 <table  cellspacing="10" style="margin: 0 auto; width: 100%;">
 	<tr>
 		<td>
@@ -371,8 +373,8 @@ function addRow() {
 			dojo.query("#head-title").append(temp);
 			title=1;
 		}
-			template+='<td width="47px"align="center"><img onclick="deleteRecord('+col+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
-			template+='<td width="6%" align="center">'+no+'</td>';
+			template+='<td width="47px" align="center"><img onclick="deleteRecord('+col+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
+			template+='<td width="23%" align="center">'+no+'</td>';
 			template+='<td><select onchange="getservicefee('+col+');" dojoType="dijit.form.FilteringSelect" id="service_'+col+'" name="service_'+col+'">'+service+'</select></td>';			
 			template+='<td><select onchange="getservicefee('+col+');" dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'" style="width:120px;"><option value="1">Monthly</option><option value="2">Quarter</option><option value="3">Semester</option><option value="4">Yearly</option></select></td>';
 			column = 0;
@@ -407,18 +409,23 @@ function calculateDiscount(index){
 	dijit.byId('subtotal_'+index).attr('value',total-discount);
 }
 
-var url_student_info = "<?php echo $this->url(array('module'=>'global','controller'=>'globals','action'=>'get-studentinfo')); ?>";
+var url_student_info = "<?php echo $this->url(array('module'=>'registrar','controller'=>'studentservicepayment','action'=>'get-student')); ?>";
 function getStudentInfo(){
-			student = dijit.byId('studentid').get('value');
-			term = dijit.byId('term_'+key).get('value');
+			studentid = dijit.byId('studentid').get('value');
+			//alert(studentid);
 			dojo.xhrPost({
 				url:url_student_info,
 				content:{
-					'student_card':student,
+					'studentid':studentid
 					},
 				handleAs:"json",
 				load: function(data) {
-					alert(data);
+					//alert(data);
+					//alert(data.sex);
+					dijit.byId("kh_name").attr("value",data.stu_khname);
+					dijit.byId("en_name").attr("value",data.stu_enname);
+					dijit.byId("sex").attr("value",data.sex);
+					//alert(data);
 					//dijit.byId("price_"+key).attr("value",data.price_fee);
 				},
 				error: function(err) {
@@ -439,6 +446,8 @@ function getservicefee(key){
 				handleAs:"json",
 				load: function(data) {
 					dijit.byId("price_"+key).attr("value",data.price_fee);
+					dijit.byId("total_"+key).attr("value",data.price_fee);
+
 				},
 				error: function(err) {
 					alert(err);
