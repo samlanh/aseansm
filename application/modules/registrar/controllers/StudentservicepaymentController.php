@@ -47,10 +47,10 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
       	try {
       		$db = new Registrar_Model_DbTable_DbStudentServicePayment();
       		if(isset($_data['save_new'])){
-      			$db->addStudentGep($_data);
+      			$db->addStudentServicePayment($_data);
       			Application_Form_FrmMessage::message($this->tr->translate('INSERT_SUCCESS'));
       		}else{
-      			$db->addStudentGep($_data);
+      			$db->addStudentServicePayment($_data);
       			Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL . '/coursestudy/index');
       		}
       	} catch (Exception $e) {
@@ -59,7 +59,7 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
       		Application_Model_DbTable_DbUserLog::writeMessageError($err);
       	}
       }
-       $frm = new Registrar_Form_FrmCourseStudy();
+       $frm = new Registrar_Form_FrmStudentServicePayment();
        $frm_register=$frm->FrmRegistarWU();
        Application_Model_Decorator::removeAllDecorator($frm_register);
        $this->view->frm_register = $frm_register;
@@ -70,13 +70,8 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
        $this->view->invoice_no = Application_Model_GlobalClass::getInvoiceNo();
        $__student_card = array();
        $this->view->student_card = $__student_card;
-       $db = new Registrar_Model_DbTable_DbwuRegister();
-       $this->view->invoice_num = $db->getGaneratInvoiceWU();
-       //get all dept
-       $_db = new Application_Model_DbTable_DbGlobal();
-       $this->view->all_dept = $_db->getAllFecultyName();
-       $_hour = new Application_Model_GlobalClass();
-       $this->view->hour= $row = $_hour->getHours();
+//        $db = new Registrar_Model_DbTable_DbwuRegister();
+//        $this->view->invoice_num = $db->getGaneratInvoiceWU();
        
        $db = new Registrar_Model_DbTable_DbStudentServicePayment();
        $this->view->rs = $db->getAllStudentCode();
