@@ -2,57 +2,55 @@
 
 class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abstract
 {
-    protected $_name = 'rms_student';
+    protected $_name = 'rms_student_payment';
     public function getUserId(){
     	$session_user=new Zend_Session_Namespace('auth');
     	return $session_user->user_id;
     	 
     }
-	function addStudentGep($data){
+	function addStudentServicePayment($data){
 		//print_r($data);exit();
 		$db = $this->getAdapter();//ស្ពានភ្ជាប់ទៅកាន់Data Base
 		$db->beginTransaction();//ទប់ស្កាត់មើលការErrore , មានErrore វាមិនអោយចូល
 			try{
 			$arr=array(
-						'stu_code'=>$data['stu_id'],
-						'academic_year'=>$data['study_year'],
-						'stu_khname'=>$data['kh_name'],
-						'stu_enname'=>$data['en_name'],
-				    	'session'=>$data['session'],
-						'sex'=>$data['sex'],
-						'degree'=>$data['dept'],
-						'grade'=>$data['grade'],
-					    'stu_type'=>2,
-						'user_id'=>$this->getUserId(),
+					'student_id'=>$data['studentid'],
+					'receipt_number'=>$data['reciept_no'],
+					'year'=>$data['study_year'],
+					'total_payment'=>$data['grand_total'],
+					'paid_amount'=>$data['total_received'],
+					'return_amount'=>$data['total_return'],
+					'balance_due'=>$data['total_balance'],
+					'amount_in_khmer'=>$data['char_price'],
+					'note'=>$data['not'],
+					'create_date'=>date("d-m-Y"),
+					'user_id'=>$this->getUserId()
 				);
-			  $id= $this->insert($arr);
-				$this->_name='rms_student_payment';
-				$arr=array(
-						'student_id'=>$id,
-						'receipt_number'=>$data['reciept_no'],
-						'start_hour'=>$data['from_time'],
-						'end_hour'=>$data['to_time'],
-						'payment_term'=>$data['payment_term'],
-						'tuition_fee'=>$data['tuitionfee'],
-						'discount_percent'=>$data['discount'],
-						'other_fee'=>$data['remark'],
-						'admin_fee'=>$data['addmin_fee'],
-						'total'=>$data['total'],
-						'paid_amount'=>$data['books'],
-						'balance_due'=>$data['remaining'],
-						'note'=>$data['not'],
-						'amount_in_khmer'=>$data['char_price'],
-						'room_id'=>$data['room'],
-						'payfor_type'=>2,
-						'user_id'=>$this->getUserId(),
-				);
-				$this->insert($arr);
-				$db->commit();//if not errore it do....
+			
+			  $id = $this->insert($arr);
+			  
+				$this->_name='rms_student_paymentdetail';
+				$ids = explode(',', $data['identity']);
+    			foreach ($ids as $i){
+    				$_arr = array(
+    						'payment_id'=>$id,
+    						'service_id'=>$data['service_'.$i],
+    						'payment_term'=>$data['term_'.$i],
+    						'fee'=>$data['price_'.$i],
+    						'qty'=>$data['qty_'.$i],
+    						'amount'=>$data['total_'.$i],
+    						'discount_fix'=>$data['discount_'.$i],
+    						'note'=>$data['remark'.$i],
+    				);
+    				$this->insert($_arr);
+    			}
+    			
+    			$db->commit();
 			}catch (Exception $e){
 				$db->rollBack();//អោយវាវិលត្រលប់ទៅដើមវីញពេលណាវាជួបErrore
 			}
 		}
-		function updateStudentGep($data){
+	function updateStudentGep($data){
 		$db = $this->getAdapter();//ស្ពានភ្ជាប់ទៅកាន់Data Base
 		$db->beginTransaction();//ទប់ស្កាត់មើលការErrore , មានErrore វាមិនអោយចូល
 			try{
