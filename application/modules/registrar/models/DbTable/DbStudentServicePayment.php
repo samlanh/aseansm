@@ -51,69 +51,84 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 				$db->rollBack();//អោយវាវិលត្រលប់ទៅដើមវីញពេលណាវាជួបErrore
 			}
 		}
-	function updateStudentGep($data){
+	function updateStudentServicePayment($data){
 		$db = $this->getAdapter();//ស្ពានភ្ជាប់ទៅកាន់Data Base
 		$db->beginTransaction();//ទប់ស្កាត់មើលការErrore , មានErrore វាមិនអោយចូល
 			try{
 			$arr=array(
-						'stu_code'=>$data['stu_id'],
-						'academic_year'=>$data['study_year'],
-						'stu_khname'=>$data['kh_name'],
-						'stu_enname'=>$data['en_name'],
-				    	'session'=>$data['session'],
-						'sex'=>$data['sex'],
-						'degree'=>$data['dept'],
-						'grade'=>$data['grade'],
-					    'stu_type'=>2,
-						'user_id'=>$this->getUserId(),
+					'student_id'=>$data['studentid'],
+					'receipt_number'=>$data['reciept_no'],
+					'year'=>$data['study_year'],
+					'total_payment'=>$data['grand_total'],
+					'paid_amount'=>$data['total_received'],
+					'return_amount'=>$data['total_return'],
+					'balance_due'=>$data['total_balance'],
+					'amount_in_khmer'=>$data['char_price'],
+					'note'=>$data['not'],
+					'create_date'=>date("d-m-Y"),
+					'user_id'=>$this->getUserId()
 				);
-			   $where="stu_id=".$data['id'];
-			   $this->update($arr, $where);
-				$this->_name='rms_student_payment';
-				$arr=array(
-						'student_id'=>$data['id'],
-						'receipt_number'=>$data['reciept_no'],
-						'start_hour'=>$data['from_time'],
-						'end_hour'=>$data['to_time'],
-						'payment_term'=>$data['payment_term'],
-						'tuition_fee'=>$data['tuitionfee'],
-						'discount_percent'=>$data['discount'],
-						'other_fee'=>$data['remark'],
-						'admin_fee'=>$data['addmin_fee'],
-						'total'=>$data['total'],
-						'paid_amount'=>$data['books'],
-						'balance_due'=>$data['remaining'],
-						'note'=>$data['not'],
-						'amount_in_khmer'=>$data['char_price'],
-						'room_id'=>$data['room'],
-						'payfor_type'=>2,
-						'user_id'=>$this->getUserId(),
-				);
-				$where="student_id=".$data['id'];
-				$this->update($arr, $where);
-				$db->commit();//if not errore it do....
+				$where=$this->getAdapter()->quoteInto("id=?", $data['id']);
+			 	$this->update($arr, $where);
+			  
+				$this->_name='rms_student_paymentdetail';
+				$where = "payment_id = ".$data['id'];
+				$this->delete($where);
+				
+				$ids = explode(',', $data['identity']);
+    			foreach ($ids as $i){
+    				$_arr = array(
+    						'payment_id'	=>$data['id'.$i],
+    						'service_id'	=>$data['service_'.$i],
+    						'payment_term'	=>$data['term_'.$i],
+    						'fee'			=>$data['price_'.$i],
+    						'qty'			=>$data['qty_'.$i],
+    						'amount'		=>$data['total_'.$i],
+    						'discount_fix'	=>$data['discount_'.$i],
+    						'note'			=>$data['remark'.$i],
+    						'type'			=>2,
+    				);
+    				$this->insert($_arr);
+    			}
+    			
+    			$db->commit();
+    			return true;
 			}catch (Exception $e){
 				$db->rollBack();//អោយវាវិលត្រលប់ទៅដើមវីញពេលណាវាជួបErrore
 			}
 		}
-    function getAllStudentGep(){
+    function getAllStudenTServicePayment(){
     	$db=$this->getAdapter();
-    	$sql=" SELECT s.stu_id,s.stu_code,sp.receipt_number,s.stu_khname,s.stu_enname,s.sex,(SELECT en_name FROM rms_dept WHERE dept_id=s.degree)AS degree,
-		       (SELECT major_enname FROM rms_major WHERE major_id=s.grade ) AS grade,
-		       sp.payment_term,sp.tuition_fee,sp.discount_percent,sp.other_fee,sp.admin_fee,sp.total,sp.paid_amount,
-		       sp.balance_due
- 			   FROM rms_student AS s,rms_student_payment AS sp WHERE s.stu_id=sp.student_id AND s.stu_type=2";
-    	$order=" ORDER By stu_id DESC ";
-    	return $db->fetchAll($sql.$order);
+    	$sql="select id,receipt_number,
+		(select CONCAT(from_academic,' - ',to_academic) from rms_tuitionfee where rms_tuitionfee.id=rms_student_payment.year limit 1)AS year,
+    	(select CONCAT(stu_khname,' - ',stu_enname) from rms_student where rms_student.stu_id=rms_student_payment.student_id limit 1)AS name,
+    	(select name_kh from rms_view where rms_view.type=2 and rms_view.key_code=(select sex from rms_student where rms_student.stu_id=rms_student_payment.student_id limit 1) limit 1)AS sex,
+    	(select title from rms_program_name where rms_program_name.service_id=(select service_id from rms_student_paymentdetail where rms_student_paymentdetail.payment_id=rms_student_payment.id limit 1))AS service_name,
+    	(select name_en from rms_view where rms_view.type=8 and rms_view.key_code=(select payment_term from rms_student_paymentdetail where rms_student_paymentdetail.payment_id=rms_student_payment.id limit 1) limit 1)AS payment_term,
+    	(select qty from rms_student_paymentdetail where rms_student_paymentdetail.payment_id=rms_student_payment.id limit 1)AS qty,
+    	(select amount from rms_student_paymentdetail where rms_student_paymentdetail.payment_id=rms_student_payment.id limit 1)AS amount,
+    	(select discount_fix from rms_student_paymentdetail where rms_student_paymentdetail.payment_id=rms_student_payment.id limit 1)AS discount,
+    	total_payment,paid_amount,balance_due,return_amount
+    	
+    	from rms_student_payment where 1
+    	";
+    	
+    	
+//     	$order=" ORDER By stu_id DESC ";
+    	return $db->fetchAll($sql);
     }
-    function getStuentGepById($id){
+    function getStudentServicePaymentByID($id){
     	$db=$this->getAdapter();
-    	$sql=" SELECT s.stu_id,s.stu_code,sp.receipt_number,s.academic_year,s.stu_khname,s.stu_enname,s.sex,s.session,s.degree,s.grade,s.session,
-    	sp.payment_term,sp.tuition_fee,sp.discount_percent,sp.other_fee,sp.admin_fee,sp.total,sp.paid_amount,
-    	sp.balance_due,sp.amount_in_khmer,sp.note,sp.start_hour,sp.end_hour,sp.room_id
-    	FROM rms_student AS s,rms_student_payment AS sp WHERE s.stu_id=sp.student_id AND s.stu_id=".$id;
+    	$sql="select * from rms_student_payment where id=".$id;
     	return $db->fetchRow($sql);
     }
+    
+    function getStudentServicePaymentDetailByID($id){
+    	$db=$this->getAdapter();
+    	$sql="select * from rms_student_paymentdetail where payment_id=".$id;
+    	return $db->fetchAll($sql);
+    }
+    
     function getAllGrade($grade_id){
     	$db = $this->getAdapter();
     	$sql = "SELECT major_id As id,major_enname As name FROM rms_major WHERE dept_id=".$grade_id;
