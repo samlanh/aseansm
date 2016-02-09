@@ -78,7 +78,7 @@ class Allreport_Model_DbTable_DbRptGroup extends Zend_Db_Table_Abstract
 	  return $db->fetchAll($sql);
    }
    
-   public function getGroupDetail($search){
+   public function getGroupDetail(){
    	$db = $this->getAdapter();
    	$sql = 'SELECT
    	`g`.`id`,
@@ -115,6 +115,7 @@ class Allreport_Model_DbTable_DbRptGroup extends Zend_Db_Table_Abstract
    	(SELECT COUNT(`stu_id`) FROM `rms_group_detail_student` WHERE `group_id`=`g`.`id`)AS Num_Student
    	FROM `rms_group` `g`
    	ORDER BY `g`.`id` DESC ';
+   	
    	return $db->fetchAll($sql);
    }
    public function getGroupDetailByID($id){
@@ -153,7 +154,6 @@ class Allreport_Model_DbTable_DbRptGroup extends Zend_Db_Table_Abstract
    	LIMIT 1) AS `status`,
    	(SELECT COUNT(`stu_id`) FROM `rms_group_detail_student` WHERE `group_id`=`g`.`id`)AS Num_Student
    	FROM `rms_group` `g` WHERE `g`.`id`='.$id;
-  //print_r($db->fetchRow($sql)); exit();
    	 
    	return $db->fetchRow($sql);
    }

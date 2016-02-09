@@ -28,7 +28,7 @@
 									<img style="width: 155px;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br /><br />
 								</td>
 								<td align="center">
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"><u>របាយការណ៏ប្រាក់ចំណូលរបស់និស្សិត</u></strong><br >
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"><u>របាយការណ៏ប្រាក់ចំណូលពី ការបង់ប្រាក់របស់សិស្ស</u></strong><br >
 								</td>
 								<td align="right" width="20%">
 									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">ក្រសួងអប់រំ យុវជន និងកីឡា</strong><br />
@@ -48,20 +48,21 @@
 
 									<table class="padd" width="99%" border="1" align="center" style="white-space:nowrap;">
 										  <tr style="font-size:10px; height: 30px;" align="center">
-										    <th>N.o</th>
-										    <th>Reciept N.o</th>
-										    <th>Student ID</th>
-											<th>Khmer Name</th>
-											<th>English Name</th>
-											<th>Discount</th>
-											<th>Total Payment</th>
-											<th>Paid Amount</th>
-											<th>Balance Due</th>
-											<th>Return Amount</th>
-											<th>Amount In Khmer</th>
-											<th>Date Paid</th>
-											<th>User</th>
-											<th>Remark</th>
+										    <th>&nbsp;N.o&nbsp;</th>
+										    <th>&nbsp;Reciept N.o&nbsp;</th>
+										    <th>&nbsp;Student ID&nbsp;</th>
+											<th>&nbsp;Khmer Name&nbsp;</th>
+											<th>&nbsp;English Name&nbsp;</th>
+											<th>&nbsp;Total Payment&nbsp;</th>
+											<th>&nbsp;Discount&nbsp;</th>
+											<th>&nbsp;Paid Amount&nbsp;</th>
+											<th>&nbsp;Recieved Amound&nbsp;</th>
+											<th>&nbsp;Balance Due&nbsp;</th>
+											<th>&nbsp;Return Amount&nbsp;</th>
+											<th>&nbsp;Amount In Khmer&nbsp;</th>
+											<th>&nbsp;Date Paid&nbsp;</th>
+											<th>&nbsp;User&nbsp;</th>
+											<th>&nbsp;Remark&nbsp;</th>
 										  </tr>
 										  <tr></tr>
 												<style> td{padding:0 3px; }</style>
@@ -72,9 +73,10 @@
 										    <td><?php echo $rs['stu_code']; ?></td>
 										    <td style=" white-space:nowrap; text-align:left"> <a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['kh_name']; ?></a></td>
 										    <td style=" white-space:nowrap; text-align:left"><?php echo $rs['en_name']; ?></td>
-										    <td><?php echo $rs['discount_percent']; ?>%</td>
 										    <td>$ <?php echo $rs['total_payment']; ?></td>
+										    <td><?php echo $rs['discount_percent']; ?>%</td>
 										    <td>$ <?php echo $rs['paid_amount']; ?></td>
+										     <td>$ <?php echo $rs['recieve_amount']; ?></td>
 										    <td>$ <?php echo $rs['balance_due']; ?></td>
 										    <td>$ <?php echo $rs['return_amount']; ?></td>
 										    <td><?php echo $rs['amount_in_khmer']; ?></td>

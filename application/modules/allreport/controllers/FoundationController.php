@@ -122,20 +122,8 @@ public function init()
 	}
 	public function studentGroupAction()
 	{	
-		if($this->getRequest()->isPost()){
-			$_data=$this->getRequest()->getPost();
-			$search = array(
-					'txtsearch' => $_data['txtsearch']
-			);
-		
-		}
-		else{
-			$search = array(
-					'txtsearch' => ""
-			);
-		}
 		$db = new Allreport_Model_DbTable_DbRptGroup();
-		$rs= $db->getGroupDetail($search);
+		$rs= $db->getGroupDetail();
 		$this->view->rs = $rs;	
 	
 	}
