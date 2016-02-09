@@ -49,6 +49,7 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 		$id=$this->getRequest()->getParam("id");
 		$db = new Allreport_Model_DbTable_DbRptPayment();
 		$row = $db->getPaymentReciptDetail($id);
+		
 		$this->view->row = $row;
 		$this->view->rr = $db->getStudentPaymentByid($id);
 	

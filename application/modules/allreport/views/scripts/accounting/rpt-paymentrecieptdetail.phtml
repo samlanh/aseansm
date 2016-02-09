@@ -12,23 +12,21 @@
 			<table style="background:#fff; margin: 0 auto; width: 100%; padding: 1cm; ">
 							<tr style="font-size: 13px; ">
 								<td colspan="3" align="center">
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">ព្រះរាជាណាចក្រកម្ពុជា</strong><br />
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">ជាតិ សាសនា ព្រះមហាក្សត្រ</strong><br />
+									<strong style="font-weight:bold;font-family: Arial Black; color:#000; font-size: 13px; font-family:'Khmer MEF2';">ព្រះរាជាណាចក្រកម្ពុជា</strong><br />
+									<strong style="font-weight:bold;font-family: Arial Black; color:#000; font-size: 13px; font-family:'Khmer MEF2';">ជាតិ សាសនា ព្រះមហាក្សត្រ</strong><br />
 								</td>
 							</tr>
 							<tr>
 									<td>&nbsp;</td>
 							</tr>
 							<tr>
-								<td width="20%" align="left">
+								<td width="25%" align="left">
 									<img style="width: 155px;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br /><br />
 								</td>
 								<td align="center">
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"><u>របាយការណ៏លំអិតប្រាក់ចំណូលពី ការបង់ប្រាក់របស់សិស្ស</u></strong><br >
+									<strong style=" font:bold 13px 'Khmer MEF2',Arial Black; color:#000;"><u>បង្កាន់ដៃបង់ប្រាក់របស់សិស្ស</u></strong><br >
 								</td>
-								<td align="right" width="20%">
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">ក្រសួងអប់រំ យុវជន និងកីឡា</strong><br />
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';margin-right: 25px;">សាលា អាស៊ាន ហ៊ែរីថេជ</strong><br /><br >
+								<td align="right" width="25%">
 								</td>
 							</tr>
 							<tr>
@@ -66,12 +64,12 @@
 											<th rowspan="2">&nbsp;Sub Total&nbsp;</th>
 										  </tr>
 										  <tr></tr>
-												<style> td{padding:0 3px; }</style>
-										  <?php $i=0; foreach($this->row as $rs){ $i++;?>
+											<style> td{padding:0 3px; }</style>
+										  <?php $i=0; if(!empty($this->row)) foreach($this->row as $rs){ $i++;?>
 										  <tr style="font-size:10px;height: 23px;"​ align="center">
 										    <td><?php echo $i;?></td>
 										    <td><?php echo $rs['service'];?></td>
-										    <td><?php echo $rs['payment_term'];//echo $rs['amount']; ?></td>
+										    <td><?php echo $rs['payment_term'];?></td>
 										     <td>$ <?php echo $rs['price'];?></td>
 										    <td><?php echo $rs['amount']; ?></td>
 										    <td><?php echo $rs['discount_percent'];?>%</td>
@@ -104,7 +102,7 @@
 									<td></td>
 									<td></td>
 									<td align="left">
-										<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">អ្នកទទួល   <?php echo $rs['user'];?></strong><br />
+										<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">អ្នកទទួល   <?php echo $this->rr['USER'];?></strong><br />
 									</td>
 								</tr>
 									<tr>
