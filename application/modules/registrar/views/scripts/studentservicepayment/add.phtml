@@ -31,16 +31,7 @@
 				}
 			});
 	}
-	function paymentTerm(){
-		study_year=dijit.byId('study_year').get('value');
-		payment_term=dijit.byId('payment_term').get('value');
-		levele=dijit.byId('grade').get('value');
-		if(study_year!='' && payment_term !='' && levele !=''){
-			getPaymentTerms(study_year,levele,payment_term);
-		}
-	}
-	var payment_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
-	var major_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode(array()));?> );
+	
 
 	dojo.addOnLoad(function(){
 		   // document.musicPrefs.other.value="Afrobeat";
@@ -167,6 +158,9 @@ fieldset{  background:none;}
 								 iconClass="dijitEditorIcon dijitEditorIconSave" />
 								 <input type="button" value="រក្សាទុក & បោះពុម្ព" label="រក្សាទុក & បោះពុម្ព" id="busyButton" dojoType="dijit.form.Button" 
 									iconClass="dijitEditorIcon dijitEditorIconPrint" onclick="printSave();"/> 
+								
+								 <input type="button" value="បោះពុម្ព" label="បោះពុម្ព" id="print" dojoType="dijit.form.Button" 
+									iconClass="dijitEditorIcon dijitEditorIconPrint" onclick="printSave();"/> 
 							</td>
 						</tr>
 					</table>	
@@ -178,31 +172,118 @@ fieldset{  background:none;}
 <script type="text/javascript">
 function printSave(){		
 		if(dijit.byId('office_receipt').validate()) {
-			/*dojo.byId("lb_term").innerHTML = dijit.byId("payment_term").attr('displayedValue');
-			dojo.byId("lb_enroll_id").innerHTML = dijit.byId("reciept_no").get('value');
-			 var d = dojo.byId("start_date").value.split('/');
-			 dojo.byId("lb_term_start").innerHTML = d[1] + "/" + d[0] +"/"+d[2];
-			 var d = dojo.byId("end_date").value.split('/');
-			 dojo.byId("lb_term_end").innerHTML = d[1] + "/" + d[0] +"/"+d[2];
-	 dojo.byId("lb_student").innerHTML = dijit.byId("en_name").get('value');
-	 dojo.byId("lb_student_id").innerHTML = dijit.byId("stu_id").get('value');
-	 dojo.byId("lb_level").innerHTML = dijit.byId("grade").attr('displayedValue');
-	 
-	 dojo.byId("lb_time_study").innerHTML = dijit.byId("from_time").attr('displayedValue')+"-"+dijit.byId("to_time").attr('displayedValue');
-	 dojo.byId("lb_room").innerHTML = dijit.byId("room").attr('displayedValue');
-	 dojo.byId("lb_note").innerHTML = dijit.byId("not").get('value');
-	 dojo.byId("lb_course_cost").innerHTML ="$"+dijit.byId("tuitionfee").get('value').toFixed(2);
-	 dojo.byId("lb_discount").innerHTML ="$"+dijit.byId("discount").get('value')+"%";
-	 dojo.byId("lb_total").innerHTML ="$"+dijit.byId("total").get('value');
-	 dojo.byId("lb_book").innerHTML ="$"+dijit.byId("books").get('value').toFixed(2);
-	 dojo.byId("lb_balance").innerHTML ="$"+dijit.byId("remaining").get('value');*/
-		dijit.byId("studentpaymentreceipt").show();	
+	
+	dojo.byId("lbl_khname").innerHTML = dijit.byId("kh_name").get('value');
+	dojo.byId("lbl_enname").innerHTML = dijit.byId("en_name").get('value');
+	dojo.byId("lbl_sex").innerHTML = dijit.byId("sex").attr('displayedValue');
+	dojo.byId("lbl_stuid").innerHTML = dijit.byId("studentid").attr('displayedValue');
+	dojo.byId("lbl_recieptno").innerHTML = dijit.byId("reciept_no").get('value');
+	var total = dijit.byId("grand_total").get('value');
+	var recieve = dijit.byId("total_received").get('value');
+	var balance_due = dijit.byId("total_balance").get('value');
+	var toral_return = dijit.byId("total_return").get('value');
+	var service = dijit.byId("total_return").get('value');
+	
+
+	
+	var rowId = $('#identity').val();
+	var rowIDArray = rowId.split(',');
+	template="";
+		 temp='<table class="collape tablesorter" border="1" align="center" style=" border-collapse: collapse; white-space:nowrap; border: 1px solid #000; font-size:10px; width:21cm !important; " id="table">'
+		      temp+='<tr style="background:#ccc; font-size:10px; "><th><?php echo $tr->translate("No");?></th>';
+		      temp+='<th><?php echo $tr->translate("Description");?></th>';
+		      temp+='<th><?php echo $tr->translate("Payment Term");?></th>';
+		      temp+='<th><?php echo $tr->translate("Price");?></th>';
+		      temp+='<th><?php echo $tr->translate("Amount");?></th>';
+		      temp+='<th><?php echo $tr->translate("Discount");?></th>';
+		      temp+='<th><?php echo $tr->translate("Sub Total");?></th></tr>';
+ 
+			    i=1;  for(var n = 0; n < rowIDArray.length; n++) {
+			     
+		      temp+='<tr style=" font-size:10px;height: 23px;"​ align="center"><td align="center" style="border:1px solid #000;">'+i+'</td>';
+		      temp+='<td style="border:1px solid #000;">'+dijit.byId("service_"+rowIDArray[n]).attr('displayedValue')+'</td>'; 
+		      temp+='<td style="border:1px solid #000;">'+dijit.byId("term_"+rowIDArray[n]).attr('displayedValue')+'</td>';
+		      temp+='<td style="border:1px solid #000;">'+dijit.byId("price_"+rowIDArray[n]).get('value')+'</td>';
+		      temp+='<td style="border:1px solid #000;">'+dijit.byId("qty_"+rowIDArray[n]).get('value')+'</td>';
+		      temp+='<td style="border:1px solid #000;">'+dijit.byId("discount_"+rowIDArray[n]).get('value')+'</td>';
+		      temp+='<td style="border:1px solid #000;">'+dijit.byId("subtotal_"+rowIDArray[n]).get('value')+'</td>';
+		      i++;
+		     }
+		      temp+='<tr style="font-size:10px;height: 23px;"​ align="left"> <td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #000;" colspan="5"></td><td style="border:1px solid #000; padding-left: 10px;" >Total Payment</td><td style="border:1px solid #000; padding-left: 10px;">$ '+total+'</td></tr>';
+		      temp+='<tr style="font-size:10px;height: 23px;"​ align="left"> <td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #000;" colspan="5"></td><td style="border:1px solid #000; padding-left: 10px;">Recieve Amount</td><td style="border:1px solid #000; padding-left: 10px;">$ '+recieve+'</td></tr>';
+		      temp+='<tr style="font-size:10px;height: 23px;"​ align="left"> <td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #000;" colspan="5"></td><td style="border:1px solid #000; padding-left: 10px;">Balance Due</td><td style="border:1px solid #000; padding-left: 10px;">$ '+balance_due+'</td></tr>';
+		      temp+='<tr style="font-size:10px;height: 23px;"​ align="left"> <td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #000;" colspan="5"></td><td style="border:1px solid #000; padding-left: 10px;">Return Amount</td><td style="border:1px solid #000; padding-left: 10px;">$ '+toral_return+'</td></tr>';
+		    temp+='</table>';
+		    dojo.byId('t_amountmoneytype').innerHTML = temp;
+
+		dijit.byId("popup_invoice").show();	
 		
 	}
 	
 }
 </script>
+
+
 <div class="dijitHidden">
+<<<<<<< .mine
+	<div data-dojo-type="dijit.Dialog" id="popup_invoice" >
+		<div id="divPrint" style=" width: 21cm; height: 14cm ; padding: 0px; margin: 0px;">
+			<table style=" width: 21cm; background:#fff; margin: 0 auto; width:100%; padding: 1cm; ">
+							<tr style="font-size: 13px; ">
+								<td colspan="3" align="center">
+									<strong style="font-weight:bold;font-family: Arial Black; color:#000; font-size: 13px; font-family:'Khmer MEF2';">ព្រះរាជាណាចក្រកម្ពុជា</strong><br />
+									<strong style="font-weight:bold;font-family: Arial Black; color:#000; font-size: 13px; font-family:'Khmer MEF2';">ជាតិ សាសនា ព្រះមហាក្សត្រ</strong><br />
+								</td>
+							</tr>
+							<tr>
+								<td width="25%" align="left">
+									<img style="width: 155px;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br /><br />
+								</td>
+								<td align="center">
+									<strong style=" font: bold 13px 'Khmer MEF2',Arial Black; color:#000;"><u>បង្កាន់ដៃបង់ប្រាក់របស់សិស្ស</u></strong><br >
+								</td>
+								<td align="right" width="20%">
+								</td>
+							</tr>
+							<tr>
+								<td width="25%" align="left">
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">Student Name  : <label id="lbl_khname"></label> <label  id="lbl_enname"></label></strong><br />
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">Sex  : <label id="lbl_sex"></label></strong><br />
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">Student ID  : <label id="lbl_stuid"></label></strong><br />
+								</td>
+								<td></td>
+								<td width="25%" align="left" style=" padding-right: 20px;">
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">Reciept N.o : <label id="lbl_recieptno"></label></strong><br />
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">Date Paid : <?php echo Zend_Date::now()?></strong><br />
+									
+								</td>
+							</tr>
+							<tr>
+								<td colspan="3">
+                                    	 <lable id="t_amountmoneytype"></lable>
+									</td>
+								</tr>
+								<tr>
+									<td>&nbsp;</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td align="left">
+										<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">អ្នកទទួល   <?php echo $this->rr['USER'];?></strong><br />
+									</td>
+								</tr>
+									<tr>
+									<td></td>
+									<td></td>
+									<td align="left">
+										<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">ហត្ថលេខា </strong><br />
+									</td>
+								</tr>
+							</table>
+	</div>	
+	<iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>	
+=======
 <?php $keycode = $this->keycode;?>
 	<div data-dojo-type="dijit.Dialog" style="width:7cm;" align="center" data-dojo-props="title:'<?php echo $tr->translate("STUDENT_PAYMENT_RECEIPT");?>'" id="studentpaymentreceipt" >
 		 <div class="header">
@@ -270,12 +351,16 @@ function printSave(){
 		</table>
 		</div>
 		<iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>	
+>>>>>>> .r314
 		<button dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconPrint"
 				showLabel="false" type="button" onclick="doPrint();">Print</button>
 		<button dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconCancel"
 				showLabel="false" type="button" onclick="hideDialog();">Cancel</button>
+
+		
 	</div>
 </div>
+
 
 <script>
 function calculatePrice() {
@@ -322,7 +407,7 @@ function showPopupDept() {
 	}
 }
 function hideDialog() {		
-	dijit.byId("popup_dept").hide();
+	dijit.byId("popup_invoice").hide();
 }
 
 var template = '';
@@ -465,3 +550,5 @@ function deleteRecord(index) {
 		dojo.query("#row"+index).remove();
 	}
 </script>
+
+
