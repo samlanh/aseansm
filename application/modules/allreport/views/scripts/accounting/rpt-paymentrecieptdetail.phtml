@@ -53,15 +53,15 @@
 											.padd tr th{  background-color: #ccc; }
 										</style>
 
-									<table class="padd" width="99%" border="1" align="center" style="white-space:nowrap;">
-										  <tr style="font-size:10px; height: 30px; align="center" >
-										    <th rowspan="2">&nbsp;N.o&nbsp;</th>
-											<th rowspan="2">&nbsp;Type Service&nbsp;</th>
-											<th rowspan="2">&nbsp;Payment Term&nbsp;</th>
-											<th rowspan="2">&nbsp;Price&nbsp;</th>
-											<th rowspan="2">&nbsp;Amount&nbsp;</th>
-											<th rowspan="2">&nbsp;Discount&nbsp;</th>
-											<th rowspan="2">&nbsp;Sub Total&nbsp;</th>
+									<table class="padd" width="99%" border="1" align="center" style="white-space:nowrap; padding: 0px; margin: 0px;">
+										  <tr style="font-size:10px; height: 30px;" align="center" >
+										    <th>&nbsp;N.o&nbsp;</th>
+											<th>&nbsp;Type Service&nbsp;</th>
+											<th>&nbsp;Payment Term&nbsp;</th>
+											<th>&nbsp;Price&nbsp;</th>
+											<th>&nbsp;Amount&nbsp;</th>
+											<th>&nbsp;Discount&nbsp;</th>
+											<th>&nbsp;Sub Total&nbsp;</th>
 										  </tr>
 										  <tr></tr>
 											<style> td{padding:0 3px; }</style>
@@ -76,20 +76,25 @@
 										    <td><?php echo $rs['total_payment'];?>$</td>
 										  </tr>
 										  <?php } ?>
-										  <tr style="font-size:10px;height: 23px;"​ align="center">
-										  	<td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff;"" colspan="5"></td>
+										  <tr style="font-size:10px;height: 23px;"​>
+										  	<td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff;" colspan="5"></td>
 										  	<td>Total Amount</td>
 										  	<td>$ <?php echo $this->rr['total_payment']?></td>
 										  </tr>
-										  <tr style=" font-size:10px;height: 23px;"​ align="center">
+										  <tr style=" font-size:10px;height: 23px;"​>
 										  	<td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff;" colspan="5"></td>
 										  	<td>Paid Amount</td>
 										  	<td>$ <?php echo $this->rr['paid_amount']?></td>
 										  </tr>
-										   <tr style="font-size:10px;height: 23px;"​ align="center">
-										  	<td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff;"" colspan="5"></td>
+										   <tr style="font-size:10px;height: 23px;"​>
+										  	<td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff;" colspan="5"></td>
 										  	<td>Balance Due</td>
 										  	<td>$ <?php echo $this->rr['balance_due']?></td>
+										  </tr>
+										   <tr style="font-size:10px; height: 23px; "​>
+										  	<td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff;" colspan="5"></td>
+										  	<td>Return Amount</td>
+										  	<td>$ <?php echo $this->rr['return_amount']?></td>
 										  </tr>
 										</table>
 									

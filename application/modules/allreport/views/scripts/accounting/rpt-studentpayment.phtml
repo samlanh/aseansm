@@ -69,9 +69,9 @@
 										  <?php $i=0; foreach($this->row as $rs){ $i++;?>
 										  <tr style="font-size:10px; height: 23px;"​ align="center">
 										    <td><?php echo $i;?></td>
-										    <td><?php echo $rs['receipt_number']; ?></td>
-										    <td><?php echo $rs['stu_code']; ?></td>
-										    <td style=" white-space:nowrap; text-align:left"> <a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['kh_name']; ?></a></td>
+										    <td><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['receipt_number']; ?></a></td>
+										    <td><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['stu_code']; ?></a></td>
+										    <td style=" white-space:nowrap; text-align:left"><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['kh_name']; ?></a></td>
 										    <td style=" white-space:nowrap; text-align:left"><?php echo $rs['en_name']; ?></td>
 										    <td>$ <?php echo $rs['total_payment']; ?></td>
 										    <td><?php echo $rs['discount_percent']; ?>%</td>
