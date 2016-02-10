@@ -29,8 +29,8 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
 //     		$glClass = new Application_Model_GlobalClass();
 //     		$rs_rows = $glClass->getImgActive($rs_rows, BASE_URL, true);
     		$list = new Application_Form_Frmtable();
-    		$collumns = array("RECEIPT_NO","YEARS","NAME","SEX",
-    				          "PAYMENT_TERM","QTY","TOTAL","DISCOUNT","TOTAL_PAYMENT","MONEY_RECEIVED","BALANCE","REMAINING",);
+    		$collumns = array("RECEIPT_NO","YEARS","NAME","SEX","GRAND_TOTAL","DISCOUNT",
+    				          "TOTAL_PAYMENT","MONEY_RECEIVED","BALANCE","REMAINING",);
     		$link=array(
     				'module'=>'registrar','controller'=>'studentservicepayment','action'=>'edit',
     		);
