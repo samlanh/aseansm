@@ -180,7 +180,8 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 				'Onchange'=>"getNewStudent();"));
 		
 		$_studid = new Zend_Dojo_Form_Element_TextBox('stu_id');
-		$_studid->setAttribs(array('dojoType'=>$this->text,'class'=>'fullside','style'=>'color:red;','readonly'=>'true'));
+		$_studid->setAttribs(array('dojoType'=>$this->text,'class'=>'fullside',
+				'style'=>'color:red;','readonly'=>'true'));
 		
 		$_sex =  new Zend_Dojo_Form_Element_FilteringSelect('sex');
 		$_sex->setAttribs(array('dojoType'=>$this->filter,'class'=>'fullside',));
@@ -315,11 +316,11 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 				'class'=>'fullside',
 				'onchange'=>'changControll();',
 		));
-		$opt = array(   1=>$this->tr->translate('NEW_STUDENT'),
+		$opts = array(   1=>$this->tr->translate('NEW_STUDENT'),
 				  		2=>$this->tr->translate('Subspend'),
 				        3=>$this->tr->translate('OLD_STUDENT') 
 				  );
-	    $student_type->setMultiOptions($opt);
+	    $student_type->setMultiOptions($opts);
 				
 		$old_studens = new Zend_Dojo_Form_Element_FilteringSelect('old_studens');
 		$old_studens->setAttribs(array('dojoType'=>'dijit.form.FilteringSelect',
@@ -336,7 +337,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		$_paid_kh = new Zend_Dojo_Form_Element_Textarea('paid_kh');
 		$_paid_kh->setAttribs(array(
 				'dojoType'=>$this->text,'class'=>'fullside',));
-		$id = new Zend_Form_Element_Hidden('id');
+		$id = new Zend_Form_Element_hidden('id');
 		if($data!=null){
 			$id->setValue($data['stu_id']);
 			$_studid->setValue($data['stu_code']);
@@ -356,6 +357,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 			$remaining->setValue($data['balance_due']);
 			$char_price->setValue($data['amount_in_khmer']);
 			$not->setValue($data['note']);
+			$student_type->setValue($data['student_type']);
 		}
 		$this->addElements(array(
 			 $old_studens,$student_type,$id,$generation,$char_price,$end_date,$start_date,$not,$books,$addmin_fee,$remaining,$total, $_year_one,$_new_student,$_invoice_no, $_pay_date, $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,$metion,

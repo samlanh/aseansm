@@ -12,7 +12,7 @@
 	dojo.require("dojo.data.ObjectStore");
 	dojo.require('dojox.form.BusyButton');
 	var dept_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->all_dept));?> );
-	dojo.ready(function(){
+	dojo.ready(function(){changControll();
 	new dijit.form.FilteringSelect({
 	    store: dept_store,
 	    autoComplete: true,                        
@@ -80,7 +80,7 @@
 				load: function(data) {
 					//alert(data);
 					//url_getstuno  = getDataStorefromJSON('id','name', data);
-					// dijit.byId('stu_id').attr('value',data);   
+					  dijit.byId('stu_id').attr('value',data);   
 
 				},
 				error: function(err) {
@@ -259,8 +259,7 @@ fieldset{  background:none;}
 					<table style="margin: 0 auto; width: 100%;padding:10px;" cellspacing="7" >
 						<tr>
 							<td style="width: 160px"><?php echo $tr->translate("NEW_STUDENT");?></td>
-							<td><?php echo $register->getElement('is_new');?>
-								&nbsp;&nbsp;&nbsp;&nbsp;<label for='is_subsped'>Subspend</label><?php echo $register->getElement('is_hold');?>
+							<td><?php  echo $register->getElement('student_type');?>
 							</td>
 							<td><?php echo $tr->translate("RECEIPT_NO");?></td>
 							<td><?php echo $register->getElement('reciept_no');?>
@@ -269,7 +268,7 @@ fieldset{  background:none;}
 						</tr>
 						<tr>
 							<td><?php echo $tr->translate("STUDENT_ID");?></td>
-							<td><?php echo $register->getElement('stu_id');?></td>
+							<td><div id="student_old"><?php echo $register->getElement('old_studens');?></div><div id="id_stu"><?php echo $register->getElement('stu_id');?></div></td>
 							<td style="width: 160px"><?php echo $tr->translate("YEARS");?></td>
 							<td><?php echo $register->getElement('study_year');?></td>
 						</tr>
@@ -596,4 +595,46 @@ function saveSender(){
 }
 var url_add_getfee = '<?php echo $this->url(array('module'=>'global','controller'=>'globals','action'=>'get-tuitionfee')); ?>';//for get payment date of sender 
 
+function changControll(){
+	student_type=dijit.byId('student_type').get('value');
+	 if(student_type==3){
+		 document.getElementById('student_old').style.display="block";
+		 document.getElementById('id_stu').style.display="none";
+	}else{
+		 document.getElementById('student_old').style.display="none";
+		 document.getElementById('id_stu').style.display="block";
+	} 
+}
+///get Gerneral old student
+function getGeneralOldStudentById(){
+	var url_getalldstudent = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-general-old-student')); ?>';
+	student_id=dijit.byId('old_studens').get('value');
+		dojo.xhrPost({
+			url:url_getalldstudent,
+			content:{
+				'student_id':student_id,
+				},
+			handleAs:"json",
+			load: function(data) {
+				   if(data){
+			    	dijit.byId('kh_name').attr('value',data.stu_khname);
+			    	dijit.byId('en_name').attr('value',data.stu_enname);
+			    	dijit.byId('sex').attr('value',data.sex);
+			    	dijit.byId('dept').attr('value',data.degree);
+			    	getallModel(data.grade,data.degree);
+			    	dijit.byId('grade').attr('value',data.grade);
+			      }else {
+			    	alert('Student Id not found!');
+			    	dijit.byId('kh_name').attr('value','');
+			    	dijit.byId('en_name').attr('value','');
+			    	dijit.byId('sex').attr('value','');
+			    	dijit.byId('dept').attr('value','');
+			    	dijit.byId('grade').attr('value','');
+			      } 
+			},
+			error: function(err) {
+				//alert(err);
+			}
+		});
+}
 </script>

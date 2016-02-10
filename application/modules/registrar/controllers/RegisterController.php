@@ -24,11 +24,12 @@ class Registrar_RegisterController extends Zend_Controller_Action {
 //     		    					'end_date'=>date('Y-m-d'));
 //     		    		}
     		$rs_rows= $db->getAllStudentRegister();
-//     		$glClass = new Application_Model_GlobalClass();
-//     		$rs_rows = $glClass->getImgActive($rs_rows, BASE_URL, true);
+    		$glClass = new Application_Model_GlobalClass();
+    		$rs_rows = $glClass->getGernder($rs_rows, BASE_URL );
+    		$rs_rows = $glClass->getGetPayTerm($rs_rows, BASE_URL );
     		$list = new Application_Form_Frmtable();
     		$collumns = array("STUDENT_ID","RECEIPT_NO","NAME_KH","NAME_EN","SEX","CLASS","CLASSES",
-    				          "PAYMENT_TERM","TUITION_FEE","DISCOUND","OTHERS_PRICE","ADMIN_FEE","TOTALE","BOOKS","REMAINING",);
+    				          "PAYMENT_TERM","TUITION_FEE","DISCOUND", "TOTALE","BOOKS","REMAINING","DATE_PAY");
     		$link=array(
     				'module'=>'registrar','controller'=>'register','action'=>'edit',
     		);
@@ -71,11 +72,13 @@ class Registrar_RegisterController extends Zend_Controller_Action {
        //$this->view->invoice_num = $db->getGaneratInvoiceWU();
        //get all dept
        $_db = new Application_Model_DbTable_DbGlobal();
-       $this->view->all_dept = $_db->getAllFecultyName();
+       $data=$this->view->all_dept = $_db->getAllFecultyName();
     }
     public function editAction(){
+    	$id=$this->getRequest()->getParam('id');
     	if($this->getRequest()->isPost()){
     		$_data = $this->getRequest()->getPost();
+    		$_data['pay_id']=$id;
     		try {
     			$db = new Registrar_Model_DbTable_DbRegister();
     			if(isset($_data['save_new'])){
@@ -88,7 +91,6 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     			Application_Model_DbTable_DbUserLog::writeMessageError($err);
     		}
     	}
-    	$id=$this->getRequest()->getParam('id');
     	$db = new Registrar_Model_DbTable_DbRegister();
         $form_row=$db->getRegisterById($id);
         $this->view->degree_row=$form_row;

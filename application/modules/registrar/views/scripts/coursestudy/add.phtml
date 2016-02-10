@@ -105,7 +105,7 @@
 				    	dijit.byId('tuitionfee').attr('value',data.tuition_fee);
 				    	dijit.byId('total').attr('value',data.tuition_fee);
 				    	dijit.byId('discount').attr('value','0');
-				    	dijit.byId('books').attr('value','0');
+				    	dijit.byId('books').attr('value',data.tuition_fee);
 				    	dijit.byId('addmin_fee').attr('value','0');
 				    	dijit.byId('remaining').attr('value','0');
 				    	dijit.byId('remark').attr('value','0');
@@ -252,9 +252,11 @@ fieldset{  background:none;}
 							<td style="width: 160px"><?php echo $tr->translate("STUDENT_TYPE");?></td>
 							<td><div >
 							     <table style="width:100%;" >
-							     <tr ><td><input type="radio" name="student_type" id="student_type" value="new_student" onclick="changControll();">សិស្សថ្មី</td>
-								      <td> <input type="radio" name="student_type" id="student_type"  value="supspend"​ onclick="changControll();"><?php echo $tr->translate("SUSPEND");?></td>
-								      <td> <input type="radio" name="student_type" id="student_type"  value="old_student" onclick="changControll();">សិស្សចាស់</td>
+ 
+							     <tr ><td><input type="radio" name="student_type" id="student_type" value="1" onclick="changControll();" checked="checked" >សិស្សថ្មី</td>
+								      <td> <input type="radio" name="student_type" id="student_type"  value="2" onclick="changControll();">subspend</td>
+								      <td> <input type="radio" name="student_type" id="student_type"  value="3" onclick="changControll();">សិស្សចាស់</td>
+ 
 								  </tr>
 								  </table>
 								</div>
@@ -630,7 +632,7 @@ function saveSender(){
 var url_add_getfee = '<?php echo $this->url(array('module'=>'global','controller'=>'globals','action'=>'get-tuitionfee')); ?>';//for get payment date of sender 
 function changControll(){
 	student_type=$("#student_type:checked").val()
-	 if(student_type=='old_student'){
+	 if(student_type==3){
 		 //alert(student_type);
 		 document.getElementById('student_id').style.display="none";
 		 document.getElementById('student_ids').style.display="block";

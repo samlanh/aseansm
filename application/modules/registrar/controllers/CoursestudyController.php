@@ -28,6 +28,7 @@ class Registrar_CoursestudyController extends Zend_Controller_Action {
     		$rs_rows= $db->getAllStudentGep();
     		$glClass = new Application_Model_GlobalClass();
     		$rs_rows = $glClass->getGernder($rs_rows, BASE_URL);
+    		$rs_rows = $glClass->getGetPayTerm($rs_rows, BASE_URL );
     		$list = new Application_Form_Frmtable();
     		$collumns = array("STUDENT_ID","RECEIPT_NO","NAME_KH","NAME_EN","SEX","CLASS","CLASSES",
     				          "PAYMENT_TERM","TUITION_FEE","DISCOUND","TOTALE","BOOKS","REMAINING","DATE_PAY");
