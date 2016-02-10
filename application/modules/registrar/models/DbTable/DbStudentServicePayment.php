@@ -32,7 +32,11 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 			  
 				$this->_name='rms_student_paymentdetail';
 				$ids = explode(',', $data['identity']);
+				$disc = 0;
+				$total = 0;
     			foreach ($ids as $i){
+    				$disc=$disc+$data['discount_'.$i];
+    				$total=$total+$data['total_'.$i];
     				$_arr = array(
     						'payment_id'	=>$id,
     						'service_id'	=>$data['service_'.$i],
@@ -47,8 +51,15 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     				$this->insert($_arr);
     			}
     			
+    			$this->_name='rms_student_payment';
+    			$datadisc = array('discount_fix'=>$disc,
+    						'grand_total'=>$total);
+    			$where=$this->getAdapter()->quoteInto("id=?", $id);
+    			$this->update($datadisc, $where);
+    			
     			$db->commit();
 			}catch (Exception $e){
+				echo $e->getMessage();
 				$db->rollBack();//អោយវាវិលត្រលប់ទៅដើមវីញពេលណាវាជួបErrore
 			}
 		}
@@ -78,7 +89,15 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 				$this->delete($where);
 				
 				$ids = explode(',', $data['identity']);
+				
+				$disc = 0;
+				$total = 0;
+				
     			foreach ($ids as $i){
+    				
+    				$disc=$disc+$data['discount_'.$i];
+    				$total=$total+$data['total_'.$i];
+    				
     				$_arr = array(
     						'payment_id'	=>$data['id'],
     						'service_id'	=>$data['service_'.$i],
@@ -93,9 +112,16 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     				$this->insert($_arr);
     			}
     			
+    			$this->_name='rms_student_payment';
+    			$datadisc = array('discount_fix'=>$disc,
+    					'grand_total'=>$total);
+    			$where=$this->getAdapter()->quoteInto("id=?", $data['id']);
+    			$this->update($datadisc, $where);
+    			
     			$db->commit();
     			return true;
 			}catch (Exception $e){
+				echo $e->getMessage();
 				$db->rollBack();//អោយវាវិលត្រលប់ទៅដើមវីញពេលណាវាជួបErrore
 			}
 		}
@@ -106,18 +132,14 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     	(select CONCAT(stu_khname,' - ',stu_enname) from rms_student where rms_student.stu_id=rms_student_payment.student_id limit 1)AS name,
     	(select name_kh from rms_view where rms_view.type=2 and rms_view.key_code=(select sex from rms_student where rms_student.stu_id=rms_student_payment.student_id limit 1) limit 1)AS sex,
     	
-    	(select name_en from rms_view where rms_view.type=8 and rms_view.key_code=(select payment_term from rms_student_paymentdetail where rms_student_paymentdetail.payment_id=rms_student_payment.id limit 1) limit 1)AS payment_term,
-    	(select qty from rms_student_paymentdetail where rms_student_paymentdetail.payment_id=rms_student_payment.id limit 1)AS qty,
-    	(select amount from rms_student_paymentdetail where rms_student_paymentdetail.payment_id=rms_student_payment.id limit 1)AS amount,
-    	(select discount_fix from rms_student_paymentdetail where rms_student_paymentdetail.payment_id=rms_student_payment.id limit 1)AS discount,
-    	total_payment,paid_amount,balance_due,return_amount
+    	grand_total,discount_fix,total_payment,paid_amount,balance_due,return_amount
     	
     	from rms_student_payment where 1
     	";
-    	
+    	$order=" ORDER BY id DESC ";
     	
 //     	$order=" ORDER By stu_id DESC ";
-    	return $db->fetchAll($sql);
+    	return $db->fetchAll($sql.$order);
     }
     function getStudentServicePaymentByID($id){
     	$db=$this->getAdapter();
