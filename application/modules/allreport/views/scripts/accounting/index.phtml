@@ -1,14 +1,3 @@
-  <?php $tr = Application_Form_FrmLanguages::getCurrentlanguage();
-  // report
-  
-  
-  $rpt_fee=$this->url(array('module'=>'allreport','controller'=>'fee','action'=>'rpt-fee'), null, true);
-  $rpt_servicecharge=$this->url(array('module'=>'allreport','controller'=>'servicecharge','action'=>'rpt-service-charge'), null, true);
-  $rpt_collectfromco=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loan-collectionco'), null, true);
-  $rpt_loancollect=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loancollect'), null, true);
-  
-  
-  ?>
   <style>
   ul.link-rpt li a {
 	color: #3A3939;
@@ -32,13 +21,27 @@
 	width: 200px !important;
   }
   </style>
+  <?php 
+  $tr = Application_Form_FrmLanguages::getCurrentlanguage();
+  $rpt_fee=$this->url(array('module'=>'allreport','controller'=>'fee','action'=>'rpt-fee'), null, true);
+  $rpt_servicecharge=$this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-service-charge'), null, true);
+  $rpt_collectfromco=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loan-collectionco'), null, true);
+  $rpt_tuitionfee=$this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-fee'), null, true);
+  $rpt_studentpayment=$this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-studentpayment'), null, true);
+  $rpt_studentpaymentdetail=$this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-studentpaymentdetail'), null, true);
+  $rpt_studentlate=$this->url(array('module'=>'report','controller'=>'accounting','action'=>'rpt-studentlate'), null, true);
+  $rpt_expectedincome=$this->url(array('module'=>'report','controller'=>'accounting','action'=>'rpt-expectedincome'), null, true);
+  
+  ?>
   <div style="background:#ccc; width: 100%;">
   	<ul class="link-rpt">
-  	
-  		<li><a href="<?php echo $rpt_fee;?>"><?php echo $tr->translate('RPT_FEE');?></a></li>
-  		<li><a href="<?php echo $rpt_servicecharge;?>"><?php echo $tr->translate('RPT_SERVICE_CHARGE');?></a></li>
-  		<li><a href="<?php echo $rpt_collectfromco;?>"><?php echo $tr->translate('RPT_SERVICE');?></a></li>
-  		<li><a href="<?php echo $rpt_loancollect;?>"><?php echo $tr->translate('RPT_PROGRAM_CHARGE');?></a></li>
+  		<li><a href="<?php echo $rpt_studentpayment;?>"><?php echo $tr->translate('Student Payment Report');?></a></li>
+  		<li><a href="<?php echo $rpt_studentpaymentdetail;?>"><?php echo $tr->translate('Student Payment Detail');?></a></li>
+  		<li><a href="<?php echo $rpt_servicecharge;?>"><?php echo $tr->translate('RPT_SERVICE');?></a></li>
+  		<li><a href="<?php echo $rpt_tuitionfee;?>"><?php echo $tr->translate('RPT_PROGRAM_CHARGE');?></a></li>
+  		<li><a href="<?php echo $this->url(array('module'=>'report','controller'=>'accounting','action'=>'rpt-studentlate'), null, true);?>"><?php echo $tr->translate('Student Payment Late Report');?></a></li>
+  		<li><a href="<?php echo $this->url(array('module'=>'report','controller'=>'accounting','action'=>'rpt-expectedincome'), null, true);?>"><?php echo $tr->translate('Expected Income Report');?></a></li>
+  		<li><a href="<?php echo $this->url(array('module'=>'report','controller'=>'accounting','action'=>'rpt-stopservice'), null, true);?>"><?php echo $tr->translate('Student Stop Service Report');?></a></li>
   
   	</ul>
   </div>
