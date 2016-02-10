@@ -46,6 +46,7 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     						'amount'		=>$data['total_'.$i],
     						'discount_fix'	=>$data['discount_'.$i],
     						'note'			=>$data['remark'.$i],
+    						'subtotal'		=>$data['subtotal_'.$i],
     						'type'			=>2,
     				);
     				$this->insert($_arr);
@@ -107,6 +108,7 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     						'amount'		=>$data['total_'.$i],
     						'discount_fix'	=>$data['discount_'.$i],
     						'note'			=>$data['remark'.$i],
+    						'subtotal'		=>$data['subtotal_'.$i],
     						'type'			=>2,
     				);
     				$this->insert($_arr);
