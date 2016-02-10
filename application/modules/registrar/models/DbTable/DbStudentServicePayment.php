@@ -18,7 +18,8 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 					'receipt_number'=>$data['reciept_no'],
 					'year'=>$data['study_year'],
 					'total_payment'=>$data['grand_total'],
-					'paid_amount'=>$data['total_received'],
+					'receive_amount'=>$data['total_received'],
+					'paid_amount'=>$data['total_received']-$data['total_return'],
 					'return_amount'=>$data['total_return'],
 					'balance_due'=>$data['total_balance'],
 					'amount_in_khmer'=>$data['char_price'],
@@ -60,7 +61,8 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 					'receipt_number'=>$data['reciept_no'],
 					'year'=>$data['study_year'],
 					'total_payment'=>$data['grand_total'],
-					'paid_amount'=>$data['total_received'],
+					'receive_amount'=>$data['total_received'],
+					'paid_amount'=>$data['total_received']-$data['total_return'],
 					'return_amount'=>$data['total_return'],
 					'balance_due'=>$data['total_balance'],
 					'amount_in_khmer'=>$data['char_price'],
@@ -78,7 +80,7 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 				$ids = explode(',', $data['identity']);
     			foreach ($ids as $i){
     				$_arr = array(
-    						'payment_id'	=>$data['id'.$i],
+    						'payment_id'	=>$data['id'],
     						'service_id'	=>$data['service_'.$i],
     						'payment_term'	=>$data['term_'.$i],
     						'fee'			=>$data['price_'.$i],
@@ -103,7 +105,7 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 		(select CONCAT(from_academic,' - ',to_academic) from rms_tuitionfee where rms_tuitionfee.id=rms_student_payment.year limit 1)AS year,
     	(select CONCAT(stu_khname,' - ',stu_enname) from rms_student where rms_student.stu_id=rms_student_payment.student_id limit 1)AS name,
     	(select name_kh from rms_view where rms_view.type=2 and rms_view.key_code=(select sex from rms_student where rms_student.stu_id=rms_student_payment.student_id limit 1) limit 1)AS sex,
-    	(select title from rms_program_name where rms_program_name.service_id=(select service_id from rms_student_paymentdetail where rms_student_paymentdetail.payment_id=rms_student_payment.id limit 1))AS service_name,
+    	
     	(select name_en from rms_view where rms_view.type=8 and rms_view.key_code=(select payment_term from rms_student_paymentdetail where rms_student_paymentdetail.payment_id=rms_student_payment.id limit 1) limit 1)AS payment_term,
     	(select qty from rms_student_paymentdetail where rms_student_paymentdetail.payment_id=rms_student_payment.id limit 1)AS qty,
     	(select amount from rms_student_paymentdetail where rms_student_paymentdetail.payment_id=rms_student_payment.id limit 1)AS amount,
