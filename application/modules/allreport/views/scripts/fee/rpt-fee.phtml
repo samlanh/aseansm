@@ -41,8 +41,8 @@
 										</tr>
 										<tr>
 											<td colspan="3">
-												<table cellpadding="5"​ style="margin:0 auto;border: 1px solid #000;width:100%; border-collapse: collapse;"  border="1" >
-													<tr style="font-size:11px; height: 30px;" align="center" >
+												<table  style="margin:0 auto;border: 1px solid #000;width:100%; border-collapse: collapse;"  border="1" >
+													<tr style="font-size:11px; height:20px;" align="center" >
 														<th >ល.រ</th>
 														<th >Academic</th>
 														<th >Generation</th>
@@ -54,11 +54,11 @@
 														
 													</tr>
 												<?php $i=0; foreach ($this->rs AS $row) { $i++;?>
-													<tr style="font-size:11px; height: 30px;" align="center" >
+													<tr style="font-size:11px; height: 10px;" align="center" >
 														<th ><?php echo $i;?></th>
 														<th ><?php echo $row['academic'];?></th>
 														<th ><?php echo $row['generation'];?></th>
-														<th align="left"><?php echo $row['class'];?></th>	
+														<th align="left">&nbsp;&nbsp;&nbsp;<?php echo $row['class'];?></th>	
 														<th ><?php echo $row['quarter'];?></th>
 														<th ><?php echo $row['semester'];?></th>
 														<th ><?php echo $row['year'];?></th>
