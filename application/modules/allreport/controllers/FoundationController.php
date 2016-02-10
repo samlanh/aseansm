@@ -12,6 +12,75 @@ public function init()
 	{	
 		
 	}
+	public function rptStudentDropAction(){
+	
+		if($this->getRequest()->isPost()){
+			$_data=$this->getRequest()->getPost();
+			$search = array(
+					'txtsearch' => $_data['txtsearch'],
+					'searchby' => $_data['searchby'],
+			);
+		}
+		else{
+			$search='';
+		}
+	
+		$group= new Allreport_Model_DbTable_DbRptStudentDrop();
+		$this->view->rs = $rs_rows = $group->getAllStudentDrop($search);
+			
+	}
+	public function rptStudentChangeGroupAction(){
+	
+		if($this->getRequest()->isPost()){
+			$_data=$this->getRequest()->getPost();
+			$search = array(
+					'txtsearch' => $_data['txtsearch'],
+					'searchby' => $_data['searchby'],
+			);
+		}
+		else{
+			$search='';
+		}
+	
+		$group= new Allreport_Model_DbTable_DbRptStudentChangeGroup();
+	
+		$this->view->rs = $rs_rows = $group->getAllStudentChangeGroup($search);
+			
+	}
+	public function rptLecturerAction(){
+	
+		if($this->getRequest()->isPost()){
+			$_data=$this->getRequest()->getPost();
+			$search = array(
+					'txtsearch' => $_data['txtsearch'],
+					'searchby' => $_data['searchby'],
+			);
+		}
+		else{
+			$search='';
+		}
+	
+		$group= new Allreport_Model_DbTable_DbRptLecturer();
+		$this->view->rs = $rs_rows = $group->getAllLecturer($search);
+			
+	}
+	public function rptGroupAction(){
+	
+		if($this->getRequest()->isPost()){
+			$_data=$this->getRequest()->getPost();
+			$search = array(
+					'txtsearch' => $_data['txtsearch'],
+					'searchby' => $_data['searchby'],
+			);
+		}
+		else{
+			$search='';
+		}
+	
+		$group= new Allreport_Model_DbTable_DbRptGroup();
+		$this->view->rs = $rs_rows = $group->getAllGroup($search);
+			
+	}
 	public function rptExamDegreeAction()
 	{
 	}

@@ -1,12 +1,15 @@
   <?php $tr = Application_Form_FrmLanguages::getCurrentlanguage();
   // report
-  $rpt_student_change_group=$this->url(array('module'=>'allreport','controller'=>'studentchangegroup','action'=>'rpt-student-change-group'), null, true);
-  $rpt_student_drop=$this->url(array('module'=>'allreport','controller'=>'studentdrop','action'=>'rpt-student-drop'), null, true);
   $rpt_student=$this->url(array('module'=>'allreport','controller'=>'student','action'=>'rpt-student'), null, true);
   $rpt_loancollect=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loancollect'), null, true);
   $rpt_dailypayment=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-payment'), null, true);
   $rpt_loanincome=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loan-income'), null, true);
   $rpt_loan_late=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loan-late'), null, true);
+  $rpt_group=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rpt-group'), null, true);
+  $rpt_studentchangegroup=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rpt-student-change-group'), null, true);
+  $rpt_studentdrop=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rpt-student-drop'), null, true);
+  $rpt_lecturer=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rpt-lecturer'), null, true);
+  $rpt_studentgroup=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'student-group'), null, true);
   
   
   
@@ -36,12 +39,15 @@
   </style>
   <div style="background:#ccc; width: 100%;">
   	<ul class="link-rpt">
-  	
-  		<li><a href="<?php //echo $rpt_student_change_group;?>"><?php echo $tr->translate('RPT_STUDENT_GROUP');?></a></li>
-  		<li><a href="<?php echo $rpt_student_change_group;?>"><?php echo $tr->translate('RPT_STUDENT_CHANGE_GROUP');?></a></li>
-  		<li><a href="<?php echo $rpt_student_drop;?>"><?php echo $tr->translate('RPT_STUDENT_DROP');?></a></li>
+  
+  		<li><a href="<?php echo $rpt_group;?>"><?php echo $tr->translate('RPT_GROUP');?></a></li>
+  		<li><a href="<?php echo $rpt_studentchangegroup;?>"><?php echo $tr->translate('RPT_STUDENT_CHANGE_GROUP');?></a></li>
+  		<li><a href="<?php echo $rpt_studentdrop;?>"><?php echo $tr->translate('RPT_STUDENT_DROP');?></a></li>
+  		<li><a href="<?php echo  $rpt_studentgroup;?>"><?php echo $tr->translate('RPT_STUDENT_GROUP');?></a></li>
   		<li><a href="<?php echo $rpt_loanincome;?>"><?php echo $tr->translate('RPT_ATTENDENT');?></a></li>
+  		<li><a href="<?php echo $rpt_lecturer;?>"><?php echo $tr->translate('RPT_LECTURER');?></a></li>
   		<li><a href="<?php echo $rpt_student;?>"><?php echo $tr->translate('RPT_REGISTER');?></a></li>
+  		
   		
   		
   		

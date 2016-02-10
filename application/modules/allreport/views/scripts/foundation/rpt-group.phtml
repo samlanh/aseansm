@@ -4,7 +4,7 @@
 	echo $this->headTitle(''); 
 	
 ?>	
-<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'group','action'=>'rpt-group')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rpt-group')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 		<select dojoType="dijit.form.FilteringSelect" id="searchby" name="searchby" placeholder="Search by ....." value="" type="text">
 			<option value="0">All</option>
 			<option value="1">Group Code</option>

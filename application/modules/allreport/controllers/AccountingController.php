@@ -79,7 +79,24 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 	function rptListOfItemAction(){
 	
 	}
+	public function rptCarAction(){
+		
+	}
 	public function rptFeeAction(){
+	
+		if($this->getRequest()->isPost()){
+			$_data=$this->getRequest()->getPost();
+			$search = array(
+					'txtsearch' => $_data['txtsearch'],
+					'searchby'=> $_data['searchby'],
+			);
+		}
+		else{
+			$search='';
+		}
+		$group= new Allreport_Model_DbTable_DbRptCar();
+		$this->view->rs = $rs_rows = $group->getAllCar($search);
+			
 	
 		if($this->getRequest()->isPost()){
 			$_data=$this->getRequest()->getPost();
@@ -214,5 +231,4 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 		);
 		return $result[$key];
 	}
-	
 }
