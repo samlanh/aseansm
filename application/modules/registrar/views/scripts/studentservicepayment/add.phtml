@@ -182,14 +182,13 @@ function printSave(){
 	var recieve = dijit.byId("total_received").get('value');
 	var balance_due = dijit.byId("total_balance").get('value');
 	var toral_return = dijit.byId("total_return").get('value');
-	var service = dijit.byId("total_return").get('value');
 	
 
 	
 	var rowId = $('#identity').val();
 	var rowIDArray = rowId.split(',');
 	template="";
-		 temp='<table class="collape tablesorter" border="1" align="center" style=" border-collapse: collapse; white-space:nowrap; border: 1px solid #000; font-size:10px; width:21cm !important; " id="table">'
+		 temp='<table class="collape tablesorter" border="1" align="center" style=" border-collapse: collapse; white-space:nowrap; border: 1px solid #000; font-size:10px;  " id="table">'
 		      temp+='<tr style="background:#ccc; font-size:10px; "><th><?php echo $tr->translate("No");?></th>';
 		      temp+='<th><?php echo $tr->translate("Description");?></th>';
 		      temp+='<th><?php echo $tr->translate("Payment Term");?></th>';
@@ -225,10 +224,9 @@ function printSave(){
 
 
 <div class="dijitHidden">
-<<<<<<< .mine
 	<div data-dojo-type="dijit.Dialog" id="popup_invoice" >
-		<div id="divPrint" style=" width: 21cm; height: 14cm ; padding: 0px; margin: 0px;">
-			<table style=" width: 21cm; background:#fff; margin: 0 auto; width:100%; padding: 1cm; ">
+		<div id="divPrint" style=" width: 21cm; height: 12cm ; padding: 0px; margin: 0px;">
+			<table style=" background:#fff; margin: 0 auto; width:100%; padding: 1cm; ">
 							<tr style="font-size: 13px; ">
 								<td colspan="3" align="center">
 									<strong style="font-weight:bold;font-family: Arial Black; color:#000; font-size: 13px; font-family:'Khmer MEF2';">ព្រះរាជាណាចក្រកម្ពុជា</strong><br />
@@ -260,106 +258,34 @@ function printSave(){
 							</tr>
 							<tr>
 								<td colspan="3">
-                                    	 <lable id="t_amountmoneytype"></lable>
-									</td>
-								</tr>
-								<tr>
-									<td>&nbsp;</td>
-								</tr>
-								<tr>
+                                    	 <label id="t_amountmoneytype"></label>
+								</td>
+							</tr>
+							
+							<tr>
 									<td></td>
 									<td></td>
 									<td align="left">
 										<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">អ្នកទទួល   <?php echo $this->rr['USER'];?></strong><br />
 									</td>
-								</tr>
-									<tr>
+							</tr>
+							<tr>
 									<td></td>
 									<td></td>
 									<td align="left">
 										<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">ហត្ថលេខា </strong><br />
 									</td>
-								</tr>
-							</table>
-	</div>	
-	<iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>	
-=======
-<?php $keycode = $this->keycode;?>
-	<div data-dojo-type="dijit.Dialog" style="width:7cm;" align="center" data-dojo-props="title:'<?php echo $tr->translate("STUDENT_PAYMENT_RECEIPT");?>'" id="studentpaymentreceipt" >
-		 <div class="header">
-		     <table     bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;  font-size:14px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;">
-		          <tr>
-		              <td colspan="8"  align="center"><strong style="font-family:'Khmer OS Muol';font-size: 20px;color: rgb(47, 70, 149);"> សាលារៀន &nbsp;<font style="color: rgb(246, 86, 74);">អាស៊ាន </font>&nbsp;ហ៊ែរីថេជ</strong>
-		              ​​​​​<br/><strong style="font-size: 20px;font-weight:bold;color: rgb(47, 70, 149);">ASEAN <font style="color: rgb(246, 86, 74);">HERITAGE</font> SCHOOL</strong>
-		              </td>
-		          </tr>
-		     </table>
-		</div>
-		<div id="divPrint" style="width: 21cm; height: 12cm ; padding: 0px; margin: 0px;">
-			<style>
-				.fontbig{
-					font-size: 15px;	
-				}
-				.fonttel{
-					font-size: 18px;	
-				}
-				.pleft{
-					width: 110px;	
-				}
-				.label{ font-weight: bold;font-size: 22px;}
-				.value{ border: 1px solid rgba(14, 0, 107, 1); height: 25px; padding: 0 2px;width: 98%; display: block;
-						margin-top: -25px; line-height: 25px;}
-				.values{ border: 1px solid rgba(14, 0, 107, 1);; height: 25px; padding: 0 10px;display: block;
-						line-height: 25px;}
-				.h{ margin-top: -5px;}
-​​               .print td{ font:bold 11px 'Khmer OS Battambang';}
-			   .khmerbold{font:bold 12px 'Khmer OS Battambang';}
-			   .khmer{font:12px 'Khmer OS Battambang';}
-			   .one{white-space:nowrap;}
-			</style>	
-			<table   class="print" bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;height: 12cm; font-size:12px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;">
-				<tr>
-				    <td   style="font:bold 20px 'Kh Muol';" align="center"><u><b><strong>បង្កាន់ដៃបង់ប្រាក់</strong></b></u>
-				        <br/><strong style="font-size: 20px;font-weight:bold">OFFICAL RECEIPT</strong>
-				    </td>
-				</tr>
-				<tr>
-				    <td  align="left"><?php echo $tr->translate("YEARS");?></td>
-				    
-				    <td  align="left"><?php echo $tr->translate("RECEIPT_NO");?></td>
-				    <td width="200px" ><input dojoType="dijit.form.TextBox"  class="fullside" id="receipt_no" name="receipt_no"  type="text"></td>
-				    
-				</tr>
-				
-				
-				
-				<tr>
-				    <td  align="left" class="khmerbold">
-				     *Note: All fees are not transferable or refundable . 
-				    </td>
-				</tr>
-			</table>
-		</div>
-		<div class="footer_re"  >
-		<table  bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;  font-size:14px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;" >
-		    <tr>
-				 <td  > 
-				       <hr style="background: rgba(251, 239, 13, 0.87) none repeat scroll 0% 0%; height: 4px; border: medium none rgb(240, 255, 0);"/>
-				       <p class=" khmerbold">អាគារលេខ១៤៧​K ផ្លូវ៥៩៨ សង្កាត់ទូលសង្កែ ខណ្ឌឬស្សីកែង រាជធានីភ្នំពេញ ព្រះរាជាណាចក្រកម្ពុជា</p>
-				 </td>
-				</tr>
-		</table>
-		</div>
-		<iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>	
->>>>>>> .r314
-		<button dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconPrint"
+							</tr>
+						</table>
+	</div>
+	<button dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconPrint"
 				showLabel="false" type="button" onclick="doPrint();">Print</button>
 		<button dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconCancel"
 				showLabel="false" type="button" onclick="hideDialog();">Cancel</button>
-
-		
-	</div>
 </div>
+</div>	
+	<iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>	
+<?php $keycode = $this->keycode;?>
 
 
 <script>
