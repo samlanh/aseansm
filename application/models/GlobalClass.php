@@ -263,6 +263,26 @@ class Application_Model_GlobalClass  extends Zend_Db_Table_Abstract
 			}
 			return $rows;
 		}
+		public function getGetPayTerm($rows,$base_url, $case=''){
+			$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+			if($rows){
+				foreach ($rows as $i =>$row){
+					if($row['payment_term'] == 2){
+						$rows[$i]['payment_term']=$tr->translate(' ត្រីមាស');
+					}
+					else if($row['payment_term'] == 1){
+						$rows[$i]['payment_term']=$tr->translate('MONTHLY');
+					}
+					else if($row['payment_term'] == 3){
+						$rows[$i]['payment_term']=$tr->translate(' ឆមាស');
+					}
+					else if($row['payment_term'] == 4){
+						$rows[$i]['payment_term']=$tr->translate('ឆ្នាំ');
+					}
+				}
+			}
+			return $rows;
+		}
 		public function getsunjectOption(){
 			$_db = new Application_Model_DbTable_DbGlobal();
 			$rows = $_db->getAllsubject();
