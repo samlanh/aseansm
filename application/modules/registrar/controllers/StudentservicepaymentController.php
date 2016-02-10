@@ -30,7 +30,7 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
 //     		$rs_rows = $glClass->getImgActive($rs_rows, BASE_URL, true);
     		$list = new Application_Form_Frmtable();
     		$collumns = array("RECEIPT_NO","YEARS","NAME","SEX",
-    				          "SERVICE_NAME","PAYMENT_TERM","QTY","TOTAL","DISCOUNT","TOTAL_PAYMENT","MONEY_RECEIVED","BALANCE","REMAINING",);
+    				          "PAYMENT_TERM","QTY","TOTAL","DISCOUNT","TOTAL_PAYMENT","MONEY_RECEIVED","BALANCE","REMAINING",);
     		$link=array(
     				'module'=>'registrar','controller'=>'studentservicepayment','action'=>'edit',
     		);
@@ -100,11 +100,15 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     	}
     	$db = new Registrar_Model_DbTable_DbStudentServicePayment();
     	
-    	$payment=$db->getStudentServicePaymentByID($id);
     	
-    	$this->view->rows = $db->getStudentServicePaymentDetailByID($id);
     	
-    	$this->view->row=$payment;
+    	$this->view->row=$db->getStudentServicePaymentByID($id);
+    	
+    	$payment=$db->getStudentServicePaymentDetailByID($id);
+    	
+    	$this->view->rows = $payment;
+    	
+//     	print_r($payment);exit();
     	
     	$frm = new Registrar_Form_FrmStudentServicePayment();
     	$frm_register=$frm->FrmRegistarWU($payment);
