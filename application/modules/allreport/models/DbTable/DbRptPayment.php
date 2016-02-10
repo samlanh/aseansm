@@ -58,7 +58,7 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     	(SELECT (SELECT `rms_student`.`stu_khname`FROM `rms_student` WHERE (`rms_student`.`stu_id` = `rms_student_payment`.`student_id`) LIMIT 1)FROM `rms_student_payment` WHERE id=payment_id LIMIT 1) as kh_name,
     	(SELECT (SELECT `rms_student`.`stu_enname`FROM `rms_student` WHERE (`rms_student`.`stu_id` = `rms_student_payment`.`student_id`) LIMIT 1)FROM `rms_student_payment` WHERE id=payment_id LIMIT 1) as en_name,
     	(SELECT (SELECT (SELECT `rms_view`.`name_kh`FROM `rms_view` WHERE ((`rms_view`.`type` = 2) AND (`rms_view`.`key_code` = `rms_student`.`sex`))) FROM `rms_student` WHERE (`rms_student`.`stu_id` = `rms_student_payment`.`student_id`)LIMIT 1)FROM `rms_student_payment` WHERE id=payment_id LIMIT 1) as sex,
-    	type,price,
+    	type,fee,qty,
     	(SELECT title FROM `rms_program_name` WHERE `rms_program_name`.`service_id`= rms_student_paymentdetail.service_id LIMIT 1) as service,
     	(SELECT `name_en` FROM `rms_view` WHERE  `type`=8 AND key_code= payment_term LIMIT 1)as payment_term,
     	amount,
@@ -67,7 +67,7 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     	(SELECT `balance_due` FROM `rms_student_payment` WHERE id= payment_id LIMIT 1) as balance_due,
     	(SELECT `return_amount` FROM `rms_student_payment` WHERE id= payment_id LIMIT 1) as return_amount,
     	(SELECT `amount_in_khmer` FROM `rms_student_payment` WHERE id= payment_id LIMIT 1) as amount_in_khmer,
-    	discount_percent,
+    	discount_fix,
     	(SELECT CONCAT (`last_name`,' ', `first_name`) FROM `rms_users` WHERE `rms_users`.id = user_id LIMIT 1) as user,
     	note,create_date
     	FROM rms_student_paymentdetail;

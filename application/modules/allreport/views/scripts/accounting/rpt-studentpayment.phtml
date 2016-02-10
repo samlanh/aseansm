@@ -55,8 +55,8 @@
 											<th>&nbsp;English Name&nbsp;</th>
 											<th>&nbsp;Total Payment&nbsp;</th>
 											<th>&nbsp;Discount&nbsp;</th>
+											<th>&nbsp;Recieved Amount&nbsp;</th>
 											<th>&nbsp;Paid Amount&nbsp;</th>
-											<th>&nbsp;Recieved Amound&nbsp;</th>
 											<th>&nbsp;Balance Due&nbsp;</th>
 											<th>&nbsp;Return Amount&nbsp;</th>
 											<th>&nbsp;Amount In Khmer&nbsp;</th>
@@ -74,9 +74,9 @@
 										    <td style=" white-space:nowrap; text-align:left"><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['kh_name']; ?></a></td>
 										    <td style=" white-space:nowrap; text-align:left"><?php echo $rs['en_name']; ?></td>
 										    <td>$ <?php echo $rs['total_payment']; ?></td>
-										    <td><?php echo $rs['discount_percent']; ?>%</td>
+										    <td><?php echo $rs['discount_fix']; ?>%</td>
+										    <td>$ <?php echo $rs['receive_amount']; ?></td>
 										    <td>$ <?php echo $rs['paid_amount']; ?></td>
-										     <td>$ <?php echo $rs['recieve_amount']; ?></td>
 										    <td>$ <?php echo $rs['balance_due']; ?></td>
 										    <td>$ <?php echo $rs['return_amount']; ?></td>
 										    <td><?php echo $rs['amount_in_khmer']; ?></td>

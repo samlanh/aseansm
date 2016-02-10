@@ -58,7 +58,8 @@
 										    <th>&nbsp;N.o&nbsp;</th>
 											<th>&nbsp;Type Service&nbsp;</th>
 											<th>&nbsp;Payment Term&nbsp;</th>
-											<th>&nbsp;Price&nbsp;</th>
+											<th>&nbsp;Fee&nbsp;</th>
+											<th>&nbsp;Qty&nbsp;</th>
 											<th>&nbsp;Amount&nbsp;</th>
 											<th>&nbsp;Discount&nbsp;</th>
 											<th>&nbsp;Sub Total&nbsp;</th>
@@ -70,29 +71,30 @@
 										    <td><?php echo $i;?></td>
 										    <td><?php echo $rs['service'];?></td>
 										    <td><?php echo $rs['payment_term'];?></td>
-										     <td>$ <?php echo $rs['price'];?></td>
-										    <td><?php echo $rs['amount']; ?></td>
-										    <td><?php echo $rs['discount_percent'];?>%</td>
-										    <td><?php echo $rs['total_payment'];?>$</td>
+										     <td>$ <?php echo $rs['fee'];?></td>
+										     <td><?php echo $rs['qty'];?></td>
+										    <td>$ <?php echo $rs['amount']; ?></td>
+										    <td><?php echo $rs['discount_fix'];?>%</td>
+										    <td>$ <?php echo $rs['total_payment'];?></td>
 										  </tr>
 										  <?php } ?>
 										  <tr style="font-size:10px;height: 23px;"​>
-										  	<td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff;" colspan="5"></td>
+										  	<td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff;" colspan="6"></td>
 										  	<td>Total Amount</td>
 										  	<td>$ <?php echo $this->rr['total_payment']?></td>
 										  </tr>
 										  <tr style=" font-size:10px;height: 23px;"​>
-										  	<td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff;" colspan="5"></td>
+										  	<td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff;" colspan="6"></td>
 										  	<td>Paid Amount</td>
 										  	<td>$ <?php echo $this->rr['paid_amount']?></td>
 										  </tr>
 										   <tr style="font-size:10px;height: 23px;"​>
-										  	<td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff;" colspan="5"></td>
+										  	<td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff;" colspan="6"></td>
 										  	<td>Balance Due</td>
 										  	<td>$ <?php echo $this->rr['balance_due']?></td>
 										  </tr>
 										   <tr style="font-size:10px; height: 23px; "​>
-										  	<td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff;" colspan="5"></td>
+										  	<td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff;" colspan="6"></td>
 										  	<td>Return Amount</td>
 										  	<td>$ <?php echo $this->rr['return_amount']?></td>
 										  </tr>
