@@ -97,7 +97,7 @@ fieldset{  background:none;}
 							<td><?php echo $register->getElement('reciept_no');?></td>
 						</tr>
 						<tr>
-							<td><?php echo $tr->translate("STUDENT_ID");?><input type="textbox" id="id" name="id" value="<?php echo $this->row['id'];?>" /></td>
+							<td><?php echo $tr->translate("STUDENT_ID");?><input type="hidden" id="id" name="id" value="<?php echo $this->row['id'];?>" /></td>
 							<td>
 								<select class="fullside" name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();" >
 									<?php if(!empty($this->rs))foreach ($this->rs as $row){?>
@@ -141,19 +141,19 @@ fieldset{  background:none;}
 								<table style="width:400px;border-collapse: collapse;" cellpadding="10" cellspacing="10" >
 									<tr>
 										<td >Total Payment</td>
-										<td align="right"><input class="fullside" type="text" value="<?php echo $this->row['total_payment'];?>"  required="true" name="grand_total" id="grand_total" dojoType="dijit.form.NumberTextBox" /></td>
+										<td align="right"><input class="fullside" type="text" value="<?php //echo $this->row['total_payment'];?>"  required="true" name="grand_total" id="grand_total" dojoType="dijit.form.NumberTextBox" /></td>
 									</tr>
 									<tr>	
 										<td><?php echo $tr->translate("BOOKS");?></td>
-										<td align="right"><input class="fullside" type="text" value="<?php echo $this->row['paid_amount'];?>" required="true" name="total_received" id="total_received" dojoType="dijit.form.NumberTextBox" /></td>
+										<td align="right"><input class="fullside" type="text" value="<?php //echo $this->row['paid_amount'];?>" required="true" name="total_received" id="total_received" dojoType="dijit.form.NumberTextBox" /></td>
 									</tr>
 									<tr>
 										<td><?php echo $tr->translate("BALANCE");?></td>
-										<td align="right"><input class="fullside" type="text" value="<?php echo $this->row['balance_due'];?>" readonly="readonly" name="total_balance" id="total_balance" dojoType="dijit.form.NumberTextBox" /></td>
+										<td align="right"><input class="fullside" type="text" value="<?php //echo $this->row['balance_due'];?>" readonly="readonly" name="total_balance" id="total_balance" dojoType="dijit.form.NumberTextBox" /></td>
 									</tr>
 									<tr>
 										<td><?php echo $tr->translate("ប្រាក់អាប់");?></td>
-										<td align="right"><input class="fullside" type="text" value="<?php echo $this->row['return_amount'];?>" readonly="readonly" name="total_return" id="total_return" dojoType="dijit.form.NumberTextBox" /></td>
+										<td align="right"><input class="fullside" type="text" value="<?php //echo $this->row['return_amount'];?>" readonly="readonly" name="total_return" id="total_return" dojoType="dijit.form.NumberTextBox" /></td>
 									</tr>
 								</table>
 							</td>
@@ -502,13 +502,13 @@ function initailize(){
 	dojo.html.set(dojo.byId("row"+col),template , {
 	     parseContent: true,
 	});
+	
 	dijit.byId('service_'+col).attr('value','<?php echo $row['service_id']?>');
 	dijit.byId('term_'+col).attr('value','<?php echo $row['payment_term']?>');
 	dijit.byId('price_'+col).attr('value','<?php echo $row['fee']?>');
 	dijit.byId('qty_'+col).attr('value','<?php echo $row['qty']?>');
 	dijit.byId('total_'+col).attr('value','<?php echo $row['amount']?>');
 	dijit.byId('discount_'+col).attr('value','<?php echo $row['discount_fix']?>');
-	
 	dijit.byId('remark'+col).attr('value','<?php echo $row['note']?>');
 	<?php } }?>
 }
