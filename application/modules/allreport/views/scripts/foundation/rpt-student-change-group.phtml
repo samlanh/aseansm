@@ -52,7 +52,7 @@ tr td table tr th:{padding: 5px;margin: 5px;};
 										<table style="margin:0 auto;width:100%; border-collapse: collapse;white-space: nowrap;border: 1px solid #000;"  border="1" >
 											<tr style="font-size:11px; height: 20px;" align="center" >
 												<th rowspan="2">ល.រ</th>
-												<th rowspan="2">Student ID</th>
+<!-- 												<th rowspan="2">Student ID</th> -->
 												<th rowspan="2">Student Name</th>
 												<th rowspan="2">Gender</th>
 												<th colspan="9">From Group</th>
@@ -86,14 +86,13 @@ tr td table tr th:{padding: 5px;margin: 5px;};
 										<?php $i=0; foreach ($this->rs AS $row) { $i++;?>
 											<tr cellpadding="5"​ style="font-size:11px; height: 30px;" align="center" >
 												<th ><?php echo $i;?></th>
-												<th ><?php echo $row['stu_id'];?></th>
 												<th align="left">&nbsp;&nbsp;<?php echo $row['name'];?>&nbsp;</th>	
 												<th ><?php echo $row['sex'];?></th>
 												
 												<th ><?php echo $row['code'];?></th>
 												<th >&nbsp;<?php echo $row['academic'];?>&nbsp;</th>
-												<th align="left"><?php echo $row['grade'];?></th>
-												<th align="left"><?php echo $row['room_name'];?></th>
+												<th align="left">&nbsp;<?php echo $row['grade'];?>&nbsp;</th>
+												<th align="left">&nbsp;<?php echo $row['room_name'];?>&nbsp;</th>
 												<th ><?php echo $row['semester'];?></th>
 												<th >&nbsp;<?php echo $row['session'];?>&nbsp;</th>
 												

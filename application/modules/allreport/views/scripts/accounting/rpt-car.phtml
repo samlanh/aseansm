@@ -2,7 +2,6 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$this->headTitle('Report Car'); 
 	echo $this->headTitle(''); 
-	
 ?>	
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-car')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 		
@@ -43,7 +42,7 @@
 						<tr>
 							<td colspan="3">
 								<table cellpadding="5"​ style="margin:0 auto;width:100%; border-collapse: collapse; border: 1px solid #000;"  border="1" >
-									<tr style="font-size:11px; height: 30px;" align="center" >
+									<tr style="font-size:11px; height: 20px;" align="center" >
 										<th >ល.រ</th>
 										<th >Car ID</th>
 										<th >Car Name</th>
@@ -51,17 +50,16 @@
 										<th >Tel</th>
 										<th >Zone</th>
 										<th >Note</th>
-												
 									</tr>
 								<?php $i=0; if(!empty($this->rs)) foreach ($this->rs AS $row) { $i++;?>
-									<tr style="font-size:11px; height: 30px;" align="center" >
+									<tr style="font-size:11px; height: 20px;" align="center" >
 										<th ><?php echo $i;?></th>
 										<th ><?php echo $row['carid'];?></th>
-										<th ><?php echo $row['carname'];?></th>
-										<th ><?php echo $row['drivername'];?></th>	
+										<th align="left">&nbsp;<?php echo $row['carname'];?></th>
+										<th align="left">&nbsp;<?php echo $row['drivername'];?></th>	
 										<th ><?php echo $row['tel'];?></th>
 										<th ><?php echo $row['zone'];?></th>
-										<th align="left"><?php echo $row['note'];?></th>
+										<th align="left">&nbsp;<?php echo $row['note'];?></th>
 									</tr>
 								<?php }?>	
 							</table>	
