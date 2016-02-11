@@ -80,23 +80,26 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 	
 	}
 	public function rptCarAction(){
-		
+		try{
+			if($this->getRequest()->isPost()){
+				$_data=$this->getRequest()->getPost();
+				$search = array(
+						'txtsearch' => $_data['txtsearch'],
+						'searchby'=> $_data['searchby'],
+				);
+			}
+			else{
+				$search='';
+			}	
+			$db = new Allreport_Model_DbTable_DbRptCar();
+			$this->view->rs = $db->getAllCar($search);
+		}catch(Exception $e){
+			Application_Form_FrmMessage::message("APPLICATION_ERROR");
+			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+		}
 	}
-	public function rptFeeAction(){
 	
-		if($this->getRequest()->isPost()){
-			$_data=$this->getRequest()->getPost();
-			$search = array(
-					'txtsearch' => $_data['txtsearch'],
-					'searchby'=> $_data['searchby'],
-			);
-		}
-		else{
-			$search='';
-		}
-		$group= new Allreport_Model_DbTable_DbRptCar();
-		$this->view->rs = $rs_rows = $group->getAllCar($search);
-			
+	public function rptFeeAction(){
 	
 		if($this->getRequest()->isPost()){
 			$_data=$this->getRequest()->getPost();

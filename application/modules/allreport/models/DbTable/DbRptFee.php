@@ -12,7 +12,8 @@ class Allreport_Model_DbTable_DbRptFee extends Zend_Db_Table_Abstract
     function getAllTuitionFee($search){
     	$db=$this->getAdapter();
     	$sql = "SELECT id,CONCAT(from_academic,' - ',to_academic) AS academic,
-    		    generation,(select name_kh from `rms_view` where `rms_view`.`type`=7 and `rms_view`.`key_code`=`rms_tuitionfee`.`time`)AS time,create_date ,status FROM `rms_tuitionfee` WHERE 1";
+    		    generation,(select name_kh from `rms_view` where `rms_view`.`type`=7 and `rms_view`.`key_code`=`rms_tuitionfee`.`time`)AS time,
+    			create_date ,status FROM `rms_tuitionfee` WHERE 1";
 //     	$order=" ORDER BY id DESC ";
     	$where= '';
     	
@@ -33,6 +34,7 @@ class Allreport_Model_DbTable_DbRptFee extends Zend_Db_Table_Abstract
     	
     }
     function getFeebyOther($fee_id){
+    	//print_r($fee_id);exit();
     	$db = $this->getAdapter();
     	$sql = "select *,
     	(SELECT major_enname FROM `rms_major` WHERE major_id=rms_tuitionfee_detail.class_id) as class

@@ -4,7 +4,7 @@
 	echo $this->headTitle(''); 
 	
 ?>	
-<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'car','action'=>'rpt-car')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-car')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 		
 		<select dojoType="dijit.form.FilteringSelect"   id="searchby" name="searchby" placeholder="Search by ....." value="" type="text">
 			<option value="0">All</option>
@@ -53,7 +53,7 @@
 										<th >Note</th>
 												
 									</tr>
-								<?php $i=0; foreach ($this->rs AS $row) { $i++;?>
+								<?php $i=0; if(!empty($this->rs)) foreach ($this->rs AS $row) { $i++;?>
 									<tr style="font-size:11px; height: 30px;" align="center" >
 										<th ><?php echo $i;?></th>
 										<th ><?php echo $row['carid'];?></th>
