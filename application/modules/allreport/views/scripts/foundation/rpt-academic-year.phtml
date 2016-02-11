@@ -4,15 +4,13 @@
 	echo $this->headTitle(''); 
 	
 ?>	
-<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'group','action'=>'rpt-group')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rpt-academic-year')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 		<select dojoType="dijit.form.FilteringSelect" id="searchby" name="searchby" placeholder="Search by ....." value="" type="text">
 			<option value="0">All</option>
-			<option value="1">Group Code</option>
-			<option value="2">Room Name</option>
-			<option value="3">Session</option>
-			<option value="4">Grade</option>
+			<option value="1">Academic</option>
+			<option value="2">Generation</option>
 		</select>
-		<input dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Search by group code....." value="" type="text">
+		<input dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Search....." value="" type="text">
 		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
 </form>
 	<div style="border: 1px dotted #000;background: #fff;width: 26cm;margin: 0 auto;min-height: 27cm;">
@@ -21,8 +19,8 @@
 								<tr style="font-size: 13px;">
 									<td colspan="2"></td>
 									<td align="right">
-										<strong></strong><br />
-										<strong></strong><br />
+<!-- 										<strong></strong><br /> -->
+<!-- 										<strong></strong><br /> -->
 									</td>
 								</tr>
 								<tr>
@@ -38,13 +36,19 @@
 										<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';margin-right: 25px;">សាលា អាស៊ាន ហ៊ែរីថេជ</strong><br /><br >
 									</td>
 								</tr>
+<style>
+	table tr th{
+		border: 1px solid #000;	
+	}
+	
+</style>
+								
 								<tr>
 									<td colspan="3">
 										<table cellpadding="5"​ style="margin:0 auto;width:100%;border1px solid #000; border-collapse: collapse;white-space: nowrap;"  border="1" >
-											<tr style="font-size:11px; height: 30px;" align="center" >
+											<tr style="font-size:11px; height: 20px;" align="center" >
 												<th rowspan="2">ល.រ</th>
-												<th rowspan="2">Academic Start</th>
-												<th rowspan="2">Academic End</th>
+												<th rowspan="2">Academic</th>
 												<th rowspan="2">Generation</th>
 												<th rowspan="2">Academic Start</th>
 												<th rowspan="2">Duration</th>
@@ -55,7 +59,7 @@
 												<th rowspan="2">Note</th>
 												
 											</tr>
-											<tr>
+											<tr style="font-size:11px; height: 20px;">
 												<th>Start Date</th>
 												<th>End Date</th>
 												
@@ -69,22 +73,20 @@
 											
 											
 										<?php $i=0; foreach ($this->rs AS $row) { $i++;?>
-										
-											<tr style="font-size:11px; height: 30px;" align="center" >
+											<tr style="font-size:11px; height: 20px;" align="center" >
 												<th ><?php echo $i;?></th>
-												<th ><?php echo $row['fromyear'];?></th>
-												<th align="left"><?php echo $row['toyear'];?></th>
+												<th ><?php echo $row['academic'];?></th>
 												<th ><?php echo $row['batch'];?></th>	
 												<th ><?php echo date("d-M-Y",strtotime($row['study_start']));?></th>
 												<th ><?php echo $row['duration'];?></th>
-												<th align="left"><?php echo date("d-M-Y",strtotime($row['study_end']));?></th>
-												<th align="left"><?php echo date("d-M-Y",strtotime($row['quarter_start']));?></th>
-												<th align="left"><?php echo date("d-M-Y",strtotime($row['quarter_end']));?></th>
+												<th ><?php echo date("d-M-Y",strtotime($row['study_end']));?></th>
+												<th ><?php echo date("d-M-Y",strtotime($row['quarter_start']));?></th>
+												<th ><?php echo date("d-M-Y",strtotime($row['quarter_end']));?></th>
 												<th ><?php echo date("d-M-Y",strtotime($row['semester_start']));?></th>
 												<th ><?php echo date("d-M-Y",strtotime($row['semester_end']));?></th>
 												<th ><?php echo date("d-M-Y",strtotime($row['yearly_start']));?></th>
 												<th ><?php echo date("d-M-Y",strtotime($row['yearly_end']));?></th>
-												<th ><?php echo $row['note'];?></th>
+												<th align="left"><?php echo $row['note'];?></th>
 											</tr>
 											
 										<?php }?>	
