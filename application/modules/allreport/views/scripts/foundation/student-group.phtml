@@ -1,6 +1,6 @@
 <?php
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-	$this->headTitle('SRMS | Report Student Group'); 
+	$this->headTitle('Report Student Group'); 
 	echo $this->headTitle();
 	$base_url = Application_Form_FrmMessage::getUrl("/");
 ?>
@@ -32,17 +32,17 @@
 								<td colspan="3">
 									<style> th,td{ padding:0 1px;}</style>
 										<style type="text/css">
-											body{font-family: "Times New Roman",Arial; }
+/* 											body{font-family: "Times New Roman",Arial; } */
 											table{ border-collapse:collapse; margin:0 auto;
 											border-color:#000; }
-											.padd tr td{  text-align:center}
+/* 											.padd tr td{  text-align:center} */
 											.padd tr th{  background-color: #ccc; }
 										</style>
 
-									<table class="padd" width="99%" border="1" align="center" style="white-space:nowrap;">
-										  <tr style="font-size:10px; height: 30px;" align="center">
-										    <th>N.o</th>
-										    <th>Group Name</th>
+									<table cellpadding="3" class="padd" width="99%" border="1" align="center" style="white-space:nowrap;">
+										  <tr style="font-size:10px; height: 23px;" align="center">
+										    <th>ល.រ</th>
+										    <th>Group Code</th>
 										    <th>Academic</th>
 											<th>Semester</th>
 											<th>Degree</th>
@@ -52,25 +52,23 @@
 											<th>Start Date</th>
 											<th>End Date</th>
 											<th>Note</th>
-											<th>Status</th>
 											<th>Student Amount</th>
 										  </tr>
 										  <tr></tr>
-												<style> td{padding:0 3px; }</style>
+												
 										  <?php $i=0; foreach($this->rs as $rs){ $i++;?>
 										  <tr style="font-size:10px; height: 23px;"​ align="center">
 										    <td><?php echo $i;?></td>
 										    <td><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'foundation','action'=>'rpt-student-group','id'=>$rs['id']));?>" target="blank"><?php echo $rs['group_code']; ?></a></td>
 										    <td><?php echo $rs['academic']; ?></td>
 										    <td><?php echo $rs['semester']; ?></td>
-										    <td ><?php echo $rs['degree']; ?></td>
+										    <td align="left">&nbsp;&nbsp;<?php echo $rs['degree']; ?></td>
 										    <td><?php echo $rs['grade']; ?></td>
 										    <td><?php echo $rs['session']; ?></td>
-										    <td><?php echo $rs['room_name']; ?></td>
+										    <td align="left">&nbsp;&nbsp;<?php echo $rs['room_name']; ?></td>
 										    <td><?php echo $rs['start_date']; ?></td>
 										    <td><?php echo $rs['expired_date']; ?></td>
-										    <td><?php echo $rs['note']; ?></td>
-										    <td><?php echo $rs['status']; ?></td>
+										    <td align="left">&nbsp;&nbsp;<?php echo $rs['note']; ?></td>
 										    <td><?php echo $rs['Num_Student']; ?></td>
 										  </tr>
 										  <?php } ?>
