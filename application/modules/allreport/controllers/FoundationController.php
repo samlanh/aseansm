@@ -99,7 +99,25 @@ public function init()
 		$this->view->rs = $rs_rows = $group->getAllStudent($search);
 			
 	}
+	public function rptAcademicYearAction(){
 	
+		if($this->getRequest()->isPost()){
+			$_data=$this->getRequest()->getPost();
+			$search = array(
+					'txtsearch' => $_data['txtsearch'],
+					'searchby' => $_data['searchby'],
+			);
+		}
+		else{
+			$search='';
+		}
+	
+		$db= new Allreport_Model_DbTable_DbRptAcademicYear();
+		$this->view->rs = $db->getAllAcademic($search);
+	
+		// 		print_r($this->view->rs);exit();
+			
+	}
 	public function rptExamDegreeAction()
 	{
 	}
