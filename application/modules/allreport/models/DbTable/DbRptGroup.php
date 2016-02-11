@@ -60,8 +60,9 @@ class Allreport_Model_DbTable_DbRptGroup extends Zend_Db_Table_Abstract
    	$db = $this->getAdapter();
    	$sql= 'SELECT * FROM v_getallstudentbygroup '; 
 	$sql.=' WHERE group_id='.$id;
+	$order= ' ORDER BY stu_id DESC ';
 	   	if(empty($search)){
-	   		return $db->fetchAll($sql);
+	   		return $db->fetchAll($sql.$order);
 	   	}
 	   	if(!empty($search['txtsearch'])){
 	   		$s_where = array();
@@ -75,19 +76,16 @@ class Allreport_Model_DbTable_DbRptGroup extends Zend_Db_Table_Abstract
 	   		$sql .=' AND ( '.implode(' OR ',$s_where).')';
 	   	
 	   	}
-	  return $db->fetchAll($sql);
+	  return $db->fetchAll($sql.$order);
    }
    
-   public function getGroupDetail(){
+   public function getGroupDetail($search){
    	$db = $this->getAdapter();
    	$sql = 'SELECT
    	`g`.`id`,
    	`g`.`group_code`    AS `group_code`,
-   
    	CONCAT(`g`.`from_academic`," - ",`g`.`to_academic`) AS academic ,
-   
    	`g`.`semester` AS `semester`,
-   
    	(SELECT kh_name
    	FROM `rms_dept`
    	WHERE (`rms_dept`.`dept_id`=`g`.`degree`) LIMIT 1) as degree,
@@ -114,9 +112,25 @@ class Allreport_Model_DbTable_DbRptGroup extends Zend_Db_Table_Abstract
    	LIMIT 1) AS `status`,
    	(SELECT COUNT(`stu_id`) FROM `rms_group_detail_student` WHERE `group_id`=`g`.`id`)AS Num_Student
    	FROM `rms_group` `g`
-   	ORDER BY `g`.`id` DESC ';
+   	 ';
+   	$sql.=' WHERE 1';
+   	$order = ' ORDER BY `g`.`id` DESC ';
+   	if(empty($search)){
+   		return $db->fetchAll($sql.$order);
+   	}
+   	if(!empty($search['txtsearch'])){
+   		$s_where = array();
+   		$s_search = trim($search['txtsearch']);
+   		$s_where[] = " `g`.`group_code` LIKE '%{$s_search}%'";
+   		$s_where[] = " 	`g`.`semester` LIKE '%{$s_search}%'";
+   		$s_where[] = "  (SELECT	`rms_view`.`name_en`FROM `rms_view` WHERE ((`rms_view`.`type` = 4) AND (`rms_view`.`key_code` = `g`.`session`)) LIMIT 1) LIKE '%{$s_search}%'";
+//    		$s_where[] = " nation LIKE '%{$s_search}%'";
+//    		$s_where[] = " tel LIKE '%{$s_search}%'";
+//    		$s_where[] = " stu_code LIKE '%{$s_search}%'";
+   		$sql .=' AND ( '.implode(' OR ',$s_where).')';
+   	}
    	
-   	return $db->fetchAll($sql);
+   	return $db->fetchAll($sql.$order);
    }
    public function getGroupDetailByID($id){
    	$db = $this->getAdapter();

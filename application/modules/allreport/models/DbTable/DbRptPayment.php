@@ -19,8 +19,9 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	$sql=" SELECT * FROM v_getstudentpayment";
     	$sql.=' WHERE 1';
+    	$order=" ORDER BY id DESC ";
     	if(empty($search)){
-    		return $db->fetchAll($sql);
+    		return $db->fetchAll($sql.$order);
     	}
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
@@ -31,15 +32,16 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     		$s_where[] = " en_name LIKE '%{$s_search}%'";
     		$sql .=' AND ( '.implode(' OR ',$s_where).')';
     	}
-    	return $db->fetchAll($sql);
+    	return $db->fetchAll($sql.$order);
     }
     
     public function getStudentPaymentDetail($search){
     	$db = $this->getAdapter();
     	$sql = 'SELECT * FROM v_getstudentpaymentdetail';
     	$sql.=' WHERE 1';
+    	$order=" ORDER BY payment_id DESC ";
     	if(empty($search)){
-    		return $db->fetchAll($sql);
+    		return $db->fetchAll($sql.$order);
     	}
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
@@ -48,7 +50,7 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     		$s_where[] = " en_name LIKE '%{$s_search}%'";
     		$sql .=' AND ( '.implode(' OR ',$s_where).')';
     	}
-    	return $db->fetchAll($sql);
+    	return $db->fetchAll($sql.$order);
     }
     public function getPaymentReciptDetail($id){
     	$db = $this->getAdapter();
