@@ -11,11 +11,12 @@ class Allreport_Model_DbTable_DbRptAcademicYear extends Zend_Db_Table_Abstract
 //     }
     public function getAllAcademic($search){
     	$db = $this->getAdapter();
-    	$sql = 'select * from rms_academicperiod where 1';	
+    	$sql = "select CONCAT(fromyear,' - ',toyear)AS academic,batch,study_start,study_end,duration,note,quarter_start,quarter_end,
+    			semester_start,semester_end,yearly_start,yearly_end from rms_academicperiod where 1";	
     	
     	//$sql.=" LIMIT 1";
     	
-    	$where=' where 1';
+    	$where='';
     	if(empty($search)){
     		return $db->fetchAll($sql);
     	}
@@ -29,17 +30,10 @@ class Allreport_Model_DbTable_DbRptAcademicYear extends Zend_Db_Table_Abstract
     		$where.='';
     	}
     	if($search['searchby']==1){
-    		$where.= " AND group_code  LIKE  '%".$searchs."%'";
+    		$where.= " AND CONCAT(fromyear,toyear) LIKE '%".$searchs."%'";
     	}
     	if($search['searchby']==2){
-    		$where.= " AND (SELECT rms_room.room_name FROM rms_room	WHERE (rms_room.room_id = g.room_id)) LIKE '%".$searchs."%'" ;
-    	}
-    	if($search['searchby']==3){
-    		$where.= " AND (SELECT rms_view.name_en	FROM rms_view WHERE ((rms_view.type = 4)
-		AND (rms_view.key_code = g.session))LIMIT 1)  LIKE '%".$searchs."%'" ;
-    	}
-    	if($search['searchby']==4){
-    		$where.= " AND (SELECT major_khname FROM `rms_major` WHERE (`rms_major`.`major_id`=`g`.`grade`))  LIKE  '%".$searchs."%'";
+    		$where.= " AND batch LIKE '%".$searchs."%'" ;
     	}
     	
     	return $db->fetchAll($sql.$where);
