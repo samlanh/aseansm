@@ -81,6 +81,25 @@ public function init()
 		$this->view->rs = $rs_rows = $group->getAllGroup($search);
 			
 	}
+	
+	public function rptStudentAction(){
+	
+		if($this->getRequest()->isPost()){
+			$_data=$this->getRequest()->getPost();
+			$search = array(
+					'txtsearch' => $_data['txtsearch'],
+					'searchby' => $_data['searchby'],
+			);
+		}
+		else{
+			$search='';
+		}
+	
+		$group= new Allreport_Model_DbTable_DbRptStudent();
+		$this->view->rs = $rs_rows = $group->getAllStudent($search);
+			
+	}
+	
 	public function rptExamDegreeAction()
 	{
 	}
