@@ -11,46 +11,25 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 	function addStudentGep($data){
 		//print_r($data);exit();
 		$db = $this->getAdapter();//ស្ពានភ្ជាប់ទៅកាន់Data Base
-		if($data['student_type']==3){
-			$arr=array(
-					'student_id'=>$data['old_studens'],
-					'receipt_number'=>$data['reciept_no'],
-					'start_hour'=>$data['from_time'],
-					'end_hour'=>$data['to_time'],
-					'payment_term'=>$data['payment_term'],
-					'tuition_fee'=>$data['tuitionfee'],
-					'discount_percent'=>$data['discount'],
-					'other_fee'=>$data['remark'],
-					'admin_fee'=>$data['addmin_fee'],
-					'total'=>$data['total'],
-					'paid_amount'=>$data['books'],
-					'balance_due'=>$data['remaining'],
-					'note'=>$data['not'],
-					'amount_in_khmer'=>$data['char_price'],
-					'room_id'=>$data['room'],
-					'student_type'=>$data['student_type'],
-					'create_date'=>	date("d-m-Y"),
-					'payfor_type'=>2,
-					'user_id'=>$this->getUserId(),
-			);
-			$this->_name='rms_student_payment';
-			$this->insert($arr);
-		}else { 		
 			$db->beginTransaction();//ទប់ស្កាត់មើលការErrore , មានErrore វាមិនអោយចូល
 			try{
-			$arr=array(
-						'stu_code'=>$data['stu_id'],
-						'academic_year'=>$data['study_year'],
-						'stu_khname'=>$data['kh_name'],
-						'stu_enname'=>$data['en_name'],
-				    	'session'=>$data['session'],
-						'sex'=>$data['sex'],
-						'degree'=>$data['dept'],
-						'grade'=>$data['grade'],
-					    'stu_type'=>2,
-						'user_id'=>$this->getUserId(),
-				);
-			  $id= $this->insert($arr);
+				if($data['student_type']==3){
+						$id=$data['old_studens'];
+				}else {
+					$arr=array(
+							'stu_code'=>$data['stu_id'],
+							'academic_year'=>$data['study_year'],
+							'stu_khname'=>$data['kh_name'],
+							'stu_enname'=>$data['en_name'],
+							'session'=>$data['session'],
+							'sex'=>$data['sex'],
+							'degree'=>$data['dept'],
+							'grade'=>$data['grade'],
+							'stu_type'=>2,
+							'user_id'=>$this->getUserId(),
+					);
+					$id= $this->insert($arr);
+				}
 				$this->_name='rms_student_payment';
 				$arr=array(
 						'student_id'=>$id,
@@ -73,42 +52,34 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 						'payfor_type'=>2,
 						'user_id'=>$this->getUserId(),
 				);
+				$paymentid=$this->insert($arr);
+				$this->_name='rms_student_paymentdetail';
+				$arr=array(
+						'payment_id'=>$paymentid,
+						'type'=>1,
+						'payment_term'=>$data['payment_term'],
+						'fee'=>$data['total'],
+						'qty'=>1,
+						'amount'=>$data['total'],
+						'discount_fix'=>$data['discount'],
+						'discount_percent'=>0,
+						'note'=>$data['not'],
+						'references'=>'frome registration',
+						'create_date'=>	date("d-m-Y"),
+						'user_id'=>$this->getUserId(),
+				);
 				$this->insert($arr);
 				$db->commit();//if not errore it do....
 			}catch (Exception $e){
 				$db->rollBack();//អោយវាវិលត្រលប់ទៅដើមវីញពេលណាវាជួបErrore
 			}
 		}
-		}
 		function updateStudentGep($data){
 		$db = $this->getAdapter();//ស្ពានភ្ជាប់ទៅកាន់Data Base
 		$db->beginTransaction();//ទប់ស្កាត់មើលការErrore , មានErrore វាមិនអោយចូល
 			try{
 			    if($data['student_type']==3){
-			    	$this->_name='rms_student_payment';
-			    	$arr=array(
-			    			'student_id'=>$data['old_studens'],
-			    			'receipt_number'=>$data['reciept_no'],
-			    			'start_hour'=>$data['from_time'],
-			    			'end_hour'=>$data['to_time'],
-			    			'payment_term'=>$data['payment_term'],
-			    			'tuition_fee'=>$data['tuitionfee'],
-			    			'discount_percent'=>$data['discount'],
-			    			'other_fee'=>$data['remark'],
-			    			'admin_fee'=>$data['addmin_fee'],
-			    			'total'=>$data['total'],
-			    			'paid_amount'=>$data['books'],
-			    			'balance_due'=>$data['remaining'],
-			    			'note'=>$data['not'],
-			    			'amount_in_khmer'=>$data['char_price'],
-			    			'room_id'=>$data['room'],
-			    			'student_type'=>$data['student_type'],
-			    			'create_date'=>	date("d-m-Y"),
-			    			'payfor_type'=>2,
-			    			'user_id'=>$this->getUserId(),
-			    	);
-			    	$where="id=".$data['id'];
-			    	$this->update($arr, $where);
+			    	
 			    }else {
 			    	$arr=array(
 			    			'stu_code'=>$data['stu_id'],

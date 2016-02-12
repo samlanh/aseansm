@@ -12,41 +12,24 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();//ស្ពានភ្ជាប់ទៅកាន់Data Base
 		$db->beginTransaction();//ទប់ស្កាត់មើលការErrore , មានErrore វាមិនអោយចូល
 			try{
-				if($data['student_type']==3){
-					$this->_name='rms_student_payment';
-					$arr=array(
-							'student_id'=>$data['old_studens'],
-							'receipt_number'=>$data['reciept_no'],
-							'payment_term'=>$data['payment_term'],
-							'tuition_fee'=>$data['tuitionfee'],
-							'discount_percent'=>$data['discount'],
-							'other_fee'=>$data['remark'],
-							'admin_fee'=>$data['addmin_fee'],
-							'total'=>$data['total'],
-							'paid_amount'=>$data['books'],
-							'balance_due'=>$data['remaining'],
-							'note'=>$data['not'],
-							'student_type'=>$data['student_type'],
-							'create_date'=>	date("d-m-Y"),
-							'payfor_type'=>1,
-							'amount_in_khmer'=>$data['char_price'],
+				if($data['student_type']==3){//old
+					$id=$data['old_studens'];
+				}else {
+				    $arr=array(
+							'stu_code'=>$data['stu_id'],
+							'academic_year'=>$data['study_year'],
+							'stu_khname'=>$data['kh_name'],
+							'stu_enname'=>$data['en_name'],
+							'sex'=>$data['sex'],
+							'session'=>$data['session'],
+							'degree'=>$data['dept'],
+							'grade'=>$data['grade'],
+						    'stu_type'=>1,
 							'user_id'=>$this->getUserId(),
 					);
-					$this->insert($arr);
-				}else {
-			    $arr=array(
-						'stu_code'=>$data['stu_id'],
-						'academic_year'=>$data['study_year'],
-						'stu_khname'=>$data['kh_name'],
-						'stu_enname'=>$data['en_name'],
-						'sex'=>$data['sex'],
-						'session'=>$data['session'],
-						'degree'=>$data['dept'],
-						'grade'=>$data['grade'],
-					    'stu_type'=>1,
-						'user_id'=>$this->getUserId(),
-				);
-			  $id= $this->insert($arr);
+			    	$id= $this->insert($arr);
+				}
+				
 				$this->_name='rms_student_payment';
 				$arr=array(
 						'student_id'=>$id,
@@ -66,8 +49,25 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						'amount_in_khmer'=>$data['char_price'],
 						'user_id'=>$this->getUserId(),
 				);
+				
+				$paymentid = $this->insert($arr);
+				
+				$this->_name='rms_student_paymentdetail';
+				$arr=array(
+						'payment_id'=>$paymentid,
+						'type'=>1,
+						'payment_term'=>$data['payment_term'],
+						'fee'=>$data['total'],
+						'qty'=>1,
+						'amount'=>$data['total'],
+						'discount_fix'=>$data['discount'],
+						'discount_percent'=>0,
+						'note'=>$data['not'],
+						'references'=>'frome registration',
+						'create_date'=>	date("d-m-Y"),
+						'user_id'=>$this->getUserId(),
+				);
 				$this->insert($arr);
-				}
 				$db->commit();//if not errore it do....
 			}catch (Exception $e){
 				$db->rollBack();//អោយវាវិលត្រលប់ទៅដើមវីញពេលណាវាជួបErrore
@@ -77,41 +77,25 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 			$db = $this->getAdapter();//ស្ពានភ្ជាប់ទៅកាន់Data Base
 			$db->beginTransaction();//ទប់ស្កាត់មើលការErrore , មានErrore វាមិនអោយចូល
 			try{
-				if($data['student_type']==3){
-					$this->_name='rms_student_payment';
+				if($data['student_type']==3){//old stu
+					
+				}else{  
 					$arr=array(
-							'student_id'=>$data['id'],
-							'receipt_number'=>$data['reciept_no'],
-							'payment_term'=>$data['payment_term'],
-							'tuition_fee'=>$data['tuitionfee'],
-							'discount_percent'=>$data['discount'],
-							'other_fee'=>$data['remark'],
-							'admin_fee'=>$data['addmin_fee'],
-							'total'=>$data['total'],
-							'paid_amount'=>$data['books'],
-							'balance_due'=>$data['remaining'],
-							'note'=>$data['not'],
-							'amount_in_khmer'=>$data['char_price'],
-							'payfor_type'=>1,
+							'stu_code'=>$data['stu_id'],
+							'academic_year'=>$data['study_year'],
+							'stu_khname'=>$data['kh_name'],
+							'stu_enname'=>$data['en_name'],
+							'sex'=>$data['sex'],
+							'session'=>$data['session'],
+							'degree'=>$data['dept'],
+							'grade'=>$data['grade'],
+							'stu_type'=>1,
 							'user_id'=>$this->getUserId(),
 					);
-					$where="id=".$data['pay_id'];
+					$where="stu_id=".$data['id'];
 					$this->update($arr, $where);
-				}else{ 
-				$arr=array(
-						'stu_code'=>$data['stu_id'],
-						'academic_year'=>$data['study_year'],
-						'stu_khname'=>$data['kh_name'],
-						'stu_enname'=>$data['en_name'],
-						'sex'=>$data['sex'],
-						'session'=>$data['session'],
-						'degree'=>$data['dept'],
-						'grade'=>$data['grade'],
-						'stu_type'=>1,
-						'user_id'=>$this->getUserId(),
-				);
-				$where="stu_id=".$data['id'];
-				 $this->update($arr, $where);
+				}
+				
 				$this->_name='rms_student_payment';
 				$arr=array(
 						'student_id'=>$data['id'],
@@ -129,9 +113,28 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						'payfor_type'=>1,
 						'user_id'=>$this->getUserId(),
 				);
-				$where="student_id=".$data['id'];
+				$where="id=".$data['pay_id'];
 				$this->update($arr, $where);
-				}
+				
+				
+				$this->_name='rms_student_paymentdetail';
+				$arr=array(
+						'payment_id'=>$data['pay_id'],
+						'type'=>1,
+						'payment_term'=>$data['payment_term'],
+						'fee'=>$data['total'],
+						'qty'=>1,
+						'amount'=>$data['total'],
+						'discount_fix'=>$data['discount'],
+						'discount_percent'=>0,
+						'note'=>$data['not'],
+						'references'=>'frome registration',
+						'create_date'=>	date("d-m-Y"),
+						'user_id'=>$this->getUserId(),
+				);
+				$where="payment_id=".$data['pay_id'];
+				$this->update($arr, $where);
+				
 				$db->commit();//if not errore it do....
 			}catch (Exception $e){
 				$db->rollBack();//អោយវាវិលត្រលប់ទៅដើមវីញពេលណាវាជួបErrore

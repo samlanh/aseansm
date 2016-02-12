@@ -24,7 +24,7 @@
 	    onChange: function() {  
 	    	dept_id = dijit.byId('dept').get('value');
 	    	dijit.byId('grade').attr('value','');
-	    	getallModel(dept_id); 
+	    	getallModel(dept_id,a=''); 
 	    	getStudentNo(dept_id);
 	    }
 	}, "dept");
@@ -45,7 +45,7 @@
 	});	
 	var grade_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 	var url_dept = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-grade')); ?>';
-	function getallModel(dept_id){
+	function getallModel(dept_id,a){
 			dojo.xhrPost({
 				url:url_dept,
 				content:{
@@ -56,6 +56,9 @@
 					//alert(data);
 					grade_store  = getDataStorefromJSON('id','name', data);
 				    dijit.byId('grade').set('store',grade_store);   
+				    if(a!=""){
+				    	dijit.byId('grade').attr('value',a);
+			        } 
 				},
 				error: function(err) {
 					//alert(err);
@@ -355,9 +358,11 @@ fieldset{  background:none;}
 						</tr>
 						<tr>
 							<td colspan="4" align="center">
+							    <input type="submit" name="save_close" id="save_close" value="រក្សាទុក &ចាកចេញ" label="រក្សាទុក &ចាកចេញ"  dojoType="dijit.form.Button" 
+								 iconClass="dijitEditorIcon dijitEditorIconSave" />
 								<input type="submit" name="save_new" id="save_new" value="រក្សាទុក" label="រក្សាទុក"  dojoType="dijit.form.Button" 
 								 iconClass="dijitEditorIcon dijitEditorIconSave" />
-								 <input type="button" value="រក្សាទុក & បោះពុម្ព" label="រក្សាទុក & បោះពុម្ព" id="busyButton" dojoType="dijit.form.Button" 
+								 <input type="button" value="  បោះពុម្ព" label="បោះពុម្ព" id="busyButton" dojoType="dijit.form.Button" 
 									iconClass="dijitEditorIcon dijitEditorIconPrint" onclick="printSave();"/> 
 							</td>
 						</tr>
@@ -633,13 +638,20 @@ var url_add_getfee = '<?php echo $this->url(array('module'=>'global','controller
 function changControll(){
 	student_type=$("#student_type:checked").val()
 	 if(student_type==3){
-		 //alert(student_type);
 		 document.getElementById('student_id').style.display="none";
 		 document.getElementById('student_ids').style.display="block";
+		 clearControll();
 	}else{
 		document.getElementById('student_id').style.display="block";
 		document.getElementById('student_ids').style.display="none";
+		 clearControll();
 	} 
+}
+function clearControll(){
+	dijit.byId('kh_name').attr('value','');
+	dijit.byId('en_name').attr('value','');
+	dijit.byId('sex').attr('value','');
+	
 }
 ///get gep old student
 var url_getGepoldstudent = '<?php echo $this->url(array('module'=>'registrar','controller'=>'coursestudy','action'=>'get-gep-old-student')); ?>';
@@ -657,7 +669,8 @@ function getGepOldStudentById(){
 			    	dijit.byId('en_name').attr('value',data.stu_enname);
 			    	dijit.byId('sex').attr('value',data.sex);
 			    	dijit.byId('dept').attr('value',data.degree);
-			    	dijit.byId('grade').attr('value',data.grade);
+			    	getallModel(data.degree,data.grade);
+			    	//dijit.byId('grade').attr('value',data.grade);
 			      }else {
 			    	alert('Student Id not found!');
 			    	dijit.byId('kh_name').attr('value','');

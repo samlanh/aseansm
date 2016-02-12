@@ -24,7 +24,7 @@
 	    onChange: function() {  
 	    	dept_id = dijit.byId('dept').get('value');
 	    	dijit.byId('grade').attr('value','');
-	    	getallModel(dept_id); 
+	    	getallModel(dept_id,a=''); 
 	    	getStudentNo(dept_id);
 	    }
 	}, "dept");
@@ -51,7 +51,8 @@
 	});	
 	var grade_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 	var url_dept = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-grade')); ?>';
-	function getallModel(dept_id){
+	function getallModel(dept_id,a){
+		
 			dojo.xhrPost({
 				url:url_dept,
 				content:{
@@ -61,8 +62,10 @@
 				load: function(data) {
 					//alert(data);
 					grade_store  = getDataStorefromJSON('id','name', data);
-				    dijit.byId('grade').set('store',grade_store);   
-					dijit.byId('grade').attr('value','<?php echo $this->degree_row['grade'];?>');
+				    dijit.byId('grade').set('store',grade_store);  
+				    if(a!=""){
+				    	dijit.byId('grade').attr('value',a);
+			        } 
 				},
 				error: function(err) {
 					alert(err);
@@ -111,14 +114,8 @@
 				load: function(data) {
 				      if(data){
 				    	dijit.byId('tuitionfee').attr('value',data.tuition_fee);
-				    	dijit.byId('total').attr('value','<?php echo $this->degree_row['total'];?>');
-				    	dijit.byId('discount').attr('value','<?php echo $this->degree_row['discount_percent'];?>');
-				    	dijit.byId('books').attr('value','<?php echo $this->degree_row['paid_amount'];?>');
-				    	dijit.byId('addmin_fee').attr('value','<?php echo $this->degree_row['admin_fee'];?>');
-				    	dijit.byId('remaining').attr('value','<?php echo $this->degree_row['balance_due'];?>');
-				    	dijit.byId('remark').attr('value','<?php echo $this->degree_row['other_fee'];?>');
-				    	dijit.byId('char_price').attr('value','<?php echo $this->degree_row['amount_in_khmer'];?>');
-				    	dijit.byId('not').attr('value','<?php echo $this->degree_row['note'];?>');
+				    	dijit.byId('total').attr('value',data.tuition_fee);
+				    	dijit.byId('books').attr('value',data.tuition_fee);
 				      }else {
 				    	 dijit.byId('tuitionfee').attr('value','0'); 
 				    	 dijit.byId('total').attr('value','0'); 
@@ -139,6 +136,7 @@
 	function getTotale(){
 		//old % totale
 		tuitionfee=dijit.byId('tuitionfee').get('value');
+		tuitionfee=isNaN(tuitionfee)?0:tuitionfee;
 		discount=dijit.byId('discount').get('value');
 		pc=discount/100;
 		ds=tuitionfee*pc;
@@ -169,7 +167,11 @@
 		  CheckAmount();
 	}
 	function getDisccount(){
+		books=dijit.byId('books').get('value');
+		books=isNaN(books)?0:books;
+	
 		tuitionfee=dijit.byId('tuitionfee').get('value');
+		tuitionfee=isNaN(tuitionfee)?0:tuitionfee;
 		discount=dijit.byId('discount').get('value');
 		pc=discount/100;
 		ds=tuitionfee*pc;
@@ -328,9 +330,11 @@ fieldset{  background:none;}
 						</tr>
 						<tr>
 							<td colspan="4" align="center">
+							    <input type="submit" name="save_close" id="save_close" value="រក្សាទុក  &ចាកចេញ" label="រក្សាទុក  &ចាកចេញ"  dojoType="dijit.form.Button" 
+								 iconClass="dijitEditorIcon dijitEditorIconSave" />
 								<input type="submit" name="save_new" id="save_new" value="រក្សាទុក" label="រក្សាទុក"  dojoType="dijit.form.Button" 
 								 iconClass="dijitEditorIcon dijitEditorIconSave" />
-								 <input type="button" value="រក្សាទុក & បោះពុម្ព" label="រក្សាទុក & បោះពុម្ព" id="busyButton" dojoType="dijit.form.Button" 
+								 <input type="button" value="បោះពុម្ព" label="បោះពុម្ព" id="busyButton" dojoType="dijit.form.Button" 
 									iconClass="dijitEditorIcon dijitEditorIconPrint" onclick="printSave();"/> 
 							</td>
 						</tr>
@@ -600,10 +604,19 @@ function changControll(){
 	 if(student_type==3){
 		 document.getElementById('student_old').style.display="block";
 		 document.getElementById('id_stu').style.display="none";
+		 clearControll();
 	}else{
 		 document.getElementById('student_old').style.display="none";
 		 document.getElementById('id_stu').style.display="block";
+		 clearControll();
 	} 
+}
+//
+function clearControll(){
+	dijit.byId('kh_name').attr('value','');
+	dijit.byId('en_name').attr('value','');
+	dijit.byId('sex').attr('value','');
+	
 }
 ///get Gerneral old student
 function getGeneralOldStudentById(){
@@ -621,8 +634,8 @@ function getGeneralOldStudentById(){
 			    	dijit.byId('en_name').attr('value',data.stu_enname);
 			    	dijit.byId('sex').attr('value',data.sex);
 			    	dijit.byId('dept').attr('value',data.degree);
-			    	getallModel(data.grade,data.degree);
-			    	dijit.byId('grade').attr('value',data.grade);
+			    	getallModel(data.degree,data.grade);
+			    	 //dijit.byId('grade').attr('value',data.grade);
 			      }else {
 			    	alert('Student Id not found!');
 			    	dijit.byId('kh_name').attr('value','');

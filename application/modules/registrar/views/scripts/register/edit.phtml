@@ -36,15 +36,10 @@
 	    class: 'fullside', 
 	    placeHolder:"Selected Grade",          
 	    onChange: function() {  
-	    	make_id = dijit.byId('grade').get('value');
-	    	paymentTerm();
-	    	dijit.byId('discount').attr('value','0');
-	    	dijit.byId('books').attr('value','0');
-	    	dijit.byId('addmin_fee').attr('value','0');
-	    	dijit.byId('remaining').attr('value','0');
-	    	dijit.byId('remark').attr('value','0');
-	    	dijit.byId('char_price').attr('value','0');
-	    	dijit.byId('not').attr('value','');
+	    //	make_id = dijit.byId('grade').get('value');
+	    	
+	    		paymentTerm();
+	    	
 	    }
 	}, "grade");
 	dijit.byId('dept').attr('value','<?php echo $this->degree_row['degree'];?>');
@@ -89,12 +84,28 @@
 			});
 	}
 	function paymentTerm(){
-		generat=dijit.byId('study_year').get('value');
-		payment_term=dijit.byId('payment_term').get('value');
-		grade=dijit.byId('grade').get('value');
-		if(generat!='' && payment_term !='' && grade !=''){
-			getPaymentTerms(generat,payment_term,grade);
+		old_grade='<?php echo $this->degree_row['grade'];?>';
+    	old_payterm='<?php echo $this->degree_row['payment_term'];?>';
+    	grade=dijit.byId('grade').get('value');
+    	payterm=dijit.byId('payment_term').get('value');
+    	if(old_grade==grade && old_payterm==payterm){
+    		defaultPayment();
+	    }else{
+	    	generat=dijit.byId('study_year').get('value');
+			payment_term=dijit.byId('payment_term').get('value');
+			grade=dijit.byId('grade').get('value');
+			if(generat!='' && payment_term !='' && grade !=''){
+				getPaymentTerms(generat,payment_term,grade);
+			}
+			dijit.byId('discount').attr('value','0');
+	    	dijit.byId('books').attr('value','0');
+	    	dijit.byId('addmin_fee').attr('value','0');
+	    	dijit.byId('remaining').attr('value','0');
+	    	dijit.byId('remark').attr('value','0');
+	    	dijit.byId('char_price').attr('value','0');
+	    	dijit.byId('not').attr('value',''); 
 		}
+		    
 		
 	}
 	var payment_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
@@ -111,29 +122,36 @@
 				load: function(data) {
 				      if(data){
 				    	dijit.byId('tuitionfee').attr('value',data.tuition_fee);
-				    	dijit.byId('total').attr('value','<?php echo $this->degree_row['total'];?>');
-				    	dijit.byId('discount').attr('value','<?php echo $this->degree_row['discount_percent'];?>');
-				    	dijit.byId('books').attr('value','<?php echo $this->degree_row['paid_amount'];?>');
-				    	dijit.byId('addmin_fee').attr('value','<?php echo $this->degree_row['admin_fee'];?>');
-				    	dijit.byId('remaining').attr('value','<?php echo $this->degree_row['balance_due'];?>');
-				    	dijit.byId('remark').attr('value','<?php echo $this->degree_row['other_fee'];?>');
-				    	dijit.byId('char_price').attr('value','<?php echo $this->degree_row['amount_in_khmer'];?>');
-				    	dijit.byId('not').attr('value','<?php echo $this->degree_row['note'];?>');
+				    	dijit.byId('total').attr('value',data.tuition_fee);
+				    	dijit.byId('books').attr('value',data.tuition_fee);
 				      }else {
-				    	 dijit.byId('tuitionfee').attr('value','0'); 
+					      
+				    	/* dijit.byId('tuitionfee').attr('value','0'); 
 				    	 dijit.byId('total').attr('value','0'); 
 				    	 dijit.byId('discount').attr('value','0');
 				    	 dijit.byId('books').attr('value','0');
 					     dijit.byId('addmin_fee').attr('value','0');
 					     dijit.byId('remaining').attr('value','0');
 					     dijit.byId('remark').attr('value','0');
-					     dijit.byId('char_price').attr('value','0');
+					     dijit.byId('char_price').attr('value','0');*/
 				      }
 				},
 				error: function(err) {
 					alert(err);
 				}
 			});
+	}
+	function defaultPayment(){
+		dijit.byId('tuitionfee').attr('value','<?php echo $this->degree_row['tuition_fee'];?>');
+    	dijit.byId('total').attr('value','<?php echo $this->degree_row['total'];?>');
+    	dijit.byId('discount').attr('value','<?php echo $this->degree_row['discount_percent'];?>');
+    	dijit.byId('books').attr('value','<?php echo $this->degree_row['paid_amount'];?>');
+    	dijit.byId('addmin_fee').attr('value','<?php echo $this->degree_row['admin_fee'];?>');
+    	dijit.byId('remaining').attr('value','<?php echo $this->degree_row['balance_due'];?>');
+    	dijit.byId('remark').attr('value','<?php echo $this->degree_row['other_fee'];?>');
+    	dijit.byId('char_price').attr('value','<?php echo $this->degree_row['amount_in_khmer'];?>');
+    	dijit.byId('not').attr('value','<?php echo $this->degree_row['note'];?>');
+     
 	}
 	//set value totale 
 	function getTotale(){
