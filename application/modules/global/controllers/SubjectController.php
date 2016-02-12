@@ -17,13 +17,11 @@ class Global_SubjectController extends Zend_Controller_Action {
 				$_data=$this->getRequest()->getPost();
 				$search = array(
 						'title' => $_data['title'],
-						'subjec_name'=>$_data['subjec_name'],
 						'status' => $_data['status_search']);
 			}
 			else{
 				$search = array(
 						'title' => '',
-						'subjec_name'=>-1,
 						'status' => -1);
 			}
 			$rs_rows = $db->getAllSujectName($search);

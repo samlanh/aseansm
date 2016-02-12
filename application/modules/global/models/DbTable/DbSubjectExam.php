@@ -46,9 +46,15 @@ class Global_Model_DbTable_DbSubjectExam extends Zend_Db_Table_Abstract
 		WHERE 1";
 		$order=" order by id DESC";
 		$where = '';
+		if(empty($search)){
+			return $db->fetchAll($sql.$order);
+		}
 		if(!empty($search['title'])){
-			$where.=" AND subject_titleen LIKE '%".$search['title']."%'";
-			$where.=" AND subject_titlekh LIKE '%".$search['title']."%'";
+			$s_where = array();
+			$s_search = trim($search['title']);
+				$s_where[]= " subject_titlekh LIKE '%{$s_search}%'";
+				$s_where[]= " subject_titleen LIKE '%{$s_search}%'";
+			$where .= ' AND ( '.implode(' OR ',$s_where).')';
 		}
 		if($search['status']>-1){
 			$where.= " AND status = ".$search['status'];
