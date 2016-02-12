@@ -200,9 +200,9 @@ $frm_set_price = $this->frm_set_charge;?>
 							<tr>
 								<td>ស្ថានការណ៍</td>
 								<td>
-									<select class="fullside" dojoType="dijit.form.FilteringSelect" required="true"  id="status" name="status" type="text">								
+									<select class="fullside" dojoType="dijit.form.FilteringSelect" required="true"  id="status" name="status" type="text">		
+										<option value="1"<?php if($this->id['status']==1) echo "selected='selected'"?>><?php echo $tr->translate("Active");?></option>						
 										<option value="0"<?php if($this->id['status']==0) echo "selected='selected'"?>><?php echo $tr->translate("Deactive");?></option>
-										<option value="1"<?php if($this->id['status']==1) echo "selected='selected'"?>><?php echo $tr->translate("Active");?></option>
 									</select>
 								</td>
 							</tr>
@@ -293,7 +293,7 @@ $frm_set_price = $this->frm_set_charge;?>
 							<td>
 								<select name="session_group" id="session_group" dojoType="dijit.form.FilteringSelect">
 									<option value='1' >ព្រឹក</option>
-									<option value='2' >ល្ញាច</option>
+									<option value='2' >រសៀល</option>
 									<option value='3' >យប់</option>
 									<option value='4' >ចុងសបា្តហ៏</option>
 								</select>
