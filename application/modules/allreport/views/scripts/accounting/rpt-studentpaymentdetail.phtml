@@ -55,6 +55,8 @@
 											<th>&nbsp;English Name&nbsp;</th>
 											<th>&nbsp;Service Type&nbsp;</th>
 											<th>&nbsp;Payment Term&nbsp;</th>
+											<th>&nbsp;Fee&nbsp;</th>
+											<th>&nbsp;Qty&nbsp;</th>
 											<th>&nbsp;Amount&nbsp;</th>
 											<th>&nbsp;Discount&nbsp;</th>
 											<th>&nbsp;Total Payment&nbsp;</th>
@@ -76,9 +78,11 @@
 										    <td style=" white-space:nowrap; text-align:left"><?php echo $rs['en_name']; ?></td>
 										    <td><?php echo $rs['service']; ?></td>
 										    <td><?php echo $rs['payment_term']; ?></td>
-										     <td><?php echo $rs['amount']; ?></td>
+										    <td>$ <?php echo $rs['fee']; ?></td>
+										    <td><?php echo $rs['qty']; ?></td>
+										     <td>$ <?php echo $rs['amount']; ?></td>
 										    <td><?php echo $rs['discount_fix']; ?>%</td>
-										    <td>$ <?php echo $rs['total_payment']; ?></td>
+										    <td>$ <?php echo $rs['subtotal']; ?></td>
 										    <td>$ <?php echo $rs['paid_amount']; ?></td>
 										    <td>$ <?php echo $rs['balance_due']; ?></td>
 										    <td><?php echo $rs['return_amount']; ?></td>
