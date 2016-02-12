@@ -14,7 +14,6 @@ class Global_CarController extends Zend_Controller_Action {
 				$_data=$this->getRequest()->getPost();
 				$search = array(
 						'title' => $_data['title'],
-						'subjec_name'=>$_data['subjec_name'],
 						'status' => $_data['status_search']);
 			}
 			else{
@@ -30,7 +29,7 @@ class Global_CarController extends Zend_Controller_Action {
 	
 			$glClass = new Application_Model_GlobalClass();
 			$rs = $glClass->getImgActive($rs_rows, BASE_URL, true);
-	
+			$this->view->search =  $search;
 			$list = new Application_Form_Frmtable();
 			$collumns = array("CarID","Car Name","Driver Name","Tel","Zone","Note","Status");
 			$link=array(
