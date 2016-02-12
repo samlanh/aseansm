@@ -16,7 +16,6 @@ class Global_ProvinceController extends Zend_Controller_Action {
 				$_data=$this->getRequest()->getPost();
 				$search = array(
 						'title' => $_data['title'],
-						'subjec_name'=>$_data['subjec_name'],
 						'status' => $_data['status_search']);
 			}
 			else{
