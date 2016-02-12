@@ -84,7 +84,12 @@ class Global_Model_DbTable_DbDept extends Zend_Db_Table_Abstract
 			return $db->fetchAll($sql.$order);
 		}
 		if(!empty($search['title'])){
-			$where.=" AND ( m.major_enname LIKE '%".$db->quote($search['title'])."%' OR m.major_khname LIKE '%".$db->quote($search['title'])."%') ";
+			$s_where = array();
+			$s_search = trim($search['txtsearch']);
+			$s_where[] = " m.major_enname LIKE '%{$s_search}%'";
+			$s_where[] = " m.major_khname LIKE '%{$s_search}%'";
+			$s_where[] = " (select d.en_name from rms_dept AS d where m.dept_id=d.dept_id ) LIKE '%{$s_search}%'";
+			$where .=' AND ( '.implode(' OR ',$s_where).')';
 		}
 		if($search['status']>-1){
 			$where.= " AND m.is_active = ".$db->quote($search['status']);
