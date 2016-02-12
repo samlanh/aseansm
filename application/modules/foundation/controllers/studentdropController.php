@@ -16,11 +16,11 @@ class Foundation_studentdropController extends Zend_Controller_Action {
 			else{
 				$result = Application_Model_DbTable_DbGlobal::getResultWarning();
 			}
-			$collumns = array("STUDENT ID","NAME_KH","NAME_EN","GENDER","TYPE","DATE STOP","STATUS");
+			$collumns = array("STUDENT_CODE","NAME_KH","NAME_EN","SEX","TYPE","REASON","STOP_DATE","NOTE");
 			$link=array(
 					'module'=>'foundation','controller'=>'studentdrop','action'=>'edit',
 			);
-			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('kh_name'=>$link,'en_name'=>$link));
+			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('code'=>$link,'kh_name'=>$link,'en_name'=>$link));
 			
 	}
 	function addAction(){

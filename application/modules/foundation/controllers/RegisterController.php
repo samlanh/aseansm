@@ -16,7 +16,7 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 			else{
 				$result = Application_Model_DbTable_DbGlobal::getResultWarning();
 			}
-			$collumns = array("STUDENT NAME","ឈ្មោះសិស្ស","SEX","GRADE","NATIONALITY","DOB","PHONE","EMAIL","STATUS");
+			$collumns = array("NAME_KH","NAME_EN","SEX","GRADE","NATIONALITY","DOB","PHONE","EMAIL","STATUS");
 			$link=array(
 					'module'=>'foundation','controller'=>'register','action'=>'edit',
 			);
@@ -78,5 +78,15 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 			exit();
 		}
 	}
+	function getStudentAction(){
+		if($this->getRequest()->isPost()){
+			$data=$this->getRequest()->getPost();
+			$db = new Foundation_Model_DbTable_DbStudent();
+			$grade = $db->getStudentInfoById($data['studentid']);
+			print_r(Zend_Json::encode($grade));
+			exit();
+		}
+	}
+	
 	
 }

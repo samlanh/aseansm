@@ -16,11 +16,11 @@ class Foundation_studentchangegroupController extends Zend_Controller_Action {
 			else{
 				$result = Application_Model_DbTable_DbGlobal::getResultWarning();
 			}
-			$collumns = array("NAME_KH","NAME_EN","GENDER","FROM GROUP","TO GROUP","MOVING DATE","NOTE","STATUS");
+			$collumns = array("STUDENT_CODE","NAME_KH","NAME_EN","SEX","FROM_GROUP","TO_GROUP","MOVING_DATE","NOTE");
 			$link=array(
 					'module'=>'foundation','controller'=>'studentchangegroup','action'=>'edit',
 			);
-			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('kh_name'=>$link,'en_name'=>$link));
+			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('code'=>$link,'kh_name'=>$link,'en_name'=>$link));
 			
 	}
 	function addAction(){
