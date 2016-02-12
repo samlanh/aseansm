@@ -170,26 +170,24 @@ class Global_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		(SELECT `rms_view`.`name_en` FROM `rms_view` WHERE ((`rms_view`.`type` = 1)
 		AND (`rms_view`.`key_code` = `g`.`status`)) LIMIT 1) AS `status`
 		FROM `rms_group` `g`
-		ORDER BY `g`.`id` DESC ';	
-
-
-		$where = '';
+		';	
+		$where =' WHERE 1 ';
+		$order =  ' ORDER BY `g`.`id` DESC ' ;
+		if(empty($search)){
+			return $db->fetchAll($sql.$order);
+		}
 		if(!empty($search['title'])){
 		    $s_where = array();
 			$s_search = addslashes(trim($search['title']));
-			$s_where[] = " group_code LIKE '%{$s_search}%'";
-			$s_where[] = " degree LIKE '%{$s_search}%'";
-			$s_where[] = " major_name LIKE '%{$s_search}%'";
-			$s_where[] = " batch = '{$s_search}'";
-			$s_where[] = " year = '{$s_search}'";
-			$s_where[] = " semester = '{$s_search}'";
-			$s_where[] = " session LIKE '%{$s_search}%'";
-			$s_where[] = " academic_year LIKE '%{$s_search}%'";
-			$s_where[] = " room_name LIKE '%{$s_search}%'";
+			$s_where[] = " `g`.`group_code` LIKE '%{$s_search}%'";
+			$s_where[] = " `g`.`semester` LIKE '%{$s_search}%'";
+			$s_where[] = " (SELECT major_khname FROM `rms_major` WHERE (`rms_major`.`major_id`=`g`.`grade`)) LIKE '%{$s_search}%'";
+			$s_where[] = " (SELECT `r`.`room_name`	FROM `rms_room` `r`	WHERE (`r`.`room_id` = `g`.`room_id`)) LIKE '%{$s_search}%'";
+			$s_where[] = " (SELECT`rms_view`.`name_en`	FROM `rms_view`	WHERE ((`rms_view`.`type` = 4)
+		AND (`rms_view`.`key_code` = `g`.`session`))LIMIT 1) LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';
-			
 		}
-		return $db->fetchAll($sql.$where);
+		return $db->fetchAll($sql.$where.$order);
 	}
 	
 	function getAllGrade($grade_id){
