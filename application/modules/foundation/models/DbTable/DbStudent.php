@@ -11,12 +11,12 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 	}
 	public function getAllStudent(){
 		$_db = $this->getAdapter();
-		$sql = "SELECT stu_id,stu_enname,stu_khname,
+		$sql = "SELECT stu_id,stu_khname,stu_enname,
 		(SELECT name_kh FROM `rms_view` WHERE type=2 AND key_code = sex) as sex
 		,(SELECT `major_enname` FROM `rms_major` WHERE `major_id`=grade),nationality,dob,tel,email ,
 		(SELECT name_kh FROM `rms_view` WHERE type=1 AND key_code = status) as status
 		FROM rms_student where status = 1 AND stu_type = 1 ";
-		$orderby = " ORDER BY stu_enname ";
+		$orderby = " ORDER BY stu_id DESC ";
 		return $_db->fetchAll($sql.$orderby);
 	}
 	public function getStudentById($id){

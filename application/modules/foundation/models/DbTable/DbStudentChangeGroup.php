@@ -28,13 +28,16 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 	
 	public function selectAllStudentChangeGroup(){
 		$_db = $this->getAdapter();
-		$sql = "SELECT id,(SELECT stu_khname FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id`) AS kh_name,
+		$sql = "SELECT id,(SELECT stu_code FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id`) AS code,
+		(SELECT stu_khname FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id`) AS kh_name,
 		(SELECT stu_enname FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id`) AS en_name,
 		(SELECT name_kh FROM `rms_view` WHERE `rms_view`.`type`=2 and `rms_view`.`key_code`=(SELECT sex FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id` limit 1))AS sex,
-		from_group,to_group,moving_date,note,
-		(select name_kh from `rms_view` where `rms_view`.`type`=6 and `rms_view`.`key_code`=`rms_student_change_group`.`status`)AS status
-		 from `rms_student_change_group` ";
-		return $_db->fetchAll($sql);
+		(select group_code from rms_group where rms_group.id = rms_student_change_group.from_group limit 1)AS from_group,
+		(select group_code from rms_group where rms_group.id = rms_student_change_group.to_group limit 1)AS to_group,
+		moving_date,note from `rms_student_change_group` ";
+		$order_by=" order by id DESC";
+		return $_db->fetchAll($sql.$order_by);
+// 		(select name_kh from `rms_view` where `rms_view`.`type`=6 and `rms_view`.`key_code`=`rms_student_change_group`.`status`)AS status
 	}
 	
 	public function getAllStudentChangeGroupById($id){

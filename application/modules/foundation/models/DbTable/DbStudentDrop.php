@@ -20,13 +20,15 @@ class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 	
 	public function getAllStudentDrop(){
 		$_db = $this->getAdapter();
-		$sql = "SELECT id,stu_id,(SELECT stu_khname FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_drop`.`stu_id`) AS kh_name,
-		(SELECT stu_enname FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_drop`.`stu_id`) AS en_name,
+		$sql = "SELECT id,(SELECT stu_code FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_drop`.`stu_id` limit 1) AS code,
+		(SELECT stu_khname FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_drop`.`stu_id` limit 1) AS kh_name,
+		(SELECT stu_enname FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_drop`.`stu_id` limit 1) AS en_name,
 		(SELECT name_kh FROM `rms_view` WHERE `rms_view`.`type`=2 and `rms_view`.`key_code`=(SELECT sex FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_drop`.`stu_id` limit 1))AS sex,
-		(SELECT name_kh FROM `rms_view` WHERE `rms_view`.`type`=5 and `rms_view`.`key_code`=`rms_student_drop`.`type`) as type,
-		date,(select name_kh from `rms_view` where `rms_view`.`type`=6 and `rms_view`.`key_code`=`rms_student_drop`.`status`)AS status
-		 from `rms_student_drop` ";
-		return $_db->fetchAll($sql);
+		(SELECT name_kh FROM `rms_view` WHERE `rms_view`.`type`=5 and `rms_view`.`key_code`=`rms_student_drop`.`type` limit 1) as type,
+		reason,date,note from `rms_student_drop` ";
+		$order_by=" order by id DESC";
+		return $_db->fetchAll($sql.$order_by);
+// 		(select name_kh from `rms_view` where `rms_view`.`type`=6 and `rms_view`.`key_code`=`rms_student_drop`.`status`)AS status
 	}
 	public function getStudentDropById($id){
 		$db = $this->getAdapter();
@@ -42,7 +44,8 @@ class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 						'type'=>$_data['type'],
 						'status'=>$_data['status'],
 						'date'=>$_data['datestop'],
-						'note'=>$_data['reason']
+						'reason'=>$_data['reason'],
+						'note'=>$_data['note']
 						);
 				$id = $this->insert($_arr);
 			
