@@ -241,7 +241,7 @@ Class Registrar_Form_FrmCourseStudy extends Zend_Dojo_Form {
 		$_fee->setAttribs(array(
 				'dojoType'=>'dijit.form.NumberTextBox',
 				'required'=>'true','class'=>'fullside',
-				//'onkeyup'=>'CheckAmount();',
+				'onkeyup'=>'getDisccount();getTotale();'
 				));
 
 		$_disc = new Zend_Dojo_Form_Element_NumberTextBox('discount');

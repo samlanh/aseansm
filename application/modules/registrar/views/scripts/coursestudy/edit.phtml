@@ -87,12 +87,27 @@
 			});
 	}
 	function paymentTerm(){
+		old_grade='<?php echo $this->row_gep['grade'];?>';
+    	old_payterm='<?php echo $this->row_gep['payment_term'];?>';
+    	grade=dijit.byId('grade').get('value');
+    	payterm=dijit.byId('payment_term').get('value');
+    	if(old_grade==grade && old_payterm==payterm){
+    		defaultPayment();
+	    }else{
 		study_year=dijit.byId('study_year').get('value');
 		payment_term=dijit.byId('payment_term').get('value');
 		levele=dijit.byId('grade').get('value');
 		if(study_year!='' && payment_term !='' && levele !=''){
 			getPaymentTerms(study_year,levele,payment_term);
 		}
+		dijit.byId('discount').attr('value','0');
+    	dijit.byId('books').attr('value','0');
+    	dijit.byId('addmin_fee').attr('value','0');
+    	dijit.byId('remaining').attr('value','0');
+    	dijit.byId('remark').attr('value','0');
+    	dijit.byId('char_price').attr('value','0');
+    	dijit.byId('not').attr('value',''); 
+	    }
 	}
 	var payment_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 	var url_getpaymentterm = '<?php echo $this->url(array('module'=>'registrar','controller'=>'coursestudy','action'=>'get-payment-gep')); ?>';
@@ -131,10 +146,23 @@
 				}
 			});
 	}
+	function defaultPayment(){
+		dijit.byId('tuitionfee').attr('value','<?php echo $this->row_gep['tuition_fee'];?>');
+    	dijit.byId('total').attr('value','<?php echo $this->row_gep['total'];?>');
+    	dijit.byId('discount').attr('value','<?php echo $this->row_gep['discount_percent'];?>');
+    	dijit.byId('books').attr('value','<?php echo $this->row_gep['paid_amount'];?>');
+    	dijit.byId('addmin_fee').attr('value','<?php echo $this->row_gep['admin_fee'];?>');
+    	dijit.byId('remaining').attr('value','<?php echo $this->row_gep['balance_due'];?>');
+    	dijit.byId('remark').attr('value','<?php echo $this->row_gep['other_fee'];?>');
+    	dijit.byId('char_price').attr('value','<?php echo $this->row_gep['amount_in_khmer'];?>');
+    	dijit.byId('not').attr('value','<?php echo $this->row_gep['note'];?>');
+     
+	}
 	//set value totale 
 	function getTotale(){
 		//old % totale
 		tuitionfee=dijit.byId('tuitionfee').get('value');
+		tuitionfee=isNaN(tuitionfee)?0:tuitionfee;
 		discount=dijit.byId('discount').get('value');
 		pc=discount/100;
 		ds=tuitionfee*pc;
