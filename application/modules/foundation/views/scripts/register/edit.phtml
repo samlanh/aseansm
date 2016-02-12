@@ -1,6 +1,6 @@
 <?php
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-	$this->headTitle('កែប្រែសិស្សដែលបានចុះឈ្មោះ'); 
+	$this->headTitle($tr->translate('EDIT_STUDENT_REGISTER')); 
 	echo $this->headTitle(''); 
 	
 ?>	
@@ -67,7 +67,7 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 				<table width="100%" >
 					<tr>
 						<td>
-						 <div id="mainTabContainer" style="width: 1150px;height: 430px;" dojoType="dijit.layout.TabContainer" region="center" width="1000px !importand" >
+						 <div id="mainTabContainer" style="width: 1150px;height: 500px;" dojoType="dijit.layout.TabContainer" region="center" width="1000px !importand" >
 					      <div class="tabContentSection" dojoType="dijit.layout.ContentPane" title="<?php echo $tr->translate("STUDENT_INFO");?>" selected="true">
 					      	<table  cellspacing="5" style="margin:0 auto;" width="100%">
 					      		<tr>
@@ -95,7 +95,7 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 					      		<tr>
 					      			<td title="អ៊ីម៉ែល"><?php echo $tr->translate("EMAIL_ADDRESS");?></td>
 									<td><input class="fullside"  tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="st_email" name="st_email" value="<?php echo $this->rs['email'];?>" type="text" required="required" ></td>
-									<td title="ទីកន្លែងកំណើត"><?php echo $tr->translate("POB ");?>*</td>
+									<td title="ទីកន្លែងកំណើត"><?php echo $tr->translate("POB");?></td>
 									<td  colspan="4" >
 										<textarea class="fullside"   style="width: 644px;height: 60px !important;"
 										tabindex="21" dojoType=""  id="place_of_birth" name="place_of_birth" required="required"><?php echo $this->rs['address'];?></textarea>
@@ -318,8 +318,10 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 					</tr>
 					<tr>
 						<td align="center">
+									<input type="button" label="<?php echo $tr->translate('GO_BACK');?>" id="back" dojoType="dijit.form.Button" 
+										iconClass="dijitIconUndo" onclick="window.location = '<?php echo $this->url(array('module'=>'foundation','controller'=>"register",'action'=>'index'),null,true); ?>';" />
 					   				<input iconClass="dijitIconClear" type="reset" value="សំអាត" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
-									<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('SAVECLOSSE');?>" dojoType="dijit.form.Button" 
+									<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('SAVE_CLOSE');?>" dojoType="dijit.form.Button" 
 										iconClass="dijitEditorIcon dijitEditorIconSave" />
 									
 					   	</td>

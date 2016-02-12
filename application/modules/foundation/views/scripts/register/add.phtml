@@ -1,6 +1,6 @@
 <?php
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-	$this->headTitle('ចុះឈ្មោះសិស្ស'); 
+	$this->headTitle($tr->translate('REGISTER')); 
 	echo $this->headTitle(''); 
 	
 ?>	
@@ -97,7 +97,7 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 					      		<tr>
 					      			<td title="អ៊ីម៉ែល"><?php echo $tr->translate("EMAIL_ADDRESS");?></td>
 									<td><input class="fullside"  tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="st_email" name="st_email" value="" type="text" required="required" ></td>
-									<td title="ទីកន្លែងកំណើត"><?php echo $tr->translate("POB");?>*</td>
+									<td title="ទីកន្លែងកំណើត"><?php echo $tr->translate("POB");?></td>
 									<td  colspan="4" >
 										<textarea class="fullside"   style="width: 644px;height: 60px !important;"
 										tabindex="21" dojoType=""  id="place_of_birth" name="place_of_birth" required="required"></textarea>
