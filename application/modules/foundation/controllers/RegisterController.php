@@ -8,20 +8,34 @@ class Foundation_RegisterController extends Zend_Controller_Action {
     	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
 	}
 	public function indexAction(){
-		$db_student= new Foundation_Model_DbTable_DbStudent();
-		$rs_rows = $db_student->getAllStudent();
-		$list = new Application_Form_Frmtable();
-		if(!empty($rs_rows)){
-			} 
-			else{
-				$result = Application_Model_DbTable_DbGlobal::getResultWarning();
+		try{
+			if($this->getRequest()->isPost()){
+				$_data=$this->getRequest()->getPost();
+				$search = array(
+						'txtsearch' => $_data['txtsearch']);
 			}
-			$collumns = array("NAME_KH","NAME_EN","SEX","GRADE","NATIONALITY","DOB","PHONE","EMAIL","STATUS");
-			$link=array(
-					'module'=>'foundation','controller'=>'register','action'=>'edit',
-			);
-			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('stu_enname'=>$link,'stu_khname'=>$link));
-			
+			else{
+				$search = array(
+						'txtsearch' => '');
+			}
+			$db_student= new Foundation_Model_DbTable_DbStudent();
+			$rs_rows = $db_student->getAllStudent($search);
+			$list = new Application_Form_Frmtable();
+			if(!empty($rs_rows)){
+				} 
+				else{
+					$result = Application_Model_DbTable_DbGlobal::getResultWarning();
+				}
+				$collumns = array("NAME_KH","NAME_EN","SEX","GRADE","NATIONALITY","DOB","PHONE","EMAIL","STATUS");
+				$link=array(
+						'module'=>'foundation','controller'=>'register','action'=>'edit',
+				);
+				$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('stu_enname'=>$link,'stu_khname'=>$link));
+		}catch (Exception $e){
+			Application_Form_FrmMessage::message("Application Error");
+			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+		}		
+	
 	}
 	function addAction(){
 		$db = new Foundation_Model_DbTable_DbStudent();

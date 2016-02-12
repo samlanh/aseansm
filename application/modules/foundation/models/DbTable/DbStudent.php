@@ -9,15 +9,28 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 		return $session_user->user_id;
 	
 	}
-	public function getAllStudent(){
+	public function getAllStudent($search){
 		$_db = $this->getAdapter();
 		$sql = "SELECT stu_id,stu_khname,stu_enname,
 		(SELECT name_kh FROM `rms_view` WHERE type=2 AND key_code = sex) as sex
-		,(SELECT `major_enname` FROM `rms_major` WHERE `major_id`=grade),nationality,dob,tel,email ,
+		,(SELECT `major_enname` FROM `rms_major` WHERE `major_id`=grade) as grade,nationality,dob,tel,email ,
 		(SELECT name_kh FROM `rms_view` WHERE type=1 AND key_code = status) as status
 		FROM rms_student where status = 1 AND stu_type = 1 ";
 		$orderby = " ORDER BY stu_id DESC ";
-		return $_db->fetchAll($sql.$orderby);
+		$where = '';
+		if(empty($search)){
+			return $_db->fetchAll($sql.$orderby);
+		}
+		if(!empty($search['txtsearch'])){
+			$s_where = array();
+			$s_search = trim($search['txtsearch']);
+			$s_where[]="stu_khname LIKE '%{$s_search}%'";
+			$s_where[]="stu_enname LIKE '%{$s_search}%'";
+			$s_where[]="(SELECT `major_enname` FROM `rms_major` WHERE `major_id`=grade) LIKE '%{$s_search}%'";
+			$s_where[]="(SELECT name_kh FROM `rms_view` WHERE type=2 AND key_code = sex) LIKE '%{$s_search}%'";
+			$where .=' AND ( '.implode(' OR ',$s_where).')';
+		}
+		return $_db->fetchAll($sql.$where.$orderby);
 	}
 	public function getStudentById($id){
 		$db = $this->getAdapter();
