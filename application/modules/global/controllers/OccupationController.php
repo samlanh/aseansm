@@ -12,20 +12,19 @@ class Global_OccupationController extends Zend_Controller_Action {
 	}
 	public function indexAction(){
 		try{
-			$db_dept=new Global_Model_DbTable_DbOccupation();
 			if($this->getRequest()->isPost()){
 				$_data=$this->getRequest()->getPost();
 				$search = array(
-						'occu_name' => $_data['occu_name'],
+						'title' => $_data['title'],
 						'status' => $_data['status_search']);
 			}
 			else{
 				$search = array(
-						'occu_name' => '',
+						'title' => '',
 						'status' => -1);
 			}
 			$db = new Global_Model_DbTable_DbOccupation();
-			$rs_rows= $db->getAllOccupation();
+			$rs_rows= $db->getAllOccupation($search);
 			$glClass = new Application_Model_GlobalClass();
 			$rs_rows = $glClass->getImgActive($rs_rows, BASE_URL, true);
 		

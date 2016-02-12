@@ -37,11 +37,23 @@ class Global_Model_DbTable_DbOccupation extends Zend_Db_Table_Abstract
 		$where=$this->getAdapter()->quoteInto("occupation_id=?", $_data["id"]);
 		$this->update($_arr, $where);
 	}
-	function getAllOccupation($search=null){
+	function getAllOccupation($search){
 		$db = $this->getAdapter();
 		$sql = " SELECT occupation_id AS id,occu_name,occu_enname, create_date,status,(SELECT  CONCAT(first_name,' ', last_name) FROM rms_users WHERE id=user_id )AS user_name
-		FROM rms_occupation	WHERE 1 ";
-		return $db->fetchAll($sql);	
+		FROM rms_occupation ";
+		$order = ' ORDER BY occu_name ASC '; 
+		$where = ' WHERE 1 ';
+		if(empty($search)){
+			return $db->fetchAll($sql.$order);
+		}
+		if(!empty($search['title'])){
+			$s_where = array();
+			$s_search = trim($search['title']);
+			$s_where[] = " occu_name LIKE '%{$s_search}%'";
+			$s_where[] = " occu_enname LIKE '%{$s_search}%'";
+			$where .=' AND ( '.implode(' OR ',$s_where).')';
+		}
+		return $db->fetchAll($sql.$where.$order);
 	}	
 	public function addOccupation($_data){//ajax
 		$_arr=array(
