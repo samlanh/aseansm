@@ -51,8 +51,14 @@ class Global_Model_DbTable_DbDept extends Zend_Db_Table_Abstract
 		}
 		$where = ' ';
 		if(!empty($search['title'])){
-			$where.=" AND ( en_name LIKE '%".$db->quote($search['title'])."%' OR kh_name LIKE '%".$db->quote($search['title'])."%') ";
-		}
+			$s_where = array();
+	    		$s_search = trim($search['title']);
+		 		$s_where[] = " en_name LIKE '%{$s_search}%'";
+	    		$s_where[] = " kh_name LIKE '%{$s_search}%'";
+	    		$s_where[] = " shortcut LIKE '%{$s_search}%'";
+	    		$sql .=' AND ( '.implode(' OR ',$s_where).')';	
+			}
+	    		
 		if($search['status']>-1){
 			$where.= " AND is_active = ".$db->quote($search['status']);
 		}

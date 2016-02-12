@@ -3,7 +3,7 @@
 	echo $this->headTitle($tr->translate("SRMS_FACULTIES_LIST"));
 ?>	
 <?php $frm = $this->frm_search;?>
-<form id="list" name="list" action="<?php echo $this->url(array('module'=>'global','controller'=>'index','action'=>'dept-list')); ?>" dojoType="dijit.form.Form" method="post">
+<form id="list" name="list" action="<?php echo $this->url(array('module'=>'global','controller'=>'faculty','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post">
 <div dojoType="dijit.layout.AccordionPane">
 	 <button IconClass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button>
 	 <?php echo $frm->getElement("title");?>

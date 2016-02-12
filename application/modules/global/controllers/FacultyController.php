@@ -16,7 +16,6 @@ class Global_FacultyController extends Zend_Controller_Action {
     		$search = array(
     				'title' => $_data['title'],
     				'status' => $_data['status_search']);
-    		$limit = $dept_session->limit;
     	}
     	else{
     		$search='';
