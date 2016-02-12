@@ -39,6 +39,7 @@ var grade_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=>'register','action'=>'get-grade')); ?>';
 	function getallGrade(){
 		dept_id = dijit.byId('degree').get('value');
+		//alert(dept_id);
 			dojo.xhrPost({
 				url:url_dept,
 				content:{

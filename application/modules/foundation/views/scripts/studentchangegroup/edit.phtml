@@ -1,13 +1,13 @@
 <?php
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-	echo $this->headTitle($tr->translate('កែសិស្សដែលបានប្តូរក្រុម')); 
+	echo $this->headTitle($tr->translate('EDIT_STUDENT_CHANGE_GROUP')); 
 ?>
 <form id="add_car" action="<?php echo $this->url(array('module'=>'foundation','controller'=>'studentchangegroup','action'=>'edit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	<table cellspacing="20" style="margin: 0 auto; width:100%">
 		<tr>
 			<td>
 				<fieldset>
-					<legend align="center"><strong><?php echo $tr->translate("ADD STUDENT CHANGE GROUP");?></strong></legend>
+					<legend align="center"><strong><?php echo $tr->translate("EDIT_STUDENT_CHANGE_GROUP");?></strong></legend>
 					<table cellspacing="20" width="100%" >
 						<tr>
 							<td align="center" valign="top">
@@ -87,6 +87,8 @@
 									
 									<tr>
 										<td colspan="6" align="center">
+											<input type="button" label="<?php echo $tr->translate('GO_BACK');?>" id="back" dojoType="dijit.form.Button" 
+											 iconClass="dijitIconUndo" onclick="window.location = '<?php echo $this->url(array('module'=>'foundation','controller'=>"studentchangegroup",'action'=>'index'),null,true); ?>';" />
 											<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('GO_EDIT');?>" dojoType="dijit.form.Button" 
 											iconClass="dijitEditorIcon dijitEditorIconSave" />
 									
