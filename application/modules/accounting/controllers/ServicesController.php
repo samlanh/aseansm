@@ -37,7 +37,7 @@ class Accounting_ServicesController extends Zend_Controller_Action {
     		}
     		$collumns = array("PROGRAM_TITLE","DISCRIPTION","TYPE","STATUS","MODIFY_DATE","BY_USER");
     		$link=array(
-    				'module'=>'accounting','controller'=>'services','action'=>'edit-service-type');
+    				'module'=>'accounting','controller'=>'services','action'=>'edit');
     		$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('cate_name'=>$link,'title'=>$link));
     		
     	}catch (Exception $e){
@@ -73,7 +73,7 @@ class Accounting_ServicesController extends Zend_Controller_Action {
 		Application_Model_Decorator::removeAllDecorator($frm_item);
 		$this->view->frm_item = $frm_item;
 	}
-	function editServiceTypeAction(){
+	function editAction(){
 			if($this->getRequest()->isPost()){
 				$_data = $this->getRequest()->getPost();
 				$model = new Accounting_Model_DbTable_DbServiceType();

@@ -43,6 +43,7 @@ class Accounting_Model_DbTable_DbService extends Zend_Db_Table_Abstract
     	$sql = "SELECT * FROM rms_program_name WHERE service_id = ".$id;
     	return $db->fetchRow($sql);
     }	
+    
     public function getAllServiceNames($search=''){
     	$db = $this->getAdapter();
     	$where='';

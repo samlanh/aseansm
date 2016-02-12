@@ -159,6 +159,7 @@ class Accounting_FeeController extends Zend_Controller_Action {
 		$row=0;$indexterm=1;$key=0;
 
 				$rows = $db->getFeeDetailById($id);
+// 				print_r($rows);exit();
 				$fee_row=1;$rs_rows=array();
 				if(!empty($rows))foreach($rows as $payment_tran){
 					if($payment_tran['payment_term']==1){
@@ -185,6 +186,7 @@ class Accounting_FeeController extends Zend_Controller_Action {
 				}
 				
 			   $this->view->rows =$rs_rows;
+// 			   print_r($rs_rows);exit();
 			   
 	}
     
