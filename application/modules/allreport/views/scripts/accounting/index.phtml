@@ -26,7 +26,6 @@
   <?php 
   
   $tr = Application_Form_FrmLanguages::getCurrentlanguage();
-  $rpt_car=$this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-car'), null, true);
   $rpt_fee=$this->url(array('module'=>'allreport','controller'=>'fee','action'=>'rpt-fee'), null, true);
   $rpt_servicecharge=$this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-service-charge'), null, true);
   $rpt_collectfromco=$this->url(array('module'=>'report','controller'=>'loan','action'=>'rpt-loan-collectionco'), null, true);
@@ -46,7 +45,6 @@
   		<li><a href="<?php echo $this->url(array('module'=>'report','controller'=>'accounting','action'=>'rpt-studentlate'), null, true);?>"><?php echo $tr->translate('Student Payment Late Report');?></a></li>
   		<li><a href="<?php echo $this->url(array('module'=>'report','controller'=>'accounting','action'=>'rpt-expectedincome'), null, true);?>"><?php echo $tr->translate('Expected Income Report');?></a></li>
   		<li><a href="<?php echo $this->url(array('module'=>'report','controller'=>'accounting','action'=>'rpt-stopservice'), null, true);?>"><?php echo $tr->translate('Student Stop Service Report');?></a></li>
-  		<li><a href="<?php echo $rpt_car;?>"><?php echo $tr->translate('RPT_CAR');?></a></li>
   
   	</ul>
   </div>
