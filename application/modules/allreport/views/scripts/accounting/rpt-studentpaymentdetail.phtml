@@ -5,7 +5,11 @@
 	$base_url = Application_Form_FrmMessage::getUrl("/");
 ?>
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-studentpaymentdetail')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<input dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Search by student name....." value="" type="text">
+		<input  dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Search....." value="<?php echo $this->search['txtsearch'];?>" type="text">
+		<label>From Date</label>
+		<input  name="from_date" id="from_date" dojoType="dijit.form.DateTextBox"  value="<?php echo $this->search['start_date'];?>" type="text">
+		<label>To Date</label>
+		<input  name="to_date" id="to_date" dojoType="dijit.form.DateTextBox"  value="<?php echo $this->search['end_date'];?>" type="text">
 		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
 </form>
 
@@ -67,7 +71,7 @@
 										  </tr>
 										  <tr></tr>
 												<style> td{padding:0 3px; }</style>
-										  <?php $i=0; $total=0; foreach($this->row as $rs){ $i++;?>
+										  <?php $i=0; $total=0; if(!empty($this->row)) foreach($this->row as $rs){ $i++;?>
 										  <tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
 										    <td><?php echo $i;?></td>
 										    <td style="color: #F00;"><?php echo $rs['receipt_number']; ?></td>

@@ -17,8 +17,12 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     	}
     public function getStudentPayment($search){
     	$db = $this->getAdapter();
-    	$sql=" SELECT * FROM v_getstudentpayment";
-    	$sql.=' WHERE 1';
+    	
+    	$from_date = (empty($search["start_date"]))?'Y-m-01' :$search["start_date"];
+    	$to_date =  (empty($search["end_date"]))?'Y-m-d' :$search["end_date"];
+    	$where = " AND create_date BETWEEN '$from_date' AND '$to_date'";
+    	
+    	$sql=" SELECT * FROM v_getstudentpayment WHERE 1";
     	$order=" ORDER BY id DESC , receipt_number DESC ";
     	if(empty($search)){
     		return $db->fetchAll($sql.$order);
@@ -30,19 +34,24 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     		$s_where[] = " stu_code LIKE '%{$s_search}%'";
     		$s_where[] = " kh_name LIKE '%{$s_search}%'";
     		$s_where[] = " en_name LIKE '%{$s_search}%'";
-    		$sql .=' AND ( '.implode(' OR ',$s_where).')';
+    		$where .=' AND ( '.implode(' OR ',$s_where).')';
     	}
-    	return $db->fetchAll($sql.$order);
+    	return $db->fetchAll($sql.$where.$order);
     }
     
-    public function getStudentPaymentDetail($search){
+    public function getStudentPaymentDetail($search=null){
     	$db = $this->getAdapter();
-    	$sql = 'SELECT * FROM v_getstudentpaymentdetail';
-    	$sql.=' WHERE 1';
+    	
+    	$db = $this->getAdapter();
+    	$from_date = (empty($search["start_date"]))?'Y-m-01' :$search["start_date"];
+    	$to_date =  (empty($search["end_date"]))?'Y-m-d' :$search["end_date"];
+ 
+    	$where = " AND create_date BETWEEN '$from_date' AND '$to_date'";
+		
+    	$sql = 'SELECT * FROM v_getstudentpaymentdetail WHERE 1 ';
     	$order=" ORDER BY payment_id DESC , receipt_number DESC ";
-    	if(empty($search)){
-    		return $db->fetchAll($sql.$order);
-    	}
+    	
+    	 
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
     		$s_search = trim($search['txtsearch']);
@@ -50,9 +59,10 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     		$s_where[] = " en_name LIKE '%{$s_search}%'";
     		$s_where[] = " service LIKE '%{$s_search}%'";
     		$s_where[] = " receipt_number LIKE '%{$s_search}%'";
-    		$sql .=' AND ( '.implode(' OR ',$s_where).')';
+    		$where .=' AND ( '.implode(' OR ',$s_where).')';
     	}
-    	return $db->fetchAll($sql.$order);
+    	//print_r ($db->fetchAll($sql.$where.$order)); exit();
+    	return $db->fetchAll($sql.$where.$order);
     }
     public function getPaymentReciptDetail($id){
     	$db = $this->getAdapter();
