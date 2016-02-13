@@ -43,6 +43,8 @@
 	    }
 	}, "grade");
 	dijit.byId('dept').attr('value','<?php echo $this->degree_row['degree'];?>');
+	 dijit.byId('from_time').attr('value','<?php echo $this->degree_row['start_hour']?>');
+     dijit.byId('to_time').attr('value','<?php echo $this->degree_row['end_hour']?>');
 	});	
 	var grade_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 	var url_dept = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-grade')); ?>';
@@ -302,6 +304,24 @@ fieldset{  background:none;}
 							<td><?php echo $tr->translate("SESSION");?></td>
 							<td><?php echo $register->getElement('session');?></td>
 						</tr>
+						<tr>
+							<td title="ចាប់ពីម៉ោង"><?php echo $tr->translate("ចាប់ពីម៉ោង");?>*</td>
+									<td>
+									     <select class="fullside"  tabindex="24" name="from_time" id="from_time" dojoType="dijit.form.FilteringSelect" >
+										  <?php $i=0; foreach ($this->hour As $key=>$hour){ $i++;?> 
+										    <option value="<?php echo $key?>"><?php echo $hour; ?></option>
+										 <?php }?>
+										</select>
+									</td>
+									<td><?php echo $tr->translate("ដល់ម៉ោង");?>*</td>
+									<td>
+									    <select class="fullside"  tabindex="24" name="to_time" id="to_time" dojoType="dijit.form.FilteringSelect" >
+										  <?php $i=0; foreach ($this->hour As $key=>$hour){?> 
+										    <option value="<?php echo $key?>"><?php echo $hour; ?></option>
+										 <?php }?>
+										</select>
+									</td>
+					      		</tr>
 						<tr>
 							<td><?php echo $tr->translate("DEGREE");?><label class="red">*</label></td>
 							<td><input id="dept" /><?php //echo $register->getElement('dept');?></td>

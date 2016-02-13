@@ -287,6 +287,24 @@ fieldset{  background:none;}
 							<td><?php echo $register->getElement('session');?></td>
 						</tr>
 						<tr>
+							<td title="ចាប់ពីម៉ោង"><?php echo $tr->translate("FROM_TIME");?>*</td>
+									<td>
+									     <select class="fullside"  tabindex="24" name="from_time" id="from_time" dojoType="dijit.form.FilteringSelect" >
+										  <?php $i=0; foreach ($this->hour As $key=>$hour){ $i++;?> 
+										    <option value="<?php echo $key?>"><?php echo $hour; ?></option>
+										 <?php }?>
+										</select>
+									</td>
+									<td><?php echo $tr->translate("TO_TIME");?>*</td>
+									<td>
+									    <select class="fullside"  tabindex="24" name="to_time" id="to_time" dojoType="dijit.form.FilteringSelect" >
+										  <?php $i=0; foreach ($this->hour As $key=>$hour){?> 
+										    <option value="<?php echo $key?>"><?php echo $hour; ?></option>
+										 <?php }?>
+										</select>
+									</td>
+					     </tr>
+						<tr>
 							<td><?php echo $tr->translate("DEGREE");?><label class="red">*</label></td>
 							<td><input id="dept" /><?php //echo $register->getElement('dept');?></td>
 							<td><?php echo $tr->translate("CLASS");?><label class="red">*</label></td>
@@ -615,8 +633,6 @@ function changControll(){
 function clearControll(){
 	dijit.byId('kh_name').attr('value','');
 	dijit.byId('en_name').attr('value','');
-	dijit.byId('sex').attr('value','');
-	
 }
 ///get Gerneral old student
 function getGeneralOldStudentById(){

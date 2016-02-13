@@ -73,6 +73,8 @@ class Registrar_RegisterController extends Zend_Controller_Action {
        //get all dept
        $_db = new Application_Model_DbTable_DbGlobal();
        $data=$this->view->all_dept = $_db->getAllFecultyName();
+       $_hour = new Application_Model_GlobalClass();
+       $this->view->hour= $row = $_hour->getHours();
     }
     public function editAction(){
     	$id=$this->getRequest()->getParam('id');
@@ -107,6 +109,8 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     	$this->view->student_card = $__student_card;
     	$_db = new Application_Model_DbTable_DbGlobal();
     	$this->view->all_dept = $_db->getAllFecultyName();
+    	$_hour = new Application_Model_GlobalClass();
+    	$this->view->hour= $row = $_hour->getHours();
     }
     public function oldaddAction()
     {

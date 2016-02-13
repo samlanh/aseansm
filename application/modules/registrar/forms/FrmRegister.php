@@ -94,7 +94,8 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 				1=>$this->tr->translate('MORNING'),
 				2=>$this->tr->translate('AFTERNOON'),
 				3=>$this->tr->translate('EVERNING'),
-				4=>$this->tr->translate('WEEKEND')
+				4=>$this->tr->translate('WEEKEND'),
+				5=>$this->tr->translate("PART_TIME")
 		);
 		$this->_session->setMultiOptions($opt_session);
 		$this->_session->setAttribs(array(
