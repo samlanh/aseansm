@@ -32,7 +32,7 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 	<tr>
 		<td>
 				<fieldset style="margin-top:-13px;">
-					<legend align="center" ><strong><?php echo $tr->translate("Group Faculty");?></strong></legend>
+					<legend align="center" ><strong><?php echo $tr->translate("បន្ថែមក្រុមសិក្សា");?></strong></legend>
 					<table style="margin: 0 auto; width: 100%;" cellspacing="10">
 						<tr>
 							<td width="110px"><?php echo $tr->translate("Group Code")?></td>
@@ -73,10 +73,10 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 							<td ><?php echo $tr->translate("DEGREE")?></td>
 							<td>
 								<select   name="degree" id="degree" dojoType="dijit.form.FilteringSelect" onchange="getallGrade();">
-										<?php 
-										if(!empty($this->degree))foreach ($this->degree as $row){?>
+									<?php 
+									if(!empty($this->degree))foreach ($this->degree as $row){?>
 										<option value="<?php echo $row['dept_id']?>"><?php echo $row['en_name']?></option>
-										<?php }?>
+									<?php }?>
 								</select>
 							</td>
 						</tr>
@@ -125,9 +125,9 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 						<tr>
 							<td colspan="6" align="center">
 								<input iconClass="dijitIconClear" type="reset" value="សំអាត" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
-									<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('SAVECLOSE');?>" dojoType="dijit.form.Button" 
+									<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('SAVE_CLOSE');?>" dojoType="dijit.form.Button" 
 										iconClass="dijitEditorIcon dijitEditorIconSave" />
-									<input type="submit" value="save_new" name="save_new" label="<?php echo $tr->translate('SAVENEW');?>" dojoType="dijit.form.Button" 
+									<input type="submit" value="save_new" name="save_new" label="<?php echo $tr->translate('SAVE_NEW');?>" dojoType="dijit.form.Button" 
 										iconClass="dijitEditorIcon dijitEditorIconSave" />
 							</td>
 						</tr>
@@ -147,8 +147,6 @@ dojo.require("dojo.date.locale");
 dojo.require("dojo.html");
 var room_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->room));?> );
 dojo.ready(function(){
-	
-
 			new dijit.form.FilteringSelect({
 			    autoComplete: true,                        
 			    id: "grade",
@@ -162,8 +160,7 @@ dojo.ready(function(){
 			}, "grade");
 			//getallGrade();
 	
-		
-	});
+});
 function setEndDate(){
 	amount_date = dijit.byId('amountmonth').get('value');
 	release_date = dijit.byId("start_date").get('value');//just update follow by first payment

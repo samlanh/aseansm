@@ -27,15 +27,16 @@ class Global_CarController extends Zend_Controller_Action {
 			$db = new Global_Model_DbTable_DbCar();
 			$rs_rows= $db->getAllCars($search);
 	
-			$glClass = new Application_Model_GlobalClass();
-			$rs = $glClass->getImgActive($rs_rows, BASE_URL, true);
+// 			$glClass = new Application_Model_GlobalClass();
+// 			$rs = $glClass->getImgActive($rs_rows, BASE_URL, true);
+			
 			$this->view->search =  $search;
 			$list = new Application_Form_Frmtable();
-			$collumns = array("CarID","Car Name","Driver Name","Tel","Zone","Note","Status");
+			$collumns = array("CarID","Car Name","Driver Name","Tel","Zone","Note");
 			$link=array(
 					'module'=>'global','controller'=>'car','action'=>'edit',
 			);
-			$this->view->list=$list->getCheckList(0, $collumns, $rs,array('carname'=>$link,'carid'=>$link,'drivername'=>$link));
+			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('carname'=>$link,'carid'=>$link,'drivername'=>$link));
 		}catch (Exception $e){
 			Application_Form_FrmMessage::message("Application Error");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());

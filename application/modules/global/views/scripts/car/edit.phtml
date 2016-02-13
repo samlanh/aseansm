@@ -7,7 +7,7 @@
 		<tr>
 			<td>
 				<fieldset>
-					<legend align="center"><strong><?php echo $tr->translate("ADD_CAR_NAME");?></strong></legend>
+					<legend align="center"><strong><?php echo $tr->translate("កែរថយន្ត");?></strong></legend>
 					<table cellspacing="20" width="100%" >
 						<tr>
 							<td align="center" valign="top">
@@ -47,8 +47,10 @@
 									</tr>		
 									<tr>
 										<td colspan="2" align="center">
+											<input type="button" label="<?php echo $tr->translate('GO_BACK');?>" id="back" dojoType="dijit.form.Button" 
+												iconClass="dijitIconUndo" onclick="window.location = '<?php echo $this->url(array('module'=>'global','controller'=>"car",'action'=>'index'),null,true); ?>';" />
 											<input type="submit" value="update" name="update" label="<?php echo $tr->translate('GO_EDIT');?>" dojoType="dijit.form.Button" 
-										iconClass="dijitEditorIcon dijitEditorIconSave" />
+												iconClass="dijitEditorIcon dijitEditorIconSave" />
 								
 										</td>
 									</tr>			

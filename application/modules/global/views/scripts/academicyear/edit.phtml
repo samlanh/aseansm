@@ -15,6 +15,37 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 				return false;
 			}
 </script>
+
+<script type="text/javascript">
+dojo.require("dojo.data.ItemFileWriteStore"); 
+dojo.require("dojo.date.locale");
+dojo.require("dojo.html");
+
+
+function getEndDate(){
+	//alert(1);
+	amount_month = dijit.byId('duration').get('value');
+	 start_date = dijit.byId("study_start").get('value');
+
+	 var a = new Date(start_date);
+	  mm = a.getMonth()+amount_month+1;
+
+	 var dd = a.getDate();
+	  if(dd<10){
+	   dd = "0"+dd;
+	 }
+	  if(mm<10){
+	   mm = "0"+mm;
+	 }
+	 var y = a.getFullYear();
+	 var epx_date = y + '-' + mm + '-' + dd ;
+
+	 //alert(epx_date);
+	 dijit.byId('start_end').attr('value',epx_date);
+}
+
+</script>
+
 <table width="100%">
 	<tr>
 		<td>
@@ -54,12 +85,12 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 										</tr>
 										<tr>
 											<td style="width: 100px"><?php echo $tr->translate("Academic/Start")?></td>
-											<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="study_start" name="study_start" value="<?php echo $this->rs['study_start']?>" ></td>
+											<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="study_start" name="study_start" onchange="getEndDate();" value="<?php echo $this->rs['study_start']?>" ></td>
 											<td></td>
 										</tr>
 										<tr>
 											<td style="width: 5px"><?php echo $tr->translate("Duration")?></td>
-											<td><input dojoType="dijit.form.TextBox" class="fullside" id="duration" name="duration" value="<?php echo $this->rs['duration']?>"></td>
+											<td><input dojoType="dijit.form.NumberTextBox" class="fullside" id="duration" name="duration" onkeyup="getEndDate();" value="<?php echo $this->rs['duration']?>"></td>
 										</tr>
 										<tr>
 											<td style="width: 100px"><?php echo $tr->translate("Academic/End")?></td>

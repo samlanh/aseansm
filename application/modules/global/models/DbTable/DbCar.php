@@ -25,7 +25,7 @@ class Global_Model_DbTable_DbCar extends Zend_Db_Table_Abstract
     }
     function getAllCars($search=null){
     	$db = $this->getAdapter();
-    	$sql = " SELECT id,carid,carname,drivername,tel,zone,note,status
+    	$sql = " SELECT id,carid,carname,drivername,tel,zone,note
     	FROM rms_car
     	WHERE 1 ";
     	$order=" order by carname";

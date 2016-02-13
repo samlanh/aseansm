@@ -166,11 +166,13 @@ class Global_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		(SELECT`rms_view`.`name_en`	FROM `rms_view`	WHERE ((`rms_view`.`type` = 4)
 		AND (`rms_view`.`key_code` = `g`.`session`))LIMIT 1) AS `session`,
 		(SELECT `r`.`room_name`	FROM `rms_room` `r`	WHERE (`r`.`room_id` = `g`.`room_id`)) AS `room_name`,
-		`g`.`start_date`,`g`.`expired_date`,`g`.`note`,
-		(SELECT `rms_view`.`name_en` FROM `rms_view` WHERE ((`rms_view`.`type` = 1)
-		AND (`rms_view`.`key_code` = `g`.`status`)) LIMIT 1) AS `status`
+		`g`.`start_date`,`g`.`expired_date`,`g`.`note`
 		FROM `rms_group` `g`
 		';	
+		
+// 		(SELECT `rms_view`.`name_en` FROM `rms_view` WHERE ((`rms_view`.`type` = 1)
+// 				AND (`rms_view`.`key_code` = `g`.`status`)) LIMIT 1) AS `status`
+		
 		$where =' WHERE 1 ';
 		$order =  ' ORDER BY `g`.`id` DESC ' ;
 		if(empty($search)){
