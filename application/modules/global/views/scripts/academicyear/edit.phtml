@@ -1,7 +1,7 @@
 <?php
 $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 $frm = $this->frm_callteral;
-echo $this->headTitle($tr->translate("Edit Academicyear"));
+echo $this->headTitle($tr->translate("EDIT_ACADEMIC_YEAR"));
 $baseurl =  Zend_Controller_Front::getInstance()->getBaseUrl();
 
 ?>
@@ -50,11 +50,11 @@ function getEndDate(){
 	<tr>
 		<td>
 			<fieldset style="margin-top:-13px;">
-					<legend align="center" ><strong><?php echo $tr->translate("Add Acadamic Year");?></strong></legend>
+					<legend align="center" ><strong style="font-size: 18px;"><?php echo $tr->translate("EDIT_ACADEMIC_YEAR");?></strong></legend>
 					<table style="margin: 0 auto; width: 100%;" cellspacing="10">
 						<td valign="top">
 							<fieldset>
-								<legend align="center">Academic</legend>
+								<legend align="center"><strong style="font-size: 14px;">ACADEMIC</strong></legend>
 									<table style="width:330px;" cellspacing="6">
 										<tr>
 											<input type="hidden" name="id" value="<?php echo $this->rs['id']; ?>">
@@ -114,19 +114,19 @@ function getEndDate(){
 						</td>
 						<td valign="top">
 						<fieldset>
-							<legend align="center">Tem Period</legend>
+							<legend align="center"><strong style="font-size: 14px;">TERM PERIOD</strong></legend>
 								<table style="width:330px;" cellspacing="6">
 								<td>
 									<fieldset>
-										<legend align="center"><b>Quarter Period</b></legend>
+										<legend align="center"><strong style="font-size: 14px;">Quarter Period<strong></legend>
 										<table style="width:330px;" cellspacing="6">
 											<tr>
-												<td style="width: 100px"><?php echo $tr->translate("Start Date")?></td>
+												<td style="width: 100px"><?php echo $tr->translate("START_DATE")?></td>
 												<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="quarter_start" name="quarter_start" value="<?php echo $this->rs['quarter_start']?>" ></td>
 												<td></td>
 											</tr>
 											<tr>
-												<td style="width: 100px"><?php echo $tr->translate("End Date")?></td>
+												<td style="width: 100px"><?php echo $tr->translate("END_DATE")?></td>
 												<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="quarter_end" name="quarter_end" value="<?php echo $this->rs['quarter_end']?>" ></td>
 												<td></td>
 											</tr>
@@ -135,15 +135,15 @@ function getEndDate(){
 								</td>
 								<td valign="top">
 									<fieldset>
-										<legend align="center"><b>Semester</b></legend>
+										<legend align="center"><strong style="font-size: 14px;">Semester</strong></legend>
 										<table style="width:330px;" cellspacing="6">
 											<tr>
-												<td style="width: 100px"><?php echo $tr->translate("Start Date")?></td>
+												<td style="width: 100px"><strong><?php echo $tr->translate("START_DATE")?></strong></td>
 												<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="semester_start" name="semester_start" value="<?php echo $this->rs['semester_start']?>" ></td>
 												<td></td>
 											</tr>
 											<tr>
-												<td style="width: 100px"><?php echo $tr->translate("End Date")?></td>
+												<td style="width: 100px"><strong><?php echo $tr->translate("END_DATE")?></strong></td>
 												<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="semester_end" name="semester_end" value="<?php echo $this->rs['semester_end']?>" ></td>
 												<td></td>
 											</tr>
@@ -153,14 +153,14 @@ function getEndDate(){
 								<table style="width:330px; margin-left:130px;" cellspacing="6">
 									<fieldset>
 										<td>
-											<legend align="center"><th>Yearly</th></legend>
+											<legend align="center"><th><strong style="font-size: 14px;">Yearly</strong></th></legend>
 												<tr>
-													<td style="width: 100px"><?php echo $tr->translate("Start Date")?></td>
+													<td style="width: 100px"><strong><?php echo $tr->translate("START_DATE")?></strong></td>
 													<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="yearly_start" name="yearly_start" value="<?php echo $this->rs['yearly_start']?>" ></td>
 													<td></td>
 												</tr>
 												<tr>
-													<td style="width: 5px"><?php echo $tr->translate("End Date")?></td>
+													<td style="width: 5px"><strong><?php echo $tr->translate("END_DATE")?></strong></td>
 													<td><input dojoType="dijit.form.DateTextBox" class="fullside" id="yearly_end" name="yearly_end" value="<?php echo $this->rs['yearly_end']?>" ></td>
 												</tr>
 										</td>
@@ -171,9 +171,7 @@ function getEndDate(){
 						<tr>
 							<td colspan="6" align="center">
 								<input iconClass="dijitIconClear" type="reset" value="សំអាត" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
-									<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('SAVECLOSE');?>" dojoType="dijit.form.Button" 
-										iconClass="dijitEditorIcon dijitEditorIconSave" />
-									<input type="submit" value="save_new" name="save_new" label="<?php echo $tr->translate('SAVENEW');?>" dojoType="dijit.form.Button" 
+									<input type="submit" value="save_new" name="save_new" label="<?php echo $tr->translate('GO_EDIT');?>" dojoType="dijit.form.Button" 
 										iconClass="dijitEditorIcon dijitEditorIconSave" />
 							</td>
 						</tr>

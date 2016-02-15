@@ -78,9 +78,10 @@ class Global_Model_DbTable_DbAcademicyear extends Zend_Db_Table_Abstract
 	
 	function getAllacademicyear($search){
 		$db = $this->getAdapter();
-		$sql = ' SELECT id, fromyear, toyear, batch, study_start, study_end, duration, note, status FROM rms_academicperiod WHERE 1';
+		$sql = ' SELECT id, fromyear, toyear, batch, study_start, study_end, duration, note FROM rms_academicperiod WHERE 1';
 		$where = '';
-		return $db->fetchAll($sql);
+		$order_by=' order by id DESC';
+		return $db->fetchAll($sql.$where.$order_by);
 	}
 }
 
