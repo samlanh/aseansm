@@ -79,18 +79,18 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
-// 			$photoname = str_replace(" ", "_", $_data['en_name'].'-teacher') . '.jpg';
-// 			$upload = new Zend_File_Transfer();
-// 			$upload->addFilter('Rename',
-// 					array('target' => PUBLIC_PATH . '/images/'. $photoname, 'overwrite' => true) ,'photo');
-// 			$receive = $upload->receive();
-// 			if($receive)
-// 			{
-// 				$_data['photo'] = $photoname;
-// 			}
-// 			else{
-// 				$_data['photo']=$_data['photo'];
-// 			}
+			$photoname = str_replace(" ", "_", $_data['en_name'].'-teacher') . '.jpg';
+			$upload = new Zend_File_Transfer();
+			$upload->addFilter('Rename',
+					array('target' => PUBLIC_PATH . '/images/'. $photoname, 'overwrite' => true) ,'photo');
+			$receive = $upload->receive();
+			if($receive)
+			{
+				$_data['photo'] = $photoname;
+			}
+			else{
+				$_data['photo']=$_data['photo'];
+			}
 		
 		$_arr=array(
 					'teacher_code' => $_data['code'],
@@ -134,9 +134,12 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 	
 	function getAllTeacher($search){
 		$db = $this->getAdapter();
-		$sql = 'SELECT id, teacher_code, teacher_name_en, teacher_name_kh, sex, tel,email, 
+		$sql = 'SELECT id, teacher_code,teacher_name_kh, teacher_name_en, 
+				(select name_kh from rms_view where rms_view.type=2 and rms_view.key_code=rms_teacher.sex)AS sex, 
+				tel,email, 
 				(select name_kh from rms_view where type=3 and rms_view.key_code=rms_teacher.degree)AS degree, 
 				note  FROM rms_teacher WHERE 1';
+		$order_by=" order by id DESC";
 		$where = '';
 		if(!empty($search['title'])){
 		    $s_where = array();
@@ -145,7 +148,7 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 			$s_where[] = " teacher_code LIKE '%{$s_search}%'";
 			$s_where[] = " teacher_name_en LIKE '%{$s_search}%'";
 			$s_where[] = " teacher_name_kh LIKE '%{$s_search}%'";
-			$s_where[] = " sex LIKE '%{$s_search}%'";
+			$s_where[] = " (select name_kh from rms_view where rms_view.type=2 and rms_view.key_code=rms_teacher.sex) LIKE '%{$s_search}%'";
 			$s_where[] = " tel LIKE '%{$s_search}%'";
 			$s_where[] = " email LIKE '%{$s_search}%'";
 			$s_where[] = " degree LIKE '%{$s_search}%'";
@@ -155,7 +158,7 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 			$where .=' AND ('.implode(' OR ',$s_where).')';
 			
 		}
-		return $db->fetchAll($sql.$where);
+		return $db->fetchAll($sql.$where.$order_by);
 	}
 	public function addTeacherSubject($_data){//ajax
 		$db = $this->getAdapter();

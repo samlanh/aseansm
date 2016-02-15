@@ -22,7 +22,7 @@ class Global_LecturerController extends Zend_Controller_Action {
 			$rs_rows= $db->getAllTeacher($search);
 			//print_r($rs_rows);exit();
 			$list = new Application_Form_Frmtable();
-			$collumns = array("CODE","TEACHER_EN_NAME","TEACHER_KH_NAME","SEX","PHONE","EMAIL","DEGREE","NOTE");
+			$collumns = array("CODE","NAME_KH","NAME_EN","SEX","PHONE","EMAIL","DEGREE","NOTE");
 			 
 			$link=array(
 					'module'=>'global','controller'=>'lecturer','action'=>'edit',
@@ -53,7 +53,6 @@ class Global_LecturerController extends Zend_Controller_Action {
 					Application_Form_FrmMessage::Sucessfull("ការ​បញ្ចូល​ជោគ​ជ័យ !", '/global/lecturer');
 				}
 					Application_Form_FrmMessage::message("ការ​បញ្ចូល​ជោគ​ជ័យ !");
-				
 				 
 			}catch (Exception $e) {
 				Application_Form_FrmMessage::message("ការ​បញ្ចូល​មិន​ជោគ​ជ័យ");

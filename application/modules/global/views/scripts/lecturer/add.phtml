@@ -19,12 +19,12 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 	<tr>
 		<td>
 			<fieldset style="margin-top:-13px;">
-					<legend align="center" ><strong><?php echo $tr->translate("ADD_TECHER_NAME");?></strong></legend>
+					<legend align="center" ><strong style="font-size: 18px;"><?php echo $tr->translate("ADD_TECHER_NAME");?></strong></legend>
 					<table style="margin: 0 auto; width: 100%;" cellspacing="10">
 						<td valign="top">
 							<fieldset>
-								<legend align="center">ពត៏មានសាស្ត្រាចារ</legend>
-									<table style="width:330px;" cellspacing="6">
+								<legend align="center"><strong style="font-size: 14px;">ពត៏មានសាស្ត្រាចារ</strong></legend>
+									<table style="width:330px;white-space: nowrap;" cellspacing="6" >
 										<tr>
 											<td style="width: 100px;"><?php echo $tr->translate("CODE")?></td>
 											<td><?php  echo $techer->getElement('code');?></td>
@@ -67,7 +67,7 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 						</td>
 						<td valign="top">
 							<fieldset>
-								<legend align="center">ពត៏មានទំនាក់ទំនង</legend>
+								<legend align="center"><strong style="font-size: 14px;">ពត៏មានទំនាក់ទំនង</strong></legend>
 									<table style="width:330px;" cellspacing="6">
 										<tr>
 											<td style="width: 100px;"><?php echo $tr->translate("Group")?></td>
@@ -111,7 +111,7 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 						</td>
 						<td valign="top">
 							<fieldset>
-								<legend align="center">ឯកសារផ្សេងៗ</legend>
+								<legend align="center"><strong style="font-size: 14px;">ឯកសារផ្សេងៗ</strong></legend>
 									<table style="width:330px;" cellspacing="6">
 										<tr>
 											<td style="width: 5px"><?php echo $tr->translate("ID Card No")?></td>
@@ -156,10 +156,9 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 						</td>
 						<tr>
 							<td colspan="6" align="center">
-								<input iconClass="dijitIconClear" type="reset" value="សំអាត" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
-									<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('SAVECLOSE');?>" dojoType="dijit.form.Button" 
+									<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('SAVE_CLOSE');?>" dojoType="dijit.form.Button" 
 										iconClass="dijitEditorIcon dijitEditorIconSave" />
-									<input type="submit" value="save_new" name="save_new" label="<?php echo $tr->translate('SAVENEW');?>" dojoType="dijit.form.Button" 
+									<input type="submit" value="save_new" name="save_new" label="<?php echo $tr->translate('SAVE_NEW');?>" dojoType="dijit.form.Button" 
 										iconClass="dijitEditorIcon dijitEditorIconSave" />
 							</td>
 						</tr>
