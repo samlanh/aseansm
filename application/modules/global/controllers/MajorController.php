@@ -29,17 +29,14 @@ class Global_MajorController extends Zend_Controller_Action {
     	   }
 	    	$rs_rows= $_model->getAllMajorList($search);
 	    
-			$glClass = new Application_Model_GlobalClass();
-	    	$rs_rows = $glClass->getImgActive($rs_rows, BASE_URL, true);
+// 			$glClass = new Application_Model_GlobalClass();
+// 	    	$rs_rows = $glClass->getImgActive($rs_rows, BASE_URL, true);
 	    	$list = new Application_Form_Frmtable();
-	    	$collumns = array("PROGRAM_TITLE","TYPE","DISCRIPTION","SHORTCUT","MODIFY_DATE","STATUS","BY_USER");
+	    	$collumns = array("NAME_EN","NAME_KH","DEGREE","SHORTCUT","MODIFY_DATE");
 	    	$link=array(
 	    			'module'=>'global','controller'=>'major','action'=>'edit',
 	    	);
-	    	$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('major_enname'=>$link,'major_khname'=>$link));
-	    	
-	    	
-	    	
+	    	$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('major_enname'=>$link ,'major_khname'=>$link,'dept_name'=>$link));
 	    	
     	}catch (Exception $e){
     		Application_Form_FrmMessage::message("Application Error");
@@ -64,14 +61,17 @@ class Global_MajorController extends Zend_Controller_Action {
     	if($this->getRequest()->isPost()){
     		$_data = $this->getRequest()->getPost();
     		try {
-    			$_dbmodel = new Application_Model_DbTable_DbDept();
+    			$_dbmodel = new Global_Model_DbTable_DbDept();
     			$_major_id = $_dbmodel->AddNewMajor($_data);
-    			unset($formdata);
-    			$return =  array('major_id' => $_major_id,"succ"=>"ការបញ្ចូលដោយជោគជ័យ");
-    			print_r(Zend_Json::encode($return));
-    			exit();
+    			if(!empty($_data['save_close'])){
+    				Application_Form_FrmMessage::Sucessfull("ការ​បញ្ចូល​ជោគ​ជ័យ !", "/global/major/index");
+    			}
+//     			Application_Form_FrmMessage::Sucessfull("ការកែប្រែដោយជោគជ័យ", "/global/major/index");
+    			
     		} catch (Exception $e) {
+    			Application_Form_FrmMessage::message("ការ​បញ្ចូល​មិន​ជោគ​ជ័យ");
     			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+    			echo $e->getMessage();
     		}
     			
     	}

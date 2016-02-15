@@ -79,11 +79,10 @@ class Global_Model_DbTable_DbDept extends Zend_Db_Table_Abstract
 	
 	public function getAllMajorList($search=''){
 		$db = $this->getAdapter();
-		$sql = " SELECT m.major_id AS id, m.major_enname,m.major_khname
-       ,(select d.en_name from rms_dept AS d where m.dept_id=d.dept_id )AS dept_name
-       ,m.shortcut,m.modify_date,m.is_active as status,
-       (select first_name from rms_users where id=m.user_id) AS user_name
-       FROM rms_major AS m WHERE 1";
+		$sql = " SELECT m.major_id AS id, m.major_enname,m.major_khname,
+        (select d.en_name from rms_dept AS d where m.dept_id=d.dept_id )AS dept_name,
+        m.shortcut,m.modify_date
+        FROM rms_major AS m WHERE 1";
 		$order=" order by m.major_enname ,dept_name";
 		$where = '';
 		if(empty($search)){
@@ -141,7 +140,7 @@ class Global_Model_DbTable_DbDept extends Zend_Db_Table_Abstract
 	public function AddNewMajor($_data){
 		$this->_name='rms_major';
 			$_arr=array(
-					'dept_id'	  => $_data['dept_id'],
+					'dept_id'	  => $_data['dept'],
 					'major_enname'  => $_data['major_enname'],
 					'major_khname'  => $_data['major_khname'],
 					'shortcut'	  => $_data['shortcut'],

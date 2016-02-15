@@ -1,0 +1,66 @@
+<?php
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	echo $this->headTitle($tr->translate("ADD_GRADE"));
+?>	
+<?php  $frm_major= $this->frm_major;?>
+<form  id='edit-major' action="<?php echo $this->url(array('module'=>'global','controller'=>'major','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+
+<table cellspacing="10" width="50%" style="margin: 0 auto;">
+	<tr>
+		<td>
+					<fieldset>
+						<legend align="center" ><strong style="font-size: 18px;"><?php echo $tr->translate("ADD_GRADE")?></strong></legend>
+						<table style="margin: 0 auto; width: 100%;" cellspacing="10">
+							<tr>
+								<td><?php echo $tr->translate("NAME_EN")?></td>
+								<td> 
+									<input dojoType="dijit.form.ValidationTextBox" required="true" class="full height-text" id="major_enname" name="major_enname" value="" type="text">
+								</td>
+							</tr>
+							<tr>
+								<td><?php echo $tr->translate("NAME_KH")?></td>
+								<td>
+									<input dojoType="dijit.form.ValidationTextBox" required="true" class="full height-text" id="major_khname" name="major_khname" value="" type="text"></td>
+							</tr>
+								<tr>
+									<td><?php echo $tr->translate("SHORTCUT")?></td>
+									<td> 
+										<input dojoType="dijit.form.ValidationTextBox" required="true" class="full height-text" id="shortcut" name="shortcut" value="" type="text">
+									</td>
+							</tr>
+							<tr>
+								<td><?php echo $tr->translate("DEGREE")?></td>
+								<td>
+									<select name="dept" id="dept" dojoType="dijit.form.FilteringSelect" required="true"  class="full height-text" onChange="ShowPopupDept()">
+									    <option value="-1" label="បន្ថែមថ្មី">បន្ថែមថ្មី</option>
+									    <option value="1" label="Kindergarten">Kindergarten</option>
+									    <option value="2" label="Primary School">Primary School</option>
+									    <option value="3" label="Secondary School">Secondary School</option>
+									    <option value="4" label="High School">High School</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td><?php echo $tr->translate("STATUS")?></td>
+								<td>
+									<select name="status" id="status" dojoType="dijit.form.FilteringSelect" required="true"  class="full height-text">
+									    <option value="1" label="ប្រើប្រាស់" selected="selected">ប្រើប្រាស់</option>
+									    <option value="0" label="មិនប្រើប្រាស់">មិនប្រើប្រាស់</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" align="center">
+									<input iconClass="dijitIconClear" type="reset" value="clear" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
+									<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('SAVE_CLOSE');?>" dojoType="dijit.form.Button" 
+										iconClass="dijitEditorIcon dijitEditorIconSave" />
+									<input type="submit" value="save_new" name="save_new" label="<?php echo $tr->translate('SAVE_NEW');?>" dojoType="dijit.form.Button" 
+										iconClass="dijitEditorIcon dijitEditorIconSave" />
+								</td>
+							</tr>
+						</table>	
+				</fieldset>		
+		</td>
+	</tr>
+</table>	
+</form>

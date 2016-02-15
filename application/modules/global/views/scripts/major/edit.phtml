@@ -1,6 +1,6 @@
 <?php
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-	echo $this->headTitle($tr->translate("SRMS_EDET_MAJOR"));
+	echo $this->headTitle($tr->translate("EDIT_GRADE"));
 ?>	
 <?php  $frm_major= $this->frm_major;?>
 <form  id='edit-major' action="<?php echo $this->url(array('module'=>'global','controller'=>'major','action'=>'edit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
@@ -9,14 +9,14 @@
 	<tr>
 		<td>
 		<fieldset>
-					<legend align="center" ><strong><?php echo $tr->translate("EDET_MAJOR");?></strong></legend>
+					<legend align="center" ><strong style="font-size: 18px;"><?php echo $tr->translate("EDIT_GRADE");?></strong></legend>
 					<table style="margin: 0 auto; width: 100%;" cellspacing="10">
 						<tr>
-							<td> <?php echo $tr->translate("MAJOR_ENNAME");?></td>
+							<td><?php echo $tr->translate("NAME_EN")?></td>
 							<td> <?php echo $frm_major->getElement("major_enname");?></td>
 						</tr>
 						<tr>
-							<td> <?php echo $tr->translate("MAJOR_KHNAME");?></td>
+							<td><?php echo $tr->translate("NAME_KH")?></td>
 							<td> <?php echo $frm_major->getElement("major_khname");?></td>
 						</tr>
 						<tr>
@@ -24,9 +24,10 @@
 							<td> <?php echo $frm_major->getElement("shortcut");?></td>
 						</tr>
 						<tr>
-							<td><?php echo $tr->translate("SELECT_FACULTY_ENNAME");?></td>
+							<td><?php echo $tr->translate("DEGREE")?></td>
 							<td><?php echo $frm_major->getElement("dept");?></td>
 						</tr>
+						<tr>
 							<td><?php echo $tr->translate("STATUS");?></td>
 							<td><?php echo $frm_major->getElement("status");?></td>
 						</tr>
@@ -35,8 +36,11 @@
 						</tr>
 						<tr>
 							<td colspan="2" align="center">
+								<input iconClass="dijitIconClear" type="reset" value="clear" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
+								<input type="button" label="<?php echo $tr->translate('GO_BACK');?>" id="back" dojoType="dijit.form.Button" 
+									iconClass="dijitIconUndo" onclick="window.location = '<?php echo $this->url(array('module'=>'global','controller'=>"major",'action'=>'index'),null,true); ?>';" />
 								<input type="submit"  label="<?php echo $tr->translate("GO_EDIT");?>" id="submitButton" dojoType="dijit.form.Button" 
-							 	iconClass="dijitEditorIcon dijitEditorIconSave" />
+							 		iconClass="dijitEditorIcon dijitEditorIconSave" />
 							</td>
 						</tr>
 					</table>	
