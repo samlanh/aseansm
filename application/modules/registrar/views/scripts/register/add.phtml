@@ -95,20 +95,22 @@
 		generat=dijit.byId('study_year').get('value');
 		payment_term=dijit.byId('payment_term').get('value');
 		grade=dijit.byId('grade').get('value');
-		if(generat!='' && payment_term !='' && grade !=''){
-			getPaymentTerms(generat,payment_term,grade);
+		time=dijit.byId('time').get('value');
+		if(generat!='' && payment_term !='' && grade !='' && time !=''){
+			getPaymentTerms(generat,payment_term,grade,time);
 		}
 		
 	}
 	var payment_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 	var url_getpaymentterm = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-payment-term')); ?>';
-	function getPaymentTerms(generat,pay,grade){
+	function getPaymentTerms(generat,pay,grade,time){
 			dojo.xhrPost({
 				url:url_getpaymentterm,
 				content:{
 					'generat_id':generat,
 					'pay_id':pay,
-					'grade_id':grade
+					'grade_id':grade,
+					'time':time
 					},
 				handleAs:"json",
 				load: function(data) {
@@ -287,21 +289,16 @@ fieldset{  background:none;}
 							<td><?php echo $register->getElement('session');?></td>
 						</tr>
 						<tr>
-							<td title="ចាប់ពីម៉ោង"><?php echo $tr->translate("FROM_TIME");?>*</td>
+							<td style="white-space: nowrap;"><?php echo $tr->translate("TIME");?></td>
+							<td>
+								<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside"  id="time" name="time" type="text" onchange="paymentTerm();">								
+										<option value="2"><?php echo $tr->translate("FULL_TIME");?></option>
+										<option value="1"><?php echo $tr->translate("PART_TIME");?></option>
+								</select>
+							</td>
+									<td></td>
 									<td>
-									     <select class="fullside"  tabindex="24" name="from_time" id="from_time" dojoType="dijit.form.FilteringSelect" >
-										  <?php $i=0; foreach ($this->hour As $key=>$hour){ $i++;?> 
-										    <option value="<?php echo $key?>"><?php echo $hour; ?></option>
-										 <?php }?>
-										</select>
-									</td>
-									<td><?php echo $tr->translate("TO_TIME");?>*</td>
-									<td>
-									    <select class="fullside"  tabindex="24" name="to_time" id="to_time" dojoType="dijit.form.FilteringSelect" >
-										  <?php $i=0; foreach ($this->hour As $key=>$hour){?> 
-										    <option value="<?php echo $key?>"><?php echo $hour; ?></option>
-										 <?php }?>
-										</select>
+									    
 									</td>
 					     </tr>
 						<tr>
