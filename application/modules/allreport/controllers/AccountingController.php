@@ -73,6 +73,9 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 		$this->view->rr = $db->getStudentPaymentByid($id);
 	
 	}
+	function  rptSuspendserviceAction(){
+		
+	}
 	function rptInvoiceAction(){
 	
 	}
