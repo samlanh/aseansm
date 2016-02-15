@@ -1,7 +1,7 @@
 <?php
 $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 $frm = $this->frm_callteral;
-echo $this->headTitle($tr->translate("កែក្រុមសិក្សា"));
+echo $this->headTitle($tr->translate("EDIT_STUDY_GROUP"));
 $baseurl =  Zend_Controller_Front::getInstance()->getBaseUrl();
 
 ?>
@@ -32,10 +32,10 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 	<tr>
 		<td>
 				<fieldset style="margin-top:-13px;">
-					<legend align="center" ><strong><?php echo $tr->translate("កែក្រុមសិក្សា");?></strong></legend>
+					<legend align="center" ><strong style="font-size: 18px;"><?php echo $tr->translate("EDIT_STUDY_GROUP");?></strong></legend>
 					<table style="margin: 0 auto; width: 100%;" cellspacing="10">
 						<tr>
-							<td width="110px"><?php echo $tr->translate("Group Code")?><input type="hidden" name="id" value="<?php echo $this->rs['id'];?>" /></td>
+							<td width="110px"><?php echo $tr->translate("GROUP_CODE")?><input type="hidden" name="id" value="<?php echo $this->rs['id'];?>" /></td>
 							<td><input dojoType="dijit.form.ValidationTextBox" required="true" id="group_code" name="group_code" value="<?php echo $this->rs['group_code'];?>" type="text"></td>
 						    
 						    <td width="110px"><?php echo $tr->translate("YEARS")?></td>
@@ -123,6 +123,10 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 				    	<tr>	
 						<tr>
 							<td colspan="6" align="center">
+							
+								<input iconClass="dijitIconClear" type="reset" value="clear" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
+								<input type="button" label="<?php echo $tr->translate('GO_BACK');?>" id="back" dojoType="dijit.form.Button" 
+									iconClass="dijitIconUndo" onclick="window.location = '<?php echo $this->url(array('module'=>'global','controller'=>"group",'action'=>'index'),null,true); ?>';" />
 								<input type="submit" value="save" name="save" label="<?php echo $tr->translate('GO_EDIT');?>" dojoType="dijit.form.Button" 
 									iconClass="dijitEditorIcon dijitEditorIconSave" />
 							</td>

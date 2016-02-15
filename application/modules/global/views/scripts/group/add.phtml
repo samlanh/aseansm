@@ -1,7 +1,7 @@
 <?php
 $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 $frm = $this->frm_callteral;
-echo $this->headTitle($tr->translate("បន្ថែមក្រុមសិក្សា"));
+echo $this->headTitle($tr->translate("ADD_STUDY_GROUP"));
 $baseurl =  Zend_Controller_Front::getInstance()->getBaseUrl();
 
 ?>
@@ -32,10 +32,10 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 	<tr>
 		<td>
 				<fieldset style="margin-top:-13px;">
-					<legend align="center" ><strong><?php echo $tr->translate("បន្ថែមក្រុមសិក្សា");?></strong></legend>
+					<legend align="center" ><strong style="font-size: 18px;"><?php echo $tr->translate("ADD_STUDY_GROUP");?></strong></legend>
 					<table style="margin: 0 auto; width: 100%;" cellspacing="10">
 						<tr>
-							<td width="110px"><?php echo $tr->translate("Group Code")?></td>
+							<td width="110px"><?php echo $tr->translate("GROUP_CODE")?></td>
 							<td><input dojoType="dijit.form.ValidationTextBox" required="true" id="group_code" name="group_code" value="" type="text"></td>
 						    
 						    <td width="110px"><?php echo $tr->translate("YEARS")?></td>

@@ -22,7 +22,7 @@ class Global_GroupController extends Zend_Controller_Action {
 			$rs_rows= $db->getAllGroup($search);
 			$list = new Application_Form_Frmtable();
 			
-			$collumns = array("GROUP CODE","YEARS","SEMESTER","DEGREE","GRADE","SESSION","ROOM_NAME","START_DATE","END_DATE","NOTE");
+			$collumns = array("GROUP_CODE","YEARS","SEMESTER","DEGREE","GRADE","SESSION","ROOM_NAME","START_DATE","END_DATE","NOTE");
 			
 			$link=array(
 					'module'=>'global','controller'=>'group','action'=>'edit',
