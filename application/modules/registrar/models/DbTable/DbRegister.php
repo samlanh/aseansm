@@ -34,8 +34,8 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				$arr=array(
 						'student_id'=>$id,
 						'receipt_number'=>$data['reciept_no'],
-						'start_hour'=>$data['from_time'],
-						'end_hour'=>$data['to_time'],
+            			'time'=>$data['time'],
+// 						'end_hour'=>$data['to_time'],
 						'payment_term'=>$data['payment_term'],
 						'tuition_fee'=>$data['tuitionfee'],
 						'discount_percent'=>$data['discount'],
@@ -102,8 +102,8 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				$arr=array(
 						'student_id'=>$data['id'],
 						'receipt_number'=>$data['reciept_no'],
-						'start_hour'=>$data['from_time'],
-						'end_hour'=>$data['to_time'],
+						'time'=>$data['time'],
+// 						'end_hour'=>$data['to_time'],
 						'payment_term'=>$data['payment_term'],
 						'tuition_fee'=>$data['tuitionfee'],
 						'discount_percent'=>$data['discount'],
@@ -158,7 +158,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	$db=$this->getAdapter();
     	$sql=" SELECT s.stu_id,s.stu_code,sp.receipt_number,s.academic_year,s.stu_khname,s.stu_enname,s.sex,s.session,s.degree,s.grade,
     	sp.payment_term,sp.tuition_fee,sp.discount_percent,sp.other_fee,sp.admin_fee,sp.total,sp.paid_amount,
-    	sp.balance_due,sp.amount_in_khmer,sp.note,sp.student_type,sp.start_hour,sp.end_hour
+    	sp.balance_due,sp.amount_in_khmer,sp.note,sp.student_type,sp.time,sp.end_hour
     	FROM rms_student AS s,rms_student_payment AS sp WHERE s.stu_id=sp.student_id AND sp.id=".$id;
     	return $db->fetchRow($sql);
     }
@@ -168,9 +168,10 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	$order=' ORDER BY id DESC';
     	return $db->fetchAll($sql.$order);
     }
-    function getPaymentTerm($generat,$payment_term,$grade){
+    function getPaymentTerm($generat,$payment_term,$grade,$time){
     	$db = $this->getAdapter();
-    	$sql="SELECT id,tuition_fee FROM rms_tuitionfee_detail WHERE fee_id=$generat AND class_id=$grade AND payment_term=$payment_term LIMIT 1";
+    	$sql="SELECT tfd.id,tfd.tuition_fee FROM rms_tuitionfee AS tf,rms_tuitionfee_detail AS tfd WHERE tf.id = fee_id
+              AND tf.time=$time AND tfd.fee_id=$generat AND tfd.class_id=$grade AND tfd.payment_term=$payment_term LIMIT 1";
     	return $db->fetchRow($sql);
     }
     function getAllYears(){

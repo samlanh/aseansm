@@ -2,6 +2,7 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	echo $this->headTitle($tr->translate('SRMS_WUREGISTER')); 
 	$base_url = Application_Form_FrmMessage::getUrl("/");
+	//print_r($this->degree_row);exit();
 ?>	
 <script type="text/javascript"  src="<?php echo $this->baseUrl();?>/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript"  src="<?php echo $this->baseUrl();?>/js/convertion.js"></script>
@@ -24,7 +25,7 @@
 	    onChange: function() {  
 	    	dept_id = dijit.byId('dept').get('value');
 	    	dijit.byId('grade').attr('value','');
-	    	getallModel(dept_id); 
+	    	getallModel(dept_id,a=''); 
 	    	getStudentNo(dept_id);
 	    }
 	}, "dept");
@@ -36,19 +37,17 @@
 	    class: 'fullside', 
 	    placeHolder:"Selected Grade",          
 	    onChange: function() {  
-	    //	make_id = dijit.byId('grade').get('value');
-	    	
-	    		paymentTerm();
-	    	
+	    	//make_id = dijit.byId('grade').get('value');
+	    	paymentTerm();
+	     
 	    }
 	}, "grade");
 	dijit.byId('dept').attr('value','<?php echo $this->degree_row['degree'];?>');
-	 dijit.byId('from_time').attr('value','<?php echo $this->degree_row['start_hour']?>');
-     dijit.byId('to_time').attr('value','<?php echo $this->degree_row['end_hour']?>');
 	});	
 	var grade_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 	var url_dept = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-grade')); ?>';
-	function getallModel(dept_id){
+	function getallModel(dept_id,a){
+		
 			dojo.xhrPost({
 				url:url_dept,
 				content:{
@@ -58,8 +57,11 @@
 				load: function(data) {
 					//alert(data);
 					grade_store  = getDataStorefromJSON('id','name', data);
-				    dijit.byId('grade').set('store',grade_store);   
-					dijit.byId('grade').attr('value','<?php echo $this->degree_row['grade'];?>');
+				    dijit.byId('grade').set('store',grade_store);  
+				    dijit.byId('grade').attr('value','<?php echo $this->degree_row['grade']?>');
+				    if(a!=""){
+				    	dijit.byId('grade').attr('value',a);
+			        } 
 				},
 				error: function(err) {
 					alert(err);
@@ -96,8 +98,9 @@
 	    	generat=dijit.byId('study_year').get('value');
 			payment_term=dijit.byId('payment_term').get('value');
 			grade=dijit.byId('grade').get('value');
-			if(generat!='' && payment_term !='' && grade !=''){
-				getPaymentTerms(generat,payment_term,grade);
+			time=dijit.byId('time').get('value');
+			if(generat!='' && payment_term !='' && grade !='' && time !=''){
+				getPaymentTerms(generat,payment_term,grade,time);
 			}
 			dijit.byId('discount').attr('value','0');
 	    	dijit.byId('books').attr('value','0');
@@ -107,27 +110,25 @@
 	    	dijit.byId('char_price').attr('value','0');
 	    	dijit.byId('not').attr('value',''); 
 		}
-		    
-		
 	}
 	var payment_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 	var url_getpaymentterm = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-payment-term')); ?>';
-	function getPaymentTerms(generat,pay,grade){
+	function getPaymentTerms(generat,pay,grade,time){
 			dojo.xhrPost({
 				url:url_getpaymentterm,
 				content:{
 					'generat_id':generat,
 					'pay_id':pay,
-					'grade_id':grade
+					'grade_id':grade,
+					'time':time
 					},
 				handleAs:"json",
 				load: function(data) {
 				      if(data){
-				    	dijit.byId('tuitionfee').attr('value',data.tuition_fee);
-				    	dijit.byId('total').attr('value',data.tuition_fee);
-				    	dijit.byId('books').attr('value',data.tuition_fee);
+				    	  dijit.byId('tuitionfee').attr('value',data.tuition_fee);
+					      dijit.byId('total').attr('value',data.tuition_fee);
+					      dijit.byId('books').attr('value',data.tuition_fee);
 				      }else {
-					      
 				    	/* dijit.byId('tuitionfee').attr('value','0'); 
 				    	 dijit.byId('total').attr('value','0'); 
 				    	 dijit.byId('discount').attr('value','0');
@@ -159,6 +160,7 @@
 	function getTotale(){
 		//old % totale
 		tuitionfee=dijit.byId('tuitionfee').get('value');
+		tuitionfee=isNaN(tuitionfee)?0:tuitionfee;
 		discount=dijit.byId('discount').get('value');
 		pc=discount/100;
 		ds=tuitionfee*pc;
@@ -189,7 +191,11 @@
 		  CheckAmount();
 	}
 	function getDisccount(){
+		books=dijit.byId('books').get('value');
+		books=isNaN(books)?0:books;
+	
 		tuitionfee=dijit.byId('tuitionfee').get('value');
+		tuitionfee=isNaN(tuitionfee)?0:tuitionfee;
 		discount=dijit.byId('discount').get('value');
 		pc=discount/100;
 		ds=tuitionfee*pc;
@@ -305,23 +311,18 @@ fieldset{  background:none;}
 							<td><?php echo $register->getElement('session');?></td>
 						</tr>
 						<tr>
-							<td title="ចាប់ពីម៉ោង"><?php echo $tr->translate("ចាប់ពីម៉ោង");?>*</td>
+							<td style="white-space: nowrap;"><?php echo $tr->translate("TIME");?></td>
+							<td>
+								<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside"  id="time" name="time" type="text" onchange="paymentTerm()">								
+										<option value="<?php echo $this->degree_row['time'];?>"  <?php if($this->degree_row['time']== 2) echo "selected"; ?> ><?php echo $tr->translate("FULL_TIME");?></option>
+										<option value="<?php echo $this->degree_row['time'];?>" <?php if($this->degree_row['time']== 1) echo "selected"; ?> ><?php echo $tr->translate("PART_TIME");?></option>
+								</select>
+							</td>
+									<td></td>
 									<td>
-									     <select class="fullside"  tabindex="24" name="from_time" id="from_time" dojoType="dijit.form.FilteringSelect" >
-										  <?php $i=0; foreach ($this->hour As $key=>$hour){ $i++;?> 
-										    <option value="<?php echo $key?>"><?php echo $hour; ?></option>
-										 <?php }?>
-										</select>
+									    
 									</td>
-									<td><?php echo $tr->translate("ដល់ម៉ោង");?>*</td>
-									<td>
-									    <select class="fullside"  tabindex="24" name="to_time" id="to_time" dojoType="dijit.form.FilteringSelect" >
-										  <?php $i=0; foreach ($this->hour As $key=>$hour){?> 
-										    <option value="<?php echo $key?>"><?php echo $hour; ?></option>
-										 <?php }?>
-										</select>
-									</td>
-					      		</tr>
+					     </tr>
 						<tr>
 							<td><?php echo $tr->translate("DEGREE");?><label class="red">*</label></td>
 							<td><input id="dept" /><?php //echo $register->getElement('dept');?></td>
@@ -368,7 +369,7 @@ fieldset{  background:none;}
 							<td colspan="4" align="center">
 								<input type="submit" name="save_new" id="save_new" value="រក្សាទុក" label="រក្សាទុក"  dojoType="dijit.form.Button" 
 								 iconClass="dijitEditorIcon dijitEditorIconSave" />
-								 <input type="button" value="រក្សាទុក & បោះពុម្ព" label="រក្សាទុក & បោះពុម្ព" id="busyButton" dojoType="dijit.form.Button" 
+								 <input type="button" value="បោះពុម្ព" label="បោះពុម្ព" id="busyButton" dojoType="dijit.form.Button" 
 									iconClass="dijitEditorIcon dijitEditorIconPrint" onclick="printSave();"/> 
 							</td>
 						</tr>
@@ -638,10 +639,17 @@ function changControll(){
 	 if(student_type==3){
 		 document.getElementById('student_old').style.display="block";
 		 document.getElementById('id_stu').style.display="none";
+		 //clearControll();
 	}else{
 		 document.getElementById('student_old').style.display="none";
 		 document.getElementById('id_stu').style.display="block";
+		 //clearControll();
 	} 
+}
+//
+function clearControll(){
+	dijit.byId('kh_name').attr('value','');
+	dijit.byId('en_name').attr('value','');
 }
 ///get Gerneral old student
 function getGeneralOldStudentById(){
@@ -659,8 +667,8 @@ function getGeneralOldStudentById(){
 			    	dijit.byId('en_name').attr('value',data.stu_enname);
 			    	dijit.byId('sex').attr('value',data.sex);
 			    	dijit.byId('dept').attr('value',data.degree);
-			    	getallModel(data.grade,data.degree);
-			    	dijit.byId('grade').attr('value',data.grade);
+			    	getallModel(data.degree,data.grade);
+			    	 //dijit.byId('grade').attr('value',data.grade);
 			      }else {
 			    	alert('Student Id not found!');
 			    	dijit.byId('kh_name').attr('value','');

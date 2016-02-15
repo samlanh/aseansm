@@ -186,7 +186,7 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     	if($this->getRequest()->isPost()){
     		$data=$this->getRequest()->getPost();
     		$db = new Registrar_Model_DbTable_DbRegister();
-    		$payment = $db->getPaymentTerm($data['generat_id'],$data['pay_id'],$data['grade_id']);
+    		$payment = $db->getPaymentTerm($data['generat_id'],$data['pay_id'],$data['grade_id'],$data['time']);
     		//print_r($grade);exit();
     		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
     		print_r(Zend_Json::encode($payment));
