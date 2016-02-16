@@ -56,7 +56,7 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 				$this->_name='rms_student_paymentdetail';
 				$arr=array(
 						'payment_id'=>$paymentid,
-						'type'=>1,
+						'type'=>2,
 						'payment_term'=>$data['payment_term'],
 						'fee'=>$data['total'],
 						'qty'=>1,
@@ -122,7 +122,7 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 			    $this->_name='rms_student_paymentdetail';
 			    $arr=array(
 			    		'payment_id'=>$data['id'],
-			    		'type'=>1,
+			    		'type'=>2,
 			    		'payment_term'=>$data['payment_term'],
 			    		'fee'=>$data['total'],
 			    		'qty'=>1,
