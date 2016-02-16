@@ -366,7 +366,12 @@ function addRow() {
 			template+='<td width="47px" align="center"><img onclick="deleteRecord('+col+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
 			template+='<td width="23%" align="center">'+no+'</td>';
 			template+='<td><select onchange="getservicefee('+col+');"  dojoType="dijit.form.FilteringSelect" id="service_'+col+'" name="service_'+col+'">'+service+'</select></td>';			
-			template+='<td><select onchange="getservicefee('+col+');" dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'" style="width:120px;"><option value="1">Monthly</option><option value="2">Quarter</option><option value="3">Semester</option><option value="4">Yearly</option></select></td>';
+			//template+='<td><select onchange="getservicefee('+col+');" dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'" style="width:120px;"><option value="1">Monthly</option><option value="2">Quarter</option><option value="3">Semester</option><option value="4">Yearly</option></select></td>';
+			template+='<td><select onchange="getservicefee('+col+');" dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'" style="width:120px;">';
+				<?php foreach($this->payment_term as $key => $value){?>
+					template+='<option value="'+<?php echo $key?>+'"><?php echo $value;?></option>';
+				<?php }?>
+			template+='</select></td>';
 			column = 0;
 			template+='<td> <input type="text" required="true" onkeyup="calculateTotal('+col+');" name="price_'+col+'" value="" id="price_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="subsub"></label></td>';
 			template+='<td> <input type="text" required="true" onkeyup="calculateTotal('+col+');" name="qty_'+col+'" value="" id="qty_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="qty"></label></td>';
@@ -409,8 +414,12 @@ function netTotal() {
 	for(var n = 0; n < rowIDArray.length; n++) {
 		netTotal += Number($('#subtotal_'+rowIDArray[n]).val());
 	}
-	$('#grand_total').val(netTotal);
-	$('#total_received').val(netTotal);
+	//alert();
+	
+	dijit.byId('grand_total').attr('value',netTotal);
+	dijit.byId('total_received').attr('value',netTotal);
+	//$('#grand_total').val(netTotal);
+	//$('#total_received').val(netTotal);
 	calculatBalance();
 }
 function calculatBalance(){
@@ -445,13 +454,13 @@ function getStudentInfo(){
 }
 var url_service_fee = "<?php echo $this->url(array('module'=>'registrar','controller'=>'studentservicepayment','action'=>'get-price')); ?>";
 function getservicefee(key){
-			service = dijit.byId('service_'+key).get('value');
+			services = dijit.byId('service_'+key).get('value');
 			term = dijit.byId('term_'+key).get('value');
 			dojo.xhrPost({
 				url:url_service_fee,
 				content:{
 					'term':term,
-					'service':service,
+					'service':services,
 					},
 				handleAs:"json",
 				load: function(data) {
@@ -497,7 +506,12 @@ function initailize(){
 		template+='<td width="47px" align="center"><img onclick="deleteRecord('+col+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
 		template+='<td width="23%" align="center">'+no+'</td>';
 		template+='<td><select onchange="getservicefee('+col+');"  dojoType="dijit.form.FilteringSelect" id="service_'+col+'" name="service_'+col+'">'+service+'</select></td>';			
-		template+='<td><select onchange="getservicefee('+col+');" dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'" style="width:120px;"><option value="1">Monthly</option><option value="2">Quarter</option><option value="3">Semester</option><option value="4">Yearly</option></select></td>';
+		//template+='<td><select onchange="getservicefee('+col+');" dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'" style="width:120px;"><option value="1">Monthly</option><option value="2">Quarter</option><option value="3">Semester</option><option value="4">Yearly</option></select></td>';
+		template+='<td><select onchange="getservicefee('+col+');" dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'" style="width:120px;">';
+			<?php foreach($this->payment_term as $key => $value){?>
+				template+='<option value="'+<?php echo $key?>+'"><?php echo $value;?></option>';
+			<?php }?>
+		template+='</select></td>';
 		column = 0;
 		template+='<td> <input type="text" required="true" onkeyup="calculateTotal('+col+');" name="price_'+col+'" value="" id="price_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="subsub"></label></td>';
 		template+='<td> <input type="text" required="true" onkeyup="calculateTotal('+col+');" name="qty_'+col+'" value="<?php //echo $this->row['qty'];?>" id="qty_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="qty"></label></td>';
@@ -539,3 +553,5 @@ function deleteRecord(index) {
 		dojo.query("#row"+index).remove();
 	}
 </script>
+	
+	

@@ -9,65 +9,13 @@
 	dojo.require("dojo.data.ItemFileWriteStore");  
 	dojo.require('dojox.form.BusyButton');
 	dojo.require("dojo.NodeList-manipulate");
+	dojo.require("dojo.data.ObjectStore");
+	dojo.require("dojo.store.Memory");
 	
 	dojo.ready(function(){ 
-		 addRow();
+		addRow();
 	});	
 
-	var url_getstuno = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-stu-no')); ?>';
-	function getStudentNo(dept_id){
-			dojo.xhrPost({
-				url:url_getstuno,
-				content:{
-					'dept_id':dept_id
-					},
-				handleAs:"json",
-				load: function(data) {
-					 dijit.byId('stu_id').attr('value',data);   
-
-				},
-				error: function(err) {
-					alert(err);
-				}
-			});
-	}
-	
-
-	dojo.addOnLoad(function(){
-		   // document.musicPrefs.other.value="Afrobeat";
-			//getStudentBYId();
-		});
-	dojo.ready(function(){
-	}); 
-	
-	var url_getstu_info = '<?php echo $this->url(array('module'=>'global','controller'=>'globals','action'=>'get-studentinfo')); ?>';
-	function getStudentBYId(){
-		   student_id = dijit.byId("stu_id").get('value');
-		   if(student_id==''){
-			   return false;
-			   }
-				dojo.xhrPost({
-				   content : {'student_card':  student_id},
-				    url: url_getstu_info,			    
-					handleAs:"json",
-				    load: function(response) {	
-					    dijit.byId("kh_name").attr('value',response.stu_khname);
-					    dijit.byId("en_name").attr('value',response.stu_enname);
-					    dijit.byId('sex').set('value', response.sex);
-					    dijit.byId("phone").attr('value',response.phone);
-					    dijit.byId("metion").attr('value',response.mention);
-					    dijit.byId('year').attr('value',response.year);
-					    dijit.byId('degree').set('value', response.degree);
-					    dijit.byId('batch').set('value',response.batch);
-					    dijit.byId('dept').set('value',response.faculty_id);
-					    dijit.byId('session').set('value',response.session);
-				    },
-				    error: function(e) {
-					    alert(e);
-				    }
-				});
-	}
-	
 </script>
 <style>
 select{ width:100%;}
@@ -143,12 +91,13 @@ fieldset{  background:none;}
 									</tr>
 									<tr>
 										<td><?php echo $tr->translate("BALANCE");?></td>
-										<td align="right"><input class="fullside" type="text" readonly="readonly" name="total_balance" id="total_balance" dojoType="dijit.form.NumberTextBox" /></td>
+										<td align="right"><input class="fullside" type="text" readonly="readonly" name="total_balance" value="<?php echo 0?>" id="total_balance" dojoType="dijit.form.NumberTextBox" /></td>
 									</tr>
 									<tr>
 										<td><?php echo $tr->translate("ប្រាក់អាប់");?></td>
 										<td align="right"><input class="fullside" type="text" readonly="readonly" name="total_return" id="total_return" dojoType="dijit.form.NumberTextBox" /></td>
 									</tr>
+									
 								</table>
 							</td>
 						</tr>
@@ -189,7 +138,7 @@ function printSave(){
 	var rowIDArray = rowId.split(',');
 	template="";
 		 temp='<table class="collape tablesorter" border="1" align="center" style=" width: 100%; padding: 0px; margin: 0px; border-collapse: collapse; white-space:nowrap; border: 1px solid #000; font-size:10px;  " id="table">'
-		      temp+='<tr style="background:#ccc; font-size:10px; "><th><?php echo $tr->translate("No");?></th>';
+		      temp+='<tr style="background:#ccc; font-size:10px; "><th><?php echo $tr->translate("NO");?></th>';
 		      temp+='<th><?php echo $tr->translate("Description");?></th>';
 		      temp+='<th><?php echo $tr->translate("Payment Term");?></th>';
 		      temp+='<th><?php echo $tr->translate("Price");?></th>';
@@ -253,12 +202,11 @@ function printSave(){
 								<td width="25%" align="left" style=" padding-right: 20px;">
 									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">Reciept N.o : <label id="lbl_recieptno"></label></strong><br />
 									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">Date Paid : <?php echo date("d-m-Y")?></strong><br />
-									
 								</td>
 							</tr>
 							<tr>
 								<td colspan="3">
-                                    	 <label id="t_amountmoneytype"></label>
+                                    	 <div id="t_amountmoneytype"></div>
 								</td>
 							</tr>
 							
@@ -336,8 +284,7 @@ function hideDialog() {
 }
 
 var template = '';
-var metion = '<?php echo $this->all_metion; ?>';
-var payment_term = '<?php echo count($this->payment_term);?>';
+
 var service = '<?php echo $this->all_service; ?>';
 
 var col = 0;
@@ -365,14 +312,21 @@ function addRow() {
 			template+='<td width="47px" align="center"><img onclick="deleteRecord('+col+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
 			template+='<td width="23%" align="center">'+no+'</td>';
 			template+='<td><select onchange="getservicefee('+col+');" dojoType="dijit.form.FilteringSelect" id="service_'+col+'" name="service_'+col+'">'+service+'</select></td>';			
-			template+='<td><select onchange="getservicefee('+col+');" dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'" style="width:120px;"><option value="1">Monthly</option><option value="2">Quarter</option><option value="3">Semester</option><option value="4">Yearly</option></select></td>';
+
+			
+			template+='<td><select onchange="getservicefee('+col+');" dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'" style="width:120px;">';
+				<?php foreach($this->payment_term as $key => $value){?>
+					template+='<option value="'+<?php echo $key?>+'"><?php echo $value;?></option>';
+				<?php }?>
+			template+='</select></td>';
 			column = 0;
 			template+='<td> <input type="text" required="true" onkeyup="calculateTotal('+col+');" name="price_'+col+'" id="price_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="subsub"></label></td>';
 			template+='<td> <input type="text" required="true" onkeyup="calculateTotal('+col+');" name="qty_'+col+'" id="qty_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="qty"></label></td>';
 			template+='<td> <input type="text" required="true" readonly="readonly" name="total_'+col+'" id="total_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="qty"></label></td>';
-			template+='<td> <input type="text" required="true" onkeyup="calculateDiscount('+col+');" name="discount_'+col+'" id="discount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="subsub"></label></td>';
+			template+='<td> <input type="text" onkeyup="calculateDiscount('+col+');" name="discount_'+col+'" value="<?php echo 0;?>" id="discount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="subsub"></label></td>';
 			template+='<td> <input type="text" required="true" readonly="readonly" name="subtotal_'+col+'" id="subtotal_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="qty"></label></td>';
 			template+='<td> <input type="text" required="true" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" /><label id="subsub"></label></td>';
+
 		tmp='<tr id="row'+col+'">';
 		tmp+="</tr>";
 		dojo.query("#table_row").append(tmp);
@@ -408,8 +362,10 @@ function netTotal() {
 	for(var n = 0; n < rowIDArray.length; n++) {
 		netTotal += Number($('#subtotal_'+rowIDArray[n]).val());
 	}
-	$('#grand_total').val(netTotal);
-	$('#total_received').val(netTotal);
+	dijit.byId('grand_total').attr('value',netTotal);
+	dijit.byId('total_received').attr('value',netTotal);
+	//$('#grand_total').val(netTotal);
+	//$('#total_received').val(netTotal);
 	calculatBalance();
 }
 function calculatBalance(){
@@ -444,13 +400,13 @@ function getStudentInfo(){
 }
 var url_service_fee = "<?php echo $this->url(array('module'=>'registrar','controller'=>'studentservicepayment','action'=>'get-price')); ?>";
 function getservicefee(key){
-			service = dijit.byId('service_'+key).get('value');
+			services = dijit.byId('service_'+key).get('value');
 			term = dijit.byId('term_'+key).get('value');
 			dojo.xhrPost({
 				url:url_service_fee,
 				content:{
 					'term':term,
-					'service':service,
+					'service':services,
 					},
 				handleAs:"json",
 				load: function(data) {
