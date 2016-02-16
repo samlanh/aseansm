@@ -4,10 +4,6 @@
 	echo $this->headTitle();
 	$base_url = Application_Form_FrmMessage::getUrl("/");
 ?>
-<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-suspendservice')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<input  dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Search by student name....." value="<?php echo $this->search['txtsearch'];?>" type="text">
-		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
-</form>
 <style>
 #footer{display: none;}
 </style>	
@@ -28,12 +24,16 @@
 									<img style="width: 155px;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br /><br />
 								</td>
 								<td align="center">
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"><u>របាយការណ៏ សិស្សផ្អាកសេវាកម្ម</u></strong><br >
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"><u>ពត៌មានលំអិត សិស្សដែលផ្អាកសេវាកម្ម</u></strong><br >
 								</td>
 								<td align="right" width="20%">
 									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">ក្រសួងអប់រំ យុវជន និងកីឡា</strong><br />
 									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';margin-right: 25px;">សាលា អាស៊ាន ហ៊ែរីថេជ</strong><br /><br >
 								</td>
+							</tr>
+							<tr>
+								<td colspan="3">
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">Student ID : <?php echo $this->rr['student_id'];?> <br />Name : <?php echo $this->rr['name_en'];?><br /> Gender : <?php echo $this->rr['sex']; ?></strong></td>
 							</tr>
 							<tr>
 								<td colspan="3">
@@ -50,25 +50,25 @@
 										  <tr style="font-size:10px; height: 30px;" align="center">
 										    <th>&nbsp;N.o&nbsp;</th>
 										    <th>&nbsp;Suspend N.o&nbsp;</th>
-										    <th>&nbsp;Student ID&nbsp;</th>
-											<th>&nbsp;Khmer Name&nbsp;</th>
-											<th>&nbsp;English Name&nbsp;</th>
-											<th>&nbsp;Gender&nbsp;</th>
-											<th>&nbsp;Academic year&nbsp;</th>
+											<th>&nbsp;Service&nbsp;</th>
+											<th>&nbsp;Payterm&nbsp;</th>
+											<th>&nbsp;Type Suspend&nbsp;</th>
+											<th>&nbsp;Reason&nbsp;</th>
+											<th>&nbsp;Note&nbsp;</th>
 											<th>&nbsp;Date&nbsp;</th>
 										  </tr>
 										  <tr></tr>
 												<style> td{padding:0 3px; }</style>
 										  <?php $i=0; $total=0;if (!empty($this->rs)) foreach($this->rs as $rs){ $i++;?>
 										  <tr style="font-size:10px; height: 23px;"​ align="center">
-										    <td><?php echo $i;?></td>
-										    <td><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-suspendservicedetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['suspend_no']; ?></a></td>
-										    <td align="left"><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-suspendservicedetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['student_id']; ?></a></td>
-										    <td style=" white-space:nowrap; text-align:left"><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-suspendservicedetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['name_kh']; ?></a></td>
-										    <td style=" white-space:nowrap; text-align:left"><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-suspendservicedetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['name_en']; ?></a></td>
-										   <td><?php echo $rs['sex']; ?></td>
-										   <td><?php echo $rs['year']; ?></td>
-										    <td><?php echo $rs['define_date']; ?></td>
+										  	<td><?php echo $i;?></td>
+										   	<td><?php echo $rs['suspend_no']; ?></td>
+										   	<td><?php echo $rs['service']; ?></td>
+										  	<td><?php echo $rs['payment_term']; ?></td>
+										  	<td><?php echo $rs['type_suspend']; ?></td>
+										   	<td><?php echo $rs['reason']; ?></td>
+										   	<td><?php echo $rs['note']; ?></td>
+										   	<td><?php echo $rs['define_date']; ?></td>
 										  </tr>
 										  <?php } ?>
 										</table>
