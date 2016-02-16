@@ -17,14 +17,17 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     	}
     public function getStudentPayment($search){
     	$db = $this->getAdapter();
+
+    	$date = date_create($search["start_date"]);
+    	$from_date = date_format($date, "d-m-Y");
+    	print_r($from_date);
     	
-//     	$from_date = (empty($search["start_date"]))?'Y-m-01' :$search["start_date"];
-//     	$to_date =  (empty($search["end_date"]))?'Y-m-d' :$search["end_date"];
-//     	$where = " AND create_date BETWEEN '$from_date' AND '$to_date'";
+    	$todate = date_create($search["end_date"]);
+    	$to_date = date_format($todate, "d-m-Y");
+		$where = " AND create_date BETWEEN '$from_date' AND '$to_date'";
     	
-    	$sql=" SELECT * FROM v_getstudentpayment WHERE 1 ";
+	   	$sql=" SELECT * FROM v_getstudentpayment WHERE 1 ";
     	$order=" ORDER BY id DESC , receipt_number DESC ";
-    	$where='';
     	if(empty($search)){
     		return $db->fetchAll($sql.$order);
     		
@@ -41,19 +44,20 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     	return $db->fetchAll($sql.$where.$order);
     }
     
-    public function getStudentPaymentDetail($search=null){
+    public function getStudentPaymentDetail($search){
     	$db = $this->getAdapter();
     	
-    	$db = $this->getAdapter();
-//     	$from_date = (empty($search["start_date"]))?'Y-m-01' :$search["start_date"];
-//     	$to_date =  (empty($search["end_date"]))?'Y-m-d' :$search["end_date"];
- 
-//     	$where = " AND create_date BETWEEN '$from_date' AND '$to_date'";
+    	$date = date_create($search["start_date"]);
+    	$from_date = date_format($date, "d-m-Y");
+    	print_r($from_date);
+    	 
+    	$todate = date_create($search["end_date"]);
+    	$to_date = date_format($todate, "d-m-Y");
+    	$where = " AND create_date BETWEEN '$from_date' AND '$to_date'";
 		
     	$sql = 'SELECT * FROM v_getstudentpaymentdetail WHERE 1 ';
     	$order=" ORDER BY payment_id DESC , receipt_number DESC ";
     	
-    	 $where='';
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
     		$s_search = trim($search['txtsearch']);
