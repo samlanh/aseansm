@@ -18,14 +18,16 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     public function getStudentPayment($search){
     	$db = $this->getAdapter();
     	
-    	$from_date = (empty($search["start_date"]))?'Y-m-01' :$search["start_date"];
-    	$to_date =  (empty($search["end_date"]))?'Y-m-d' :$search["end_date"];
-    	$where = " AND create_date BETWEEN '$from_date' AND '$to_date'";
+//     	$from_date = (empty($search["start_date"]))?'Y-m-01' :$search["start_date"];
+//     	$to_date =  (empty($search["end_date"]))?'Y-m-d' :$search["end_date"];
+//     	$where = " AND create_date BETWEEN '$from_date' AND '$to_date'";
     	
-    	$sql=" SELECT * FROM v_getstudentpayment WHERE 1";
+    	$sql=" SELECT * FROM v_getstudentpayment WHERE 1 ";
     	$order=" ORDER BY id DESC , receipt_number DESC ";
+    	$where='';
     	if(empty($search)){
     		return $db->fetchAll($sql.$order);
+    		
     	}
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
@@ -43,15 +45,15 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	
     	$db = $this->getAdapter();
-    	$from_date = (empty($search["start_date"]))?'Y-m-01' :$search["start_date"];
-    	$to_date =  (empty($search["end_date"]))?'Y-m-d' :$search["end_date"];
+//     	$from_date = (empty($search["start_date"]))?'Y-m-01' :$search["start_date"];
+//     	$to_date =  (empty($search["end_date"]))?'Y-m-d' :$search["end_date"];
  
-    	$where = " AND create_date BETWEEN '$from_date' AND '$to_date'";
+//     	$where = " AND create_date BETWEEN '$from_date' AND '$to_date'";
 		
     	$sql = 'SELECT * FROM v_getstudentpaymentdetail WHERE 1 ';
     	$order=" ORDER BY payment_id DESC , receipt_number DESC ";
     	
-    	 
+    	 $where='';
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
     		$s_search = trim($search['txtsearch']);
