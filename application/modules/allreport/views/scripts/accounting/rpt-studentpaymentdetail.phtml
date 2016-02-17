@@ -4,13 +4,37 @@
 	echo $this->headTitle();
 	$base_url = Application_Form_FrmMessage::getUrl("/");
 ?>
-<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-studentpaymentdetail')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<input  dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Search....." value="<?php echo $this->search['txtsearch'];?>" type="text">
-		<label>From Date</label>
-		<input  name="from_date" id="from_date" dojoType="dijit.form.DateTextBox"  value="<?php echo $this->search['start_date'];?>" type="text">
-		<label>To Date</label>
-		<input  name="to_date" id="to_date" dojoType="dijit.form.DateTextBox"  value="<?php echo $this->search['end_date'];?>" type="text">
-		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
+<form id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-studentpaymentdetail')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+		<table width="100%" style="margin: 0 auto; background: #fff;">
+			<tr>
+				<td align="left" colspan="2">
+					<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
+				</td>
+				<td><label>Advance Search</label></td>
+				<td>
+					<input class="fullside" dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Search....." value="<?php echo $this->search['txtsearch'];?>" type="text">
+				</td>
+				<td><label>From Date</label></td>
+				<td>
+					<input class="fullside"  name="from_date" id="from_date" dojoType="dijit.form.DateTextBox"  value="<?php echo $this->search['start_date'];?>" type="text">
+				</td>
+				<td><label>To Date</label></td>
+				<td>
+					<input class="fullside" name="to_date" id="to_date" dojoType="dijit.form.DateTextBox"  value="<?php echo $this->search['end_date'];?>" type="text">
+				</td>
+			<tr>
+				<td colspan="2"></td>
+				<td><label>Search By Sercice Type</label></td>
+				<td>
+					<select class="fullside" name="session_group" id="session_group" dojoType="dijit.form.FilteringSelect">
+							<?php if(!empty($this->service)) foreach ($this->service as $row){?>
+							<option value='<?php $row['service_id']?>'><?php echo $row['title'];?></option>
+							<?php }?>
+					</select>
+				</td>
+				<td colspan="4" ></td>
+			</tr>
+		</table>
 </form>
 
 <style>

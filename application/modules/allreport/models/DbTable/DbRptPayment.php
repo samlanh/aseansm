@@ -43,7 +43,11 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     	}
     	return $db->fetchAll($sql.$where.$order);
     }
-    
+    public function getService(){
+    	$db = $this->getAdapter();
+    	$sql="SELECT title,`service_id` FROM `rms_program_name` WHERE `type`=2  AND `status`=1";
+    	return $db->fetchAll($sql);
+    }
     public function getStudentPaymentDetail($search){
     	$db = $this->getAdapter();
     	
