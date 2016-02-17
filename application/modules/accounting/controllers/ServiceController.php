@@ -58,7 +58,13 @@ public function addAction(){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
-		}	
+		}
+		
+	$db = new Accounting_Model_DbTable_DbService();
+	$rs= $db->getServiceType(1);
+	array_unshift($rs, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
+	$this->view->service = $rs;
+		
 	$frm=new Accounting_Form_FrmProgram();
 	$this->view->frm=$frm->addProgramName();
 	Application_Model_Decorator::removeAllDecorator($frm->addProgramName());
@@ -80,9 +86,33 @@ public function editAction(){
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
 	}
+	
+	$db = new Accounting_Model_DbTable_DbService();
+	$rs= $db->getServiceType(1);
+	array_unshift($rs, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
+	$this->view->service = $rs;
+	
 	$obj=new Accounting_Form_FrmProgram();
 	$frm=$obj->addProgramName($row);
 	$this->view->frm=$frm;
 	Application_Model_Decorator::removeAllDecorator($frm);
 }
+function submitAction(){
+	if($this->getRequest()->isPost()){
+		try{
+			$data = $this->getRequest()->getPost();
+			$db = new Accounting_Model_DbTable_DbService();
+			$row = $db->AddServiceType($data);
+			$result = array("id"=>$row);
+			print_r(Zend_Json::encode($row));
+			exit();
+			//Application_Form_FrmMessage::message("INSERT_SUCCESS");
+		}catch(Exception $e){
+			Application_Form_FrmMessage::message("INSERT_FAIL");
+			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+		}
+	}
+}
+
+
 }
