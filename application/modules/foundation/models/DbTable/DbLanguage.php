@@ -10,15 +10,16 @@ class Foundation_Model_DbTable_DbLanguage extends Zend_Db_Table_Abstract
 	
 	}
 	public function addDegreeLanguage($data){
-		try{$db= $this->getAdapter();
+		try{
+			$db= $this->getAdapter();
 			$arr = array(
 					'title'=>$data['language_title'],
 					'modify_date'=> date("Y-m-d"),
-					'status'=> $data['status'],
+					'status'=> $data['status_p'],
 					'user_id'=>$this->getUserId(),
 					'note'=>$data['note'],
 					);
-			$this->insert($arr);
+			return $this->insert($arr);
 		}catch(Exception $e){
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}	

@@ -14,6 +14,12 @@ class Foundation_Model_DbTable_DbApplication extends Zend_Db_Table_Abstract
 		$sql ="SELECT `service_id`,`title` FROM `rms_program_name` WHERE status=1 AND `type`=".$type;
 		return $db->fetchAll($sql);
 	}
+	
+	public function getlang(){
+		$db=$this->getAdapter();
+		$sql = "SELECT id, title as name FROM rms_degree_language WHERE status = 1";
+		return $db->fetchAll($sql);
+	}
 	public function addStudent($_data){
 		$db= $this->getAdapter();
 		$_arr= array(

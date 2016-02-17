@@ -369,11 +369,11 @@ function addGroup(){
 	dojo.xhrPost({
 			url:url_add_group,
 			form: dojo.byId("frm_add_tran"),
-			andleAs:"json",
+			handleAs:"json",
 			load: function(data) {
 				var Itemmake = {     
 					      id: data,
-					         name: dijit.byId('group_code').get('value')
+					       name: dijit.byId('group_code').get('value')
 					    };
 		   addDataToSelectbox(dijit.byId('group'), group_store, Itemmake, data);
 		   dijit.byId('frm_add_tran').reset();

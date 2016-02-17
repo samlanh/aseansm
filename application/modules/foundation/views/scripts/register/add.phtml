@@ -2,12 +2,14 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$this->headTitle($tr->translate('REGISTER')); 
 	echo $this->headTitle(''); 
+	//print_r($this->serviecename);exit()
 	
 ?>	
 
 <?php 
 	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
 ?>
+<script src="<?php echo $this->baseUrl();?>/js/help.js"  type="text/javascript"></script>
 <script type="dojo/method" event="onSubmit">			
 	if(this.validate()) {
 				return true;
@@ -21,6 +23,8 @@ dojo.require("dijit.form.NumberTextBox");
 dojo.require("dijit.form.Textarea");
 dojo.require("dijit.form.DateTextBox");
 dojo.require("dijit.form.CheckBox");
+var service_store  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->serviecename));?> );
+
 dojo.ready(function(){
 	new dijit.form.FilteringSelect({
 	    autoComplete: true,                        
@@ -31,10 +35,29 @@ dojo.ready(function(){
 	    placeHolder:"Selected Grade",          
 	    onChange: function() {  
 	    	make_id = dijit.byId('grade').get('value');
-	    	paymentTerm();
 	    }
 	}, "grade");
 	getallGrade();
+	
+	new dijit.form.FilteringSelect({
+		store: service_store,
+		autoComplete: true,                        
+		required: true,                      
+	    id: "level",
+	    name: "level",  
+	    tabindex: "17",         
+	    class: 'fullside',  
+	    placeHolder:"Selected language", 
+	    onChange: function() {          
+	   	service_id = dijit.byId('level').get('value');
+	    if(service_id==-1){
+	   	 dijit.byId("popup_dept").show();
+	     }
+	    else {
+	     
+	    }  
+	   } 
+	}, "level");
 }); 
 var grade_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=>'register','action'=>'get-grade')); ?>';
@@ -58,6 +81,7 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 				}
 			});
 	}
+
 </script>
 
 <form id="add_student" dojoType="dijit.form.Form" method="post">
@@ -154,11 +178,7 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 								<tr>
 									<td title="កំរិតភាសា"><?php echo $tr->translate("LANGUAGE_LEVEL");?>*</td>
 									<td>
-									    <select class="fullside"  tabindex="17" name="level" id="level" dojoType="dijit.form.FilteringSelect" >
-										   <?php if(!empty($this->row)) foreach($this->row as $rr){?>
-										    <option value="<?php echo $rr['id']?>" ><?php echo $rr['title']?></option>
-										    <?php }?>
-										</select>
+									   <input id="level" />
 									</td>
 									<td><?php echo $tr->translate("SESSION");?>*</td>
 									<td>
@@ -330,113 +350,81 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 					  </tr>
 					  </table>
 </form>
+<script>
+var url_add_lang = '<?php echo $this->url(array("module"=>"foundation","controller"=>"register","action"=>"submit")); ?>';
+function addLanguage(){
+	language = dijit.byId('language_title').get('value');
+	dojo.xhrPost({
+			url:url_add_lang,
+			form: dojo.byId("frm_add_tran"),
+			handleAs:"json",
+			load: function(data) {
+				//alert(data); 
+				var Itemmake = { 
+				     id: data,
+					         name: dijit.byId('language_title').get('value')
+					   };
+		 	addDataToSelectbox(dijit.byId('level'), service_store, Itemmake, data);
+		   dijit.byId('frm_add_tran').reset();
+		   dijit.byId("popup_dept").hide();
+				
+			},
+			error: function(err) {
+				alert(err);
+			}
+	});
+}
+function hideDialog() {		
+	dijit.byId("popup_dept").hide();
+}
+function popupgroup(){
+	//alert(2);
+	dijit.byId("popup_dept").show();
+}
+</script>
 <div class="dijitHidden">
-	<div data-dojo-type="dijit.Dialog" data-dojo-type="dijit.Dialog" id="pop_major" >
-		<form id='frm_major' dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<table class="height" >
+	<div data-dojo-type="dijit.Dialog" style="width:100%;" id="popup_dept" >
+		<form style="background-color: buttonface; width:15cm;" id='frm_add_tran' dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+			<table cellspacing="10" width="100%" style="margin: 0 auto;">
 			<tr>
-				<td>មហាវិទ្យាល័យ</td>
-				<td><input dojoType="dijit.form.TextBox"  id="facultyid" name="facultyid" value="" type="hidden">
-				<input dojoType="dijit.form.TextBox" readonly="readonly"  id="lbl_faculty" name="lbl_faculty" value="" type="text"></td>
-				</td>
-			</tr>
-			<tr>
-				<td>ជំនាញ/EN</td>
-				<td><input dojoType="dijit.form.ValidationTextBox" required="true" missingMessage="Invalid Module!" class="full height-text" id="major_en" name="major_en" value="" type="text"></td>
-			</tr>
-			<tr>
-				<td>ជំនាញ/KH</td>
-				<td><input dojoType="dijit.form.ValidationTextBox" required="true" missingMessage="Invalid Module!" class="full height-text" id="major_kh" name="major_kh" value="" type="text"></td>
-			</tr>
-			<tr>
-				<td>អក្សរកាត់</td>
-				<td><input dojoType="dijit.form.ValidationTextBox" required="true" class=" fullside height-text" missingMessage="ភ្លេច​បំពេញ​ពាក្យកាត់!" id="shortcut" name="shortcut" value="" type="text"></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-				  	<input type="button"  label="រក្សាទុក" dojoType="dijit.form.Button" 
-				 	iconClass="dijitEditorIcon dijitEditorIconSave" onclick="addNewMajor();"/>
+				<td>
+					<fieldset style="background-color: buttonface;">
+					<legend align="center" >បន្ថែមកម្រិតភាសា</legend><br />
+					<table style="margin: 0 auto; width: 95%;" cellspacing="5">
+						<tr>
+							<td style="width:100px"><?php echo $tr->translate("ចំណងជើងភាសា")?></td>
+							<td><input class="fullside" tabindex="1" value="" dojoType="dijit.form.ValidationTextBox" name="language_title" id="language_title" type="text" required="required" /></td>
+						</tr>
+						<tr>
+							<td>ពណ៌នា</td>
+							<td>
+								<textarea class="fullside"   style=" height: 60px !important;"
+										tabindex="2" dojoType=""  id="note" name=note ></textarea>
+									
+							</td>
+						</tr>
+						<tr>
+							<td style="width:100px"><?php echo $tr->translate("status")?></td>
+							<td>
+								<select class="fullside"  tabindex="3" name="status_p" id="status_p" dojoType="dijit.form.FilteringSelect" >
+									    <option value="1"><?php echo $tr->translate("Active")?></option>
+									    <option value="0"><?php echo $tr->translate("Deactive")?></option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center">
+								<input iconClass="dijitIconUndo" type="button" value="close" label="Close" dojoType="dijit.form.Button" onclick="hideDialog();"/>
+								<input type="button" value="save" name="save" label="Save" dojoType="dijit.form.Button" 
+									iconClass="dijitEditorIcon dijitEditorIconSave" onclick="addLanguage();"/>
+							</td>
+						</tr>
+					</table>
+				</fieldset>
 				</td>
 			</tr>
 		</table>
-		</form>
-	</div>
-</div>
-<div class="dijitHidden">
-	<div data-dojo-type="dijit.Dialog" data-dojo-type="dijit.Dialog" id="pop_situation" >
-		<form id='frm_situation' dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<table class="height" >
-			<tr>
-				<td>វណ្ណៈក្នុងគ្រួសារ</td>
-				<td><input dojoType="dijit.form.ValidationTextBox" required="true" id="txt_situation" name="txt_situation" value="" type="text"></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-				  	<input type="button"  label="រក្សាទុក" dojoType="dijit.form.Button" 
-				 	iconClass="dijitEditorIcon dijitEditorIconSave" onclick="addsituation();"/>
-				</td>
-			</tr>
-		</table>
-		</form>
-	</div>
-</div>
-<div class="dijitHidden">
-	<div data-dojo-type="dijit.Dialog" data-dojo-type="dijit.Dialog" id="pop_composition" >
-		<form id='frm_composition' dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<table class="height" >
-			<tr>
-				<td>សមាសភាពនិស្សិត</td>
-				<td><input dojoType="dijit.form.ValidationTextBox" required="true" id="occu_name" name="occu_name" value="" type="text"></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-				  	<input type="button"  label="រក្សាទុក" dojoType="dijit.form.Button" 
-				 	iconClass="dijitEditorIcon dijitEditorIconSave" onclick="addcomposition();"/>
-				</td>
-			</tr>
-		</table>
-		</form>
-	</div>
-</div>
-<div class="dijitHidden">
-	<div data-dojo-type="dijit.Dialog" data-dojo-type="dijit.Dialog" id="pop_school" >
-		<form id='frm_school' dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<table class="height" >
-			<tr>
-				<td>ខេត្ត/រាជធានី</td>
-				<td><input dojoType="dijit.form.TextBox" readonly="readonly" id="from_province" name="from_province" value="" type="text">
-					<input dojoType="dijit.form.TextBox" id="province" name="province" value="" type="text">
-				</td>
-			</tr>
-			<tr>
-				<td>ឈ្មោះសាលា</td>
-				<td><input dojoType="dijit.form.ValidationTextBox" required="true" id="school_name" name="school_name" value="" type="text"></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-				  	<input type="button"  label="រក្សាទុក" dojoType="dijit.form.Button" 
-				 	iconClass="dijitEditorIcon dijitEditorIconSave" onclick="addschool();"/>
-				</td>
-			</tr>
-		</table>
-		</form>
-	</div>
-</div>
-<div class="dijitHidden">
-	<div data-dojo-type="dijit.Dialog" data-dojo-type="dijit.Dialog" id="pop_scholarship" >
-		<form id='frm_scholarship' dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<table class="height" >
-			<tr>
-				<td>ឈ្មោះអាហារូបការណ៏</td>
-				<td><input dojoType="dijit.form.ValidationTextBox" required="true" id="txt_scholarship" name="txt_scholarship" value="" type="text"></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-				  	<input type="button"  label="រក្សាទុក" dojoType="dijit.form.Button" 
-				 	iconClass="dijitEditorIcon dijitEditorIconSave" onclick="addscholarship();"/>
-				</td>
-			</tr>
-		</table>
+
 		</form>
 	</div>
 </div>

@@ -50,6 +50,11 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}
+		$service = new Foundation_Model_DbTable_DbApplication();
+		$rows = $service->getlang();
+		array_unshift($rows, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
+		$this->view->serviecename = $rows;
+		
 		$this->view->row = $db->getDegreeLanguage();
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$this->view->degree = $rows = $_db->getAllFecultyName();
@@ -74,12 +79,18 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}
+		
+		$service = new Foundation_Model_DbTable_DbApplication();
+		$rows = $service->getlang();
+		array_unshift($rows, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
+		$this->view->serviecename = $rows;
 		$this->view->row = $db->getDegreeLanguage();
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$this->view->degree = $_db->getAllFecultyName();
 		$this->view->occupation = $_db->getOccupation();
 		$this->view->province = $_db->getProvince();
 		$this->view->rs = $db->getStudentById($id);
+		
 	}
 	function getGradeAction(){
 		if($this->getRequest()->isPost()){
@@ -99,6 +110,22 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 			$grade = $db->getStudentInfoById($data['studentid']);
 			print_r(Zend_Json::encode($grade));
 			exit();
+		}
+	}
+	function submitAction(){
+		if($this->getRequest()->isPost()){
+			try{
+				$data = $this->getRequest()->getPost();
+				$db = new Foundation_Model_DbTable_DbLanguage();
+				$row = $db->addDegreeLanguage($data);
+				$result = array("id"=>$row);
+				print_r(Zend_Json::encode($row));
+				exit();
+				//Application_Form_FrmMessage::message("INSERT_SUCCESS");
+			}catch(Exception $e){
+				Application_Form_FrmMessage::message("INSERT_FAIL");
+				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			}
 		}
 	}
 	
