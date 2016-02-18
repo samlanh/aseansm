@@ -191,18 +191,11 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	$sql="  SELECT stu_id  FROM rms_student ORDER BY  stu_id DESC LIMIT 1 ";
     	$acc_no = $db->fetchOne($sql);
     	$new_acc_no= (int)$acc_no+1;
-    	//echo $new_acc_no;exit();
+    	$new_acc_no=100+$new_acc_no;
+    	// echo $new_acc_no;exit();
     	$acc_no= strlen((int)$acc_no+1);
-    	if($type==1){
-    		$pre='K';
-    	}
-    	else if($type==2){
-    		$pre='P';
-    	}
-    	else if($type==3){
-    		$pre='S';
-    	}else if($type==4) {
-    		$pre='H';
+    	if($type==1 || $type==2 || $type==3 || $type==4){
+    		$pre='';
     	}else {
     		$pre='CH';
     	}

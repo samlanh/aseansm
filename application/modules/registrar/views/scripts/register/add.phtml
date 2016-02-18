@@ -2,6 +2,7 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	echo $this->headTitle($tr->translate('SRMS_WUREGISTER')); 
 	$base_url = Application_Form_FrmMessage::getUrl("/");
+	
 ?>	
 <script type="text/javascript"  src="<?php echo $this->baseUrl();?>/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript"  src="<?php echo $this->baseUrl();?>/js/convertion.js"></script>
@@ -480,7 +481,12 @@ function printSave(){
 				<tr>
 				    <td colspan="8" align="right" class="khmerbold">
 				        <hr style="margin-bottom: -26px !important;" align="right" width="20%"/><br/>
-				        <h3 style="padding-right: 62px ! important;margin-bottom: -16px  !important;">បេឡា</h3><br/> 26/Dec/2015 08:05AM Tip Rachna<br/>
+				        <h3 style="padding-right: 62px ! important;margin-bottom: -16px  !important;">
+				           <?php $session_user=new Zend_Session_Namespace('auth');
+				           $last_name=$session_user->last_name;
+				           $username = $session_user->first_name;
+				           echo "បេឡា:".$last_name." ".$username;?>
+				        </h3><br/> 26/Dec/2015 08:05AM Tip Rachna<br/>
 				        បញ្ជាក់ៈទឹកប្រាក់ដែលបង់ហើយ  មិនអាចផ្ទេរ ឬ ដកវិញបានទែ  Note: All fees are not transferable or refundable . 
 				    </td>
 				</tr>

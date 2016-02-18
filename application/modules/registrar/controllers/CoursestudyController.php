@@ -75,7 +75,7 @@ class Registrar_CoursestudyController extends Zend_Controller_Action {
        $this->view->invoice_num = $db->getGaneratInvoiceWU();
        //get all dept
        $_db = new Application_Model_DbTable_DbGlobal();
-       $this->view->all_dept = $_db->getAllFecultyName();
+       $this->view->all_dept = $_db->getAllFecultyNamess(2);
        $_hour = new Application_Model_GlobalClass();
        $this->view->hour= $row = $_hour->getHours();
     }
@@ -115,7 +115,7 @@ class Registrar_CoursestudyController extends Zend_Controller_Action {
     	$this->view->invoice_num = $db->getGaneratInvoiceWU();
     	//get all dept
     	$_db = new Application_Model_DbTable_DbGlobal();
-    	$this->view->all_dept = $_db->getAllFecultyName();
+    	$this->view->all_dept = $_db->getAllFecultyNamess(2);
     	$_hour = new Application_Model_GlobalClass();
     	$this->view->hour= $row = $_hour->getHours();
     }

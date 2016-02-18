@@ -72,7 +72,7 @@ class Registrar_RegisterController extends Zend_Controller_Action {
        //$this->view->invoice_num = $db->getGaneratInvoiceWU();
        //get all dept
        $_db = new Application_Model_DbTable_DbGlobal();
-       $data=$this->view->all_dept = $_db->getAllFecultyName();
+       $data=$this->view->all_dept = $_db->getAllFecultyNamess(1);
        $_hour = new Application_Model_GlobalClass();
        $this->view->hour= $row = $_hour->getHours();
     }
@@ -108,7 +108,7 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     	$__student_card = array();
     	$this->view->student_card = $__student_card;
     	$_db = new Application_Model_DbTable_DbGlobal();
-    	$this->view->all_dept = $_db->getAllFecultyName();
+    	$this->view->all_dept = $_db->getAllFecultyNamess(1);
     	$_hour = new Application_Model_GlobalClass();
     	$this->view->hour= $row = $_hour->getHours();
     }
@@ -227,7 +227,8 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     	//$this->view->invoice_num = $db->getGaneratInvoiceWU();
     	//get all dept
     	$_db = new Application_Model_DbTable_DbGlobal();
-    	$this->view->all_dept = $_db->getAllFecultyName();
+    	$this->view->all_dept = $_db->getAllFecultyNamess(1);
+    	
     	
     }
     function getGeneralOldStudentAction(){
