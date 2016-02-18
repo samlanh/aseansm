@@ -91,7 +91,7 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     	(SELECT `balance_due` FROM `rms_student_payment` WHERE id= payment_id LIMIT 1) as balance_due,
     	(SELECT `return_amount` FROM `rms_student_payment` WHERE id= payment_id LIMIT 1) as return_amount,
     	(SELECT `amount_in_khmer` FROM `rms_student_payment` WHERE id= payment_id LIMIT 1) as amount_in_khmer,
-    	discount_fix,
+    	discount_fix,discount_percent,
     	(SELECT CONCAT (`last_name`,' ', `first_name`) FROM `rms_users` WHERE `rms_users`.id = user_id LIMIT 1) as user,
     	note,create_date
     	FROM rms_student_paymentdetail
