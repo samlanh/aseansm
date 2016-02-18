@@ -83,11 +83,11 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 					'create_date'=>date("d-m-Y"),
 					'user_id'=>$this->getUserId()
 				);
-				$where=$this->getAdapter()->quoteInto("id=?", $data['id']);
-			 	$this->update($arr, $where);
+				$where =$this->getAdapter()->quoteInto("id=?", $data['id']);
+			 	$this->update($arr,$where);
 			  
 				$this->_name='rms_student_paymentdetail';
-				$where = "payment_id = ".$data['id'];
+				$where = "suspendservice_id = ".$data['id'];
 				$this->delete($where);
 				
 				$ids = explode(',', $data['identity']);

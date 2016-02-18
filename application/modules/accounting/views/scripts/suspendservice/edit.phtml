@@ -52,7 +52,7 @@ fieldset{  background:none;}
 						<tr>
 							<td><?php echo $tr->translate("STUDENT_ID");?></td>
 							<td>
-								<select class="fullside" name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();" >
+								<select class="fullside" readonly="readonly"  name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();" >
 									<?php if(!empty($this->rs))foreach ($this->rs as $row){?>
 										<option value="<?php echo $row['stu_id']?>"<?php if($row['stu_id']==$this->id['student_id']) echo "selected='Selected'"?>><?php echo $row['stu_code']?></option>
 									<?php }?>

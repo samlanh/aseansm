@@ -75,15 +75,6 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 		$this->view->rr = $db->getStudentPaymentByid($id);
 	
 	}
-	function rptSuspendservicedetailAction(){
-		$id=$this->getRequest()->getParam("id");
-		$db = new Allreport_Model_DbTable_DbSuspendService();
-		$row = $db->getStudetnSuspendServiceDetail($id);
-		
-		$this->view->rs = $row;
-		$this->view->rr = $db->getStudetnByid($id);
-		
-	}
 	function  rptSuspendserviceAction(){
 		try{
 			if($this->getRequest()->isPost()){
@@ -96,7 +87,7 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 				$search='';
 			}
 		$db = new Allreport_Model_DbTable_DbSuspendService();
-		$this->view->rs = $db->getStudenSuspendService($search);
+		$this->view->rs = $db->getStudetnSuspendServiceDetail($search);
 		}catch (Exception $e){
 			Application_Form_FrmMessage::message("APPLICATION_ERROR");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
