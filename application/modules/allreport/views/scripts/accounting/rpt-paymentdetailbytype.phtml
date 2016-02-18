@@ -4,7 +4,7 @@
 	echo $this->headTitle();
 	$base_url = Application_Form_FrmMessage::getUrl("/");
 ?>
-<form id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-studentpaymentdetail')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-paymentdetailbytype')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 		<table width="100%" style="margin: 0 auto; background: #fff;">
 			<tr>
 				<td align="left" colspan="2">
@@ -74,12 +74,21 @@
 										</style>
 
 									<table class="padd" width="99%" border="1" align="center" style="white-space:nowrap;">
-										  <tr style="font-size:10px; height: 30px; align="center" >
+										 
+										  <tr></tr>
+												<style> td{padding:0 3px; }</style>
+										  <?php $service_id=0; $i=0; $total=0; if(!empty($this->row)) foreach($this->row as $rs){ $i++;?>
+										 <?php  if($rs['service_id']!=$service_id){?>
+										  <tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
+										    <td colspan="16" style="text-align:left">
+										    	<strong><?php echo 'Service Name :'.$rs['service']; ?></strong>
+										    </td>
+										  </tr>
+										   <tr style="font-size:10px; height: 30px; align="center" >
 										    <th>&nbsp;N.o&nbsp;</th>
 										    <th>&nbsp;Reciept N.o&nbsp;</th>
 											<th>&nbsp;Khmer Name&nbsp;</th>
 											<th>&nbsp;English Name&nbsp;</th>
-											<th>&nbsp;Service Type&nbsp;</th>
 											<th>&nbsp;Payment Term&nbsp;</th>
 											<th>&nbsp;Fee&nbsp;</th>
 											<th>&nbsp;Qty&nbsp;</th>
@@ -93,18 +102,18 @@
 											<th>&nbsp;User&nbsp;</th>
 											<th>&nbsp;Remark&nbsp;</th>
 										  </tr>
-										  <tr></tr>
-												<style> td{padding:0 3px; }</style>
-										  <?php $i=0; $total=0; if(!empty($this->row)) foreach($this->row as $rs){ $i++;?>
-										  <tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
-											<?php $after_dic= $rs['fee'] - (($rs['fee'] * $rs['discount_percent'])/100);
-												$subtotal= $after_dic + $rs['admin_fee']+ $rs['other_fee'];
-											?>
+										   <?php
+										   $after_dic= $rs['fee'] - (($rs['fee'] * $rs['discount_percent'])/100);
+										   $subtotal= $after_dic + $rs['admin_fee']+ $rs['other_fee'];
+										   $total = $subtotal + $total;
+												}
+										 	$service_id=$rs['service_id'];
+										 ?>
+										   <tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
 										  	<td><?php echo $i;?></td>
 										    <td style="color: #F00;"><?php echo $rs['receipt_number']; ?></td>
 										    <td style=" white-space:nowrap; text-align:left"><?php echo $rs['kh_name']; ?></td>
 										    <td style=" white-space:nowrap; text-align:left"><?php echo $rs['en_name']; ?></td>
-										    <td style="text-align:left"><?php echo $rs['service']; ?></td>
 										    <td style="text-align:left"><?php echo $rs['payment_term']; ?></td>
 										    <td>$ <?php echo $rs['fee']; if(empty($rs['fee']))echo '0.00'; ?></td>
 										    <td><?php echo $rs['qty']; if(empty($rs['qty']))echo '00'; ?></td>
@@ -118,7 +127,12 @@
 										    <td><?php echo $rs['user']; ?></td>
 										   	<td><?php echo $rs['note']; ?></td>
 										  </tr>
-										 <?php $total = $subtotal + $total; ?> 
+										  	<tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
+										 				<td colspan="14"></td>
+										 				<th style="background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;Total&nbsp;</th>
+														<td style=" color:#F00; font-weight:bold;font-family: Arial Black; font-size: 10px;">$ <?php echo $total;?>.00</td>
+										  	</tr>
+										
 										  <?php } ?>
 										 
 										</table>
@@ -131,10 +145,7 @@
 								<tr>
 									<td colspan="3">
 											<table width="29.2%" border="1" align="right" style="margin-right:0.5%; white-space:nowrap;">
-												<tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
-										 				<th style="background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;Total&nbsp;</th>
-														<td colspan="2" style=" color:#F00; font-weight:bold;font-family: Arial Black; font-size: 10px;">$ <?php echo $total;?>.00</td>
-										  		</tr>
+											
 										  </table>
 									</td>
 								</tr>
