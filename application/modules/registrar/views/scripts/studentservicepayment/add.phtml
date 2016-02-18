@@ -1,6 +1,6 @@
 <?php
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-	echo $this->headTitle($tr->translate('SRMS_WUREGISTER')); 
+	echo $this->headTitle($tr->translate('ADD_STUDENT_SERVICE_PAYMENT')); 
 	$base_url = Application_Form_FrmMessage::getUrl("/");
 ?>	
 <script type="text/javascript"  src="<?php echo $this->baseUrl();?>/js/jquery-1.8.3.min.js"></script>
@@ -82,7 +82,7 @@ fieldset{  background:none;}
 							<td colspan="2" align="right">
 								<table style="width:400px;border-collapse: collapse;" cellpadding="10" cellspacing="10" >
 									<tr>
-										<td >Total Payment</td>
+										<td ><?php echo $tr->translate("TOTAL_PAYMENT");?></td>
 										<td align="right"><input class="fullside" type="text" onkeyup="calculatBalanceAndReturn();" required="true" name="grand_total" id="grand_total" dojoType="dijit.form.NumberTextBox" /></td>
 									</tr>
 									<tr>	
@@ -136,29 +136,46 @@ function printSave(){
 	var rowIDArray = rowId.split(',');
 	template="";
 		 temp='<table class="collape tablesorter" border="1" align="center" style=" width: 100%; padding: 0px; margin: 0px; border-collapse: collapse; white-space:nowrap; border: 1px solid #000; font-size:10px;  " id="table">'
-		      temp+='<tr style="background:#ccc; font-size:10px; "><th><?php echo $tr->translate("លេខ/No");?></th>';
-		      temp+='<th><?php echo $tr->translate("ឈ្មោះសេវាកម្ម / Service Name");?></th>';
-		      temp+='<th><?php echo $tr->translate("បង់ជា / Payment Term");?></th>';
-		      temp+='<th><?php echo $tr->translate("តំលៃ / Price");?></th>';
-		      temp+='<th><?php echo $tr->translate("ចំនួន / Amount");?></th>';
-		      temp+='<th><?php echo $tr->translate("បញ្ចុះតំលៃ / Discount");?></th>';
-		      temp+='<th><?php echo $tr->translate("តំលៃសរុប​ / Sub Total");?></th></tr>';
+		      temp+='<tr style="background:#ccc; font-size:10px; "><th><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;"><?php echo $tr->translate("លេខ/No");?></strong></th>';
+		      temp+='<th><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;"><?php echo $tr->translate("ឈ្មោះសេវាកម្ម / Service Name");?></strong></th>';
+		      temp+='<th><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;"><?php echo $tr->translate("បង់ជា / Payment Term");?></strong></th>';
+		      temp+='<th><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;"><?php echo $tr->translate("តំលៃ / Price");?></strong></th>';
+		      temp+='<th><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;"><?php echo $tr->translate("ចំនួន / Amount");?></strong></th>';
+		      temp+='<th><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;"><?php echo $tr->translate("បញ្ចុះតំលៃ / Discount");?></strong></th>';
+		      temp+='<th><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;"><?php echo $tr->translate("តំលៃសរុប​ / Sub Total");?></strong></th>';
+		      temp+='<th><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;"><?php echo $tr->translate("សុពលភាព / Validate");?></strong></th></tr>';
  
 			    i=1;  for(var n = 0; n < rowIDArray.length; n++) {
 			     
 		      temp+='<tr style=" font-size:10px;height: 23px;"​ align="center"><td align="center" style="border:1px solid #000;">'+i+'</td>';
-		      temp+='<td style="border:1px solid #000;">'+dijit.byId("service_"+rowIDArray[n]).attr('displayedValue')+'</td>'; 
-		      temp+='<td style="border:1px solid #000;">'+dijit.byId("term_"+rowIDArray[n]).attr('displayedValue')+'</td>';
+		      temp+='<td align="left" style="border:1px solid #000;">&nbsp;&nbsp;'+dijit.byId("service_"+rowIDArray[n]).attr('displayedValue')+'</td>'; 
+		      temp+='<td align="left" style="border:1px solid #000;"><span style="font-family: Khmer OS Battambang;color:#000;font-size: 9px;">&nbsp;&nbsp;'+dijit.byId("term_"+rowIDArray[n]).attr('displayedValue')+'</td>';
 		      temp+='<td style="border:1px solid #000;">$ '+dijit.byId("price_"+rowIDArray[n]).get('value')+'</td>';
 		      temp+='<td style="border:1px solid #000;">'+dijit.byId("qty_"+rowIDArray[n]).get('value')+'</td>';
 		      temp+='<td style="border:1px solid #000;">$ '+dijit.byId("discount_"+rowIDArray[n]).get('value')+'</td>';
 		      temp+='<td style="border:1px solid #000;">$ '+dijit.byId("subtotal_"+rowIDArray[n]).get('value')+'</td>';
+		      var a = new Date(dijit.byId("validate_"+rowIDArray[n]).get('value'));
+			  mm = a.getMonth()+1;
+
+			 var dd = a.getDate();
+			  if(dd<10){
+			   dd = "0"+dd;
+			 }
+			  if(mm<10){
+			   mm = "0"+mm;
+			 }
+			 var y = a.getFullYear();
+			 var epx_date = dd + '-' + mm + '-' + y ;
+
+			
+		      temp+='<td style="border:1px solid #000;"> '+epx_date+'</td>';
 		      i++;
+		      temp+='</tr>';
 		     }
-		      temp+='<tr style="font-size:10px;height: 23px;"​ align="left"> <td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #000;" colspan="5"></td><td style="border:1px solid #000; padding-left: 10px;" >ទឹកប្រាក់ត្រូវបង់ / Total Payment</td><td style="border:1px solid #000; padding-left: 10px;">$ '+total+'</td></tr>';
-		      temp+='<tr style="font-size:10px;height: 23px;"​ align="left"> <td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #000;" colspan="5"></td><td style="border:1px solid #000; padding-left: 10px;">ទឹកប្រាក់ទទួលបាន / Recieve Amount</td><td style="border:1px solid #000; padding-left: 10px;">$ '+recieve+'</td></tr>';
-		      temp+='<tr style="font-size:10px;height: 23px;"​ align="left"> <td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #000;" colspan="5"></td><td style="border:1px solid #000; padding-left: 10px;">ប្រាក់នៅខ្វះ / Balance Due</td><td style="border:1px solid #000; padding-left: 10px;">$ '+balance_due+'</td></tr>';
-		      temp+='<tr style="font-size:10px;height: 23px;"​ align="left"> <td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #000;" colspan="5"></td><td style="border:1px solid #000; padding-left: 10px;">ប្រាក់អាប់ / Return Amount</td><td style="border:1px solid #000; padding-left: 10px;">$ '+toral_return+'</td></tr>';
+		      temp+='<tr style="font-size:10px;height: 23px;"​ align="left"> <td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #000;" colspan="6"></td><td style="border:1px solid #000; padding-left: 10px;"><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;">ទឹកប្រាក់ត្រូវបង់ / Total Payment</strong></td><td style="border:1px solid #000; padding-left: 10px;">$ '+total+'</td></tr>';
+		      temp+='<tr style="font-size:10px;height: 23px;"​ align="left"> <td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #000;" colspan="6"><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 11px;color:red;">** ប្រាក់ដែលបង់រួចមិនអាចដកវិញបានទេ</strong></td><td style="border:1px solid #000; padding-left: 10px;"><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;">ទឹកប្រាក់ទទួលបាន / Recieve Amount</strong></td><td style="border:1px solid #000; padding-left: 10px;">$ '+recieve+'</td></tr>';
+		      temp+='<tr style="font-size:10px;height: 23px;"​ align="left"> <td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #000;" colspan="6"><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 13px;color:red;">** Nonrefundable</strong></td><td style="border:1px solid #000; padding-left: 10px;"><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;">ប្រាក់នៅខ្វះ / Balance Due</strong></td><td style="border:1px solid #000; padding-left: 10px;">$ '+balance_due+'</td></tr>';
+		      temp+='<tr style="font-size:10px;height: 23px;"​ align="left"> <td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #000;" colspan="6"></td><td style="border:1px solid #000; padding-left: 10px;"><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;">ប្រាក់អាប់ / Return Amount</strong></td><td style="border:1px solid #000; padding-left: 10px;">$ '+toral_return+'</td></tr>';
 		    temp+='</table>';
 		    dojo.byId('t_amountmoneytype').innerHTML = temp;
 
@@ -172,36 +189,70 @@ function printSave(){
 
 <div class="dijitHidden">
 	<div data-dojo-type="dijit.Dialog" id="popup_invoice" >
-		<div id="divPrint" style=" width: 21cm; height: 12cm ; padding: 0px; margin: 0px;">
-			<table style="background:#fff; margin: 0 auto; width: 21cm;height: 12cm; padding: 1cm; margin: 0 auto;" align="center">
+		<div id="divPrint" style=" width: 23cm; height: 12cm ; padding: 0px; margin: 0px;">
+			<table style="background:#fff; margin: 0 auto; width: 23cm;height: 12cm; padding: 1cm; margin: 0 auto;" align="center">
 							<tr>
-								<td width="30%" align="left">
-									<img style="width: 155px;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br /><br />
+								<td width="25%" align="left">
 								</td>
 								<td align="center">
-									<strong style=" font: bold 13px 'Khmer MEF2',Arial Black; color:#000;padding-left: 10px"><u>បង្កាន់ដៃបង់ប្រាក់របស់សិស្ស</u></strong><br >
+									<strong style=" font: bold 15px 'Khmer MEF2',Arial Black; color:#000;"><u>បង្កាន់ដៃបង់ប្រាក់របស់សិស្ស</u></strong><br >
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 15px;padding-right: 10px;">OFFICAIL RECEIPT</strong><br >
 								</td>
-								<td align="right" width="30%">
+								<td align="right" width="20%">
 								</td>
 							</tr>
 							<tr>
-								<td width="35%" align="left" style="line-height: 12px;">
+								<td width="35%" style="line-height: 32px;">
+									<table style="white-space: nowrap;">
+										<tr>
+											<td style="line-height: 13px;">
+												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;">អត្តលេខសិស្ស  : </strong><br />
+												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 11px;">Student ID &nbsp;&nbsp;&nbsp;</strong>
+											</td>
+											<td ><label id="lbl_stuid"></label></td>
+											
+										</tr>
+										<tr>
+											<td style="line-height: 13px;">
+												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;">ឈ្មោះសិស្ស :</strong><br />
+												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;">Student Name </strong>
+											</td>
+											<td ><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;"><label id="lbl_khname"></label></strong> - <label id="lbl_enname"></label></td>
+										</tr>
+										<tr>
+											<td ><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;">ភេទ / Sex : </strong></td>
+											<td ><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;"><label id="lbl_sex"></label></strong></td>
+										</tr>
+									</table>
+								</td>
+								<td width="30%">
+									&nbsp;
+								</td>
+								<td width="35%" style="line-height: 32px;">
+									<table style="white-space: nowrap;">
+										<tr>
+											<td width="20%" style="line-height: 13px;">
+												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;padding-left: 15px;">វិក័យប័ត្រលេខ​  :  </strong><br />
+												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;padding-left: 15px;">Reciept N.o  </strong>
+											</td>
+											
+											<td width="20%" >
+												<b><label id="lbl_recieptno"> </label></b>
+											</td>
+										</tr>
+										<tr>
+											<td width="20%" style="line-height: 13px;">
+												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;padding-left: 15px;">ថ្ងៃបង់ :  </strong><br />
+												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;padding-left: 15px;">Date Paid  </strong>
+											</td>
+											<td width="80%"><span style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;"><?php echo Zend_Date::now();?></span></td>
+										</tr>
+										<tr>
+											<td colspan="2">&nbsp;</td>
+										</tr>
+									</table>
+								</td>
 								
-									<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;">អត្តលេខសិស្ស  : <label id="lbl_stuid"></label></strong><br />
-									<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 11px;">Student ID &nbsp;&nbsp;&nbsp;</strong> <br /><br />
-									
-									<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;">ឈ្មោះសិស្ស  &nbsp;&nbsp;&nbsp;: <label id="lbl_khname"></label> - <label id="lbl_enname"></label>  </strong> <br />
-									<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 11px;">Student Name </strong><br /><br />
-									<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;">ភេទ / Sex &nbsp;&nbsp;&nbsp;&nbsp; : <label id="lbl_sex"></label></strong><br />
-									
-								</td>
-								<td width="30%">&nbsp;</td>
-								<td width="35%" align="left" style="line-height: 12px;">
-									<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;padding-left: 22px;">វិក័យប័ត្រលេខ​  : <label id="lbl_recieptno"> </label></strong><br />         
-									<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 11px;padding-left: 22px;">Reciept N.o  </strong><br /><br /> 
-									<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;padding-left: 22px;">ថ្ងៃបង់  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?php echo Zend_Date::now();?> </strong><br />
-									<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 11px;padding-left: 22px;">Date Paid  </strong>
-								</td>
 							</tr>
 							<tr>
 								<td colspan="3">
@@ -211,12 +262,15 @@ function printSave(){
 							<tr><td>&nbsp;</td></tr>
 							<tr>
 								<td align="left">
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';padding-left: 50px;">អ្នកទទួល    <?php $session_user=new Zend_Session_Namespace('auth'); $username = $session_user->first_name;?></strong><br />
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';padding-left: 50px;">អ្នកទទួល    </strong><br />
 								</td>
 								<td>&nbsp;</td>
 								<td align="right">
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';padding-right: 80px;">ហត្ថលេខា </strong><br />
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';padding-right: 80px;">ហត្ថលេខា</strong><br />
 								</td>
+							</tr>
+							<tr>
+								<td colspan="3"> <div style="padding-left: 57px;font-family: Khmer OS Battambang;color:#000;"><?php $session_user=new Zend_Session_Namespace('auth'); $username = $session_user->first_name;echo $username; ?></div></td>
 							</tr>
 							
 						</table>
@@ -311,14 +365,14 @@ function addRow() {
 			template+='<td><select onchange="getservicefee('+col+');" dojoType="dijit.form.FilteringSelect" id="service_'+col+'" name="service_'+col+'">'+service+'</select></td>';			
 
 			
-			template+='<td><select onchange="getservicefee('+col+');" dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'" style="width:120px;">';
+			template+='<td><select onchange="getservicefee('+col+');getValidate('+col+');" dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'" style="width:120px;">';
 				<?php foreach($this->payment_term as $key => $value){?>
 					template+='<option value="'+<?php echo $key?>+'"><?php echo $value;?></option>';
 				<?php }?>
 			template+='</select></td>';
 			column = 0;
 			template+='<td> <input type="text" required="true" onkeyup="calculateTotal('+col+');" name="price_'+col+'" id="price_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="subsub"></label></td>';
-			template+='<td> <input type="text" required="true" onkeyup="calculateTotal('+col+');" name="qty_'+col+'" id="qty_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="qty"></label></td>';
+			template+='<td> <input type="text" required="true" onkeyup="calculateTotal('+col+');getValidate('+col+');" name="qty_'+col+'" id="qty_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="qty"></label></td>';
 			
 			template+='<td> <input type="text" onkeyup="calculateDiscount('+col+');" name="discount_'+col+'" value="<?php echo 0;?>" id="discount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="subsub"></label></td>';
 			template+='<td> <input type="text" required="true" readonly="readonly" name="subtotal_'+col+'" id="subtotal_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="qty"></label></td>';
@@ -461,6 +515,106 @@ function getservicefee(key){
 				}
 			});
 }
+
+function getValidate(key){
+	//alert(1);
+	//amount_month=dijit.byId('duration').get('value');
+	 amount= dijit.byId('qty_'+key).get('value');
+	 //start_date = dijit.byId("study_start").get('value');
+	 term = dijit.byId('term_'+key).get('value');
+
+	 var dNow = new Date();
+	 var localdate= (dNow.getMonth()+1) + '/' + dNow.getDate() + '/' + dNow.getFullYear();
+	 
+	// alert(localdate);
+	 
+	 if(term==1){
+		 var a = new Date(localdate);
+		  mm = a.getMonth()+amount+1;
+
+		 var dd = a.getDate();
+		  if(dd<10){
+		   dd = "0"+dd;
+		 }
+		  if(mm<10){
+		   mm = "0"+mm;
+		 }
+		 var y = a.getFullYear();
+		 var epx_date = y + '-' + mm + '-' + dd ;
+
+		 //alert(epx_date);
+		 dijit.byId('validate_'+key).attr('value',epx_date);
+	 }
+	 if(term==2){
+		 var a = new Date(localdate);
+		  mm = a.getMonth()+(amount*3)+1;
+
+		 var dd = a.getDate();
+		  if(dd<10){
+		   dd = "0"+dd;
+		 }
+		  if(mm<10){
+		   mm = "0"+mm;
+		 }
+		 var y = a.getFullYear();
+		 var epx_date = y + '-' + mm + '-' + dd ;
+
+		 //alert(epx_date);
+		 dijit.byId('validate_'+key).attr('value',epx_date);
+	 }
+	 if(term==3){
+		 var a = new Date(localdate);
+		  mm = a.getMonth()+(amount*6)+1;
+
+		 var dd = a.getDate();
+		  if(dd<10){
+		   dd = "0"+dd;
+		 }
+		  if(mm<10){
+		   mm = "0"+mm;
+		 }
+		 var y = a.getFullYear();
+		 var epx_date = y + '-' + mm + '-' + dd ;
+
+		 //alert(epx_date);
+		 dijit.byId('validate_'+key).attr('value',epx_date);
+	 }
+	 if(term==4){
+		 var a = new Date(localdate);
+		  mm = a.getMonth()+(amount*12)+1;
+
+		 var dd = a.getDate();
+		  if(dd<10){
+		   dd = "0"+dd;
+		 }
+		  if(mm<10){
+		   mm = "0"+mm;
+		 }
+		 var y = a.getFullYear();
+		 var epx_date = y + '-' + mm + '-' + dd ;
+
+		 //alert(epx_date);
+		 dijit.byId('validate_'+key).attr('value',epx_date);
+	 }
+
+	 var a = new Date(start_date);
+	  mm = a.getMonth()+amount_month+1;
+
+	 var dd = a.getDate();
+	  if(dd<10){
+	   dd = "0"+dd;
+	 }
+	  if(mm<10){
+	   mm = "0"+mm;
+	 }
+	 var y = a.getFullYear();
+	 var epx_date = dd + '-' + mm + '-' + y ;
+
+	 //alert(epx_date);
+	 dijit.byId('start_end').attr('value',epx_date);
+}
+
+
 function deleteRecord(index) {
 		var identity = $('#identity').val();
 		var arrays = identity.split(',');
