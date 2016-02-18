@@ -211,7 +211,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 				'class'=>'fullside'));
 		
 		  $_term = new Zend_Dojo_Form_Element_FilteringSelect("payment_term");
-		  $opt_term = $_db->getAllPaymentTerm();
+		  $opt_term = $_db->getAllPaymentTerm(null,1);
 // 		  $opt_term = array(
 // 		  		1=>$this->tr->translate('QUARTER'),
 // 		  		2=>$this->tr->translate('SEMESTER'),
@@ -318,7 +318,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 				'onchange'=>'changControll();',
 		));
 		$opts = array(   1=>$this->tr->translate('NEW_STUDENT'),
-				  		2=>$this->tr->translate('Subspend'),
+				  		2=>$this->tr->translate('SUSPEND'),
 				        3=>$this->tr->translate('OLD_STUDENT') 
 				  );
 	    $student_type->setMultiOptions($opts);
@@ -330,7 +330,11 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 						'class'=>'fullside',
 				        'onchange'=>'getGeneralOldStudentById();',
 				));
+		
 		$opt_ger=$reciept->getAllGerneralOldStudent();
+		
+//  		print_r($opt_ger);exit();
+		
 		$opts=array(-1=>$this->tr->translate("student id"));
 		if(!empty($opt_ger))foreach($opt_ger AS $row) $opts[$row['stu_id']]=$row['stu_code'];
 		$old_studens->setMultiOptions($opts);
