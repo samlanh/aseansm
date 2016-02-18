@@ -134,10 +134,10 @@ Class Registrar_Form_FrmStudentServicePayment extends Zend_Dojo_Form {
 				//'onkeyup'=>'CheckReceipt()'
 				'required'=>'true',
 				'class'=>'fullside',
-				'onchange'=>'paymentTerm();',
+				//'onchange'=>'getServiceName();',
 		));
 		$db_years=new Registrar_Model_DbTable_DbRegister();
-        $years=$db_years->getAllYearsProgramFee();
+        $years=$db_years->getAllYearsServiceFee();
         $opt = array(-1=>$this->tr->translate("SELECT_YEAR"));
         if(!empty($years))foreach($years AS $row) $opt[$row['id']]=$row['years'];
 		$generation->setMultiOptions($opt);
