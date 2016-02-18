@@ -30,7 +30,7 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
 //     		$rs_rows = $glClass->getImgActive($rs_rows, BASE_URL, true);
     		$list = new Application_Form_Frmtable();
     		$collumns = array("RECEIPT_NO","YEARS","NAME","SEX","GRAND_TOTAL","DISCOUNT",
-    				          "TOTAL_PAYMENT","MONEY_RECEIVED","BALANCE","REMAINING",);
+    				          "TOTAL_PAYMENT","MONEY_RECEIVED","BALANCE","REMAINING","VALIDATE");
     		$link=array(
     				'module'=>'registrar','controller'=>'studentservicepayment','action'=>'edit',
     		);
@@ -68,17 +68,20 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
        $this->view->keycode=$key->getKeyCodeMiniInv(TRUE);
        $model = new Application_Form_FrmGlobal();
       
-       $this->view->invoice_no = Application_Model_GlobalClass::getInvoiceNo();
-       $__student_card = array();
-       $this->view->student_card = $__student_card;
-//        $db = new Registrar_Model_DbTable_DbwuRegister();
-//        $this->view->invoice_num = $db->getGaneratInvoiceWU();
+       $db = new Application_Model_DbTable_DbGlobal();
+       $abc=$this->view->payment_term = $db->getAllPaymentTerm();
+       
+//        print_r($abc);exit();
        
        $db = new Registrar_Model_DbTable_DbStudentServicePayment();
        $this->view->rs = $db->getAllStudentCode();
        
+       
        $_model = new Application_Model_GlobalClass();
        $this->view->all_service = $_model->getAllServiceItemOption(2);
+       
+       $session_user=new Zend_Session_Namespace('auth'); $username = $session_user->first_name;
+       
     }
     public function editAction()
     {
@@ -98,14 +101,11 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     			Application_Model_DbTable_DbUserLog::writeMessageError($err);
     		}
     	}
+    	
     	$db = new Registrar_Model_DbTable_DbStudentServicePayment();
-    	
-    	
-    	
     	$this->view->row=$db->getStudentServicePaymentByID($id);
     	
     	$payment=$db->getStudentServicePaymentDetailByID($id);
-    	
     	$this->view->rows = $payment;
     	
 //     	print_r($payment);exit();
@@ -116,69 +116,18 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     	$this->view->frm_register = $frm_register;
     	$key = new Application_Model_DbTable_DbKeycode();
     	$this->view->keycode=$key->getKeyCodeMiniInv(TRUE);
-    	$model = new Application_Form_FrmGlobal();
-    	$this->view->footer=$model->getReceiptFooter();
-    	$this->view->invoice_no = Application_Model_GlobalClass::getInvoiceNo();
-    	$__student_card = array();
-    	$this->view->student_card = $__student_card;
-//     	$db = new Registrar_Model_DbTable_DbwuRegister();
-//     	$this->view->invoice_num = $db->getGaneratInvoiceWU();
     	
     	$db = new Registrar_Model_DbTable_DbStudentServicePayment();
     	$this->view->rs = $db->getAllStudentCode();
     	
+    	$db = new Application_Model_DbTable_DbGlobal();
+    	$abc=$this->view->payment_term = $db->getAllPaymentTerm();
+    	
     	$_model = new Application_Model_GlobalClass();
     	$this->view->all_service = $_model->getAllServiceItemOption(2);
-    }
-    public function oldaddAction()
-    {
-    	if($this->getRequest()->isPost()){
-    		$_data = $this->getRequest()->getPost();
-    		$_model = new Registrar_Model_DbTable_DbwuRegister();
-    		//print_r($_data);exit();
-    		$_model->AddNewStudent($_data);
-    	}
-    	$frm = new Registrar_Form_FrmRegister();
-    	$frm_register=$frm->FrmRegistarWU();
-    	Application_Model_Decorator::removeAllDecorator($frm_register);
-    	$this->view->frm_register = $frm_register;
-    	//        $_marjor =array();
-    	//        $this->view->marjorlist = $_marjor;
-    	//        $model = new Application_Model_DbTable_DbGlobal();
-    	//        $_marjorlist = $model->getMarjorById();
-    	 
-    	//        $this->view->marjorlist = $_marjorlist;
-    	 
-    	$key = new Application_Model_DbTable_DbKeycode();
-    	$this->view->keycode=$key->getKeyCodeMiniInv(TRUE);
-    	$model = new Application_Form_FrmGlobal();
-    	$this->view->footer=$model->getReceiptFooter();
-    	 
-    	$this->view->invoice_no = Application_Model_GlobalClass::getInvoiceNo();
-    	// echo Application_Model_GlobalClass::getInvoiceNo();
-    	 
-    	$__student_card = array();
-    	$this->view->student_card = $__student_card;
-    	$db = new Registrar_Model_DbTable_DbwuRegister();
-    	$this->view->invoice_num = $db->getGaneratInvoiceWU();
-    	// echo $db->getGaneratInvoiceWU();
-    }
-    public function wuReceiptAction()
-    {
-    	$frm = new Registrar_Form_FrmRecept();
-    	$frm_recept=$frm->FrmRecept();
-    	Application_Model_Decorator::removeAllDecorator($frm_recept);
-    	$this->view->frm_recept = $frm_recept;
-    	//$key = new Application_Model_DbTable_DbKeycode();
-    	//$this->view->keycode=$key->getKeyCodeMiniInv(TRUE);
-    }
-    public function getStudentinfoallAction(){
-    	if($this->getRequest()->isPost()){
-    		$_db = new Registrar_Model_DbTable_DbGetStudentInfo();
-    		$_rs_student = $_db->getAllStudent();
-    		print_r(Zend_Json::encode($_rs_student));
-    		exit();
-    	}
+    	
+    	$session_user=new Zend_Session_Namespace('auth'); $username = $session_user->first_name;
+    	
     }
     function getGradeAction(){
     	if($this->getRequest()->isPost()){
@@ -188,28 +137,6 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     		//print_r($grade);exit();
     		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
     		print_r(Zend_Json::encode($grade));
-    		exit();
-    	}
-    }
-    function getPaymentGepAction(){
-    	if($this->getRequest()->isPost()){
-    		$data=$this->getRequest()->getPost();
-    		$db = new Registrar_Model_DbTable_DbStudentServicePayment();
-    		$payment = $db->getPaymentGep($data['study_year'],$data['levele'],$data['payment_term']);
-    		//print_r($grade);exit();
-    		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
-    		print_r(Zend_Json::encode($payment));
-    		exit();
-    	}
-    }
-    function getGepOldStudentAction(){
-    	if($this->getRequest()->isPost()){
-    		$data=$this->getRequest()->getPost();
-    		$db = new Registrar_Model_DbTable_DbRegister();
-    		$gep = $db->getGepOldStudent($data['student_id']);
-    		//print_r($grade);exit();
-    		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
-    		print_r(Zend_Json::encode($gep));
     		exit();
     	}
     }
@@ -238,5 +165,17 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     		exit();
     	}
     }
+    
+    function getServiceAction(){
+    	if($this->getRequest()->isPost()){
+    		$data=$this->getRequest()->getPost();
+    		$db = new Registrar_Model_DbTable_DbStudentServicePayment();
+    		$year = $db->getAllService($data['year']);
+    		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
+    		print_r(Zend_Json::encode($year));
+    		exit();
+    	}
+    }
+    
     
 }
