@@ -41,6 +41,7 @@
   		<li><a href="<?php echo $rpt_studentpaymentdetail;?>"><?php echo $tr->translate('Student Payment Detail');?></a></li>
   		<li><a href="<?php echo $rpt_servicecharge;?>"><?php echo $tr->translate('RPT_SERVICE');?></a></li>
   		<li><a href="<?php echo $rpt_tuitionfee;?>"><?php echo $tr->translate('RPT_FEE');?></a></li>
+  		<li><a href="<?php echo $this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-paymentdetailbytype'), null, true);?>"><?php echo $tr->translate('Student Payment Service By Type');?></a></li>
   		<li><a href="<?php echo $this->url(array('module'=>'report','controller'=>'accounting','action'=>'rpt-studentlate'), null, true);?>"><?php echo $tr->translate('Student Payment Late Report');?></a></li>
   		<li><a href="<?php echo $this->url(array('module'=>'report','controller'=>'accounting','action'=>'rpt-expectedincome'), null, true);?>"><?php echo $tr->translate('Expected Income Report');?></a></li>
   		<li><a href="<?php echo $this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-suspendservice'), null, true);?>"><?php echo $tr->translate('Student Stop Service Report');?></a></li>
