@@ -393,20 +393,21 @@ function printSave(){
 	if(dijit.byId('office_receipt').validate()) {
 		dojo.byId("lb_receipt_no").innerHTML = dijit.byId("reciept_no").get('value');
 		dojo.byId("lb_stu_id").innerHTML = dijit.byId("stu_id").value;
-		dojo.byId("lb_kh_name").innerHTML = dijit.byId("kh_name").get('value')+"-"+dijit.byId("en_name").get('value');
+		dojo.byId("lb_kh_name").innerHTML = dijit.byId("kh_name").get('value')+" - "+dijit.byId("en_name").get('value');
 		//dojo.byId("lb_en_name").innerHTML = dijit.byId("en_name").get('value');
 		dojo.byId("lb_sex").innerHTML = dijit.byId("sex").attr('displayedValue');
 		dojo.byId("lb_session").innerHTML = dijit.byId('session').attr('displayedValue');
+		dojo.byId("lb_hour").innerHTML = dijit.byId('time').attr('displayedValue');
 		//var mkh = new Array('មករា', 'កុម្ភៈ', 'មីនា', 'មេសា', 'ឧសភា', 'មិថុនា', 'កក្កដា', 'សីហា', 'កញ្ញា', 'តុលា', 'វិច្ឆិកា', 'ធ្នូរ');
 		dojo.byId("lb_dept").innerHTML = dijit.byId('dept').attr('displayedValue');
 		dojo.byId("lb_grade").innerHTML = dijit.byId("grade").attr('displayedValue');
-		dojo.byId("lb_tuitionfee").innerHTML ="$"+dijit.byId('tuitionfee').get('value');
+		dojo.byId("lb_tuitionfee").innerHTML ="$"+dijit.byId('tuitionfee').get('value').toFixed(2);
 		dojo.byId("lb_payment_term").innerHTML = dijit.byId("payment_term").attr('displayedValue');
 		dojo.byId("lb_discount").innerHTML = dijit.byId("discount").get('value')+"%";
-		dojo.byId("lb_remark").innerHTML ="$"+ dijit.byId('remark').attr('value');
+		dojo.byId("lb_remark").innerHTML ="$"+ dijit.byId('remark').attr('value').toFixed(2);
 		dojo.byId("lb_total").innerHTML ="$"+dijit.byId('total').attr('value');
-		dojo.byId("lb_books").innerHTML = "$"+dijit.byId("books").get('value');
-		dojo.byId("lb_addmin_fee").innerHTML ="$"+dijit.byId("addmin_fee").get('value');
+		dojo.byId("lb_books").innerHTML = "$"+dijit.byId("books").get('value').toFixed(2);
+		dojo.byId("lb_addmin_fee").innerHTML ="$"+dijit.byId("addmin_fee").get('value').toFixed(2);
 		dojo.byId("lb_remaining").innerHTML = "$"+dijit.byId("remaining").get('value');
 		
 		 dojo.byId("lb_note").innerHTML = dijit.byId("not").get('value');
@@ -448,7 +449,7 @@ function printSave(){
 						margin-top: -25px; line-height: 25px;}
 				.values{ border: 1px solid rgba(14, 0, 107, 1);; height: 25px; padding: 0 10px;display: block;
 						line-height: 25px;}
-				.h{ margin-top: -5px;}
+				.h{ margin-top: -8px;margin-left:4px;}
 ​​               .print td{ font:bold 11px 'Khmer OS Battambang';}
 			   .khmerbold{font:bold 12px 'Khmer OS Battambang';}
 			   .khmer{font:12px 'Khmer OS Battambang';}
@@ -456,51 +457,56 @@ function printSave(){
 			</style>	
 			<table  class="print" bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;height: 11cm; font-size:12px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;">
 				<tr>
-				    <td colspan="8"  style="font:bold 20px 'Kh Muol';" align="center"><u><b><strong>បង្កាន់ដៃបង់ប្រាក់</strong></b></u>
+				    <td colspan="8"  style="font:bold 20px 'Kh Muol';" align="center"><u><b><strong style=" font-family: Arial Black;font-family:'Khmer MEF2';">បង្កាន់ដៃបង់ប្រាក់</strong></b></u>
 				        <br/><strong style="font-size: 20px;font-weight:bold">OFFICAL RECEIPT</strong>
 				    </td>
 				</tr>
 				<tr>
-				    <td class="one khmerbold">&nbsp;អត្តលេខ</td><td width="25%"><strong> &nbsp;<label id="lb_stu_id" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;អត្តលេខសិស្ស:<div class="h">Student ID</div> </td><td width="25%"><strong> &nbsp;<label id="lb_stu_id" class="value"></label></strong></td>
 				    <td></td><td ></td>
 				    <td> </td><td ></td>
-				    <td class="one khmerbold">&nbsp;&nbsp;No:</td><td width="25%"><strong>&nbsp;<label id="lb_receipt_no" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;Receipt No:</td><td width="25%"><strong>&nbsp;<label id="lb_receipt_no" class="value"></label></strong></td>
 				</tr>
 				<tr>
-				    <td class="one khmerbold">&nbsp;ឈ្មោះខ្មែរ/អង់គ្លេស</td>
+				    <td class="one khmerbold">&nbsp;ឈ្មោះខ្មែរ/អង់គ្លេស:<div class="h">Khmer/English</div> </td>
 				    <td width="25%" colspan="5"><strong> &nbsp;<label id="lb_kh_name" class="value"></label></strong></td>
-				    <td class="one khmerbold">&nbsp;&nbsp;ភេទ</td><td width="25%"><strong>&nbsp;<label id="lb_sex" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;ភេទ&nbsp;/&nbsp;Sex :</td><td width="25%"><strong>&nbsp;<label id="lb_sex" class="value"></label></strong></td>
 				</tr>
 				<tr>
-				    <td class="one khmerbold">&nbsp;វេនសិក្សា</td><td width="25%"><strong> &nbsp;<label id="lb_session" class="value"></label></strong></td>
-				    <td class="one khmerbold">&nbsp;&nbsp;ថ្នាក់</td><td width="25%"><strong>&nbsp;<label id="lb_dept" class="value"></label></strong></td>
-				    <td class="one khmerbold">&nbsp;&nbsp;</td><td width="25%"></td>
-				    <td class="one khmerbold">&nbsp;&nbsp;បន្ទប់</td><td width="25%"><strong>&nbsp;<label id="lb_grade" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;វេនសិក្សា :<div class="h">Session</div></td><td width="25%"><strong> &nbsp;<label id="lb_session" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;&nbsp;ម៉ោងសិក្សា :<div class="h" style="margin-left:7px !important;">Study Hour</div></td><td width="25%"><strong> &nbsp;<label id="lb_hour" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;&nbsp;ថ្នាក់&nbsp;/&nbsp;Grade :</td><td width="25%"><strong>&nbsp;<label id="lb_dept" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;&nbsp;បន្ទប់&nbsp;/&nbsp;Room :</td><td width="25%"><strong>&nbsp;<label id="lb_grade" class="value"></label></strong></td>
 				</tr>
 				<tr>
-				    <td class="one khmerbold">&nbsp;តម្លៃសិក្សា</td><td width="25%"><strong> &nbsp;<label id="lb_tuitionfee" class="value"></label></strong></td>
-				    <td class="one khmerbold">&nbsp;&nbsp;ការបង់</td><td width="25%"><strong>&nbsp;<label id="lb_payment_term" class="value"></label></strong></td>
-				    <td class="one khmerbold">&nbsp;&nbsp;បញ្ចុះតម្លៃ</td><td width="25%"><strong>&nbsp; <label id="lb_discount" class="value"></label></strong></td>
-				    <td class="one khmerbold">&nbsp;&nbsp;តម្លៃផ្សេងៗ</td><td width="25%"><strong>&nbsp;<label id="lb_remark" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;តម្លៃសិក្សា :<div class="h">Tuition Fee</div></td><td width="25%"><strong> &nbsp;<label id="lb_tuitionfee" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;&nbsp;ការបង់  :<div class="h" style="margin-left:7px !important;">Payment&nbsp;Term&nbsp;</div></td><td width="25%"><strong>&nbsp;<label id="lb_payment_term" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;&nbsp;បញ្ចុះតម្លៃ :<div class="h" style="margin-left:7px !important;">Discount</div></td><td width="25%"><strong>&nbsp; <label id="lb_discount" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;&nbsp;តម្លៃផ្សេងៗ :<div class="h" style="margin-left:7px !important;">Other Fee</div></td><td width="25%"><strong>&nbsp;<label id="lb_remark" class="value"></label></strong></td>
 				</tr>
 				<tr>
-				    <td class="one khmerbold">&nbsp;តម្លៃសរុប</td><td width="25%"><strong> &nbsp;<label id="lb_total" class="value"></label></strong></td>
-				    <td class="one khmerbold">&nbsp;&nbsp;តម្លៃកក់</td><td width="25%"><strong>&nbsp;<label id="lb_books" class="value"></label></strong></td>
-				    <td class="one khmerbold">&nbsp;&nbsp;តម្លៃរដ្ឋបាល</td><td width="25%"><strong>&nbsp; <label id="lb_addmin_fee" class="value"></label></strong></td>
-				    <td class="one khmerbold">&nbsp;&nbsp;តម្លៃនៅសល់</td><td width="25%"><strong>&nbsp;<label id="lb_remaining" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;តម្លៃសរុប :<div class="h">Total</div></td><td width="25%"><strong> &nbsp;<label id="lb_total" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;&nbsp;តម្លៃកក់ :<div class="h" style="margin-left:7px !important;">Booking</div></td><td width="25%"><strong>&nbsp;<label id="lb_books" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;&nbsp;តម្លៃរដ្ឋបាល :<div class="h" style="margin-left:7px !important;">Admin Fee</div></td><td width="25%"><strong>&nbsp; <label id="lb_addmin_fee" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;&nbsp;តម្លៃនៅសល់ :<div class="h" style="margin-left:7px !important;">Balance</div></td><td width="25%"><strong>&nbsp;<label id="lb_remaining" class="value"></label></strong></td>
 				</tr>
 				<tr>
-				    <td class="one khmerbold">តម្លៃជាអក្សរ</td><td  colspan="3"><strong >&nbsp; <label style="width: 99% ! important;" id="lb_char" class="value"></label></strong></td>
-				    <td class="one khmerbold">&nbsp;&nbsp;សម្គាល់</td><td  colspan="3"><strong >&nbsp; <label style="width: 99% ! important;" id="lb_note" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;តម្លៃជាអក្សរ :<div class="h">Fee In Word</div></td><td  colspan="3"><strong >&nbsp; <label style="width: 99% ! important;" id="lb_char" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;&nbsp;សម្គាល់ :<div class="h" style="margin-left:7px !important;">Note</div></td><td  colspan="3"><strong >&nbsp; <label style="width: 99% ! important;" id="lb_note" class="value"></label></strong></td>
 				</tr>
 				<tr>
-				    <td class="one khmerbold">&nbsp;&nbsp;ថ្ងៃចាប់ផ្តើម</td><td width="25%"><strong>&nbsp; <label id="lb_start_date" class="value"></label></strong></td>
-				    <td class="one khmerbold">&nbsp;&nbsp;ថ្ងៃបញ្ចប់</td><td width="25%"><strong>&nbsp; <label id="lb_end_date" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;ថ្ងៃចាប់ផ្តើម :<div class="h">Start Date</div></td><td width="25%"><strong>&nbsp; <label id="lb_start_date" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;&nbsp;ថ្ងៃបញ្ចប់  :<div class="h" style="margin-left:7px !important;">End Date</div></td><td width="25%"><strong>&nbsp; <label id="lb_end_date" class="value"></label></strong></td>
 				</tr>
 				<tr>
 				    <td colspan="8" align="right" class="khmerbold">
 				        <hr style="margin-bottom: -26px !important;" align="right" width="20%"/><br/>
-				        <h3 style="padding-right: 62px ! important;margin-bottom: -16px  !important;">បេឡា</h3><br/> 26/Dec/2015 08:05AM Tip Rachna<br/>
+				        <h3 style="padding-right: 62px ! important;margin-bottom: -16px  !important;"> 
+				                 <?php $session_user=new Zend_Session_Namespace('auth');
+						           $last_name=$session_user->last_name;
+						           $username = $session_user->first_name;
+						           echo "បេឡា:".$last_name." ".$username;?>
+				        </h3><br/> 26/Dec/2015 08:05AM Tip Rachna<br/>
 				        បញ្ជាក់ៈទឹកប្រាក់ដែលបង់ហើយ  មិនអាចផ្ទេរ ឬ ដកវិញបានទែ  Note: All fees are not transferable or refundable . 
 				    </td>
 				</tr>
