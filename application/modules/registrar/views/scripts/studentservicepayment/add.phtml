@@ -103,7 +103,10 @@ fieldset{  background:none;}
 						</tr>
 						<tr>
 							<td colspan="4" align="center">
-								<input type="submit" name="save_new" id="save_new" value="រក្សាទុក" label="រក្សាទុក"  dojoType="dijit.form.Button" 
+								<input type="submit" name="save_close" id="save_close" value="រក្សាទុក" label="<?php echo $tr->translate('SAVE_CLOSE');?>"  dojoType="dijit.form.Button" 
+								 iconClass="dijitEditorIcon dijitEditorIconSave" />
+								 
+								<input type="submit" name="save_new" id="save_new" value="រក្សាទុក" label="<?php echo $tr->translate('SAVE_NEW');?>"  dojoType="dijit.form.Button" 
 								 iconClass="dijitEditorIcon dijitEditorIconSave" />
 								
 								 <input type="button" value="បោះពុម្ព" label="បោះពុម្ព" id="print" dojoType="dijit.form.Button" 
@@ -219,8 +222,8 @@ function printSave(){
 											</td>
 											<td ><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;"><label id="lbl_khname"></label></strong> - <label id="lbl_enname"></label></td>
 										</tr>
-										<tr>
-											<td ><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;">ភេទ / Sex : </strong></td>
+										<tr style="line-height: 13px;">
+											<td valign="top" ><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;">ភេទ / Sex : </strong></td>
 											<td ><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;"><label id="lbl_sex"></label></strong></td>
 										</tr>
 									</table>
