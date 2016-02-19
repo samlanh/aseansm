@@ -18,9 +18,6 @@
 								</td>
 							</tr>
 							<tr>
-									<td>&nbsp;</td>
-							</tr>
-							<tr>
 								<td width="20%" align="left">
 									<img style="width: 155px;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br /><br />
 								</td>
@@ -44,24 +41,24 @@
 										</style>
 
 									<table cellpadding="3" class="padd" width="99%" border="1" align="center" style="white-space:nowrap;">
-										  <tr style="font-size:10px; height: 23px;" align="center">
+										  <tr style="font-size:11px; height: 20px;" align="center">
 										    <th>ល.រ</th>
-										    <th>Group Code</th>
-										    <th>Academic</th>
-											<th>Semester</th>
-											<th>Degree</th>
-											<th>Grade </th>
-											<th>Session</th>
-											<th>Room</th>
-											<th>Start Date</th>
-											<th>End Date</th>
-											<th>Note</th>
-											<th>Student Amount</th>
+										    <th>&nbsp;Group Code&nbsp;</th>
+										    <th>&nbsp;Academic&nbsp;</th>
+											<th>&nbsp;Semester&nbsp;</th>
+											<th>&nbsp;Degree&nbsp;</th>
+											<th>&nbsp;Grade&nbsp;</th>
+											<th>&nbsp;Session&nbsp;</th>
+											<th>&nbsp;Room&nbsp;</th>
+											<th>&nbsp;Start Date&nbsp;</th>
+											<th>&nbsp;End Date&nbsp;</th>
+											<th>&nbsp;Note&nbsp;</th>
+											<th>&nbsp;Student Amount&nbsp;</th>
 										  </tr>
 										  <tr></tr>
 												
 										  <?php $i=0; if (!empty($this->rs))foreach($this->rs as $rs){ $i++;?>
-										  <tr style="font-size:10px; height: 23px;"​ align="center">
+										  <tr style="font-size:10px; height: 18px;"​ align="center">
 										    <td><?php echo $i;?></td>
 										    <td><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'foundation','action'=>'rpt-student-group','id'=>$rs['id']));?>" target="blank"><?php echo $rs['group_code']; ?></a></td>
 										    <td><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'foundation','action'=>'rpt-student-group','id'=>$rs['id']));?>" target="blank"><?php echo $rs['academic']; ?></a></td>

@@ -1,7 +1,7 @@
 <?php
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$this->headTitle('Currency Smart | Transfer Report page'); 
-	echo $this->headTitle('SRMS | Student Exam Fundation Year'); 
+	echo $this->headTitle('SRMS | Student List'); 
 	
 ?>
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rpt-student-list')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
