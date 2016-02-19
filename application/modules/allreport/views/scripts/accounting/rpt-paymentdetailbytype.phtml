@@ -77,7 +77,7 @@
 										 
 										  <tr></tr>
 												<style> td{padding:0 3px; }</style>
-										  <?php $service_id=0; $i=0; $total=0; if(!empty($this->row)) foreach($this->row as $key => $rs){ $i++;?>
+										  <?php  $service_id=0; $i=0; $total=0; if(!empty($this->row)) foreach($this->row as $key => $rs){ $i++;?>
 										 <?php  if($rs['service_id']!=$service_id){	?>
 										   <?php if($key>0 ){?>
 												 <tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
@@ -95,7 +95,7 @@
 										    	<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 11px;font-family:'Khmer MEF2';" ><?php echo 'Service Name :'.$rs['service']; ?></strong>
 										    </td>
 										  </tr>
-										   <tr style="font-size:10px; height: 30px; align="center" >
+										   <tr style="font-size:10px; height: 22px; align="center" >
 										    <th>&nbsp;N.o&nbsp;</th>
 										    <th>&nbsp;Reciept N.o&nbsp;</th>
 											<th>&nbsp;Khmer Name&nbsp;</th>
@@ -119,32 +119,61 @@
 										 	$subtotal= $after_dic + $rs['admin_fee']+ $rs['other_fee'];
 										 	$total = $subtotal + $total;
 										 	 ?>
-										   <tr style="font-size:10px; color:#000; height: 23px; border-bottom: 1px solid #000;"​ align="center">
+										   <tr style="font-size:10px; color:#000; height: 18px; border-bottom: 1px solid #000;"​ align="center">
 										  	<td><?php echo $i;?></td>
 										    <td style="color: #F00;"><?php echo $rs['receipt_number']; ?></td>
 										    <td style=" white-space:nowrap; text-align:left"><?php echo $rs['kh_name']; ?></td>
 										    <td style=" white-space:nowrap; text-align:left"><?php echo $rs['en_name']; ?></td>
 										    <td style="text-align:left"><?php echo $rs['payment_term']; ?></td>
-										    <td>$ <?php echo $rs['fee']; if(empty($rs['fee']))echo '0.00'; ?></td>
+										    <td>$ <?php echo number_format($rs['fee'],2); if(empty($rs['fee']))echo '0.00'; ?></td>
 										    <td><?php echo $rs['qty']; if(empty($rs['qty']))echo '00'; ?></td>
-										    <td><?php echo $rs['discount_percent']; if(empty($rs['discount_percent']))echo '0'; ?>%</td>
-										    <td>$ <?php echo $rs['admin_fee']; if(empty($rs['admin_fee']))echo '0.00'; ?></td>
-										    <td>$ <?php echo $rs['other_fee']; if(empty($rs['other_fee']))echo '0.00'; ?></td>
-										    <td>$ <?php echo $rs['amount']; if(empty($rs['amount']))echo '0.00'; ?></td>
-										    <td>$ <?php echo $subtotal ?></td>
+										    <td><?php echo $rs['discount_percent']; if(empty($rs['discount_percent']))echo '0'; ?> %</td>
+										    <td>$ <?php echo number_format($rs['admin_fee'],2); if(empty($rs['admin_fee']))echo '0.00'; ?></td>
+										    <td>$ <?php echo number_format($rs['other_fee'],2); if(empty($rs['other_fee']))echo '0.00'; ?></td>
+										    <td>$ <?php echo number_format($rs['amount'],2); if(empty($rs['amount']))echo '0.00'; ?></td>
+										    <td>$ <?php echo number_format($subtotal,2); ?></td>
 										    <td><?php echo $rs['amount_in_khmer']; ?></td>
 										    <td><?php echo date('d-m-Y', strtotime($rs['create_date']));?></td>
 										    <td><?php echo $rs['user']; ?></td>
 										   	<td><?php echo $rs['note']; ?></td>
 										  </tr>
 										  <?php } ?>
-										  <tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
+										  <tr style="font-size:10px; color:#000; height: 18px;"​ align="center">
 												<td style="border-left: solid 1px #fff; border-bottom: 1px #fff solid;" colspan="14"></td>
 												<th style=" border-bottom: 1px #000 solid; background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;Total&nbsp;</th>
-												<td style=" border-bottom: 1px #000 solid; color:#F00; font-weight:bold;font-family: Arial Black; font-size: 10px;">$ <?php echo $total;?>.00</td>
+												<td style=" border-bottom: 1px #000 solid; color:#F00; font-weight:bold;font-family: Arial Black; font-size: 10px;">$ <?php echo number_format($total,2);?></td>
 										 </tr>
 									</table>
 								</td>
+							</tr>
+							<tr><td colspan="3">&nbsp;</td></tr>
+							<tr>
+								<td>
+									<table border="1" align="left" style=" margin-left:2%; width:100%; white-space:nowrap;">
+										<tr style="font-size:10px; background:#ccc; height: 20px;"​ align="center">
+											<th>&nbsp;Discount&nbsp;</th>
+											<th>&nbsp;Amount&nbsp;</th>
+											<th>&nbsp;Sub Total&nbsp;</th>
+										</tr>
+										<?php $g_total=0; if(!empty($this->row)) foreach($this->row as $key => $rs){ 
+											$after_dicou= $rs['fee'] - (($rs['fee'] * $rs['discount_percent'])/100);
+											$s_total= $after_dicou + $rs['admin_fee']+ $rs['other_fee'];
+											$g_total = $s_total + $g_total;
+										?>
+										<tr align="center" style="font-size:10px; height: 18px;"​ >
+											<td><?php echo $rs['discount_percent']; if(empty($rs['discount_percent']))echo '0'; ?> %</td>
+											<td>$ <?php echo number_format($rs['amount'],2); if(empty($rs['amount']))echo '0.00'; ?></td>
+											<td>$ <?php echo number_format($s_total,2)?></td>
+										</tr>
+										<?php } ?>
+										<tr style="font-size:10px; color:#000; height: 20px;"​ align="center">
+								 			<td style=" border-left: 1px solid #fff; border-bottom: 1px solid #fff;">&nbsp;</td>
+								 			<td style="background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;Grand Total&nbsp;</td>
+											<td style=" color:#F00; font-weight:bold;font-family: Arial Black; font-size: 10px;">$ <?php echo number_format($g_total,2);?></td>
+										</tr>
+									  </table>
+								</td>
+								<td colspan="2"></td>
 							</tr>
 					</table>
 	</div>	

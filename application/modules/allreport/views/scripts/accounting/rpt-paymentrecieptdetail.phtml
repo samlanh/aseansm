@@ -51,28 +51,29 @@
 											<th>&nbsp;Payment Term&nbsp;</th>
 											<th>&nbsp;Fee&nbsp;</th>
 											<th>&nbsp;Qty&nbsp;</th>
-											<th>&nbsp;Amount&nbsp;</th>
 											<th>&nbsp;Discount&nbsp;</th>
+											<th>&nbsp;Amount&nbsp;</th>
 											<th>&nbsp;Sub Total&nbsp;</th>
 										  </tr>
 										  <tr></tr>
 											<style> td{padding:0 3px; }</style>
-										  <?php $i=0; if(!empty($this->row)) foreach($this->row as $rs){ $i++;?>
+										  <?php $i=0; $total=0; if(!empty($this->row)) foreach($this->row as $rs){ $i++;?>
 										  <tr style="font-size:10px;height: 15px;"​ align="center">
+										  <?php $subtotal = $rs['fee']-(($rs['fee']*$rs['discount_percent'])/100); ?>
 										    <td><?php echo $i;?></td>
 										    <td><?php echo $rs['service'];?></td>
 										    <td><?php echo $rs['payment_term']; ?></td>
 										    <td>$ <?php echo $rs['fee']; if(empty($rs['fee'])) echo '0.00';?></td>
 										    <td><?php echo $rs['qty']; if(empty($rs['qty'])) echo '00';?></td>
-										    <td><?php echo $rs['discount_percent']; if(empty($rs['discount_percent'])) echo '00';?>%</td>
+										    <td><?php echo $rs['discount_percent']; if(empty($rs['discount_percent'])) echo '0';?>%</td>
 										    <td>$ <?php echo $rs['amount']; ?></td>
-										    <td>$ <?php echo $rs['subtotal']; if(empty($rs['subtotal'])) echo '0.00';?></td>
-										  </tr>
+										    <td>$ <?php echo $subtotal; if(empty($rs['subtotal'])) echo '0.00';?></td>
+										  </tr> <?php $total = $total + $subtotal; ?>
 										  <?php } ?>
 										  <tr style="font-size:10px;height: 15px;"​>
 										  	<td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff;" colspan="6"></td>
 										  	<td>Total Amount</td>
-										  	<td>$ <?php echo $this->rr['total_payment']; if(empty($this->rr['total_payment'])) echo '0.00';?></td>
+										  	<td>$ <?php echo $total.'.00';//echo $this->rr['total_payment']; if(empty($this->rr['total_payment'])) echo '0.00';?></td>
 										  </tr>
 										  <tr style=" font-size:10px;height: 15px;"​>
 										  	<td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff;" colspan="6"></td>
