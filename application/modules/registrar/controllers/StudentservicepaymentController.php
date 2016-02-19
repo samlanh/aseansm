@@ -30,7 +30,7 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
 //     		$rs_rows = $glClass->getImgActive($rs_rows, BASE_URL, true);
     		$list = new Application_Form_Frmtable();
     		$collumns = array("RECEIPT_NO","YEARS","NAME","SEX","GRAND_TOTAL","DISCOUNT",
-    				          "TOTAL_PAYMENT","MONEY_RECEIVED","BALANCE","REMAINING","VALIDATE");
+    				          "TOTAL_PAYMENT","MONEY_RECEIVED","BALANCE","REMAINING","DATE_PAY");
     		$link=array(
     				'module'=>'registrar','controller'=>'studentservicepayment','action'=>'edit',
     		);
@@ -52,7 +52,7 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
       			Application_Form_FrmMessage::message($this->tr->translate('INSERT_SUCCESS'));
       		}else{
       			$db->addStudentServicePayment($_data);
-      			Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL . '/coursestudy/index');
+      			Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL . '/studentservicepayment/index');
       		}
       	} catch (Exception $e) {
       		Application_Form_FrmMessage::message($this->tr->translate('INSERT_FAIL'));
@@ -95,6 +95,9 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     				$db->updateStudentServicePayment($_data);
     				Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL . '/studentservicepayment/index');
     			}
+    			
+    			
+    			
     		} catch (Exception $e) {
     			Application_Form_FrmMessage::message($this->tr->translate('INSERT_FAIL'));
     			$err =$e->getMessage();
@@ -126,7 +129,6 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     	$_model = new Application_Model_GlobalClass();
     	$this->view->all_service = $_model->getAllServiceItemOption(2);
     	
-    	$session_user=new Zend_Session_Namespace('auth'); $username = $session_user->first_name;
     	
     }
     function getGradeAction(){
