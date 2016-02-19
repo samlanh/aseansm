@@ -59,7 +59,7 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     	$to_date = date_format($todate, "d-m-Y");
     	$where = " AND create_date BETWEEN '$from_date' AND '$to_date'";
     
-    	$sql = 'SELECT * FROM v_getstudentpaymentdetail WHERE 1';
+    	$sql = 'SELECT * FROM v_getstudentpaymentdetail WHERE type=3';
     	$order=" ORDER BY service_id DESC ";
     	 
     	if(!empty($search['txtsearch'])){
