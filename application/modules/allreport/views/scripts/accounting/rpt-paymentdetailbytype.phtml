@@ -58,7 +58,7 @@
 									<img style="width: 155px;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br /><br />
 								</td>
 								<td align="left">
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"><u>របាយការណ៏ប្រាក់ចំណូលពី ការបង់ប្រាក់របស់សិស្ស</u></strong><br >
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"><u>របាយការណ៏ប្រាក់ចំណូលពី ការបង់ប្រាក់របស់សិស្សលើសេវាកម្ម</u></strong><br >
 								</td>
 								<td align="right" width="20%">&nbsp;</td>
 							</tr>
@@ -78,7 +78,18 @@
 										  <tr></tr>
 												<style> td{padding:0 3px; }</style>
 										  <?php $service_id=0; $i=0; $total=0; if(!empty($this->row)) foreach($this->row as $key => $rs){ $i++;?>
-										 <?php  if($rs['service_id']!=$service_id){?>
+										 <?php  if($rs['service_id']!=$service_id){	?>
+										   <?php if($key>0 ){?>
+												 <tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
+												 			<td style="border-left: solid 1px #fff; border-bottom: 1px #fff solid;" colspan="14"></td>
+												 			<th style=" border-bottom: 1px #000 solid; background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;Total&nbsp;</th>
+															<td style=" border-bottom: 1px #000 solid; color:#F00; font-weight:bold;font-family: Arial Black; font-size: 10px;">$ <?php echo $total;?>.00</td>
+												 </tr>
+												 </table>
+												<table class="padd" width="99%" border="1" align="center" style="white-space:nowrap;">
+											
+										<?php }?>
+									
 										  <tr style="font-size:10px; color:#000; height: 23px; border-left:1px solid #fff; border-right:1px solid #fff; border-top: 1px solid #fff;"​ align="center">
 										    <td colspan="16" style="text-align:left">
 										    	<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 11px;font-family:'Khmer MEF2';" ><?php echo 'Service Name :'.$rs['service']; ?></strong>
@@ -102,17 +113,12 @@
 											<th>&nbsp;User&nbsp;</th>
 											<th>&nbsp;Remark&nbsp;</th>
 										  </tr>
-										  
-										  
-										 
-										   <?php
-										   }
-												
+										   <?php $total=0;}
 										 	$service_id=$rs['service_id'];
 										 	$after_dic= $rs['fee'] - (($rs['fee'] * $rs['discount_percent'])/100);
 										 	$subtotal= $after_dic + $rs['admin_fee']+ $rs['other_fee'];
 										 	$total = $subtotal + $total;
-										 ?>
+										 	 ?>
 										   <tr style="font-size:10px; color:#000; height: 23px; border-bottom: 1px solid #000;"​ align="center">
 										  	<td><?php echo $i;?></td>
 										    <td style="color: #F00;"><?php echo $rs['receipt_number']; ?></td>
@@ -131,31 +137,16 @@
 										    <td><?php echo $rs['user']; ?></td>
 										   	<td><?php echo $rs['note']; ?></td>
 										  </tr>
-										   <?php if($key>0){?>
-											<tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
-										 				<td style="border-left: solid 1px #fff; border-bottom: 1px #fff solid;" colspan="14"></td>
-										 				<th style=" border-bottom: 1px #000 solid; background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;Total&nbsp;</th>
-														<td style=" border-bottom: 1px #000 solid; color:#F00; font-weight:bold;font-family: Arial Black; font-size: 10px;">$ <?php echo $total;?>.00</td>
-											 </tr>
-										 <?php }?>
-										  <?php //$total=0;
-											 } ?>
-										 
-										</table>
-									</td>
-								</tr>
-								<tr><td colspan="3">&nbsp;</td></tr>
-								<tr>
-									<td colspan="3">&nbsp;</td>
-								</tr>
-								<tr>
-									<td colspan="3">
-											<table width="29.2%" border="1" align="right" style="margin-right:0.5%; white-space:nowrap;">
-											
-										  </table>
-									</td>
-								</tr>
-							</table>
+										  <?php } ?>
+										  <tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
+												<td style="border-left: solid 1px #fff; border-bottom: 1px #fff solid;" colspan="14"></td>
+												<th style=" border-bottom: 1px #000 solid; background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;Total&nbsp;</th>
+												<td style=" border-bottom: 1px #000 solid; color:#F00; font-weight:bold;font-family: Arial Black; font-size: 10px;">$ <?php echo $total;?>.00</td>
+										 </tr>
+									</table>
+								</td>
+							</tr>
+					</table>
 	</div>	
 </div>
 
