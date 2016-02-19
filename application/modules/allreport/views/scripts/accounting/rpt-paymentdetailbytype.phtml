@@ -77,11 +77,11 @@
 										 
 										  <tr></tr>
 												<style> td{padding:0 3px; }</style>
-										  <?php $service_id=0; $i=0; $total=0; if(!empty($this->row)) foreach($this->row as $rs){ $i++;?>
+										  <?php $service_id=0; $i=0; $total=0; if(!empty($this->row)) foreach($this->row as $key => $rs){ $i++;?>
 										 <?php  if($rs['service_id']!=$service_id){?>
-										  <tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
+										  <tr style="font-size:10px; color:#000; height: 23px; border-left:1px solid #fff; border-right:1px solid #fff; border-top: 1px solid #fff;"​ align="center">
 										    <td colspan="16" style="text-align:left">
-										    	<strong><?php echo 'Service Name :'.$rs['service']; ?></strong>
+										    	<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 11px;font-family:'Khmer MEF2';" ><?php echo 'Service Name :'.$rs['service']; ?></strong>
 										    </td>
 										  </tr>
 										   <tr style="font-size:10px; height: 30px; align="center" >
@@ -102,14 +102,18 @@
 											<th>&nbsp;User&nbsp;</th>
 											<th>&nbsp;Remark&nbsp;</th>
 										  </tr>
+										  
+										  
+										 
 										   <?php
-										   $after_dic= $rs['fee'] - (($rs['fee'] * $rs['discount_percent'])/100);
-										   $subtotal= $after_dic + $rs['admin_fee']+ $rs['other_fee'];
-										   $total = $subtotal + $total;
-												}
+										   }
+												
 										 	$service_id=$rs['service_id'];
+										 	$after_dic= $rs['fee'] - (($rs['fee'] * $rs['discount_percent'])/100);
+										 	$subtotal= $after_dic + $rs['admin_fee']+ $rs['other_fee'];
+										 	$total = $subtotal + $total;
 										 ?>
-										   <tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
+										   <tr style="font-size:10px; color:#000; height: 23px; border-bottom: 1px solid #000;"​ align="center">
 										  	<td><?php echo $i;?></td>
 										    <td style="color: #F00;"><?php echo $rs['receipt_number']; ?></td>
 										    <td style=" white-space:nowrap; text-align:left"><?php echo $rs['kh_name']; ?></td>
@@ -117,7 +121,7 @@
 										    <td style="text-align:left"><?php echo $rs['payment_term']; ?></td>
 										    <td>$ <?php echo $rs['fee']; if(empty($rs['fee']))echo '0.00'; ?></td>
 										    <td><?php echo $rs['qty']; if(empty($rs['qty']))echo '00'; ?></td>
-										    <td><?php echo $rs['discount_percent']; if(empty($rs['discount_percent']))echo '00'; ?>%</td>
+										    <td><?php echo $rs['discount_percent']; if(empty($rs['discount_percent']))echo '0'; ?>%</td>
 										    <td>$ <?php echo $rs['admin_fee']; if(empty($rs['admin_fee']))echo '0.00'; ?></td>
 										    <td>$ <?php echo $rs['other_fee']; if(empty($rs['other_fee']))echo '0.00'; ?></td>
 										    <td>$ <?php echo $rs['amount']; if(empty($rs['amount']))echo '0.00'; ?></td>
@@ -127,13 +131,15 @@
 										    <td><?php echo $rs['user']; ?></td>
 										   	<td><?php echo $rs['note']; ?></td>
 										  </tr>
-										  	<tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
-										 				<td colspan="14"></td>
-										 				<th style="background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;Total&nbsp;</th>
-														<td style=" color:#F00; font-weight:bold;font-family: Arial Black; font-size: 10px;">$ <?php echo $total;?>.00</td>
-										  	</tr>
-										
-										  <?php } ?>
+										   <?php if($key>0){?>
+											<tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
+										 				<td style="border-left: solid 1px #fff; border-bottom: 1px #fff solid;" colspan="14"></td>
+										 				<th style=" border-bottom: 1px #000 solid; background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;Total&nbsp;</th>
+														<td style=" border-bottom: 1px #000 solid; color:#F00; font-weight:bold;font-family: Arial Black; font-size: 10px;">$ <?php echo $total;?>.00</td>
+											 </tr>
+										 <?php }?>
+										  <?php //$total=0;
+											 } ?>
 										 
 										</table>
 									</td>
