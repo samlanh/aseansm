@@ -87,7 +87,8 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 			 	$this->update($arr,$where);
 			  
 				$this->_name='rms_student_paymentdetail';
-				$where = "suspendservice_id = ".$data['id'];
+				//$where = "suspendservice_id = ".$data['id'];
+				$where = "payment_id = ".$data['id'];
 				$this->delete($where);
 				
 				$ids = explode(',', $data['identity']);
@@ -134,8 +135,8 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 		(select CONCAT(from_academic,' - ',to_academic) from rms_servicefee where rms_servicefee.id=rms_student_payment.year limit 1)AS year,
     	(select CONCAT(stu_khname,' - ',stu_enname) from rms_student where rms_student.stu_id=rms_student_payment.student_id limit 1)AS name,
     	(select name_kh from rms_view where rms_view.type=2 and rms_view.key_code=(select sex from rms_student where rms_student.stu_id=rms_student_payment.student_id limit 1) limit 1)AS sex,
-    	grand_total,discount_fix,total_payment,paid_amount,balance_due,return_amount,
-    	(select validate from rms_student_paymentdetail where rms_student_paymentdetail.payment_id=rms_student_payment.id limit 1)AS validate
+    	grand_total,discount_fix,total_payment,receive_amount,balance_due,return_amount,create_date
+    	
     	from rms_student_payment where 1
     	";
     	$order=" ORDER BY id DESC ";
