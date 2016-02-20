@@ -45,7 +45,7 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     }
     public function getService(){
     	$db = $this->getAdapter();
-    	$sql="SELECT title,`service_id` FROM `rms_program_name` WHERE `type`=2  AND `status`=1";
+    	$sql="SELECT `service_id`,title FROM `rms_program_name` WHERE `type`=2  AND `status`=1";
     	return $db->fetchAll($sql);
     }
     
@@ -53,15 +53,18 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	$date = date_create($search["start_date"]);
     	$from_date = date_format($date, "d-m-Y");
-    	print_r($from_date);
+    	//print_r($search); exit();
     
     	$todate = date_create($search["end_date"]);
     	$to_date = date_format($todate, "d-m-Y");
     	$where = " AND create_date BETWEEN '$from_date' AND '$to_date'";
     
-    	$sql = 'SELECT * FROM v_getstudentpaymentdetail WHERE type=3';
+    	$sql = 'SELECT * FROM v_getstudentpaymentdetail WHERE 1 ';
     	$order=" ORDER BY service_id DESC ";
-    	 
+    	
+    	if($search['service_type']>0){
+    		$where.=" AND service_id =".$search['service_type'];
+    	} 
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
     		$s_search = trim($search['txtsearch']);
@@ -69,8 +72,10 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     		$s_where[] = " en_name LIKE '%{$s_search}%'";
     		$s_where[] = " service LIKE '%{$s_search}%'";
     		$s_where[] = " receipt_number LIKE '%{$s_search}%'";
+    		$s_where[] = " payment_term LIKE '%{$s_search}%'";
     		$where .=' AND ( '.implode(' OR ',$s_where).')';
     	}
+    	echo $sql.$where.$order;
     	return $db->fetchAll($sql.$where.$order);
     }
     

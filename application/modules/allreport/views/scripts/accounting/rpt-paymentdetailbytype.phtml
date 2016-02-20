@@ -10,26 +10,22 @@
 				<td align="left" colspan="2">
 					<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
 				</td>
-				<td><label>Advance Search</label></td>
 				<td>
-					<input class="fullside" dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Search....." value="<?php echo $this->search['txtsearch'];?>" type="text">
+					<input class="fullside" dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Advance search....." value="<?php echo $this->search['txtsearch'];?>" type="text">
 				</td>
-				<td><label>From Date</label></td>
 				<td>
-					<input class="fullside"  name="from_date" id="from_date" dojoType="dijit.form.DateTextBox"  value="<?php echo $this->search['start_date'];?>" type="text">
+					<input class="fullside" name="from_date" id="from_date" dojoType="dijit.form.DateTextBox"  value="<?php echo $this->search['start_date'];?>" type="text">
 				</td>
-				<td><label>To Date</label></td>
 				<td>
 					<input class="fullside" name="to_date" id="to_date" dojoType="dijit.form.DateTextBox"  value="<?php echo $this->search['end_date'];?>" type="text">
 				</td>
 			<tr>
 				<td colspan="2"></td>
-				<td><label>Search By Sercice Type</label></td>
 				<td>
-					<select class="fullside" name="session_group" id="session_group" dojoType="dijit.form.FilteringSelect">
-							<option value="-1" placeholder="Search by service type..." ></option>
+					<select class="fullside" name="service" id="service" dojoType="dijit.form.FilteringSelect">
+							<option value="-1" >- - -Search by service type- - -</option>
 							<?php if(!empty($this->service)) foreach ($this->service as $row){?>
-							<option value='<?php $row['service_id']?>'><?php echo $row['title'];?></option>
+							<option value='<?php echo $row['service_id'];?>' <?php if($row['service_id']== $this->search['service_type']) echo "selected='Selected'"?>><?php echo $row['title'];?></option>
 							<?php }?>
 					</select>
 				</td>
@@ -89,7 +85,7 @@
 										 
 										 <?php  if($rs['service_id']!=$service_id){	?>
 										   <?php if($key>0 ){?>
-												 <tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
+												 <tr style="font-size:10px; color:#000; height: 18px;"​ align="center">
 												 			<td style="border-left: solid 1px #fff; border-bottom: 1px #fff solid;" colspan="14"></td>
 												 			<th style=" border-bottom: 1px #000 solid; background-color: #ccc; width: 38%; font-weight:bold; font-size: 10px;">&nbsp;Total&nbsp;</th>
 															<td style=" border-bottom: 1px #000 solid; color:#F00; font-weight:bold; font-size: 10px;">$ <?php echo number_format($total,2);?></td>
@@ -124,8 +120,8 @@
 										  </tr>
 										   <?php $total=0;}
 										 	$service_id=$rs['service_id'];
-										 	$fee_dic = ($rs['fee'] * $rs['discount_percent'])/100;
-										 	$after_dic= $rs['fee'] - $fee_dic;
+										 	$fee_dic = (($rs['fee']* $rs['qty']) * $rs['discount_percent'])/100;
+										 	$after_dic= ($rs['fee']* $rs['qty']) - $fee_dic;
 										 	$subtotal= $after_dic + $rs['admin_fee']+ $rs['other_fee'];
 										 	$total = $subtotal + $total;
 										 	 ?>

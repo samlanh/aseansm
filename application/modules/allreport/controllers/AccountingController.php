@@ -41,18 +41,21 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 		try{
 			if($this->getRequest()->isPost()){
 				$_data=$this->getRequest()->getPost();
+				//print_r($_data); exit();
 				$search = array(
 						'txtsearch' =>$_data['txtsearch'],
 						'start_date'=> $_data['from_date'],
-						'end_date'=> $_data['to_date']
+						'end_date'=> $_data['to_date'],
+						'service_type'=>$_data['service']
 				);
 		
 			}
 			else{
 				$search = array(
 						'txtsearch' =>'',
-						'start_date'=> date('Y-m-01'),
+						'start_date'=> date('Y-m-d'),
 						'end_date'=>date('Y-m-d'),
+						'service_type'=>0
 				);
 			}
 			$db = new Allreport_Model_DbTable_DbRptPayment();
