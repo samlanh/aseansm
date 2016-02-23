@@ -147,10 +147,18 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     	if($this->getRequest()->isPost()){
     		$data=$this->getRequest()->getPost();
     		$db = new Registrar_Model_DbTable_DbStudentServicePayment();
-    		$price = $db->getAllpriceByServiceTerm($data['service'],$data['term']);
-//     		print_r($price);exit();
-    		
-    		//print_r($grade);exit();
+    		$price = $db->getAllpriceByServiceTerm($data['studentid'],$data['service'],$data['term']);
+    		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
+    		print_r(Zend_Json::encode($price));
+    		exit();
+    	}
+    }
+    
+    function getPriceEditAction(){
+    	if($this->getRequest()->isPost()){
+    		$data=$this->getRequest()->getPost();
+    		$db = new Registrar_Model_DbTable_DbStudentServicePayment();
+    		$price = $db->getAllpriceByServiceTermEdit($data['service'],$data['term']);
     		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
     		print_r(Zend_Json::encode($price));
     		exit();
@@ -167,6 +175,7 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     		exit();
     	}
     }
+    
     
     function getServiceAction(){
     	if($this->getRequest()->isPost()){

@@ -41,7 +41,7 @@ fieldset{  background:none;}
 						<tr>
 							<td><?php echo $tr->translate("STUDENT_ID");?></td>
 							<td>
-								<select class="fullside" name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();" >
+								<select class="fullside" name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();getservicefee();" >
 									<?php if(!empty($this->rs))foreach ($this->rs as $row){?>
 										<option value="<?php echo $row['stu_id']?>"><?php echo $row['stu_code']?></option>
 									<?php }?>
@@ -193,7 +193,7 @@ function printSave(){
 <div class="dijitHidden">
 	<div data-dojo-type="dijit.Dialog" id="popup_invoice" >
 		<div id="divPrint" style=" width: 23cm; height: 12cm ; padding: 0px; margin: 0px;">
-			<table style="background:#fff; margin: 0 auto; width: 23cm;height: 12cm; padding: 1cm; margin: 0 auto;" align="center">
+			<table style="background:#fff; margin: 0 auto; width: 21cm;height: 12cm; padding: 1cm; margin: 0 auto;" align="center">
 							<tr>
 								<td width="25%" align="left">
 								</td>
@@ -209,22 +209,26 @@ function printSave(){
 									<table style="white-space: nowrap;">
 										<tr>
 											<td style="line-height: 13px;">
-												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;">អត្តលេខសិស្ស  : </strong><br />
+												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;">អត្តលេខសិស្ស</strong><br />
 												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 11px;">Student ID &nbsp;&nbsp;&nbsp;</strong>
 											</td>
-											<td ><label id="lbl_stuid"></label></td>
+											<td >
+												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;"> : &nbsp;<label id="lbl_stuid"></label></strong>
+											</td>
 											
 										</tr>
 										<tr>
 											<td style="line-height: 13px;">
-												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;">ឈ្មោះសិស្ស :</strong><br />
+												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;">ឈ្មោះសិស្ស</strong><br />
 												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;">Student Name </strong>
 											</td>
-											<td ><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;"><label id="lbl_khname"></label></strong> - <label id="lbl_enname"></label></td>
+											<td >
+												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;"> : &nbsp;<label id="lbl_khname"></label></strong> - <label id="lbl_enname"></label>
+											</td>
 										</tr>
 										<tr style="line-height: 13px;">
-											<td valign="top" ><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;">ភេទ / Sex : </strong></td>
-											<td ><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;"><label id="lbl_sex"></label></strong></td>
+											<td valign="top" ><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;">ភេទ / Sex</strong></td>
+											<td ><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;"> : &nbsp;<label id="lbl_sex"></label></strong></td>
 										</tr>
 									</table>
 								</td>
@@ -235,20 +239,20 @@ function printSave(){
 									<table style="white-space: nowrap;">
 										<tr>
 											<td width="20%" style="line-height: 13px;">
-												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;padding-left: 15px;">វិក័យប័ត្រលេខ​  :  </strong><br />
+												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;padding-left: 15px;">វិក័យប័ត្រលេខ​</strong><br />
 												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;padding-left: 15px;">Reciept N.o  </strong>
 											</td>
 											
 											<td width="20%" >
-												<b><label id="lbl_recieptno"> </label></b>
+												 <strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;">: &nbsp;</strong><b><label id="lbl_recieptno"> </label></b>
 											</td>
 										</tr>
 										<tr>
 											<td width="20%" style="line-height: 13px;">
-												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;padding-left: 15px;">ថ្ងៃបង់ :  </strong><br />
+												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;padding-left: 15px;">ថ្ងៃបង់</strong><br />
 												<strong style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;padding-left: 15px;">Date Paid  </strong>
 											</td>
-											<td width="80%"><span style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;"><?php echo Zend_Date::now();?></span></td>
+											<td width="80%"><span style="font-family: Khmer OS Battambang;color:#000;font-size: 12px;"><strong>: &nbsp;</strong><?php echo Zend_Date::now();?></span></td>
 										</tr>
 										<tr>
 											<td colspan="2">&nbsp;</td>
@@ -265,15 +269,15 @@ function printSave(){
 							<tr><td>&nbsp;</td></tr>
 							<tr>
 								<td align="left">
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';padding-left: 50px;">អ្នកទទួល    </strong><br />
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';padding-left: 50px;">ហត្ថលេខា និង​ ឈ្មោះអ្នកទទួល  </strong><br />
 								</td>
 								<td>&nbsp;</td>
 								<td align="right">
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';padding-right: 80px;">ហត្ថលេខា</strong><br />
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';padding-right: 80px;">ហត្ថលេខា និង​ ឈ្មោះអ្នកបង់</strong><br />
 								</td>
 							</tr>
 							<tr>
-								<td colspan="3"> <div style="padding-left: 57px;font-family: Khmer OS Battambang;color:#000;"><?php $session_user=new Zend_Session_Namespace('auth'); $username = $session_user->first_name;echo $username; ?></div></td>
+								<td colspan="3"> <div style="padding-left: 90px;font-family: Khmer OS Battambang;color:#000;"><?php $session_user=new Zend_Session_Namespace('auth'); $username = $session_user->first_name;echo $username; ?></div></td>
 							</tr>
 							
 						</table>
@@ -355,20 +359,20 @@ function addRow() {
 			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("PAYMENT_TERM");?></th>';
 			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("PRICE");?></th>';
 			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("AMOUNT");?></th>';
-			
 			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("DISCOUNT");?></th>';
 			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("SUBTOTAL");?></th>';
+			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("PAID_AMOUNT");?></th>';
 			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("VALIDATE");?></th>';
 			temp+='<th><?php echo $tr->translate("REMARK");?></th>';
 			dojo.query("#head-title").append(temp);
 			title=1;
 		}
-			template+='<td width="47px" align="center"><img onclick="deleteRecord('+col+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
+			template+='<td width="47px" align="center"><img onclick="deleteRecord('+col+');calculateTotal('+col+');calculatePaidAmount('+col+');" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
 			template+='<td width="23%" align="center">'+no+'</td>';
-			template+='<td><select onchange="getservicefee('+col+');" dojoType="dijit.form.FilteringSelect" id="service_'+col+'" name="service_'+col+'">'+service+'</select></td>';			
+			template+='<td><input type="hidden" dojoType="dijit.form.TextBox" name="old_service_'+col+'" id="old_service_'+col+'"/><select onchange="getservicefee('+col+');calculatePaidAmount('+col+');" dojoType="dijit.form.FilteringSelect" id="service_'+col+'" name="service_'+col+'">'+service+'</select></td>';			
 
 			
-			template+='<td><select onchange="getservicefee('+col+');getValidate('+col+');" dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'" style="width:120px;">';
+			template+='<td><select onchange="getservicefee('+col+');getValidate('+col+');calculatePaidAmount('+col+');" dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'" style="width:120px;">';
 				<?php foreach($this->payment_term as $key => $value){?>
 					template+='<option value="'+<?php echo $key?>+'"><?php echo $value;?></option>';
 				<?php }?>
@@ -379,8 +383,8 @@ function addRow() {
 			
 			template+='<td> <input type="text" onkeyup="calculateDiscount('+col+');" name="discount_'+col+'" value="<?php echo 0;?>" id="discount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="subsub"></label></td>';
 			template+='<td> <input type="text" required="true" readonly="readonly" name="subtotal_'+col+'" id="subtotal_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="qty"></label></td>';
-			template+='<td> <input type="text" required="true"  name="validate_'+col+'" id="validate_'+col+'" dojoType="dijit.form.DateTextBox" style="width:200px;" /><label id="validate"></label></td>';
-			//template+='<input type="hidden" required="true"  name="total_'+col+'" id="total_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="qty"></label>';
+			template+='<td> <input type="text" required="true" onkeyup="calculatePaidAmount('+col+');"  name="paidamount_'+col+'" id="paidamount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="paidamount"></label></td>';
+			template+='<td> <input type="text" required="true"  name="validate_'+col+'" id="validate_'+col+'" dojoType="dijit.form.DateTextBox" style="width:120px;" /><label id="validate"></label></td>';
 			template+='<td> <input type="text" required="true" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" /><label id="subsub"></label></td>';
 
 		tmp='<tr id="row'+col+'">';
@@ -417,19 +421,36 @@ function calculateDiscount(index){
 	discount = dijit.byId('discount_'+index).get('value');
 	discount=isNaN(discount)?0:discount;
 	dijit.byId('subtotal_'+index).attr('value',total-discount);
+	dijit.byId('paidamount_'+index).attr('value',total-discount);
 	netTotal();
 }
+
+function calculatePaidAmount(index){
+	//price = dijit.byId('price_'+index).get('value');
+	var netPaidAmount=0;
+	var rowId = $('#identity').val();
+	var rowIDArray = rowId.split(',');
+	for(var n = 0; n < rowIDArray.length; n++) {
+		//netTotal += Number($('#subtotal_'+rowIDArray[n]).val());
+		netPaidAmount += dijit.byId('paidamount_'+rowIDArray[n]).get('value');
+	}
+	dijit.byId('total_received').attr('value',netPaidAmount);
+	calculatBalanceAndReturn();
+}
+
 function netTotal() {
 	var netTotal=0;
 	var rowId = $('#identity').val();
 	var rowIDArray = rowId.split(',');
 	for(var n = 0; n < rowIDArray.length; n++) {
-		netTotal += Number($('#subtotal_'+rowIDArray[n]).val());
+		//netTotal += Number($('#subtotal_'+rowIDArray[n]).val());
+		netTotal += dijit.byId('subtotal_'+rowIDArray[n]).get('value');
 	}
 	dijit.byId('grand_total').attr('value',netTotal);
-	dijit.byId('total_received').attr('value',netTotal);
+	//dijit.byId('total_received').attr('value',netTotal);
 	//$('#grand_total').val(netTotal);
 	//$('#total_received').val(netTotal);
+	calculatePaidAmount();
 	calculatBalanceAndReturn();
 }
 function calculatBalanceAndReturn(){
@@ -498,6 +519,7 @@ function getStudentInfo(){
 }
 var url_service_fee = "<?php echo $this->url(array('module'=>'registrar','controller'=>'studentservicepayment','action'=>'get-price')); ?>";
 function getservicefee(key){
+			studentid = dijit.byId('studentid').get('value');
 			services = dijit.byId('service_'+key).get('value');
 			term = dijit.byId('term_'+key).get('value');
 			dojo.xhrPost({
@@ -505,9 +527,20 @@ function getservicefee(key){
 				content:{
 					'term':term,
 					'service':services,
+					'studentid':studentid,
 					},
 				handleAs:"json",
 				load: function(data) {
+					dijit.byId("remark"+key).attr("value",'');
+					dijit.byId("old_service_"+key).attr("value",'');
+					//dijit.byId("validate_"+key).attr("value",<?php Zend_Date::now()?>);
+					
+					if(data.sms!=''){
+						dijit.byId("remark"+key).attr("value",data.sms);
+						dijit.byId("old_service_"+key).attr("value",data.id);
+						dijit.byId("validate_"+key).attr("value",data.validate);
+					}
+
 					dijit.byId("price_"+key).attr("value",data.price_fee);
 					//dijit.byId("total_"+key).attr("value",data.price_fee);
 					calculateTotal(key);

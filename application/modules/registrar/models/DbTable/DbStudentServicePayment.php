@@ -14,18 +14,18 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 		$db->beginTransaction();//ទប់ស្កាត់មើលការErrore , មានErrore វាមិនអោយចូល
 			try{
 			$arr=array(
-					'student_id'=>$data['studentid'],
-					'receipt_number'=>$data['reciept_no'],
-					'year'=>$data['study_year'],
-					'total_payment'=>$data['grand_total'],
-					'receive_amount'=>$data['total_received'],
-					'paid_amount'=>$data['total_received']-$data['total_return'],
-					'return_amount'=>$data['total_return'],
-					'balance_due'=>$data['total_balance'],
-					'amount_in_khmer'=>$data['char_price'],
-					'note'=>$data['not'],
-					'create_date'=>date("d-m-Y"),
-					'user_id'=>$this->getUserId()
+					'student_id'		=>$data['studentid'],
+					'receipt_number'	=>$data['reciept_no'],
+					'year'				=>$data['study_year'],
+					'total_payment'		=>$data['grand_total'],
+					'receive_amount'	=>$data['total_received'],
+					'paid_amount'		=>$data['total_received']-$data['total_return'],
+					'return_amount'		=>$data['total_return'],
+					'balance_due'		=>$data['total_balance'],
+					'amount_in_khmer'	=>$data['char_price'],
+					'note'				=>$data['not'],
+					'create_date'		=>date("d-m-Y"),
+					'user_id'			=>$this->getUserId()
 				);
 			
 			  $id = $this->insert($arr);
@@ -37,25 +37,41 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     			foreach ($ids as $i){
     				$disc=$disc+$data['discount_'.$i];
     				$total=$total+($data['price_'.$i]*$data['qty_'.$i]);
+    				$complete=1;
+    				if($data['subtotal_'.$i]-$data['paidamount_'.$i]>0){
+    					$complete=0;
+    				}
     				$_arr = array(
     						'payment_id'	=>$id,
     						'service_id'	=>$data['service_'.$i],
     						'payment_term'	=>$data['term_'.$i],
     						'fee'			=>$data['price_'.$i],
     						'qty'			=>$data['qty_'.$i],
-    						//'amount'		=>$data['total_'.$i],
+    						'paidamount'	=>$data['paidamount_'.$i],
+    						'balance'		=>$data['subtotal_'.$i]-$data['paidamount_'.$i],
     						'validate'		=>$data['validate_'.$i],
     						'discount_fix'	=>$data['discount_'.$i],
     						'note'			=>$data['remark'.$i],
     						'subtotal'		=>$data['subtotal_'.$i],
     						'type'			=>2,
+    						'is_complete'	=>$complete
     				);
-    				$this->insert($_arr);
+    				$id_record = $this->insert($_arr);
+    				
+    				if(!empty($data['old_service_'.$i])){
+    					$arr = array(
+    						'is_complete'=>1
+    					);
+    					$where='id ='.$data['old_service_'.$i];
+    					$this->update($arr, $where);
+    					
+    				}
+    				
     			}
     			
     			$this->_name='rms_student_payment';
     			$datadisc = array('discount_fix'=>$disc,
-    						'grand_total'=>$total);
+    						'total'=>$total);
     			$where=$this->getAdapter()->quoteInto("id=?", $id);
     			$this->update($datadisc, $where);
     			
@@ -100,25 +116,31 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     				
     				$disc=$disc+$data['discount_'.$i];
     				$total=$total+($data['price_'.$i]*$data['qty_'.$i]);
-    				
+    				$complete=1;
+    				if($data['subtotal_'.$i]-$data['paidamount_'.$i]>0){
+    					$complete=0;
+    				}
     				$_arr = array(
     						'payment_id'	=>$data['id'],
     						'service_id'	=>$data['service_'.$i],
     						'payment_term'	=>$data['term_'.$i],
     						'fee'			=>$data['price_'.$i],
     						'qty'			=>$data['qty_'.$i],
+    						'paidamount'	=>$data['paidamount_'.$i],
+    						'balance'		=>$data['subtotal_'.$i]-$data['paidamount_'.$i],
     						'validate'		=>$data['validate_'.$i],
     						'discount_fix'	=>$data['discount_'.$i],
     						'note'			=>$data['remark'.$i],
     						'subtotal'		=>$data['subtotal_'.$i],
     						'type'			=>2,
+    						'is_complete'   =>$complete
     				);
     				$this->insert($_arr);
     			}
     			
     			$this->_name='rms_student_payment';
     			$datadisc = array('discount_fix'=>$disc,
-    					'grand_total'=>$total);
+    					'total'=>$total);
     			$where=$this->getAdapter()->quoteInto("id=?", $data['id']);
     			$this->update($datadisc, $where);
     			
@@ -135,7 +157,7 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 		(select CONCAT(from_academic,' - ',to_academic) from rms_servicefee where rms_servicefee.id=rms_student_payment.year limit 1)AS year,
     	(select CONCAT(stu_khname,' - ',stu_enname) from rms_student where rms_student.stu_id=rms_student_payment.student_id limit 1)AS name,
     	(select name_kh from rms_view where rms_view.type=2 and rms_view.key_code=(select sex from rms_student where rms_student.stu_id=rms_student_payment.student_id limit 1) limit 1)AS sex,
-    	grand_total,discount_fix,total_payment,receive_amount,balance_due,return_amount,create_date
+    	total,discount_fix,total_payment,receive_amount,balance_due,return_amount,create_date
     	
     	from rms_student_payment where 1
     	";
@@ -235,12 +257,34 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     	return $db->fetchAll($sql);
     	
     }
-    public function getAllpriceByServiceTerm($serviceid,$termid){
+    public function getAllpriceByServiceTerm($studentid,$serviceid,$termid){
     	$db=$this->getAdapter();
-    	$sql="select price_fee from rms_servicefee_detail where rms_servicefee_detail.service_id=$serviceid and rms_servicefee_detail.payment_term=$termid limit 1";
+    	
+    	$sql="select rms_student_paymentdetail.id,rms_student_paymentdetail.validate,balance AS price_fee from rms_student_paymentdetail,rms_student_payment where rms_student_payment.id=rms_student_paymentdetail.payment_id and rms_student_paymentdetail.service_id=$serviceid and rms_student_payment.student_id=$studentid and is_complete=0 limit 1";                               
+    	$row=$db->fetchRow($sql);
+    	if($row['price_fee']>0){
+    		$row['sms']='លុយជំពាក់ពីមុន';
+    		return $row;
+    	}
+    	else{
+    		$sql="select price_fee from rms_servicefee_detail where  rms_servicefee_detail.service_id=$serviceid and rms_servicefee_detail.payment_term=$termid limit 1";
+    		return $db->fetchRow($sql);
+    	}
+    }
+    
+    public function getAllpriceByServiceTermEdit($serviceid,$termid){
+    	$db=$this->getAdapter();
+    	$sql="select price_fee from rms_servicefee_detail where  rms_servicefee_detail.service_id=$serviceid and rms_servicefee_detail.payment_term=$termid limit 1";
     	return $db->fetchRow($sql);
     }
+    
     public function getAllStudentInfo($studentid){
+    	$db=$this->getAdapter();
+    	$sql="select stu_enname,stu_khname,sex from rms_student where stu_id=$studentid limit 1";
+    	return $db->fetchRow($sql);
+    }
+    
+    public function getStudentBalance($studentid,$serviceid,$termid){
     	$db=$this->getAdapter();
     	$sql="select stu_enname,stu_khname,sex from rms_student where stu_id=$studentid limit 1";
     	return $db->fetchRow($sql);
