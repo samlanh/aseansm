@@ -181,11 +181,13 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 			else{
 				$search='';
 			}
-			$db = new Allreport_Model_DbTable_DbRptCar();
-			$this->view->rs = $db->getAllCar($search);
+			$db = new Allreport_Model_DbTable_DbRptStudentServicePayment();
+			$abc = $this->view->rs = $db->getAllBalance($search);
+// 			print_r($abc);exit();
 		}catch(Exception $e){
 			Application_Form_FrmMessage::message("APPLICATION_ERROR");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			echo $e->getMessage();
 		}
 	}
 	
