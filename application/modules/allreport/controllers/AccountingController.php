@@ -77,7 +77,6 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 						'start_date'=> $_data['from_date'],
 	      				'end_date'=> $_data['to_date']
 				);
-				
 			}
 			else{
 				$search = array(
@@ -168,6 +167,28 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
 	}
+	
+	
+	public function rptStudentServicePaymentAction(){
+		try{
+			if($this->getRequest()->isPost()){
+				$_data=$this->getRequest()->getPost();
+				$search = array(
+						'txtsearch' => $_data['txtsearch'],
+						'searchby'=> $_data['searchby'],
+				);
+			}
+			else{
+				$search='';
+			}
+			$db = new Allreport_Model_DbTable_DbRptCar();
+			$this->view->rs = $db->getAllCar($search);
+		}catch(Exception $e){
+			Application_Form_FrmMessage::message("APPLICATION_ERROR");
+			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+		}
+	}
+	
 	
 	public function rptFeeAction(){
 	
