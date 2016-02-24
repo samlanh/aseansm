@@ -65,7 +65,7 @@
 				}
 			});
 	}
-	var url_getstuno = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-stu-no')); ?>';
+	var url_getstuno = '<?php echo $this->url(array('module'=>'registrar','controller'=>'coursestudy','action'=>'get-stu-no')); ?>';
 	function getStudentNo(dept_id){
 			dojo.xhrPost({
 				url:url_getstuno,
@@ -253,17 +253,20 @@ fieldset{  background:none;}
 					<table style="margin: 0 auto; width: 100%;padding:10px;" cellspacing="7" >
 						<tr>
 							<td style="width: 160px"><?php echo $tr->translate("STUDENT_TYPE");?></td>
-							<td><div >
+							<td><?php echo $register->getElement('student_type');?></td>
+						<!-- 	<td><div >
 							     <table style="width:100%;" >
  
-							     <tr ><td><input type="radio" name="student_type" id="student_type" value="1" onclick="changControll();" checked="checked" >សិស្សថ្មី</td>
+							     <tr >
+							         
+							     <td><input type="radio" name="student_type" id="student_type" value="1" onclick="changControll();" checked="checked" >សិស្សថ្មី</td>
 								      <td> <input type="radio" name="student_type" id="student_type"  value="2" onclick="changControll();">subspend</td>
 								      <td> <input type="radio" name="student_type" id="student_type"  value="3" onclick="changControll();">សិស្សចាស់</td>
  
 								  </tr>
 								  </table>
 								</div>
-							</td>
+							</td> -->
 							<td><?php echo $tr->translate("RECEIPT_NO");?></td>
 							<td><?php echo $register->getElement('reciept_no');?></td>
 						</tr>
@@ -641,7 +644,7 @@ function saveSender(){
 }
 var url_add_getfee = '<?php echo $this->url(array('module'=>'global','controller'=>'globals','action'=>'get-tuitionfee')); ?>';//for get payment date of sender 
 function changControll(){
-	student_type=$("#student_type:checked").val()
+	student_type=dijit.byId('student_type').get('value');
 	 if(student_type==3){
 		 document.getElementById('student_id').style.display="none";
 		 document.getElementById('student_ids').style.display="block";

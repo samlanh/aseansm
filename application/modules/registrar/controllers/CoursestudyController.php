@@ -15,17 +15,18 @@ class Registrar_CoursestudyController extends Zend_Controller_Action {
     {
     	try{
     		$db = new Registrar_Model_DbTable_DbCourStudey();
-//     		    		if($this->getRequest()->isPost()){
-//     		    			$search=$this->getRequest()->getPost();
-//     		    		}
-//     		    		else{
-//     		    			$search = array(
-//     		    					'adv_search' => '',
+    		    		if($this->getRequest()->isPost()){
+    		    			$search=$this->getRequest()->getPost();
+    		    			$this->view->adv_search=$search;
+    		    		}
+    		    		else{
+    		    			$search = array(
+    		    					'adv_search' => '',
 //     		    					'search_status' => -1,
-//     		    					'start_date'=> date('Y-m-01'),
-//     		    					'end_date'=>date('Y-m-d'));
-//     		    		}
-    		$rs_rows= $db->getAllStudentGep();
+    		    					'start_date'=> date('Y-m-01'),
+    		    					'end_date'=>date('Y-m-d'));
+    		    		}
+    		$rs_rows= $db->getAllStudentGep($search);
     		$glClass = new Application_Model_GlobalClass();
     		$rs_rows = $glClass->getGernder($rs_rows, BASE_URL);
     		$rs_rows = $glClass->getGetPayTerm($rs_rows, BASE_URL );
@@ -199,6 +200,15 @@ class Registrar_CoursestudyController extends Zend_Controller_Action {
     		//print_r($grade);exit();
     		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
     		print_r(Zend_Json::encode($gep));
+    		exit();
+    	}
+    }
+    function getStuNoAction(){
+    	if($this->getRequest()->isPost()){
+    		$data=$this->getRequest()->getPost();
+    		$db = new Registrar_Model_DbTable_DbRegister();
+    		$stu_no = $db->getNewAccountNumber($data['dept_id'],2);
+    		print_r(Zend_Json::encode($stu_no));
     		exit();
     	}
     }

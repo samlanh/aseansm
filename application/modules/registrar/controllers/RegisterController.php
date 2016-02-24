@@ -13,17 +13,18 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     public function indexAction(){
     	try{
     		$db = new Registrar_Model_DbTable_DbRegister();
-//     		    		if($this->getRequest()->isPost()){
-//     		    			$search=$this->getRequest()->getPost();
-//     		    		}
-//     		    		else{
-//     		    			$search = array(
-//     		    					'adv_search' => '',
+    		    		if($this->getRequest()->isPost()){
+    		    			$search=$this->getRequest()->getPost();
+    		    			$this->view->adv_search=$search;
+    		    		}
+    		    		else{
+    		    			$search = array(
+    		    					'adv_search' => '',
 //     		    					'search_status' => -1,
-//     		    					'start_date'=> date('Y-m-01'),
-//     		    					'end_date'=>date('Y-m-d'));
-//     		    		}
-    		$rs_rows= $db->getAllStudentRegister();
+    		    					'start_date'=> date('Y-m-01'),
+    		    					'end_date'=>date('Y-m-d'));
+    		    		}
+    		$rs_rows= $db->getAllStudentRegister($search);
     		$glClass = new Application_Model_GlobalClass();
     		$rs_rows = $glClass->getGernder($rs_rows, BASE_URL );
     		$rs_rows = $glClass->getGetPayTerm($rs_rows, BASE_URL );
@@ -177,7 +178,7 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     	if($this->getRequest()->isPost()){
     		$data=$this->getRequest()->getPost();
     		$db = new Registrar_Model_DbTable_DbRegister();
-    		$stu_no = $db->getNewAccountNumber($data['dept_id']);
+    		$stu_no = $db->getNewAccountNumber($data['dept_id'],1);
     		print_r(Zend_Json::encode($stu_no));
     		exit();
     	}
