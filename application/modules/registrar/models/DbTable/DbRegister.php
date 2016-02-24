@@ -198,6 +198,13 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	return $db->fetchAll($sql.$order);
     }
     
+    function getAllYears(){
+    	$db = $this->getAdapter();
+    	$sql = "SELECT id,CONCAT(from_academic,'-',to_academic) AS years FROM rms_tuitionfee WHERE `status`=1";
+    	$order=' ORDER BY id DESC';
+    	return $db->fetchAll($sql.$order);
+    }
+    
     function getAllYearsServiceFee(){
     	$db = $this->getAdapter();
     	$sql = "SELECT id,CONCAT(from_academic,'-',to_academic) AS years FROM rms_servicefee WHERE `status`=1";
@@ -236,12 +243,12 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	return $pre.$new_acc_no;
     }
     //select GEP all old student
-//     function getAllGepOldStudent(){
-//     	$db=$this->getAdapter();
-//     	$sql="SELECT s.stu_id As stu_id,s.stu_code As stu_code FROM rms_student AS s,rms_student_payment AS sp 
-//     	      WHERE s.stu_id=sp.student_id  AND s.stu_type=2 AND sp.payfor_type=2";
-//     	return $db->fetchAll($sql);
-//     }
+    function getAllGepOldStudent(){
+    	$db=$this->getAdapter();
+    	$sql="SELECT s.stu_id As stu_id,s.stu_code As stu_code FROM rms_student AS s,rms_student_payment AS sp 
+    	      WHERE s.stu_id=sp.student_id  AND s.stu_type=2 AND sp.payfor_type=2";
+    	return $db->fetchAll($sql);
+    }
     //select Gep old student by id 
     function getGepOldStudent($stu_id){
     	$db=$this->getAdapter();
