@@ -46,7 +46,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						'balance_due'=>$data['remaining'],
 						'note'=>$data['not'],
 						'student_type'=>$data['student_type'],
-						'create_date'=>	date("d-m-Y"),
+						'create_date'=>	date('Y-m-d'),
 						'payfor_type'=>1,
 						'amount_in_khmer'=>$data['char_price'],
 						'user_id'=>$this->getUserId(),
@@ -66,7 +66,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						'discount_fix'=>0,
 						'note'=>$data['not'],
 						'references'=>'frome registration',
-						'create_date'=>	date("d-m-Y"),
+						'create_date'=>date('Y-m-d'),
 						'user_id'=>$this->getUserId(),
 				);
 				$this->insert($arr);
@@ -133,7 +133,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						'discount_fix'=>0,
 						'note'=>$data['not'],
 						'references'=>'frome registration',
-						'create_date'=>	date("d-m-Y"),
+						'create_date'=>	date('Y-m-d'),
 						'user_id'=>$this->getUserId(),
 				);
 				$where="payment_id=".$data['pay_id'];
@@ -144,15 +144,31 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				$db->rollBack();//អោយវាវិលត្រលប់ទៅដើមវីញពេលណាវាជួបErrore
 			}
 		}
-    function getAllStudentRegister(){
+    function getAllStudentRegister($search=null){
+    	
     	$db=$this->getAdapter();
+     	$from_date = (empty($search["start_date"]))?'Y-m-01':$search["start_date"];
+     	$to_date =  (empty($search["end_date"]))?'Y-m-01' :$search["end_date"];
+     	$where =" AND sp.create_date BETWEEN '$from_date' AND '$to_date'";
     	$sql=" SELECT sp.id,s.stu_code,sp.receipt_number,s.stu_khname,s.stu_enname,s.sex,(SELECT en_name FROM rms_dept WHERE dept_id=s.degree)AS degree,
 		       (SELECT major_enname FROM rms_major WHERE major_id=s.grade ) AS grade,
  		       sp.payment_term,sp.tuition_fee,sp.discount_percent, sp.total,sp.paid_amount,
 		       sp.balance_due,sp.create_date
  			   FROM rms_student AS s,rms_student_payment AS sp WHERE s.stu_id=sp.student_id AND s.stu_type=1";
+    	
+    	if(!empty($search['adv_search'])){
+    		$s_where=array();
+    		$s_search=$search['adv_search'];
+    		$s_where[]= " stu_code LIKE '%{$s_search}%'";
+    		$s_where[]=" receipt_number LIKE '%{$s_search}%'";
+    		$s_where[]= " stu_khname LIKE '%{$s_search}%'";
+    		$s_where[]= " stu_enname LIKE '%{$s_search}%'";
+    		$s_where[]= " grade LIKE '%{$s_search}%'";
+    		$where.=' AND ('.implode(' OR ', $s_where).')';
+    	}
     	$order=" ORDER By stu_id DESC ";
-    	return $db->fetchAll($sql.$order);
+    	//print_r($sql.$where);
+    	return $db->fetchAll($sql.$where.$order);
     }
     function getRegisterById($id){
     	$db=$this->getAdapter();
@@ -188,10 +204,14 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	$order=' ORDER BY id DESC';
     	return $db->fetchAll($sql.$order);
     }
+<<<<<<< .mine
+    public function getNewAccountNumber($type,$stu_type){
+=======
     
     public function getNewAccountNumber($type){
+>>>>>>> .r436
     	$db = $this->getAdapter();
-    	$sql="  SELECT stu_id  FROM rms_student ORDER BY  stu_id DESC LIMIT 1 ";
+    	$sql="  SELECT COUNT(stu_id)  FROM rms_student WHERE stu_type=$stu_type";
     	$acc_no = $db->fetchOne($sql);
     	$new_acc_no= (int)$acc_no+1;
     	$new_acc_no=100+$new_acc_no;
