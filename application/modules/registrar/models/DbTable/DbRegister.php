@@ -204,12 +204,8 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	$order=' ORDER BY id DESC';
     	return $db->fetchAll($sql.$order);
     }
-<<<<<<< .mine
+ 
     public function getNewAccountNumber($type,$stu_type){
-=======
-    
-    public function getNewAccountNumber($type){
->>>>>>> .r436
     	$db = $this->getAdapter();
     	$sql="  SELECT COUNT(stu_id)  FROM rms_student WHERE stu_type=$stu_type";
     	$acc_no = $db->fetchOne($sql);
