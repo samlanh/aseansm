@@ -169,20 +169,26 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 	}
 	
 	
-	public function rptStudentServicePaymentAction(){
+	public function rptstudentbalanceAction(){
 		try{
 			if($this->getRequest()->isPost()){
-				$_data=$this->getRequest()->getPost();
+				$data=$this->getRequest()->getPost();
 				$search = array(
-						'txtsearch' => $_data['txtsearch'],
-						'searchby'=> $_data['searchby'],
+						'txtsearch' => $data['txtsearch'],
+						'start_date'=> $data['from_date'],
+                        'end_date'=>$data['to_date']
 				);
+			}else{
+				$search=array(
+						'txtsearch' =>'',
+						'start_date'=> date('Y-m-d'),
+						'end_date'=>date('Y-m-d'),
+				);;
 			}
-			else{
-				$search='';
-			}
-			$db = new Allreport_Model_DbTable_DbRptStudentServicePayment();
-			$abc = $this->view->rs = $db->getAllBalance($search);
+			
+			$db = new Allreport_Model_DbTable_DbRptStudentBalance();
+			$this->view->rs = $db->getAllStudentLate($search);
+			$this->view->search = $search;
 // 			print_r($abc);exit();
 		}catch(Exception $e){
 			Application_Form_FrmMessage::message("APPLICATION_ERROR");
@@ -190,7 +196,61 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 			echo $e->getMessage();
 		}
 	}
+	public function rptexpectincomeAction(){
+		try{
+			if($this->getRequest()->isPost()){
+				$data=$this->getRequest()->getPost();
+				$search = array(
+						'txtsearch' => $data['txtsearch'],
+						'start_date'=> $data['from_date'],
+						'end_date'=>$data['to_date']
+				);
+			}else{
+				$search=array(
+						'txtsearch' =>'',
+						'start_date'=> date('Y-m-d'),
+						'end_date'=>date('Y-m-d'),
+				);;
+			}
+				
+			$db = new Allreport_Model_DbTable_DbRptExpectIncome();
+			$this->view->rs = $db->getAllExpectIncome($search);
+			$this->view->search = $search;
+			// 			print_r($abc);exit();
+		}catch(Exception $e){
+			Application_Form_FrmMessage::message("APPLICATION_ERROR");
+			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			echo $e->getMessage();
+		}
+	}
 	
+	public function rptstudentlateAction(){
+		try{
+			if($this->getRequest()->isPost()){
+				$data=$this->getRequest()->getPost();
+				$search = array(
+						'txtsearch' => $data['txtsearch'],
+						'start_date'=> $data['from_date'],
+						'end_date'=>$data['to_date']
+				);
+			}else{
+				$search=array(
+						'txtsearch' =>'',
+						'start_date'=> date('Y-m-d'),
+						'end_date'=>date('Y-m-d'),
+				);;
+			}
+				
+			$db = new Allreport_Model_DbTable_DbRptStudentLate();
+			$this->view->rs = $db->getAllBalance($search);
+			$this->view->search = $search;
+			// 			print_r($abc);exit();
+		}catch(Exception $e){
+			Application_Form_FrmMessage::message("APPLICATION_ERROR");
+			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			echo $e->getMessage();
+		}
+	}
 	
 	public function rptFeeAction(){
 	
