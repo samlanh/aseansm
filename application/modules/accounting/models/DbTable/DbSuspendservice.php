@@ -7,6 +7,12 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
     	$session_user=new Zend_Session_Namespace('auth');
     	return $session_user->user_id;
     }
+    function getAllYears(){
+    	$db = $this->getAdapter();
+    	$sql = "SELECT id,CONCAT(from_academic,'-',to_academic) AS years FROM rms_tuitionfee WHERE `status`=1";
+    	$order=' ORDER BY id DESC';
+    	return $db->fetchAll($sql.$order);
+    }
    public function addSuspendservice($data){
    	$db = $this->getAdapter();
    	$db->beginTransaction();
