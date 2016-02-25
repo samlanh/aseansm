@@ -33,8 +33,6 @@ class Allreport_Model_DbTable_DbRptCar extends Zend_Db_Table_Abstract
     	if($search['searchby'] == 3){
     		$where.= " AND drivername LIKE '%".$searchs."%'";
     	}
-    	
-    	echo $sql.$where;
     	return $db->fetchAll($sql.$where);
     	 
     }

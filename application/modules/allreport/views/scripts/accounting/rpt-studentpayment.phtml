@@ -5,10 +5,8 @@
 	$base_url = Application_Form_FrmMessage::getUrl("/");
 ?>
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-studentpayment')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<input  dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Search by student name....." value="<?php echo $this->search['txtsearch'];?>" type="text">
-		<label>From Date</label>
+		<input  dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Advance Search....." value="<?php echo $this->search['txtsearch'];?>" type="text">
 		<input  name="from_date" id="from_date" dojoType="dijit.form.DateTextBox"  value="<?php echo $this->search['start_date'];?>" type="text">
-		<label>To Date</label>
 		<input  name="to_date" id="to_date" dojoType="dijit.form.DateTextBox"  value="<?php echo $this->search['end_date'];?>" type="text">
 		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
 </form>
@@ -68,7 +66,7 @@
 										  </tr>
 										  <tr></tr>
 												<style> td{padding:0 3px; }</style>
-										  <?php $i=0; $total=0; foreach($this->row as $rs){ $i++;?>
+										 <?php if (!empty($this->row)) $i=0; $total=0; foreach($this->row as $rs){ $i++;?>
 										  <tr style="font-size:10px; height: 18px;"​ align="center">
 										    <td><?php echo $i;?></td>
 										    <td><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['receipt_number']; ?></a></td>
@@ -97,16 +95,18 @@
 								<tr>
 									<td colspan="3">&nbsp;</td>
 								</tr>
+								<?php if(!empty($total)){?>
 								<tr>
 									<td colspan="3">
 											<table width="29.2%" border="1" align="right" style="margin-right:0.1%; white-space:nowrap;">
 												<tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
 										 				<th style="background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;Total&nbsp;</th>
-														<td colspan="2" style=" color:#F00; font-weight:bold;font-family: Arial Black; font-size: 10px;">$ <?php echo $total;?>.00</td>
+														<td colspan="2" style=" color:#F00; font-weight:bold;font-family: Arial Black; font-size: 10px;">$ <?php echo number_format($total,2);?></td>
 										  		</tr>
 										  </table>
 									</td>
 								</tr>
+								<?php }?>
 							</table>
 	</div>	
 </div>

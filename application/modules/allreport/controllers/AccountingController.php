@@ -24,7 +24,7 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 				else{
 					$search = array(
 							'txtsearch' =>'',
-							'start_date'=> date('Y-m-01'),
+							'start_date'=> date('Y-m-d'),
 	                        'end_date'=>date('Y-m-d'),
 					);
 				}
@@ -81,7 +81,7 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 			else{
 				$search = array(
 						'txtsearch' =>'',
-						'start_date'=> date('Y-m-01'),
+						'start_date'=> date('Y-m-d'),
                         'end_date'=>date('Y-m-d'),
 				);
 			}

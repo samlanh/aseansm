@@ -81,9 +81,10 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     
     public function getStudentPaymentDetail($search){
     	$db = $this->getAdapter();
+    	
     	$date = date_create($search["start_date"]);
     	$from_date = date_format($date, "d-m-Y");
-    	print_r($from_date);
+    	
     	 
     	$todate = date_create($search["end_date"]);
     	$to_date = date_format($todate, "d-m-Y");

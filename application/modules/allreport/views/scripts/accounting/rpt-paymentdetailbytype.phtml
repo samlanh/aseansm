@@ -7,9 +7,6 @@
 <form id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-paymentdetailbytype')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 		<table width="100%" style="margin: 0 auto; background: #fff;">
 			<tr>
-				<td align="left" colspan="2">
-					<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
-				</td>
 				<td>
 					<input class="fullside" dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Advance search....." value="<?php echo $this->search['txtsearch'];?>" type="text">
 				</td>
@@ -19,8 +16,10 @@
 				<td>
 					<input class="fullside" name="to_date" id="to_date" dojoType="dijit.form.DateTextBox"  value="<?php echo $this->search['end_date'];?>" type="text">
 				</td>
+				<td align="left" colspan="2">
+					<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
+				</td>
 			<tr>
-				<td colspan="2"></td>
 				<td>
 					<select class="fullside" name="service" id="service" dojoType="dijit.form.FilteringSelect">
 							<option value="-1" >- - -Search by service type- - -</option>
@@ -42,19 +41,18 @@
 			<table style="background:#fff; margin: 0 auto; width: 100%; padding: 1cm; ">
 							<tr style="font-size: 13px; ">
 								<td colspan="3" align="center">
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">ព្រះរាជាណាចក្រកម្ពុជា</strong><br />
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">ជាតិ សាសនា ព្រះមហាក្សត្រ</strong><br />
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">សាលារៀន អាស៊ាន ហ៊ែរីថេដ</strong><br />
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">ASEAN HERITAGE SCHOOL</strong><br />
 								</td>
 							</tr>
 							<tr>
-									<td>&nbsp;</td>
-							</tr>
-							<tr>
-								<td width="30%" align="left">
+								<td colspan="3" align="left">
 									<img style="width: 155px;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br /><br />
 								</td>
-								<td colspan="2" align="left">
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"><u>របាយការណ៏ប្រាក់ចំណូលពី ការបង់ប្រាក់របស់សិស្សលើសេវាកម្ម</u></strong><br >
+							</tr>
+							<tr>
+								<td colspan="3"  align="center">
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"><u>របាយការណ៏ប្រាក់ចំណូលពី ការបង់ប្រាក់របស់សិស្ស</u></strong><br >
 								</td>
 							</tr>
 							<tr>
@@ -72,53 +70,53 @@
 										 
 										  <tr></tr>
 												<style> td{padding:0 3px; }</style>
-										<?php	$total_dic=0; 
+										<?php $total_dic=0; 
 												$grand_total =0;  
 												$service_id=0;
 												$i=0; 
 												$total=0; $total_amount=0; $total_admin_nOhter = 0;
 												$total_fee=0;
 											 ?>
-											 
+										<?php if(empty($this->row)){}?> 
 										  <?php  if(!empty($this->row)) foreach($this->row as $key => $rs){ $i++;?>
-										 
-										 
-										 <?php  if($rs['service_id']!=$service_id){	?>
-										   <?php if($key>0 ){?>
-												 <tr style="font-size:10px; color:#000; height: 18px;"​ align="center">
-												 			<td style="border-left: solid 1px #fff; border-bottom: 1px #fff solid;" colspan="14"></td>
-												 			<th style=" border-bottom: 1px #000 solid; background-color: #ccc; width: 38%; font-weight:bold; font-size: 10px;">&nbsp;Total&nbsp;</th>
-															<td style=" border-bottom: 1px #000 solid; color:#F00; font-weight:bold; font-size: 10px;">$ <?php echo number_format($total,2);?></td>
-												 </tr>
-												 </table>
-												<table class="padd" width="99%" border="1" align="center" style="white-space:nowrap;">
-											
-										<?php }?>
-									
-										  <tr style="font-size:10px; color:#000; height: 23px; border-left:1px solid #fff; border-right:1px solid #fff; border-top: 1px solid #fff;"​ align="center">
-										    <td colspan="16" style="text-align:left">
-										    	<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 11px;font-family:'Khmer MEF2';" ><?php echo 'Service Name :'.$rs['service']; ?></strong>
-										    </td>
-										  </tr>
-										   <tr style="font-size:10px; height: 22px; align="center" >
-										    <th>&nbsp;N.o&nbsp;</th>
-										    <th>&nbsp;Reciept N.o&nbsp;</th>
-											<th>&nbsp;Khmer Name&nbsp;</th>
-											<th>&nbsp;English Name&nbsp;</th>
-											<th>&nbsp;Payment Term&nbsp;</th>
-											<th>&nbsp;Fee&nbsp;</th>
-											<th>&nbsp;Qty&nbsp;</th>
-											<th>&nbsp;Discount&nbsp;</th>
-											<th>&nbsp;Admin Fee&nbsp;</th>
-											<th>&nbsp;Other Fee&nbsp;</th>
-											<th>&nbsp;Amount&nbsp;</th>
-											<th>&nbsp;Sub Total&nbsp;</th>
-											<th>&nbsp;Amount In Khmer&nbsp;</th>
-											<th>&nbsp;Date Paid&nbsp;</th>
-											<th>&nbsp;User&nbsp;</th>
-											<th>&nbsp;Remark&nbsp;</th>
-										  </tr>
-										   <?php $total=0;}
+										  <?php  
+											  if($rs['service_id']!=$service_id){	?>
+											   <?php  if($key>0 ){?>
+													 <tr style="font-size:10px; color:#000; height: 18px;"​ align="center">
+													 			<td style="border-left: solid 1px #fff; border-bottom: 1px #fff solid;" colspan="14"></td>
+													 			<th style=" border-bottom: 1px #000 solid; background-color: #ccc; width: 38%; font-weight:bold; font-size: 10px;">&nbsp;Total&nbsp;</th>
+																<td style=" border-bottom: 1px #000 solid; color:#F00; font-weight:bold; font-size: 10px;">$ <?php echo number_format($total,2);?></td>
+													 </tr>
+													 </table>
+													<table class="padd" width="99%" border="1" align="center" style="white-space:nowrap;">
+												<?php }?>
+										
+											  <tr style="font-size:10px; color:#000; height: 23px; border-left:1px solid #fff; border-right:1px solid #fff; border-top: 1px solid #fff;"​ align="center">
+											    <td colspan="16" style="text-align:left">
+											    	<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 11px;font-family:'Khmer MEF2';" ><?php echo 'Service Name :'.$rs['service']; ?></strong>
+											    </td>
+											  </tr>
+											   <tr style="font-size:10px; height: 22px; align="center" >
+											    <th>&nbsp;N.o&nbsp;</th>
+											    <th>&nbsp;Reciept N.o&nbsp;</th>
+												<th>&nbsp;Khmer Name&nbsp;</th>
+												<th>&nbsp;English Name&nbsp;</th>
+												<th>&nbsp;Payment Term&nbsp;</th>
+												<th>&nbsp;Fee&nbsp;</th>
+												<th>&nbsp;Qty&nbsp;</th>
+												<th>&nbsp;Discount&nbsp;</th>
+												<th>&nbsp;Admin Fee&nbsp;</th>
+												<th>&nbsp;Other Fee&nbsp;</th>
+												<th>&nbsp;Amount&nbsp;</th>
+												<th>&nbsp;Sub Total&nbsp;</th>
+												<th>&nbsp;Amount In Khmer&nbsp;</th>
+												<th>&nbsp;Date Paid&nbsp;</th>
+												<th>&nbsp;User&nbsp;</th>
+												<th>&nbsp;Remark&nbsp;</th>
+											  </tr>
+											   <?php $total=0;
+											 }
+										   
 										 	$service_id=$rs['service_id'];
 										 	$fee_dic = (($rs['fee']* $rs['qty']) * $rs['discount_percent'])/100;
 										 	$after_dic= ($rs['fee']* $rs['qty']) - $fee_dic;
@@ -150,11 +148,14 @@
 										  	$total_admin_nOhter = $total_admin_nOhter + $rs['other_fee']+$rs['admin_fee'];
 										  ?>
 										  <?php } ?>
+										  <?php if (empty($total)){}?>
+										   <?php if(!empty($total)){?>
 										  <tr style="font-size:10px; color:#000; height: 18px;"​ align="center">
 												<td style="border-left: solid 1px #fff; border-bottom: 1px #fff solid;" colspan="14"></td>
 												<th style=" border-bottom: 1px #000 solid; background-color: #ccc; width: 38%; font-size: 10px;">&nbsp;Total&nbsp;</th>
 												<td style=" border-bottom: 1px #000 solid; color:#F00; font-weight:bold; font-size: 10px;">$ <?php echo number_format($total,2);?></td>
 										 </tr>
+										 <?php }?>
 									</table>
 								</td>
 							</tr>
@@ -162,10 +163,12 @@
 							<tr>
 								<td colspan="3">&nbsp;</td>
 							</tr>
+							<?php if (empty($total_fee)){}?>
+							<?php if (!empty($total_fee)){?>
 							<tr>
 								<td colspan="2"></td>
 								<td>
-									<table border="1" align="left" style="  width:100%; margin-right:0.1%; white-space:nowrap;">
+									<table border="1" align="right" style="  width:50%; margin-right:0.5%; white-space:nowrap;">
 										<tr style="font-size:10px; background:#ccc; height: 20px; align="center">
 											<th>&nbsp;Total Fee&nbsp;</th>
 											<th>&nbsp;Total Discount&nbsp;</th>
@@ -183,6 +186,7 @@
 									  </table>
 								</td>
 							</tr>
+							<?php }?>
 					</table>
 	</div>	
 </div>
