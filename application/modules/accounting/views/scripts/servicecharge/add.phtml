@@ -224,8 +224,7 @@ function addRow() {
 		}
 			template+='<td width="47px"align="center"><img onclick="deleteRecord('+col+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
 			template+='<td width="6%" align="center">'+no+'</td>';
-			template+='<td><select dojoType="dijit.form.FilteringSelect" id="class_'+col+'" onchange="showpopup('+col+');" name="class_'+col+'">'+faculty+'</select></td>';			
-			
+			template+='<td><lable id="acc_label'+col+'"><select dojoType="dijit.form.FilteringSelect" id="class_'+col+'" onchange="showpopup('+col+');" name="class_'+col+'">'+faculty+'</select></lable></td>';			
 			column = 0;
 			//template+='<td width="15%"> <input type="text" required="true" name="monthly'+col+'" id="monthly'+col+'" dojoType="dijit.form.NumberTextBox" style=""/><label id="subsub"></label></td>';
 			for(j=0;j<payment_term;j++){ column++;
@@ -264,25 +263,15 @@ function showpopup(key){
 
 var url_add_service = '<?php echo $this->url(array("module"=>"accounting","controller"=>"ServiceCharge","action"=>"add-service")); ?>';
 function addService(){
-	b = $('#hidden_key').val();
+	index = $('#hidden_key').val();
 	//language = dijit.byId('language_title').get('value');
 	dojo.xhrPost({
 			url:url_add_service,
 			form: dojo.byId("frm_add_tran"),
 			handleAs:"json",
 			load: function(data) {
-				//a = dijit.byId('class_'+b).get('value');
-				getService(b);
-				//alert(html);
-				//dijit.byId('class_'+b).attr('value',html);
-				//v= html.run();
-				//alert(html); 
-				//var Itemmake = { 
-				//     id: data,
-				//	 name: dijit.byId('service_name').get('value'),
-				//	   };
-				   //service_store
-		 	//addDataToSelectbox(dijit.byId('class_'+b), faculty, Itemmake, data);
+				
+				//getService(index,data);
 		   dijit.byId('frm_add_tran').reset();
 		   dijit.byId("popup_dept").hide();
 				
@@ -294,18 +283,23 @@ function addService(){
 }
 var nameContent;
 var url_a = '<?php echo $this->url(array("module"=>"accounting","controller"=>"ServiceCharge","action"=>"getallfac")); ?>';
-function getService(index){
+function getService(index,data){
 	type = 2;
 	//language = dijit.byId('language_title').get('value');
 	dojo.xhrPost({
 			url: url_a,
 			content: {"type":type},
 			handleAs:"json",
-			load: function(data) {
-				//alert(data); 
-				document.getElementById('class_'+index).innerHTML = data;
-				//document.getElementById('hh').innerHTML = data;
-				 //return 1;
+			load: function(option) {
+				 dojo.html.set(dojo.byId("acc_label"+index), '<select onchange="showpopup('+index+');" name="class_'+index+'"  dojoType="dijit.form.FilteringSelect" >'
+				         +option+'</select>', {
+				           parseContent: true,
+				           onBegin: function() {
+				        	   dojo.require('dijit.form.FilteringSelect');
+				           }
+				       });
+				 dijit.byId('frm_add_tran').reset();
+				
 			},
 			error: function(err) {
 				alert(err);
