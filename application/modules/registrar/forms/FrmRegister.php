@@ -231,7 +231,8 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 				'dojoType'=>'dijit.form.NumberTextBox',
 				'required'=>'true','class'=>'fullside',
 				//'onkeyup'=>'CheckAmount();',
-				'onkeyup'=>'getDisccount();getTotale();'
+				'onkeyup'=>'getDisccount();getTotale();',
+				'readOnly'=>'true'
 				));
 
 		$_disc = new Zend_Dojo_Form_Element_NumberTextBox('discount');
@@ -248,7 +249,8 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		$total->setAttribs(array(
 				'dojoType'=>$this->text,
 				'class'=>'fullside',
-				'style'=>'color:red;'
+				'style'=>'color:red;',
+				'readOnly'=>'true'
 				));
 		$total->setValue(0);
 		

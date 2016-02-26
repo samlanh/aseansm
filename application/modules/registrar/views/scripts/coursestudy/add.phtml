@@ -157,6 +157,7 @@
 		  if(total<books){
 			 alert('Deposit must be smaller than the total money!');
 			 dijit.byId('books').attr('value',total);
+			 dijit.byId('remaining').attr('value','0');
 		  }else{
 		     dijit.byId('remaining').attr('value',remaining.toFixed(2));
 		  }
