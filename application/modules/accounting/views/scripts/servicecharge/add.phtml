@@ -101,6 +101,8 @@ table .set-style tr.st1{ background: none repeat scroll 0% 0% rgba(218, 250, 255
 									 iconClass="dijitIconUndo" onclick="window.location = '<?php echo $this->url(array('module'=>'accounting','controller'=>"servicecharge",'action'=>'index'),null,true); ?>';" />
 									<input type="submit" label="<?php echo $tr->translate('SAVE');?>" id="save_new" dojoType="dijit.form.Button" 
 								 		iconClass="dijitEditorIcon dijitEditorIconSave"/>
+								 		<input type="text" id="hidden_key" />
+								 		<div id="hh"></div>
 								</td>
 							</tr>
 						</tfoot>
@@ -110,40 +112,62 @@ table .set-style tr.st1{ background: none repeat scroll 0% 0% rgba(218, 250, 255
 	</tr>
 </table>	
 </form>
-<?php $frm_dept = $this->add_dept;?>
 <div class="dijitHidden">
-	<div data-dojo-type="dijit.Dialog" style="width:7cm;" data-dojo-props="title:'<?php echo $tr->translate("ADD_FACULTY");?>', onCancel:hideDialog" id="popup_dept" >
-		<form id='frm_add_dept' dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<table>
+	<div data-dojo-type="dijit.Dialog" style="width:100%;" id="popup_dept" >
+		<form style="background-color: buttonface; width:15cm;" id='frm_add_tran' dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+			<table cellspacing="10" width="100%" style="margin: 0 auto;">
 			<tr>
-				<td><?php echo $tr->translate("FACULTY_ENNAME");?></td>
 				<td>
-					<?php echo $frm_dept->getElement("en_name");?></td>
-			</tr>
-			<tr>
-				<td><?php echo $tr->translate("FACULTY_KHNAME");?></td>
-				<td>
-					<?php echo $frm_dept->getElement("kh_name");?></td>
-			</tr>
-			<tr>
-				<td><?php echo $tr->translate("SHORTCUT");?></td>
-				<td><?php echo $frm_dept->getElement("shortcut");?></td>
-			</tr>
-			<tr>
-				<td><?php echo $tr->translate("STATUS");?></td>
-				<td><?php echo $frm_dept->getElement("status");?>
-					<?php echo $frm_dept->getElement("dept_id");?>
+					<fieldset style="background-color: buttonface;">
+					<legend align="center" >បន្ថែមសេវាកម្ម</legend><br />
+					<table style="margin: 0 auto; width: 95%;" cellspacing="5">
+					
+						<tr>
+							<td style="width:100px"><?php echo $tr->translate("SERVICE_TYPE")?></td>
+							<td>
+								<select class="fullside"  tabindex="3" name="service_type" id="service_type" dojoType="dijit.form.FilteringSelect" >
+									    <option value="1"><?php echo $tr->translate("Sport")?></option>
+									    <option value="2"><?php echo $tr->translate("Life Skill")?></option>
+									    <option value="3"><?php echo $tr->translate("Other")?></option>
+									    <option value="4"><?php echo $tr->translate("Food")?></option>
+								</select>
+							</td>
+						</tr>
+					
+						<tr>
+							<td style="width:100px"><?php echo $tr->translate("ឈ្មោះសេវាកម្ម")?></td>
+							<td><input class="fullside" tabindex="1" value="" dojoType="dijit.form.ValidationTextBox" name="service_name" id="service_name" type="text" required="required" /></td>
+						</tr>
+						<tr>
+							<td>ពណ៌នា</td>
+							<td>
+								<textarea class="fullside"   style=" height: 60px !important;"
+										tabindex="2" dojoType=""  id="note" name=note ></textarea>
+									
+							</td>
+						</tr>
+						<tr>
+							<td style="width:100px"><?php echo $tr->translate("STATUS")?></td>
+							<td>
+								<select class="fullside"  tabindex="3" name="status_service" id="status_service" dojoType="dijit.form.FilteringSelect" >
+									    <option value="1"><?php echo $tr->translate("Active")?></option>
+									    <option value="0"><?php echo $tr->translate("Deactive")?></option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center">
+								<input iconClass="dijitIconUndo" type="button" value="close" label="Close" dojoType="dijit.form.Button" onclick="hideDialog();"/>
+								<input type="button" value="save" name="save" label="Save" dojoType="dijit.form.Button" 
+									iconClass="dijitEditorIcon dijitEditorIconSave" onclick="addService();"/>
+							</td>
+						</tr>
+					</table>
+				</fieldset>
 				</td>
 			</tr>
-			<tr>
-				<td colspan="2" align="center"><br />
-					<input type="button"  label="<?php echo $tr->translate("SAVE");?>" id="submitButton" 
-					dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconSave" onclick="addNewDepartment();"/>
-			</tr>
-			<tr>
-				<td colspan="2">&nbsp;</td>
-			</tr>
 		</table>
+
 		</form>
 	</div>
 </div>
@@ -200,7 +224,7 @@ function addRow() {
 		}
 			template+='<td width="47px"align="center"><img onclick="deleteRecord('+col+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
 			template+='<td width="6%" align="center">'+no+'</td>';
-			template+='<td><select dojoType="dijit.form.FilteringSelect" id="class_'+col+'" name="class_'+col+'">'+faculty+'</select></td>';			
+			template+='<td><select dojoType="dijit.form.FilteringSelect" id="class_'+col+'" onchange="showpopup('+col+');" name="class_'+col+'">'+faculty+'</select></td>';			
 			
 			column = 0;
 			//template+='<td width="15%"> <input type="text" required="true" name="monthly'+col+'" id="monthly'+col+'" dojoType="dijit.form.NumberTextBox" style=""/><label id="subsub"></label></td>';
@@ -221,62 +245,75 @@ function addRow() {
 		});
  }
 dojo.ready(function(){
-	var metion = '<?php echo $this->all_metion; ?>';
+	//var metion = '<?php echo $this->all_metion; ?>';
 	 addRow();
 	 
 });
-function showPopupFaculty(r_key){
-	faculty_id = dijit.byId('metion'+r_key).value;	
-	if(faculty_id==-1){
-		r_index = r_key;
-		dijit.byId("popup_dept").show();
+
+a=0;
+function showpopup(key){
+	$('#hidden_key').val(key);
+	value=dijit.byId('class_'+key).get('value');
+	
+	//alert(value);
+	if(value==-1){
+		dijit.byId("popup_dept").show(key);
 	}
+	
 }
-var url_get_faculty ='<?php echo $this->url(array('module'=>'global','controller'=>'globals','action'=>'getfaculty-option')); ?>';
-function getAllFucaltyOption(f_id){                                                                      
+
+var url_add_service = '<?php echo $this->url(array("module"=>"accounting","controller"=>"ServiceCharge","action"=>"add-service")); ?>';
+function addService(){
+	b = $('#hidden_key').val();
+	//language = dijit.byId('language_title').get('value');
 	dojo.xhrPost({
-		url: url_get_faculty,				    
-		handleAs:"json", 
-		load: function(response){
-			//alert(response.option);
-			dojo.html.set(dojo.byId("lbl_metion"+r_index),'',{
-			     parseContent: true});
-			faculty=response.option;
-			    select='<select class="full" dojoType="dijit.form.FilteringSelect" name="metion'+r_index+'" id="metion'+r_index+'" >'+faculty+'</select>';
-				dojo.html.set(dojo.byId("lbl_metion"+r_index),select, {
-				     parseContent: true
-				});
-				dijit.byId("metion"+r_index).attr( 'value',f_id);
-				alert('<?php echo $tr->translate("INSERT_SUCCESS"); ?>');
-				//dijit.byId('frm_service').reset();
-		},error:function(err){
-			alert(err);
-		}
+			url:url_add_service,
+			form: dojo.byId("frm_add_tran"),
+			handleAs:"json",
+			load: function(data) {
+				//a = dijit.byId('class_'+b).get('value');
+				getService(b);
+				//alert(html);
+				//dijit.byId('class_'+b).attr('value',html);
+				//v= html.run();
+				//alert(html); 
+				//var Itemmake = { 
+				//     id: data,
+				//	 name: dijit.byId('service_name').get('value'),
+				//	   };
+				   //service_store
+		 	//addDataToSelectbox(dijit.byId('class_'+b), faculty, Itemmake, data);
+		   dijit.byId('frm_add_tran').reset();
+		   dijit.byId("popup_dept").hide();
+				
+			},
+			error: function(err) {
+				alert(err);
+			}
 	});
 }
-var url_add_dept= '<?php echo $this->url(array('module'=>'global','controller'=>'index','action'=>'add-department')); ?>';
-function addNewDepartment(){
-	if(dijit.byId('frm_add_dept').validate()) { 
-		dojo.xhrPost({
-		    url: url_add_dept,
-		    form: dojo.byId('frm_add_dept'),
-		    content : { 
-				'en_name':dijit.byId('en_name').get('value'),
-			    'kh_name':dijit.byId('kh_name').get('value'),
-			    'shortcut':dijit.byId('shortcut').get('value'),
-			    'status':dijit.byId('status').get('value'),			    
-			},				    
-		   handleAs:"json", 
-		   load: function(response) {
-			   getAllFucaltyOption(response.id);
-			   //location.reload();
-		      hideDialog();
-		    },
-		    error: function(err) {
-		    }
-		});
-		}
+var nameContent;
+var url_a = '<?php echo $this->url(array("module"=>"accounting","controller"=>"ServiceCharge","action"=>"getallfac")); ?>';
+function getService(index){
+	type = 2;
+	//language = dijit.byId('language_title').get('value');
+	dojo.xhrPost({
+			url: url_a,
+			content: {"type":type},
+			handleAs:"json",
+			load: function(data) {
+				//alert(data); 
+				document.getElementById('class_'+index).innerHTML = data;
+				//document.getElementById('hh').innerHTML = data;
+				 //return 1;
+			},
+			error: function(err) {
+				alert(err);
+			}
+	});
 }
+
+
  function deleteRecord(index) {
 		var identity = $('#identity').val();
 		var arrays = identity.split(',');
@@ -286,5 +323,18 @@ function addNewDepartment(){
 		var strings = arrays.join(',');
 		$('#identity').val(strings);
 		dojo.query("#row"+index).remove();
-	}
+}
+
+ function getkey(key){
+	 var a=key;
+	 return a;
+ }
+
+
+	
 </script>
+			
+			
+			
+			
+			
