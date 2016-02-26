@@ -31,6 +31,22 @@ class Accounting_Model_DbTable_DbService extends Zend_Db_Table_Abstract
     		return ($this->insert($_arr));
     	
     } 
+    
+    public function addServicePopup($_data){
+    	$db = $this->getAdapter();
+    	$_arr = array(
+    			'title'=>$_data['service_name'],
+    			'type'=>2,
+    			'ser_cate_id'=>$_data['service_type'],
+    			'desc'=>$_data['note'],
+    			'create_date'=>Zend_Date::now(),
+    			'status'=>$_data['status_service'],
+    			'user_id'=>$this->getUserId(),
+    	);
+    	return ($this->insert($_arr));
+    	 
+    }
+    
     public function serviceExist($service_name,$_type){
     	$db = $this->getAdapter();
     	$sql = "SELECT service_id FROM `rms_program_name` WHERE title= '".$service_name."' AND ser_cate_id=$_type";
