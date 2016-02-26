@@ -40,6 +40,10 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     				$complete=1;
     				if($data['subtotal_'.$i]-$data['paidamount_'.$i]>0){
     					$complete=0;
+    					$status="មិនទាន់បង់";
+    				}else{
+	    				$complete=1;
+	    				$status="បង់រួច";
     				}
     				$_arr = array(
     						'payment_id'	=>$id,
@@ -50,31 +54,30 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     						'paidamount'	=>$data['paidamount_'.$i],
     						'balance'		=>$data['subtotal_'.$i]-$data['paidamount_'.$i],
     						'validate'		=>$data['validate_'.$i],
+    						'start_date'	=>$data['date_start_'.$i],
     						'discount_fix'	=>$data['discount_'.$i],
     						'note'			=>$data['remark'.$i],
     						'subtotal'		=>$data['subtotal_'.$i],
     						'type'			=>2,
-    						'is_complete'	=>$complete
+    						'is_complete'	=>$complete,
+    						'comment'		=>$status,
     				);
     				$id_record = $this->insert($_arr);
     				
     				if(!empty($data['old_service_'.$i])){
     					$arr = array(
-    						'is_complete'=>1
+    						'is_complete'=>1,
+    						'comment'	 =>"បង់រួច"
     					);
     					$where='id ='.$data['old_service_'.$i];
     					$this->update($arr, $where);
-    					
     				}
-    				
     			}
-    			
     			$this->_name='rms_student_payment';
     			$datadisc = array('discount_fix'=>$disc,
     						'total'=>$total);
     			$where=$this->getAdapter()->quoteInto("id=?", $id);
     			$this->update($datadisc, $where);
-    			
     			$db->commit();
 			}catch (Exception $e){
 				echo $e->getMessage();
@@ -108,17 +111,18 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 				$this->delete($where);
 				
 				$ids = explode(',', $data['identity']);
-				
 				$disc = 0;
 				$total = 0;
-				
     			foreach ($ids as $i){
-    				
     				$disc=$disc+$data['discount_'.$i];
     				$total=$total+($data['price_'.$i]*$data['qty_'.$i]);
     				$complete=1;
     				if($data['subtotal_'.$i]-$data['paidamount_'.$i]>0){
     					$complete=0;
+    					$status="មិនទាន់បង់";
+    				}else{
+	    				$complete=1;
+	    				$status="បង់រួច";
     				}
     				$_arr = array(
     						'payment_id'	=>$data['id'],
@@ -129,15 +133,16 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     						'paidamount'	=>$data['paidamount_'.$i],
     						'balance'		=>$data['subtotal_'.$i]-$data['paidamount_'.$i],
     						'validate'		=>$data['validate_'.$i],
+    						'start_date'	=>$data['date_start_'.$i],
     						'discount_fix'	=>$data['discount_'.$i],
     						'note'			=>$data['remark'.$i],
     						'subtotal'		=>$data['subtotal_'.$i],
     						'type'			=>2,
-    						'is_complete'   =>$complete
+    						'is_complete'   =>$complete,
+    						'comment'		=>$status,
     				);
     				$this->insert($_arr);
     			}
-    			
     			$this->_name='rms_student_payment';
     			$datadisc = array('discount_fix'=>$disc,
     					'total'=>$total);

@@ -201,6 +201,8 @@ function printSave(){
 	     	  temp+='<th><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;"><?php echo $tr->translate("ចំនួន / Amount");?></strong></th>';
 	       	  temp+='<th><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;"><?php echo $tr->translate("បញ្ចុះតំលៃ / Discount");?></strong></th>';
 	     	  temp+='<th><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;"><?php echo $tr->translate("តំលៃសរុប​ / Sub Total");?></strong></th>';
+		      temp+='<th><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;"><?php echo $tr->translate("ប្រាក់បានបង់​ / Paid Amomunt");?></strong></th>';
+		      temp+='<th><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;"><?php echo $tr->translate("ថ្ងៃចាប់ផ្តើម / Start Date");?></strong></th>';
 		      temp+='<th><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;"><?php echo $tr->translate("សុពលភាព / Validate");?></strong></th></tr>';
 			    i=1;  for(var n = 0; n < rowIDArray.length; n++) {
 			     
@@ -211,29 +213,42 @@ function printSave(){
 		      temp+='<td style="border:1px solid #000;">'+dijit.byId("qty_"+rowIDArray[n]).get('value')+'</td>';
 		      temp+='<td style="border:1px solid #000;">$ '+dijit.byId("discount_"+rowIDArray[n]).get('value')+'</td>';
 		      temp+='<td style="border:1px solid #000;">$ '+dijit.byId("subtotal_"+rowIDArray[n]).get('value')+'</td>';
+		      temp+='<td style="border:1px solid #000;">$ '+dijit.byId("paidamount_"+rowIDArray[n]).get('value')+'</td>';
 
+		      var b = new Date(dijit.byId("date_start_"+rowIDArray[n]).get('value'));
+			  mm = b.getMonth()+1;
+			  var dd = b.getDate();
+			   if(dd<10){
+			    dd = "0"+dd;
+			   }
+			   if(mm<10){
+			    mm = "0"+mm;
+			   }
+			  var y = b.getFullYear();
+			  var start_date = dd + '-' + mm + '-' + y ;
+			  temp+='<td style="border:1px solid #000;"> '+start_date+'</td>';
+			  
+			  
 		      var a = new Date(dijit.byId("validate_"+rowIDArray[n]).get('value'));
 			  mm = a.getMonth()+1;
-
-			 var dd = a.getDate();
-			  if(dd<10){
-			   dd = "0"+dd;
-			 }
-			  if(mm<10){
-			   mm = "0"+mm;
-			 }
-			 var y = a.getFullYear();
-			 var epx_date = dd + '-' + mm + '-' + y ;
-
-			
+			  var dd = a.getDate();
+			   if(dd<10){
+			    dd = "0"+dd;
+			   }
+			   if(mm<10){
+			    mm = "0"+mm;
+			   }
+			  var y = a.getFullYear();
+			  var epx_date = dd + '-' + mm + '-' + y ;
 		      temp+='<td style="border:1px solid #000;"> '+epx_date+'</td>';
+		      
 		      i++;
 		      temp+='</tr>';
 		     }
-			  temp+='<tr style="font-size:10px;height: 23px;"​ align="left"> <td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #000;" colspan="6"></td><td style="border:1px solid #000; padding-left: 10px;"><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;">ទឹកប្រាក់ត្រូវបង់ / Total Payment</strong></td><td style="border:1px solid #000; padding-left: 10px;">$ '+total+'</td></tr>';
-			  temp+='<tr style="font-size:10px;height: 23px;"​ align="left"> <td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #000;" colspan="6"><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 11px;color:red;">** ប្រាក់ដែលបង់រួចមិនអាចដកវិញបានទេ</strong></td><td style="border:1px solid #000; padding-left: 10px;"><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;">ទឹកប្រាក់ទទួលបាន / Recieve Amount</strong></td><td style="border:1px solid #000; padding-left: 10px;">$ '+recieve+'</td></tr>';
-			  temp+='<tr style="font-size:10px;height: 23px;"​ align="left"> <td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #000;" colspan="6"><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 13px;color:red;">** Nonrefundable</strong></td><td style="border:1px solid #000; padding-left: 10px;"><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;">ប្រាក់នៅខ្វះ / Balance Due</strong></td><td style="border:1px solid #000; padding-left: 10px;">$ '+balance_due+'</td></tr>';
-			  temp+='<tr style="font-size:10px;height: 23px;"​ align="left"> <td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #000;" colspan="6"></td><td style="border:1px solid #000; padding-left: 10px;"><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;">ប្រាក់អាប់ / Return Amount</strong></td><td style="border:1px solid #000; padding-left: 10px;">$ '+toral_return+'</td></tr>';
+			  temp+='<tr style="font-size:10px;height: 23px;"​ align="left"> <td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #000;" colspan="8"></td><td style="border:1px solid #000; padding-left: 10px;"><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;">ទឹកប្រាក់ត្រូវបង់ / Total Payment</strong></td><td style="border:1px solid #000; padding-left: 10px;">$ '+total+'</td></tr>';
+			  temp+='<tr style="font-size:10px;height: 23px;"​ align="left"> <td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #000;" colspan="8"><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 11px;color:red;">** ទឹកប្រាក់ដែលបង់ហើយ មិនអាចផ្ទេរ ឬ ដកវិញបានទេ</strong></td><td style="border:1px solid #000; padding-left: 10px;"><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;">ទឹកប្រាក់ទទួលបាន / Recieve Amount</strong></td><td style="border:1px solid #000; padding-left: 10px;">$ '+recieve+'</td></tr>';
+			  temp+='<tr style="font-size:10px;height: 23px;"​ align="left"> <td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #000;" colspan="8"><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 13px;color:red;">** All fees are not transferable or refundable.</strong></td><td style="border:1px solid #000; padding-left: 10px;"><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;">ប្រាក់នៅខ្វះ / Balance Due</strong></td><td style="border:1px solid #000; padding-left: 10px;">$ '+balance_due+'</td></tr>';
+			  temp+='<tr style="font-size:10px;height: 23px;"​ align="left"> <td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff; border-right: 1px solid #000;" colspan="8"></td><td style="border:1px solid #000; padding-left: 10px;"><strong style="font-family: Khmer OS Battambang;color:#000;font-size: 8px;">ប្រាក់អាប់ / Return Amount</strong></td><td style="border:1px solid #000; padding-left: 10px;">$ '+toral_return+'</td></tr>';
 		    temp+='</table>';
 		    dojo.byId('t_amountmoneytype').innerHTML = temp;
 
@@ -416,6 +431,7 @@ function addRow() {
 			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("DISCOUNT");?></th>';
 			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("SUBTOTAL");?></th>';
 			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("PAID_AMOUNT");?></th>';
+			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("DATE_START");?></th>';
 			temp+='<th><?php echo $tr->translate("REMARK");?></th>';
 			dojo.query("#head-title").append(temp);
 			title=1;
@@ -435,9 +451,10 @@ function addRow() {
 			//template+='<td> <input type="text" required="true" readonly="readonly" name="total_'+col+'" value="" id="total_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="qty"></label></td>';
 			template+='<td> <input type="text" required="true" onkeyup="calculateDiscount('+col+');" value="<?php echo 0;?>"  name="discount_'+col+'" id="discount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="subsub"></label></td>';
 			template+='<td> <input type="text" required="true" readonly="readonly" name="subtotal_'+col+'" value="" id="subtotal_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="qty"></label></td>';
-			template+='<td> <input type="text" required="true" onkeyup="calculatePaidAmount('+col+');"  name="paidamount_'+col+'" id="paidamount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="paidamount"></label></td>';
-			template+='<td> <input type="text" required="true"  name="validate_'+col+'" id="validate_'+col+'" dojoType="dijit.form.DateTextBox" style="width:120px;" /><label id="validate"></label></td>';
-			template+='<td> <input type="text" required="true" name="remark'+col+'" value="" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" /><label id="subsub"></label></td>';
+			template+='<td> <input type="text" required="true" onkeyup="calculatePaidAmount('+col+');"  name="paidamount_'+col+'" id="paidamount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="paidamount"></label></td>';
+			template+='<td> <input type="text" required="true"  name="date_start_'+col+'" id="date_start_'+col+'" dojoType="dijit.form.DateTextBox" style="width:100px;" value="<?php echo date('Y-m-d')?>" /><label id="validate"></label></td>';
+			template+='<td> <input type="text" required="true"  name="validate_'+col+'" id="validate_'+col+'" dojoType="dijit.form.DateTextBox" style="width:100px;" /><label id="validate"></label></td>';
+			template+='<td> <input type="text" required="true" name="remark'+col+'" value="" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" style="width:170px;" /><label id="subsub"></label></td>';
 		tmp='<tr id="row'+col+'">';
 		tmp+="</tr>";
 		dojo.query("#table_row").append(tmp);
@@ -628,6 +645,7 @@ function initailize(){
 		temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("DISCOUNT");?></th>';
 		temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("SUBTOTAL");?></th>';
 		temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("PAID_AMOUNT");?></th>';
+		temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("DATE_START");?></th>';
 		temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("VALIDATE");?></th>';
 		temp+='<th><?php echo $tr->translate("REMARK");?></th>';
 		dojo.query("#head-title").append(temp);
@@ -648,9 +666,10 @@ function initailize(){
 		//template+='<td> <input type="text" required="true" readonly="readonly" name="total_'+col+'" value="<?php //echo $this->row['amount'];?>" id="total_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="qty"></label></td>';
 		template+='<td> <input type="text" required="true" onkeyup="calculateDiscount('+col+',1);" value="<?php //echo $this->row['discount_fix'];?>"  name="discount_'+col+'" id="discount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="subsub"></label></td>';
 		template+='<td> <input type="text" required="true" readonly="readonly" name="subtotal_'+col+'" value="<?php //echo $this->row['total_payment'];?>" id="subtotal_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="qty"></label></td>';
-		template+='<td> <input type="text" required="true" onkeyup="calculatePaidAmount('+col+');"  name="paidamount_'+col+'" id="paidamount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="paidamount"></label></td>';
-		template+='<td> <input type="text" required="true"  name="validate_'+col+'" id="validate_'+col+'" dojoType="dijit.form.DateTextBox" style="width:120px;" /><label id="validate"></label></td>';
-		template+='<td> <input type="text" required="true" name="remark'+col+'" value="<?php //echo $this->row['note1'];?>" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" /><label id="subsub"></label></td>';
+		template+='<td> <input type="text" required="true" onkeyup="calculatePaidAmount('+col+');"  name="paidamount_'+col+'" id="paidamount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="paidamount"></label></td>';
+		template+='<td> <input type="text" required="true"  name="date_start_'+col+'" id="date_start_'+col+'" dojoType="dijit.form.DateTextBox" style="width:100px;" value="" /><label id="validate"></label></td>';
+		template+='<td> <input type="text" required="true"  name="validate_'+col+'" id="validate_'+col+'" dojoType="dijit.form.DateTextBox" style="width:100px;" /><label id="validate"></label></td>';
+		template+='<td> <input type="text" required="true" name="remark'+col+'" value="<?php //echo $this->row['note1'];?>" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" style="width:170px;" /><label id="subsub"></label></td>';
 	tmp='<tr id="row'+col+'">';
 	tmp+="</tr>";
 	dojo.query("#table_row").append(tmp);
@@ -668,6 +687,7 @@ function initailize(){
 	dijit.byId('price_'+col).attr('value','<?php echo $row['fee']?>');
 	dijit.byId('qty_'+col).attr('value','<?php echo $row['qty']?>');
 	dijit.byId('validate_'+col).attr('value','<?php echo $row['validate']?>');
+	dijit.byId('date_start_'+col).attr('value','<?php echo $row['start_date']?>');
 	dijit.byId('discount_'+col).attr('value','<?php echo $row['discount_fix']?>');
 	dijit.byId('remark'+col).attr('value','<?php echo $row['note']?>');
 	dijit.byId('paidamount_'+col).attr('value','<?php echo $row['paidamount']?>');
