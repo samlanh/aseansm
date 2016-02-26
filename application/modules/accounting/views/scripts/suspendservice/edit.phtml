@@ -21,8 +21,6 @@
 		   // document.musicPrefs.other.value="Afrobeat";
 			//getStudentBYId();
 		});
-	dojo.ready(function(){
-	}); 
 	
 </script>
 <style>
@@ -52,7 +50,7 @@ fieldset{  background:none;}
 						<tr>
 							<td><?php echo $tr->translate("STUDENT_ID");?></td>
 							<td>
-								<select class="fullside" readonly="readonly"  name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();" >
+								<select class="fullside"  name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();" >
 									<?php if(!empty($this->rs))foreach ($this->rs as $row){?>
 										<option value="<?php echo $row['stu_id']?>"<?php if($row['stu_id']==$this->id['student_id']) echo "selected='Selected'"?>><?php echo $row['stu_code']?></option>
 									<?php }?>
@@ -119,9 +117,9 @@ function addRow() {
 			temp+='<th><?php echo $tr->translate("DEL");?></th>';
 			temp+='<th><?php echo $tr->translate("N_O");?></th>';
 			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("SERVICES");?></th>';
-			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("PAYMENT_TERM");?></th>';
 			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("TYPE");?></th>';
 			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("REASON");?></th>';
+			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("DATE_BACK");?></th>';
 			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("NOTE");?></th>';
 			dojo.query("#head-title").append(temp);
 			title=1;
@@ -129,10 +127,10 @@ function addRow() {
 			template+='<td width="47px" align="center"><img onclick="deleteRecord('+col+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
 			template+='<td width="15px" align="center">'+no+'</td>';
 			template+='<td><select style="width:100%;"  dojoType="dijit.form.FilteringSelect" id="service_'+col+'" name="service_'+col+'">'+service+'</select></td>';			
-			template+='<td><select style="width:100%;"  dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'"><option value="1">Monthly</option><option value="2">Quarter</option><option value="3">Semester</option><option value="4">Yearly</option></select></td>';
 			column = 0;
 			template+='<td><select dojoType="dijit.form.FilteringSelect" id="type_'+col+'" name="type_'+col+'" style="width:100%;"><option value="1">Suspend</option><option value="2">Stop</option></select></td>';
 			template+='<td> <input type="text" required="true" name="reason_'+col+'" id="reason_'+col+'" dojoType="dijit.form.TextBox" style="width:100%;" /><label id="subsub"></label></td>';
+			template+='<td><select style="width:100%;"  dojoType="dijit.form.DateTextBox" id="date_'+col+'" name="date_'+col+'"></select></td>';
 			template+='<td> <input type="text" required="true" name="note_'+col+'" id="note_'+col+'" dojoType="dijit.form.TextBox" style="width:100%;" /></td>';
 		tmp='<tr id="row'+col+'">';
 		tmp+="</tr>";
@@ -157,9 +155,9 @@ function initailize() {
 		temp+='<th><?php echo $tr->translate("DEL");?></th>';
 		temp+='<th><?php echo $tr->translate("N_O");?></th>';
 		temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("SERVICES");?></th>';
-		temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("PAYMENT_TERM");?></th>';
 		temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("TYPE");?></th>';
 		temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("REASON");?></th>';
+		temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("DATE_BACK");?></th>';
 		temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("NOTE");?></th>';
 		dojo.query("#head-title").append(temp);
 		title=1;
@@ -167,10 +165,10 @@ function initailize() {
 		template+='<td width="47px" align="center"><img onclick="deleteRecord('+col+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
 		template+='<td width="15px" align="center">'+no+'</td>';
 		template+='<td><select style="width:100%;"  dojoType="dijit.form.FilteringSelect" id="service_'+col+'" name="service_'+col+'">'+service+'</select></td>';			
-		template+='<td><select style="width:100%;"  dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'"><option value="1">Monthly</option><option value="2">Quarter</option><option value="3">Semester</option><option value="4">Yearly</option></select></td>';
 		column = 0;
-		template+='<td><select dojoType="dijit.form.FilteringSelect" id="type_'+col+'" name="type_'+col+'" style="width:100%;"><option value="1">Suspend</option><option value="2">Stop</option></select></td>';
+		template+='<td><select dojoType="dijit.form.FilteringSelect" id="type_'+col+'" onchange="dateReadonly('+col+')" name="type_'+col+'" style="width:100%;"><option value="1">Suspend</option><option value="2">Stop</option></select></td>';
 		template+='<td> <input type="text" required="true" name="reason_'+col+'" id="reason_'+col+'" dojoType="dijit.form.TextBox" style="width:100%;" /><label id="subsub"></label></td>';
+		template+='<td><select style="width:100%;"  dojoType="dijit.form.DateTextBox" id="date_'+col+'" name="date_'+col+'"></select></td>';
 		template+='<td> <input type="text" required="true" name="note_'+col+'" id="note_'+col+'" dojoType="dijit.form.TextBox" style="width:100%;" /></td>';
 	tmp='<tr id="row'+col+'">';
 	tmp+="</tr>";
@@ -184,12 +182,23 @@ function initailize() {
 	     parseContent: true,
 	});
 	dijit.byId('service_'+col).attr('value','<?php echo $row['service_id']?>');
-	dijit.byId('term_'+col).attr('value','<?php echo $row['payment_term']?>');
+	dijit.byId('date_'+col).attr('value','<?php echo $row['date']?>');
 	dijit.byId('type_'+col).attr('value','<?php echo $row['type_suspend']?>');
 	dijit.byId('reason_'+col).attr('value','<?php echo $row['reason']?>');
 	dijit.byId('note_'+col).attr('value','<?php echo $row['note']?>');
 
 	<?php } }?>
+}
+
+function dateReadonly(key) {
+	condition = dijit.byId('type_'+key).get('value');
+	if(condition==2){
+		dijit.byId("date_"+key).set('readOnly',true);
+		$('#date_'+key).val('');
+	}else{
+		dijit.byId("date_"+key).set('readOnly',false);
+		dijit.byId('date_'+col).attr('value','<?php echo $row['date']?>');
+	}
 }
 
 var url_student_info = "<?php echo $this->url(array('module'=>'accounting','controller'=>'suspendservice','action'=>'get-student')); ?>";

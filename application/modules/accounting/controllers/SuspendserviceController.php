@@ -16,11 +16,11 @@ class Accounting_SuspendserviceController extends Zend_Controller_Action {
 			$rs = $db->getStudentSuspendService();
 			if(!empty($rs)){
 				$list = new Application_Form_Frmtable();
-				$collumns = array("SUSPEND No","ឈ្មោះ","NAME","GENDER","DATE");
+				$collumns = array("លេខ","CODE","NAME_KH","NAME_EN","SEX","CREATED_DATE");
 				$link=array(
 						'module'=>'accounting','controller'=>'suspendservice','action'=>'edit',
 				);
-				$this->view->list=$list->getCheckList(0, $collumns, $rs,array('suspend_no'=>$link,'kh_name'=>$link));
+				$this->view->list=$list->getCheckList(0, $collumns, $rs,array('suspend_no'=>$link,'code'=>$link,'kh_name'=>$link,'en_name'=>$link));
 			}
 			else{
 				$result = Application_Model_DbTable_DbGlobal::getResultWarning();

@@ -9,7 +9,7 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
     }
     function getAllYears(){
     	$db = $this->getAdapter();
-    	$sql = "SELECT id,CONCAT(from_academic,'-',to_academic) AS years FROM rms_tuitionfee WHERE `status`=1";
+    	$sql = "SELECT id,CONCAT(from_academic,'-',to_academic) AS years FROM rms_servicefee WHERE `status`=1";
     	$order=' ORDER BY id DESC';
     	return $db->fetchAll($sql.$order);
     }
@@ -18,9 +18,10 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
    	$db->beginTransaction();
    		try{
 	   		$arr = array(
-	   			'student_id'=> $data['studentid'],
-	   			'suspend_no'=> $data['suspend_no'],
-	   			'define_date'=>date("Y-m-d"),
+	   			'student_id'	=> $data['studentid'],
+	   			'suspend_no'	=> $data['suspend_no'],
+	   			'define_date'	=> date("Y-m-d"),
+	   			'year'			=> $data['study_year'],
 	   			'user_id'=>$this->getUserId()
 	   				);
 	   		$id = $this->insert($arr);
@@ -31,7 +32,7 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
 		   		$_arr = array(
 		   				'suspendservice_id'=>$id,
 		   				'service_id'=> $data['service_'.$i],
-		   				'payment_term'=> $data['term_'.$i],
+		   				'date'=> $data['date_'.$i],
 		   				'type_suspend'=> $data['type_'.$i],
 		   				'reason'=> $data['reason_'.$i],
 		   				'note'=> $data['note_'.$i],
@@ -51,10 +52,11 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
    	$db->beginTransaction();
    	try{
    		$arr = array(
-   				'student_id'=> $data['studentid'],
-   				'suspend_no'=> $data['suspend_no'],
-   				'define_date'=>date("Y-m-d"),
-   				'user_id'=>$this->getUserId()
+   				'student_id'	=> $data['studentid'],
+   				'suspend_no'	=> $data['suspend_no'],
+   				'define_date'	=>date("Y-m-d"),
+   				'year'			=> $data['study_year'],
+   				'user_id'		=>$this->getUserId()
    		);
    		$where=$this->getAdapter()->quoteInto("id=?", $data['id']);
    		$this->update($arr, $where);
@@ -66,14 +68,14 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
    		$ids = explode(',', $data['identity']);
    		foreach ($ids as $i){
    			$_arr = array(
-   					'suspendservice_id'=>$data['id'],
-   					'service_id'=> $data['service_'.$i],
-   					'payment_term'=> $data['term_'.$i],
-   					'type_suspend'=> $data['type_'.$i],
-   					'reason'=> $data['reason_'.$i],
-   					'note'=> $data['note_'.$i],
-   					'define_date'=>date("Y-m-d"),
-   					'user_id'=>$this->getUserId()
+   					'suspendservice_id'	=>$data['id'],
+   					'service_id'		=> $data['service_'.$i],
+   					'date'				=> $data['date_'.$i],
+   					'type_suspend'		=> $data['type_'.$i],
+   					'reason'			=> $data['reason_'.$i],
+   					'note'				=> $data['note_'.$i],
+   					'define_date'		=>date("Y-m-d"),
+   					'user_id'			=>$this->getUserId()
    			);
    			$this->insert($_arr);
    		}
@@ -103,8 +105,9 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
    public function getStudentSuspendService(){
    	$db = $this->getAdapter();
    	$sql="SELECT id,suspend_no,
+  	 	(SELECT `stu_code` FROM  `rms_student` WHERE stu_id=student_id LIMIT 1) AS code,
    		(SELECT `stu_khname` FROM  `rms_student` WHERE stu_id=student_id LIMIT 1) as kh_name,
-   		(SELECT `stu_enname` FROM  `rms_student` WHERE stu_id=student_id LIMIT 1),
+   		(SELECT `stu_enname` FROM  `rms_student` WHERE stu_id=student_id LIMIT 1) AS en_name,
    		(SELECT (SELECT `name_kh` FROM`rms_view` WHERE `type`=2 AND `key_code`=`sex`) FROM `rms_student` WHERE stu_id=student_id LIMIT 1),
    		define_date
    		FROM rms_suspendservice ORDER BY id DESC
