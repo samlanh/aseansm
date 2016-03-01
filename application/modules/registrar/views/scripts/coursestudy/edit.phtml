@@ -466,17 +466,17 @@ function printSave(){
 			   .khmer{font:12px 'Khmer OS Battambang';}
 			   .one{white-space:nowrap;}
 			</style>	
-			<table   class="print" bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;height: 12cm; font-size:12px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;">
+			<table    class="print" bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;height: 12cm; font-size:12px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;">
 				<tr>
 				    <td colspan="8"  style="font:bold 20px 'Kh Muol';" align="center"><u><b><strong style=" font-family: Arial Black;font-family:'Khmer MEF2';">បង្កាន់ដៃបង់ប្រាក់</strong></b></u>
 				        <br/><strong style="font-size: 20px;font-weight:bold">OFFICAL RECEIPT</strong>
 				    </td>
 				</tr>
 				<tr>
-				    <td class="one khmerbold">&nbsp;ការបង់&nbsp;/&nbsp;Payment Term</td>
+				    <td  class="one khmerbold" style="width: 20%;">&nbsp;ការបង់&nbsp;/&nbsp;Payment Term</td>
 				    <td width="25%" ><strong> &nbsp;<label id="lb_term" class="value"></label></strong></td>
 				    <td colspan="2" style="width:10px;"></td>
-				    <td class="one khmerbold">&nbsp;&nbsp;លេខបង្កាន់ដៃ&nbsp;/&nbsp;Receipt No</td><td width="25%"><strong>&nbsp;<label id="lb_enroll_id" class="value"></label></strong></td>
+				    <td class="one khmerbold" style="width:20%">&nbsp;&nbsp;លេខបង្កាន់ដៃ&nbsp;/&nbsp;Receipt No</td><td width="25%"><strong>&nbsp;<label id="lb_enroll_id" class="value"></label></strong></td>
 				</tr>
 				<tr>
 				    <td class="one khmerbold">&nbsp;ថ្ងៃចាប់ផ្តើម&nbsp;/&nbsp;Term Start</td><td width="25%"><strong> &nbsp;<label id="lb_term_start" class="value"></label></strong></td>
@@ -489,7 +489,7 @@ function printSave(){
 				    <td class="one khmerbold">&nbsp;&nbsp;តម្លៃវគ្គសិក្សា &nbsp;/&nbsp;Course Cost </td><td width="25%"><strong>&nbsp;<label id="lb_course_cost" class="value"></label></strong></td>
 				</tr>
 				<tr>
-				    <td class="one khmerbold">&nbsp;ឈ្មោះ​របស់​សិស្ស &nbsp;/&nbsp;Student Name</td>
+				    <td class="one khmerbold">&nbsp;ឈ្មោះ​របស់​សិស្ស /Student Name</td>
 				    <td width="25%" ><strong> &nbsp;<label id="lb_student" class="value"></label></strong></td>
 				    <td colspan="2" style="width:10px;" ></td>
 				    <td class="one khmerbold">&nbsp;&nbsp;បញ្ចុះតំលៃ &nbsp;/&nbsp;Discount </td><td width="25%"><strong>&nbsp;<label id="lb_discount" class="value"></label></strong></td>
@@ -508,7 +508,7 @@ function printSave(){
 				    <td class="one khmerbold">&nbsp;ម៉ោងសិក្សា&nbsp;/&nbsp;Time Study</td>
 				    <td width="25%" ><strong> &nbsp;<label id="lb_time_study" class="value"></label></strong></td>
 				    <td colspan="2" style="width:10px;" ></td>
-				    <td class="one khmerbold">&nbsp;&nbsp;ប្រាក់នូវសល់ &nbsp;/&nbsp;Balance</td><td width="25%"><strong>&nbsp;<label id="lb_balance" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;&nbsp;ប្រាក់នៅសល់ &nbsp;/&nbsp;Balance</td><td width="25%"><strong>&nbsp;<label id="lb_balance" class="value"></label></strong></td>
 				</tr>
 				<tr>
 				    <td class="one khmerbold">&nbsp;បន្ទប់&nbsp;/&nbsp;Room</td><td width="25%"><strong> &nbsp;<label id="lb_room" class="value"></label></strong></td>
@@ -518,21 +518,20 @@ function printSave(){
 				<tr>
 				    <td class="one khmerbold">&nbsp;សម្គាល់ &nbsp;/&nbsp;Note</td><td width="25%"><strong> &nbsp;<label id="lb_note" class="value"></label></strong></td>
 				    <td colspan="2" style="width:10px;" ></td>
-				    <td></td><td class="one khmerbold" >&nbsp;&nbsp;<hr ></td>
+				    <td></td><td class="one khmerbold" >&nbsp;&nbsp;<hr style="background-color: #000 ! important; height: 1px ! important;border-width: 0px;" ></td>
 				</tr>
 				<tr>
-				    <td colspan="8" align="right" class="khmerbold">
-				        <h3 style="padding-right: 5px ! important;margin-bottom: -20px  !important;">
+				    <td colspan="4" align="left" class="khmerbold" style="line-height: 14px;">
+				    ​ *សម្គាល់ : ប្រាក់ដែលបានបង់ហើយមិនអាចដកវិញបានទេ​ ។<br/> 
+				     &nbsp;*Note: All fees are not transferable or refundable . 
+				    </td>
+				    <td colspan="4" align="right" class="khmerbold" style="line-height: 14px;">
+				        <h3 style="padding-right: 5px ! important;margin-bottom: -10px  !important;">
 				              <?php $session_user=new Zend_Session_Namespace('auth');
 						           $last_name=$session_user->last_name;
 						           $username = $session_user->first_name;
 						           echo " Official's Signature : ".$last_name." ".$username;?>
 				        </h3><br/>15/Aug/2015 10:30AM Sek Sokny
-				    </td>
-				</tr>
-				<tr>
-				    <td colspan="8" align="left" class="khmerbold">
-				     *Note: All fees are not transferable or refundable . 
 				    </td>
 				</tr>
 			</table>
