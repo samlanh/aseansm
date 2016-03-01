@@ -1,0 +1,112 @@
+<?php
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	$this->headTitle('SRMS | Report Student Receivable'); 
+	echo $this->headTitle();
+	$base_url = Application_Form_FrmMessage::getUrl("/");
+	$session_user=new Zend_Session_Namespace('auth');
+	$user_id=$session_user->user_id;
+?>
+<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'registrar','controller'=>'allreports','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+		<input  dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Advance Search....." value="<?php echo $this->search['txtsearch'];?>" type="text">
+		<input  name="from_date" id="from_date" dojoType="dijit.form.DateTextBox"  value="<?php echo $this->search['start_date'];?>" type="text">
+		<input  name="to_date" id="to_date" dojoType="dijit.form.DateTextBox"  value="<?php echo $this->search['end_date'];?>" type="text">
+		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
+</form>
+<style>
+#footer{display: none;}
+</style>	
+<div style="border: 1px dotted #000;background: #fff; margin: 0 auto;min-height: 27cm;">
+		<div id="divPrint">
+			<table style="background:#fff; margin: 0 auto; width: 100%; padding: 1cm; ">
+							<tr style="font-size: 13px;">
+								<td colspan="3" align="center">
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">ព្រះរាជាណាចក្រកម្ពុជា</strong><br />
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">ជាតិ សាសនា ព្រះមហាក្សត្រ</strong><br />
+								</td>
+							</tr>
+							<tr>
+									<td>&nbsp;</td>
+							</tr>
+							<tr>
+								<td width="20%" align="left">
+									<img style="width: 155px;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br /><br />
+								</td>
+								<td align="left">
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"><u>របាយការណ៏ប្រាក់ចំណូលពី ការបង់ប្រាក់របស់សិស្ស</u></strong><br >
+								</td>
+								<td align="right" width="20%">&nbsp;</td>
+							</tr>
+							<tr>
+								<td colspan="3">
+									<style> th,td{ padding:0 1px;}</style>
+										<style type="text/css">
+											body{font-family: "Times New Roman",Arial; }
+											table{ border-collapse:collapse; margin:0 auto;
+											border-color:#000; }
+											.padd tr td{  text-align:center}
+											.padd tr th{  background-color: #ccc; }
+										</style>
+
+									<table class="padd" width="99%" border="1" align="center" style="white-space:nowrap;">
+										  <tr style="font-size:10px; height: 20px;" align="center">
+										    <th>&nbsp;N.o&nbsp;</th>
+										    <th>&nbsp;Reciept N.o&nbsp;</th>
+										    <th>&nbsp;Student ID&nbsp;</th>
+											<th>&nbsp;Khmer Name&nbsp;</th>
+											<th>&nbsp;English Name&nbsp;</th>
+											<th>&nbsp;Tuition Fee&nbsp;</th>
+											<th>&nbsp;Discount&nbsp;</th>
+											<th>&nbsp;Total&nbsp;</th>
+											<th>&nbsp;Paid Amount&nbsp;</th>
+											<th>&nbsp;Balance Due&nbsp;</th>
+											<th>&nbsp;Return Amount&nbsp;</th>
+											<th>&nbsp;Date Paid&nbsp;</th>
+											<th>&nbsp;User&nbsp;</th>
+											<th>&nbsp;Remark&nbsp;</th>
+										  </tr>
+										  <tr></tr>
+												<style> td{padding:0 3px; }</style>
+										 <?php if (!empty($this->row)) $i=0; $total=0; foreach($this->row as $rs){ $i++;?>
+										  <tr style="font-size:10px; height: 18px;"​ align="center">
+										    <td><?php echo $i;?></td>
+										    <td><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['receipt_number']; ?></a></td>
+										    <td><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['stu_code']; ?></a></td>
+										    <td style=" white-space:nowrap; text-align:left"><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['stu_khname']; ?></a></td>
+										    <td style=" white-space:nowrap; text-align:left"><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['stu_enname']; ?></a></td>
+										    <td>$ <?php echo $rs['tuition_fee']; if(empty($rs['tuition_fee']))echo '0.00'; ?></td>
+										    <td><?php echo $rs['discount_percent']; if(empty($rs['discount_percent']))echo '0'; ?>%</td>
+										    <td>$ <?php echo $rs['total']; if(empty($rs['total']))echo '0.00'; ?></td>
+										    <td>$ <?php echo $rs['paid_amount']; if(empty($rs['paid_amount']))echo '0.00'; ?></td>
+										    <td>$ <?php echo $rs['balance_due']; if(empty($rs['balance_due']))echo '0.00'; ?></td>
+										    <td>$ <?php echo $rs['return_amount']; if(empty($rs['return_amount']))echo '0.00'; ?></td>
+										   
+										    <td><?php echo date('d-m-Y', strtotime($rs['create_date'])); ?></td>
+										    <td><?php $user=$rs['user_id'];if( $user==$user_id )echo $session_user->last_name." ".$session_user->first_name; ?></td>
+										   	<td><?php echo $rs['note']; ?></td>
+										  </tr>
+										  <?php $total = $rs['total'] + $total; ?> 
+										  <?php } ?>
+										</table>
+									
+									</td>
+								</tr>
+									<tr><td colspan="3">&nbsp;</td></tr>
+								<tr>
+									<td colspan="3">&nbsp;</td>
+								</tr>
+								<?php if(!empty($total)){?>
+								<tr>
+									<td colspan="3">
+											<table width="29.2%" border="1" align="right" style="margin-right:0.1%; white-space:nowrap;">
+												<tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
+										 				<th style="background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;Total&nbsp;</th>
+														<td colspan="2" style=" color:#F00; font-weight:bold;font-family: Arial Black; font-size: 10px;">$ <?php echo number_format($total,2);?></td>
+										  		</tr>
+										  </table>
+									</td>
+								</tr>
+								<?php }?>
+							</table>
+	</div>	
+</div>
+
