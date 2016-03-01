@@ -346,6 +346,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 				'dojoType'=>$this->text,'class'=>'fullside',));
 		$id = new Zend_Form_Element_hidden('id');
 		if($data!=null){
+		//	 print_r($data);exit();
 			$id->setValue($data['stu_id']);
 			$_studid->setValue($data['stu_code']);
 			$_invoice_no->setValue($data['receipt_number']);
@@ -365,6 +366,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 			$char_price->setValue($data['amount_in_khmer']);
 			$not->setValue($data['note']);
 			$student_type->setValue($data['student_type']);
+			$old_studens->setValue($data['stu_id']);
 		}
 		$this->addElements(array(
 			 $old_studens,$student_type,$id,$generation,$char_price,$end_date,$start_date,$not,$books,$addmin_fee,$remaining,$total, $_year_one,$_new_student,$_invoice_no, $_pay_date, $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,$metion,
