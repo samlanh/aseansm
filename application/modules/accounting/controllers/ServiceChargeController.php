@@ -97,14 +97,25 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
     	return $result[$key];
     }
 	public function addAction(){
-		
-		
 		if($this->getRequest()->isPost()){
 			try {
 				$_data = $this->getRequest()->getPost();
 				$_model = new Accounting_Model_DbTable_DbServiceCharge();
-				$rs =  $_model->addServiceCharge($_data);
-				if(!empty($rs))Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/servicecharge/add");
+				$_model->addServiceCharge($_data);
+				if(isset($_data['save_new'])){
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/servicecharge/add");
+				}else{
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/servicecharge/index");
+				}
+// 				else{
+// 					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/servicecharge/add");
+// 				}
+				//Application_Form_FrmMessage::message("INSERT_SUCCESS");
+				
+// 				if(!empty($_data['save_close'])){
+// 					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/servicecharge/index");
+// 				}
+// 				Application_Form_FrmMessage::message("INSERT_SUCCESS");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
