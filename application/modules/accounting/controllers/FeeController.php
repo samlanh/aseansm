@@ -103,11 +103,14 @@ class Accounting_FeeController extends Zend_Controller_Action {
     public function addAction()
     {
     	if($this->getRequest()->isPost()){
+    		$_data = $this->getRequest()->getPost();
+    		$_model = new Accounting_Model_DbTable_DbTuitionFee();
+    		
+//     		$result=$_model->getCondition($_data);
+    		
     		try {
-	    		$_data = $this->getRequest()->getPost();
-	    		$_model = new Accounting_Model_DbTable_DbTuitionFee();
 	    		$rs =  $_model->addTuitionFee($_data);
-    		if(!empty($rs))Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/fee/add");
+	    	if(!empty($rs))Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/fee/add");
     		}catch(Exception $e){
     			Application_Form_FrmMessage::message("INSERT_FAIL");
 	   			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());

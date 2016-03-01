@@ -37,44 +37,61 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     	from rms_tuitionfee_detail where fee_id =".$fee_id." ORDER BY id";
     	return $db->fetchAll($sql);
     }
+    function getCondition($_data){
+    	$db = $this->getAdapter();
+    	$find="select id from rms_tuitionfee where from_academic=".$_data['from_year']." and to_academic=".$_data['to_year']." 
+    		   and generation=".$_data['generation']." and time=".$_data['time'];
+    	
+    	return $db->fetchOne($find);
+    }
     ////////////////
     public function addTuitionFee($_data){
     	$db = $this->getAdapter();
     	$db->beginTransaction();
+		
+    	$fee_id = $this->getCondition($_data);
+    	
+    	//print_r($fee_id);exit();
+    	
     	try{
-    		
-    		$_arr = array(
-    				'from_academic'=>$_data['from_year'],
-    				'to_academic'=>$_data['to_year'],
-    				'generation'=>$_data['generation'],
-    				'note'=>$_data['note'],
-    				'time'=>$_data['time'],
-    				'status'=>$_data['status'],
-    				'create_date'=>date("d-m-Y"),
-    				'user_id'=>$this->getUserId()
-    				);
-    		$fee_id = $this->insert($_arr);
-    		
-    		$this->_name='rms_tuitionfee_detail';
-    		$ids = explode(',', $_data['identity']);
-    		$id_term =explode(',', $_data['iden_term']);
-    		foreach ($ids as $i){
-    			foreach ($id_term as $j){
-    				$_arr = array(
-    						'fee_id'=>$fee_id,
-    						'class_id'=>$_data['class_'.$i],
-    						'payment_term'=>$j,
-    						'tuition_fee'=>$_data['fee'.$i.'_'.$j],
-    						'remark'=>$_data['remark'.$i]
-    				);
-    				$this->insert($_arr);
-    			}
+    		if(!empty($fee_id)){
+    			
+    		}else{
+	    		$_arr = array(
+	    				'from_academic'=>$_data['from_year'],
+	    				'to_academic'=>$_data['to_year'],
+	    				'generation'=>$_data['generation'],
+	    				'note'=>$_data['note'],
+	    				'time'=>$_data['time'],
+	    				'status'=>$_data['status'],
+	    				'create_date'=>date("d-m-Y"),
+	    				'user_id'=>$this->getUserId()
+	    				);
+	    		$fee_id = $this->insert($_arr);
     		}
-    	    $db->commit();
-    	    return true;
+	    		
+	    		$this->_name='rms_tuitionfee_detail';
+	    		$ids = explode(',', $_data['identity']);
+	    		$id_term =explode(',', $_data['iden_term']);
+	    		foreach ($ids as $i){
+	    			foreach ($id_term as $j){
+	    				$_arr = array(
+	    						'fee_id'=>$fee_id,
+	    						'class_id'=>$_data['class_'.$i],
+	    						'payment_term'=>$j,
+	    						'tuition_fee'=>$_data['fee'.$i.'_'.$j],
+	    						'remark'=>$_data['remark'.$i]
+	    				);
+	    				$this->insert($_arr);
+	    			}
+	    		}
+	    	    $db->commit();
+	    	    return true;
+    		
     	}catch (Exception $e){
     		$db->rollBack();
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+    		echo $e->getMessage();
     		return false;
     	}
     }
