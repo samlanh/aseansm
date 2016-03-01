@@ -145,7 +145,8 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 			}
 		}
     function getAllStudentRegister($search=null){
-    	
+    	$session_user=new Zend_Session_Namespace('auth');
+    	$user_id=$session_user->user_id;
     	$db=$this->getAdapter();
      	$from_date = (empty($search["start_date"]))?'Y-m-01':$search["start_date"];
      	$to_date =  (empty($search["end_date"]))?'Y-m-01' :$search["end_date"];
@@ -154,7 +155,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 		       (SELECT major_enname FROM rms_major WHERE major_id=s.grade ) AS grade,
  		       sp.payment_term,sp.tuition_fee,sp.discount_percent, sp.total,sp.paid_amount,
 		       sp.balance_due,sp.create_date
- 			   FROM rms_student AS s,rms_student_payment AS sp WHERE s.stu_id=sp.student_id AND s.stu_type=1";
+ 			   FROM rms_student AS s,rms_student_payment AS sp WHERE s.stu_id=sp.student_id AND s.stu_type=1 AND sp.user_id=$user_id";
     	
     	if(!empty($search['adv_search'])){
     		$s_where=array();
