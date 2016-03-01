@@ -6,7 +6,6 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     public function getUserId(){
     	$session_user=new Zend_Session_Namespace('auth');
     	return $session_user->user_id;
-    	 
     }
 	function addStudentServicePayment($data){
 		//print_r($data);exit();
@@ -24,6 +23,7 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 					'balance_due'		=>$data['total_balance'],
 					'amount_in_khmer'	=>$data['char_price'],
 					'note'				=>$data['not'],
+					'time'				=>$data['time'],
 					'create_date'		=>date("d-m-Y"),
 					'user_id'			=>$this->getUserId()
 				);
@@ -89,16 +89,17 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 		$db->beginTransaction();//ទប់ស្កាត់មើលការErrore , មានErrore វាមិនអោយចូល
 			try{
 			$arr=array(
-					'student_id'=>$data['studentid'],
-					'receipt_number'=>$data['reciept_no'],
-					'year'=>$data['study_year'],
-					'total_payment'=>$data['grand_total'],
-					'receive_amount'=>$data['total_received'],
-					'paid_amount'=>$data['total_received']-$data['total_return'],
-					'return_amount'=>$data['total_return'],
-					'balance_due'=>$data['total_balance'],
-					'amount_in_khmer'=>$data['char_price'],
-					'note'=>$data['not'],
+					'student_id'		=>$data['studentid'],
+					'receipt_number'	=>$data['reciept_no'],
+					'year'				=>$data['study_year'],
+					'total_payment'		=>$data['grand_total'],
+					'receive_amount'	=>$data['total_received'],
+					'paid_amount'		=>$data['total_received']-$data['total_return'],
+					'return_amount'		=>$data['total_return'],
+					'balance_due'		=>$data['total_balance'],
+					'amount_in_khmer'	=>$data['char_price'],
+					'note'				=>$data['not'],
+					'time'				=>$data['time'],
 					'create_date'=>date("d-m-Y"),
 					'user_id'=>$this->getUserId()
 				);
@@ -157,15 +158,16 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 			}
 		}
     function getAllStudenTServicePayment(){
+    	$user=$this->getUserId();
     	$db=$this->getAdapter();
     	$sql="select id,receipt_number,
 		(select CONCAT(from_academic,' - ',to_academic) from rms_servicefee where rms_servicefee.id=rms_student_payment.year limit 1)AS year,
     	(select CONCAT(stu_khname,' - ',stu_enname) from rms_student where rms_student.stu_id=rms_student_payment.student_id limit 1)AS name,
     	(select name_kh from rms_view where rms_view.type=2 and rms_view.key_code=(select sex from rms_student where rms_student.stu_id=rms_student_payment.student_id limit 1) limit 1)AS sex,
-    	total,discount_fix,total_payment,receive_amount,balance_due,return_amount,create_date
-    	
-    	from rms_student_payment where 1
-    	";
+    	total,discount_fix,total_payment,receive_amount,balance_due,return_amount,create_date,
+    	(select CONCAT(last_name,' ',first_name) from rms_users where rms_users.id=rms_student_payment.user_id) AS user
+
+    	from rms_student_payment where 1 and rms_student_payment.user_id=".$user;
     	$order=" ORDER BY id DESC ";
     	
 //     	$order=" ORDER By stu_id DESC ";

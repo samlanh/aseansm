@@ -26,11 +26,9 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
 //     		    					'end_date'=>date('Y-m-d'));
 //     		    		}
     		$rs_rows= $db->getAllStudenTServicePayment();
-//     		$glClass = new Application_Model_GlobalClass();
-//     		$rs_rows = $glClass->getImgActive($rs_rows, BASE_URL, true);
     		$list = new Application_Form_Frmtable();
     		$collumns = array("RECEIPT_NO","YEARS","NAME","SEX","GRAND_TOTAL","DISCOUNT",
-    				          "TOTAL_PAYMENT","MONEY_RECEIVED","BALANCE","REMAINING","DATE_PAY");
+    				          "TOTAL_PAYMENT","MONEY_RECEIVED","BALANCE","REMAINING","DATE_PAY","USER");
     		$link=array(
     				'module'=>'registrar','controller'=>'studentservicepayment','action'=>'edit',
     		);
@@ -71,16 +69,13 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
        $db = new Application_Model_DbTable_DbGlobal();
        $abc=$this->view->payment_term = $db->getAllPaymentTerm();
        
-//        print_r($abc);exit();
-       
        $db = new Registrar_Model_DbTable_DbStudentServicePayment();
        $this->view->rs = $db->getAllStudentCode();
-       
        
        $_model = new Application_Model_GlobalClass();
        $this->view->all_service = $_model->getAllServiceItemOption(2);
        
-       $session_user=new Zend_Session_Namespace('auth'); $username = $session_user->first_name;
+       //$session_user=new Zend_Session_Namespace('auth'); $username = $session_user->first_name;
        
     }
     public function editAction()
@@ -95,9 +90,6 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     				$db->updateStudentServicePayment($_data);
     				Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL . '/studentservicepayment/index');
     			}
-    			
-    			
-    			
     		} catch (Exception $e) {
     			Application_Form_FrmMessage::message($this->tr->translate('INSERT_FAIL'));
     			$err =$e->getMessage();

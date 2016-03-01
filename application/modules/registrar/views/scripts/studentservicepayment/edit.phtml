@@ -2,6 +2,8 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	echo $this->headTitle($tr->translate('EDIT_STUDENT_SERVICE_PAYMENT')); 
 	$base_url = Application_Form_FrmMessage::getUrl("/");
+	$hour=explode(',', $this->row['time']);
+	
 ?>	
 <script type="text/javascript"  src="<?php echo $this->baseUrl();?>/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript"  src="<?php echo $this->baseUrl();?>/js/convertion.js"></script>
@@ -121,6 +123,26 @@ fieldset{  background:none;}
 							<td title='Ex: 20 or 10%' ><?php echo $register->getElement('not');?></td>	
 							<td><?php echo $tr->translate("CHAR_PRICE");?></td>
 							<td title='Ex: 20 or 10%' ><?php echo $register->getElement('char_price');?></td>
+						</tr>
+						<tr>
+							<td colspan="4">
+								<table>
+									<tr>
+										<td style="padding-left: 20px;"><input type="checkBox" <?php foreach($hour as $row){if($row==1){echo "checked='checked'"; } } ?>dojoType="dijit.form.CheckBox" value="07:00 am" id="time1" name="time1" onclick="getValue()" />07:00 am</td>
+										<td><input type="checkBox" dojoType="dijit.form.CheckBox" <?php foreach($hour as $row){if($row==2){echo "checked='checked'"; } } ?> value="07:30 am" id="time2" name="time2" onclick="getValue();" />07:30 am</td>
+										<td><input type="checkBox" dojoType="dijit.form.CheckBox" <?php foreach($hour as $row){if($row==3){echo "checked='checked'"; } } ?> value="10:30 am" id="time3" name="time3" onclick="getValue();" />10:30 am</td>
+										<td><input type="checkBox" dojoType="dijit.form.CheckBox" <?php foreach($hour as $row){if($row==4){echo "checked='checked'"; } } ?> value="11:00 am" id="time4" name="time4" onclick="getValue();" />11:00 am</td>
+										<td><input type="checkBox" dojoType="dijit.form.CheckBox" <?php foreach($hour as $row){if($row==5){echo "checked='checked'"; } } ?> value="01:00 pm" id="time5" name="time5" onclick="getValue();" />01:00 pm</td>
+										<td><input type="checkBox" dojoType="dijit.form.CheckBox" <?php foreach($hour as $row){if($row==6){echo "checked='checked'"; } } ?> value="01:30 pm" id="time6" name="time6" onclick="getValue();" />01:30 pm</td>
+										<td><input type="checkBox" dojoType="dijit.form.CheckBox" <?php foreach($hour as $row){if($row==7){echo "checked='checked'"; } } ?> value="04:30 pm" id="time7" name="time7" onclick="getValue();" />04:30 pm</td>
+										<td><input type="checkBox" dojoType="dijit.form.CheckBox" <?php foreach($hour as $row){if($row==8){echo "checked='checked'"; } } ?> value="05:00 pm" id="time8" name="time8" onclick="getValue();" />05:00 pm</td>
+										<td><input type="checkBox" dojoType="dijit.form.CheckBox" <?php foreach($hour as $row){if($row==9){echo "checked='checked'"; } } ?> value="05:30 pm" id="time9" name="time9" onclick="getValue();" />05:30 pm</td>
+										
+										<input type="hidden" id="time" name="time" value="<?php echo $this->row['time'];?>" />
+									
+									</tr>
+								</table>
+							</td>
 						</tr>
 						<tr>
 							<td colspan="4" align="left">
@@ -605,7 +627,7 @@ function getservicefee(key,num){
 						},
 					handleAs:"json",
 					load: function(data) {
-						//dijit.byId("price_"+key).attr("value",data.price_fee);
+						dijit.byId("price_"+key).attr("value",data.price_fee);
 						//dijit.byId("total_"+key).attr("value",data.price_fee);
 						calculateTotal(key,num);
 	
@@ -628,6 +650,7 @@ dojo.ready(function(){
 	 dijit.byId('total_return').attr('value','<?php echo $this->row['return_amount']?>');
 	 dijit.byId('total_received').attr('value','<?php echo $this->row['receive_amount']?>');
 	 dijit.byId('grand_total').attr('value','<?php echo $this->row['total_payment']?>');
+	 //dijit.byId('time').attr('value','<?php echo $this->row['time']?>');
 });
 function initailize(){
 	<?php if(!empty($this->rows)){
@@ -705,7 +728,7 @@ function setValue(col){
 	var old_ser = '<?php echo $row['service_id']?>';
 	var old_term = '<?php echo $row['payment_term']?>';
 		if(ser==old_ser && term==old_term){
-			
+			//alert(1);
 			dijit.byId('price_'+col).attr('value','<?php echo $row['fee']?>');
 			dijit.byId('qty_'+col).attr('value','<?php echo $row['qty']?>');
 			dijit.byId('validate_'+col).attr('value','<?php echo $row['validate']?>');
@@ -713,8 +736,9 @@ function setValue(col){
 			dijit.byId('remark'+col).attr('value','<?php echo $row['note']?>');
 			dijit.byId('paidamount_'+col).attr('value','<?php echo $row['paidamount']?>');
 			dijit.byId('subtotal_'+col).attr('value','<?php echo $row['subtotal']?>');
-			
+			getservicefee(col,1);
 		}else{
+			//alert(1);
 			getservicefee(col,1);
 		}
 	<?php }}?>
@@ -817,6 +841,28 @@ function getValidate(key){
 
 	 //alert(epx_date);
 	 dijit.byId('start_end').attr('value',epx_date);
+}
+
+function getValue(){
+	seperater='';
+	i=0;
+	hour='';
+	$("#time").val('')
+	for(i=1;i<=9;i++){
+		if(i>1){
+			seperater='-';
+		}
+		if(dojo.byId('time'+i).checked){
+			hour+=seperater+dijit.byId('time'+i).get('value');
+			
+			if($("#time").val()!="") {
+				var time = $("#time").val();
+				$("#time").val(time+','+i);
+			} else {$("#time").val(i);}
+		}
+		
+	}
+	dijit.byId('not').attr('value',hour);
 }
 
 function deleteRecord(index) {

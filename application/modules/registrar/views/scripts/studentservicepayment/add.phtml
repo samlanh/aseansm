@@ -64,6 +64,28 @@ fieldset{  background:none;}
 							<td><?php echo $tr->translate("CHAR_PRICE");?></td>
 							<td title='Ex: 20 or 10%' ><?php echo $register->getElement('char_price');?></td>
 						</tr>
+						
+						<tr>
+							<td colspan="4">
+								<table>
+									<tr>
+										<td style="padding-left: 20px;"><input type="checkBox" dojoType="dijit.form.CheckBox" value="07:00 am" id="time1" name="time1" onclick="getValue()" />07:00 am</td>
+										<td><input type="checkBox" dojoType="dijit.form.CheckBox" value="07:30 am" id="time2" name="time2" onclick="getValue();" />07:30 am</td>
+										<td><input type="checkBox" dojoType="dijit.form.CheckBox" value="10:30 am" id="time3" name="time3" onclick="getValue();" />10:30 am</td>
+										<td><input type="checkBox" dojoType="dijit.form.CheckBox" value="11:00 am" id="time4" name="time4" onclick="getValue();" />11:00 am</td>
+										<td><input type="checkBox" dojoType="dijit.form.CheckBox" value="01:00 pm" id="time5" name="time5" onclick="getValue();" />01:00 pm</td>
+										<td><input type="checkBox" dojoType="dijit.form.CheckBox" value="01:30 pm" id="time6" name="time6" onclick="getValue();" />01:30 pm</td>
+										<td><input type="checkBox" dojoType="dijit.form.CheckBox" value="04:30 pm" id="time7" name="time7" onclick="getValue();" />04:30 pm</td>
+										<td><input type="checkBox" dojoType="dijit.form.CheckBox" value="05:00 pm" id="time8" name="time8" onclick="getValue();" />05:00 pm</td>
+										<td><input type="checkBox" dojoType="dijit.form.CheckBox" value="05:30 pm" id="time9" name="time9" onclick="getValue();" />05:30 pm</td>
+										<input type="hidden" id="time" name="time" />
+									</tr>
+									
+								</table>
+							
+							</td>
+						</tr>
+						
 						<tr>
 							<td colspan="4" align="left">
 									<input type="button" label="<?php echo $tr->translate('ADD_ROW');?>" dojoType="dijit.form.Button" 
@@ -665,6 +687,27 @@ function getValidate(key){
 	 dijit.byId('start_end').attr('value',epx_date);
 }
 
+function getValue(){
+	seperater='';
+	i=0;
+	hour='';
+	$("#time").val('')
+	for(i=1;i<=9;i++){
+		if(i>1){
+			seperater='-';
+		}
+		if(dojo.byId('time'+i).checked){
+			hour+=seperater+dijit.byId('time'+i).get('value');
+			
+			if($("#time").val()!="") {
+				var time = $("#time").val();
+				$("#time").val(time+','+i);
+			} else {$("#time").val(i);}
+		}
+		
+	}
+	dijit.byId('not').attr('value',hour);
+}
 
 function deleteRecord(index) {
 		var identity = $('#identity').val();
