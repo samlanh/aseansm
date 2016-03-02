@@ -18,18 +18,18 @@ class Registrar_AllreportsController extends Zend_Controller_Action {
     					'start_date'=> $_data['from_date'],
     					'end_date'=> $_data['to_date']
     			);
-    				
+    			$this->view->search = $search;
     		}
     		else{
     			$search = array(
     					'txtsearch' =>'',
-    					'start_date'=> date('Y-m-d'),
+    					'start_date'=> date('Y-m-01'),
     					'end_date'=>date('Y-m-d'),
     			);
     		}
-    		$this->view->search = $search;
+    		
     		$db = new Registrar_Model_DbTable_DbReportStudentByuser();
-    		$this->view->row = $db->getAllGernAndGepRegister();
+    		$this->view->row = $db->getAllGernAndGepRegister($search);
     			
     	}catch(Exception $e){
     		Application_Form_FrmMessage::message("Application Error");
