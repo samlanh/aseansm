@@ -25,17 +25,17 @@
 						</li>',	  
 	  	'registrar'=>'<li class="link">
 						<a title="ការិ.ចុះឈ្មោះ" href="'.$registrar.'">
-							<span>'.$tr->translate("ការិ.ចុះឈ្មោះ").'</span>
+							<span>'.$tr->translate("ការិយាល័យចុះឈ្មោះ").'</span>
 						</a>
 				  </li>',
 	 	'foundation'=>'<li class="link">
-							<a title="ការិ.ឆ្នាំសិក្សាមួលដ្ឋាន" href="'.$foundation.'">
-								<span>'.$tr->translate("ការិ.រដ្ឋបាល").'</span>
+							<a title="ការិយាល័យរដ្ឋបាល" href="'.$foundation.'">
+								<span>'.$tr->translate("ការិយាល័យរដ្ឋបាល").'</span>
 							</a>
 						</li>',
 	  	'accounting'=>'<li class="link">
-						<a title="ការិ.គណនេយ្យ" href="'.$accounting.'">
-							<span>'.$tr->translate("ការិ.គណនេយ្យ").'</span>
+						<a title="ការិយាល័យគណនេយ្យ" href="'.$accounting.'">
+							<span>'.$tr->translate("ការិយាល័យគណនេយ្យ").'</span>
 						</a>
 					</li>',
 	    'global'=>'<li class="link">
@@ -81,3 +81,22 @@
 		</li>
 	</ul>
 </div>
+
+<script>	
+var url_changelang = '<?php echo $this->url(array('module'=>'default','controller'=>'index','action'=>'changelange'));?> ';
+function changeLange(lang){
+	dojo.xhrPost({
+		url: url_changelang,
+	    content :{ 
+			    'lange':lang,
+		},	
+		handleAs:"json",
+		load: function(data) {
+			location.reload();
+		},
+		error: function(err) {
+			
+		}
+	});
+}
+	</script>
