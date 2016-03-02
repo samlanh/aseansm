@@ -7,6 +7,15 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     	$session_user=new Zend_Session_Namespace('auth');
     	return $session_user->user_id;
     }
+    
+    function getStudentPaymentStart($studentid,$service_id){
+    	$db = $this->getAdapter();
+    	$sql="select spd.id from rms_student_payment AS sp,rms_student_paymentdetail AS spd where
+    		 sp.id=spd.payment_id and is_start=1 and service_id= $service_id and sp.student_id=$studentid limit 1 ";
+//     	echo $sql;exit();
+    	return $db->fetchOne($sql);
+    }
+    
 	function addStudentServicePayment($data){
 		//print_r($data);exit();
 		$db = $this->getAdapter();//ស្ពានភ្ជាប់ទៅកាន់Data Base
@@ -35,6 +44,17 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 				$disc = 0;
 				$total = 0;
     			foreach ($ids as $i){
+    				
+    				$payment_id = $this->getStudentPaymentStart($data['studentid'], $data['service_'.$i]);
+    				if(empty($payment_id)){
+    					$payment_id=0;
+    				}
+    				$where="id = $payment_id ";
+    				$arr = array(
+    						'is_start'=>0
+    				);
+    				$this->update($arr,$where);
+    				
     				$disc=$disc+$data['discount_'.$i];
     				$total=$total+($data['price_'.$i]*$data['qty_'.$i]);
     				$complete=1;
@@ -59,6 +79,8 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     						'note'			=>$data['remark'.$i],
     						'subtotal'		=>$data['subtotal_'.$i],
     						'type'			=>2,
+    						'is_start'		=>1,
+    						'is_parent'		=>$payment_id,
     						'is_complete'	=>$complete,
     						'comment'		=>$status,
     				);
@@ -84,6 +106,15 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 				$db->rollBack();//អោយវាវិលត្រលប់ទៅដើមវីញពេលណាវាជួបErrore
 			}
 		}
+		
+	function getServicePaymentDetail($id) {
+		$db = $this->getAdapter();
+		$sql="select * from rms_student_payment AS sp,rms_student_paymentdetail AS spd where 
+    		 sp.id=spd.payment_id and sp.id=$id";
+		//echo $sql;exit();
+		return $db->fetchAll($sql);
+	}
+		
 	function updateStudentServicePayment($data){
 		$db = $this->getAdapter();//ស្ពានភ្ជាប់ទៅកាន់Data Base
 		$db->beginTransaction();//ទប់ស្កាត់មើលការErrore , មានErrore វាមិនអោយចូល
@@ -105,16 +136,43 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 				);
 				$where =$this->getAdapter()->quoteInto("id=?", $data['id']);
 			 	$this->update($arr,$where);
-			  
+			    
 				$this->_name='rms_student_paymentdetail';
-				//$where = "suspendservice_id = ".$data['id'];
+				
+				$rows = $this->getServicePaymentDetail($data['id']);
+				
+				if(!empty($rows)){
+					foreach ($rows as $rs){
+						$arr = array(
+								'is_start'   =>1,
+						);
+						$where="id =".$rs['is_parent'];
+						$this->update($arr, $where);
+					}
+				}
+				
+				
 				$where = "payment_id = ".$data['id'];
 				$this->delete($where);
+				
+				
 				
 				$ids = explode(',', $data['identity']);
 				$disc = 0;
 				$total = 0;
     			foreach ($ids as $i){
+    				
+    				$payment_id = $this->getStudentPaymentStart($data['studentid'], $data['service_'.$i]);
+    				if(empty($payment_id)){
+    					$payment_id=0;
+    				}
+    				$where="id = $payment_id ";
+    				$arr = array(
+    						'is_start'=>0
+    				);
+    				$this->update($arr,$where);
+    				
+    				
     				$disc=$disc+$data['discount_'.$i];
     				$total=$total+($data['price_'.$i]*$data['qty_'.$i]);
     				$complete=1;
@@ -139,6 +197,7 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     						'note'			=>$data['remark'.$i],
     						'subtotal'		=>$data['subtotal_'.$i],
     						'type'			=>2,
+    						'is_parent'		=>$payment_id,
     						'is_complete'   =>$complete,
     						'comment'		=>$status,
     				);
