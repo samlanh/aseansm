@@ -4,6 +4,12 @@
 	echo $this->headTitle(''); 
 	
 ?>	
+<?php
+// 			$date1=date_create("2013-03-15");
+// 			$date2=date_create("2013-04-15");
+// 			$diff=date_diff($date1,$date2);
+// 			echo $diff->format("%R%a days");exit();
+?>
 <div style="width: 27cm;margin: 0 auto;">
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rptstudentlate')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	<table>	
@@ -26,7 +32,7 @@
 </div>
 <div style="border: 1px dotted #000;background: #fff;width: 27cm;margin: 0 auto;min-height: 27cm;">
 	<div id="divPrint">
-									<table style="background:#fff; margin: 0 auto; padding: 0.5cm;">
+									<table style="background:#fff;width:90%; margin: 0 auto; padding: 0.5cm;">
 										
 										<tr>
 											<td width="28%" align="left">
@@ -44,49 +50,36 @@
 													<tr style="font-size:11px; height: 20px;border: 1px solid #000;" align="center" >
 														<th style="border: 1px solid #000;">&nbsp;N.o&nbsp;</th>
 														<th style="border: 1px solid #000;">&nbsp;Receipt No&nbsp;</th>
-														<th style="border: 1px solid #000;">&nbsp;Academic Year&nbsp;</th>
 														<th style="border: 1px solid #000;">Code</th>
 														<th style="border: 1px solid #000;">&nbsp;Student Name&nbsp;</th>
 														<th style="border: 1px solid #000;">&nbsp;Sex&nbsp;</th>
 														<th style="border: 1px solid #000;">Service Name</th>
-														<th style="border: 1px solid #000;">Total</th>
-														<th style="border: 1px solid #000;">&nbsp;Discount&nbsp;</th>
-														<th style="border: 1px solid #000;">&nbsp;Total Payment&nbsp;</th>
-														<th style="border: 1px solid #000;">&nbsp;Paid Amount&nbsp;</th>
-														<th style="border: 1px solid #000;">&nbsp;Balance&nbsp;</th>
 														<th style="border: 1px solid #000;">Paid Date</th>
 														<th style="border: 1px solid #000;">Validate</th>
-														<th style="border: 1px solid #000;">Note</th>
+														<th style="border: 1px solid #000;">Remain Date</th>
+														
 													</tr>
-												<?php $i=0;$totalpaid=0;$totalbalance=0; foreach ($this->rs AS $row) { $i++;?>
+												<?php $i=0;$totalpaid=0;$totalbalance=0; if(!empty($this->row)){foreach ($this->row AS $row) { $i++;
+												
+													$date1=date_create($row['end']);
+													$date2=date_create(date('Y-m-d'));
+													$diff=date_diff($date1,$date2);
+													$day=$diff->format("%R%a");
+// 													echo $diff->format('%R'); // use for point out relation: smaller/greater
+// 													echo $diff->days;
+												?>
 													<tr style="font-size:10px; height: 20px;border: 1px solid #000;" align="center" >
 														<th style="border: 1px solid #000;"><?php echo $i;?></th>
 														<th style="border: 1px solid #000;"><?php echo $row['receipt'];?></th>
-														<th style="border: 1px solid #000;"><?php echo $row['year'];?></th>
 														<th style="border: 1px solid #000;">&nbsp;<?php echo $row['code'];?>&nbsp;</th>
 														<th align="left" style="border: 1px solid #000;">&nbsp;<?php echo $row['name'];?></th>	
-														<th style="border: 1px solid #000;"><?php echo $row['sex'];?></th>
+														<th align="left" style="border: 1px solid #000;">&nbsp;<?php echo $row['sex'];?></th>
 														<th align="left" style="border: 1px solid #000;">&nbsp;<?php echo $row['service'];?></th>
-														<th style="border: 1px solid #000;">&nbsp;<?php echo $row['fee'];?>&nbsp;</th>
-														<th style="border: 1px solid #000;"><?php echo $row['discount'];?></th>
-														<th style="border: 1px solid #000;"><?php echo $row['payment'];?></th>
-														<th style="border: 1px solid #000;"><?php echo $row['paid'];?></th>
-														<?php if($row['complete']==0){ ?>
-															<th style="border: 1px solid #000;color:red;"><?php echo $row['balance'];?></th>
-															<?php $totalbalance=$totalbalance + $row['balance'];?>
-														<?php }else{?>
-															<th style="border: 1px solid #000;"><?php echo $row['balance'];?></th>
-															<?php $totalpaid=$totalpaid+$row['balance'];?>
-														<?php }?>
-														<th style="border: 1px solid #000;">&nbsp;<?php echo date("d-M-Y",strtotime($row['paid_date']));?>&nbsp;</th>
-														<th style="border: 1px solid #000;">&nbsp;<?php echo date("d-M-Y",strtotime($row['validate']));?>&nbsp;</th>
-														<?php if($row['complete']!=0){ ?>
-															<th style="border: 1px solid #000;">&nbsp;<?php echo $row['comment'];?>&nbsp;</th>
-														<?php }else{?>
-															<th style="border: 1px solid #000;color:red;">&nbsp;<?php echo $row['comment'];?>&nbsp;</th>
-														<?php }?>
-													</tr>
-												<?php }?>	
+														<th style="border: 1px solid #000;">&nbsp;<?php echo date("d-M-Y",strtotime($row['start']));?>&nbsp;</th>
+														<th style="border: 1px solid #000;color: red;">&nbsp;<?php echo date("d-M-Y",strtotime($row['end']));?>&nbsp;</th>
+														<th align="center" style="border: 1px solid #000;color: red;">&nbsp;<?php echo abs($day);?></th>
+ 													</tr>
+												<?php }}?>	 
 												</table>	
 											</td>
 										</tr>
@@ -96,7 +89,7 @@
 										</tr>
 										<?php //if (empty($total_fee)){}?>
 										<?php ///if (!empty($total_fee)){?>
-										<tr>
+									<!--	<tr>
 											<td colspan="2"></td>
 											<td>
 												<table border="1" align="right" style="width:50%; margin-right:0.5%; white-space:nowrap;border-collapse: collapse;border: 1px #000 solid;">
@@ -110,7 +103,7 @@
 													</tr>
 												  </table>
 											</td>
-										</tr>
+										</tr>-->
 										<?php //}?>
 									</table>
 							
