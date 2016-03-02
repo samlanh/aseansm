@@ -31,7 +31,7 @@ class Registrar_Model_DbTable_DbReportStudentByuser extends Zend_Db_Table_Abstra
 	    		$where.=' AND ('.implode(' OR ', $s_where).')';
 	    	}
 	    	$order=" ORDER By stu_id DESC ";
-	    	print_r($sql.$where);
+	    	//print_r($sql.$where);
 	    	return $db->fetchAll($sql.$where.$order);
 	    }
 }
