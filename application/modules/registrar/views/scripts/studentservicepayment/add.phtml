@@ -116,7 +116,7 @@ fieldset{  background:none;}
 										<td align="right"><input class="fullside" type="text" readonly="readonly" name="total_balance" value="<?php echo 0?>" id="total_balance" dojoType="dijit.form.NumberTextBox" /></td>
 									</tr>
 									<tr>
-										<td><?php echo $tr->translate("ប្រាក់អាប់");?></td>
+										<td><?php echo $tr->translate("RETURN");?></td>
 										<td align="right"><input class="fullside" type="text" readonly="readonly" name="total_return" id="total_return" dojoType="dijit.form.NumberTextBox" /></td>
 									</tr>
 									
@@ -131,7 +131,7 @@ fieldset{  background:none;}
 								<input type="submit" name="save_new" id="save_new" value="រក្សាទុក" label="<?php echo $tr->translate('SAVE_NEW');?>"  dojoType="dijit.form.Button" 
 								 iconClass="dijitEditorIcon dijitEditorIconSave" />
 								
-								 <input type="button" value="បោះពុម្ព" label="បោះពុម្ព" id="print" dojoType="dijit.form.Button" 
+								 <input type="button" value="បោះពុម្ព" label="<?php echo $tr->translate('PRINT');?>" id="print" dojoType="dijit.form.Button" 
 									iconClass="dijitEditorIcon dijitEditorIconPrint" onclick="printSave();"/> 
 							</td>
 						</tr>

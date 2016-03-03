@@ -174,7 +174,7 @@ fieldset{  background:none;}
 										<td align="right"><input class="fullside" type="text" value="<?php //echo $this->row['balance_due'];?>" readonly="readonly" name="total_balance" id="total_balance" dojoType="dijit.form.NumberTextBox" /></td>
 									</tr>
 									<tr>
-										<td><?php echo $tr->translate("ប្រាក់អាប់");?></td>
+										<td><?php echo $tr->translate("RETURN");?></td>
 										<td align="right"><input class="fullside" type="text" value="<?php //echo $this->row['return_amount'];?>" readonly="readonly" name="total_return" id="total_return" dojoType="dijit.form.NumberTextBox" /></td>
 									</tr>
 								</table>
@@ -186,7 +186,7 @@ fieldset{  background:none;}
 									iconClass="dijitIconUndo" onclick="window.location = '<?php echo $this->url(array('module'=>'registrar','controller'=>"studentservicepayment",'action'=>'index'),null,true); ?>';" />
 								<input type="submit" name="save_new" id="save_new" value="រក្សាទុក" label="<?php echo $tr->translate('GO_EDIT');?>"  dojoType="dijit.form.Button" 
 								 	iconClass="dijitEditorIcon dijitEditorIconSave" />
-								<input type="button" value="រក្សាទុក & បោះពុម្ព" label="បោះពុម្ព" id="busyButton" dojoType="dijit.form.Button" 
+								<input type="button" value="រក្សាទុក & បោះពុម្ព" label="<?php echo $tr->translate('PRINT');?>" id="busyButton" dojoType="dijit.form.Button" 
 									iconClass="dijitEditorIcon dijitEditorIconPrint" onclick="printSave();"/> 
 							</td>
 						</tr>
