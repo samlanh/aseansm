@@ -29,6 +29,7 @@
 	    	getStudentNo(dept_id);
 	    }
 	}, "dept");
+	
 	new dijit.form.FilteringSelect({
 	    //store: dept_store,
 	    autoComplete: true,                        
@@ -48,8 +49,10 @@
 	    	dijit.byId('not').attr('value','');
 	    }
 	}, "grade");
+	
 	dijit.byId('dept').attr('value','<?php echo $this->degree_row['degree'];?>');
 	});	
+	
 	var grade_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 	var url_dept = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-grade')); ?>';
 	function getallModel(dept_id,a){
@@ -264,7 +267,7 @@ fieldset{  background:none;}
 					<legend align="center"><strong><?php echo $tr->translate("OFFICIAL_RECEIPT");?></strong></legend>
 					<table style="margin: 0 auto; width: 100%;padding:10px;" cellspacing="7" >
 						<tr>
-							<td style="width: 160px"><?php echo $tr->translate("NEW_STUDENT");?></td>
+							<td style="width: 160px"><?php echo $tr->translate("STUDENT_TYPE");?></td>
 							<td><?php  echo $register->getElement('student_type');?>
 							</td>
 							<td><?php echo $tr->translate("RECEIPT_NO");?></td>
@@ -342,16 +345,16 @@ fieldset{  background:none;}
 						<tr>
 							<td><?php echo $tr->translate("START_DATE");?></td>
 							<td><?php echo $register->getElement('start_date');?></td>
-							<td><?php echo $tr->translate("ENT_DATE");?></td>
+							<td><?php echo $tr->translate("END_DATE");?></td>
 							<td><?php echo $register->getElement('end_date');?></td>
 						</tr>
 						<tr>
 							<td colspan="4" align="center">
-							    <input type="submit" name="save_close" id="save_close" value="រក្សាទុក  &ចាកចេញ" label="រក្សាទុក  &ចាកចេញ"  dojoType="dijit.form.Button" 
+							    <input type="submit" name="save_close" id="save_close" value="រក្សាទុក  &ចាកចេញ" label="<?php echo $tr->translate('SAVE_CLOSE');?>"   dojoType="dijit.form.Button" 
 								 iconClass="dijitEditorIcon dijitEditorIconSave" />
-								<input type="submit" name="save_new" id="save_new" value="រក្សាទុក" label="រក្សាទុក"  dojoType="dijit.form.Button" 
+								<input type="submit" name="save_new" id="save_new" value="រក្សាទុក" label="<?php echo $tr->translate('SAVE_NEW');?>"  dojoType="dijit.form.Button" 
 								 iconClass="dijitEditorIcon dijitEditorIconSave" />
-								 <input type="button" value="បោះពុម្ព" label="បោះពុម្ព" id="busyButton" dojoType="dijit.form.Button" 
+								 <input type="button" value="បោះពុម្ព" label="<?php echo $tr->translate('PRINT');?>" id="busyButton" dojoType="dijit.form.Button" 
 									iconClass="dijitEditorIcon dijitEditorIconPrint" onclick="printSave();"/> 
 							</td>
 						</tr>
@@ -473,13 +476,22 @@ function printSave(){
 				    <td class="one khmerbold">&nbsp;&nbsp;ប្រាក់នៅសល់ <div class="h" style="margin-left:7px !important;">Balance</div></td><td width="25%"><strong>&nbsp;<label id="lb_remaining" class="value"></label></strong></td>
 				</tr>
 				<tr>
+
+				    <!--<td class="one khmerbold">&nbsp;&nbsp;តម្លៃជាអក្សរ</td><td  colspan="3"><strong >&nbsp; <label style="width: 99% ! important;" id="lb_char" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;&nbsp;សម្គាល់</td><td  colspan="3"><strong >&nbsp; <label style="width: 99% ! important;" id="lb_note" class="value"></label></strong></td>
+					-->
+				    <td class="one khmerbold">&nbsp;តម្លៃជាអក្សរ :<div class="h">Fee In Word</div></td><td  colspan="3"><strong >&nbsp; <label style="width: 99% ! important;" id="lb_char" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;&nbsp;សម្គាល់ :<div class="h" style="margin-left:7px !important;">Note</div></td><td  colspan="3"><strong >&nbsp; <label style="width: 99% ! important;" id="lb_note" class="value"></label></strong></td>
+					<!--
 				    <td class="one khmerbold">&nbsp;តម្លៃជាអក្សរ <div class="h">Fee In Word</div></td><td  colspan="3"><strong >&nbsp; <label style="width: 99% ! important;" id="lb_char" class="value"></label></strong></td>
 				    <td class="one khmerbold">&nbsp;&nbsp;សម្គាល់ <div class="h" style="margin-left:7px !important;">Note</div></td><td  colspan="3"><strong >&nbsp; <label style="width: 99% ! important;" id="lb_note" class="value"></label></strong></td>
+					-->
+
 				</tr>
 				<tr>
 				    <td class="one khmerbold">&nbsp;ថ្ងៃចាប់ផ្តើម <div class="h">Start Date</div></td><td width="25%"><strong>&nbsp; <label id="lb_start_date" class="value"></label></strong></td>
 				    <td class="one khmerbold">&nbsp;&nbsp;ថ្ងៃបញ្ចប់  <div class="h" style="margin-left:7px !important;">End Date</div></td><td width="25%"><strong>&nbsp; <label id="lb_end_date" class="value"></label></strong></td>
-				</tr>
+ 				</tr> 
 				<tr>
 				    <td colspan="6">&nbsp;បញ្ជាក់ៈទឹកប្រាក់ដែលបង់ហើយ  មិនអាចផ្ទេរ ឬ ដកវិញបានទែ  Note: All fees are not transferable or refundable.</td>
 				    <td  colspan="2" align="right" class="khmerbold">
@@ -650,11 +662,13 @@ function getGeneralOldStudentById(){
 				},
 			handleAs:"json",
 			load: function(data) {
+				//alert(data);
 				   if(data){
 			    	dijit.byId('kh_name').attr('value',data.stu_khname);
 			    	dijit.byId('en_name').attr('value',data.stu_enname);
 			    	dijit.byId('sex').attr('value',data.sex);
 			    	dijit.byId('dept').attr('value',data.degree);
+			    	dijit.byId('session').attr('value',data.ses);
 			    	getallModel(data.degree,data.grade);
 			    	 //dijit.byId('grade').attr('value',data.grade);
 			      }else {
