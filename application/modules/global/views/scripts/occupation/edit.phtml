@@ -1,22 +1,28 @@
+<?php
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	echo $this->headTitle($tr->translate('OCCUPATION')); 
+?>
+
+
 <?php $rs=$this->rs;?>
 <form id='edit_occupation' action="" method="post" enctype="application/x-www-form-urlencoded">
 <table  cellspacing="10" style="margin: 0 auto; width: 50%;">
 	<tr>
 		<td>
 		<fieldset>
-					<legend align="center"><strong>Update Occupation</strong></legend>
+					<legend align="center"><strong><?php echo $tr->translate('EDIT_OCCUPATION');?></strong></legend>
 					<table style="margin: 0 auto; width: 100%;  padding:10px;" cellspacing="7" >
 						<tr>
 							<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="id" name="id" value="<?php echo $rs["occupation_id"]?>" type="hidden"></td>
 						</tr>
 						<tr>
-							<td>Occupation KHName</td>
+							<td><?php echo $tr->translate('OCCUPATION_KHNAME');?></td>
 							<td>
 								<input dojoType="dijit.form.ValidationTextBox" required="true" class="fullside" id="occu_name" name="occu_name" value="<?php echo $rs["occu_name"]?>" type="text">
 							</td>
 						</tr>
 						<tr>
-							<td>Occupation ENName</td>
+							<td><?php echo $tr->translate('OCCUPATION_ENNAME');?></td>
 							<td>
 								<input dojoType="dijit.form.ValidationTextBox" required="true" class="fullside" id="occu_enname" name="occu_enname" value="<?php echo $rs["occu_enname"]?>" type="text">
 							</td>
@@ -24,7 +30,7 @@
 						<tr>
 						
 						<tr>
-							<td>Status</td>
+							<td><?php echo $tr->translate('STATUS');?></td>
 							<td>
 								<select name="status" id="status" dojoType="dijit.form.FilteringSelect" required="true" class="fullside">
     								<option value="1" <?php if ($rs["status"]==1){echo "selected='selected'";}?> label="active" >Active</option>

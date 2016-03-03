@@ -26,7 +26,7 @@ dojoType="dijit.form.Form" method="post"  enctype="multipart/form-data">
 								<legend align="center"><strong style="font-size: 14px;">ពត៏មានសាស្ត្រាចារ</strong></legend>
 									<table style="width:330px;white-space: nowrap;" cellspacing="6">
 										<tr>
-											<input type="hidden" name="photo" value="<?php echo $this->rs['photo']; ?>">
+											<input type="hidden" name="photo" value="<?php echo $this->rs['photo']; ?>" />
 											<td style="width: 100px;"><?php echo $tr->translate("CODE")?></td>
 											<td><?php  echo $techer->getElement('code');?></td>
 										</tr>
@@ -214,7 +214,7 @@ function addSubjectRow(){
 		tmp+="</tr>";
 			dojo.query("#t_amountmoneytype").append(tmp);
 		temp='<td style="width:30px !important;text-align:center;" ><img style="cursor:pointer" onclick="deleteRecord('+r+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
-		temp+='<td width="200px" ><select style=" width:98%;background:#fff; padding-left:5px;" id="subject_id'+r+'" name="subject_id'+r+'"  onchange="checkSelectOption('+r+')"  >'+subject_option+'</select></td>';
+		temp+='<td width="200px" ><select style=" width:98%;background:#fff; padding-left:5px;" id="subject_id'+r+'" name="subject_id'+r+'"  onchange="checkSelectOption('+r+')"  >'++'</select></td>';
 		temp+='<td width="200px"><input style=" width:98%;" type="text" name="note'+r+'" id="note'+r+'" dojoType="dijit.form.ValidationTextBox" /></td>';
 		
 			dojo.html.set(dojo.byId("row_subject"+r),temp, {
