@@ -144,7 +144,8 @@
 		addmin_fee=isNaN(addmin_fee)?0:addmin_fee;
 		totals=parseFloat(old_totale)+parseFloat(remark)+parseFloat(addmin_fee);
 		  dijit.byId('total').attr('value',totals.toFixed(2));
-		  dijit.byId('books').attr('value',totals.toFixed(2));
+		  dijit.byId('books').attr('value',tent
+				  otals.toFixed(2));
 		  getRemaining();
 	}
 	//set value remaining
@@ -351,7 +352,7 @@ fieldset{  background:none;}
 						<tr>
 							<td><?php echo $tr->translate("START_DATE");?></td>
 							<td><?php echo $register->getElement('start_date');?></td>
-							<td><?php echo $tr->translate("ENT_DATE");?></td>
+							<td><?php echo $tr->translate("END_DATE");?></td>
 							<td><?php echo $register->getElement('end_date');?></td>
 						</tr>
 						<tr>
