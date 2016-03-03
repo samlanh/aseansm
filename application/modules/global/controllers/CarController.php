@@ -32,7 +32,7 @@ class Global_CarController extends Zend_Controller_Action {
 			
 			$this->view->search =  $search;
 			$list = new Application_Form_Frmtable();
-			$collumns = array("CarID","Car Name","Driver Name","Tel","Zone","Note");
+			$collumns = array("CAR_ID","CAR_NAME","DRIVER_NAME","PHONE","ZONE","NOTE");
 			$link=array(
 					'module'=>'global','controller'=>'car','action'=>'edit',
 			);
