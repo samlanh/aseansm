@@ -83,8 +83,9 @@ class Global_LecturerController extends Zend_Controller_Action {
 				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/global/lecturer");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("EDIT_FAIL");
-				$err =$e->getMessage();
-				Application_Model_DbTable_DbUserLog::writeMessageError($err);
+				
+				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+				echo $e->getMessage();
 			}
 		}
 		$id=$this->getRequest()->getParam("id");
