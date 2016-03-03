@@ -29,7 +29,8 @@ class Registrar_AllreportsController extends Zend_Controller_Action {
     		}
     		
     		$db = new Registrar_Model_DbTable_DbReportStudentByuser();
-    		$this->view->row = $db->getAllGernAndGepRegister($search);
+    		$data=$this->view->row = $db->getAllGernAndGepRegister($search);
+    		 
     			
     	}catch(Exception $e){
     		Application_Form_FrmMessage::message("Application Error");

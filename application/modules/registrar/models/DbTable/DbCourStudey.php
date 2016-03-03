@@ -8,6 +8,13 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
     	return $session_user->user_id;
     	 
     }
+    function getStudentPaymentStart($studentid,$service_id){
+    	$db = $this->getAdapter();
+    	$sql="select spd.id from rms_student_payment AS sp,rms_student_paymentdetail AS spd where
+    	sp.id=spd.payment_id and is_start=1 and service_id= $service_id and sp.student_id=$studentid limit 1 ";
+    	//     	echo $sql;exit();
+    	return $db->fetchOne($sql);
+    }
 	function addStudentGep($data){
 		//print_r($data);exit();
 		$db = $this->getAdapter();//ស្ពានភ្ជាប់ទៅកាន់Data Base
@@ -53,19 +60,36 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 						'user_id'=>$this->getUserId(),
 				);
 				$paymentid=$this->insert($arr);
+				
+				$this->_name='rms_student_paymentdetail';
+				$payment_id_ser = $this->getStudentPaymentStart($id,2);
+				if(empty($payment_id_ser)){
+					$payment_id_ser=0;
+				}
+				$where="id = $payment_id_ser ";
+				$arr = array(
+						'is_start'=>0
+				);
+				$this->update($arr,$where);
+				
 				$this->_name='rms_student_paymentdetail';
 				$arr=array(
 						'payment_id'=>$paymentid,
 						'type'=>2,
+						'service_id'=>2,
 						'payment_term'=>$data['payment_term'],
-						'fee'=>$data['total'],
+						'fee'=>$data['tuitionfee'],
 						'qty'=>1,
-						'amount'=>$data['total'],
-						'discount_fix'=>$data['discount'],
-						'discount_percent'=>0,
+						'subtotal'=>$data['total'],
+						'paidamount'=>$data['books'],
+						'balance'=>$data['remaining'],
+						'discount_percent'=>$data['discount'],
+						'discount_fix'=>0,
 						'note'=>$data['not'],
+						'start_date'=>$data['start_date'],
+						'validate'=>$data['end_date'],
 						'references'=>'frome registration',
-						'create_date'=>	date('Y-m-d'),
+					 	'is_parent'		=>$payment_id_ser,
 						'user_id'=>$this->getUserId(),
 				);
 				$this->insert($arr);
@@ -123,16 +147,21 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 			    $arr=array(
 			    		'payment_id'=>$data['id'],
 			    		'type'=>2,
-			    		'payment_term'=>$data['payment_term'],
-			    		'fee'=>$data['total'],
-			    		'qty'=>1,
-			    		'amount'=>$data['total'],
-			    		'discount_fix'=>$data['discount'],
-			    		'discount_percent'=>0,
-			    		'note'=>$data['not'],
-			    		'references'=>'frome registration',
-			    		'create_date'=>date('Y-m-d'),
-			    		'user_id'=>$this->getUserId(),
+						'service_id'=>2,
+						'payment_term'=>$data['payment_term'],
+						'fee'=>$data['tuitionfee'],
+						'qty'=>1,
+						'subtotal'=>$data['total'],
+						'paidamount'=>$data['books'],
+						'balance'=>$data['remaining'],
+						'discount_percent'=>$data['discount'],
+						'discount_fix'=>0,
+						'note'=>$data['not'],
+						'start_date'=>$data['start_date'],
+						'validate'=>$data['end_date'],
+						'references'=>'frome registration',
+					 	//'is_parent'		=>$payment_id_ser,
+						'user_id'=>$this->getUserId(),
 			    );
 			    $where="payment_id=".$data['id'];
 			    $this->update($arr, $where);
@@ -173,8 +202,10 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
     	$db=$this->getAdapter();
     	$sql=" SELECT s.stu_id,s.stu_code,sp.receipt_number,s.academic_year,s.stu_khname,s.stu_enname,s.sex,s.session,s.degree,s.grade,s.session,
     	sp.payment_term,sp.tuition_fee,sp.discount_percent,sp.other_fee,sp.admin_fee,sp.total,sp.paid_amount,
-    	sp.balance_due,sp.amount_in_khmer,sp.note,sp.start_hour,sp.end_hour,sp.room_id,sp.student_type
-    	FROM rms_student AS s,rms_student_payment AS sp WHERE s.stu_id=sp.student_id AND sp.id=".$id;
+    	sp.balance_due,sp.amount_in_khmer,sp.note,sp.start_hour,sp.end_hour,sp.room_id,sp.student_type,
+    	spd.start_date,spd.validate
+    	FROM rms_student AS s,rms_student_payment AS sp ,rms_student_paymentdetail AS spd WHERE  s.stu_id=sp.student_id AND sp.id=spd.payment_id
+    	AND sp.id=".$id;
     	return $db->fetchRow($sql);
     }
     function getAllGrade($grade_id){

@@ -8,6 +8,13 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	return $session_user->user_id;
     	 
     }
+    function getStudentPaymentStart($studentid,$service_id){
+    	$db = $this->getAdapter();
+    	$sql="select spd.id from rms_student_payment AS sp,rms_student_paymentdetail AS spd where
+    	sp.id=spd.payment_id and is_start=1 and service_id= $service_id and sp.student_id=$studentid limit 1 ";
+    	//     	echo $sql;exit();
+    	return $db->fetchOne($sql);
+    }
 	function addRegister($data){
 		$db = $this->getAdapter();//ស្ពានភ្ជាប់ទៅកាន់Data Base
 		$db->beginTransaction();//ទប់ស្កាត់មើលការErrore , មានErrore វាមិនអោយចូល
@@ -28,6 +35,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 							'user_id'=>$this->getUserId(),
 					);
 			    	$id= $this->insert($arr);
+			    	
 				}
 				
 				$this->_name='rms_student_payment';
@@ -55,18 +63,35 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				$paymentid = $this->insert($arr);
 				
 				$this->_name='rms_student_paymentdetail';
+				$payment_id_ser = $this->getStudentPaymentStart($id,1);
+				if(empty($payment_id_ser)){
+					$payment_id_ser=0;
+				}
+				$where="id = $payment_id_ser ";
+				$arr = array(
+						'is_start'=>0
+				);
+				$this->update($arr,$where);
+				
+				
+				$this->_name='rms_student_paymentdetail';
 				$arr=array(
 						'payment_id'=>$paymentid,
 						'type'=>1,
+						'service_id'=>1,
 						'payment_term'=>$data['payment_term'],
 						'fee'=>$data['tuitionfee'],
 						'qty'=>1,
-						'amount'=>$data['total'],
+						'subtotal'=>$data['total'],
+						'paidamount'=>$data['books'],
+						'balance'=>$data['remaining'],
 						'discount_percent'=>$data['discount'],
 						'discount_fix'=>0,
 						'note'=>$data['not'],
+						'start_date'=>$data['start_date'],
+						'validate'=>$data['end_date'],
 						'references'=>'frome registration',
-						'create_date'=>date('Y-m-d'),
+					 	'is_parent'		=>$payment_id_ser,
 						'user_id'=>$this->getUserId(),
 				);
 				$this->insert($arr);
@@ -120,20 +145,24 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				$where="id=".$data['pay_id'];
 				$this->update($arr, $where);
 				
-				
 				$this->_name='rms_student_paymentdetail';
 				$arr=array(
 						'payment_id'=>$data['pay_id'],
 						'type'=>1,
+						'service_id'=>1,
 						'payment_term'=>$data['payment_term'],
 						'fee'=>$data['tuitionfee'],
 						'qty'=>1,
-						'amount'=>$data['total'],
+						'subtotal'=>$data['total'],
+						'paidamount'=>$data['books'],
+						'balance'=>$data['remaining'],
 						'discount_percent'=>$data['discount'],
 						'discount_fix'=>0,
 						'note'=>$data['not'],
+						'start_date'=>$data['start_date'],
+						'validate'=>$data['end_date'],
 						'references'=>'frome registration',
-						'create_date'=>	date('Y-m-d'),
+					 //	'is_parent'		=>$payment_id_ser,
 						'user_id'=>$this->getUserId(),
 				);
 				$where="payment_id=".$data['pay_id'];
@@ -174,9 +203,10 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     function getRegisterById($id){
     	$db=$this->getAdapter();
     	$sql=" SELECT s.stu_id,s.stu_code,sp.receipt_number,s.academic_year,s.stu_khname,s.stu_enname,s.sex,s.session,s.degree,s.grade,
-    	sp.payment_term,sp.tuition_fee,sp.discount_percent,sp.other_fee,sp.admin_fee,sp.total,sp.paid_amount,
-    	sp.balance_due,sp.amount_in_khmer,sp.note,sp.student_type,sp.time,sp.end_hour
-    	FROM rms_student AS s,rms_student_payment AS sp WHERE s.stu_id=sp.student_id AND sp.id=".$id;
+		    	sp.payment_term,sp.tuition_fee,sp.discount_percent,sp.other_fee,sp.admin_fee,sp.total,sp.paid_amount,
+		    	sp.balance_due,sp.amount_in_khmer,sp.note,sp.student_type,sp.time,sp.end_hour,spd.start_date,spd.validate
+		    	FROM rms_student AS s,rms_student_payment AS sp ,rms_student_paymentdetail AS spd
+		    	WHERE s.stu_id=sp.student_id AND sp.id=spd.payment_id AND sp.id=".$id;
     	return $db->fetchRow($sql);
     }
     function getAllGrade($grade_id){

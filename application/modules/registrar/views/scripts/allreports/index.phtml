@@ -70,6 +70,8 @@
 										    <th>&nbsp;Student ID&nbsp;</th>
 											<th>&nbsp;Khmer Name&nbsp;</th>
 											<th>&nbsp;English Name&nbsp;</th>
+											<th>&nbsp;Type Service&nbsp;</th>
+											<th>&nbsp;Servic Name&nbsp;</th>
 											<th>&nbsp;Tuition Fee&nbsp;</th>
 											<th>&nbsp;Discount&nbsp;</th>
 											<th>&nbsp;Total&nbsp;</th>
@@ -81,27 +83,37 @@
 										  </tr>
 										  <tr></tr>
 												<style> td{padding:0 3px; }</style>
-										 <?php if (!empty($this->row)) $i=0; $total=0;$total_paid=0;$total_balance=0; foreach($this->row as $rs){ $i++;?>
+										 <?php if (!empty($this->row)) $i=0; $total=0;$total_paid=0;$total_balance=0; foreach($this->row as $rs){ $i++;
+										 	if($rs['type']==1){
+										 		$ser_type="Registration Fee Service";
+										 	}elseif ($rs["type"]==2){
+										 		$ser_type="GEP Fee Service";
+										 	}else {
+										 		$ser_type=$rs["type"];
+										 	}
+										 
+										 ?>
 										  <tr style="font-size:10px; height: 18px;"​ align="center">
 										    <td><?php echo $i;?></td>
 										    <td><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['receipt_number']; ?></a></td>
 										    <td><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['stu_code']; ?></a></td>
 										    <td style=" white-space:nowrap; text-align:left"><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['stu_khname']; ?></a></td>
 										    <td style=" white-space:nowrap; text-align:left"><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['stu_enname']; ?></a></td>
-										    <td>$ <?php echo $rs['tuition_fee']; if(empty($rs['tuition_fee']))echo '0.00'; ?></td>
-										    <td><?php echo $rs['discount_percent']; if(empty($rs['discount_percent']))echo '0'; ?>%</td>
-										    <td>$ <?php echo $rs['total']; if(empty($rs['total']))echo '0.00'; ?></td>
-										    <td>$ <?php echo number_format($rs['paid_amount'],2); ?></td>
-										    <td>$ <?php echo number_format($rs['balance_due'],2);  ?></td>
-										   
-										    <td><?php echo date('d-m-Y', strtotime($rs['create_date'])); ?></td>
+										    <td><?php echo $rs['type']; ?></td>
+										    <td><?php echo $ser_type ?></td>
+										    <td>$ <?php echo $rs['fee']; if(empty($rs['fee']))echo '0.00'; ?></td>
+										    <td><?php echo $rs['discount_fix']; if(empty($rs['discount_fix']))echo '0'; ?>%</td>
+										    <td>$ <?php echo $rs['subtotal']; if(empty($rs['subtotal']))echo '0.00'; ?></td>
+										    <td>$ <?php echo number_format($rs['paidamount'],2); ?></td>
+										    <td>$ <?php echo number_format($rs['balance'],2);  ?></td>
+										    <td><?php echo date('d-m-Y', strtotime($rs['start_date'])); ?></td>
 										    <td><?php $user=$rs['user_id'];if( $user==$user_id )echo $session_user->last_name." ".$session_user->first_name; ?></td>
 										   	<td><?php echo $rs['note']; ?></td>
 										  </tr>
 										  <?php 
-										        $total = $rs['total'] + $total;
-										        $total_paid = $rs['paid_amount'] + $total_paid;
-										        $total_balance = $rs['balance_due'] + $total_balance;
+										        $total = $rs['subtotal'] + $total;
+										        $total_paid = $rs['paidamount'] + $total_paid;
+										        $total_balance = $rs['balance'] + $total_balance;
 										   ?> 
 										  <?php } ?>
 										</table>

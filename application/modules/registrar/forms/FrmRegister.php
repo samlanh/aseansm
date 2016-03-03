@@ -294,16 +294,16 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		$start_date= new Zend_Dojo_Form_Element_DateTextBox('start_date');
 		$date = date("Y-m-d")-1;
 		$start_date->setAttribs(array(
-				'data-dojo-Type'=>"dijit.form.DateTextBox",
-				'data-dojo-props'=>"value:'$date','class':'fullside','name':'dob'",
+				'dojoType'=>"dijit.form.DateTextBox",
+				'class'=>'fullside',
 				'required'=>true));
 		$start_date->setValue($date);
 		
 		$end_date= new Zend_Dojo_Form_Element_DateTextBox('end_date');
 		$date = date("Y-m-d");
 		$end_date->setAttribs(array(
-				'data-dojo-Type'=>"dijit.form.DateTextBox",
-				'data-dojo-props'=>"value:'$date','class':'fullside','name':'dob'",
+				'dojoType'=>"dijit.form.DateTextBox",
+				'class'=>'fullside', 
 				'required'=>true));
 		$end_date->setValue($date);
 		
@@ -346,7 +346,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 				'dojoType'=>$this->text,'class'=>'fullside',));
 		$id = new Zend_Form_Element_hidden('id');
 		if($data!=null){
-		//	 print_r($data);exit();
+		//   print_r($data);exit();
 			$id->setValue($data['stu_id']);
 			$_studid->setValue($data['stu_code']);
 			$_invoice_no->setValue($data['receipt_number']);
@@ -367,6 +367,8 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 			$not->setValue($data['note']);
 			$student_type->setValue($data['student_type']);
 			$old_studens->setValue($data['stu_id']);
+			$start_date->setValue($data['start_date']);
+			$end_date->setValue($data['validate']);
 		}
 		$this->addElements(array(
 			 $old_studens,$student_type,$id,$generation,$char_price,$end_date,$start_date,$not,$books,$addmin_fee,$remaining,$total, $_year_one,$_new_student,$_invoice_no, $_pay_date, $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,$metion,
