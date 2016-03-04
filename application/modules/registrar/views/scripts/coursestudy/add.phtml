@@ -12,7 +12,7 @@
 	dojo.require("dojo.data.ObjectStore");
 	dojo.require('dojox.form.BusyButton');
 	var dept_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->all_dept));?> );
-	dojo.ready(function(){ changControll();
+	dojo.ready(function(){ changControll();getStudentNo(5);
 	new dijit.form.FilteringSelect({
 	    store: dept_store,
 	    autoComplete: true,                        

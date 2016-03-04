@@ -70,7 +70,6 @@
 										    <th>&nbsp;Student ID&nbsp;</th>
 											<th>&nbsp;Khmer Name&nbsp;</th>
 											<th>&nbsp;English Name&nbsp;</th>
-											<th>&nbsp;Type Service&nbsp;</th>
 											<th>&nbsp;Servic Name&nbsp;</th>
 											<th>&nbsp;Tuition Fee&nbsp;</th>
 											<th>&nbsp;Discount&nbsp;</th>
@@ -95,14 +94,13 @@
 										 ?>
 										  <tr style="font-size:10px; height: 18px;"​ align="center">
 										    <td><?php echo $i;?></td>
-										    <td><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['receipt_number']; ?></a></td>
-										    <td><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['stu_code']; ?></a></td>
-										    <td style=" white-space:nowrap; text-align:left"><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['stu_khname']; ?></a></td>
-										    <td style=" white-space:nowrap; text-align:left"><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['stu_enname']; ?></a></td>
-										    <td><?php echo $rs['type']; ?></td>
+										    <td><a style=" text-decoration: none; color:#000;" ><?php echo $rs['receipt_number']; ?></a></td>
+										    <td><a style=" text-decoration: none; color:#000;" ><?php echo $rs['stu_code']; ?></a></td>
+										    <td style=" white-space:nowrap; text-align:left"><a style=" text-decoration: none; color:#000;" ><?php echo $rs['stu_khname']; ?></a></td>
+										    <td style=" white-space:nowrap; text-align:left"><a style=" text-decoration: none; color:#000;" ><?php echo $rs['stu_enname']; ?></a></td>
 										    <td><?php echo $ser_type ?></td>
 										    <td>$ <?php echo $rs['fee']; if(empty($rs['fee']))echo '0.00'; ?></td>
-										    <td><?php echo $rs['discount_fix']; if(empty($rs['discount_fix']))echo '0'; ?>%</td>
+										    <td><?php echo $rs['discount_percent']; if(empty($rs['discount_percent']))echo '0'; ?>%</td>
 										    <td>$ <?php echo $rs['subtotal']; if(empty($rs['subtotal']))echo '0.00'; ?></td>
 										    <td>$ <?php echo number_format($rs['paidamount'],2); ?></td>
 										    <td>$ <?php echo number_format($rs['balance'],2);  ?></td>

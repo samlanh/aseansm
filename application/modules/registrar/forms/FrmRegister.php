@@ -292,7 +292,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		));
 		
 		$start_date= new Zend_Dojo_Form_Element_DateTextBox('start_date');
-		$date = date("Y-m-d")-1;
+		$date = date("Y-m-01");
 		$start_date->setAttribs(array(
 				'dojoType'=>"dijit.form.DateTextBox",
 				'class'=>'fullside',
@@ -320,7 +320,6 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 				'onchange'=>'changControll();',
 		));
 		$opts = array(   1=>$this->tr->translate('NEW_STUDENT'),
-				  		2=>$this->tr->translate('SUSPEND'),
 				        3=>$this->tr->translate('OLD_STUDENT') 
 				  );
 	    $student_type->setMultiOptions($opts);

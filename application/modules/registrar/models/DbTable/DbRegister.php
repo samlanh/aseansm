@@ -224,14 +224,16 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
    
     function getAllYearsProgramFee(){
     	$db = $this->getAdapter();
-    	$sql = "SELECT id,CONCAT(from_academic,'-',to_academic) AS years FROM rms_tuitionfee WHERE `status`=1";
+    	$sql = "SELECT id,CONCAT(from_academic,'-',to_academic,'(',generation,')') AS years FROM rms_tuitionfee
+    	        WHERE `status`=1 GROUP BY from_academic,to_academic,generation";
     	$order=' ORDER BY id DESC';
     	return $db->fetchAll($sql.$order);
     }
     
     function getAllYears(){
     	$db = $this->getAdapter();
-    	$sql = "SELECT id,CONCAT(from_academic,'-',to_academic) AS years FROM rms_tuitionfee WHERE `status`=1";
+    	$sql = "SELECT id,CONCAT(from_academic,'-',to_academic,'(',generation,')') AS years FROM rms_tuitionfee WHERE `status`=1 
+    	        GROUP BY from_academic,to_academic,generation";
     	$order=' ORDER BY id DESC';
     	return $db->fetchAll($sql.$order);
     }
