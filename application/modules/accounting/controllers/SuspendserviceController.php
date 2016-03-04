@@ -39,10 +39,18 @@ public function addAction(){
 		try{
 				$db = new Accounting_Model_DbTable_DbSuspendservice();
 				$row = $db->addSuspendservice($_data);
+				
+				if(isset($_data['save_close'])){
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/suspendservice");
+				}else{
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/suspendservice/add");
+				}
+				
 				Application_Form_FrmMessage::message("INSERT_SUCCESS");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+				echo $e->getMessage();
 			}
 		}
 		$frm = new Accounting_Form_FrmServicesuspend();
@@ -70,6 +78,7 @@ public function editAction(){
 		}catch(Exception $e){
 			Application_Form_FrmMessage::message("EDIT_FAIL");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			echo $e->getMessage();
 		}
 	}
 	$frm = new Accounting_Form_FrmServicesuspend();

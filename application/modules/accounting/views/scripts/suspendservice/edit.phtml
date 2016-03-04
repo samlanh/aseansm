@@ -85,9 +85,10 @@ fieldset{  background:none;}
 						</tr>
 						<tr>
 							<td colspan="4" align="center">
-								<input type="submit" name="save_new" id="save_new" value="រក្សាទុក" label="រក្សាទុក"  dojoType="dijit.form.Button" 
+								<input iconClass="dijitIconUndo" type="button" value="back" label="<?php echo $tr->translate('GO_BACK');?>" dojoType="dijit.form.Button" onclick="window.location = '<?php echo $this->url(array('module'=>'accounting','controller'=>"suspendservice",'action'=>'index'),null,true); ?>';" />
+								<input type="submit" name="save_new" id="save_new" value="រក្សាទុក" label="<?php echo $tr->translate('GO_EDIT');?>"  dojoType="dijit.form.Button" 
 								 iconClass="dijitEditorIcon dijitEditorIconSave" />
-								<input iconClass="dijitIconUndo" type="button" value="back" label="Back" dojoType="dijit.form.Button" onclick="window.location = '<?php echo $this->url(array('module'=>'accounting','controller'=>"suspendservice",'action'=>'index'),null,true); ?>';" />
+								
 								
 							</td>
 						</tr>
