@@ -40,12 +40,13 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     function getCondition($_data){
     	$db = $this->getAdapter();
     	$find="select id from rms_tuitionfee where from_academic=".$_data['from_year']." and to_academic=".$_data['to_year']." 
-    		   and generation=".$_data['generation']." and time=".$_data['time'];
+    		   and generation='".$_data['generation']."' and time=".$_data['time'];
     	
     	return $db->fetchOne($find);
     }
     ////////////////
     public function addTuitionFee($_data){
+    	
     	$db = $this->getAdapter();
     	$db->beginTransaction();
 		

@@ -40,45 +40,60 @@ class Accounting_Model_DbTable_DbServiceCharge extends Zend_Db_Table_Abstract
     }
     
     
+    function getCondition($_data){
+    	$db = $this->getAdapter();
+    	$find="select id from rms_servicefee where from_academic=".$_data['from_year']." and to_academic=".$_data['to_year']."
+    	and generation='".$_data['generation']."'";
+    	 
+    	return $db->fetchOne($find);
+    }
+    
     public function addServiceCharge($_data){
     	
     	$db = $this->getAdapter();
     	$db->beginTransaction();
-    	try{   		
-    		$_arr = array(
-    				'from_academic'=>$_data['from_year'],
-    				'to_academic'=>$_data['to_year'],
-    				'generation'=>$_data['generation'],
-    				'note'=>$_data['note'],
-    				'status'=>$_data['status'],
-    				'create_date'=>$_data['create_date'],
-    				'user_id'=>$this->getUserId()
-    				);
-    		$fee_id = $this->insert($_arr);
-    		
-    		$this->_name='rms_servicefee_detail';
-    		$ids = explode(',', $_data['identity']);
-    		$id_term =explode(',', $_data['iden_term']);
-    		foreach ($ids as $i){
-    			foreach ($id_term as $j){
-    				$_arr = array(
-    						'service_feeid'=>$fee_id,
-    						'service_id'=>$_data['class_'.$i],
-    						'payment_term'=>$j,
-    						'price_fee'=>$_data['fee'.$i.'_'.$j],
-    						'remark'=>$_data['remark'.$i]
-    				);
-    				$this->insert($_arr);
-    			}
-//     			$_arr = array(
-//     					'service_feeid'=>$fee_id,
-//     					'service_id'=>$_data['class_'.$i],
-//     					'payment_term'=>4,
-//     					'price_fee'=>$_data['monthly'.$i],
-//     					'remark'=>$_data['remark'.$i]
-//     			);
-//     			$this->insert($_arr);
+    	
+    	$service_id = $this->getCondition($_data);
+    	
+    	try{   	
+
+    		if(!empty($service_id)){
+    			 
+    		}else{
+	    		$_arr = array(
+	    				'from_academic'=>$_data['from_year'],
+	    				'to_academic'=>$_data['to_year'],
+	    				'generation'=>$_data['generation'],
+	    				'note'=>$_data['note'],
+	    				'status'=>$_data['status'],
+	    				'create_date'=>$_data['create_date'],
+	    				'user_id'=>$this->getUserId()
+	    				);
+	    		$service_id = $this->insert($_arr);
     		}
+	    		$this->_name='rms_servicefee_detail';
+	    		$ids = explode(',', $_data['identity']);
+	    		$id_term =explode(',', $_data['iden_term']);
+	    		foreach ($ids as $i){
+	    			foreach ($id_term as $j){
+	    				$_arr = array(
+	    						'service_feeid'=>$service_id,
+	    						'service_id'=>$_data['class_'.$i],
+	    						'payment_term'=>$j,
+	    						'price_fee'=>$_data['fee'.$i.'_'.$j],
+	    						'remark'=>$_data['remark'.$i]
+	    				);
+	    				$this->insert($_arr);
+	    			}
+	//     			$_arr = array(
+	//     					'service_feeid'=>$fee_id,
+	//     					'service_id'=>$_data['class_'.$i],
+	//     					'payment_term'=>4,
+	//     					'price_fee'=>$_data['monthly'.$i],
+	//     					'remark'=>$_data['remark'.$i]
+	//     			);
+	//     			$this->insert($_arr);
+	    		}
     		
     	    $db->commit();
     	    return true;
