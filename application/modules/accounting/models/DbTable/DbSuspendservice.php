@@ -32,7 +32,7 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
 		   		$_arr = array(
 		   				'suspendservice_id'=>$id,
 		   				'service_id'=> $data['service_'.$i],
-		   				'date'=> $data['date_'.$i],
+		   				'date_back'=> $data['date_'.$i],
 		   				'type_suspend'=> $data['type_'.$i],
 		   				'reason'=> $data['reason_'.$i],
 		   				'note'=> $data['note_'.$i],
@@ -41,10 +41,12 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
 		   				);
 		   		$this->insert($_arr);
 		   		}
+		   		$db->commit();
    		}catch (Exception $e){
    			$db->rollBack();
+   			echo $e->getMessage();
    		}
-   	$db->commit();
+   	
    }
    
    public function editSuspendService($data){
@@ -70,7 +72,7 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
    			$_arr = array(
    					'suspendservice_id'	=>$data['id'],
    					'service_id'		=> $data['service_'.$i],
-   					'date'				=> $data['date_'.$i],
+   					'date_back'				=> $data['date_'.$i],
    					'type_suspend'		=> $data['type_'.$i],
    					'reason'			=> $data['reason_'.$i],
    					'note'				=> $data['note_'.$i],
@@ -79,10 +81,11 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
    			);
    			$this->insert($_arr);
    		}
+   		$db->commit();
    	}catch (Exception $e){
    		$db->rollBack();
    	}
-   	$db->commit();
+   	
    }
    public function getSuspendNo(){
    	$db = $this->getAdapter();
