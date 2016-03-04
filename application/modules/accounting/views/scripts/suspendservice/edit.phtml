@@ -182,7 +182,7 @@ function initailize() {
 	     parseContent: true,
 	});
 	dijit.byId('service_'+col).attr('value','<?php echo $row['service_id']?>');
-	dijit.byId('date_'+col).attr('value','<?php echo $row['date']?>');
+	dijit.byId('date_'+col).attr('value','<?php echo $row['date_back']?>');
 	dijit.byId('type_'+col).attr('value','<?php echo $row['type_suspend']?>');
 	dijit.byId('reason_'+col).attr('value','<?php echo $row['reason']?>');
 	dijit.byId('note_'+col).attr('value','<?php echo $row['note']?>');
@@ -197,7 +197,7 @@ function dateReadonly(key) {
 		$('#date_'+key).val('');
 	}else{
 		dijit.byId("date_"+key).set('readOnly',false);
-		dijit.byId('date_'+col).attr('value','<?php echo $row['date']?>');
+		dijit.byId('date_'+key).attr('value','<?php echo $row['date_back']?>');
 	}
 }
 
@@ -217,8 +217,6 @@ function getStudentInfo(){
 					dijit.byId("kh_name").attr("value",data.stu_khname);
 					dijit.byId("en_name").attr("value",data.stu_enname);
 					dijit.byId("sex").attr("value",data.sex);
-					//alert(data);
-					//dijit.byId("price_"+key).attr("value",data.price_fee);
 				},
 				error: function(err) {
 					alert(err);
