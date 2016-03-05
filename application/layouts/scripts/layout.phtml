@@ -82,8 +82,8 @@ dojo.require("dojo.parser");
             <tr height="45px" >
             	<td colspan="2" valign="top"> <?php echo $this->render('header.phtml')?>
             	 <p style="font-size:13px !important; ">
-						              <span style="padding-left: 3px;padding-right: 3px;float: left; font-weight:600;"><?php echo $tr->translate("USING_BY");?><a href="<?php echo $this->url(array('module'=>'','controller'=>'index','action'=>'changepassword')); ?>"><?php echo $username;?></a></span>  
-							<a href="<?php echo $this->url(array('module'=>'','controller'=>'index','action'=>'logout','value'=>'1')); ?>"> | <?php echo $tr->translate("SIGN_OUT");?></a>
+						              <span style="padding-left: 3px;padding-right: 3px;float: left; font-weight:600;"><?php echo $tr->translate("USING_BY");?>&nbsp;&nbsp;<a href="<?php echo $this->url(array('module'=>'','controller'=>'index','action'=>'changepassword')); ?>"><?php echo $username;?></a></span>  
+							<a href="<?php echo $this->url(array('module'=>'','controller'=>'index','action'=>'logout','value'=>'1')); ?>">&nbsp; | &nbsp;<?php echo $tr->translate("SIGN_OUT");?></a>
 			                 <?php if($action=='index' AND $module!='report' AND $module!='home'){?>
 			                 <a class='add-link' style="float:right;" href="<?php echo $this->url(array('module'=>$module,'controller'=>$controller,'action'=>'add'),null,true); ?>"><?php echo $tr->translate('ADD');?></a>
 							<?php }elseif($action=='add' OR $action=='edit' OR $module=='report'){?>
