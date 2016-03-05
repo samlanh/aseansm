@@ -12,11 +12,11 @@ class Allreport_Model_DbTable_DbRptStudentBalance extends Zend_Db_Table_Abstract
     function getAllStudentLate($search){
     	$db=$this->getAdapter();
     	
-    	$date_start = date_create($search['start_date']);
-    	$from_date=date_format($date_start, "d-M-Y");
+//     	$date_start = date_create($search['start_date']);
+//     	//$from_date=date_format($date_start, "d-M-Y");
     	
-    	$date_end = date_create($search['end_date']);
-    	$to_date=date_format($date_end, "d-m-Y");
+//     	$date_end = date_create($search['end_date']);
+    	//$to_date=date_format($date_end, "d-m-Y");
     	
     	$sql = "select spd.id,spd.fee AS fee,spd.discount_fix AS discount,spd.subtotal AS payment,spd.paidamount AS paid,spd.is_complete AS complete,
     			spd.balance AS balance,spd.validate AS validate,spd.comment AS comment,sp.create_date AS paid_date,sp.receipt_number AS receipt,     
@@ -27,8 +27,15 @@ class Allreport_Model_DbTable_DbRptStudentBalance extends Zend_Db_Table_Abstract
 				(select title from rms_program_name where rms_program_name.service_id=spd.service_id limit 1)AS service
 				from rms_student_payment AS sp,rms_student_paymentdetail AS spd where spd.payment_id=sp.id and spd.balance>0
     		   ";
+    	
      	$order=" ORDER by sp.receipt_number ASC ";
-    	$where= " and sp.create_date between '$from_date' and '$to_date'";
+    	
+     	//$where= " and sp.create_date between '$from_date' and '$to_date'";
+     	
+     	$from_date =(empty($search['start_date']))? '1': "sp.create_date >= '".$search['start_date']." 00:00:00'";
+     	$to_date = (empty($search['end_date']))? '1': "sp.create_date <= '".$search['end_date']." 23:59:59'";
+     	$where = " AND ".$from_date." AND ".$to_date;
+     	
     		if(!empty($search['txtsearch'])){
     			$s_where = array();
     			$s_search = trim($search['txtsearch']);
@@ -39,6 +46,7 @@ class Allreport_Model_DbTable_DbRptStudentBalance extends Zend_Db_Table_Abstract
     			$s_where[] = " spd.comment LIKE '%{$s_search}%'";
     			$where .=' AND ( '.implode(' OR ',$s_where).')';
     		}
+    		echo $sql.$where;exit();
     	return $db->fetchAll($sql.$where.$order);
     }
     
