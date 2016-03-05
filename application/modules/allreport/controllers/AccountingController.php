@@ -154,14 +154,16 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 				$_data=$this->getRequest()->getPost();
 				$search = array(
 						'txtsearch' => $_data['txtsearch'],
-						'searchby'=> $_data['searchby'],
 				);
 			}
 			else{
-				$search='';
+				$search=array(
+						'txtsearch' =>'',
+				);
 			}	
 			$db = new Allreport_Model_DbTable_DbRptCar();
 			$this->view->rs = $db->getAllCar($search);
+			$this->view->search=$search;
 		}catch(Exception $e){
 			Application_Form_FrmMessage::message("APPLICATION_ERROR");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
@@ -181,8 +183,8 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 			}else{
 				$search=array(
 						'txtsearch' =>'',
-						'start_date'=> date('Y-m-d'),
-						'end_date'=>date('Y-m-d'),
+						'start_date'=> date('d-m-Y'),
+						'end_date'=>date('d-m-Y'),
 				);;
 			}
 			
@@ -260,7 +262,7 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 			$_data=$this->getRequest()->getPost();
 			$search = array(
 					'txtsearch' => $_data['txtsearch'],
-					'searchby' => $_data['searchby'],
+					//'searchby' => $_data['searchby'],
 			);
 		}
 		else{
@@ -284,6 +286,7 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 	
 						$rs_rows[$key]['status'] = Application_Model_DbTable_DbGlobal::getAllStatus($payment_tran['status']);
 						$rs_rows[$key]['class'] = $payment_tran['class'];
+						$rs_rows[$key]['remark'] = $payment_tran['remark'];
 						$rs_rows[$key]['quarter'] = $payment_tran['tuition_fee'];
 						$key_old=$key;
 						$key++;
