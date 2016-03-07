@@ -9,13 +9,13 @@
 	<table>	
 		<tr>
 			<td>
-				<input dojoType="dijit.form.TextBox" required="true"  id="txtsearch" name="txtsearch" placeholder="Search....." value="" type="text">
+				<input dojoType="dijit.form.TextBox" required="true"  id="txtsearch" name="txtsearch" placeholder="Search....." value="<?php echo $this->search['txtsearch'];?>" type="text">
 			</td>
 			<td>
-				<input class="fullside" name="from_date" id="from_date" dojoType="dijit.form.DateTextBox" placeholder="from date" value="<?php echo $this->search['start_date'];?>" type="text">
+				<input class="fullside" name="from_date" id="from_date" dojoType="dijit.form.DateTextBox"  value="<?php echo $this->search['start_date'];?>" type="text">
 			</td>
 			<td>
-				<input class="fullside" name="to_date" id="to_date" dojoType="dijit.form.DateTextBox" placeholder="to date" value="<?php echo $this->search['end_date'];?>" type="text">
+				<input class="fullside" name="to_date" id="to_date" dojoType="dijit.form.DateTextBox"  value="<?php echo $this->search['end_date'];?>" type="text">
 			</td>
 			<td>
 				<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
@@ -57,7 +57,7 @@
 														<th style="border: 1px solid #000;">Validate</th>
 														<th style="border: 1px solid #000;">Note</th>
 													</tr>
-												<?php $i=0;$totalpaid=0;$totalbalance=0; foreach ($this->rs AS $row) { $i++;?>
+												<?php $i=0;$totalpaid=0;$totalbalance=0;if(!empty($this->rs)){ foreach ($this->rs AS $row) { $i++;?>
 													<tr style="font-size:10px; height: 20px;border: 1px solid #000;" align="center" >
 														<th style="border: 1px solid #000;"><?php echo $i;?></th>
 														<th style="border: 1px solid #000;"><?php echo $row['receipt'];?></th>
@@ -83,7 +83,7 @@
 															<th style="border: 1px solid #000;">&nbsp;<?php echo $row['comment'];?>&nbsp;</th>
 														<?php }else{?>
 															<th style="border: 1px solid #000;color:red;">&nbsp;<?php echo $row['comment'];?>&nbsp;</th>
-														<?php }?>
+														<?php }}?>
 													</tr>
 												<?php }?>	
 												</table>	

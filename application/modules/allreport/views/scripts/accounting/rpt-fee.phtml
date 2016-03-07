@@ -4,11 +4,13 @@
 	echo $this->headTitle(''); 
 	
 ?>	
+<div style="width: 27cm;margin: 0 auto;">
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-fee')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<input dojoType="dijit.form.TextBox" required="true"  id="txtsearch" name="txtsearch" placeholder="Search....." value="" type="text">
+		<input dojoType="dijit.form.TextBox" required="true"  id="txtsearch" name="txtsearch" placeholder="Search....." value="<?php echo $this->search['txtsearch'];?>" type="text">
 		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
 </form>		
-<div style="border: 1px dotted #000;background: #fff;width: 26cm;margin: 0 auto;min-height: 27cm;">
+</div>
+<div style="border: 1px dotted #000;background: #fff;width: 27cm;margin: 0 auto;min-height: 27cm;">
 			<div id="divPrint">
 									<table style="background:#fff; margin: 0 auto; padding: 1cm;">
 										<tr>
