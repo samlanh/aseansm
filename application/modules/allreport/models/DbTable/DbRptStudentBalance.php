@@ -9,7 +9,7 @@ class Allreport_Model_DbTable_DbRptStudentBalance extends Zend_Db_Table_Abstract
 //     	return $session_user->user_id;
     	 
 //     }
-    function getAllStudentLate($search){
+    function getAllStudentBalance($search){
     	$db=$this->getAdapter();
     	
 //     	$date_start = date_create($search['start_date']);
@@ -29,7 +29,7 @@ class Allreport_Model_DbTable_DbRptStudentBalance extends Zend_Db_Table_Abstract
     		   ";
     	
      	$order=" ORDER by sp.receipt_number ASC ";
-    	
+    	$where = '';
      	//$where= " and sp.create_date between '$from_date' and '$to_date'";
      	
      	$from_date =(empty($search['start_date']))? '1': "sp.create_date >= '".$search['start_date']." 00:00:00'";
@@ -46,7 +46,7 @@ class Allreport_Model_DbTable_DbRptStudentBalance extends Zend_Db_Table_Abstract
     			$s_where[] = " spd.comment LIKE '%{$s_search}%'";
     			$where .=' AND ( '.implode(' OR ',$s_where).')';
     		}
-    		echo $sql.$where;exit();
+//     		echo $sql.$where;
     	return $db->fetchAll($sql.$where.$order);
     }
     
