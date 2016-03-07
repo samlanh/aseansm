@@ -183,13 +183,13 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 			}else{
 				$search=array(
 						'txtsearch' =>'',
-						'start_date'=> date('d-m-Y'),
-						'end_date'=>date('d-m-Y'),
+						'start_date'=> date('Y-m-d'),
+						'end_date'=>date('Y-m-d'),
 				);;
 			}
 			
 			$db = new Allreport_Model_DbTable_DbRptStudentBalance();
-			$this->view->rs = $db->getAllStudentLate($search);
+			$this->view->rs = $db->getAllStudentBalance($search);
 			$this->view->search = $search;
 // 			print_r($abc);exit();
 		}catch(Exception $e){
@@ -226,29 +226,27 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 		}
 	}
 	
-	public function rptstudentlateAction(){
+	public function rptstudentnearlyendserviceAction(){
 		try{
 			if($this->getRequest()->isPost()){
 				$data=$this->getRequest()->getPost();
 				$search = array(
 						'txtsearch' => $data['txtsearch'],
 						'start_date'=> $data['from_date'],
-						'end_date'=>$data['to_date']
+						'end_date'	=>$data['to_date']
 				);
 			}else{
 				$search=array(
 						'txtsearch' =>'',
 						'start_date'=> date('Y-m-d'),
-						'end_date'=>date('Y-m-d'),
+						'end_date'	=>date('Y-m-d'),
 				);;
 			}
-				
-			$db = new Allreport_Model_DbTable_DbRptStudentLate();
-			$abc = $this->view->row = $db->getAllStudentLate($search);
-// 			print_r($abc);exit();
+			$db = new Allreport_Model_DbTable_DbRptStudentNearlyEndService();
+			$abc = $this->view->row = $db->getAllStudentNearlyEndService($search);
 			
 			$this->view->search = $search;
-			// 			print_r($abc);exit();
+			
 		}catch(Exception $e){
 			Application_Form_FrmMessage::message("APPLICATION_ERROR");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
@@ -266,9 +264,10 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 			);
 		}
 		else{
-			$search='';
+			$search=array(
+					'txtsearch' =>'',
+			);
 		}
-	
 		$db = new Allreport_Model_DbTable_DbRptFee();
 		$group= new Allreport_Model_DbTable_DbRptFee();
 		$rs_rows = $group->getAllTuitionFee($search);
@@ -306,6 +305,7 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 			$result = Application_Model_DbTable_DbGlobal::getResultWarning();
 		}
 		$this->view->rs = $rs_rows;
+		$this->view->search = $search;
 	}
 	
 	public function headAddRecordTuitionFee($rs,$key){
@@ -329,11 +329,13 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 			$_data=$this->getRequest()->getPost();
 			$search = array(
 					'txtsearch' => $_data['txtsearch'],
-					'searchby' => $_data['searchby'],
+					//'searchby' => $_data['searchby'],
 			);
 		}
 		else{
-			$search='';
+			$search=array(
+					'txtsearch' =>'',
+			);
 		}
 	
 		$db = new Allreport_Model_DbTable_DbRptServiceCharge();
@@ -352,6 +354,7 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 	
 	
 						$rs_rows[$key]['service_name'] = $payment_tran['service_name'];
+						$rs_rows[$key]['remark'] = $payment_tran['remark'];
 						$rs_rows[$key]['monthly'] = $payment_tran['price_fee'];
 						$key_old=$key;
 						$key++;
@@ -376,6 +379,7 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 		}
 	
 		$this->view->rs = $rs_rows;
+		$this->view->search = $search;
 	}
 	
 	public function headAddRecordServiceFee($rs,$key){
