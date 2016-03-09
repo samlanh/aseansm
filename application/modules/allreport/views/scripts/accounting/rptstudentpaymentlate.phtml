@@ -32,16 +32,18 @@
 </div>
 <div style="border: 1px dotted #000;background: #fff;width: 27cm;margin: 0 auto;min-height: 27cm;">
 	<div id="divPrint">
-									<table style="background:#fff;width:90%; margin: 0 auto; padding: 0.5cm;">
+									<table style="background:#fff;width:90%; margin: 0 auto; padding: 0.5cm;white-space: nowrap;">
 										
 										<tr>
 											<td width="28%" align="left">
 												<img style="width:70%;" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br /><br >
 											</td>
 											<td align="center" width="44%">
-												<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">របាយការណ៏​​ សិស្សបង់យឺត</strong><br /><br >
+												<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 16px;font-family:'Khmer MEF2';">របាយការណ៏​​ សិស្សបង់យឺត</strong><br />
+												<span style="font-weight: bold;font-size: 11px;">From &nbsp;<?php echo date("d-M-Y",strtotime($this->search['start_date']));?> &nbsp;To&nbsp; <?php echo date("d-M-Y",strtotime($this->search['end_date']));?></span><br /><br />
 											</td>
 											<td width="28%" align="right">
+												
 											</td>
 										</tr>
 										<tr>
