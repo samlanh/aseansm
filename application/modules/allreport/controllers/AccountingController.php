@@ -271,7 +271,7 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 				);;
 			}
 			$db = new Allreport_Model_DbTable_DbRptStudentPaymentLate();
-			$abc = $this->view->row = $db->getAllStudentNearlyEndService($search);
+			$abc = $this->view->row = $db->getAllStudentPaymentLate($search);
 				
 			$this->view->search = $search;
 				
