@@ -56,6 +56,11 @@ class Global_SubjectController extends Zend_Controller_Action {
 			try {
 				$_dbmodel = new Global_Model_DbTable_DbSubjectExam();
 				$_dbmodel->addNewSubjectExam($_data);
+				if(isset($_data['save_close'])){
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/global/subject");
+				}else{
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/global/subject/add");
+				}
 				Application_Form_FrmMessage::message("INSERT_SUCCESS");
 			} catch (Exception $e) {
 				Application_Form_FrmMessage::message("INSERT_FAIL");
