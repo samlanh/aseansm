@@ -9,7 +9,7 @@ class Allreport_Model_DbTable_DbRptStudentPaymentLate extends Zend_Db_Table_Abst
 //     	return $session_user->user_id;
     	 
 //     }
-    function getAllStudentNearlyEndService($search){
+    function getAllStudentPaymentLate($search){
     	$db=$this->getAdapter();
     	
     	$sql="SELECT 
@@ -46,7 +46,7 @@ class Allreport_Model_DbTable_DbRptStudentPaymentLate extends Zend_Db_Table_Abst
     			$where .=' AND ( '.implode(' OR ',$s_where).')';
     		}
     		
-    		echo $sql.$where;
+//     		echo $sql.$where;
     	return $db->fetchAll($sql.$where.$order);
     }
     
