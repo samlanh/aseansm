@@ -30,7 +30,7 @@ class Global_SubjectController extends Zend_Controller_Action {
 			 
 			 
 			$list = new Application_Form_Frmtable();
-			$collumns = array("SUBJECT IN KHMER","SUBJECT IN KH","MODIFY_DATE","STATUS","BY_USER");
+			$collumns = array("SUBJECT_IN_KH","SUBJECT_IN_EN","MODIFY_DATE","STATUS","USER");
 			$link=array(
 					'module'=>'global','controller'=>'subject','action'=>'edit',
 			);
@@ -44,9 +44,13 @@ class Global_SubjectController extends Zend_Controller_Action {
 		$frm =$frm->SubjectExam();
 		Application_Model_Decorator::removeAllDecorator($frm);
 		$this->view->frm_search = $frm;
+		
 	}
 	function addAction()
 	{
+		
+		
+		
 		if($this->getRequest()->isPost()){
 			$_data = $this->getRequest()->getPost();
 			try {
@@ -63,6 +67,12 @@ class Global_SubjectController extends Zend_Controller_Action {
 		$frm_subject_exam=$subject_exam->FrmAddSubjectExam();
 		Application_Model_Decorator::removeAllDecorator($frm_subject_exam);
 		$this->view->frm_subject_exam = $frm_subject_exam;
+		
+		$parent = new Global_Model_DbTable_DbSubjectExam();
+		$is_parent = $parent->getAllSubjectParent();
+		$this->view->rs = $is_parent;
+// 		print_r($abc);
+		
 	}
 	function addsubjectAction(){//At callecteral when click client
 		if($this->getRequest()->isPost()){
@@ -96,6 +106,15 @@ class Global_SubjectController extends Zend_Controller_Action {
 		$frm_subject_exam=$subject_exam->FrmAddSubjectExam($row);
 		Application_Model_Decorator::removeAllDecorator($frm_subject_exam);
 		$this->view->frm_subject_exam = $frm_subject_exam;
+		
+		$parent = new Global_Model_DbTable_DbSubjectExam();
+		$is_parent = $parent->getAllSubjectParent();
+		$this->view->rs = $is_parent;
+		
+		$getRow = $parent->getAllSubjectParentByID($id);
+//  		print_r($getRow);exit();
+		$this->view->row = $getRow;
+		
 	}
 }
 
