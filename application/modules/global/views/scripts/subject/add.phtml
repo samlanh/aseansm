@@ -12,12 +12,38 @@
 						
 						<table style="margin: 0 auto; width: 95%;" cellspacing="10">
 							<tr>
-								<td style="width: 100px"><?php echo $tr->translate("SUBJECT_EXAM_KH")?></td>
+								<td style="width: 100px"><?php echo $tr->translate("PARENT")?></td>
+								<td>
+									<select class="fullside" name="parent" id="parent" dojoType="dijit.form.FilteringSelect" >
+										<option value="0"></option>
+										<?php if(!empty($this->rs))foreach ($this->rs as $row){?>
+													<option value="<?php echo $row['id']?>"><?php echo $row['subject_titleen']?></option>
+										<?php }?>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td style="width: 100px"><?php echo $tr->translate("SUBJECT_IN_KH")?></td>
 								<td><?php  echo $subject_exam->getElement('subject_kh');?></td>
 							</tr>
 							<tr>
-								<td style="width: 100px"><?php echo $tr->translate("SUBJECT_EXAM")?></td>
+								<td style="width: 100px"><?php echo $tr->translate("SUBJECT_IN_EN")?></td>
 								<td><?php  echo $subject_exam->getElement('subject_en');?></td>
+							</tr>
+							<tr>
+								<td style="width: 5px"><?php echo $tr->translate("ACCESS_TYPE")?></td>
+								<td>
+									<select class="fullside" name="access_type" id="access_type" dojoType="dijit.form.FilteringSelect" >
+										<option value="1">All</option>
+										<option value="2">GEP</option>
+										<option value="3">Kindergarten</option>
+										<option value="4">General Education</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkBox" dojoType="dijit.form.CheckBox" value="1" id="is_parent" onclick="getValue();" name="is_parent" />Is_Parent</td>
+								<input type="hidden" id="par" name="par" />
 							</tr>
 							<tr>
 								<td style="width: 5px"><?php echo $tr->translate("STATUS")?></td>
@@ -37,3 +63,46 @@
 	</tr>
 </table>	
 </form>
+
+<script type="text/javascript">
+
+	function getValue(){
+		//alert(1);
+		var par='';
+		if(dojo.byId('is_parent').checked){
+			par = $("#is_parent").val();;
+			//alert(par);
+			
+		}else{
+			par=0;
+			//alert(par);
+			//dijit.byId('parent').attr('value','0');
+		}
+		//dijit.byId('parent').attr('value',par);
+		$('#par').val(par);
+	}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

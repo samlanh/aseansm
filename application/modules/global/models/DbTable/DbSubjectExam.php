@@ -7,26 +7,43 @@ class Global_Model_DbTable_DbSubjectExam extends Zend_Db_Table_Abstract
     public function getUserId(){
     	$session_user=new Zend_Session_Namespace('auth');
     	return $session_user->user_id;
-    	 
     }
 	
+    public function getAllSubjectParent(){
+    	$db = $this->getAdapter();
+    	$sql = "SELECT id,subject_titleen FROM rms_subject WHERE is_parent=1";
+    	return $db->fetchAll($sql);
+    }
+    
+    public function getAllSubjectParentByID($id){
+    	$db = $this->getAdapter();
+    	$sql = "SELECT * FROM rms_subject WHERE id=".$id;
+    	return $db->fetchRow($sql);
+    }
+    
 	public function addNewSubjectExam($_data){
 		$_arr=array(
-				'subject_titlekh' => $_data['subject_kh'],
-				'subject_titleen' => $_data['subject_en'],
-				'date' 	=> Zend_Date::now(),
-				'status'   	=> $_data['status'],
-				'user_id'	  	=> $this->getUserId()
+				'parent' 			=> $_data['parent'],
+				'subject_titlekh' 	=> $_data['subject_kh'],
+				'subject_titleen' 	=> $_data['subject_en'],
+				'date' 				=> date("Y-m-d"),
+				'status'   			=> $_data['status'],
+				'is_parent'   		=> $_data['par'],
+				'access_type'   	=> $_data['access_type'],
+				'user_id'	  		=> $this->getUserId()
 		);
 		return  $this->insert($_arr);
 	}
 	public function updateSubjectExam($_data,$id){
 		$_arr=array(
-				'subject_titlekh' => $_data['subject_kh'],
-				'subject_titleen' => $_data['subject_en'],
-				'date' 	 => Zend_Date::now(),
-				'status'   	 => $_data['status'],
-				'user_id'	  	 => $this->getUserId()
+				'parent' 			=> $_data['parent'],
+				'subject_titlekh' 	=> $_data['subject_kh'],
+				'subject_titleen' 	=> $_data['subject_en'],
+				'date' 				=> date("Y-m-d"),
+				'status'   			=> $_data['status'],
+				'is_parent'   		=> $_data['par'],
+				'access_type'   	=> $_data['access_type'],
+				'user_id'	  		=> $this->getUserId()
 		);
 		$where=$this->getAdapter()->quoteInto("id=?", $id);
 		$this->update($_arr, $where);
