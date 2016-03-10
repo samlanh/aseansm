@@ -33,7 +33,8 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 					'amount_in_khmer'	=>$data['char_price'],
 					'note'				=>$data['not'],
 					'time'				=>$data['time'],
-					'create_date'		=>date("d-m-Y"),
+					//'create_date'		=>date("Y-m-d"),
+					'create_date'		=>date("Y-m-d H:i:s"),
 					'user_id'			=>$this->getUserId()
 				);
 			
