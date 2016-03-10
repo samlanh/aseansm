@@ -11,7 +11,7 @@
 	<tr>
 		<td>
 			<fieldset style="background-color:menu;">
-					<legend align="center" ><strong><?php echo $tr->translate("SRMS_EDIT_SUBJECT_EXAM");?></strong></legend>
+					<legend align="center" ><strong><?php echo $tr->translate("EDIT_SUBJECT_NAME");?></strong></legend>
 						<table style="margin: 0 auto; width: 95%;white-space: nowrap;" cellspacing="10">
 							<tr>
 								<td style="width: 100px"><?php echo $tr->translate("PARENT")?></td>
@@ -46,7 +46,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td><input type="checkBox" <?php if($this->row['is_parent']==1){echo "checked='checked'";}?> dojoType="dijit.form.CheckBox" onclick="getValue();" value="1" id="is_parent" name="is_parent" />Is_Parent</td>
+								<td><input type="checkBox" <?php if($this->row['is_parent']==1){echo "checked='checked'";}?> dojoType="dijit.form.CheckBox" onclick="getValue();" value="1" id="is_parent" name="is_parent" /><?php echo $tr->translate("IS_PARENT")?></td>
 							</tr>
 							<tr><input type="hidden" id="par" name="par" />
 								<td style="width: 5px"><?php echo $tr->translate("STATUS")?></td>
