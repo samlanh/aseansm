@@ -4,7 +4,7 @@
 	echo $this->headTitle(''); 
 	
 ?>	
-<div style="width: 27cm;margin: 0 auto;">
+<div style="width: 28cm;margin: 0 auto;">
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rptexpectincome')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	<table>	
 		<tr>
@@ -24,9 +24,9 @@
 	</table>
 </form>	
 </div>
-<div style="border: 1px dotted #000;background: #fff;width: 27cm;margin: 0 auto;min-height: 27cm;">
+<div style="border: 1px dotted #000;background: #fff;width: 27cm;margin: 0 auto;min-height: 27cm;padding: 0.5cm;">
 	<div id="divPrint">
-									<table style="background:#fff; margin: 0 auto; padding: 0.5cm;">
+									<table style="background:#fff; margin: 0 auto; width: 100%;">
 										
 										<tr>
 											<td width="28%" align="left">
@@ -112,6 +112,24 @@
 											</td>
 										</tr>
 										<?php //}?>
+										
+										<tr>
+											<td colspan="3">&nbsp;</td>
+										</tr>
+										<tr>
+											<td colspan="3">&nbsp;</td>
+										</tr>
+										<tr >
+											<td align="center" width="25%">
+												<span style="font-weight: bold;font-size: 14px;">Verified by</span>
+											</td>
+											<td  width="50%">
+												&nbsp;
+											</td>
+											<td align="center"  width="25%">
+												<span style="font-weight: bold;font-size: 14px;text-align: right;">Prepared by</span>
+											</td>
+										</tr>
 									</table>
 							
 			</div>		

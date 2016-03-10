@@ -10,7 +10,7 @@
 // 			$diff=date_diff($date1,$date2);
 // 			echo $diff->format("%R%a days");exit();
 ?>
-<div style="width: 27cm;margin: 0 auto;">
+<div style="width: 28cm;margin: 0 auto;">
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rptstudentnearlyendservice')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	<table>	
 		<tr>
@@ -30,9 +30,9 @@
 	</table>
 </form>	
 </div>
-<div style="border: 1px dotted #000;background: #fff;width: 27cm;margin: 0 auto;min-height: 27cm;">
+<div style="border: 1px dotted #000;background: #fff;width: 27cm;margin: 0 auto;min-height: 27cm; padding: 0.5cm;">
 	<div id="divPrint">
-									<table style="background:#fff;width:90%; margin: 0 auto; padding: 0.5cm;">
+									<table style="background:#fff;width:90%; margin: 0 auto;width: 100%;">
 										
 										<tr>
 											<td width="28%" align="left">
@@ -88,24 +88,20 @@
 										<tr>
 											<td colspan="3">&nbsp;</td>
 										</tr>
-										<?php //if (empty($total_fee)){}?>
-										<?php ///if (!empty($total_fee)){?>
-									<!--	<tr>
-											<td colspan="2"></td>
-											<td>
-												<table border="1" align="right" style="width:50%; margin-right:0.5%; white-space:nowrap;border-collapse: collapse;border: 1px #000 solid;">
-													<tr style="font-size:10px; background:#ccc; height: 20px;width: 400px;" align="center">
-														<th>&nbsp;Total Balance Paid &nbsp;</th>
-														<th>&nbsp;Total Balance Remain&nbsp;</th>
-													</tr>
-													<tr align="center" style=" height:18px; font-size:10px; padding: 1px;font-weight: bold;" >
-														<td>$ <?php echo number_format($totalpaid,2);?></td>
-														<td style="color: red;">$ <?php echo number_format($totalbalance,2);?></td>
-													</tr>
-												  </table>
+										<tr>
+											<td colspan="3">&nbsp;</td>
+										</tr>
+										<tr >
+											<td align="center" width="25%">
+												<span style="font-weight: bold;font-size: 14px;">Verified by</span>
 											</td>
-										</tr>-->
-										<?php //}?>
+											<td  width="50%">
+												&nbsp;
+											</td>
+											<td align="center"  width="25%">
+												<span style="font-weight: bold;font-size: 14px;text-align: right;">Prepared by</span>
+											</td>
+										</tr>
 									</table>
 							
 			</div>		

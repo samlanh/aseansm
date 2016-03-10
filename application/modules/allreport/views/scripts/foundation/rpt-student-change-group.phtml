@@ -2,26 +2,21 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$this->headTitle('Report Student Change Group'); 
 	echo $this->headTitle(''); 
-	
 ?>	
-
 <style>
 tr td table tr th:{padding: 5px;margin: 5px;};
 
 </style>
+<div style="width: 29cm;margin: 0 auto;">
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rpt-student-change-group')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-<!-- 		<select dojoType="dijit.form.FilteringSelect" name="searchby" id="searchby" placeholder="Search by ....." value="" type="text"> -->
-<!-- 			<option value="0">All</option> -->
-<!-- 			<option value="1">Student ID</option> -->
-<!-- 			<option value="2">Student Name</option> -->
-<!-- 		</select> -->
 		<input dojoType="dijit.form.TextBox" required="true"  id="txtsearch" name="txtsearch" placeholder="Search....." value="<?php echo $this->search['txtsearch']?>" type="text">
 		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
 </form>		
-<div style="border: 1px dotted #000;background: #fff;margin: 0 auto;min-height: 27cm;">
+</div>
+<div style="border: 1px dotted #000;background: #fff;width: 28cm; margin: 0 auto;min-height: 27cm;padding: 0.5cm;">
 		<div id="divPrint">
 		
-							<table style="background:#fff; margin: 0 auto; width: 100%;padding: 1cm;">
+							<table style="background:#fff; margin: 0 auto; width: 100%;">
 								<tr>
 									<td  width="28%">
 										<img style="width:155px;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br /><br />
@@ -111,6 +106,23 @@ tr td table tr th:{padding: 5px;margin: 5px;};
 											</tr>
 										<?php }?>	
 										</table>	
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3">&nbsp;</td>
+								</tr>
+								<tr>
+									<td colspan="3">&nbsp;</td>
+								</tr>
+								<tr >
+									<td align="center" width="25%">
+										<span style="font-weight: bold;font-size: 14px;">Verified by</span>
+									</td>
+									<td  width="50%">
+										&nbsp;
+									</td>
+									<td align="center"  width="25%">
+										<span style="font-weight: bold;font-size: 14px;text-align: right;">Prepared by</span>
 									</td>
 								</tr>
 							</table>
