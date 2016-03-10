@@ -33,7 +33,6 @@
 	table tr th{
 		border: 1px solid #000;	
 	}
-	
 </style>
 								<tr>
 									<td colspan="3">
@@ -49,9 +48,9 @@
 												<th colspan="2">Semester</th>
 												<th colspan="2">Year</th>
 												<th rowspan="2">Note</th>
-												
 											</tr>
 											<tr style="font-size:11px; height: 20px;">
+											
 												<th>Start Date</th>
 												<th>End Date</th>
 												
@@ -62,8 +61,6 @@
 												<th>End Date</th>
 												
 											</tr>
-											
-											
 										<?php $i=0; foreach ($this->rs AS $row) { $i++;?>
 											<tr style="font-size:11px; height: 20px;" align="center" >
 												<th ><?php echo $i;?></th>
@@ -80,7 +77,6 @@
 												<th ><?php echo date("d-M-Y",strtotime($row['yearly_end']));?></th>
 												<th align="left"><?php echo $row['note'];?></th>
 											</tr>
-											
 										<?php }?>	
 										</table>	
 									</td>
