@@ -111,6 +111,16 @@
 	    	dijit.byId('not').attr('value',''); 
 		}
 	}
+	function paymentTerms(){
+		generat=dijit.byId('study_year').get('value');
+		payment_term=dijit.byId('payment_term').get('value');
+		grade=dijit.byId('grade').get('value');
+		time=dijit.byId('time').get('value');
+		if(generat!='' && payment_term !='' && grade !='' && time !=''){
+			getPaymentTerms(generat,payment_term,grade,time);
+		}
+	}
+	
 	var payment_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 	var url_getpaymentterm = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-payment-term')); ?>';
 	function getPaymentTerms(generat,pay,grade,time){
@@ -155,6 +165,53 @@
     	dijit.byId('char_price').attr('value','<?php echo $this->degree_row['amount_in_khmer'];?>');
     	dijit.byId('not').attr('value','<?php echo $this->degree_row['note'];?>');
      
+	}
+	//get price balance 
+	function getBalanceOldStudent(){
+		old_studens=old_studens=dijit.byId('old_studens').get('value');
+		if(old_studens != -1){
+			//alert(old_studens);
+			getBalancePrice(1,old_studens);
+		}
+	}
+	//get price balance
+	var url_balance = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-banlance-price')); ?>';
+	function getBalancePrice(servce_id,student_id){
+			dojo.xhrPost({
+				url:url_balance,
+				content:{
+					'servce_id':servce_id,
+					'student_id':student_id,
+					},
+				handleAs:"json",
+				load: function(data) {
+					 
+				      if(data){
+				    	  dijit.byId('tuitionfee').attr('value',data.price_fee);
+				    	  dijit.byId('ids').attr('value',data.id);
+				     	  dijit.byId('total').attr('value',data.price_fee);
+				    	  dijit.byId('books').attr('value',data.price_fee);
+				    	  dijit.byId('not').attr('value',data.sms);
+				    	  dijit.byId('remaining').attr('value','0');
+				     }else {
+				    	 dijit.byId('ids').attr('value','');
+				    	 dijit.byId('not').attr('value','');
+				    	 paymentTerms();
+				 /*   	 dijit.byId('tuitionfee').attr('value','0'); 
+				    	 dijit.byId('total').attr('value','0'); 
+				    	 dijit.byId('discount').attr('value','0');
+				    	 dijit.byId('books').attr('value','0');
+					     dijit.byId('addmin_fee').attr('value','0');
+					     dijit.byId('remaining').attr('value','0');
+					     dijit.byId('remark').attr('value','0');
+					     dijit.byId('char_price').attr('value','0');
+						     */
+				      }
+				},
+				error: function(err) {
+					alert(err);
+				}
+			});
 	}
 	//set value totale 
 	function getTotale(){
@@ -287,10 +344,11 @@ fieldset{  background:none;}
 						<tr>
 							<td style="width: 160px"><?php echo $tr->translate("STUDENT_TYPE");?></td>
 							<td><?php  echo $register->getElement('student_type');?>
+							    <?php echo $register->getElement('ids'); ?>
 							</td>
 							<td><?php echo $tr->translate("RECEIPT_NO");?></td>
 							<td><?php echo $register->getElement('reciept_no');?>
-							    <?php echo $register->getElement('id');?>
+							    <?php echo $register->getElement('id');?><?php echo $register->getElement('parent_id');?>
 							</td>
 						</tr>
 						<tr>

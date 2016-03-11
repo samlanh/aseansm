@@ -34,8 +34,8 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						    'stu_type'=>1,
 							'user_id'=>$this->getUserId(),
 					);
+				    $db->getProfiler()->setEnabled(true);
 			    	$id= $this->insert($arr);
-			    	
 				}
 				
 				$this->_name='rms_student_payment';
@@ -59,9 +59,8 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						'amount_in_khmer'=>$data['char_price'],
 						'user_id'=>$this->getUserId(),
 				);
-				
+				$db->getProfiler()->setEnabled(true);
 				$paymentid = $this->insert($arr);
-				
 				$this->_name='rms_student_paymentdetail';
 				$payment_id_ser = $this->getStudentPaymentStart($id,1);
 				if(empty($payment_id_ser)){
@@ -71,10 +70,27 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				$arr = array(
 						'is_start'=>0
 				);
+				$db->getProfiler()->setEnabled(true);
 				$this->update($arr,$where);
 				
-				
 				$this->_name='rms_student_paymentdetail';
+				if(!empty($data['ids'])){
+					$where="id=".$data['ids'];
+					$arr = array(
+							'is_complete'=>1,
+							'comment'=>"បង់រួច",
+					);
+					$db->getProfiler()->setEnabled(true);
+					$this->update($arr,$where);
+				}
+				$complete=1;
+				if($data['remaining']>0){
+					$complete=0;
+					$comment="មិនទាន់បង់";
+				}else{
+					$complete=1;
+					$comment="បង់រួច";
+				}
 				$arr=array(
 						'payment_id'=>$paymentid,
 						'type'=>1,
@@ -92,10 +108,13 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						'validate'=>$data['end_date'],
 						'references'=>'frome registration',
 					 	'is_parent'		=>$payment_id_ser,
+						'is_complete'	=>$complete,
+						'comment'		=>$comment,
 						'user_id'=>$this->getUserId(),
 				);
+				$db->getProfiler()->setEnabled(true);
 				$this->insert($arr);
-				$db->commit();//if not errore it do....
+				 $db->commit();//if not errore it do....
 			}catch (Exception $e){
 				$db->rollBack();//អោយវាវិលត្រលប់ទៅដើមវីញពេលណាវាជួបErrore
 			}
@@ -103,7 +122,24 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 		function updateRegister($data){
 			$db = $this->getAdapter();//ស្ពានភ្ជាប់ទៅកាន់Data Base
 			$db->beginTransaction();//ទប់ស្កាត់មើលការErrore , មានErrore វាមិនអោយចូល
+	//	print_r($data);exit();
 			try{
+				//សំរាប់ update សិស្សចាស់ is start = 1 វិញ
+				if($data["parent_id"]!=0){
+					if($data["id"]!=$data["old_studens"]){
+						
+						$arr = array(
+								'is_start'=>1
+						);
+						$this->_name='rms_student_paymentdetail';
+						$where="payment_id = " .$data["parent_id"];
+						$db->getProfiler()->setEnabled(true);
+						$this->update($arr,$where);
+						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+						$db->getProfiler()->setEnabled(false); 
+					}
+				}
 				if($data['student_type']==3){//old stu
 					
 				}else{  
@@ -124,8 +160,9 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				}
 				
 				$this->_name='rms_student_payment';
+		  // print_r($data);exit();
 				$arr=array(
-						'student_id'=>$data['id'],
+						'student_id'=>$data['old_studens'],
 						'receipt_number'=>$data['reciept_no'],
 						'time'=>$data['time'],
 // 						'end_hour'=>$data['to_time'],
@@ -145,7 +182,42 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				$where="id=".$data['pay_id'];
 				$this->update($arr, $where);
 				
+				$payment_id_ser = $this->getStudentPaymentStart($data['old_studens'],1);
+				if($data['id']!=$data['old_studens']){
+				if(empty($payment_id_ser)){
+					$payment_id_ser=0;
+				}
 				$this->_name='rms_student_paymentdetail';
+				$where="payment_id = $payment_id_ser ";
+				$arr = array(
+						'is_start'=>0
+				);
+				$db->getProfiler()->setEnabled(true);
+				$this->update($arr,$where);
+				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+				$db->getProfiler()->setEnabled(false);
+				}
+				$this->_name='rms_student_paymentdetail';
+				if(!empty($data['ids'])){
+					$where="id=".$data['ids'];
+					$arr = array(
+							'is_complete'=>1,
+							
+							'comment'=>"បង់រួច",
+					);
+					$db->getProfiler()->setEnabled(true);
+					$this->update($arr,$where);
+				}
+				$complete=1;
+				if($data['remaining']>0){
+					$complete=0;
+					$comment="មិនទាន់បង់";
+				}else{
+					$complete=1;
+					
+					$comment="បង់រួច";
+				}
 				$arr=array(
 						'payment_id'=>$data['pay_id'],
 						'type'=>1,
@@ -162,13 +234,15 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						'start_date'=>$data['start_date'],
 						'validate'=>$data['end_date'],
 						'references'=>'frome registration',
-					 //	'is_parent'		=>$payment_id_ser,
+						'is_complete'	=>$complete,
+						'comment'		=>$comment,
+					 	'is_parent'		=>$payment_id_ser,
 						'user_id'=>$this->getUserId(),
 				);
 				$where="payment_id=".$data['pay_id'];
 				$this->update($arr, $where);
-				
-				$db->commit();//if not errore it do....
+			   // exit();	
+			 	$db->commit();//if not errore it do....
 			}catch (Exception $e){
 				$db->rollBack();//អោយវាវិលត្រលប់ទៅដើមវីញពេលណាវាជួបErrore
 			}
@@ -204,7 +278,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	$db=$this->getAdapter();
     	$sql=" SELECT s.stu_id,s.stu_code,sp.receipt_number,s.academic_year,s.stu_khname,s.stu_enname,s.sex,s.session,s.degree,s.grade,
 		    	sp.payment_term,sp.tuition_fee,sp.discount_percent,sp.other_fee,sp.admin_fee,sp.total,sp.paid_amount,
-		    	sp.balance_due,sp.amount_in_khmer,sp.note,sp.student_type,sp.time,sp.end_hour,spd.start_date,spd.validate
+		    	sp.balance_due,sp.amount_in_khmer,sp.note,sp.student_type,sp.time,sp.end_hour,spd.start_date,spd.validate,spd.is_start,spd.is_parent
 		    	FROM rms_student AS s,rms_student_payment AS sp ,rms_student_paymentdetail AS spd
 		    	WHERE s.stu_id=sp.student_id AND sp.id=spd.payment_id AND sp.id=".$id;
     	return $db->fetchRow($sql);
@@ -217,9 +291,20 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     }
     function getPaymentTerm($generat,$payment_term,$grade,$time){
     	$db = $this->getAdapter();
-    	$sql="SELECT tfd.id,tfd.tuition_fee FROM rms_tuitionfee AS tf,rms_tuitionfee_detail AS tfd WHERE tf.id = fee_id
-              AND tf.time=$time AND tfd.fee_id=$generat AND tfd.class_id=$grade AND tfd.payment_term=$payment_term LIMIT 1";
-    	return $db->fetchRow($sql);
+    		$sql="SELECT tfd.id,tfd.tuition_fee FROM rms_tuitionfee AS tf,rms_tuitionfee_detail AS tfd WHERE tf.id = fee_id
+    		AND tf.time=$time AND tfd.fee_id=$generat AND tfd.class_id=$grade AND tfd.payment_term=$payment_term LIMIT 1";
+    		return $db->fetchRow($sql);
+    }
+    function getBalance($serviceid,$studentid){
+    	$db = $this->getAdapter();
+    	$sql="select rms_student_paymentdetail.id,rms_student_paymentdetail.validate,balance AS price_fee
+    	from rms_student_paymentdetail,rms_student_payment where rms_student_payment.id=rms_student_paymentdetail.payment_id
+    	and rms_student_paymentdetail.service_id=$serviceid and rms_student_payment.student_id=$studentid and is_complete=0 limit 1";
+    	$row=$db->fetchRow($sql);
+    	if($row['price_fee'] > 0){
+    	    $row['sms']='លុយជំពាក់ពីមុន';
+    		return $row;
+    	}
     }
    
     function getAllYearsProgramFee(){

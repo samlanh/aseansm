@@ -96,6 +96,10 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     	}
     	$db = new Registrar_Model_DbTable_DbRegister();
         $form_row=$db->getRegisterById($id);
+        $is_start=$form_row['is_start'];
+        if($is_start==0){
+        	Application_Form_FrmMessage::Sucessfull($this->tr->translate('Can note Edit'), self::REDIRECT_URL . '/register/index');
+        }
         $this->view->degree_row=$form_row;
     	$frm = new Registrar_Form_FrmRegister();
     	$frm_register=$frm->FrmRegistarWU($form_row);
@@ -190,6 +194,15 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     		$payment = $db->getPaymentTerm($data['generat_id'],$data['pay_id'],$data['grade_id'],$data['time']);
     		//print_r($grade);exit();
     		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
+    		print_r(Zend_Json::encode($payment));
+    		exit();
+    	}
+    }
+    function getBanlancePriceAction(){
+    	if($this->getRequest()->isPost()){
+    		$data=$this->getRequest()->getPost();
+    		$db = new Registrar_Model_DbTable_DbRegister();
+    		$payment = $db->getBalance($data['servce_id'],$data['student_id']);
     		print_r(Zend_Json::encode($payment));
     		exit();
     	}

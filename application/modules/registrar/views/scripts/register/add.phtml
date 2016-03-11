@@ -100,10 +100,31 @@
 		payment_term=dijit.byId('payment_term').get('value');
 		grade=dijit.byId('grade').get('value');
 		time=dijit.byId('time').get('value');
+		student_type=dijit.byId('student_type').get('value');
+		if(student_type==3){
+			old_studens=dijit.byId('old_studens').get('value');
+			if(old_studens != -1 ){
+				getBalancePrice(1,old_studens);
+			}else
+			{
+				if(generat!='' && payment_term !='' && grade !='' && time !=''){
+					getPaymentTerms(generat,payment_term,grade,time);
+				}
+			}
+		}else{
+			if(generat!='' && payment_term !='' && grade !='' && time !=''){
+				getPaymentTerms(generat,payment_term,grade,time);
+			}
+		}
+	}
+	function paymentTerms(){
+		generat=dijit.byId('study_year').get('value');
+		payment_term=dijit.byId('payment_term').get('value');
+		grade=dijit.byId('grade').get('value');
+		time=dijit.byId('time').get('value');
 		if(generat!='' && payment_term !='' && grade !='' && time !=''){
 			getPaymentTerms(generat,payment_term,grade,time);
 		}
-		
 	}
 	var payment_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 	var url_getpaymentterm = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-payment-term')); ?>';
@@ -119,6 +140,7 @@
 				handleAs:"json",
 				load: function(data) {
 				      if(data){
+				    	 // dijit.byId('tuitionfee').attr('value',data.price_fee);
 				    	dijit.byId('tuitionfee').attr('value',data.tuition_fee);
 				    	dijit.byId('total').attr('value',data.tuition_fee);
 				    	dijit.byId('books').attr('value',data.tuition_fee);
@@ -131,6 +153,44 @@
 					     dijit.byId('remaining').attr('value','0');
 					     dijit.byId('remark').attr('value','0');
 					     dijit.byId('char_price').attr('value','0');
+					     dijit.byId('not').attr('value','');
+				      }
+				},
+				error: function(err) {
+					alert(err);
+				}
+			});
+	}
+	//get price balance
+	var url_balance = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-banlance-price')); ?>';
+	function getBalancePrice(servce_id,student_id){
+			dojo.xhrPost({
+				url:url_balance,
+				content:{
+					'servce_id':servce_id,
+					'student_id':student_id,
+					},
+				handleAs:"json",
+				load: function(data) {
+					
+				      if(data){
+				    	  dijit.byId('tuitionfee').attr('value',data.price_fee);
+				    	  dijit.byId('ids').attr('value',data.id);
+				     	  dijit.byId('total').attr('value',data.price_fee);
+				    	  dijit.byId('books').attr('value',data.price_fee);
+				    	  dijit.byId('not').attr('value',data.sms);
+				     }else {
+				    	 dijit.byId('ids').attr('value','');
+				    	 paymentTerms();
+				 /*   	 dijit.byId('tuitionfee').attr('value','0'); 
+				    	 dijit.byId('total').attr('value','0'); 
+				    	 dijit.byId('discount').attr('value','0');
+				    	 dijit.byId('books').attr('value','0');
+					     dijit.byId('addmin_fee').attr('value','0');
+					     dijit.byId('remaining').attr('value','0');
+					     dijit.byId('remark').attr('value','0');
+					     dijit.byId('char_price').attr('value','0');
+						     */
 				      }
 				},
 				error: function(err) {
@@ -268,7 +328,8 @@ fieldset{  background:none;}
 					<table style="margin: 0 auto; width: 100%;padding:10px;" cellspacing="7" >
 						<tr>
 							<td style="width: 160px"><?php echo $tr->translate("STUDENT_TYPE");?></td>
-							<td><?php  echo $register->getElement('student_type');?>
+							<td><?php echo $register->getElement('ids'); ?>
+							<?php  echo $register->getElement('student_type');?>
 							</td>
 							<td><?php echo $tr->translate("RECEIPT_NO");?></td>
 							<td><?php echo $register->getElement('reciept_no');?>
