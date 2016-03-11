@@ -51,9 +51,6 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     	$db->beginTransaction();
 		
     	$fee_id = $this->getCondition($_data);
-    	
-    	//print_r($fee_id);exit();
-    	
     	try{
     		if(!empty($fee_id)){
     			
@@ -92,7 +89,6 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     	}catch (Exception $e){
     		$db->rollBack();
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
-    		echo $e->getMessage();
     		return false;
     	}
     }
