@@ -15,24 +15,25 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     {
     	try{
     		$db = new Registrar_Model_DbTable_DbStudentServicePayment();
-//     		    		if($this->getRequest()->isPost()){
-//     		    			$search=$this->getRequest()->getPost();
-//     		    		}
-//     		    		else{
-//     		    			$search = array(
-//     		    					'adv_search' => '',
+    		    		if($this->getRequest()->isPost()){
+    		    			$search=$this->getRequest()->getPost();
+    						$this->view->adv_search=$search;
+    		    		}
+    		    		else{
+    		    			$search = array(
+    		    					'adv_search' => '',
 //     		    					'search_status' => -1,
-//     		    					'start_date'=> date('Y-m-01'),
-//     		    					'end_date'=>date('Y-m-d'));
-//     		    		}
-    		$rs_rows= $db->getAllStudenTServicePayment();
+    		    					'start_date'=> date('Y-m-d'),
+    		    					'end_date'=>date('Y-m-d'));
+    		    		}
+    		$rs_rows= $db->getAllStudenTServicePayment($search);
     		$list = new Application_Form_Frmtable();
-    		$collumns = array("RECEIPT_NO","YEARS","NAME","SEX","GRAND_TOTAL","DISCOUNT",
+    		$collumns = array("RECEIPT_NO","YEARS","CODE","NAME","SEX","GRAND_TOTAL","DISCOUNT",
     				          "TOTAL_PAYMENT","MONEY_RECEIVED","BALANCE","REMAINING","DATE_PAY","USER");
     		$link=array(
     				'module'=>'registrar','controller'=>'studentservicepayment','action'=>'edit',
     		);
-    		$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('year'=>$link,'receipt_number'=>$link,'name'=>$link,'service_name'=>$link));
+    		$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('year'=>$link,'receipt_number'=>$link,'name'=>$link,'service_name'=>$link,'code'=>$link));
     	}catch (Exception $e){
     		//Application_Form_FrmMessage::message("Application Error");
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());

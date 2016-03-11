@@ -310,7 +310,7 @@ function printSave(){
 								</td>
 							</tr>
 							<tr>
-								<td colspan="3"> <div style="padding-left: 90px;font-family: Khmer OS Battambang;color:#000;"><?php $session_user=new Zend_Session_Namespace('auth'); $username = $session_user->first_name;echo $username; ?></div></td>
+								<td colspan="3"> <div style="padding-left: 100px;font-family: Khmer OS Battambang;color:#000;font-size: 13px;"><?php $session_user=new Zend_Session_Namespace('auth'); $last = $session_user->last_name;$first=$session_user->first_name;echo $last.' '.$first; ?></div></td>
 							</tr>
 							
 						</table>

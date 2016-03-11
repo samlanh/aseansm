@@ -362,7 +362,7 @@ function printSave(){
 							<tr><td>&nbsp;</td></tr>
 							<tr>
 								<td align="left">
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';padding-left: 50px;">ហត្ថលេខា និង​ ឈ្មោះអ្នកទទួល   <?php echo $this->rr['USER'];?></strong><br />
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';padding-left: 50px;">ហត្ថលេខា និង​ ឈ្មោះអ្នកទទួល  </strong><br />
 								</td>
 								<td>&nbsp;</td>
 								<td align="right">
@@ -370,7 +370,7 @@ function printSave(){
 								</td>
 							</tr>
 							<tr>
-								<td colspan="3"> <div style="padding-left: 90px;font-family: Khmer OS Battambang;color:#000;"><?php $session_user=new Zend_Session_Namespace('auth'); $username = $session_user->first_name;echo $username; ?></div></td>
+								<td colspan="3"> <div style="padding-left: 100px;font-family: Khmer OS Battambang;color:#000;font-size: 13px;"><?php $session_user=new Zend_Session_Namespace('auth'); $last = $session_user->last_name;$first=$session_user->first_name;echo $last.' '.$first; ?></div></td>
 							</tr>
 						</table>
 	</div>
