@@ -9,14 +9,26 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 	}
 	public function indexAction(){
 		try{
+// 			if($this->getRequest()->isPost()){
+// 				$_data=$this->getRequest()->getPost();
+// 				$search = array(
+// 						'txtsearch' => $_data['txtsearch']);
+// 			}
+// 			else{
+// 				$search = array(
+// 						'txtsearch' => '');
+// 			}
+
 			if($this->getRequest()->isPost()){
-				$_data=$this->getRequest()->getPost();
-				$search = array(
-						'txtsearch' => $_data['txtsearch']);
+				$search=$this->getRequest()->getPost();
+				$this->view->adv_search=$search;
 			}
 			else{
 				$search = array(
-						'txtsearch' => '');
+						'adv_search' => '',
+						//     		    					'search_status' => -1,
+						'start_date'=> date('Y-m-d'),
+						'end_date'=>date('Y-m-d'));
 			}
 			$db_student= new Foundation_Model_DbTable_DbStudent();
 			$rs_rows = $db_student->getAllStudent($search);
@@ -30,10 +42,11 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 				$link=array(
 						'module'=>'foundation','controller'=>'register','action'=>'edit',
 				);
-				$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('stu_enname'=>$link,'stu_khname'=>$link));
+				$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('stu_enname'=>$link,'stu_khname'=>$link,'grade'=>$link));
 		}catch (Exception $e){
 			Application_Form_FrmMessage::message("Application Error");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			echo $e->getMessage();
 		}		
 	
 	}
@@ -44,22 +57,37 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 				$_data = $this->getRequest()->getPost();
 				//$_add = new Foundation_Model_DbTable_DbStudent();
 				$db->addStudent($_data);
+				if(isset($_data['save_close'])){
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/register");
+				}else{
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/register/add");
+				}
 				Application_Form_FrmMessage::message("INSERT_SUCCESS");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+				echo $e->getMessage();
 			}
 		}
 		$service = new Foundation_Model_DbTable_DbApplication();
 		$rows = $service->getlang();
 		array_unshift($rows, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
-		$this->view->serviecename = $rows;
+		$this->view->language = $rows;
+		$_db = new Application_Model_DbTable_DbGlobal();
+		$row =$_db->getOccupation();
+		array_unshift($row, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
+		$this->view->occupation = $row;
 		
 		$this->view->row = $db->getDegreeLanguage();
-		$_db = new Application_Model_DbTable_DbGlobal();
+		
+		$this->view->year = $db->getAllYear();
+		
 		$this->view->degree = $rows = $_db->getAllFecultyName();
-		$this->view->occupation = $row =$_db->getOccupation();
+		
 		$this->view->province = $row =$_db->getProvince();
+		
+		
+		
 	}
 	public function editAction(){
 		$id=$this->getRequest()->getParam("id");
@@ -85,10 +113,21 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 		array_unshift($rows, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
 		$this->view->serviecename = $rows;
 		$this->view->row = $db->getDegreeLanguage();
+		
 		$_db = new Application_Model_DbTable_DbGlobal();
+		
+		$row =$_db->getOccupation();
+		
+		array_unshift($row, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
+		
+		$this->view->occupation = $row;
+		
 		$this->view->degree = $_db->getAllFecultyName();
-		$this->view->occupation = $_db->getOccupation();
+		
+		//$this->view->occupation = $_db->getOccupation();
+		
 		$this->view->province = $_db->getProvince();
+		
 		$this->view->rs = $db->getStudentById($id);
 		
 	}
@@ -129,5 +168,42 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 		}
 	}
 	
+	function addJobAction(){
+		if($this->getRequest()->isPost()){
+			try{
+				$data = $this->getRequest()->getPost();
+				$_dbmodel = new Global_Model_DbTable_DbOccupation();
+				$row = $_dbmodel->addNewOccupationPopup($data);
+				$result = array("id"=>$row);
+				print_r(Zend_Json::encode($row));
+				exit();
+				//Application_Form_FrmMessage::message("INSERT_SUCCESS");
+			}catch(Exception $e){
+				Application_Form_FrmMessage::message("INSERT_FAIL");
+				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			}
+		}
+	}
+	
+	
+	function getStuNoAction(){
+		if($this->getRequest()->isPost()){
+			$data=$this->getRequest()->getPost();
+			$db = new Foundation_Model_DbTable_DbStudent();
+			$stu_no = $db->getNewAccountNumber($data['newid'],1);
+			print_r(Zend_Json::encode($stu_no));
+			exit();
+		}
+	}
+	
 	
 }
+
+
+
+
+
+
+
+
+
