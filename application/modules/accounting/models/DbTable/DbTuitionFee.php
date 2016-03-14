@@ -12,22 +12,22 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     function getAllTuitionFee($search=''){
     	$db=$this->getAdapter();
     	$sql = "SELECT id,CONCAT(from_academic,' - ',to_academic) AS academic,
-    		    generation,(select name_kh from `rms_view` where `rms_view`.`type`=7 and `rms_view`.`key_code`=`rms_tuitionfee`.`time`)AS time,create_date ,status FROM `rms_tuitionfee` WHERE 1";
+    		    generation,(select name_kh from `rms_view` where `rms_view`.`type`=7 and `rms_view`.`key_code`=`rms_tuitionfee`.`time`)AS time,
+    		    create_date ,status FROM `rms_tuitionfee` WHERE 1";
     	$order=" ORDER BY id DESC ";
     	$where = '';
     	if(empty($search)){
     		return $db->fetchAll($sql.$order);
     	}
-    	if(!empty($search['txtsearch'])){
-    		$where.=" AND title LIKE '%".$search['txtsearch']."%'";
-    	}
-    	if($search['type']>-1){
-    		$where.= " AND type = ".$search['type'];
-    	}
-    	if($search['status']>-1){
-    		$where.= " AND status = '".$search['status']."'";
-    	}
-    	echo $sql.$where.$order;
+	    if(!empty($search['txtsearch'])){
+	    	$s_where = array();
+	    	$s_search = trim($search['txtsearch']);
+		 	$s_where[] = " CONCAT(from_academic,'-',to_academic) LIKE '%{$s_search}%'";
+	    	$s_where[] = " generation LIKE '%{$s_search}%'";
+	    	$s_where[] = " (select name_kh from `rms_view` where `rms_view`.`type`=7 and `rms_view`.`key_code`=`rms_tuitionfee`.`time`) LIKE '%{$s_search}%'";
+// 	    	$s_where[] = " en_name LIKE '%{$s_search}%'";
+	    	$where .=' AND ( '.implode(' OR ',$s_where).')';
+	    }
     	return $db->fetchAll($sql.$where.$order);
     }
     function getFeebyOther($fee_id){

@@ -105,7 +105,7 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
    	WHERE s.stu_id=sp.student_id  AND s.stu_type=1 AND sp.payfor_type=1";
    	return $db->fetchAll($sql);
    }
-   public function getStudentSuspendService(){
+   public function getStudentSuspendService($search){
    	$db = $this->getAdapter();
    	$sql="SELECT id,suspend_no,
   	 	(SELECT `stu_code` FROM  `rms_student` WHERE stu_id=student_id LIMIT 1) AS code,
@@ -113,9 +113,22 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
    		(SELECT `stu_enname` FROM  `rms_student` WHERE stu_id=student_id LIMIT 1) AS en_name,
    		(SELECT (SELECT `name_kh` FROM`rms_view` WHERE `type`=2 AND `key_code`=`sex`) FROM `rms_student` WHERE stu_id=student_id LIMIT 1),
    		define_date
-   		FROM rms_suspendservice ORDER BY id DESC
-   	";
-   	return $db->fetchAll($sql);
+   		FROM rms_suspendservice where 1 ";
+   	$where="";
+   	$order=" ORDER BY id DESC";
+   	if(empty($search)){
+   		return $db->fetchAll($sql.$order);
+   	}
+   	if(!empty($search['txtsearch'])){
+   		$s_where = array();
+   		$s_search = trim($search['txtsearch']);
+   		$s_where[] = " suspend_no LIKE '%{$s_search}%'";
+   		$s_where[] = " (SELECT `stu_code` FROM  `rms_student` WHERE rms_student.stu_id=student_id LIMIT 1) LIKE '%{$s_search}%'";
+   		$s_where[] = " (SELECT `stu_khname` FROM  `rms_student` WHERE rms_student.stu_id=student_id LIMIT 1) LIKE '%{$s_search}%'";
+   		$s_where[] = " (SELECT `stu_enname` FROM  `rms_student` WHERE rms_student.stu_id=student_id LIMIT 1) LIKE '%{$s_search}%'";
+   		$where .=' AND ( '.implode(' OR ',$s_where).')';
+   	}
+   	return $db->fetchAll($sql.$where.$order);
    }
    public function getStudentSuspendServiceByID($id){
    	$db = $this->getAdapter();

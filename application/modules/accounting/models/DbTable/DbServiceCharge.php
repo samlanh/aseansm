@@ -36,6 +36,18 @@ class Accounting_Model_DbTable_DbServiceCharge extends Zend_Db_Table_Abstract
     	$order=" ORDER BY id DESC ";
     	$where = '';
     	
+    	if(empty($search)){
+    		return $db->fetchAll($sql.$order);
+    	}
+    	if(!empty($search['txtsearch'])){
+    		$s_where = array();
+    		$s_search = trim($search['txtsearch']);
+    		$s_where[] = " CONCAT(from_academic,'-',to_academic) LIKE '%{$s_search}%'";
+    		$s_where[] = " generation LIKE '%{$s_search}%'";
+//     		$s_where[] = " kh_name LIKE '%{$s_search}%'";
+//     		$s_where[] = " en_name LIKE '%{$s_search}%'";
+    		$where .=' AND ( '.implode(' OR ',$s_where).')';
+    	}
     	return $db->fetchAll($sql.$where.$order);
     }
     

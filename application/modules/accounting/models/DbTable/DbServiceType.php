@@ -79,19 +79,19 @@ class Accounting_Model_DbTable_DbServiceType extends Zend_Db_Table_Abstract
     	,(SELECT CONCAT(last_name,' ',first_name) FROM rms_users WHERE user_id=id ) AS user_name
     	 FROM rms_program_type
     	WHERE 1";
-    	$order=" ORDER BY title";
+    	$order=" ORDER BY id DESC";
     	$where = '';
     	if(empty($search)){
     		return $db->fetchAll($sql.$order);
     	}
     	if(!empty($search['txtsearch'])){
-    		$where.=" AND title LIKE '%".$search['txtsearch']."%'";
-    	}
-    	if($search['type']>-1){
-    		$where.= " AND type = ".$search['type'];
-    	}
-    	if($search['status']>-1){
-    		$where.= " AND status = '".$search['status']."'";
+    		$s_where = array();
+    		$s_search = trim($search['txtsearch']);
+    		$s_where[] = " title LIKE '%{$s_search}%'";
+    		$s_where[] = " (select name_en from rms_view where rms_view.type=9 and rms_view.key_code=rms_program_type.type) LIKE '%{$s_search}%'";
+//     		$s_where[] = " kh_name LIKE '%{$s_search}%'";
+//     		$s_where[] = " en_name LIKE '%{$s_search}%'";
+    		$where .=' AND ( '.implode(' OR ',$s_where).')';
     	}
     	return $db->fetchAll($sql.$where.$order);
     }

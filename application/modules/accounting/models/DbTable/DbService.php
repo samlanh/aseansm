@@ -57,7 +57,7 @@ class Accounting_Model_DbTable_DbService extends Zend_Db_Table_Abstract
 	    			'title'=>$_data['add_title'],
 	    			'ser_cate_id'=>$_data['title'],
     				'desc'=>$_data['desc'],
-    				'create_date'=>Zend_Date::now(),
+    				//'create_date'=>Zend_Date::now(),
     				'status'=>$_data['status'],
     				'user_id'=>$this->getUserId());
     	$where=$this->getAdapter()->quoteInto("service_id=?", $_data["id"]);
@@ -65,7 +65,8 @@ class Accounting_Model_DbTable_DbService extends Zend_Db_Table_Abstract
     }
     public function getServiceById($id){
     	$db = $this->getAdapter();
-    	$sql = "SELECT * FROM rms_program_name WHERE service_id = ".$id;
+    	$sql = "SELECT *
+    	 FROM rms_program_name WHERE service_id = ".$id;
     	return $db->fetchRow($sql);
     }	
     
@@ -78,23 +79,20 @@ class Accounting_Model_DbTable_DbService extends Zend_Db_Table_Abstract
     	,`desc`,p.`status`,p.`create_date`
     	,(SELECT CONCAT(last_name,' ',first_name) FROM rms_users WHERE p.user_id=id ) AS user_name
     	FROM `rms_program_name` AS p Where type=2 ";
-    	$order=" ORDER BY p.title";
+    	$order=" ORDER BY service_id DESC";
     	 
     	if(empty($search)){
     		return $db->fetchAll($sql.$order);
     	}
-    	if(!empty($search['txtsearch'])){
-    		$where.=" AND p.title LIKE '%".$search['txtsearch']."%'";
-    	}
-    	/*if($search['type']>-1){
-    	 $where.= " AND type = ".$search['type'];
-    	}*/
-    	if($search['status']>-1){
-    		$where.= " AND p.status = '".$search['status']."'";
-    	}
-    	if($search['status']>-1){
-    		//$where.= " AND status = '".$search['status']."'";
-    	}
+	    if(!empty($search['txtsearch'])){
+	    	$s_where = array();
+	    	$s_search = trim($search['txtsearch']);
+		 	$s_where[] = " p.title LIKE '%{$s_search}%'";
+	    	$s_where[] = " (SELECT title FROM `rms_program_type` WHERE id=ser_cate_id LIMIT 1) LIKE '%{$s_search}%'";
+// 	    	$s_where[] = " kh_name LIKE '%{$s_search}%'";
+// 	    	$s_where[] = " en_name LIKE '%{$s_search}%'";
+	    	$where .=' AND ( '.implode(' OR ',$s_where).')';
+	    }
     	return $db->fetchAll($sql.$where.$order);
     }
     public function AddServiceType($_data){
