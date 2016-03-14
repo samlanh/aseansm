@@ -13,11 +13,11 @@ class Global_AcademicyearController extends Zend_Controller_Action {
 			if($this->getRequest()->isPost()){
 				$_data=$this->getRequest()->getPost();
 				$search = array(
-						'title' => $_data['title']);
+						'txtsearch' => $_data['adv_search']);
 			}
 			else{
 				$search = array(
-						'title' => '');
+						'txtsearch' => '');
 			}
 			$rs_rows= $db->getAllacademicyear($search);
 			$list = new Application_Form_Frmtable();
@@ -37,6 +37,7 @@ class Global_AcademicyearController extends Zend_Controller_Action {
 		$frm = $frm->frmSearchTeacher();
 		Application_Model_Decorator::removeAllDecorator($frm);
 		$this->view->frm_search = $frm;
+		$this->view->adv_search = $search;
 	}
 	function addAction()
 	{

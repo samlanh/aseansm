@@ -79,7 +79,7 @@ class Global_Model_DbTable_DbDept extends Zend_Db_Table_Abstract
 	
 	public function getAllMajorList($search=''){
 		$db = $this->getAdapter();
-		$sql = " SELECT m.major_id AS id, m.major_enname,m.major_khname,
+		$sql = " SELECT m.major_id AS id,m.major_khname, m.major_enname,
         (select d.en_name from rms_dept AS d where m.dept_id=d.dept_id )AS dept_name,
         m.shortcut,m.modify_date
         FROM rms_major AS m WHERE 1";

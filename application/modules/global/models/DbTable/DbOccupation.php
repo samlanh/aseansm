@@ -19,6 +19,19 @@ class Global_Model_DbTable_DbOccupation extends Zend_Db_Table_Abstract
 		);
 		return  $this->insert($_arr);
 	}
+	
+	public function addNewOccupationPopup($_data){
+		$_arr=array(
+				'occu_name'	  => $_data['occu_name'],
+				'occu_enname'	  => $_data['occu_enname'],
+				'create_date' => Zend_Date::now(),
+				'status'   => $_data['status_j'],
+				'user_id'	  => $this->getUserId()
+		);
+		return  $this->insert($_arr);
+	}
+	
+	
 	public function getOccupationById($id){
 		$db = $this->getAdapter();
 		$sql = "SELECT * FROM rms_occupation WHERE occupation_id = ".$db->quote($id);

@@ -32,7 +32,7 @@ class Global_MajorController extends Zend_Controller_Action {
 // 			$glClass = new Application_Model_GlobalClass();
 // 	    	$rs_rows = $glClass->getImgActive($rs_rows, BASE_URL, true);
 	    	$list = new Application_Form_Frmtable();
-	    	$collumns = array("NAME_EN","NAME_KH","DEGREE","SHORTCUT","MODIFY_DATE");
+	    	$collumns = array("NAME_KH","NAME_EN","DEGREE","SHORTCUT","MODIFY_DATE");
 	    	$link=array(
 	    			'module'=>'global','controller'=>'major','action'=>'edit',
 	    	);

@@ -23,19 +23,23 @@ class Global_Model_DbTable_DbCar extends Zend_Db_Table_Abstract
     			);  	
     	$this->insert($arr);   	
     }
-    function getAllCars($search=null){
+    function getAllCars($search){
     	$db = $this->getAdapter();
     	$sql = " SELECT id,carid,carname,drivername,tel,zone,note
-    	FROM rms_car
-    	WHERE 1 ";
-    	$order=" order by carname";
-    	$where = '';
-    	if(!empty($search['title'])){
-    		$where.=" AND ( carname LIKE '%".$search['title']."%') ";
-    	}
-    	if($search['status']>-1){
-    		$where.= " AND is_active = ".$db->quote($search['status']);
-    	}
+    	FROM rms_car WHERE 1 ";
+    	$order=" order by id DESC";
+    	$where = ' ';
+	    if(empty($search)){
+	    		return $db->fetchAll($sql.$order);
+	    }
+	    if(!empty($search['title'])){
+	    	$s_where = array();
+	    	$s_search = trim($search['title']);
+		 	$s_where[] = " carid LIKE '%{$s_search}%'";
+	    	$s_where[] = " carname LIKE '%{$s_search}%'";
+	    	$s_where[] = " drivername LIKE '%{$s_search}%'";
+	    	$where .=' AND ( '.implode(' OR ',$s_where).')';
+	    }
     	return $db->fetchAll($sql.$where.$order);
     }
     
@@ -48,7 +52,6 @@ class Global_Model_DbTable_DbCar extends Zend_Db_Table_Abstract
     }
     public function updateCar($data){
     	$_arr=array(
-    			
     			'carid'=>$data['Car_ID'],
     			'carname'=>$data['Car_Name'],
     			'drivername'=>$data['Driver_Name'],
@@ -56,7 +59,6 @@ class Global_Model_DbTable_DbCar extends Zend_Db_Table_Abstract
     			'zone'=>$data['Zone'],
     			'note'=>$data['Note'],
     			'status'=>$data['status']
-    			
     	);
     	$where=$this->getAdapter()->quoteInto("id=?", $data['id']);
     	$this->update($_arr, $where);

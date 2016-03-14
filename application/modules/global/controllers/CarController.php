@@ -14,13 +14,12 @@ class Global_CarController extends Zend_Controller_Action {
 				$_data=$this->getRequest()->getPost();
 				$search = array(
 						'title' => $_data['title'],
-						'status' => $_data['status_search']);
+						);
 			}
 			else{
 			
 				$search = array(
 						'title' => '',
-						'status' => -1,
 				);
 			
 			}
@@ -51,10 +50,15 @@ class Global_CarController extends Zend_Controller_Action {
 			try {
 				$_dbcar = new Global_Model_DbTable_DbCar();
 				$_dbcar->addcar($_data);
-				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/global/car/add");
+				if(isset($_data['save_close'])){
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/global/car");
+				}else{
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/global/car/add");
+				}
+				Application_Form_FrmMessage::message("INSERT_SUCCESS");
 			}catch (Exception $e) {
 				Application_Form_FrmMessage::message("INSERT_FAIL");
-				$err =$e->getMessage();
+				$err = $e->getMessage();
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
 			}
 		}

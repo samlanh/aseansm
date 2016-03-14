@@ -151,7 +151,7 @@ class Global_Model_DbTable_DbTeacher extends Zend_Db_Table_Abstract
 			$s_where[] = " (select name_kh from rms_view where rms_view.type=2 and rms_view.key_code=rms_teacher.sex) LIKE '%{$s_search}%'";
 			$s_where[] = " tel LIKE '%{$s_search}%'";
 			$s_where[] = " email LIKE '%{$s_search}%'";
-			$s_where[] = " degree LIKE '%{$s_search}%'";
+			$s_where[] = " (select name_kh from rms_view where type=3 and rms_view.key_code=rms_teacher.degree) LIKE '%{$s_search}%'";
 			$s_where[] = " status LIKE '%{$s_search}%'";
 			$s_where[] = " user_id LIKE '%{$s_search}%'";
 			

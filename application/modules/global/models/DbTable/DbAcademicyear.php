@@ -81,8 +81,46 @@ class Global_Model_DbTable_DbAcademicyear extends Zend_Db_Table_Abstract
 		$sql = ' SELECT id, fromyear, toyear, batch, study_start, study_end, duration, note FROM rms_academicperiod WHERE 1';
 		$where = '';
 		$order_by=' order by id DESC';
+		
+		if(empty($search)){
+			return $db->fetchAll($sql.$order_by);
+		}
+		if(!empty($search['txtsearch'])){
+			$s_where = array();
+			$s_search = trim($search['txtsearch']);
+			$s_where[] = " fromyear LIKE '%{$s_search}%'";
+			$s_where[] = " toyear LIKE '%{$s_search}%'";
+			$s_where[] = " batch LIKE '%{$s_search}%'";
+			$where .=' AND ( '.implode(' OR ',$s_where).')';
+		}
+		
+		
 		return $db->fetchAll($sql.$where.$order_by);
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
