@@ -1,6 +1,6 @@
 <?php
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-	echo $this->headTitle($tr->translate('OCCUPATION')); 
+	echo $this->headTitle($tr->translate('EDIT_OCCUPATION')); 
 ?>
 
 
@@ -41,10 +41,9 @@
 						</tr>
 						<tr>
 							<td colspan="4" align="center">
-								 <input type="submit" value="រក្សាទុក " label="រក្សាទុក " id="busyButton" dojoType="dijit.form.Button" 
-									iconClass="dijitEditorIcon dijitEditorIconSave" /> 
-									<input type="button" value="ចាកចេញ" label="ចាកចេញ" id="close" dojoType="dijit.form.Button" 
-									iconClass="dijitEditorIcon dijitEditorIconCancel" onclick="cancel();"/>
+								 <input iconClass="dijitIconClear" type="reset" value="សំអាត" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
+							 	 <input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('GO_EDIT');?>" dojoType="dijit.form.Button" 
+									iconClass="dijitEditorIcon dijitEditorIconSave" />
 							</td>
 						</tr>
 						
