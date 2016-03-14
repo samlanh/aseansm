@@ -164,7 +164,7 @@ Class Registrar_Form_FrmCourseStudy extends Zend_Dojo_Form {
 		$old_studens =  new Zend_Dojo_Form_Element_FilteringSelect('old_studens');
 		$old_studens->setAttribs(array('dojoType'=>$this->filter,
 				'class'=>'fullside',
-				'Onchange'=>"getGepOldStudentById();",
+				'Onchange'=>"getGepOldStudentById();getPriceBalance();",
 				));
 		$opt_gep=$reciept->getAllGepOldStudent();
 		$opts=array(-1=>$this->tr->translate("student id"));
@@ -211,7 +211,7 @@ Class Registrar_Form_FrmCourseStudy extends Zend_Dojo_Form {
 				'dojoType'=>$this->filter,
 				'required'=>'true',
 				'class'=>'fullside',
-				'onchange'=>'changeMajor();'));
+				'onchange'=>'changeMajor();getShortcut();'));
 		
 		
 		$opt_marjor = array(-1=>$this->tr->translate("SELECT_MAJOR"));
@@ -327,7 +327,7 @@ Class Registrar_Form_FrmCourseStudy extends Zend_Dojo_Form {
 				'class'=>'fullside',
 				'required'=>'true',
 				'class'=>'fullside',
-				'onchange'=>'changControll();',
+				'onchange'=>'changControll();getPricesBalance();',
 		));
 		$opts = array(   1=>$this->tr->translate('NEW_STUDENT'),
 			           	3=>$this->tr->translate('OLD_STUDENT')
@@ -349,8 +349,17 @@ Class Registrar_Form_FrmCourseStudy extends Zend_Dojo_Form {
 		$session->setMultiOptions($opt_session);
 		
 		$id = new Zend_Form_Element_Hidden('id');
+		$ids = new Zend_Form_Element_Hidden('ids');
+		$ids->setAttribs(array('dojoType'=>$this->text,
+				'class'=>'fullside',
+				'required'=>'true',
+				'class'=>'fullside',
+		));
+		$parent = new Zend_Form_Element_Hidden('parent_id');
+		
 		if($data!=null){
 			 //print_r($data);exit();
+			$parent->setValue($data["is_parent"]);
 			$id->setValue($data['stu_id']);
 			$_studid->setValue($data['stu_code']);
 			$_invoice_no->setValue($data['receipt_number']);
@@ -376,7 +385,7 @@ Class Registrar_Form_FrmCourseStudy extends Zend_Dojo_Form {
 			$end_date->setValue($data['validate']);
 		}
 		$this->addElements(array(
-			  $student_type,$old_studens,$old_student,$room,$session,$id,$generation,$char_price,$end_date,$start_date,$not,$books,$addmin_fee,$remaining,$total, $_year_one,$_new_student,$_invoice_no, $_pay_date, $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,$metion,
+			  $parent,$student_type,$old_studens,$old_student,$room,$session,$ids,$id,$generation,$char_price,$end_date,$start_date,$not,$books,$addmin_fee,$remaining,$total, $_year_one,$_new_student,$_invoice_no, $_pay_date, $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,$metion,
 			  $_phone,$_dept,$_major,$_batch,$_year,$_session,$_term,$_fee,$_disc,$_paid,$_paid_kh,$_remark,$_is_hold ));
 		
 		return $this;

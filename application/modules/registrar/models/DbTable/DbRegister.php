@@ -62,6 +62,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				$db->getProfiler()->setEnabled(true);
 				$paymentid = $this->insert($arr);
 				$this->_name='rms_student_paymentdetail';
+	            //update is_start=0 and is_parent=$payment_id_ser when add old student 
 				$payment_id_ser = $this->getStudentPaymentStart($id,1);
 				if(empty($payment_id_ser)){
 					$payment_id_ser=0;
@@ -72,7 +73,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				);
 				$db->getProfiler()->setEnabled(true);
 				$this->update($arr,$where);
-				
+				//update is_complet = 1 becuse for get balance price 
 				$this->_name='rms_student_paymentdetail';
 				if(!empty($data['ids'])){
 					$where="id=".$data['ids'];
@@ -341,7 +342,9 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	if($type==1 || $type==2 || $type==3 || $type==4){
     		$pre='';
     	}else {
-    		$pre='CH';
+    		$sql="SELECT shortcut FROM rms_dept WHERE dept_id=$type LIMIT 1";
+    		$shortcut=$db->fetchOne($sql);
+    		$pre=$shortcut;
     	}
     	for($i = $acc_no;$i<5;$i++){
     		$pre.='0';
@@ -388,5 +391,6 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	WHERE  stu_type=1 AND stu_id=$stu_id LIMIT 1";
     	return $db->fetchRow($sql);
     }
+    
 }
 

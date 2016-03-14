@@ -78,7 +78,8 @@
 				load: function(data) {
 					//alert(data);
 					//url_getstuno  = getDataStorefromJSON('id','name', data);
-					 //dijit.byId('stu_id').attr('value',data);   
+					 //dijit.byId('stu_id').attr('value',data);  
+					 dijit.byId('stu_id').attr('value',data);   
 
 				},
 				error: function(err) {
@@ -285,6 +286,7 @@ fieldset{  background:none;}
 						<tr>
 							<td style="width: 160px"><?php echo $tr->translate("STUDENT_TYPE");?></td>
 							<td><?php echo $register->getElement('student_type');?>
+							    <?php echo $register->getElement('ids');?><?php echo $register->getElement('parent_id');?>
 							    <input type="hidden" name="stus_id" id="stus_id" value="<?php echo $this->row_gep['stu_id'];?>"/>
 							</td>
 							<!--  <td><div >
@@ -521,10 +523,7 @@ function printSave(){
 				    <td></td><td class="one khmerbold" >&nbsp;&nbsp;<hr style="background-color: #000 ! important; height: 1px ! important;border-width: 0px;" ></td>
 				</tr>
 				<tr>
-				    <td colspan="4" align="left" class="khmerbold" style="line-height: 14px;">
-				    ​ *សម្គាល់ : ប្រាក់ដែលបានបង់ហើយមិនអាចដកវិញបានទេ​ ។<br/> 
-				     &nbsp;*Note: All fees are not transferable or refundable . 
-				    </td>
+				    <td colspan="4" class="khmerbold" style="line-height: 14px;">&nbsp;&nbsp;ហត្ថលេខា និង​ ឈ្មោះអ្នកបង់   </td>
 				    <td colspan="4" align="right" class="khmerbold" style="line-height: 14px;">
 				        <h3 style="padding-right: 5px ! important;margin-bottom: -10px  !important;">
 				              <?php $session_user=new Zend_Session_Namespace('auth');
@@ -532,6 +531,13 @@ function printSave(){
 						           $username = $session_user->first_name;
 						           echo " Official's Signature : ".$last_name." ".$username;?>
 				        </h3><br/>15/Aug/2015 10:30AM Sek Sokny
+				    </td>
+				</tr>
+				<tr><td style="height: 30px;"></td></tr>
+				<tr>
+				    <td colspan="8" align="left" class="khmerbold" style="line-height: 14px;">
+				    ​ *សម្គាល់ : ប្រាក់ដែលបានបង់ហើយមិនអាចដកវិញបានទេ​ ។<br/> 
+				     &nbsp;*Note: All fees are not transferable or refundable . 
 				    </td>
 				</tr>
 			</table>
@@ -671,5 +677,85 @@ function changControll(){
 		document.getElementById('student_id').style.display="block";
 		document.getElementById('student_ids').style.display="none";
 	} 
+}
+///get price balance where complete=0
+function getPriceBalance(){
+	student_type=dijit.byId('student_type').get('value');
+	old_studens=dijit.byId('old_studens').get('value');
+	if(student_type==3){
+		if(old_studens != -1){
+			getBalancePrice(2,old_studens);
+		}
+	}
+}
+//get price balance
+var url_balance = '<?php echo $this->url(array('module'=>'registrar','controller'=>'coursestudy','action'=>'get-banlance-price')); ?>';
+function getBalancePrice(servce_id,student_id){
+		dojo.xhrPost({
+			url:url_balance,
+			content:{
+				'servce_id':servce_id,
+				'student_id':student_id,
+				},
+			handleAs:"json",
+			load: function(data) {
+				
+			      if(data){
+			    	  dijit.byId('tuitionfee').attr('value',data.price_fee);
+			    	  dijit.byId('ids').attr('value',data.id);
+			     	  dijit.byId('total').attr('value',data.price_fee);
+			    	  dijit.byId('books').attr('value',data.price_fee);
+			    	  dijit.byId('not').attr('value',data.sms);
+			    	 
+			     }else {
+			    	 dijit.byId('ids').attr('value','');
+			    	// paymentTerms();
+			    	 dijit.byId('tuitionfee').attr('value','0'); 
+			    	 dijit.byId('total').attr('value','0'); 
+			    	 dijit.byId('discount').attr('value','0');
+			    	 dijit.byId('books').attr('value','0');
+				     dijit.byId('addmin_fee').attr('value','0');
+				     dijit.byId('remaining').attr('value','0');
+				     dijit.byId('remark').attr('value','0');
+				     dijit.byId('char_price').attr('value','0');
+				     dijit.byId('not').attr('value','');
+			      }
+			},
+			error: function(err) {
+				alert(err);
+			}
+		});
+}
+///get gep old student
+var url_getGepoldstudent = '<?php echo $this->url(array('module'=>'registrar','controller'=>'coursestudy','action'=>'get-gep-old-student')); ?>';
+function getGepOldStudentById(){
+	student_id=dijit.byId('old_studens').get('value');
+		dojo.xhrPost({
+			url:url_getGepoldstudent,
+			content:{
+				'student_id':student_id,
+				},
+			handleAs:"json",
+			load: function(data) {
+				  if(data){
+			    	dijit.byId('kh_name').attr('value',data.stu_khname);
+			    	dijit.byId('en_name').attr('value',data.stu_enname);
+			    	dijit.byId('sex').attr('value',data.sex);
+			    	dijit.byId('dept').attr('value',data.degree);
+			    	getallModel(data.degree,data.grade);
+			    	//dijit.byId('grade').attr('value',data.grade);
+			      }else {
+			    	alert('Student Id not found!');
+			    	dijit.byId('kh_name').attr('value','');
+			    	dijit.byId('en_name').attr('value','');
+			    	dijit.byId('sex').attr('value','');
+			    	dijit.byId('dept').attr('value','');
+			    	dijit.byId('grade').attr('value','');
+			      } 
+			},
+			error: function(err) {
+				//alert(err);
+			}
+		});
 }
 </script>

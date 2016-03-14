@@ -100,6 +100,10 @@ class Registrar_CoursestudyController extends Zend_Controller_Action {
     	}
     	$db = new Registrar_Model_DbTable_DbCourStudey();
     	$row_gep=$db->getStuentGepById($id);
+    	$is_start=$row_gep['is_start'];
+    	if($is_start==0){
+    		Application_Form_FrmMessage::Sucessfull($this->tr->translate('Can not edit!'), self::REDIRECT_URL . '/coursestudy/index');
+    	}
     	$this->view->row_gep=$row_gep;
     	$frm = new Registrar_Form_FrmCourseStudy();
     	$frm_register=$frm->FrmRegistarWU($row_gep);
@@ -209,6 +213,15 @@ class Registrar_CoursestudyController extends Zend_Controller_Action {
     		$db = new Registrar_Model_DbTable_DbRegister();
     		$stu_no = $db->getNewAccountNumber($data['dept_id'],2);
     		print_r(Zend_Json::encode($stu_no));
+    		exit();
+    	}
+    }
+    function getBanlancePriceAction(){
+    	if($this->getRequest()->isPost()){
+    		$data=$this->getRequest()->getPost();
+    		$db = new Registrar_Model_DbTable_DbRegister();
+    		$payment = $db->getBalance($data['servce_id'],$data['student_id']);
+    		print_r(Zend_Json::encode($payment));
     		exit();
     	}
     }

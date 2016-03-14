@@ -558,9 +558,9 @@ function printSave(){
 				    <td class="one khmerbold">&nbsp;&nbsp;ថ្ងៃបញ្ចប់  <div class="h" style="margin-left:7px !important;">End Date</div></td><td width="25%"><strong>&nbsp; <label id="lb_end_date" class="value"></label></strong></td>
 				</tr>
 				<tr>
-				    <td colspan="6">&nbsp;បញ្ជាក់ៈទឹកប្រាក់ដែលបង់ហើយ  មិនអាចផ្ទេរ ឬ ដកវិញបានទែ  Note: All fees are not transferable or refundable.</td>
-				    <td  colspan="2" align="right" class="khmerbold">
-				        <hr style="margin-bottom: -26px !important; color:#000; height: 0.5px; border-width:0px; background-color: #000;" align="right" width="100%" /><br/>
+				    <td colspan="6" class="khmerbold">&nbsp;ហត្ថលេខា និង​ ឈ្មោះអ្នកបង់ </td>
+				    <td  colspan="2" align="right" class="khmerbold" style="line-height: 16px;">
+				        <hr style="margin-bottom: -15px !important; color:#000; height: 0.5px; border-width:0px; background-color: #000;" align="right" width="100%" /><br/>
 				        <h3 style="padding-right: 0px ! important;margin-bottom: -16px  !important;"> 
 				                 <?php $session_user=new Zend_Session_Namespace('auth');
 						           $last_name=$session_user->last_name;
@@ -568,6 +568,10 @@ function printSave(){
 						           echo "បេឡា  /​​​ Cashier: ".$last_name." ".$username;?>
 				        </h3><br/> 26/Dec/2015 08:05AM <br/>
 				    </td>
+				</tr>
+				<tr><td colspan="8" style="height:20px;"></td></tr>
+				<tr>
+				    <td colspan="8">&nbsp;បញ្ជាក់ៈទឹកប្រាក់ដែលបង់ហើយ  មិនអាចផ្ទេរ ឬ ដកវិញបានទែ  Note: All fees are not transferable or refundable.</td>
 				</tr>
 			</table>
 		</div>
