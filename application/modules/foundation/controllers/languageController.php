@@ -1,3 +1,4 @@
+
 <?php
 class Foundation_LanguageController extends Zend_Controller_Action {
 	
@@ -16,7 +17,7 @@ class Foundation_LanguageController extends Zend_Controller_Action {
 			else{
 				$result = Application_Model_DbTable_DbGlobal::getResultWarning();
 			}
-			$collumns = array("កម្រិតភាសា","ថ្ថៃកែប្រែ","ពណ៌នា","ស្ថានការណ៍","បង្កើតដោយ");
+			$collumns = array("LANGUAGE_LEVEL","MODIFY_DATE","DISCRIPTION","STATUS","USER");
 			$link=array(
 					'module'=>'foundation','controller'=>'language','action'=>'edit',
 			);
@@ -29,8 +30,11 @@ class Foundation_LanguageController extends Zend_Controller_Action {
 			$data = $this->getRequest()->getPost();
 			$db = new Foundation_Model_DbTable_DbLanguage();
 			$row = $db->addDegreeLanguage($data);
-			Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/language/add");
-			
+			if(isset($data['save_close'])){
+				Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/language/index");
+			}else{
+				Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/language/add");
+			}
 			Application_Form_FrmMessage::message("INSERT_SUCCESS");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
@@ -58,3 +62,4 @@ class Foundation_LanguageController extends Zend_Controller_Action {
 	}
 	
 }
+?>
