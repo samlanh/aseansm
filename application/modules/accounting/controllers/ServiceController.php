@@ -15,13 +15,13 @@ class Accounting_ServiceController extends Zend_Controller_Action {
 			if($this->getRequest()->isPost()){
 				$_data=$this->getRequest()->getPost();
 				$search = array(
-						'title' => $_data['title'],
-						'txtsearch' => $_data['title'],
-						'cate_name' => $_data['cate_name'],
-						'status' => $_data['status_search']);
+						'txtsearch' => $_data['txtsearch'],
+						);
 			}
 			else{
-				$search='';
+				$search=array(
+						'txtsearch' =>'',
+						);
 			}
 			$db = new Accounting_Model_DbTable_DbService();
 			$rs_rows = $db->getAllServiceNames($search);
@@ -46,6 +46,7 @@ class Accounting_ServiceController extends Zend_Controller_Action {
 		$frm = $frm->frmSearchServiceProgram();
 		Application_Model_Decorator::removeAllDecorator($frm);
 		$this->view->frm_search = $frm;
+		$this->view->adv_search = $search;
 	}
 public function addAction(){
 	if($this->getRequest()->isPost()){
@@ -53,6 +54,11 @@ public function addAction(){
 				$_data = $this->getRequest()->getPost();
 				$_model = new Accounting_Model_DbTable_DbService();
 				$_model->addservice($_data);
+				if(isset($_data['save_close'])){
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/service");
+				}else{
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/service/add");
+				}
 				Application_Form_FrmMessage::message("INSERT_SUCCESS");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
@@ -73,6 +79,7 @@ public function editAction(){
 	$id=$this->getRequest()->getParam("id");
 	$db = new Accounting_Model_DbTable_Dbservice();
 	$row = $db->getServiceById($id);
+// 	print_r($row);exit();
 	if($this->getRequest()->isPost())
 	{
 		try{
@@ -96,6 +103,7 @@ public function editAction(){
 	$frm=$obj->addProgramName($row);
 	$this->view->frm=$frm;
 	Application_Model_Decorator::removeAllDecorator($frm);
+	$this->view->row=$row;
 }
 function submitAction(){
 	if($this->getRequest()->isPost()){

@@ -11,14 +11,13 @@ class Accounting_FeeController extends Zend_Controller_Action {
     		if($this->getRequest()->isPost()){
     			$_data = $this->getRequest()->getPost();
     			$search = array(
-    					'title' => $session_servicetype->txtsearch,
-    					'txtsearch' => $_data['title'],
-    					'status' => $_data['status_search'],
-    					'type' => $_data['type'],
+    					'txtsearch' => $_data['txtsearch'],
     			);
     		}
     		else{
-    			$search='';
+    			$search=array(
+    					'txtsearch' => '',
+    			);
     		}
     		$db = new Accounting_Model_DbTable_DbTuitionFee();
     		$service= $db->getAllTuitionFee($search);
@@ -84,6 +83,7 @@ class Accounting_FeeController extends Zend_Controller_Action {
     	$frm = $frm->frmSearchTutionFee();
     	Application_Model_Decorator::removeAllDecorator($frm);
     	$this->view->frm_search = $frm;
+    	$this->view->adv_search = $search;
     }
     public function headAddRecordTuitionFee($rs,$key){
     	$result[$key] = array(
@@ -110,7 +110,13 @@ class Accounting_FeeController extends Zend_Controller_Action {
     		
     		try {
 	    		$rs =  $_model->addTuitionFee($_data);
-	    	if(!empty($rs))Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/fee/add");
+	    		if(isset($_data['save_close'])){
+	    			Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/fee");
+	    		}else{
+	    			Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/fee/add");
+	    		}
+	    		Application_Form_FrmMessage::message("INSERT_SUCCESS");
+	    		
     		}catch(Exception $e){
     			Application_Form_FrmMessage::message("INSERT_FAIL");
 	   			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());

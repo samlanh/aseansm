@@ -14,14 +14,13 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
     		if($this->getRequest()->isPost()){
     			$_data = $this->getRequest()->getPost();
     			$search = array(
-    					'title' => $session_servicetype->txtsearch,
-    					'txtsearch' => $_data['title'],
-    					'status' => $_data['status_search'],
-    					'type' => $_data['type'],
+    					'txtsearch' => $_data['txtsearch'],
     			);
  		}
     		else{
-    			$search='';
+    			$search=array(
+    					'txtsearch' =>'',
+    			);
     		}
     		$db = new Accounting_Model_DbTable_DbServiceCharge();
     		$service= $db->getAllServiceFee($search);
@@ -80,6 +79,8 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
     	$frm = $frm->frmSearchTutionFee();
     	Application_Model_Decorator::removeAllDecorator($frm);
     	$this->view->frm_search = $frm;
+    	$this->view->adv_search = $search;
+    	
     }
     public function headAddRecordTuitionFee($rs,$key){
     	$result[$key] = array(

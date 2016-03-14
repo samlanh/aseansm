@@ -12,8 +12,20 @@ class Accounting_SuspendserviceController extends Zend_Controller_Action {
 	}
 	public function indexAction(){
 		try{
+			if($this->getRequest()->isPost()){
+				$_data=$this->getRequest()->getPost();
+				$search = array(
+						'txtsearch' => $_data['adv_search'],
+				);
+			}
+			else{
+				$search=array(
+						'txtsearch' =>'',
+				);
+			}
+			
 			$db =  new Accounting_Model_DbTable_DbSuspendservice();
-			$rs = $db->getStudentSuspendService();
+			$rs = $db->getStudentSuspendService($search);
 			if(!empty($rs)){
 				$list = new Application_Form_Frmtable();
 				$collumns = array("RECEIPT_NO","CODE","NAME_KH","NAME_EN","SEX","CREATED_DATE");
@@ -31,6 +43,7 @@ class Accounting_SuspendserviceController extends Zend_Controller_Action {
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
 		
+		$this->view->rs =$search;
 		
 	}
 public function addAction(){

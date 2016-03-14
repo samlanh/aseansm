@@ -16,14 +16,13 @@ class Accounting_ServicesController extends Zend_Controller_Action {
     		if($this->getRequest()->isPost()){
     			$_data=$this->getRequest()->getPost();
     			$search = array(
-    					'title' => $_data['title'],
-    					'txtsearch' => $_data['title'],
-    					'status' => $_data['status_search'],
-    					'type' => $_data['type'],
+    					'txtsearch' => $_data['adv_search'],
     			);
     		}
     		else{
-    			$search='';
+    			$search=array(
+    					'txtsearch' => '',
+    			);
     		}
     		$db = new Accounting_Model_DbTable_DbServiceType();
     		$rs_rows = $db->getAllServicesType($search);
@@ -50,6 +49,7 @@ class Accounting_ServicesController extends Zend_Controller_Action {
     	$frm = $frm->frmServiceType();
     	Application_Model_Decorator::removeAllDecorator($frm);
     	$this->view->frm_search = $frm;
+    	$this->view->adv_search = $search;
     	
     }
 	function addAction()
@@ -62,7 +62,13 @@ class Accounting_ServicesController extends Zend_Controller_Action {
 				if($id==-1){
 				Application_Form_FrmMessage::message("RECORD_EXIST");
 				}else{
-				Application_Form_FrmMessage::message("INSERT_SUCCESS");}
+					if(isset($_data['save_close'])){
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/services");
+					}else{
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/services/add");
+					}
+					Application_Form_FrmMessage::message("INSERT_SUCCESS");
+				}
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
