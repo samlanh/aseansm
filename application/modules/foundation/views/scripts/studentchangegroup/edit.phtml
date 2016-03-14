@@ -40,6 +40,7 @@
 										<td><?php echo $tr->translate("FROM_GROUP")?></td>
 										<td>
 											<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside" id="from_group" name="from_group" type="text" onchange="toStudentGroup(1);">
+												<option value="0" placeholder="select group">Select Year </option>
 												<?php if(!empty($this->row))foreach ($this->row as $_row){?>
 													<option value="<?php echo $_row['id']?>"<?php if($_row['id']==$this->rows['from_group']) echo 'selected="selected"';?>><?php echo $_row['group_code']?></option>
 												<?php }?>
@@ -87,6 +88,7 @@
 									
 									<tr>
 										<td colspan="6" align="center">
+											<input iconClass="dijitIconClear" type="reset" value="សំអាត" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
 											<input type="button" label="<?php echo $tr->translate('GO_BACK');?>" id="back" dojoType="dijit.form.Button" 
 											 iconClass="dijitIconUndo" onclick="window.location = '<?php echo $this->url(array('module'=>'foundation','controller'=>"studentchangegroup",'action'=>'index'),null,true); ?>';" />
 											<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('GO_EDIT');?>" dojoType="dijit.form.Button" 

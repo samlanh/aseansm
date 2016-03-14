@@ -15,7 +15,8 @@
 									<tr>
 										<td ><?php echo $tr->translate("STUDENT_CODE")?></td>
 										<td>
-											<select class="fullside" name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();" >
+											<select class="fullside" name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" placeholder="Select Student" onchange="getStudentInfo();" >
+										    	<option value="0" > </option>
 										    	<?php if(!empty($this->rs))foreach ($this->rs as $row){?>
 													<option value="<?php echo $row['stu_id']?>"><?php echo $row['stu_code']?></option>
 												<?php }?>
@@ -26,8 +27,6 @@
 										<td align="right"><?php echo $tr->translate("STUDENT_NAME")?></td>
 										<td ><input dojoType="dijit.form.TextBox" readonly="readonly" class="fullside" id="studentname" name="studentname" value="" type="text">
 										</td>
-									 
-									 
 										<td align="right"><?php echo $tr->translate("SEX")?></td>
 										<td>
 											<select dojoType="dijit.form.FilteringSelect"  readonly="readonly" class="fullside" id="gender" name="gender" type="text">
@@ -39,7 +38,8 @@
 									<tr>
 										<td><?php echo $tr->translate("FROM_GROUP")?></td>
 										<td>
-											<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside" id="from_group" name="from_group" type="text" onchange="toStudentGroup(1);">
+											<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside" id="from_group" name="from_group" type="text" placeholder="select group" onchange="toStudentGroup(1);">
+												<option value="0" > </option>
 												<?php if(!empty($this->row))foreach ($this->row as $_row){?>
 													<option value="<?php echo $_row['id']?>"><?php echo $_row['group_code']?></option>
 												<?php }?>
@@ -53,7 +53,8 @@
 									<tr>
 										<td><?php echo $tr->translate("TO_GROUP")?></td>
 										<td>
-											<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside" id="to_group" name="to_group" type="text" onchange="toStudentGroup(2);">
+											<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside" id="to_group" name="to_group" type="text" placeholder="to group" onchange="toStudentGroup(2);">
+												<option value="0" > </option>
 												<?php if(!empty($this->row))foreach ($this->row as $_row){?>
 													<option value="<?php echo $_row['id']?>"><?php echo $_row['group_code']?></option>
 												<?php }?>
@@ -61,7 +62,7 @@
 										</td>
 									
 										<td align="right"><?php echo $tr->translate("DETAIL")?></td>
-										<td  colspan="3" rowspan="1"><label id="lbltogroup" name="detail_to_group" style="background:#fff;width:100%;height:70px;display:block;"></label></td>
+										<td  colspan="3" rowspan="1"><label id="lbltogroup"  name="detail_to_group" style="background:#fff;width:100%;height:70px;display:block;"></label></td>
 									</tr>
 									
 									
@@ -87,6 +88,7 @@
 									
 									<tr>
 										<td colspan="6" align="center">
+										<input iconClass="dijitIconClear" type="reset" value="សំអាត" label="<?php echo $tr->translate('CLEAR');?>" onclick="clear();" dojoType="dijit.form.Button"/>
 										<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('SAVE_CLOSE');?>" dojoType="dijit.form.Button" 
 											iconClass="dijitEditorIcon dijitEditorIconSave" />
 										<input type="submit" value="save_new" name="save_new" label="<?php echo $tr->translate('SAVE_NEW');?>" dojoType="dijit.form.Button" 
@@ -159,8 +161,19 @@ function toStudentGroup(type){
 	});
 }
 
-
-
+function clear(){
+	
+	dojo.byId('lblfromgroup').innerHTML='';
+	dojo.byId('lbltogroup').innerHTML='';
+	
+	dijit.byId("studentid").attr("value",'');
+	dijit.byId("from_group").attr("value",'');
+	dijit.byId("studentname").attr("value",'');
+	dijit.byId("to_group").attr("value",'');
+	dijit.byId("moving_date").attr("value",'');
+	dijit.byId("note").attr("value",'');
+	clear1();
+}
 
 
 </script>

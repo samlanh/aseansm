@@ -14,7 +14,7 @@
 			<tr>
 				<td>
 					<fieldset style="background-color: buttonface;">
-					<legend align="center" ><?php echo $tr->translate("ADD_DEGREE_LANGUAGE");?></legend><br />
+					<legend align="center" style="font-size: 16px;" ><strong><?php echo $tr->translate("ADD_DEGREE_LANGUAGE");?></strong></legend><br />
 					<table style="margin: 0 auto; width: 95%;" cellspacing="5">
 						<tr>
 							<td style="width:100px"><?php echo $tr->translate("LANGUAGE_LEVEL")?></td>
@@ -24,7 +24,8 @@
 							<td><?php echo $tr->translate("DISCRIPTION")?></td>
 							<td>
 								<textarea class="fullside"   style=" height: 60px !important;"
-										tabindex="2" dojoType=""  id="note" name=note ></textarea>
+										tabindex="2" dojoType=""  id="note" name=note >
+								</textarea>
 									
 							</td>
 						</tr>
@@ -39,8 +40,9 @@
 						</tr>
 						<tr>
 							<td colspan="2" align="center">
-								<input iconClass="dijitIconUndo" type="button" value="back" label="<?php echo $tr->translate("GO_BACK")?>" dojoType="dijit.form.Button" onclick="window.location = '<?php echo $this->url(array('module'=>'foundation','controller'=>"language",'action'=>'index'),null,true); ?>';" />
-								<input type="submit" value="save" name="save" label="<?php echo $tr->translate("SAVE")?>" dojoType="dijit.form.Button" 
+								<input iconClass="dijitIconClear" type="reset" value="សំអាត" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
+								<input iconClass="dijitEditorIcon dijitEditorIconSave" type="submit" name="save_close" id="save_close" value="save_close" label="<?php echo $tr->translate("SAVE_CLOSE")?>" dojoType="dijit.form.Button"  />
+								<input type="submit" value="save_new" name="save_new" id="save_new" label="<?php echo $tr->translate("SAVE_NEW")?>" dojoType="dijit.form.Button" 
 									iconClass="dijitEditorIcon dijitEditorIconSave" />
 							</td>
 						</tr>

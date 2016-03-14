@@ -212,7 +212,7 @@ var url_getstuno = '<?php echo $this->url(array('module'=>'foundation','controll
 									<td><input class="fullside"  tabindex="7" dojoType="dijit.form.ValidationTextBox"  id="st_email" name="st_email" value="" type="text"  ></td>
 									<td title="ទីកន្លែងកំណើត"><?php echo $tr->translate("POB");?></td>
 									<td  colspan="4" >
-										<textarea class="fullside"   style="width: 644px;height: 60px !important;"
+										<textarea class="fullside"  dojoType="dijit.form.ValidationTextBox" style="width: 644px;height: 60px !important;"
 										tabindex="8" dojoType=""  id="place_of_birth" name="place_of_birth" required="required"></textarea>
 									</td>
 					      		</tr>
@@ -295,7 +295,7 @@ var url_getstuno = '<?php echo $this->url(array('module'=>'foundation','controll
 									</td>
 									<td title="ពណ៌នា"><?php echo $tr->translate("REMARK");?>*</td>
 									<td  colspan="4" >
-										<textarea class="fullside" style="width: 644px;height: 60px !important;"
+										<textarea class="fullside" dojoType="dijit.form.ValidationTextBox" style="width: 644px;height: 60px !important;"
 										tabindex="20" dojoType=""  id="remark" name="remark" required="required"></textarea>
 									</td>
 					      		</tr>
@@ -424,7 +424,7 @@ var url_getstuno = '<?php echo $this->url(array('module'=>'foundation','controll
 					</tr>
 					<tr>
 						<td align="center">
-					   				<input iconClass="dijitIconClear" type="reset" value="សំអាត" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
+					   				<input iconClass="dijitIconClear" type="reset" value="សំអាត" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button" onclick="getStudentNo(1);"/>
 									<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('SAVE_CLOSE');?>" dojoType="dijit.form.Button" 
 										iconClass="dijitEditorIcon dijitEditorIconSave" />
 									<input type="submit" value="save_new" name="save_new" label="<?php echo $tr->translate('SAVE_NEW');?>" dojoType="dijit.form.Button" 
