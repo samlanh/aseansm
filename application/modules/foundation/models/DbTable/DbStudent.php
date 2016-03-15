@@ -11,7 +11,7 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 	}
 	public function getAllStudent($search){
 		$_db = $this->getAdapter();
-		$sql = "SELECT stu_id,stu_khname,stu_enname,
+		$sql = "SELECT stu_id,stu_code,stu_khname,stu_enname,
 		(SELECT name_kh FROM `rms_view` WHERE type=2 AND key_code = sex) as sex
 		,(SELECT `major_enname` FROM `rms_major` WHERE `major_id`=grade) as grade,nationality,dob,tel,email ,
 		(SELECT name_kh FROM `rms_view` WHERE type=1 AND key_code = status) as status
@@ -29,6 +29,7 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 		if(!empty($search['adv_search'])){
 			$s_where = array();
 			$s_search = trim($search['adv_search']);
+			$s_where[]="stu_code LIKE '%{$s_search}%'";
 			$s_where[]="stu_khname LIKE '%{$s_search}%'";
 			$s_where[]="stu_enname LIKE '%{$s_search}%'";
 			$s_where[]="(SELECT `major_enname` FROM `rms_major` WHERE `major_id`=grade) LIKE '%{$s_search}%'";
@@ -52,7 +53,19 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
 	}
+	
+	function getStudentExist($studentid){
+		$db = $this->getAdapter();
+		$sql ="SELECT * FROM rms_student WHERE  stu_code= $studentid";
+		return $db->fetchRow($sql);
+	}
+	
 	public function addStudent($_data){
+		
+			$id = $this->getStudentExist($_data['student_id']);	
+			if(!empty($id)){
+				return -1;
+			}
 			try{	
 				$_db= $this->getAdapter();
 				$_arr= array(

@@ -38,11 +38,11 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 				else{
 					$result = Application_Model_DbTable_DbGlobal::getResultWarning();
 				}
-				$collumns = array("NAME_KH","NAME_EN","SEX","GRADE","NATIONALITY","DOB","PHONE","EMAIL","STATUS");
+				$collumns = array("STUDENT_CODE","NAME_KH","NAME_EN","SEX","GRADE","NATIONALITY","DOB","PHONE","EMAIL","STATUS");
 				$link=array(
 						'module'=>'foundation','controller'=>'register','action'=>'edit',
 				);
-				$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('stu_enname'=>$link,'stu_khname'=>$link,'grade'=>$link));
+				$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('stu_code'=>$link,'stu_enname'=>$link,'stu_khname'=>$link,'grade'=>$link));
 		}catch (Exception $e){
 			Application_Form_FrmMessage::message("Application Error");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
@@ -56,13 +56,18 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 			try{
 				$_data = $this->getRequest()->getPost();
 				//$_add = new Foundation_Model_DbTable_DbStudent();
-				$db->addStudent($_data);
-				if(isset($_data['save_close'])){
-					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/register");
+				$exist = $db->addStudent($_data);
+				if($exist==-1){
+					Application_Form_FrmMessage::message("RECORD_EXIST");
 				}else{
-					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/register/add");
+				
+					if(isset($_data['save_close'])){
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/register");
+					}else{
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/register/add");
+					}
+					Application_Form_FrmMessage::message("INSERT_SUCCESS");
 				}
-				Application_Form_FrmMessage::message("INSERT_SUCCESS");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
