@@ -116,12 +116,12 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
    }
    public function getProvince(){
    	$db = $this->getAdapter();
-   	$sql ="SELECT DISTINCT province_kh_name,province_id FROM rms_province WHERE is_active=1 AND province_kh_name!='' ORDER BY province_kh_name";
+   	$sql ="SELECT province_en_name,province_id FROM rms_province WHERE is_active=1 AND province_en_name!='' ";
    	return $db->fetchAll($sql);
    }
    public function getOccupation(){
    	$db = $this->getAdapter();
-   	$sql ="SELECT DISTINCT occu_name,occupation_id FROM rms_occupation WHERE status=1 AND occu_name!='' ORDER BY occu_name";
+   	$sql ="SELECT occupation_id as id, occu_name as name FROM rms_occupation WHERE status=1 AND occu_name!='' ";
    	return $db->fetchAll($sql);
    }
    
