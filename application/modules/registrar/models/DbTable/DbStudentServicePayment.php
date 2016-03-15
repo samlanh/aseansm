@@ -16,10 +16,21 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     	return $db->fetchOne($sql);
     }
     
+    function getStudentExist($receipt,$studentid){
+    	$db = $this->getAdapter();
+    	$sql ="SELECT * FROM rms_student_payment WHERE student_id='".$studentid."' AND receipt_number= $receipt";
+    	return $db->fetchRow($sql);
+    }
+    
+    
 	function addStudentServicePayment($data){
 		//print_r($data);exit();
 		$db = $this->getAdapter();//ស្ពានភ្ជាប់ទៅកាន់Data Base
 		$db->beginTransaction();//ទប់ស្កាត់មើលការErrore , មានErrore វាមិនអោយចូល
+		$rs = $this->getStudentExist($data['reciept_no'],$data['studentid']);
+		if(!empty($rs)){
+			return -1;
+		}
 			try{
 			$arr=array(
 					'student_id'		=>$data['studentid'],
