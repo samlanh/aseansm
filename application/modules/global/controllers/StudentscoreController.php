@@ -68,6 +68,9 @@ class Global_StudentscoreController extends Zend_Controller_Action {
 		$this->view->payment_term = $model->getAllPaymentTerm(null,1);
 		$db_subjec=new Global_Model_DbTable_DbStudentScore();
 		$this->view->rows_parent=$db_subjec->getParentName();
+		$dbs=$this->view->row_years=$db_subjec->getStudyYears();
+		$this->view->rows_group=$db_subjec->getGroupAll();
+		//print_r($dbs);exit();
 		 
 	}
 	function addoldAction(){
@@ -118,6 +121,15 @@ class Global_StudentscoreController extends Zend_Controller_Action {
 			$data = $this->getRequest()->getPost();
 			$_dbmodel = new Global_Model_DbTable_DbStudentScore();
 			$data=$_dbmodel->getSujectById($data['parent_id']);
+			print_r(Zend_Json::encode($data));
+			exit();
+		}
+	}
+	function getStudentAction(){
+		if($this->getRequest()->isPost()){
+			$data = $this->getRequest()->getPost();
+			$_dbmodel = new Global_Model_DbTable_DbStudentScore();
+			$data=$_dbmodel->getStudent($data['group_id']);
 			print_r(Zend_Json::encode($data));
 			exit();
 		}
