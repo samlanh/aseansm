@@ -48,9 +48,6 @@ class Global_SubjectController extends Zend_Controller_Action {
 	}
 	function addAction()
 	{
-		
-		
-		
 		if($this->getRequest()->isPost()){
 			$_data = $this->getRequest()->getPost();
 			try {

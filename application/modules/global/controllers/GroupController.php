@@ -60,6 +60,12 @@ class Global_GroupController extends Zend_Controller_Action {
 		$this->view->degree = $rows = $_db->getAllFecultyName();
 		
 		$this->view->room =$_db->getAllRoom();
+		$model = new Application_Model_DbTable_DbGlobal();
+		$this->view->payment_term = $model->getAllPaymentTerm(null,1);
+
+		$_model = new Global_Model_DbTable_DbGroup();
+		$this->view->subject = $_model->getAllSubjectStudy();
+		
 	}
 		
 		
@@ -83,8 +89,16 @@ class Global_GroupController extends Zend_Controller_Action {
 		}
 		
 		$id=$this->getRequest()->getParam("id");
-		$id=$this->view->rs = $db->getGroupById($id);
+		
+		$this->view->rs = $db->getGroupById($id);
+		
+		$this->view->row = $db->getGroupSubjectById($id);
+		
+// 		print_r($this->view->row);exit();
+		
+		
 		$db = new Application_Model_DbTable_DbGlobal();
+		
 		$this->view->degree = $rows = $db->getAllFecultyName();
 		$faculty =  $db->getAllMajor();
 		array_unshift($faculty, Array('id'=> -1 ,'name' =>'Add New'));
@@ -94,13 +108,9 @@ class Global_GroupController extends Zend_Controller_Action {
 		array_unshift($room, Array('id'=> -1 ,'name' =>'Add New'));
 		$this->view->room =$room;
 	
-		$db = new Application_Model_GlobalClass();
-		$this->view->subject_opt = $db->getTeachersunjectOption();
-	
-		$tsub=new Global_Form_FrmTeacher();
-		$frm_techer=$tsub->FrmTecher();
-		Application_Model_Decorator::removeAllDecorator($frm_techer);
-		$this->view->frm_techer = $frm_techer;
+		
+		$_model = new Global_Model_DbTable_DbGroup();
+		$this->view->subject = $_model->getAllSubjectStudy();
 	}
 }
 

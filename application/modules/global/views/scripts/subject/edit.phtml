@@ -35,6 +35,10 @@
 								<td><?php  echo $subject_exam->getElement('subject_en');?></td>
 							</tr>
 							<tr>
+								<td style="width: 100px"><?php echo $tr->translate("SCORE_PERCENT")?></td>
+								<td><?php echo $subject_exam->getElement('score_percent');?></td>
+							</tr>
+							<tr>
 								<td style="width: 5px"><?php echo $tr->translate("ACCESS_TYPE")?></td>
 								<td>
 									<select class="fullside" name="access_type" id="access_type" dojoType="dijit.form.FilteringSelect" >
