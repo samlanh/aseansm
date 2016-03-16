@@ -9,15 +9,6 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 	}
 	public function indexAction(){
 		try{
-// 			if($this->getRequest()->isPost()){
-// 				$_data=$this->getRequest()->getPost();
-// 				$search = array(
-// 						'txtsearch' => $_data['txtsearch']);
-// 			}
-// 			else{
-// 				$search = array(
-// 						'txtsearch' => '');
-// 			}
 
 			if($this->getRequest()->isPost()){
 				$search=$this->getRequest()->getPost();
@@ -26,7 +17,6 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 			else{
 				$search = array(
 						'adv_search' => '',
-						//     		    					'search_status' => -1,
 						'start_date'=> date('Y-m-d'),
 						'end_date'=>date('Y-m-d'));
 			}
@@ -54,9 +44,12 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 		$db = new Foundation_Model_DbTable_DbStudent();
 		if($this->getRequest()->isPost()){
 			try{
+				
+				$num = $this->getStuNoGenerateAction();
+// 				print_r($num);exit();
+				
 				$_data = $this->getRequest()->getPost();
-				//$_add = new Foundation_Model_DbTable_DbStudent();
-				$exist = $db->addStudent($_data);
+				$exist = $db->addStudent($_data,$num);
 				if($exist==-1){
 					Application_Form_FrmMessage::message("RECORD_EXIST");
 				}else{
@@ -200,7 +193,14 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 			exit();
 		}
 	}
-	
+	function getStuNoGenerateAction(){
+		if($this->getRequest()->isPost()){
+			$data=$this->getRequest()->getPost();
+			$db = new Foundation_Model_DbTable_DbStudent();
+			$stu_no = $db->getNewAccountNumber(1,1);
+			return $stu_no;
+		}
+	}
 	
 }
 

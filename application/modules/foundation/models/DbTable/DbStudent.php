@@ -60,12 +60,12 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 		return $db->fetchRow($sql);
 	}
 	
-	public function addStudent($_data){
+	public function addStudent($_data,$stu_id){
 		
-			$id = $this->getStudentExist($_data['student_id']);	
-			if(!empty($id)){
-				return -1;
-			}
+// 			$id = $this->getStudentExist($_data['student_id']);	
+// 			if(!empty($id)){
+// 				return -1;
+// 			}
 			try{	
 				$_db= $this->getAdapter();
 				$_arr= array(
@@ -84,7 +84,7 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 						'commune_name'=>$_data['commun_note'],
 						'district_name'=>$_data['distric_note'],
 						'province_id'=>$_data['student_province'],
-						'stu_code'=>$_data['student_id'],
+						'stu_code'=>$stu_id,
 						'degree'=>$_data['degree'],
 						'grade'=>$_data['grade'],
 						'lang_level'=>$_data['level'],
