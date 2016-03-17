@@ -248,7 +248,7 @@ var url_getstuno = '<?php echo $this->url(array('module'=>'foundation','controll
 					      		<tr>
 					      			<td title="បញ្ជូលលេខសំគាល់និស្សិត"><?php echo $tr->translate("ACADEMIC_YEAR");?>*</td>
 									<td>
-										<select class="fullside" tabindex="14" dojoType="dijit.form.FilteringSelect"  id="stu_id" name="stu_id" placeholder="----- Select Year -----" value="" type="text" >
+										<select class="fullside" tabindex="14" dojoType="dijit.form.FilteringSelect"  id="academic_year" name="academic_year" placeholder="----- Select Year -----" value="" type="text" >
 											<?php if(!empty($this->year))foreach ($this->year as $rows){?>
 											<option value="<?php echo $rows['id']?>"><?php echo $rows['years']?></option>
 											<?php }?>

@@ -15,7 +15,7 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 		(SELECT name_kh FROM `rms_view` WHERE type=2 AND key_code = sex) as sex
 		,(SELECT `major_enname` FROM `rms_major` WHERE `major_id`=grade) as grade,nationality,dob,tel,email ,
 		(SELECT name_kh FROM `rms_view` WHERE type=1 AND key_code = status) as status
-		FROM rms_student where status = 1 AND stu_type = 1 ";
+		FROM rms_student where status = 1 AND stu_type = 1 and degree>1 ";
 		$orderby = " ORDER BY stu_id DESC ";
 		
 		$from_date =(empty($search['start_date']))? '1': "rms_student.create_date >= '".$search['start_date']." 00:00:00'";
@@ -72,6 +72,7 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 						'user_id'=>$this->getUserId(),
 						'stu_enname'=>$_data['name_en'],
 						'stu_khname'=>$_data['name_kh'],
+						'academic_year'	=>$_data['academic_year'],
 						'sex'=>$_data['sex'],
 						'nationality'=>$_data['studen_national'],
 						'dob'=>$_data['date_of_birth'],
@@ -145,6 +146,7 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 					'stu_enname'	=>$_data['name_en'],
 					'stu_khname'	=>$_data['name_kh'],
 					'sex'			=>$_data['sex'],
+					'academic_year'	=>$_data['academic_year'],
 					'nationality'	=>$_data['studen_national'],
 					'dob'			=>$_data['date_of_birth'],
 					'tel'			=>$_data['st_phone'],

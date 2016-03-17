@@ -71,7 +71,9 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 		$rows = $service->getlang();
 		array_unshift($rows, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
 		$this->view->language = $rows;
+		
 		$_db = new Application_Model_DbTable_DbGlobal();
+		
 		$row =$_db->getOccupation();
 		array_unshift($row, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
 		$this->view->occupation = $row;
@@ -83,7 +85,6 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 		$this->view->degree = $rows = $_db->getAllFecultyName();
 		
 		$this->view->province = $row =$_db->getProvince();
-		
 		
 		
 	}
@@ -127,6 +128,8 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 		$this->view->province = $_db->getProvince();
 		
 		$this->view->rs = $db->getStudentById($id);
+		
+		$this->view->year = $db->getAllYear();
 		
 	}
 	function getGradeAction(){

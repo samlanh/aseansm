@@ -2,7 +2,7 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$this->headTitle($tr->translate('EDIT_STUDENT_REGISTER')); 
 	echo $this->headTitle(''); 
-	//print_r($this->rs);
+// 	print_r($this->rs['academic_year']);exit();
 	
 ?>	
 <script type="dojo/method" event="onSubmit">			
@@ -120,7 +120,7 @@ dojo.ready(function(){
 	   } 
 	}, "level");
 	dijit.byId('level').attr('value',"<?php echo $this->rs['lang_level']?>");
-	
+	dijit.byId('academic_year').attr('value',"<?php echo $this->rs['academic_year']?>");
 }); 
 
 var grade_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
@@ -223,8 +223,15 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 					      			<td colspan="6"​ style="border-bottom:1px solid #ccc;"><strong><?php echo $tr->translate("STUDY_INFO");?></strong></td>
 					      		</tr>
 					      		<tr>
-					      			<td title="បញ្ជូលលេខសំគាល់និស្សិត"><?php echo $tr->translate("STUDENT_ID");?>*</td>
-									<td><input class="fullside" tabindex="15" dojoType="dijit.form.TextBox" readonly="readonly" id="student_id" name="student_id" value="<?php echo $this->rs['stu_code']; ?>" type="text" ></td>
+					      			<td title="បញ្ជូលលេខសំគាល់និស្សិត"><?php echo $tr->translate("ACADEMIC_YEAR");?>*</td>
+									<td>
+										<select class="fullside" tabindex="14" dojoType="dijit.form.FilteringSelect"  id="academic_year" name="academic_year" placeholder="----- Select Year -----" value="" type="text" >
+											<?php if(!empty($this->year))foreach ($this->year as $rows){?>
+											<option value="<?php echo $rows['id'];?>"<?php if($rows['id']==$this->rs['academic_year']) echo 'selected="selected"'?>><?php echo $rows['years']?></option>
+											<?php }?>
+										</select>
+									</td>
+					      			
 									<td><?php echo $tr->translate("DEGREE");?>*</td>
 									<td>
 										<select class="fullside" tabindex="16" name="degree" id="degree" dojoType="dijit.form.FilteringSelect" onchange="getallGrade();">
@@ -240,6 +247,8 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 									</td>
 								</tr>
 								<tr>
+									<td title="បញ្ជូលលេខសំគាល់និស្សិត"><?php echo $tr->translate("STUDENT_ID");?>*</td>
+									<td><input class="fullside" tabindex="15" dojoType="dijit.form.TextBox" readonly="readonly" id="student_id" name="student_id" value="<?php echo $this->rs['stu_code']; ?>" type="text" ></td>
 									<td title="កំរិតភាសា"><?php echo $tr->translate("LANGUAGE_LEVEL");?>*</td>
 									<td>
 									    <input id="level" class="fullside" value="<?php echo $this->rs['lang_level'];?>"/>
@@ -393,9 +402,9 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 					</tr>
 					<tr>
 						<td align="center">
+									<input iconClass="dijitIconClear" type="reset" value="សំអាត" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
 									<input type="button" label="<?php echo $tr->translate('GO_BACK');?>" id="back" dojoType="dijit.form.Button" 
 										iconClass="dijitIconUndo" onclick="window.location = '<?php echo $this->url(array('module'=>'foundation','controller'=>"register",'action'=>'index'),null,true); ?>';" />
-					   				<input iconClass="dijitIconClear" type="reset" value="សំអាត" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
 									<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('GO_EDIT');?>" dojoType="dijit.form.Button" 
 										iconClass="dijitEditorIcon dijitEditorIconSave" />
 									
