@@ -31,14 +31,16 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 				$search = array(
 						'degree' => $_data['degree'],
 						'grade' => $_data['grade'],
-						'session' => $_data['session']);
+						'session' => $_data['session'],
+						'academy'=> $_data['academy']);
 				$rs =$db->getSearchStudent($search);
 				$this->view->rs = $rs;
 			}else{
 				$search = array(
 						'degree' => 0,
 						'grade' => 0,
-						'session' => 0);
+						'session' => 0,
+						'academy'=> 0);
 				//$rs = $db->getSearchStudent($search);
 			}
 			
@@ -48,6 +50,9 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 			Application_Form_FrmMessage::message("APPLICATION_ERROR");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
+		$dbstudent = new Foundation_Model_DbTable_DbStudent();
+		$this->view->academy = $dbstudent->getAllYear();
+		
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$this->view->degree = $_db->getAllFecultyName();
 		$group = new Foundation_Model_DbTable_DbGroup();
