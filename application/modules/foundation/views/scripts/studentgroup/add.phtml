@@ -119,9 +119,9 @@ $frm_set_price = $this->frm_set_charge;?>
 		<fieldset>
 					<legend align="center"><strong>Search Group</strong></legend>
 					<table style="margin: 0 auto; width: 100%; background:#DFF7FD;" cellspacing="10" broder 1>
-							<tr>
+						<tr>
 							<td>ឆ្នាំសិក្សា</td>
-							<td colspan="3">
+							<td>
 								<select class="fullside" dojoType="dijit.form.FilteringSelect" required="true"  id="academy" name="academy" type="text">
 									<?php if(!empty($this->academy)) foreach($this->academy as $row){?>
 										<option value="<?php echo $row['id'];?>"><?php echo $row['years']; ?></option>
@@ -129,7 +129,7 @@ $frm_set_price = $this->frm_set_charge;?>
 								</select>
 							</td>
 							<td>Degree</td>
-							<td>
+							<td colspan="2">
 								<select class="fullside"  name="degree" id="degree" dojoType="dijit.form.FilteringSelect" onchange="getallGrade(1);">
 											<?php if(!empty($this->degree))foreach ($this->degree as $row){?>
 											<option value="<?php echo $row['dept_id']?>"<?php if($row['dept_id']==$this->value['degree']) echo "selected='selected'"?>><?php echo $row['en_name']?></option>

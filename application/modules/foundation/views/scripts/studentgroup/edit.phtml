@@ -128,22 +128,14 @@ $frm_set_price = $this->frm_set_charge;?>
 							<tr>
 							<td>ឆ្នាំសិក្សា</td>
 							<td>
-								<select class="fullside" dojoType="dijit.form.FilteringSelect" required="true"  id="from_year" name="from_year" type="text">
-									<?php for($i=2014;$i<=date('Y')+1;$i++){?>
-										<option value="<?php echo $i;?>"><?php echo $i; ?></option>
-									<?php }?>
-								</select>
-							</td>
-							<td>ដល់</td>
-							<td>
-								<select class="fullside" dojoType="dijit.form.FilteringSelect" required="true"  id="to_year" name="to_year" type="text">
-									<?php for($i=2015;$i<=date('Y')+2;$i++){?>
-										<option value="<?php echo $i;?>"><?php echo $i; ?></option>
+								<select class="fullside" dojoType="dijit.form.FilteringSelect" required="true"  id="academy" name="academy" type="text">
+									<?php if(!empty($this->academy)) foreach($this->academy as $row){?>
+										<option value="<?php echo $row['id'];?>"><?php echo $row['years']; ?></option>
 									<?php }?>
 								</select>
 							</td>
 							<td>Degree</td>
-							<td>
+							<td colspan="2">
 								<select class="fullside"  name="degree" id="degree" dojoType="dijit.form.FilteringSelect" onchange="getallGrade(1);">
 											<?php if(!empty($this->degree))foreach ($this->degree as $row){?>
 											<option value="<?php echo $row['dept_id']?>"<?php if($row['dept_id']==$this->value['degree']) echo "selected='selected'"?>><?php echo $row['en_name']?></option>
@@ -165,7 +157,7 @@ $frm_set_price = $this->frm_set_charge;?>
 										    <option value="4" <?php if($this->value['session']==4) {{ echo "selected='selected'"; }}?> label="weekend">ចុងសបា្តហ៏</option>
 										</select>
 							</td>
-							<td colspan="2" align="center">
+							<td align="center">
 								 	<input type="submit" dojoType="dijit.form.Button"  label="SEARCH" id="search"
 								 		iconClass="dijitEditorIcon dijitEditorIconSearch"/>
 							</td>

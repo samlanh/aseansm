@@ -241,7 +241,6 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 		 if($data['academy']>0){
 		 	$sql.=" AND academic_year =".$data['academy'];
 		 }
-		 echo $sql;
 		return $db->fetchAll($sql);
 	}
 
