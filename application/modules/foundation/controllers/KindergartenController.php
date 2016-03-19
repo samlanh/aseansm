@@ -42,19 +42,30 @@ public function indexAction(){
 	function addAction(){
 		if($this->getRequest()->isPost()){
 			try{
+				
+				$db = new Foundation_Model_DbTable_DbKindergarten();
+				
 				$num = $this->getStuNoGenerateAction();
 				$data = $this->getRequest()->getPost();
-				$db = new Foundation_Model_DbTable_DbKindergarten();
+				
 				$row = $db->addKindergarten($data,$num);
-				if(isset($data['save_close'])){
-					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/kindergarten/index");
+				
+// 				print_r($row);exit();
+
+				if($row==-1){
+					Application_Form_FrmMessage::message("RECORD_EXIST");
 				}else{
-					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/kindergarten/add");
+					if(isset($data['save_close'])){
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/kindergarten/index");
+					}else{
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/kindergarten/add");
+					}
+					Application_Form_FrmMessage::message("INSERT_SUCCESS");
 				}
-				Application_Form_FrmMessage::message("INSERT_SUCCESS");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+				echo $e->getMessage();
 			}
 		}
 		
