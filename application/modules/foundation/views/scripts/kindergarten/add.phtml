@@ -1,6 +1,7 @@
 <?php 
 	$frm_student = $this->frm_student;
 	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
+	echo $this->headTitle($tr->translate('ADD_KINDERGARTEN_REGISTER'));
 ?>
 <script type="dojo/method" event="onSubmit">			
 	if(this.validate()) {
@@ -43,7 +44,7 @@ dojo.require("dijit.form.DateTextBox");
 									</td>
 					      		</tr>
 					      		<tr>
-									<td title="សញ្ឃាតិ"><?php echo $tr->translate("សញ្ជាតិ");?></td>
+									<td title="សញ្ឃាតិ"><?php echo $tr->translate("NATIONALITY");?></td>
 									<td><input  dojoType="dijit.form.TextBox"  id="nationality" name="nationality" value="" type="text" ></td>
 									<td title="ថ្ងៃខែឆ្នាំកំនើត"><?php echo $tr->translate("DOB");?></td>
 									<td><input tabindex="20"  name="dob" id="dob" dojoType="dijit.form.DateTextBox"  value="<?php echo date('2000-m-d')?>" type="text"/></td>
@@ -59,7 +60,7 @@ dojo.require("dijit.form.DateTextBox");
 									
 					      		</tr>
 					      		<tr>
-									<td colspan="6"  style="border-bottom: 1px solid #ccc;"><strong><?php echo $tr->translate("អាសយដ្ធានបច្ខុប្បន្ន*");?></strong></td>
+									<td colspan="6"  style="border-bottom: 1px solid #ccc;"><strong><?php echo $tr->translate("CURRENT_ADDRESS");?></strong></td>
 					      		</tr>
 					      		<tr>
 					      			<td><?php echo $tr->translate("HOME");?></td>
@@ -84,7 +85,7 @@ dojo.require("dijit.form.DateTextBox");
 									</td>
 					      		</tr>
 					      		<tr>
-					      			<td colspan="6"​ style="border-bottom:1px solid #ccc;"><strong>កម្មវិធីនៃការសិក្សា</strong></td>
+					      			<td colspan="6"​ style="border-bottom:1px solid #ccc;"><strong><?php echo $tr->translate("STUDY_INFO");?></strong></td>
 					      		</tr>
 					      		<tr>
 					      			<td title="បញ្ជូលលេខសំគាល់និស្សិត"><?php echo $tr->translate("STUDENT_ID");?>*</td>
@@ -193,20 +194,20 @@ dojo.require("dijit.form.DateTextBox");
 								<tr>
 									<td ><?php echo $tr->translate("NAME");?>*</td>
 									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="tr_name" name="tr_name" value="" type="text" required="required"></td>
-									<td><?php echo $tr->translate("NRIC_NO");?></td>
-									<td><input tabindex="15" dojoType="dijit.form.TextBox"  id="tr_passport_no" name="tr_identity_no" value="" type="text" ></td>
+					      			<td width="12%"><?php echo $tr->translate("RELATIONSHIP_TO_CHILD");?></td>
+									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="tr_relationship_to_child" name="tr_relationship_to_child" value="" type="text" required="required"></td>
 					      		</tr>
 					      		
 					      		<tr>
-					      		    <td width="12%"><?php echo $tr->translate("RELATIONSHIP_TO_CHILD");?></td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="tr_relationship_to_child" name="tr_relationship_to_child" value="" type="text" required="required"></td>
+					      		    <td><?php echo $tr->translate("IDENTITTY_PASSPORT_NO");?></td>
+									<td><input tabindex="15" dojoType="dijit.form.TextBox"  id="tr_passport_no" name="tr_identity_no" value="" type="text" ></td>                        
 									<td ><?php echo $tr->translate("PHONE");?>*</td>
 									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="tr_phone" name="tr_phone" value="" type="text" required="required"></td>
 					      		</tr>
 					      		<tr>
 					      		    <td ><?php echo $tr->translate("ADDRESS");?></td>
 									<td colspan="3">
-									     <textarea   style="width: 766px;height: 50px !important;"
+									     <textarea   style="width: 791px;height: 50px !important;"
 										    tabindex="21" dojoType=""  id="tr_address" name="tr_address" required="required"></textarea>
 									</td>
 					      		</tr>
@@ -214,7 +215,7 @@ dojo.require("dijit.form.DateTextBox");
 									<td>&nbsp;</td>
 								</tr>
 								<tr>
-									<td colspan="4" style="border-bottom:1px solid #ccc;"><strong>ទំនាក់ទំនងបន្ទាន់(បន្ទាប់ពីមាតាមិតា)</strong></td>
+									<td colspan="4" style="border-bottom:1px solid #ccc;"><strong><?php echo $tr->translate("URGENT_CONTACT");?></strong></td>
 								</tr>
 								<tr>
 									<td>&nbsp;</td>
@@ -227,7 +228,8 @@ dojo.require("dijit.form.DateTextBox");
 					      		</tr>
 					      		
 					      		<tr>
-					      		    <td ><?php echo $tr->translate("NRIC_NO");?>*</td>
+					      			
+					      		    <td ><?php echo $tr->translate("IDENTITTY_PASSPORT_NO");?>*</td>
 									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="ur_identity_no" name="ur_identity_no" value="" type="text" required="required"></td>
 					      		    <td><?php echo $tr->translate("PHONE");?>*</td>
 									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="ur_phone" name="ur_phone" value="" type="text" required="required" ></td>
@@ -236,7 +238,7 @@ dojo.require("dijit.form.DateTextBox");
 					      		<tr>
 					      		    <td ><?php echo $tr->translate("ADDRESS");?></td>
 									<td colspan="3">
-									     <textarea   style="width: 766px;height: 50px !important;"
+									     <textarea   style="width: 791px;height: 50px !important;"
 										    tabindex="21" dojoType=""  id="ur_address" name="ur_address" required="required"></textarea>
 									</td>
 					      		</tr>

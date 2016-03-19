@@ -1,6 +1,6 @@
 <?php
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-	$this->headTitle($tr->translate('REGISTER')); 
+	$this->headTitle($tr->translate('ADD_STUDENT_REGISTER')); 
 	echo $this->headTitle(''); 
 	//print_r($this->serviecename);exit()
 	
@@ -200,10 +200,10 @@ var url_getstuno = '<?php echo $this->url(array('module'=>'foundation','controll
 									</td>
 					      		</tr>
 					      		<tr>
-									<td title="សញ្ឃាតិ"><?php echo $tr->translate("NATIONALITY");?></td>
+									<td ><?php echo $tr->translate("NATIONALITY");?></td>
 									<td><input class="fullside" tabindex="4" dojoType="dijit.form.TextBox"  id="studen_national" name="studen_national" value="" type="text" ></td>
 									<td title="ថ្ងៃខែឆ្នាំកំនើត"><?php echo $tr->translate("DOB");?></td>
-									<td><input class="fullside"  tabindex="5"  name="date_of_birth" id="date_of_birth" dojoType="dijit.form.DateTextBox"  value="now" type="text"/></td>
+									<td><input class="fullside"  tabindex="5"  name="date_of_birth" id="date_of_birth" dojoType="dijit.form.DateTextBox"  value="<?php echo date("2000-m-d")?>" type="text"/></td>
 									<td title="លេខទូរស័ព្ទ"><?php echo $tr->translate("PHONE");?></td>
 									<td><input class="fullside"  tabindex="6" dojoType="dijit.form.ValidationTextBox"  id="st_phone" name="st_phone" value="" type="text" ></td>
 					      		</tr>
@@ -487,13 +487,29 @@ function addJob(){
 			     id: data,
 				        name: dijit.byId('occu_name').get('value')
 				   };
-		//if(type==1){	   
+		if(type==1){	   
 	 		addDataToSelectbox(dijit.byId('fa_job'), job_store, Itemmake, data);
-		//}else if(type==2){
-			addDataToSelectbox(dijit.byId('mo_job'), job_store1, Itemmake, data);
-		//}else if(type==3){
-			addDataToSelectbox(dijit.byId('gu_job'), job_store2, Itemmake, data);
-		//}
+	 		addDataToSelectbox(dijit.byId('mo_job'), job_store1, Itemmake, data);
+	 		addDataToSelectbox(dijit.byId('gu_job'), job_store2, Itemmake, data);
+
+			dijit.byId('mo_job').attr('value','');
+			dijit.byId('gu_job').attr('value','');
+	 		
+		}else if(type==2){
+			addDataToSelectbox(dijit.byId('fa_job'), job_store, Itemmake, data);
+	 		addDataToSelectbox(dijit.byId('mo_job'), job_store1, Itemmake, data);
+	 		addDataToSelectbox(dijit.byId('gu_job'), job_store2, Itemmake, data);
+
+			dijit.byId('fa_job').attr('value','');
+			dijit.byId('gu_job').attr('value','');
+		}else if(type==3){
+			addDataToSelectbox(dijit.byId('fa_job'), job_store, Itemmake, data);
+	 		addDataToSelectbox(dijit.byId('mo_job'), job_store1, Itemmake, data);
+	 		addDataToSelectbox(dijit.byId('gu_job'), job_store2, Itemmake, data);
+
+			dijit.byId('mo_job').attr('value','');
+			dijit.byId('fa_job').attr('value','');
+		}
 	    dijit.byId('frm_add_tran1').reset();
 	    dijit.byId("popup_dept2").hide();
 			
