@@ -54,18 +54,21 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 		}
 	}
 	
-	function getStudentExist($studentid){
+	function getStudentExist($name_en,$name_kh,$sex,$grade,$dob){
 		$db = $this->getAdapter();
-		$sql ="SELECT * FROM rms_student WHERE  stu_code= $studentid";
+		$sql = "select * from rms_student where stu_enname="."'$name_en'"." and stu_khname="."'$name_kh'"." and sex=".$sex." and grade=".$grade." and dob="."'$dob'";
 		return $db->fetchRow($sql);
 	}
 	
 	public function addStudent($_data,$stu_id){
 		
-// 			$id = $this->getStudentExist($_data['student_id']);	
-// 			if(!empty($id)){
-// 				return -1;
-// 			}
+			$id = $this->getStudentExist($_data['name_en'],$_data['name_kh'],$_data['sex'],$_data['grade'],$_data['date_of_birth']);	
+			
+// 			print_r($id);exit();
+			
+			if(!empty($id)){
+				return -1;
+			}
 			try{	
 				$_db= $this->getAdapter();
 				$_arr= array(

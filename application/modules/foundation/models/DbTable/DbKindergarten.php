@@ -8,9 +8,23 @@ class Foundation_Model_DbTable_DbKindergarten extends Zend_Db_Table_Abstract
 		$session_user=new Zend_Session_Namespace('auth');
 		return $session_user->user_id;
 	}
+	
+	function getExistRecord($name_en,$name_kh,$sex,$grade,$dob){
+		$db = $this->getAdapter();
+		$sql = "select * from rms_student where stu_enname="."'$name_en'"." and stu_khname="."'$name_kh'"." and sex=".$sex." and grade=".$grade." and dob="."'$dob'";                  
+		return $db->fetchRow($sql);
+	}
+	
 	public function addKindergarten($data,$num){
+		$db= $this->getAdapter();
+
+		$exist = $this->getExistRecord($data['name_en'],$data['name_kh'],$data['sex'],$data['grade'],$data['dob']);
+		
+		if(!empty($exist)){
+			return -1;
+		}
+		
 		try{
-			$db= $this->getAdapter();
 			$arr = array(
 					'stu_type'		=>1,
 					'user_id'		=>$this->getUserId(),
@@ -69,6 +83,7 @@ class Foundation_Model_DbTable_DbKindergarten extends Zend_Db_Table_Abstract
 			return $this->insert($arr);
 		}catch(Exception $e){
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+				echo $e->getMessage();
 		}	
 	}
 	
