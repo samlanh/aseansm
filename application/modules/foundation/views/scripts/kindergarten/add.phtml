@@ -290,7 +290,12 @@ function addJob(){
 	var job_store  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->occupation));?> );
 	var job_store1  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->occupation));?> );
 	type=dijit.byId('value_j').get('value');
-	//alert(type);
+
+	mo_job=dijit.byId('mo_job').get('value');
+	fa_job=dijit.byId('fa_job').get('value');
+	
+	//alert(fa_job,mo_job);
+	
 	dojo.xhrPost({
 		url:url_add_job,
 		form: dojo.byId("frm_add_tran1"),
@@ -304,20 +309,24 @@ function addJob(){
 		if(type==1){	   
 	 		addDataToSelectbox(dijit.byId('fa_job'), job_store, Itemmake, data);
 			addDataToSelectbox(dijit.byId('mo_job'), job_store1, Itemmake, data);
-			dijit.byId('mo_job').attr('value','');
+			dijit.byId('mo_job').attr('value',mo_job);
+			//$(this).unbind(event);
 		}else if(type==2){
 			addDataToSelectbox(dijit.byId('fa_job'), job_store, Itemmake, data);
 			addDataToSelectbox(dijit.byId('mo_job'), job_store1, Itemmake, data);
-			dijit.byId('fa_job').attr('value','');
+			dijit.byId('fa_job').attr('value',fa_job);
+			//$(this).unbind(event);
 		}
+		
 	    dijit.byId('frm_add_tran1').reset();
+			    
 	    dijit.byId("popup_job").hide();
 		},
 		error: function(err) {
 			alert(err);
 		}
 	});
-	
+
 }
 
 
