@@ -38,7 +38,7 @@
 									<tr>
 										<td><?php echo $tr->translate("FROM_GROUP")?></td>
 										<td>
-											<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside" id="from_group" name="from_group" type="text" placeholder="select group" onchange="toStudentGroup(1);">
+											<select dojoType="dijit.form.FilteringSelect" required="true" readonly="readonly" class="fullside" id="from_group" name="from_group" type="text" placeholder="select group" onchange="toStudentGroup(1);">
 												<option value="0" > </option>
 												<?php if(!empty($this->row))foreach ($this->row as $_row){?>
 													<option value="<?php echo $_row['id']?>"><?php echo $_row['group_code']?></option>
@@ -106,7 +106,7 @@
 	</table>	
 </form>
 <script type="text/javascript">
-var url_student = '<?php echo $this->url(array('module'=>'foundation','controller'=>'register','action'=>'get-student')); ?>';
+var url_student = '<?php echo $this->url(array('module'=>'foundation','controller'=>'studentchangegroup','action'=>'get-student')); ?>';
 function getStudentInfo(){
 			studentid = dijit.byId('studentid').get('value');
 			dojo.xhrPost({
@@ -119,7 +119,7 @@ function getStudentInfo(){
 					//alert(data.stu_enname);
 					dijit.byId("studentname").attr("value",data.stu_enname);
 					dijit.byId("gender").attr("value",data.sex);
-
+					dijit.byId("from_group").attr("value",data.group_id);
 				},
 				error: function(err) {
 					alert(err);
