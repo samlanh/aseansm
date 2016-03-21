@@ -22,7 +22,6 @@ class Foundation_LanguageController extends Zend_Controller_Action {
 					'module'=>'foundation','controller'=>'language','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rows,array('title'=>$link,'modify_date'=>$link));
-			
 	}
 	function addAction(){
 		if($this->getRequest()->isPost()){
