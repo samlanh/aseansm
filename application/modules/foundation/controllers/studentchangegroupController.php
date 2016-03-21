@@ -112,4 +112,14 @@ class Foundation_studentchangegroupController extends Zend_Controller_Action {
 		}
 	}
 	
+	function getStudentAction(){
+		if($this->getRequest()->isPost()){
+			$data=$this->getRequest()->getPost();
+			$db = new Foundation_Model_DbTable_DbStudentChangeGroup();
+			$grade = $db->getStudentInfoById($data['studentid']);
+			print_r(Zend_Json::encode($grade));
+			exit();
+		}
+	}
+	
 }
