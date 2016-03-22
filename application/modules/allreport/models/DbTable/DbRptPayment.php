@@ -74,9 +74,10 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     		$s_where[] = " service LIKE '%{$s_search}%'";
     		$s_where[] = " receipt_number LIKE '%{$s_search}%'";
     		$s_where[] = " payment_term LIKE '%{$s_search}%'";
+    		$s_where[] = " user LIKE '%{$s_search}%'";
     		$where .=' AND ( '.implode(' OR ',$s_where).')';
     	}
-    	echo $sql.$where.$order;
+    	//echo $sql.$where.$order;
     	return $db->fetchAll($sql.$where.$order);
     }
     
@@ -101,6 +102,7 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     		$s_where[] = " en_name LIKE '%{$s_search}%'";
     		$s_where[] = " service LIKE '%{$s_search}%'";
     		$s_where[] = " receipt_number LIKE '%{$s_search}%'";
+    		$s_where[] = " user LIKE '%{$s_search}%'";
     		$where .=' AND ( '.implode(' OR ',$s_where).')';
     	}
     	return $db->fetchAll($sql.$where.$order);

@@ -81,7 +81,7 @@
 												<style> td{padding:0 3px; }</style>
 										  <?php if(!empty($this->row))$i=0; $total=0;  foreach($this->row as $rs){ $i++;?>
 										  <tr style="font-size:10px; color:#000; height: 18px;"​ align="center">
-											<?php $after_dic= ($rs['fee']*$rs['qty']) - (($rs['fee'] * $rs['discount_percent'])/100);
+											<?php $after_dic= ($rs['fee']*$rs['qty']) - ((($rs['fee']*$rs['qty']) * $rs['discount_percent'])/100);
 												$subtotal= $after_dic + $rs['admin_fee']+ $rs['other_fee'];
 											?>
 										  	<td><?php echo $i;?></td>
