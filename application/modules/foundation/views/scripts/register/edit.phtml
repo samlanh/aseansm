@@ -18,8 +18,11 @@ dojo.require("dijit.form.NumberTextBox");
 dojo.require("dijit.form.Textarea");
 dojo.require("dijit.form.DateTextBox");
 dojo.require("dijit.form.CheckBox");
-var service_store  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->serviecename));?> );
 
+var service_store  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->serviecename));?> );
+var job_store  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->occupation));?> );
+var job_store1  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->occupation));?> );
+var job_store2  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->occupation));?> );
 dojo.ready(function(){
 	new dijit.form.FilteringSelect({
 	    autoComplete: true,                        
@@ -35,7 +38,6 @@ dojo.ready(function(){
 	getallGrade();
 
 
-	var job_store  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->occupation));?> );
 	new dijit.form.FilteringSelect({
 		store: job_store,
 		autoComplete: true,                        
@@ -449,9 +451,9 @@ function popupgroup(){
 
 var url_add_job = '<?php echo $this->url(array("module"=>"foundation","controller"=>"register","action"=>"add-job")); ?>';
 function addJob(){
-	var job_store  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->occupation));?> );
-	var job_store1  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->occupation));?> );
-	var job_store2  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->occupation));?> );
+	fa_job=dijit.byId('fa_job').get('value');
+	mo_job=dijit.byId('mo_job').get('value');
+	gu_job=dijit.byId('gu_job').get('value');
 	type=dijit.byId('value_j').get('value');
 	//alert(type);
 	dojo.xhrPost({
@@ -461,16 +463,32 @@ function addJob(){
 		load: function(data) {
 			//alert(data); 
 			var Itemmake = { 
-			     id: data,
+			    		id: data,
 				        name: dijit.byId('occu_name').get('value')
 				   };
-		if(type==1){	   
-	 		addDataToSelectbox(dijit.byId('fa_job'), job_store, Itemmake, data);
-		}else if(type==2){
-			addDataToSelectbox(dijit.byId('mo_job'), job_store1, Itemmake, data);
-		}else if(type==3){
-			addDataToSelectbox(dijit.byId('gu_job'), job_store2, Itemmake, data);
-		}
+			if(type==1){	   
+		 		addDataToSelectbox(dijit.byId('fa_job'), job_store, Itemmake, data);
+		 		addDataToSelectbox(dijit.byId('mo_job'), job_store1, Itemmake, data);
+		 		addDataToSelectbox(dijit.byId('gu_job'), job_store2, Itemmake, data);
+
+				dijit.byId('mo_job').attr('value',mo_job);
+				dijit.byId('gu_job').attr('value',gu_job);
+		 		
+			}else if(type==2){
+				addDataToSelectbox(dijit.byId('fa_job'), job_store, Itemmake, data);
+		 		addDataToSelectbox(dijit.byId('mo_job'), job_store1, Itemmake, data);
+		 		addDataToSelectbox(dijit.byId('gu_job'), job_store2, Itemmake, data);
+
+				dijit.byId('fa_job').attr('value',fa_job);
+				dijit.byId('gu_job').attr('value',gu_job);
+			}else if(type==3){
+				addDataToSelectbox(dijit.byId('fa_job'), job_store, Itemmake, data);
+		 		addDataToSelectbox(dijit.byId('mo_job'), job_store1, Itemmake, data);
+		 		addDataToSelectbox(dijit.byId('gu_job'), job_store2, Itemmake, data);
+
+				dijit.byId('mo_job').attr('value',mo_job);
+				dijit.byId('fa_job').attr('value',fa_job);
+			}
 	    dijit.byId('frm_add_tran1').reset();
 	    dijit.byId("popup_dept2").hide();
 			

@@ -50,6 +50,7 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 	public function addStudentChangeGroup($_data){
 			try{	
 				$_db= $this->getAdapter();
+				$stu_id=$_data['studentid'];
 				$_arr= array(
 						'user_id'=>$this->getUserId(),
 						'stu_id'=>$_data['studentid'],
@@ -60,25 +61,43 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 						'status'=>$_data['status']
 						);
 				$id = $this->insert($_arr);
-			
+				
+				$this->_name='rms_group_detail_student';
+				$arr= array(
+						'group_id'=>$_data['to_group'],
+				);
+				$where="stu_id=".$stu_id;
+				
+				$this->update($arr, $where);
+				
 			}catch(Exception $e){
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 	}
 	public function updateStudentChangeGroup($_data){
-		
+// 		print_r($_data);exit();
 		try{	
+			$stu_id=$_data['studentid'];
 			$_arr=array(
 						'user_id'=>$this->getUserId(),
-						'stu_id'=>$_data['studentid'],
+						//'stu_id'=>$_data['studentid'],
 						'from_group'=>$_data['from_group'],
 						'to_group'=>$_data['to_group'],
 						'moving_date'=>$_data['moving_date'],
 						'note'=>$_data['note'],
 						'status'=>$_data['status'],
 					);
-			$where=$this->getAdapter()->quoteInto("id=?", $_data["id"]);
+			$where=$this->getAdapter()->quoteInto("stu_id=?", $_data["studentid"]);
 			$this->update($_arr, $where);
+			
+			
+			$this->_name='rms_group_detail_student';
+			$arr= array(
+					'group_id'=>$_data['to_group'],
+			);
+			$where="stu_id=".$stu_id;
+			
+			$this->update($arr, $where);
 			
 		}catch(Exception $e){
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
@@ -95,8 +114,8 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 	
 	function getStudentChangeGroup1ById($id){
 		$db = $this->getAdapter();
-		$sql = "SELECT from_academic,to_academic,start_date,expired_date,
-		(select en_name from `rms_dept` where `rms_dept`.`dept_id`=`rms_group`.`degree`)AS degree ,
+		$sql = "SELECT start_date,expired_date,
+		(select CONCAT(from_academic,'-',to_academic,'(',generation,')') from rms_tuitionfee where rms_tuitionfee.id=rms_group.academic_year )AS year ,
 		(select major_enname from `rms_major` where `rms_major`.`major_id`=`rms_group`.`grade`)AS grade,
 		(select name_en from `rms_view` where `rms_view`.`type`=4 and `rms_view`.`key_code`=`rms_group`.`session`)AS session
 		FROM `rms_group` WHERE id=$id LIMIT 1 ";

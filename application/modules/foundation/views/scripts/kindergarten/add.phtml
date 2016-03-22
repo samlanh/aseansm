@@ -287,8 +287,7 @@ function hideDialogJob() {
 
 var url_add_job = '<?php echo $this->url(array("module"=>"foundation","controller"=>"kindergarten","action"=>"add-job")); ?>';
 function addJob(){
-	var job_store  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->occupation));?> );
-	var job_store1  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->occupation));?> );
+	
 	type=dijit.byId('value_j').get('value');
 
 	mo_job=dijit.byId('mo_job').get('value');
@@ -329,11 +328,10 @@ function addJob(){
 
 }
 
+var job_store  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->occupation));?> );
+var job_store1  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->occupation));?> );
 
 dojo.ready(function(){
-
-	var job_store  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->occupation));?> );
-	
 	new dijit.form.FilteringSelect({
 		store: job_store,
 		autoComplete: true,                        
