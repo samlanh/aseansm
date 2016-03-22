@@ -16,8 +16,7 @@ class Global_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 			$_arr=array(
 					'group_code' => $_data['group_code'],
 					'room_id' => $_data['room'],
-					'from_academic' => $_data['from_year'],
-					'to_academic' => $_data['to_year'],
+					'academic_year' => $_data['academic_year'],
 					'semester' => $_data['semester'],
 					'session' => $_data['session'],
 					'degree' => $_data['degree'],
@@ -63,8 +62,7 @@ class Global_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 			$_arr=array(
 					'group_code' => $_data['group_code'],
 					'room_id' => $_data['room'],
-					'from_academic' => $_data['from_year'],
-					'to_academic' => $_data['to_year'],
+					'academic_year' => $_data['academic_year'],
 					'semester' => $_data['semester'],
 					'session' => $_data['session'],
 					'degree' => $_data['degree'],
@@ -181,8 +179,7 @@ class Global_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 //   		$sql = ' SELECT * FROM `v_getallgroup` WHERE 1';
 // 		$sql = ' SELECT group_code , CONCAT(from_academic,'-',to_academic) as year,semester,session,degree,grade,room_id,start_date,expired_date,note,status FROM `rms_group` WHERE 1';
 		
-		$sql = 'SELECT `g`.`id`,`g`.`group_code` AS `group_code`,CONCAT(`g`.`from_academic`," - ",
-		`g`.`to_academic`) AS academic ,`g`.`semester` AS `semester`,
+		$sql = 'SELECT `g`.`id`,`g`.`group_code` AS `group_code`,academic_year as academic ,`g`.`semester` AS `semester`,
 		(SELECT kh_name FROM `rms_dept` WHERE (`rms_dept`.`dept_id`=`g`.`degree`)) AS degree,
 		(SELECT major_khname FROM `rms_major` WHERE (`rms_major`.`major_id`=`g`.`grade`))AS grade,
 		(SELECT`rms_view`.`name_en`	FROM `rms_view`	WHERE ((`rms_view`.`type` = 4)
@@ -235,11 +232,28 @@ class Global_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 	}
 	
 	
+	function getAllYear(){
+		$db = $this->getAdapter();
+		$sql = "select id,CONCAT(from_academic,'-',to_academic,'(',generation,')')as years from rms_tuitionfee ";
+		return $db->fetchAll($sql);
+	}
 	
+	public function getAllFecultyName(){
+		$db = $this->getAdapter();
+		$sql ="SELECT dept_id AS id, en_name AS NAME,en_name,dept_id,shortcut FROM rms_dept WHERE is_active=1 AND en_name!='' ORDER BY en_name";
+		return $db->fetchAll($sql);
+	}
 	
-	
-	
-	
+	public function addNewRoom($_data){
+		$this->_name='rms_room';
+		$_arr=array(
+				'room_name'	  => $_data['room_name'],
+				'modify_date' => Zend_Date::now(),
+				'is_active'   => $_data['status_room'],
+				'user_id'	  => $this->getUserId(),
+		);
+		return  $this->insert($_arr);
+	}
 	
 }
 

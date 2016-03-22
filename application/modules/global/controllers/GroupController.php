@@ -31,6 +31,7 @@ class Global_GroupController extends Zend_Controller_Action {
 		}catch (Exception $e){
 			Application_Form_FrmMessage::message("Application Error");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			echo $e->getMessage();
 		}
 		$frm = new Application_Form_FrmOther();
 		$this->view->add_major = $frm->FrmAddMajor(null);
@@ -56,16 +57,23 @@ class Global_GroupController extends Zend_Controller_Action {
 			}
 		}
 		
-		$_db = new Application_Model_DbTable_DbGlobal();
+		$_db = new Global_Model_DbTable_DbGroup();
 		$this->view->degree = $rows = $_db->getAllFecultyName();
 		
-		$this->view->room =$_db->getAllRoom();
+		
+		
 		$model = new Application_Model_DbTable_DbGlobal();
 		$this->view->payment_term = $model->getAllPaymentTerm(null,1);
+		
+		$room = $model->getAllRoom();
+		array_unshift($room, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
+		$this->view->room = $room;
 
 		$_model = new Global_Model_DbTable_DbGroup();
 		$this->view->subject = $_model->getAllSubjectStudy();
 		
+		$this->view->year = $_model->getAllYear();
+		//print_r($this->view->year);exit();
 	}
 		
 		
@@ -97,20 +105,47 @@ class Global_GroupController extends Zend_Controller_Action {
 // 		print_r($this->view->row);exit();
 		
 		
-		$db = new Application_Model_DbTable_DbGlobal();
-		
+		$db = new Global_Model_DbTable_DbGroup();
 		$this->view->degree = $rows = $db->getAllFecultyName();
-		$faculty =  $db->getAllMajor();
+		
+		$model = new Application_Model_DbTable_DbGlobal();
+		
+		$faculty =  $model->getAllMajor();
 		array_unshift($faculty, Array('id'=> -1 ,'name' =>'Add New'));
 		$this->view->faculty =$faculty;
 	
-		$room = $db->getAllRoom();
+		$room = $model->getAllRoom();
 		array_unshift($room, Array('id'=> -1 ,'name' =>'Add New'));
 		$this->view->room =$room;
 	
 		
 		$_model = new Global_Model_DbTable_DbGroup();
 		$this->view->subject = $_model->getAllSubjectStudy();
+		
+		$this->view->year = $_model->getAllYear();
 	}
+	
+	
+	function addRoomAction(){
+		if($this->getRequest()->isPost()){
+			try{
+				$data=$this->getRequest()->getPost();
+				$db = new Global_Model_DbTable_DbGroup();
+				$room = $db->addNewRoom($data);
+				print_r(Zend_Json::encode($room));
+				exit();
+			}catch (Exception $e){
+				Application_Form_FrmMessage::message("INSERT_FAIL");
+				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			}
+			
+		}
+	}
+	
+	
+	
+	
+	
+	
 }
 

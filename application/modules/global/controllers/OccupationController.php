@@ -50,7 +50,13 @@ class Global_OccupationController extends Zend_Controller_Action {
 			try {
 				$_dbmodel = new Global_Model_DbTable_DbOccupation();
 				$_major_id = $_dbmodel->addNewOccupation($_data);
-				Application_Form_FrmMessage::message("ការ​បញ្ចូល​ជោគ​ជ័យ !");
+				if(isset($_data['save_close'])){
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/global/occupation");
+				}else{
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/global/occupation/add");
+				}
+				Application_Form_FrmMessage::message("INSERT_SUCCESS");
+				
 					
 			} catch (Exception $e) {
 				Application_Form_FrmMessage::message("ការ​បញ្ចូល​មិន​ជោគ​ជ័យ");
