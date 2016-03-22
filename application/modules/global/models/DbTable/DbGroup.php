@@ -29,7 +29,8 @@ class Global_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 					'date' => date("Y-m-d"),
 					'status'   => $_data['status'],
 					'note'   => $_data['note'],
-					'user_id'	  => $this->getUserId()
+					'user_id'	  => $this->getUserId(),
+					'is_use' => 1
 			);
 			
 			$id = $this->insert($_arr);
