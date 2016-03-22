@@ -39,6 +39,7 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     		$s_where[] = " stu_code LIKE '%{$s_search}%'";
     		$s_where[] = " kh_name LIKE '%{$s_search}%'";
     		$s_where[] = " en_name LIKE '%{$s_search}%'";
+    		$s_where[] = " USER LIKE '%{$s_search}%'";
     		$where .=' AND ( '.implode(' OR ',$s_where).')';
     	}
     	return $db->fetchAll($sql.$where.$order);
