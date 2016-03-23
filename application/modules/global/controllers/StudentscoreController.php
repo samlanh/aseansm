@@ -82,7 +82,7 @@ public	function addAction(){
 				if(isset($_data['save_close'])){ 
 					$_data['score_id']=$id;
 					$rs =  $_model->updateStudentHomworkScore($_data);
-					//Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/global/studentscore");
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/global/studentscore");
 				}
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");

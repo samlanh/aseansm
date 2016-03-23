@@ -16,6 +16,10 @@ class Global_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 			$_arr=array(
 					'group_code' => $_data['group_code'],
 					'room_id' => $_data['room'],
+					'tuitionfee_id'=>$_data['tuitionfee_id'],
+//					'from_academic' => $_data['from_year'],
+//  				'to_academic' => $_data['to_year'],
+					'room_id' => $_data['room'],
 					'academic_year' => $_data['academic_year'],
 					'semester' => $_data['semester'],
 					'session' => $_data['session'],
@@ -63,7 +67,12 @@ class Global_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 			$_arr=array(
 					'group_code' => $_data['group_code'],
 					'room_id' => $_data['room'],
+					'tuitionfee_id'=>$_data['tuitionfee_id'],
+//					'from_academic' => $_data['from_year'],
+//  				'to_academic' => $_data['to_year'],
+ 
 					'academic_year' => $_data['academic_year'],
+ 
 					'semester' => $_data['semester'],
 					'session' => $_data['session'],
 					'degree' => $_data['degree'],
@@ -211,10 +220,47 @@ class Global_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		}
 		return $db->fetchAll($sql.$where.$order);
 	}
+	function getAllGroups($search){
+		$db = $this->getAdapter();
+		$sql = "SELECT `g`.`id`,`g`.`group_code` AS `group_code`,
+		(SELECT CONCAT(from_academic,'-',to_academic,'(',generation,')') FROM rms_tuitionfee AS f WHERE id=g.tuitionfee_id AND `status`=1 GROUP BY from_academic,to_academic,generation) AS tuitionfee_id,
+		 `g`.`semester` AS `semester`,
+		(SELECT kh_name FROM `rms_dept` WHERE (`rms_dept`.`dept_id`=`g`.`degree`)) AS degree,
+		(SELECT major_khname FROM `rms_major` WHERE (`rms_major`.`major_id`=`g`.`grade`))AS grade,
+		(SELECT`rms_view`.`name_en`	FROM `rms_view`	WHERE ((`rms_view`.`type` = 4)
+		AND (`rms_view`.`key_code` = `g`.`session`))LIMIT 1) AS `session`,
+		(SELECT `r`.`room_name`	FROM `rms_room` `r`	WHERE (`r`.`room_id` = `g`.`room_id`)) AS `room_name`,
+		`g`.`start_date`,`g`.`expired_date`,`g`.`note`
+		FROM `rms_group` `g`";
+		$where =' WHERE 1 ';
+		$order =  ' ORDER BY `g`.`id` DESC ' ;
+		if(empty($search)){
+			return $db->fetchAll($sql.$order);
+		}
+		if(!empty($search['title'])){
+			$s_where = array();
+			$s_search = addslashes(trim($search['title']));
+			$s_where[] = " `g`.`group_code` LIKE '%{$s_search}%'";
+			$s_where[] = " `g`.`semester` LIKE '%{$s_search}%'";
+			$s_where[] = " (SELECT major_khname FROM `rms_major` WHERE (`rms_major`.`major_id`=`g`.`grade`)) LIKE '%{$s_search}%'";
+			$s_where[] = " (SELECT `r`.`room_name`	FROM `rms_room` `r`	WHERE (`r`.`room_id` = `g`.`room_id`)) LIKE '%{$s_search}%'";
+			$s_where[] = " (SELECT`rms_view`.`name_en`	FROM `rms_view`	WHERE ((`rms_view`.`type` = 4)
+			AND (`rms_view`.`key_code` = `g`.`session`))LIMIT 1) LIKE '%{$s_search}%'";
+			$where .=' AND ('.implode(' OR ',$s_where).')';
+		}
+		return $db->fetchAll($sql.$where.$order);
+	}
 	
 	function getAllGrade($grade_id){
 		$db = $this->getAdapter();
 		$sql = "SELECT major_id As id,major_enname As name FROM rms_major WHERE dept_id=".$grade_id;
+		$order=' ORDER BY id DESC';
+		return $db->fetchAll($sql.$order);
+	}
+	function getAllYears(){
+		$db = $this->getAdapter();
+		$sql = "SELECT id,CONCAT(from_academic,'-',to_academic,'(',generation,')') AS years FROM rms_tuitionfee WHERE `status`=1
+		        GROUP BY from_academic,to_academic,generation";
 		$order=' ORDER BY id DESC';
 		return $db->fetchAll($sql.$order);
 	}

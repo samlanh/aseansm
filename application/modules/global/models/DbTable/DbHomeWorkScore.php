@@ -76,19 +76,13 @@ class Global_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
    				'user_id'=>$this->getUserId()
    		);
    		$where="id=".$_data['score_id'];
-   		$db->getProfiler()->setEnabled(true);
+   		//$db->getProfiler()->setEnabled(true);
    		$this->update($_arr, $where);
-   		Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-   		Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-   		$db->getProfiler()->setEnabled(false); 
    		
    		$this->_name='rms_score_detail';
    		$delete="score_id=".$_data['score_id'];
-   		$db->getProfiler()->setEnabled(true);
+   		//$db->getProfiler()->setEnabled(true);
    		$this->delete($delete);
-   		Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-   		Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-   		$db->getProfiler()->setEnabled(false); 
    		
    		if(!empty($_data['identity'])){
    			$ids = explode(',', $_data['identity']);
@@ -106,11 +100,8 @@ class Global_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
    						'user_id'=>$this->getUserId()
    				);
    				$this->_name='rms_score_detail';
-   				$db->getProfiler()->setEnabled(true);
+   				//$db->getProfiler()->setEnabled(true);
    				$this->insert($arr);
-   				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-   				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-   				$db->getProfiler()->setEnabled(false);
    			}
    		}
    		//exit();

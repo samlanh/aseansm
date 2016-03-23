@@ -19,7 +19,9 @@ class Global_GroupController extends Zend_Controller_Action {
 						'title' => '');
 			}
 			$db = new Global_Model_DbTable_DbGroup();
-			$rs_rows= $db->getAllGroup($search);
+			$rs_rows= $db->getAllGroups($search);
+			$glClass = new Application_Model_GlobalClass();
+			//$rs_rows = $glClass->getGetPayTerm($rs_rows, BASE_URL );
 			$list = new Application_Form_Frmtable();
 			
 			$collumns = array("GROUP_CODE","YEARS","SEMESTER","DEGREE","GRADE","SESSION","ROOM_NAME","START_DATE","END_DATE","NOTE");
@@ -27,7 +29,7 @@ class Global_GroupController extends Zend_Controller_Action {
 			$link=array(
 					'module'=>'global','controller'=>'group','action'=>'edit',
 			);
-			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('group_code'=>$link,'academic'=>$link,'degree'=>$link,'grade'=>$link));
+			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('group_code'=>$link,'tuitionfee_id'=>$link,'degree'=>$link,'grade'=>$link));
 		}catch (Exception $e){
 			Application_Form_FrmMessage::message("Application Error");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
@@ -61,17 +63,15 @@ class Global_GroupController extends Zend_Controller_Action {
 		$this->view->degree = $rows = $_db->getAllFecultyName();
 		
 		
-		
+		$years=new Global_Model_DbTable_DbGroup();
+		$this->view->row_year=$years->getAllYears();
 		$model = new Application_Model_DbTable_DbGlobal();
 		$this->view->payment_term = $model->getAllPaymentTerm(null,1);
-		
 		$room = $model->getAllRoom();
 		array_unshift($room, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
 		$this->view->room = $room;
-
 		$_model = new Global_Model_DbTable_DbGroup();
-		$this->view->subject = $_model->getAllSubjectStudy();
-		
+    	$this->view->subject = $_model->getAllSubjectStudy();
 		$this->view->year = $_model->getAllYear();
 		//print_r($this->view->year);exit();
 	}
@@ -121,7 +121,8 @@ class Global_GroupController extends Zend_Controller_Action {
 		
 		$_model = new Global_Model_DbTable_DbGroup();
 		$this->view->subject = $_model->getAllSubjectStudy();
-		
+		$years=new Global_Model_DbTable_DbGroup();
+		$this->view->row_year=$years->getAllYears();
 		$this->view->year = $_model->getAllYear();
 	}
 	
