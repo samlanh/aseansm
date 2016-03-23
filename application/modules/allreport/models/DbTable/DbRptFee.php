@@ -17,7 +17,6 @@ class Allreport_Model_DbTable_DbRptFee extends Zend_Db_Table_Abstract
 //     	if(empty($search)){
 //     		return $db->fetchAll($sql);
 //     	}
-    	
 //     	$searchs=$search['txtsearch'];
     	
 //     	if($search['searchby']==1){
@@ -30,11 +29,11 @@ class Allreport_Model_DbTable_DbRptFee extends Zend_Db_Table_Abstract
     	if(empty($search)){
     		return $db->fetchAll($sql.$order);
     	}
-    	$s=$search['txtsearch'];
+//     	$s=$search['txtsearch'];
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
-    		$s_search = trim($search['txtsearch']);
-    		//$s_where[] = " (select CONCAT(from_academic,to_academic)from rms_tuitionfee limit 1) LIKE '%{$s_search}%'";
+    		$abc = $s_search = trim($search['txtsearch']);
+    		$s_where[] = " CONCAT(from_academic,'-',to_academic) LIKE '%{$s_search}%'";
     		$s_where[] = " rms_tuitionfee.generation LIKE '%{$s_search}%'";
     		$s_where[] = " rms_tuitionfee.from_academic LIKE '%{$s_search}%'";
     		$s_where[] = " rms_tuitionfee.to_academic LIKE '%{$s_search}%'";
@@ -42,7 +41,7 @@ class Allreport_Model_DbTable_DbRptFee extends Zend_Db_Table_Abstract
     		$s_where[] = " (select name_en from rms_view where rms_view.type=7 and rms_view.key_code=rms_tuitionfee.time) LIKE '%{$s_search}%'";
     		$where .=' AND ( '.implode(' OR ',$s_where).')';
     	}
-//     	echo $sql.$where;
+    	echo $sql.$where;
 
     	return $db->fetchAll($sql.$where.$order);
     }

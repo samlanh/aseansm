@@ -30,7 +30,6 @@ class Allreport_Model_DbTable_DbRptStudent extends Zend_Db_Table_Abstract
     	
     	if(empty($search)){
     		return $db->fetchAll($sql.$order);
-    	
     	}
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
@@ -42,7 +41,6 @@ class Allreport_Model_DbTable_DbRptStudent extends Zend_Db_Table_Abstract
     		$s_where[] = " (select name_en from rms_view where rms_view.type=4 and rms_view.key_code=rms_student.session limit 1) LIKE '%{$s_search}%'";
     		$where .=' AND ( '.implode(' OR ',$s_where).')';
     	}
-    	
 //     	if(empty($search)){
 //     		return $db->fetchAll($sql);
 //     	}

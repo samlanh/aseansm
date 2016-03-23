@@ -12,6 +12,46 @@ public function init()
 	{	
 		
 	}
+	
+	public function rptamountstudentbygenerationAction()
+	{
+		$db= new Allreport_Model_DbTable_DbRptAmountStudent();
+		$this->view->title = $rs_rows = $db->getAllTitle();
+		$this->view->session = $rs_row = $db->getAllSession();
+		$this->view->rs = $db->getAllStu();
+		$this->view->year = $db->getAllYearGeneration();
+		//print_r($this->view->year);
+		//$this->view->search=$search;
+	}
+	
+	
+	
+	
+	public function rptamountstudentbyyearAction()
+	{
+		$db= new Allreport_Model_DbTable_DbRptAmountStudentByYear();
+		$this->view->grade = $rs_rows = $db->getAllTitle();
+		$this->view->session = $rs_row = $db->getAllSession();
+		$this->view->rs = $db->getAllStu();
+		$this->view->year = $db->getAllYearGeneration();
+		//print_r($this->view->year);
+		//$this->view->search=$search;
+	}
+	
+	public function rptamountstudentAction()
+	{
+		$db= new Allreport_Model_DbTable_DbRptAmountStudentByYear();
+		$this->view->grade = $rs_rows = $db->getAllTitle();
+		$this->view->session = $rs_row = $db->getAllSession();
+		$this->view->rs = $db->getAllStu();
+		$this->view->year = $db->getAllYearGeneration();
+		//print_r($this->view->year);
+		//$this->view->search=$search;
+	}
+	
+	
+	
+	
 	public function rptStudentDropAction(){
 	
 		if($this->getRequest()->isPost()){
@@ -151,10 +191,7 @@ public function init()
 	{
 	
 	}
-	public function rptAmountStudentAction()
-	{
 	
-	}
 	
 	public function rptScorelistAction()
 	{

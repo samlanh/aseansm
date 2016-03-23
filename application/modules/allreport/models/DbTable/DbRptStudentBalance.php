@@ -34,11 +34,13 @@ class Allreport_Model_DbTable_DbRptStudentBalance extends Zend_Db_Table_Abstract
      	
      	$from_date =(empty($search['start_date']))? '1': "sp.create_date >= '".$search['start_date']." 00:00:00'";
      	$to_date = (empty($search['end_date']))? '1': "sp.create_date <= '".$search['end_date']." 23:59:59'";
+     	
      	$where = " AND ".$from_date." AND ".$to_date;
      	
     		if(!empty($search['txtsearch'])){
     			$s_where = array();
     			$s_search = trim($search['txtsearch']);
+    			$s_where[] = " (select CONCAT(from_academic,'-',to_academic) from rms_servicefee where rms_servicefee.id=sp.year limit 1) LIKE '%{$s_search}%'";
     			$s_where[] = " sp.receipt_number LIKE '%{$s_search}%'";
     			$s_where[] = " (select stu_code from rms_student where rms_student.stu_id=sp.student_id) LIKE '%{$s_search}%'";
     			$s_where[] = " (select CONCAT(stu_khname,stu_enname) from rms_student where rms_student.stu_id=sp.student_id) LIKE '%{$s_search}%'";
