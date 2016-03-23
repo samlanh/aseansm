@@ -8,6 +8,13 @@
     dojo.require("dojo.NodeList-manipulate");
     dojo.require("dojo.parser");
 </script>
+<script>
+dojo.require("dijit.form.NumberTextBox");
+dojo.require("dijit.form.DateTextBox");
+dojo.require("dojo.data.ItemFileWriteStore");  
+dojo.require("dijit.form.DateTextBox");
+require(["dijit/form/CheckBox","dijit/Dialog","dijit/layout/TabContainer"]);
+</script>
 <style>
 select{ width:100%;}
 fieldset{  background:none;}
@@ -24,7 +31,7 @@ dojo.require("dojo.data.ObjectStore");
 dojo.require('dojox.form.BusyButton');
 dojo.ready(function(){
 	//control study year
-		var years_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->row_years));?> );
+		var years_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->row_year));?> );
 		new dijit.form.FilteringSelect({
 		    store:years_store,
 		    autoComplete: true,                        
@@ -110,19 +117,26 @@ function getStudentByIdGroup(group_id){
 					//alert(data.length);
 					tem +=  '<tr id=tr_'+inx+' style="background-color:none">';
 					tem += '<td width="6%">&nbsp;'+num+'</td>';
-					tem += '<td>&nbsp;'+data[i].stu_code+'</td>';
-					tem += '<td style="width:200px;">&nbsp;'+data[i].stu_khname+'</td>';
+					tem += '<td><input type="hidden" name="stu_code_'+inx+'" id="stu_code_'+inx+'" value="'+data[i].stu_code+'" />&nbsp;'+data[i].stu_code+'</td>';
+					tem += '<td style="width:200px;"><input type="hidden" name="stu_id_'+inx+'" id="stu_id_'+inx+'" value="'+data[i].stu_id+'" />&nbsp;'+data[i].stu_khname+'</td>';
 					tem += '<td>&nbsp;'+gender(data[i].sex)+'</td>';
 					tem += '<td>&nbsp;'+data[i].grade+'</td>';
-					tem +='<td>&nbsp;<input style="width:240px;padding-left:10px;" dojoType="dijit.form.NumberTextBox" class="fullside" name="studentscore_'+inx+'" id="studentscore_'+inx+'" value="" type="text"></td>';
+					tem +='<td>&nbsp;<input style="width:240px;padding-left:10px;" dojoType="dijit.form.NumberTextBox" class="fullside" name="studentscores_'+inx+'" id="studentscores_'+inx+'" value="" type="text"></td>';
 					tem +='<td>&nbsp;<input style="width:240px;padding-left:10px;" dojoType="dijit.form.TextBox" class="fullside" name="note_'+inx+'" id="note_'+inx+'" value="" type="text"></td>';
 				    tem += '</tr>';
+				    if(inx!=1) {//identity set value 1,2,3,4,5
+						var identity = $('#identity').val();
+						$('#identity').val(identity+','+inx);
+					} else {
+						$('#identity').val(inx);
+					}
 				}
 				document.getElementById("table_row").innerHTML = tem;
 				//dojo.query("#table_row").append(tmp);
 	       }else{
 	    	  // document.getElementById("table_row").innerHTML = '';
 	    	   document.getElementById("table_row").innerHTML =tem;
+	    	   $('#identity').val('');
 	       }
 	   },		
 	    error: function(err) {
@@ -304,7 +318,7 @@ function addRow() {
 			template+='<td style="width:200px;padding-left:10px;">01111</td>';	
 			template+='<td style="width:200px;padding-left:10px;">Meas Dara </td>';		
 			template+='<td style="width:200px;padding-left:10px;">K1</td>';
-			template+='<td><input style="width:200px;padding-left:10px;" dojoType="dijit.form.NumberTextBox" class="fullside" name="studentscore_'+col+'" id="studentscore_'+col+'" value="" type="text"></td>';
+			template+='<td><input style="width:200px;padding-left:10px;" dojoType="dijit.form.NumberTextBox" class="fullside" name="studentscore_'+col+'" id="studentscore_'+col+'" value="" type="number"></td>';
 			template+='<td><input style="width:200px;padding-left:10px;" dojoType="dijit.form.TextBox" class="fullside" name="note_'+col+'" id="note_'+col+'" value="" type="text"></td>';
 			
 		tmp='<tr id="row'+col+'">';
@@ -347,8 +361,9 @@ function getSubjectName(){
 	parent_id=dijit.byId('parent_name').get('value');
 	if(parent_id != -1){
 		dijit.byId('subject').attr('value','');
-		getSubject(parent_id);
+		getSubject(parent_id );
 	}
+	
 }
 var subject_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 var url_getSubject = '<?php echo $this->url(array('module'=>'global','controller'=>'studentscore','action'=>'get-subject')); ?>';
