@@ -40,13 +40,25 @@ public function init()
 	
 	public function rptamountstudentAction()
 	{
+		if($this->getRequest()->isPost()){
+			$data=$this->getRequest()->getPost();
+			$search=array(
+					'txtsearch' => $data['txtsearch'],
+					);
+		}else{
+			$search=array(
+					'txtsearch' => '',
+			);
+		}
+		
 		$db= new Allreport_Model_DbTable_DbRptAmountStudentByYear();
 		$this->view->grade = $rs_rows = $db->getAllTitle();
 		$this->view->session = $rs_row = $db->getAllSession();
-		$this->view->rs = $db->getAllStu();
 		$this->view->year = $db->getAllYearGeneration();
+		
+		$this->view->rs = $db->getAllStu($search);
 		//print_r($this->view->year);
-		//$this->view->search=$search;
+		$this->view->search=$search;
 	}
 	
 	
