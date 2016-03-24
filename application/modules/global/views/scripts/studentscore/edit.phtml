@@ -40,7 +40,7 @@ dojo.ready(function(){
 		    id: "year_study",
 		    name: "year_study",           
 		    class: 'fullside',  
-		    required:'',
+		    required:'true',
 		    placeHolder:"Selected Study Years",          
 		    onChange: function() {  
 		    	getGroupName();
@@ -355,7 +355,6 @@ function gender(sex){
 											<div style="clear: both;"></div>
 											<input type="hidden" dojoType="dijit.form.TextBox" id="record_row" name="record_row" />
 											<div  id="store_record"></div>
-											<input iconClass="dijitIconClear" type="button" onClick="addPockage();" label="Add Record" dojoType="dijit.form.Button"/>
 										</td>
 									</tr>
 					</table>
