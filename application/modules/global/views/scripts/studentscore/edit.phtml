@@ -249,7 +249,7 @@ function addNewRecord(){
 		dojo.query("#table_row").append(tmp);
 	temp='<td width="6%">&nbsp;'+r+'</td>';
 	temp+='<td>&nbsp;<?php echo $rs_detail["student_no"];?><input type="hidden" name="stu_code_'+r+'" id="stu_code_'+r+'" value="<?php echo $rs_detail["student_no"];?>"></td>';
-	temp+='<td>&nbsp;<?php echo $rs_detail["student_name"];?><input type="hidden" name="stu_id_'+r+'" id="stu_id_'+r+'" value="<?php echo $rs_detail["student_id"];?>"></td>';
+	temp+='<td style="width:200px;">&nbsp;<?php echo $rs_detail["student_name"];?><input type="hidden" name="stu_id_'+r+'" id="stu_id_'+r+'" value="<?php echo $rs_detail["student_id"];?>"></td>';
 	temp+='<td>&nbsp;'+gender(sex)+'<input type="hidden" name="sex_'+r+'" id="sex_'+r+'" value="<?php echo $rs_detail["sex"];?>"></td>';
 	temp+='<td>&nbsp;<?php echo $rs_detail["grade"];?><input type="hidden" name="grade_'+r+'" id="grade_'+r+'" value="<?php echo $rs_detail["grade_id"];?>"></td>';
 	temp+='<td>&nbsp;<input style="width:200px;padding-left:10px;" dojoType="dijit.form.NumberTextBox" class="fullside" name="studentscores_'+r+'" id="studentscores_'+r+'" value="<?php echo $rs_detail['score'];?>" type="text"></td>';
