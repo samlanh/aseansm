@@ -83,7 +83,7 @@ class Global_Model_DbTable_DbStudentScore extends Zend_Db_Table_Abstract
 	function getStudent($data){
 		$db=$this->getAdapter();
 		$sql="SELECT s.stu_id,s.stu_code,CONCAT(s.stu_enname,' - ',s.stu_khname) AS stu_khname,s.sex,(SELECT CONCAT(major_enname,' - ',major_khname ) AS major_enname
-		    FROM rms_major WHERE rms_major.major_id=s.grade) AS grade
+		    FROM rms_major WHERE rms_major.major_id=s.grade) AS grade,s.grade As grade_id
 	    	FROM rms_student AS s,rms_group_detail_student AS g  WHERE s.stu_id=g.stu_id AND g.group_id=$data";
 		$order=" ORDER BY stu_code DESC";
 		return $db->fetchAll($sql.$order);

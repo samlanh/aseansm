@@ -26,11 +26,10 @@ class Global_StudentscoreController extends Zend_Controller_Action {
 			}
 			$rs_rows = $db->getAllHoweWorkScore($search=null);
 			$glClass = new Application_Model_GlobalClass();
-			$rs = $glClass->getImgActive($rs_rows, BASE_URL, true);
-			 
-			 
+			//$rs = $glClass->getImgActive($rs_rows, BASE_URL, true);
+			$rs = $glClass->getSession($rs_rows,BASE_URL, true);
 			$list = new Application_Form_Frmtable();
-			$collumns = array("RECEIPT_NO","STUDENT_NAME","STUDY_YEAR","SESSION","STUDENT_GROUP","SUBJECT","TERM","STUDENT_SCORE","NOTE","STATUS");
+			$collumns = array( "STUDENT_GROUP","STUDY_YEAR","SESSION","SUBJECT","TERM","STATUS");
 			$link=array(
 					'module'=>'global','controller'=>'studentscore','action'=>'edit',
 			);
@@ -160,6 +159,24 @@ public	function addAction(){
 			$data = $this->getRequest()->getPost();
 			$_dbmodel = new Global_Model_DbTable_DbStudentScore();
 			$data=$_dbmodel->getStudent($data['group_id']);
+			print_r(Zend_Json::encode($data));
+			exit();
+		}
+	}
+	function getGroupNameAction(){
+		if($this->getRequest()->isPost()){
+			$data = $this->getRequest()->getPost();
+			$_dbmodel = new Global_Model_DbTable_DbHomeWorkScore();
+			$data=$_dbmodel->getGroupName($data['academic_id'],$data['session_id']);
+			print_r(Zend_Json::encode($data));
+			exit();
+		}
+	}
+	function getParentNameAction(){
+		if($this->getRequest()->isPost()){
+			$data = $this->getRequest()->getPost();
+			$_dbmodel = new Global_Model_DbTable_DbHomeWorkScore();
+			$data=$_dbmodel->getParentNameByGroupId($data['group_id']);
 			print_r(Zend_Json::encode($data));
 			exit();
 		}

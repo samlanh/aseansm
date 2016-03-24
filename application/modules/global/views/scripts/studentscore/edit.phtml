@@ -43,7 +43,7 @@ dojo.ready(function(){
 		    required:'',
 		    placeHolder:"Selected Study Years",          
 		    onChange: function() {  
-		    	
+		    	getGroupName();
 		    }
 		}, "year_study");
 		
@@ -68,7 +68,8 @@ dojo.ready(function(){
 			    	
 		    	}else{
 				    getStudent(study_group);
-		    	}		    	
+		    	}
+		    	getParentName();		    	
 		    }
 		}, "study_group");
 
@@ -94,10 +95,77 @@ dojo.ready(function(){
 		 dijit.byId('parent_name').attr('value',"<?php echo $this->row_home['parent_id'];?>");
 		 dijit.byId('term').attr('value',"<?php echo $this->row_home['term_id'];?>");
 	});
+//get parent name filter by group id
+function getParentName(){
+	group_id=dijit.byId('study_group').get('value');
+	if(group_id !=''){
+		getParent(group_id);
+	}
+}
+var parent_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
+var url_parent = '<?php echo $this->url(array('module'=>'global','controller'=>'studentscore','action'=>'get-parent-name')); ?>';
+function getParent(group_id){
+	dojo.xhrPost({
+		url:url_parent,
+		content:{
+			'group_id':group_id,
+			},
+		handleAs:"json",
+		load: function(data) {
+			parent_stores  = getDataStorefromJSON('id','name', data);
+		    dijit.byId('parent_name').set('store',parent_stores);
+		},
+		error: function(err) {
+			  alert(err);
+		}
+	});
+}
+
+
+//function fileter group name 
+function getGroupName(){
+	academic_id=dijit.byId('year_study').get('value');
+	session_id=dijit.byId('session').get('value');
+    if(academic_id !=''){
+        //alert(academic_id+"-"+session_id);
+    	getGroup(academic_id,session_id);
+    }
+}
+var group_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
+var url_groupname = '<?php echo $this->url(array('module'=>'global','controller'=>'studentscore','action'=>'get-group-name')); ?>';
+function getGroup(academic_id,session_id){
+	dojo.xhrPost({
+		url:url_groupname,
+		content:{
+			'academic_id':academic_id,
+			'session_id':session_id
+			},
+		handleAs:"json",
+		load: function(data) {
+			if(data !=''){
+				group_stores  = getDataStorefromJSON('id','name', data);
+			    dijit.byId('study_group').set('store',group_stores);  
+			}else{
+				dijit.byId('study_group').set('store',group_store);  
+				dijit.byId('study_group').attr('value','');  
+			}
+		},
+		error: function(err) {
+			  alert(err);
+		}
+	});
+}
+	
 //function select student
 function getStudent(){
+	dijit.byId('parent_name').attr('value','');
 	group_id=dijit.byId('study_group').get('value');
-	getStudentByIdGroup(group_id);
+	if(group_id !=''){
+		getStudentByIdGroup(group_id);
+		
+	}else{
+		document.getElementById("table_row").innerHTML = '';
+	}
 }
 var url_getStudent= '<?php echo $this->url(array('module'=>'global','controller'=>'studentscore','action'=>'get-student')); ?>';
 function getStudentByIdGroup(group_id){
@@ -155,7 +223,7 @@ function getStudentByIdGroup(group_id){
 	       }
 	   },		
 	    error: function(err) {
-		    alert(err);
+		   // alert(err);
 	    }
 	});
 }
@@ -174,6 +242,7 @@ function addNewRecord(){
 	r=0;
 	<?php if(!empty($this->row_detial)) { 
 		foreach($this->row_detial AS $i=>$rs_detail){?>
+		sex='<?php echo $rs_detail["sex"];?>';
 	r++;
 	tmp='<tr style="border:1px solid #ccc;" id="row_guide'+r+'">'
 	tmp+="</tr>";
@@ -181,8 +250,8 @@ function addNewRecord(){
 	temp='<td width="6%">&nbsp;'+r+'</td>';
 	temp+='<td>&nbsp;<?php echo $rs_detail["student_no"];?><input type="hidden" name="stu_code_'+r+'" id="stu_code_'+r+'" value="<?php echo $rs_detail["student_no"];?>"></td>';
 	temp+='<td>&nbsp;<?php echo $rs_detail["student_name"];?><input type="hidden" name="stu_id_'+r+'" id="stu_id_'+r+'" value="<?php echo $rs_detail["student_id"];?>"></td>';
-	temp+='<td>&nbsp;<?php echo $rs_detail["sex"];?></td>';
-	temp+='<td>&nbsp;<?php echo $rs_detail["grade_id"];?></td>';
+	temp+='<td>&nbsp;'+gender(sex)+'<input type="hidden" name="sex_'+r+'" id="sex_'+r+'" value="<?php echo $rs_detail["sex"];?>"></td>';
+	temp+='<td>&nbsp;<?php echo $rs_detail["grade"];?><input type="hidden" name="grade_'+r+'" id="grade_'+r+'" value="<?php echo $rs_detail["grade_id"];?>"></td>';
 	temp+='<td>&nbsp;<input style="width:200px;padding-left:10px;" dojoType="dijit.form.NumberTextBox" class="fullside" name="studentscores_'+r+'" id="studentscores_'+r+'" value="<?php echo $rs_detail['score'];?>" type="text"></td>';
 	temp+='<td>&nbsp;<input style="width:200px;padding-left:10px;" dojoType="dijit.form.TextBox" class="fullside" name="note_'+r+'" id="note_'+r+'" value="<?php echo $rs_detail['note'];?>" type="text"></td>';
 	dojo.html.set(dojo.byId("row_guide"+r),temp, {
@@ -226,7 +295,7 @@ function gender(sex){
 							</td>
 							<td  ><?php echo $tr->translate("SESSION");?></td>
 							<td>
-								<select dojoType="dijit.form.FilteringSelect" required="true"  class="fullside"  id="session" name="session" type="text">
+								<select dojoType="dijit.form.FilteringSelect" required="true"  class="fullside"  id="session" name="session" type="text" onChange="getGroupName();">
 									<option value="1"><?php echo $tr->translate('MORNING');?></option>
 									<option value="2"><?php echo $tr->translate('AFTERNOON');?></option>
 									<option value="3"><?php echo $tr->translate('EVERNING');?></option>
@@ -257,7 +326,9 @@ function gender(sex){
 							<td  ><?php echo $tr->translate("TERM");?></td>
 							<td align="center">
 								<select dojoType="dijit.form.FilteringSelect" required="true"  class="fullside"  id="term" name="term" type="text">
-									<option value="1">1</option>
+									<?php for($i=1;$i<=6;$i++){?>
+									<option value="<?php echo $i;?>"><?php echo $i;?></option>
+									<?php }?>
 								</select>
 							</td>
 						</tr>
@@ -440,7 +511,7 @@ function getSubject(parent_id){
 		    dijit.byId('subject').attr('value',"<?php echo $this->row_home['subject_id'];?>");
 		},
 		error: function(err) {
-			 alert(err);
+			 //alert(err);
 		}
 	});
 }
