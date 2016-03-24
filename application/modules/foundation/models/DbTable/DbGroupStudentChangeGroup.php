@@ -1,6 +1,6 @@
 <?php
 
-class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstract
+class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_Abstract
 {
 	
 	protected $_name = 'rms_student_change_group';
@@ -103,14 +103,6 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
 	}
-	function getAllGrade($grade_id){
-		$db = $this->getAdapter();
-		$sql = "SELECT major_id As id,major_enname As name FROM rms_major WHERE dept_id=".$grade_id;
-		$order=' ORDER BY id DESC';
-		return $db->fetchAll($sql.$order);
-	}
-	
-	
 	
 	function getStudentChangeGroup1ById($id){
 		$db = $this->getAdapter();
@@ -123,11 +115,16 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 		return $db->fetchRow($sql);
 	}
 	
-	function getStudentInfoById($stu_id){
-		$db = $this->getAdapter();
-		$sql = "SELECT st.stu_enname,st.`sex`,gds.`group_id` FROM `rms_student` AS st,rms_group_detail_student AS gds WHERE st.stu_id=$stu_id AND st.stu_id=gds.stu_id LIMIT 1";
-		return $db->fetchRow($sql);
+	function getAllStudentFromGroup($from_group){
+		$db=$this->getAdapter();
+		$sql="select gds.stu_id as stu_id,st.stu_enname,st.stu_khname,st.stu_code,
+			 (select name_en from rms_view where rms_view.type=2 and rms_view.key_code=st.sex) as sex
+			 from rms_group_detail_student as gds,rms_student as st where gds.stu_id=st.stu_id and gds.group_id=$from_group";
+		return $db->fetchAll($sql);
 	}
+	
+	
+	
 	
 	
 	
