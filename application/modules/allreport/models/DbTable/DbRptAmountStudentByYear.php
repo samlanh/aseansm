@@ -63,7 +63,7 @@ class Allreport_Model_DbTable_DbRptAmountStudentByYear extends Zend_Db_Table_Abs
     	return $db->fetchAll($sql);
     }
     
-    function getAllStu(){
+    function getAllStu($search){
     	$db= $this->getAdapter();
     	$sql="SELECT COUNT(gds.`stu_id`) AS amount,gds.stu_id,g.`academic_year`,
     		  (select from_academic from rms_tuitionfee where rms_tuitionfee.id=g.academic_year limit 1) as from_academic,
@@ -75,8 +75,23 @@ class Allreport_Model_DbTable_DbRptAmountStudentByYear extends Zend_Db_Table_Abs
 			  `rms_group_detail_student` AS gds,
 			  `rms_group` AS g 
 			 WHERE g.id = gds.`group_id` 
-			 GROUP BY g.`academic_year`,g.`grade`,g.`session` ";
-    	$row = $db->fetchAll($sql);
+			  ";
+    	$groupby=" GROUP BY g.`academic_year`,g.`grade`,g.`session`";
+    	$where  = '';
+    	
+   		 if(empty($search)){
+    		return $db->fetchAll($sql.$groupby);
+    	}
+    	if(!empty($search['txtsearch'])){
+    		$s_where = array();
+    		$s_search = trim($search['txtsearch']);
+    		$s_where[] = " (select CONCAT(from_academic,'-',to_academic,' ',generation) from rms_tuitionfee where rms_tuitionfee.id=g.academic_year) LIKE '%{$s_search}%'";
+    		$s_where[] = " (select major_enname from rms_major where rms_major.major_id=g.grade) LIKE '%{$s_search}%'";
+    		$s_where[] = " (select name_en from rms_view where rms_view.type=4 and rms_view.key_code=g.session) LIKE '%{$s_search}%'";
+    		$where .=' AND ( '.implode(' OR ',$s_where).')';
+    	}
+    	
+    	$row = $db->fetchAll($sql.$where.$groupby);
     	if($row){
     		return $row;
     	}
