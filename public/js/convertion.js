@@ -451,9 +451,9 @@ function read_money_in_khmer(value)
 	var read='';
 	var amount='';	
 	var len=extract.length;
+	
 	for(var i=0;i<extract.length;i++){				
 		var temp=read_number_in_khmer_by_len_1_to_5(extract[i]);				
-		
 			switch(len){			
 				case 1:
 					if(temp==undefined){ amount=''; break;}
