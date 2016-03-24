@@ -283,6 +283,29 @@ class Application_Model_GlobalClass  extends Zend_Db_Table_Abstract
 			}
 			return $rows;
 		}
+		public function getSession($rows,$base_url, $case=''){
+			$imgnone='<img src="'.$base_url.'/images/icon/cross.png"/>';
+			$imgtick='<img src="'.$base_url.'/images/icon/apply2.png"/>';
+			$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+			if($rows){
+				foreach ($rows as $i =>$row){
+					if($row['session_id'] == 1){
+						$rows[$i]['session_id']=$tr->translate(' ព្រឹក');
+						$rows[$i]['status']= $imgtick;
+					}
+					else if($row['session_id'] ==2){
+						$rows[$i]['session_id']=$tr->translate('រសៀល');
+					}
+					else if($row['session_id'] == 3){
+						$rows[$i]['session_id']=$tr->translate(' ល្ញាច');
+					}
+					else if($row['session_id'] == 4){
+						$rows[$i]['session_id']=$tr->translate('ចុងសបា្តហ៏');
+					}
+				}
+			}
+			return $rows;
+		}
 		public function getsunjectOption(){
 			$_db = new Application_Model_DbTable_DbGlobal();
 			$rows = $_db->getAllsubject();
