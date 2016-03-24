@@ -13,18 +13,20 @@ class Global_StudentscoreController extends Zend_Controller_Action {
 	public function indexAction(){
 		try{
 			$db = new Global_Model_DbTable_DbHomeWorkScore();
+			$this->view->g_all_name=$db->getGroupSearch();
 			if($this->getRequest()->isPost()){
 				$_data=$this->getRequest()->getPost();
+				$this->view->g_name=$_data;
 				$search = array(
-						'title' => $_data['title'],
-						'status' => $_data['status_search']);
+						'group_name' => $_data['group_name'],
+						);
 			}
 			else{
 				$search = array(
-						'title' => '',
-						'status' => -1);
+						'group_name' => ''
+						);
 			}
-			$rs_rows = $db->getAllHoweWorkScore($search=null);
+			$rs_rows = $db->getAllHoweWorkScore($search);
 			$glClass = new Application_Model_GlobalClass();
 			//$rs = $glClass->getImgActive($rs_rows, BASE_URL, true);
 			$rs = $glClass->getSession($rs_rows,BASE_URL, true);
@@ -39,6 +41,7 @@ class Global_StudentscoreController extends Zend_Controller_Action {
 			Application_Form_FrmMessage::message("Application Error");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
+		
 		
 	}
 public	function addAction(){

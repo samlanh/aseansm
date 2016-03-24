@@ -155,7 +155,7 @@ class Global_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
 		$order=" ORDER BY stu_code DESC";
 		return $db->fetchAll($sql.$order);
 	}
-	function getAllHoweWorkScore(){
+	function getAllHoweWorkScore($search=null){
 		$db=$this->getAdapter();
 		$sql="SELECT s.id,(SELECT group_code FROM rms_group WHERE id=s.group_id ) AS  group_id,
 	           (SELECT CONCAT(from_academic,'-',to_academic,'(',generation,')') FROM rms_tuitionfee AS f WHERE id=s.academic_id AND `status`=1 GROUP BY from_academic,to_academic,generation) AS academic_id,
@@ -163,8 +163,12 @@ class Global_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
 		        (SELECT CONCAT(subject_titleen,' - ',subject_titlekh) FROM rms_subject WHERE id=s.subject_id ) AS subject_id,
 		        s.term_id,s.status
 		        FROM rms_score AS s WHERE s.status=1";
+		$where ='';
+		if(!empty($search['group_name'])){
+			$where.= " AND s.group_id=".$search['group_name'];
+		}
 		$order=" ORDER BY id DESC ";
-		return $db->fetchAll($sql.$order);
+		return $db->fetchAll($sql.$where.$order);
 	}
 	function getAllHoweWorkScoreOld(){
 		$db=$this->getAdapter();
@@ -211,6 +215,12 @@ class Global_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
 		$sql="SELECT subject_id AS id,(SELECT CONCAT(subject_titleen,' - ',subject_titlekh)
 		        FROM rms_subject WHERE rms_subject.id= rms_group_subject_detail.subject_id) AS `name`
 		        FROM rms_group_subject_detail WHERE group_id=$group_id";
+		return $db->fetchAll($sql);
+	}
+	function getGroupSearch(){
+		$db=$this->getAdapter();
+		$sql="SELECT group_id AS id,(SELECT group_code FROM rms_group WHERE id=rms_score.group_id) AS `name` 
+		               FROM rms_score WHERE `status`=1 GROUP BY group_id";
 		return $db->fetchAll($sql);
 	}
 }
