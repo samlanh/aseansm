@@ -2,7 +2,7 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	echo $this->headTitle($tr->translate('ADD_FEE')); 
 	$payment_term = $this->payment_term;
-	print_r($this->row_att_detial);
+	 //print_r($this->row_att_detial);
 ?>	
 <script type="text/javascript" src="js/dojo/dojo.js" djConfig="isDebug: true, parseOnLoad: true"></script>
 <script type="text/javascript">
@@ -60,9 +60,8 @@ dojo.ready(function(){
 		    required:'',
 		    placeHolder:"Selected Study Group",          
 		    onChange: function() {  
-		    	study_group=dijit.byId('study_group').get('value');
-			    getStudent(study_group);
 			    getParentName();
+			    getDefualGroup();
 		    }
 		}, "study_group");
 
@@ -70,17 +69,23 @@ dojo.ready(function(){
 	dijit.byId('session').attr('value','<?php echo $this->row_att['session_id'];?>'); 
 	dijit.byId('study_group').attr('value','<?php echo $this->row_att['group_id'];?>');   
 	getParent(<?php echo $this->row_att['group_id'];?>);
-	
+	getDefualGroup();
+
+});
+function getDefualGroup(){
 ////function for chab yok defual group 
 	old_group=$('#old_group').val();
     new_group=dijit.byId('study_group').get('value');
     if(old_group==new_group){
-	    alert(old_group+'-'+new_group);
+   	 document.getElementById("table_row").innerHTML ='';
+	   // alert(old_group+'-'+new_group);
 	    getGroupDefaul();
     }else{
-    	getStudent();
+   	 document.getElementById("table_row").innerHTML ='';
+    	study_group=dijit.byId('study_group').get('value');
+        getStudent(study_group);
     }
-});
+}
 //get parent name filter by group id
 function getParentName(){
 	group_id=dijit.byId('study_group').get('value');
@@ -239,7 +244,7 @@ function setPermission(r){
 	});
 }
 </script>
-<form id='office_receipt' action="<?php echo $this->url(array('module'=>'foundation','controller'=>'attendent','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form id='office_receipt' action="<?php echo $this->url(array('module'=>'foundation','controller'=>'attendent','action'=>'edit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 <script type="dojo/method" event="onSubmit">   
    if(this.validate()) {
     return true;
@@ -269,7 +274,7 @@ function setPermission(r){
 							</td>
 							<td  ><?php echo $tr->translate("STUDENT_GROUP");?></td>
 							<td>
-								<input id="study_group" /><input type="text" name="old_group" id="old_group" value="<?php echo $this->row_att['group_id'];?>"/>
+								<input id="study_group" /><input type="hidden" name="old_group" id="old_group" value="<?php echo $this->row_att['group_id'];?>"/>
 							</td>
 							
 						</tr>
@@ -334,8 +339,6 @@ function setPermission(r){
 								 	<input iconClass="dijitIconClear" type="reset" value="សំអាត" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
 									<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('SAVE_CLOSE');?>" dojoType="dijit.form.Button" 
 										iconClass="dijitEditorIcon dijitEditorIconSave" />
-									<input type="submit" value="save_new" name="save_new" label="<?php echo $tr->translate('SAVE_NEW');?>" dojoType="dijit.form.Button" 
-										iconClass="dijitEditorIcon dijitEditorIconSave" />
 								</td>
 							</tr>
 						</tfoot>
@@ -392,7 +395,7 @@ function getAllFucaltyOption(f_id){
 	});
 }
  function getGroupDefaul(){
-	 r=0;
+	 document.getElementById("table_row").innerHTML ='';
 	 title=0;
 	   if(title !=1){
 		   thead='<th><?php echo $tr->translate("N_O");?></th>';
@@ -406,6 +409,39 @@ function getAllFucaltyOption(f_id){
 			dojo.query("#table_row").append(thead);	
 			title=1;
 	   }
+	   r=0;
+	   <?php if(!empty($this->row_att_detial))foreach($this->row_att_detial As $rs){ ?>
+        r++;
+	    tmp='<tr style="border:1px solid #ccc;" id="row_guide'+r+'">'
+		tmp+="</tr>";
+			dojo.query("#table_row").append(tmp);
+		temp='<td width="6%">&nbsp;'+r+'</td>';
+		temp+='<td><input type="hidden" name="stu_code_'+r+'" id="stu_code_'+r+'" value="<?php echo $rs['student_code'];?>" />&nbsp;<?php echo $rs['student_code'];?></td>';
+		temp+='<td style="width:200px;"><input type="hidden" name="stu_id_'+r+'" id="stu_id_'+r+'" value="<?php echo $rs['student_id'];?>" />&nbsp;<?php echo $rs['student_id'];?> </td>';
+        temp+='<td><input type="hidden" name="sex_'+r+'" id="sex_'+r+'" value="<?php echo $rs['sex'];?> " />&nbsp;'+gender('<?php echo $rs['sex'];?>')+'</td>';
+        temp+= '<td><input type="hidden" name="grade_'+r+'" id="grade_'+r+'" value="<?php echo $rs['grade_id'];?>" />&nbsp;<?php echo $rs['grade_id'];?></td>';
+        temp+='<td>&nbsp;<input type="checkbox" id="att_type_'+r+'" value="<?php echo $rs['att_type'];?>"   name="att_type_'+r+'" onClick="setVaue('+r+');"  > <input type="hidden" value="<?php echo $rs['att_type'];?>" name="at_type_'+r+'" id="at_type_'+r+'"/></td>';
+        temp+='<td>&nbsp;<input style="height: 0px ! important;" type="checkbox" id="permission_'+r+'" value="<?php echo $rs['permission'];?>" name="permission_'+r+'" onClick="setPermission('+r+');"><input type="hidden" value="<?php echo $rs['permission'];?>" name="permiss_'+r+'" id="permiss_'+r+'"/></td>';
+        temp+='<td>&nbsp;<input style="width:240px;padding-left:10px;" dojoType="dijit.form.TextBox" class="fullside" name="note_'+r+'" id="note_'+r+'" value="<?php echo $rs['note'];?>" type="text"></td>';
+		dojo.html.set(dojo.byId("row_guide"+r),temp, {
+		    parseContent: true,
+		});
+		var att = $('#att_type_'+r).val();
+		var per = $('#permission_'+r).val();
+		if(att==1){
+			$("#att_type_"+r).attr("checked", "checked");
+		}
+		if(per==1){
+			$("#permission_"+r).attr("checked", "checked");
+		}
+		//alert(c);
+			if(r!=1) {//identity set value 1,2,3,4,5
+				var identity = $('#identity').val();
+				$('#identity').val(identity+','+r);
+			} else {
+				$('#identity').val(r);
+			}
+	<?php }?>
  }
  function deleteRecord(index) {
 		var identity = $('#identity').val();
@@ -416,5 +452,12 @@ function getAllFucaltyOption(f_id){
 		var strings = arrays.join(',');
 		$('#identity').val(strings);
 		dojo.query("#row"+index).remove();
+	}
+	function getChecked(r,index){
+		if(index==1){
+			// alert(r);
+			//$("#att_type_"+r).attr("checked", "checked");
+			//document.getElementById('att_type_'+r).checked;
+		}
 	}
 </script>

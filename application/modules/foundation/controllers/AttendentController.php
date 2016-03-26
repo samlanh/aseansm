@@ -74,11 +74,9 @@ class Foundation_AttendentController extends Zend_Controller_Action {
 			$_data = $this->getRequest()->getPost();
 			$_model = new Foundation_Model_DbTable_DbAttendent();
 			try {
-				if(isset($_data['save_new'])){
-					$rs =  $_model->addAttendent($_data);
-					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/attendent/add");
-				}else {
-					$rs =  $_model->addAttendent($_data);
+				if(isset($_data['save_close'])){
+					$_data['id']=$id;
+					$rs =  $_model->updateAttendent($_data);
 					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/attendent");
 				}
 				Application_Form_FrmMessage::message("INSERT_SUCCESS");
