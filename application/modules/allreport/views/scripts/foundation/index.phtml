@@ -5,6 +5,7 @@
   $rpt_studentchangegroup=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rpt-student-change-group'), null, true);
   $rpt_studentdrop=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rpt-student-drop'), null, true);
   $rpt_amount_student_by_year=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rptamountstudent'), null, true);
+  $student_score=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rpt-student-score'), null, true);
   ?>
   <style>
   ul.link-rpt li a {
@@ -37,6 +38,7 @@
   		<li><a href="<?php ;?>"><?php echo $tr->translate('របាយការណ៏អវត្តមាន');?></a></li>
   		<li><a href="<?php echo $rpt_student;?>"><?php echo $tr->translate('RPT_STUDENT');?></a></li>
   		<li><a href="<?php echo $rpt_amount_student_by_year;?>"><?php echo $tr->translate('RPT_AMOUNT_STUDENT');?></a></li>
+  		<li><a href="<?php echo $student_score;?>"><?php echo $tr->translate('RPT_STUDENT_SCORE');?></a></li>
   	</ul>
   </div>
   <div style="clear: both;"></div>
