@@ -148,10 +148,18 @@ class Allreport_Model_DbTable_DbRptStudentScore extends Zend_Db_Table_Abstract
    function getScoreByGroupId($student_id,$subject_id,$group_id){
    	$db = $this->getAdapter();
    	$sql = "select (select subject_titleen from rms_subject where rms_subject.id=s.subject_id) as subject_name,
-            sd.score from rms_score as s,rms_score_detail as sd,rms_student as st
-           where  s.id=sd.score_id and sd.student_id=st.stu_id and s.group_id=$group_id and s.parent_id=$subject_id ";
+            SUM(sd.score) As total_score from rms_score as s,rms_score_detail as sd,rms_student as st
+           where  s.id=sd.score_id and sd.student_id=st.stu_id and s.group_id=$group_id and s.parent_id=$subject_id GROUP BY s.subject_id ";
    	return $db->fetchAll($sql);
    	
+   }
+   function getSubjectItem($subject_id,$group_id){
+   	$db = $this->getAdapter();
+   	$sql = " select (select subject_titleen from rms_subject where rms_subject.id=s.subject_id) as subject_name
+    from rms_score as s,rms_score_detail as sd
+   	where s.id=sd.score_id and s.group_id=$group_id and s.parent_id=$subject_id GROUP BY s.subject_id ";
+   	return $db->fetchAll($sql);
+   
    }
   
 }

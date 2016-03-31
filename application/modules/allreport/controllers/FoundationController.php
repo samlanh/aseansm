@@ -335,6 +335,7 @@ public function init()
     				'stu_code'=>$rs['stu_code'],
     				'id'=>$rs['id'],
     				'group_code'=>$rs['group_code'],
+    				'group_id'=>$rs['group_id'],
     				'tuitionfee_id'=>$rs['tuitionfee_id'],
     				'room_id'=>$rs['room_id'],
     				'from_academic'=>$rs['from_academic'],
@@ -354,13 +355,16 @@ public function init()
     				);
     		
     		$itemrs = $parent->getScoreByGroupId($rs['stu_id'],$rs['subject_id'],$rs['group_id']);
+//     		$itemrs = $parent->getScoreByGroupId($rs['subject_id'],$rs['group_id']);
     		foreach ($itemrs as $index => $item){
-    			$result[$key][$index ]=$item['subject_name'];
+    			$result[$key]['subject_id'.$index]=$item['subject_name'];
+    			$result[$key]['total_score'.$index]=$item['total_score'];
     		}
     	}
     	//$data= $this->view->row_group=$parent->getStudenetGroupSubject();
     	
     	$data= $this->view->row_group=$result;
+//     	print_r($data);exit();
     	
     	
     }
