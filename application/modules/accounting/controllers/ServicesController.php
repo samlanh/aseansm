@@ -60,7 +60,7 @@ class Accounting_ServicesController extends Zend_Controller_Action {
 				$_model = new Accounting_Model_DbTable_DbServiceType();
 				$id=$_model->AddServiceType($_data);
 				if($id==-1){
-				Application_Form_FrmMessage::message("RECORD_EXIST");
+					Application_Form_FrmMessage::message("RECORD_EXIST");
 				}else{
 					if(isset($_data['save_close'])){
 						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/accounting/services");

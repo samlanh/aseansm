@@ -100,8 +100,11 @@ public function editAction(){
 	$this->view->frm_servicesuspend = $frm_servicesuspend;
 	
 	$_db = new Accounting_Model_DbTable_DbSuspendservice();
+	
 	$this->view->rs = $_db->getAllStudentCode();
+	
 	$this->view->id = $_db->getStudentSuspendServiceByID($id);
+	
 	$this->view->service = $_db->getSuspendServiceByID($id);
 	
 	$_model = new Application_Model_GlobalClass();
