@@ -14,7 +14,9 @@ class Allreport_Model_DbTable_DbRptStudentChangeGroup extends Zend_Db_Table_Abst
     	$sql = "SELECT stu_id,(SELECT CONCAT(stu_khname,' - ',stu_enname) FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id` limit 1) AS name,
 		(SELECT name_kh FROM `rms_view` WHERE `rms_view`.`type`=2 and `rms_view`.`key_code`=(SELECT sex FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id` limit 1) limit 1)AS sex,
 		(select group_code from rms_group where rms_group.id=rms_student_change_group.from_group limit 1) AS code,
-		(select CONCAT(from_academic,'-',to_academic) from rms_group where rms_group.id=rms_student_change_group.from_group limit 1) AS academic,
+		
+		(select CONCAT(from_academic,'-',to_academic,' (',generation,')') from rms_tuitionfee where rms_tuitionfee.id=(select academic_year from rms_group where rms_group.id=rms_student_change_group.from_group)) as academic,
+		
 		(select semester from rms_group where rms_group.id=rms_student_change_group.from_group limit 1 ) AS semester,
 		(select name_en from rms_view where rms_view.type=4 and rms_view.key_code=(select session from rms_group where rms_student_change_group.from_group=rms_group.id) limit 1) AS session,
 		(select major_enname from rms_major where rms_major.major_id=(select grade from rms_group where rms_student_change_group.from_group=rms_group.id) limit 1) AS grade,
@@ -24,7 +26,9 @@ class Allreport_Model_DbTable_DbRptStudentChangeGroup extends Zend_Db_Table_Abst
 		(select expired_date from rms_group where rms_group.id=rms_student_change_group.from_group limit 1) AS expired_date,
 
 		(select group_code from rms_group where rms_group.id=rms_student_change_group.to_group limit 1) AS to_code,
-		(select CONCAT(from_academic,'-',to_academic) from rms_group where rms_group.id=rms_student_change_group.to_group limit 1) AS to_academic,
+		
+		(select CONCAT(from_academic,'-',to_academic,' (',generation,')') from rms_tuitionfee where rms_tuitionfee.id=(select academic_year from rms_group where rms_group.id=rms_student_change_group.to_group)) as to_academic,
+		
 		(select semester from rms_group where rms_group.id=rms_student_change_group.to_group limit 1) AS to_semester,
 		(select name_en from rms_view where rms_view.type=4 and rms_view.key_code=(select session from rms_group where rms_student_change_group.to_group=rms_group.id) limit 1) AS to_session,
 		(select major_enname from rms_major where rms_major.major_id=(select grade from rms_group where rms_student_change_group.to_group=rms_group.id) limit 1) AS to_grade,
@@ -32,6 +36,8 @@ class Allreport_Model_DbTable_DbRptStudentChangeGroup extends Zend_Db_Table_Abst
 	 	 moving_date,note,
 		(select name_kh from `rms_view` where `rms_view`.`type`=6 and `rms_view`.`key_code`=`rms_student_change_group`.`status`)AS status
 		 from `rms_student_change_group` ";
+    	
+    	//echo $sql;exit();
     	
     	$where=' where 1';
     	$order=" order by id DESC";
