@@ -1,5 +1,5 @@
 <?php
-class Allreport_ReceiptionistController extends Zend_Controller_Action {
+class Allreport_OtherController extends Zend_Controller_Action {
 	
 	
 public function init()
