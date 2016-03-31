@@ -62,6 +62,29 @@ public function init()
 	}
 	
 	
+	public function rptgroupstudentchangegroupAction()
+	{
+		if($this->getRequest()->isPost()){
+			$data=$this->getRequest()->getPost();
+			$search=array(
+					'txtsearch' => $data['txtsearch'],
+			);
+		}else{
+			$search=array(
+					'txtsearch' => '',
+			);
+		}
+	
+		$db= new Allreport_Model_DbTable_DbRptGroupStudentChangeGroup();
+		$this->view->grade = $rs_rows = $db->getAllTitle();
+		$this->view->session = $rs_row = $db->getAllSession();
+		$this->view->year = $db->getAllYearGeneration();
+	
+		$this->view->rs = $db->getAllStu($search);
+// 		print_r($this->view->rs);exit();
+		$this->view->search=$search;
+	}
+	
 	
 	
 	public function rptStudentDropAction(){
