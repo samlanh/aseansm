@@ -16,20 +16,21 @@ class Foundation_groupstudentchangegroupController extends Zend_Controller_Actio
 			else{
 				$result = Application_Model_DbTable_DbGlobal::getResultWarning();
 			}
-			$collumns = array("STUDENT_CODE","NAME_KH","NAME_EN","SEX","FROM_GROUP","TO_GROUP","MOVING_DATE","NOTE");
+			$collumns = array("FROM_GROUP","GRADE","SESSION","TO_GROUP","GRADE","SESSION","MOVING_DATE","NOTE");
 			$link=array(
-					'module'=>'foundation','controller'=>'studentchangegroup','action'=>'edit',
+					'module'=>'foundation','controller'=>'groupstudentchangegroup','action'=>'edit',
 			);
-			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('code'=>$link,'kh_name'=>$link,'en_name'=>$link));
+			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('group_code'=>$link,'grade'=>$link,'session'=>$link,'to_group_code'=>$link));
 			
 	}
 	function addAction(){
 		if($this->getRequest()->isPost()){
 			try{
-				$_data = $this->getRequest()->getPost();
+				$data = $this->getRequest()->getPost();
+// 				print_r($data);exit();
 				$_add = new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
- 				$_add->addStudentChangeGroup($_data);
- 				if(!empty($_data['save_close'])){
+ 				$_add->addGroupStudentChangeGroup($data);
+ 				if(!empty($data['save_close'])){
  					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentchangegroup");
  				}
 				Application_Form_FrmMessage::message("INSERT_SUCCESS");
@@ -39,11 +40,12 @@ class Foundation_groupstudentchangegroupController extends Zend_Controller_Actio
 			}
 		}
 		
-		$_add = new Foundation_Model_DbTable_DbStudentChangeGroup();
+		$_add = new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
 		
-		$this->view->rs = $add =$_add->getAllStudentID();
+		$this->view->row = $add =$_add->getfromGroup();
 		
-		$this->view->row = $add =$_add->getAllStudentChangeGroup();
+		$this->view->rs = $add =$_add->gettoGroup();
+		
 		
 // 		$_db = new Application_Model_DbTable_DbGlobal();
 // 		$this->view->degree = $rows = $_db->getAllFecultyName();
@@ -52,36 +54,36 @@ class Foundation_groupstudentchangegroupController extends Zend_Controller_Actio
 	}
 	public function editAction(){
 		$id=$this->getRequest()->getParam("id");
-		$db= new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
-		$row = $this->view->rows = $db->getAllStudentChangeGroupById($id);
-		
-		
 		if($this->getRequest()->isPost())
 		{
 			try{
 				$data = $this->getRequest()->getPost();
-				$data["id"]=$id;
+				//$data["id"]=$id;
 				$db = new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
-				$row=$db->updateStudentChangeGroup($data);
+				$row=$db->updateStudentChangeGroup($data,$id);
 				
-				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/foundation/studentchangegroup/index");
+				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/foundation/groupstudentchangegroup/index");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("EDIT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}	
+		$db= new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
+		$row = $this->view->rs = $db->getAllGroupStudentChangeGroupById($id);
 		
-		$_add = new Foundation_Model_DbTable_DbStudentChangeGroup();
+// 		print_r($row);exit();
 		
-		$this->view->rs = $add =$_add->getAllStudentID();
+		$_add = new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
 		
-		$this->view->row = $add =$_add->getAllStudentChangeGroup();
+		$this->view->row = $add =$_add->getfromGroup();
+		
+		$this->view->rows = $add =$_add->gettoGroup();
 	}
 	function getToGroupAction(){
 		if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();
 			$db = new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
-			$grade = $db->getStudentChangeGroup1ById($data['to_group']);
+			$grade = $db->getGroupStudentChangeGroup1ById($data['to_group'],$data['type']);
 			print_r(Zend_Json::encode($grade));
 			exit();
 		}
@@ -97,4 +99,25 @@ class Foundation_groupstudentchangegroupController extends Zend_Controller_Actio
 		}
 	}
 	
+	function getAllStudentUpdateAction(){
+		if($this->getRequest()->isPost()){
+			$data=$this->getRequest()->getPost();
+			$db = new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
+			$student = $db->getAllStudentFromGroup($data['from_group']);
+			print_r(Zend_Json::encode($student));
+			exit();
+		}
+	}	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
