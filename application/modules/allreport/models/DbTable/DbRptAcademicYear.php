@@ -22,7 +22,7 @@ class Allreport_Model_DbTable_DbRptAcademicYear extends Zend_Db_Table_Abstract
     	}
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
-    		$s_search = trim($search['txtsearch']);
+    		$s_search = addslashes(trim($search['txtsearch']));
     		$s_where[] = " CONCAT(fromyear,'-',toyear) LIKE '%{$s_search}%'";
     		$s_where[] = " batch LIKE '%{$s_search}%'";
 //     		$s_where[] = " kh_name LIKE '%{$s_search}%'";

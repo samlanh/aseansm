@@ -39,7 +39,7 @@ class Allreport_Model_DbTable_DbRptStudentBalance extends Zend_Db_Table_Abstract
      	
     		if(!empty($search['txtsearch'])){
     			$s_where = array();
-    			$s_search = trim($search['txtsearch']);
+    			$s_search = addslashes(trim($search['txtsearch']));
     			$s_where[] = " (select CONCAT(from_academic,'-',to_academic) from rms_servicefee where rms_servicefee.id=sp.year limit 1) LIKE '%{$s_search}%'";
     			$s_where[] = " sp.receipt_number LIKE '%{$s_search}%'";
     			$s_where[] = " (select stu_code from rms_student where rms_student.stu_id=sp.student_id) LIKE '%{$s_search}%'";

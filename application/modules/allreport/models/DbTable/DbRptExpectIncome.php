@@ -31,7 +31,7 @@ class Allreport_Model_DbTable_DbRptExpectIncome extends Zend_Db_Table_Abstract
     	//$where= " and sp.create_date between '$from_date' and '$to_date'";
     		if(!empty($search['txtsearch'])){
     			$s_where = array();
-    			$s_search = trim($search['txtsearch']);
+    			$s_search = addslashes(trim($search['txtsearch']));
     			$s_where[] = " sp.receipt_number LIKE '%{$s_search}%'";
     			$s_where[] = " (select stu_code from rms_student where rms_student.stu_id=sp.student_id) LIKE '%{$s_search}%'";
     			$s_where[] = " (select CONCAT(stu_khname,stu_enname) from rms_student where rms_student.stu_id=sp.student_id) LIKE '%{$s_search}%'";

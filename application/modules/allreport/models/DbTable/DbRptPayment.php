@@ -34,7 +34,7 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     	}
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
-    		$s_search = trim($search['txtsearch']);
+    		$s_search = addslashes(trim($search['txtsearch']));
 	 		$s_where[] = " receipt_number LIKE '%{$s_search}%'";
     		$s_where[] = " stu_code LIKE '%{$s_search}%'";
     		$s_where[] = " kh_name LIKE '%{$s_search}%'";
@@ -69,7 +69,7 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     	} 
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
-    		$s_search = trim($search['txtsearch']);
+    		$s_search = addslashes(trim($search['txtsearch']));
     		$s_where[] = " kh_name LIKE '%{$s_search}%'";
     		$s_where[] = " en_name LIKE '%{$s_search}%'";
     		$s_where[] = " service LIKE '%{$s_search}%'";
@@ -97,7 +97,7 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     	
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
-    		$s_search = trim($search['txtsearch']);
+    		$s_search = addslashes(trim($search['txtsearch']));
     		$s_where[] = " kh_name LIKE '%{$s_search}%'";
     		$s_where[] = " en_name LIKE '%{$s_search}%'";
     		$s_where[] = " service LIKE '%{$s_search}%'";

@@ -21,7 +21,7 @@ class Allreport_Model_DbTable_DbRptServiceCharge extends Zend_Db_Table_Abstract
     	$s=$search['txtsearch'];
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
-    		$s_search = trim($search['txtsearch']);
+    		$s_search = addslashes(trim($search['txtsearch']));
     		$s_where[] = " CONCAT(from_academic,'-',to_academic) LIKE '%{$s_search}%'";
     		$s_where[] = " rms_servicefee.from_academic LIKE '%{$s_search}%'";
     		$s_where[] = " rms_servicefee.to_academic LIKE '%{$s_search}%'";

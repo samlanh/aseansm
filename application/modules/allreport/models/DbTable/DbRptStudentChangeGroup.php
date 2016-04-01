@@ -46,7 +46,7 @@ class Allreport_Model_DbTable_DbRptStudentChangeGroup extends Zend_Db_Table_Abst
     	}
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
-    		$s_search = trim($search['txtsearch']);
+    		$s_search = addslashes(trim($search['txtsearch']));
     		$s_where[] = " (SELECT CONCAT(stu_khname,' - ',stu_enname) FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id` limit 1) LIKE '%{$s_search}%'";
 //     		$s_where[] = " (SELECT rms_room.room_name FROM rms_room	WHERE (rms_room.room_id = g.room_id)) LIKE '%{$s_search}%'";
 //     		$s_where[] = " (SELECT rms_view.name_en	FROM rms_view WHERE ((rms_view.type = 4)

@@ -31,7 +31,7 @@ class Allreport_Model_DbTable_DbRptStudentDrop extends Zend_Db_Table_Abstract
     	}
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
-    		$s_search = trim($search['txtsearch']);
+    		$s_search = addslashes(trim($search['txtsearch']));
     		$s_where[] = " (SELECT stu_code FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_drop`.`stu_id`) LIKE '%{$s_search}%'";
     		$s_where[] = " (SELECT CONCAT(stu_khname,' - ',stu_enname) FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_drop`.`stu_id`) LIKE '%{$s_search}%'";
     		$s_where[] = "  (SELECT name_kh FROM `rms_view` WHERE `rms_view`.`type`=5 and `rms_view`.`key_code`=`rms_student_drop`.`type`) LIKE '%{$s_search}%'";

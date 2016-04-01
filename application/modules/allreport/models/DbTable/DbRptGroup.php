@@ -32,7 +32,7 @@ class Allreport_Model_DbTable_DbRptGroup extends Zend_Db_Table_Abstract
 	   	}
 	   	if(!empty($search['txtsearch'])){
 	   		$s_where = array();
-	   		$s_search = trim($search['txtsearch']);
+	   		$s_search = addslashes(trim($search['txtsearch']));
 		   		$s_where[] = " group_code LIKE '%{$s_search}%'";
 		   		$s_where[] = " (SELECT rms_room.room_name FROM rms_room	WHERE (rms_room.room_id = g.room_id)) LIKE '%{$s_search}%'";
 				$s_where[] = " (SELECT rms_view.name_en	FROM rms_view WHERE ((rms_view.type = 4)
@@ -56,7 +56,7 @@ class Allreport_Model_DbTable_DbRptGroup extends Zend_Db_Table_Abstract
 	   	}
 	   	if(!empty($search['txtsearch'])){
 	   		$s_where = array();
-	   		$s_search = trim($search['txtsearch']);
+	   		$s_search = addslashes(trim($search['txtsearch']));
 		   		$s_where[] = " en_name LIKE '%{$s_search}%'";
 		   		$s_where[] = " kh_name LIKE '%{$s_search}%'";
 				$s_where[] = " sex LIKE '%{$s_search}%'";
@@ -110,7 +110,7 @@ class Allreport_Model_DbTable_DbRptGroup extends Zend_Db_Table_Abstract
    	}
    	if(!empty($search['txtsearch'])){
    		$s_where = array();
-   		$s_search = trim($search['txtsearch']);
+   		$s_search = addslashes(trim($search['txtsearch']));
    		$s_where[] = " `g`.`group_code` LIKE '%{$s_search}%'";
    		$s_where[] = " 	`g`.`semester` LIKE '%{$s_search}%'";
    		$s_where[] = "  (SELECT	`rms_view`.`name_en`FROM `rms_view` WHERE ((`rms_view`.`type` = 4) AND (`rms_view`.`key_code` = `g`.`session`)) LIMIT 1) LIKE '%{$s_search}%'";

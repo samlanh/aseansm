@@ -52,12 +52,7 @@ public function init()
 		}
 		
 		$db= new Allreport_Model_DbTable_DbRptAmountStudentByYear();
-		$this->view->grade = $rs_rows = $db->getAllTitle();
-		$this->view->session = $rs_row = $db->getAllSession();
-		$this->view->year = $db->getAllYearGeneration();
-		
 		$this->view->rs = $db->getAllStu($search);
-		//print_r($this->view->year);
 		$this->view->search=$search;
 	}
 	
@@ -76,10 +71,6 @@ public function init()
 		}
 	
 		$db= new Allreport_Model_DbTable_DbRptGroupStudentChangeGroup();
-		$this->view->grade = $rs_rows = $db->getAllTitle();
-		$this->view->session = $rs_row = $db->getAllSession();
-		$this->view->year = $db->getAllYearGeneration();
-	
 		$this->view->rs = $db->getAllStu($search);
 // 		print_r($this->view->rs);exit();
 		$this->view->search=$search;
@@ -126,23 +117,7 @@ public function init()
 		$this->view->rs = $rs_rows = $group->getAllStudentChangeGroup($search);
 		$this->view->search=$search;
 	}
-	public function rptLecturerAction(){
 	
-		if($this->getRequest()->isPost()){
-			$_data=$this->getRequest()->getPost();
-			$search = array(
-					'txtsearch' => $_data['txtsearch'],
-			);
-		}
-		else{
-			$search=array(
-					'txtsearch' =>'',
-			);
-		}
-		$group= new Allreport_Model_DbTable_DbRptLecturer();
-		$this->view->rs = $rs_rows = $group->getAllLecturer($search);
-		$this->view->search=$search;
-	}
 	public function rptGroupAction(){
 	
 		if($this->getRequest()->isPost()){
@@ -182,25 +157,7 @@ public function init()
 		$this->view->rs = $rs_rows = $group->getAllStudent($search);
 		$this->view->search=$search;
 	}
-	public function rptAcademicYearAction(){
 	
-		if($this->getRequest()->isPost()){
-			$_data=$this->getRequest()->getPost();
-			$search = array(
-					'txtsearch' => $_data['txtsearch'],
-			);
-		}
-		else{
-			$search=array(
-					'txtsearch' =>'',
-			);
-		}
-	
-		$db= new Allreport_Model_DbTable_DbRptAcademicYear();
-		$this->view->rs = $db->getAllAcademic($search);
-		$this->view->search = $search;
-			
-	}
 	public function rptExamDegreeAction()
 	{
 	}

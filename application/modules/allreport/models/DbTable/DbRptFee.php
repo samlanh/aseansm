@@ -32,7 +32,7 @@ class Allreport_Model_DbTable_DbRptFee extends Zend_Db_Table_Abstract
 //     	$s=$search['txtsearch'];
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
-    		$abc = $s_search = trim($search['txtsearch']);
+    		$abc = $s_search = addslashes(trim($search['txtsearch']));
     		$s_where[] = " CONCAT(from_academic,'-',to_academic) LIKE '%{$s_search}%'";
     		$s_where[] = " rms_tuitionfee.generation LIKE '%{$s_search}%'";
     		$s_where[] = " rms_tuitionfee.from_academic LIKE '%{$s_search}%'";

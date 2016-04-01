@@ -41,7 +41,7 @@ tr td table tr th:{padding: 5px;margin: 5px;};
 <!-- 												<th rowspan="2">Student ID</th> -->
 												<th rowspan="2">Student Name</th>
 												<th rowspan="2">Gender</th>
-												<th colspan="9">From Group</th>
+												<th colspan="6">From Group</th>
 												<th colspan="6">To Group</th>
 												<th rowspan="2">Moving Date</th>
 												<th rowspan="2">Note</th>
@@ -54,9 +54,7 @@ tr td table tr th:{padding: 5px;margin: 5px;};
 												<th >Room</th>
 												<th >Semester</th>
 												<th >Session</th>
-												<th >Start Date</th>
-												<th >Amount Month</th>
-												<th >Expired Date</th>
+												
 											
 												<th >Code</th>
 												<th >Academic</th>
@@ -82,10 +80,10 @@ tr td table tr th:{padding: 5px;margin: 5px;};
 												<th ><?php echo $row['semester'];?></th>
 												<th >&nbsp;<?php echo $row['session'];?>&nbsp;</th>
 												
-												<th >&nbsp;<?php echo date("d-M-Y",strtotime($row['start_date']));?>&nbsp;</th>
-												<th ><?php echo $row['amount_month'];?></th>
-												<th >&nbsp;<?php echo date("d-M-Y",strtotime($row['expired_date']));?>&nbsp;</th>
-												
+										<!--	<th >&nbsp;<?php //echo date("d-M-Y",strtotime($row['start_date']));?>&nbsp;</th>
+												<th ><?php //echo $row['amount_month'];?></th>
+												<th >&nbsp;<?php //echo date("d-M-Y",strtotime($row['expired_date']));?>&nbsp;</th>
+										-->		
 												
 												
 												<th ><?php echo $row['to_code'];?></th>
