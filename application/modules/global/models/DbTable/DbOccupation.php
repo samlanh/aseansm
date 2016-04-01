@@ -61,7 +61,7 @@ class Global_Model_DbTable_DbOccupation extends Zend_Db_Table_Abstract
 		}
 		if(!empty($search['title'])){
 			$s_where = array();
-			$s_search = trim($search['title']);
+			$s_search = addslashes(trim($search['title']));
 			$s_where[] = " occu_name LIKE '%{$s_search}%'";
 			$s_where[] = " occu_enname LIKE '%{$s_search}%'";
 			$where .=' AND ( '.implode(' OR ',$s_where).')';

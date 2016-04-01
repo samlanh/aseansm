@@ -87,14 +87,12 @@ class Global_Model_DbTable_DbAcademicyear extends Zend_Db_Table_Abstract
 		}
 		if(!empty($search['txtsearch'])){
 			$s_where = array();
-			$s_search = trim($search['txtsearch']);
+			$s_search = addslashes(trim($search['txtsearch']));
 			$s_where[] = " fromyear LIKE '%{$s_search}%'";
 			$s_where[] = " toyear LIKE '%{$s_search}%'";
 			$s_where[] = " batch LIKE '%{$s_search}%'";
 			$where .=' AND ( '.implode(' OR ',$s_where).')';
 		}
-		
-		
 		return $db->fetchAll($sql.$where.$order_by);
 	}
 }

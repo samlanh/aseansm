@@ -52,7 +52,7 @@ class Global_Model_DbTable_DbDept extends Zend_Db_Table_Abstract
 		$where = ' ';
 		if(!empty($search['title'])){
 			$s_where = array();
-	    		$s_search = trim($search['title']);
+	    		$s_search = addslashes(trim($search['title']));
 		 		$s_where[] = " en_name LIKE '%{$s_search}%'";
 	    		$s_where[] = " kh_name LIKE '%{$s_search}%'";
 	    		$s_where[] = " shortcut LIKE '%{$s_search}%'";

@@ -70,7 +70,7 @@ class Global_Model_DbTable_DbSubjectExam extends Zend_Db_Table_Abstract
 		}
 		if(!empty($search['title'])){
 			$s_where = array();
-			$s_search = trim($search['title']);
+			$s_search = addslashes(trim($search['title']));
 				$s_where[]= " subject_titlekh LIKE '%{$s_search}%'";
 				$s_where[]= " subject_titleen LIKE '%{$s_search}%'";
 			$where .= ' AND ( '.implode(' OR ',$s_where).')';
