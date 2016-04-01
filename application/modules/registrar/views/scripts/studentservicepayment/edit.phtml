@@ -3,6 +3,7 @@
 	echo $this->headTitle($tr->translate('EDIT_STUDENT_SERVICE_PAYMENT')); 
 	$base_url = Application_Form_FrmMessage::getUrl("/");
 	$hour=explode(',', $this->row['time']);
+	//print_r($hour);exit();
 	
 ?>	
 <script type="text/javascript"  src="<?php echo $this->baseUrl();?>/js/jquery-1.8.3.min.js"></script>

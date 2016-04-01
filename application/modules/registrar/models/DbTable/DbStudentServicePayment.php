@@ -143,8 +143,8 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 					'amount_in_khmer'	=>$data['char_price'],
 					'note'				=>$data['not'],
 					'time'				=>$data['time'],
-					'create_date'=>date("d-m-Y"),
-					'user_id'=>$this->getUserId()
+					//'create_date'		=>date("Y-m-d H:i:s"),
+					'user_id'			=>$this->getUserId()
 				);
 				$where =$this->getAdapter()->quoteInto("id=?", $data['id']);
 			 	$this->update($arr,$where);
@@ -249,7 +249,7 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     	
     	if(!empty($search['adv_search'])){
     		$s_where = array();
-    		$s_search = trim($search['adv_search']);
+    		$s_search = addslashes(trim($search['adv_search']));
     		$s_where[] = " (select CONCAT(from_academic,'-',to_academic) from rms_servicefee where rms_servicefee.id=rms_student_payment.year limit 1) LIKE '%{$s_search}%'";
     		$s_where[] = " receipt_number LIKE '%{$s_search}%'";
     		$s_where[] = " (select stu_code from rms_student where rms_student.stu_id=rms_student_payment.student_id) LIKE '%{$s_search}%'";
