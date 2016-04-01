@@ -61,10 +61,7 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 	public function addGroupStudentChangeGroup($_data){
 			try{	
 				$_db= $this->getAdapter();
-				
 				$con = $this->getCondition($_data);
-				
-				
 				if($con!=''){
 					$identity = explode(',', $_data['identity']);
 					$array_checkbox=explode(',', $con['array_checkbox']);
@@ -182,6 +179,15 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 		$sql="select gds.stu_id as stu_id,st.stu_enname,st.stu_khname,st.stu_code,
 			 (select name_en from rms_view where rms_view.type=2 and rms_view.key_code=st.sex) as sex
 			 from rms_group_detail_student as gds,rms_student as st where is_pass=0 and gds.stu_id=st.stu_id and gds.group_id=$from_group";
+		return $db->fetchAll($sql);
+	}
+	
+	
+	function getAllStudentFromGroupUpdate($from_group){
+		$db=$this->getAdapter();
+		$sql="select gds.stu_id as stu_id,st.stu_enname,st.stu_khname,st.stu_code,
+		(select name_en from rms_view where rms_view.type=2 and rms_view.key_code=st.sex) as sex
+		from rms_group_detail_student as gds,rms_student as st where gds.stu_id=st.stu_id and gds.group_id=$from_group";
 		return $db->fetchAll($sql);
 	}
 	

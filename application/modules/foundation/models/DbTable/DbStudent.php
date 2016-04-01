@@ -28,7 +28,7 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 		}
 		if(!empty($search['adv_search'])){
 			$s_where = array();
-			$s_search = trim($search['adv_search']);
+			$s_search = addslashes(trim($search['adv_search']));
 			$s_where[]="stu_code LIKE '%{$s_search}%'";
 			$s_where[]="stu_khname LIKE '%{$s_search}%'";
 			$s_where[]="stu_enname LIKE '%{$s_search}%'";

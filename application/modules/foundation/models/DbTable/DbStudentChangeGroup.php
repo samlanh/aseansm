@@ -11,7 +11,7 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 	
 	public function getAllStudentID(){
 		$_db = $this->getAdapter();
-		$sql = "SELECT st.stu_id,st.stu_code FROM `rms_student` as st,rms_group_detail_student as gds where status = 1 and gds.stu_id=st.stu_id";
+		$sql = "SELECT st.stu_id,st.stu_code FROM `rms_student` as st,rms_group_detail_student as gds where gds.is_pass=0 and gds.stu_id=st.stu_id group by gds.stu_id";
 		$orderby = " ORDER BY stu_code ";
 		return $_db->fetchAll($sql.$orderby);		
 	}
@@ -125,7 +125,7 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 	
 	function getStudentInfoById($stu_id){
 		$db = $this->getAdapter();
-		$sql = "SELECT st.stu_enname,st.`sex`,gds.`group_id` FROM `rms_student` AS st,rms_group_detail_student AS gds WHERE st.stu_id=$stu_id AND st.stu_id=gds.stu_id LIMIT 1";
+		$sql = "SELECT st.stu_enname,st.`sex`,gds.`group_id` FROM `rms_student` AS st,rms_group_detail_student AS gds WHERE gds.is_pass=0 and  st.stu_id=$stu_id AND st.stu_id=gds.stu_id LIMIT 1";
 		return $db->fetchRow($sql);
 	}
 	

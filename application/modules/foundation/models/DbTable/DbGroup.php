@@ -143,9 +143,8 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$sql = 'SELECT
 		`g`.`id`,
-		`g`.`group_code`    AS `group_code`,
+		`g`.`group_code`    AS `group_code`,g.academic_year,
 		
-		CONCAT(`g`.`from_academic`," - ",`g`.`to_academic`) AS academic ,
 		
 		`g`.`semester` AS `semester`,
 		

@@ -48,13 +48,21 @@ class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 						'note'=>$_data['note']
 						);
 				$id = $this->insert($_arr);
-			
+				
+				$this->_name='rms_student';
+				
+				$where=" stu_id=".$_data['studentid'];
+				$arr=array(
+					'is_subspend'	=>	$_data['type'],
+						);
+				$this->update($arr, $where);
+				$_db->commit();
 			}catch(Exception $e){
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 	}
 	public function updateStudentDrop($_data){
-		
+		$db= $this->getAdapter();
 		try{	
 			$_arr=array(
 					'user_id'=>$this->getUserId(),
@@ -63,11 +71,19 @@ class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 					'date'=>$_data['datestop'],
 					'note'=>$_data['reason'],
 					'status'=>$_data['status'],
-		
 					);
 			$where=$this->getAdapter()->quoteInto("id=?", $_data["id"]);
 			$this->update($_arr, $where);
 			
+			$this->_name='rms_student';
+			
+			$where=" stu_id=".$_data['studentid'];
+			$arr=array(
+					'is_subspend'	=>	$_data['type'],
+			);
+			$this->update($arr, $where);
+			
+			$db->commit();
 		}catch(Exception $e){
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
