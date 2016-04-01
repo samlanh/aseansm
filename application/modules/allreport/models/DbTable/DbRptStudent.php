@@ -25,7 +25,12 @@ class Allreport_Model_DbTable_DbRptStudent extends Zend_Db_Table_Abstract
     		  (select province_en_name from rms_province where rms_province.province_id = rms_student.province_id limit 1)AS province,	   	
     		  (select name_en from rms_view where rms_view.type=2 and rms_view.key_code=rms_student.sex limit 1)AS sex
     		  from rms_student ';
-    	$where=' where 1';
+    	$where=' where 1 ';
+    	
+    	$from_date =(empty($search['start_date']))? '1': "rms_student.create_date >= '".$search['start_date']." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': "rms_student.create_date <= '".$search['end_date']." 23:59:59'";
+    	$where .= " AND ".$from_date." AND ".$to_date;
+    	
     	$order=" order by stu_id DESC";
     	
     	if(empty($search)){
@@ -41,30 +46,6 @@ class Allreport_Model_DbTable_DbRptStudent extends Zend_Db_Table_Abstract
     		$s_where[] = " (select name_en from rms_view where rms_view.type=4 and rms_view.key_code=rms_student.session limit 1) LIKE '%{$s_search}%'";
     		$where .=' AND ( '.implode(' OR ',$s_where).')';
     	}
-//     	if(empty($search)){
-//     		return $db->fetchAll($sql);
-//     	}
-    	
-//     	$searchs = $search['txtsearch'];
-//     	if($search['searchby']==0){
-//     		$where.='';
-//     	}
-//     	if($search['searchby']==1){
-//     		$where.= " AND stu_code  LIKE  '%".$searchs."%'";
-//     	}
-//     	if($search['searchby']==2){
-//     		$where.= " AND CONCAT(stu_enname,stu_khname) LIKE '%".$searchs."%'" ;
-//     	}
-//     	if($search['searchby']==3){
-//     		$where.= " AND (select en_name from rms_dept where rms_dept.dept_id=rms_student.degree limit 1)  LIKE '%".$searchs."%'" ;
-//     	}
-//     	if($search['searchby']==4){
-//     		$where.= " AND (select major_enname from rms_major where rms_major.major_id=rms_student.grade limit 1)  LIKE  '%".$searchs."%'";
-//     	}
-//     	if($search['searchby']==5){
-//     		$where.= " AND (select name_en from rms_view where rms_view.type=4 and rms_view.key_code=rms_student.session limit 1)  LIKE  '%".$searchs."%'";
-//     	}
-    	
     	return $db->fetchAll($sql.$where.$order);
     	 
     }
