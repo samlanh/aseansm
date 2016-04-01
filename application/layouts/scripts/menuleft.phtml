@@ -2,7 +2,7 @@
 	$request=Zend_Controller_Front::getInstance()->getRequest();
 	$action = $request->getActionName();
 	$baseurl  = $this->baseUrl();
-	$global=$acl=$this->url(array('module'=>'allreport','controller'=>'index','action'=>'index'), null, true);
+	$other=$acl=$this->url(array('module'=>'allreport','controller'=>'other','action'=>'index'), null, true);
 	$registrar=$acl=$this->url(array('module'=>'allreport','controller'=>'receiptionist','action'=>'index'), null, true);
 	$accoutning=$acl=$this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'index'), null, true);
 	$fundation=$acl=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'index'), null, true);
@@ -94,7 +94,7 @@
 						'index'=>'<li><a href="">'.$tr->translate("Backup List").'</a></li>',
 				),
 			'allreport'=>array(
-				'global'=>"<li><span class''><a href=".$global.">".$tr->translate("OTHER_REPORT")."</a></span></li>",
+				'other'=>"<li><span class''><a href=".$other.">".$tr->translate("OTHER_REPORT")."</a></span></li>",
 				'registra'=>"<li><span class''><a href=".$registrar.">".$tr->translate("REGISTRATION_REPORT")."</a></span></li>",
 				'fundation'=>"<li><span class''><a href=".$fundation.">".$tr->translate("ADMINISTRATION_REPORT")."</a></span></li>",
 				'accounting'=>"<li><span class''><a href=".$accoutning.">".$tr->translate("ACCOUNTING_REPORT")."</a></span></li>",
