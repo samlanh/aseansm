@@ -1,7 +1,6 @@
   <?php $tr = Application_Form_FrmLanguages::getCurrentlanguage();
   // report
   $rpt_student=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rpt-student'), null, true);
-  $rpt_group=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rpt-group'), null, true);
   $rpt_studentchangegroup=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rpt-student-change-group'), null, true);
   $rpt_studentdrop=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rpt-student-drop'), null, true);
   $rpt_amount_student_by_year=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rptamountstudent'), null, true);
@@ -33,7 +32,6 @@
   </style>
   <div style="background:#ccc; width: 100%;">
   	<ul class="link-rpt">
-  		<li><a href="<?php echo $rpt_group;?>"><?php echo $tr->translate('RPT_GROUP_STUDY');?></a></li>
   		<li><a href="<?php echo $rpt_studentchangegroup;?>"><?php echo $tr->translate('RPT_STUDENT_CHANGE_GROUP');?></a></li>
   		<li><a href="<?php echo $rpt_studentdrop;?>"><?php echo $tr->translate('របាយការណ៏សិស្សឈប់សិក្សា');?></a></li>
   		<li><a href="<?php ;?>"><?php echo $tr->translate('របាយការណ៏អវត្តមាន');?></a></li>

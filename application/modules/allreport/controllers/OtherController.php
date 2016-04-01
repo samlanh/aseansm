@@ -11,10 +11,89 @@ public function init()
 	{
 	
 	}
-	public function rptDailyAction()
-	{
 	
+	public function rptCarAction(){
+		try{
+			if($this->getRequest()->isPost()){
+				$_data=$this->getRequest()->getPost();
+				$search = array(
+						'txtsearch' => $_data['txtsearch'],
+				);
+			}
+			else{
+				$search=array(
+						'txtsearch' =>'',
+				);
+			}
+			$db = new Allreport_Model_DbTable_DbRptCar();
+			$this->view->rs = $db->getAllCar($search);
+			$this->view->search=$search;
+		}catch(Exception $e){
+			Application_Form_FrmMessage::message("APPLICATION_ERROR");
+			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+		}
 	}
+	
+	public function rptAcademicYearAction(){
+	
+		if($this->getRequest()->isPost()){
+			$_data=$this->getRequest()->getPost();
+			$search = array(
+					'txtsearch' => $_data['txtsearch'],
+			);
+		}
+		else{
+			$search=array(
+					'txtsearch' =>'',
+			);
+		}
+	
+		$db= new Allreport_Model_DbTable_DbRptAcademicYear();
+		$this->view->rs = $db->getAllAcademic($search);
+		$this->view->search = $search;
+			
+	}
+	
+	public function rptLecturerAction(){
+		if($this->getRequest()->isPost()){
+			$_data=$this->getRequest()->getPost();
+			$search = array(
+					'txtsearch' => $_data['txtsearch'],
+			);
+		}
+		else{
+			$search=array(
+					'txtsearch' =>'',
+			);
+		}
+		$group= new Allreport_Model_DbTable_DbRptLecturer();
+		$this->view->rs = $rs_rows = $group->getAllLecturer($search);
+		$this->view->search=$search;
+	}
+	
+	public function rptGroupAction(){
+	
+		if($this->getRequest()->isPost()){
+			$_data=$this->getRequest()->getPost();
+			$search = array(
+					'txtsearch' => $_data['txtsearch'],
+					//'searchby' => $_data['searchby'],
+			);
+		}
+		else{
+			$search=array(
+					'txtsearch' =>'',
+			);
+		}
+	
+		$group= new Allreport_Model_DbTable_DbRptGroup();
+		$this->view->rs = $rs_rows = $group->getAllGroup($search);
+		$this->view->search = $search;
+			
+	}
+	
+	
+	
 	
 }
 
