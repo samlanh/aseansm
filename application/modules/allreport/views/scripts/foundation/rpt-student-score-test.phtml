@@ -29,37 +29,39 @@
 	table tr th{
 		border: 1px solid #000;	
 	}                       
-</style>                <?php //print_r($this->row_aca);?>
-                        <?php if(!empty($this->row_aca)) foreach ($this->row_aca As $rs_acadi){?>
-                        	<?php $aca = null; $gr = null;$gr1 = null; $a= 0;  $i=0;foreach($this->row_studet As $key=>$rs_stuss){ ?>
-                        		<?php if($aca!=$rs_stuss["academic_id"]){ ?>
-                        		<tr>
-                        			<td><?php echo $rs_stuss["academic_name"]; ?></td>
-                        			
-                        			<?php if($gr!=$rs_stuss["group_id"]){?>
-                        			<td><?php echo $rs_stuss["group_name"]; ?></td>
-                        			<?php } ?>
-                        		</tr>
-                        		<?php }$aca=$rs_stuss["academic_id"];$gr=$rs_stuss["group_id"];?>
-                        		<?php if($a==0){ ?>
-                        		<?php if($gr1!=$rs_stuss["group_id"]){ ?>
+</style>                <?php $aca =null; $gr = null; ?>
+                        
 								<tr>
 									<td colspan="3">
 										<table cellpadding="3"​ style="margin:0 auto;width:100%; border-collapse: collapse;white-space: nowrap;" border="1"  >
-									
+											<?php $st = null;  $i=0; $thead = 0; foreach($this->row_studet As $key=>$rs_stu){ echo $gr."=".$rs_stu["group_id"];?>
+											<?php //if($aca!=$rs_stu["academic_id"]){?>
+												<tr>
+													<?php if($gr!=$rs_stu["group_id"]){ $thead=1;?>
+														<td colspan="9"><?php echo $rs_stu["group_name"]?></td>
+													<?php }else{$thead=0;}?>
+												</tr>
+											<?php $aca=$rs_stu["academic_id"];
+											// }?>
+											<?php if($thead!=0){?>
 											<tr style="font-size:11px; height: 20px;" align="center" >
 												<th>No.</th>
 												<th>Studen No</th>
 												<th>Students Name</th>
-												<?php if(!empty($this->row_sub)) foreach($this->row_sub As $rs_par){?>
-												<th ><?php echo $rs_par['subject_name'];?>
-												</th>
+												<?php 
+													if(!empty($this->row_sub)) foreach($this->row_sub As $rs_par){
+														
+												?>
+												<?php if($rs_par["subject_id"]==$rs_stu["subject_id"]){?>
+												<th><?php echo $rs_par['subject_name'];?></th>
+												<?php }?>
 												<?php }?>
 												<th >Final Score</th>
 												<th >Remarks</th>
 												
 											</tr>
-											 <?php $st = null;  $i=0;foreach($this->row_studet As $key=>$rs_stu){ 
+											<?php }?>
+											 <?php  
 												if($st!=$rs_stu["stu_id"]){
 													$i=$i+1;
 											 	$old_stu = $rs_stu["stu_id"];
@@ -75,17 +77,17 @@
 																	if($old_sub==$rs_stus["subject_id"]){
 																?>
 																<td><?php echo $rs_stus["score"]?></td>
-																<?php }}?>
+																<?php } }?>
 															<?php }?>
 													<?php }?>
 											</tr>
-											<?php $st=$rs_stu["stu_id"]; }
+											
+											<?php $st=$rs_stu["stu_id"]; } $gr=$rs_stu["group_id"];
 											 }?>
 										</table>	
 									</td>
 								</tr>
-								<?php } $gr1=$rs_stuss["group_id"]; echo $gr1 ."=".$rs_stuss["group_id"]."<br />";}$a=1;}?>
-								<?php }?>
+								
 								<tr>
 									<td colspan="3">&nbsp;</td>
 								</tr>

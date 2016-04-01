@@ -124,10 +124,28 @@ class Allreport_Model_DbTable_DbRptStudentScore extends Zend_Db_Table_Abstract
    }   
    function getAllSubjectByStudent(){
    		$db=$this->getAdapter();
-   		$sql="SELECT 
-			     stu_id,stu_enname,stu_code,SUM(sd.score) AS score,sd.note,sc.parent_id,sc.subject_id 
-			     FROM rms_student,rms_score_detail AS sd,rms_score AS sc 
-			     WHERE sd.student_id=stu_id AND  sd.score_id=sc.id GROUP BY sc.subject_id,stu_id ORDER BY stu_id";
+   		$sql="SELECT
+				  stu_id,
+				  stu_enname,
+				  stu_code,
+				  SUM(sd.score) AS score,
+				  sd.note,
+				  sc.academic_id,
+				    (SELECT CONCAT(from_academic,'-',to_academic,'-',generation) FROM rms_tuitionfee WHERE rms_tuitionfee.id=sc.academic_id ) AS academic_name,
+				  sc.session_id,
+				  sc.group_id,
+				    (SELECT group_code FROM rms_group WHERE rms_group.id=sc.group_id) AS group_name,
+				  sc.parent_id,
+				     (SELECT subject_titleen FROM rms_subject WHERE rms_subject.id=sc.parent_id) AS parent_name,
+				  sc.subject_id,
+				     (SELECT subject_titleen FROM rms_subject WHERE rms_subject.id=sc.subject_id) AS subject_name
+				FROM rms_student,
+				  rms_score_detail AS sd,
+				  rms_score AS sc
+				WHERE sd.student_id = stu_id
+				    AND sd.score_id = sc.id
+				GROUP BY sc.subject_id,stu_id
+				ORDER BY stu_id";
    		return $db->fetchAll($sql);
    }
    function getAcademic(){
