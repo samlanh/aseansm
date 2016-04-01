@@ -121,7 +121,7 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
    	}
    	if(!empty($search['txtsearch'])){
    		$s_where = array();
-   		$s_search = trim($search['txtsearch']);
+   		$s_search = addslashes(trim($search['txtsearch']));
    		$s_where[] = " suspend_no LIKE '%{$s_search}%'";
    		$s_where[] = " (SELECT `stu_code` FROM  `rms_student` WHERE rms_student.stu_id=student_id LIMIT 1) LIKE '%{$s_search}%'";
    		$s_where[] = " (SELECT `stu_khname` FROM  `rms_student` WHERE rms_student.stu_id=student_id LIMIT 1) LIKE '%{$s_search}%'";

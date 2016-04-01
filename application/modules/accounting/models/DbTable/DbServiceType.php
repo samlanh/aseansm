@@ -86,7 +86,7 @@ class Accounting_Model_DbTable_DbServiceType extends Zend_Db_Table_Abstract
     	}
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
-    		$s_search = trim($search['txtsearch']);
+    		$s_search = addslashes(trim($search['txtsearch']));
     		$s_where[] = " title LIKE '%{$s_search}%'";
     		$s_where[] = " (select name_en from rms_view where rms_view.type=9 and rms_view.key_code=rms_program_type.type) LIKE '%{$s_search}%'";
 //     		$s_where[] = " kh_name LIKE '%{$s_search}%'";

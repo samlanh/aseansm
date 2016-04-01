@@ -41,7 +41,7 @@ class Accounting_Model_DbTable_DbServiceCharge extends Zend_Db_Table_Abstract
     	}
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
-    		$s_search = trim($search['txtsearch']);
+    		$s_search = addslashes(trim($search['txtsearch']));
     		$s_where[] = " CONCAT(from_academic,'-',to_academic) LIKE '%{$s_search}%'";
     		$s_where[] = " generation LIKE '%{$s_search}%'";
 //     		$s_where[] = " kh_name LIKE '%{$s_search}%'";
