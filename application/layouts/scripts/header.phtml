@@ -3,11 +3,11 @@
 	
 	  $home=$this->url(array('module'=>'home','controller'=>'index','action'=>'index'), null, true);
 	  $registrar=$this->url(array('module'=>'registrar','controller'=>'Register','action'=>'index'), null, true);
-	  $foundation=$this->url(array('module'=>'foundation','controller'=>'index','action'=>'index'), null, true);
-	  $accounting=$this->url(array('module'=>'accounting','controller'=>'index','action'=>'index'), null, true);
+	  $foundation=$this->url(array('module'=>'foundation','controller'=>'register','action'=>'index'), null, true);
+	  $accounting=$this->url(array('module'=>'accounting','controller'=>'fee','action'=>'index'), null, true);
 	  $gep=$this->url(array('module'=>'gep','controller'=>'index','action'=>'index'), null, true);
-	  $report=$this->url(array('module'=>'allreport','controller'=>'index','action'=>'index'), null, true);
-	  $global=$this->url(array('module'=>'global','controller'=>'index','action'=>'index'), null, true);
+	  $report=$this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'index'), null, true);
+	  $global=$this->url(array('module'=>'global','controller'=>'group','action'=>'index'), null, true);
 	  $inventory_path=$this->url(array('module'=>'inventory','controller'=>'tax-exemption','action'=>'index'), null, true);
 	  $reference_path=$this->url(array('module'=>'analysis','controller'=>'query','action'=>'index'), null, true);
 	  $backup=$this->url(array('module'=>'backup','controller'=>'index','action'=>'index'), null, true);
