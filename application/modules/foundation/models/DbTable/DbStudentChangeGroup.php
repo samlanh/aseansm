@@ -26,7 +26,7 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 	
 	
 	
-	public function selectAllStudentChangeGroup(){
+	public function selectAllStudentChangeGroup($search){
 		$_db = $this->getAdapter();
 		$sql = "SELECT id,(SELECT stu_code FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id`) AS code,
 		(SELECT stu_khname FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id`) AS kh_name,
@@ -34,9 +34,25 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 		(SELECT name_kh FROM `rms_view` WHERE `rms_view`.`type`=2 and `rms_view`.`key_code`=(SELECT sex FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id` limit 1))AS sex,
 		(select group_code from rms_group where rms_group.id = rms_student_change_group.from_group limit 1)AS from_group,
 		(select group_code from rms_group where rms_group.id = rms_student_change_group.to_group limit 1)AS to_group,
-		moving_date,note from `rms_student_change_group` ";
+		moving_date,note from `rms_student_change_group` where 1 ";
 		$order_by=" order by id DESC";
-		return $_db->fetchAll($sql.$order_by);
+		$where='';
+		
+		if(empty($search)){
+			return $_db->fetchAll($sql.$order_by);
+		}
+		if(!empty($search['txtsearch'])){
+			$s_where = array();
+			$s_search = addslashes(trim($search['txtsearch']));
+			$s_where[] = " (SELECT stu_code FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id`) LIKE '%{$s_search}%'";
+			$s_where[] = " (SELECT stu_khname FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id`) LIKE '%{$s_search}%'";
+			$s_where[] = " (SELECT stu_enname FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id`) LIKE '%{$s_search}%'";
+			//$s_where[] = " en_name LIKE '%{$s_search}%'";
+			$where .=' AND ( '.implode(' OR ',$s_where).')';
+		}
+		
+		
+		return $_db->fetchAll($sql.$where.$order_by);
 // 		(select name_kh from `rms_view` where `rms_view`.`type`=6 and `rms_view`.`key_code`=`rms_student_change_group`.`status`)AS status
 	}
 	

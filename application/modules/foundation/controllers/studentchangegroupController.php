@@ -8,10 +8,23 @@ class Foundation_studentchangegroupController extends Zend_Controller_Action {
     	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
 	}
 	public function indexAction(){
+		
+		if($this->getRequest()->isPost()){
+			$data = $this->getRequest()->getPost();
+			$search=array(
+				'txtsearch'	=>$data['adv_search'],	
+					);
+		}else{
+			$search=array(
+				'txtsearch'	=>'',
+			);
+		}
+		
+		
 		$db_student= new Foundation_Model_DbTable_DbStudentChangeGroup();
-		$rs_rows = $db_student->selectAllStudentChangeGroup();
+		$rs_rows = $db_student->selectAllStudentChangeGroup($search);
 		$list = new Application_Form_Frmtable();
-		if(!empty($rs_rows)){
+			if(!empty($rs_rows)){
 			} 
 			else{
 				$result = Application_Model_DbTable_DbGlobal::getResultWarning();
@@ -21,7 +34,7 @@ class Foundation_studentchangegroupController extends Zend_Controller_Action {
 					'module'=>'foundation','controller'=>'studentchangegroup','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('code'=>$link,'kh_name'=>$link,'en_name'=>$link));
-			
+		$this->view->adv_search=$search;	
 	}
 	function addAction(){
 		if($this->getRequest()->isPost()){
@@ -42,7 +55,7 @@ class Foundation_studentchangegroupController extends Zend_Controller_Action {
 		$_add = new Foundation_Model_DbTable_DbStudentChangeGroup();
 		
 		$this->view->rs = $add =$_add->getAllStudentID();
-		
+// 		print_r($this->view->rs);exit();
 		$this->view->row = $add =$_add->getAllStudentChangeGroup();
 		
 // 		$_db = new Application_Model_DbTable_DbGlobal();
