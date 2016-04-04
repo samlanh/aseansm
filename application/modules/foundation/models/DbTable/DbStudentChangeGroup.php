@@ -82,7 +82,7 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 				$arr= array(
 						'group_id'=>$_data['to_group'],
 				);
-				$where="stu_id=".$stu_id;
+				$where="stu_id=".$stu_id." and is_pass=0";
 				
 				$this->update($arr, $where);
 				
@@ -142,6 +142,7 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 	function getStudentInfoById($stu_id){
 		$db = $this->getAdapter();
 		$sql = "SELECT st.stu_enname,st.`sex`,gds.`group_id` FROM `rms_student` AS st,rms_group_detail_student AS gds WHERE gds.is_pass=0 and  st.stu_id=$stu_id AND st.stu_id=gds.stu_id LIMIT 1";
+// 		echo $sql;exit();
 		return $db->fetchRow($sql);
 	}
 	
