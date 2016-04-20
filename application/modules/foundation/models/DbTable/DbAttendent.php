@@ -105,7 +105,7 @@ class Foundation_Model_DbTable_DbAttendent extends Zend_Db_Table_Abstract
 		$db=$this->getAdapter();
 		$sql="SELECT id,(SELECT group_code FROM rms_group WHERE id=rms_attendent.group_id ) AS  group_id,
 	        (SELECT CONCAT(from_academic,'-',to_academic,'(',generation,')') FROM rms_tuitionfee WHERE id=rms_attendent.academic_id AND `status`=1 GROUP BY from_academic,to_academic,generation) AS academic_id,
-	         session_id,
+	        (SELECT CONCAT(name_en ,'-',name_kh ) FROM rms_view WHERE `type`=4 AND rms_view.key_code=rms_attendent.session_id) As session_id,
 	        (SELECT CONCAT(subject_titleen,' - ',subject_titlekh) FROM rms_subject WHERE id=rms_attendent.subject_id ) AS subject_id,
 	        `date`,note,`status` 
 	        FROM rms_attendent WHERE `status`=1";

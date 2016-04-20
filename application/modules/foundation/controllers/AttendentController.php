@@ -26,8 +26,8 @@ class Foundation_AttendentController extends Zend_Controller_Action {
 			}
 			$rs_rows = $db->getAllAttendent($search);
 			$glClass = new Application_Model_GlobalClass();
-			//$rs = $glClass->getImgActive($rs_rows, BASE_URL, true);
-			$rs = $glClass->getSession($rs_rows,BASE_URL, true);
+		    $rs = $glClass->getImgActive($rs_rows, BASE_URL, true);
+			//$rs = $glClass->getSession($rs_rows,BASE_URL, true);
 			$list = new Application_Form_Frmtable();
 			$collumns = array( "STUDENT_GROUP","STUDY_YEAR","SESSION","SUBJECT","ATTENDENT_DATE","NOTE","STATUS");
 			$link=array(
@@ -67,6 +67,8 @@ class Foundation_AttendentController extends Zend_Controller_Action {
 		$db_years=new Registrar_Model_DbTable_DbRegister();
 		$db_homwork=new Global_Model_DbTable_DbHomeWorkScore();
 		$this->view->row_year=$db_homwork->getAllYears();
+		$db_session=new Application_Model_DbTable_DbGlobal();
+		$this->view->row_sesion=$db_session->getSession();
 	}
 	function editAction(){
 		$id=$this->getRequest()->getParam('id');
@@ -97,5 +99,7 @@ class Foundation_AttendentController extends Zend_Controller_Action {
 		$_model_att = new Foundation_Model_DbTable_DbAttendent();
 		$this->view->row_att=$_model_att->getAttendentById($id);
 		$this->view->row_att_detial=$_model_att->getAttendentDetail($id);
+		$db_session=new Application_Model_DbTable_DbGlobal();
+		$this->view->row_sesion=$db_session->getSession();
 	}
 }
