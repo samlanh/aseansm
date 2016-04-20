@@ -91,11 +91,14 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		
 		$this->_session = new Zend_Dojo_Form_Element_FilteringSelect("session");
 		$opt_session = array(
-				1=>$this->tr->translate('MORNING'),
-				2=>$this->tr->translate('AFTERNOON'),
-				3=>$this->tr->translate('EVERNING'),
-				4=>$this->tr->translate('WEEKEND'),
+// 				1=>$this->tr->translate('MORNING'),
+// 				2=>$this->tr->translate('AFTERNOON'),
+// 				3=>$this->tr->translate('EVERNING'),
+// 				4=>$this->tr->translate('WEEKEND'),
 		);
+		$opt_ses=new Application_Model_DbTable_DbGlobal();
+		$opt_sesion=$opt_ses->getSession();
+		if(!empty($opt_sesion))foreach ($opt_sesion As $rs)$opt_session[$rs['key_code']]=$rs['view_name'];
 		$this->_session->setMultiOptions($opt_session);
 		$this->_session->setAttribs(array(
 				'dojoType'=>$this->filter,
