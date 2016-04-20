@@ -62,11 +62,11 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 							<td><?php echo $tr->translate("SESSION")?></td>
 							<td>
 								<select name="session" id="session" dojoType="dijit.form.FilteringSelect">
-								<?php $row=Application_Model_DbTable_DbGlobal::getSessionById();
-									foreach($row as $key =>$rs){?>
-										<option value='<?php echo $key?>' ><?php echo $rs;?></option>
-								<?php 	}
-								?>
+								<?php $row= new Application_Model_DbTable_DbGlobal();
+								      $rows=$row->getSession();
+									foreach($rows as $key =>$rs){?>
+										<option value='<?php echo $key['key_code']?>' ><?php echo $rs['view_name'];?></option>
+								<?php 	}?>
 								</select>
 							</td>
 							<td ><?php echo $tr->translate("DEGREE")?></td>
