@@ -28,8 +28,8 @@ class Global_StudentscoreController extends Zend_Controller_Action {
 			}
 			$rs_rows = $db->getAllHoweWorkScore($search);
 			$glClass = new Application_Model_GlobalClass();
-			//$rs = $glClass->getImgActive($rs_rows, BASE_URL, true);
-			$rs = $glClass->getSession($rs_rows,BASE_URL, true);
+			$rs = $glClass->getImgActive($rs_rows, BASE_URL, true);
+			//$rs = $glClass->getSession($rs_rows,BASE_URL, true);
 			$list = new Application_Form_Frmtable();
 			$collumns = array( "STUDENT_GROUP","STUDY_YEAR","SESSION","SUBJECT","TERM","STATUS");
 			$link=array(
@@ -72,6 +72,8 @@ public	function addAction(){
 		$db_years=new Registrar_Model_DbTable_DbRegister();
 		$db_homwork=new Global_Model_DbTable_DbHomeWorkScore();
 		$this->view->row_year=$db_homwork->getAllYears();
+		$db_session=new Application_Model_DbTable_DbGlobal();
+		$this->view->row_sesion=$db_session->getSession();
 		//print_r($dbs);exit();
 	}
 	
@@ -103,6 +105,8 @@ public	function addAction(){
 		$this->view->row_home=$db_homwork->getHomeWorkScoreById($id);
 		$this->view->row_detial=$db_homwork->getHomeWorkDetailScoreById($id);
 		//print_r($dbs);exit();
+		$db_session=new Application_Model_DbTable_DbGlobal();
+		$this->view->row_sesion=$db_session->getSession();
 	}
 	
 	function addoldAction(){

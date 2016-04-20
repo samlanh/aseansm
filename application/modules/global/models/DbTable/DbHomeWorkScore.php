@@ -159,7 +159,7 @@ class Global_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
 		$db=$this->getAdapter();
 		$sql="SELECT s.id,(SELECT group_code FROM rms_group WHERE id=s.group_id ) AS  group_id,
 	           (SELECT CONCAT(from_academic,'-',to_academic,'(',generation,')') FROM rms_tuitionfee AS f WHERE id=s.academic_id AND `status`=1 GROUP BY from_academic,to_academic,generation) AS academic_id,
-		        s.session_id,
+		       (SELECT CONCAT(name_en ,'-',name_kh ) FROM rms_view WHERE `type`=4 AND rms_view.key_code=s.session_id) AS session_id,
 		        (SELECT CONCAT(subject_titleen,' - ',subject_titlekh) FROM rms_subject WHERE id=s.subject_id ) AS subject_id,
 		        s.term_id,s.status
 		        FROM rms_score AS s WHERE s.status=1";

@@ -241,10 +241,9 @@ function gender(sex){
 							<td  ><?php echo $tr->translate("SESSION");?></td>
 							<td>
 								<select dojoType="dijit.form.FilteringSelect" required="true"  class="fullside"  id="session" name="session" type="text" onChange="getGroupName();">
-									<option value="1"><?php echo $tr->translate('MORNING');?></option>
-									<option value="2"><?php echo $tr->translate('AFTERNOON');?></option>
-									<option value="3"><?php echo $tr->translate('EVERNING');?></option>
-									<option value="4"><?php echo $tr->translate('WEEKEND');?></option>
+								  <?php if(!empty($this->row_sesion)) foreach($this->row_sesion As $rs_sesion){?>
+									<option value="<?php echo $rs_sesion['key_code']?>"><?php echo  $rs_sesion['view_name'];?></option>
+								  <?php }?> 
 								</select>
 							</td>
 							<td  ><?php echo $tr->translate("STUDENT_GROUP");?></td>
