@@ -151,11 +151,10 @@ $frm_set_price = $this->frm_set_charge;?>
 							<td>Session</td>
 							<td>
 								 <select class="fullside"  tabindex="24" name="session" id="session" dojoType="dijit.form.FilteringSelect" >
-										    <option value="1" <?php if($this->value['session']==1){{echo "selected='selected'"; }}?> label="morning" >ព្រឹក</option>
-										    <option value="2" <?php if($this->value['session']==2){{echo "selected='selected'"; }}?> label="afternoon">រសៀល</option>
-										    <option value="3" <?php if($this->value['session']==3){{echo "selected='selected'"; }}?> label="night">យប់</option>
-										    <option value="4" <?php if($this->value['session']==4) {{ echo "selected='selected'"; }}?> label="weekend">ចុងសបា្តហ៏</option>
-										</select>
+								       <?php if(!empty($this->rs_session)) foreach ($this->rs_session As $rs_sesion){?>
+										    <option value="<?php echo $rs_sesion['key_code'];?>"><?php echo $rs_sesion['view_name'];?></option>
+								       <?php }?>			
+								 </select>
 							</td>
 							<td align="center">
 								 	<input type="submit" dojoType="dijit.form.Button"  label="SEARCH" id="search"
