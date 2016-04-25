@@ -16,7 +16,7 @@ class Global_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 			$_arr=array(
 					'group_code' => $_data['group_code'],
 					'room_id' => $_data['room'],
-					'tuitionfee_id'=>$_data['tuitionfee_id'],
+//				'tuitionfee_id'=>$_data['academic_year'],
 //					'from_academic' => $_data['from_year'],
 //  				'to_academic' => $_data['to_year'],
 					'room_id' => $_data['room'],
@@ -67,7 +67,7 @@ class Global_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 			$_arr=array(
 					'group_code' => $_data['group_code'],
 					'room_id' => $_data['room'],
-					'tuitionfee_id'=>$_data['tuitionfee_id'],
+//					'tuitionfee_id'=>$_data['academic_year'],
 //					'from_academic' => $_data['from_year'],
 //  				'to_academic' => $_data['to_year'],
  
