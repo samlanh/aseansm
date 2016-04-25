@@ -60,7 +60,7 @@
 												<option value="1" <?php if($this->rs['status']==1) echo 'selected="selected"';?>>Active</option>
 												<option value="0" <?php if($this->rs['status']==0) echo 'selected="selected"';?>>Deactive</option>
 											</select>
-											<input dojoType="dijit.form.TextBox"  type="text" name="identity" id="identity" value="<?php echo $this->rs['array_checkbox']?>" />
+											<input dojoType="dijit.form.TextBox"  type="text" name="identity" id="identity" value="" />
 										</td>
 									</tr>
 									<tr style="max-height: 100px;height: 100px;overflow: scroll;">
@@ -72,7 +72,7 @@
 										<td colspan="6" align="center">
 											<input iconClass="dijitIconClear" type="reset" value="សំអាត" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
 											<input type="button" label="<?php echo $tr->translate('GO_BACK');?>" id="back" dojoType="dijit.form.Button" 
-											 iconClass="dijitIconUndo" onclick="window.location = '<?php echo $this->url(array('module'=>'foundation','controller'=>"studentchangegroup",'action'=>'index'),null,true); ?>';" />
+											 iconClass="dijitIconUndo" onclick="window.location = '<?php echo $this->url(array('module'=>'foundation','controller'=>"groupstudentchangegroup",'action'=>'index'),null,true); ?>';" />
 											<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('GO_EDIT');?>" dojoType="dijit.form.Button" 
 											iconClass="dijitEditorIcon dijitEditorIconSave" />
 									

@@ -24,8 +24,6 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 		return $db->fetchAll($sql);
 	}
 	
-	
-	
 	public function selectAllStudentChangeGroup($search){
 		$_db = $this->getAdapter();
 		$sql = "SELECT id,(SELECT stu_code FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id`) AS code,
@@ -81,6 +79,7 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 				$this->_name='rms_group_detail_student';
 				$arr= array(
 						'group_id'=>$_data['to_group'],
+						'old_group'	=>$_data['from_group'],
 				);
 				$where="stu_id=".$stu_id." and is_pass=0";
 				
@@ -109,9 +108,10 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 			
 			$this->_name='rms_group_detail_student';
 			$arr= array(
-					'group_id'=>$_data['to_group'],
+					'group_id'	=>$_data['to_group'],
+					'old_group'	=>$_data['from_group'],
 			);
-			$where="stu_id=".$stu_id;
+			$where="stu_id=".$stu_id." and is_pass=0";
 			
 			$this->update($arr, $where);
 			
