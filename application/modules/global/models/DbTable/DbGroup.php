@@ -223,7 +223,7 @@ class Global_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 	function getAllGroups($search){
 		$db = $this->getAdapter();
 		$sql = "SELECT `g`.`id`,`g`.`group_code` AS `group_code`,
-		(SELECT CONCAT(from_academic,'-',to_academic,'(',generation,')') FROM rms_tuitionfee AS f WHERE id=g.tuitionfee_id AND `status`=1 GROUP BY from_academic,to_academic,generation) AS tuitionfee_id,
+		(SELECT CONCAT(from_academic,'-',to_academic,'(',generation,')') FROM rms_tuitionfee AS f WHERE f.id=g.academic_year AND `status`=1 GROUP BY from_academic,to_academic,generation) AS tuitionfee_id,
 		 `g`.`semester` AS `semester`,
 		(SELECT kh_name FROM `rms_dept` WHERE (`rms_dept`.`dept_id`=`g`.`degree`)) AS degree,
 		(SELECT major_khname FROM `rms_major` WHERE (`rms_major`.`major_id`=`g`.`grade`))AS grade,
@@ -231,7 +231,7 @@ class Global_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		AND (`rms_view`.`key_code` = `g`.`session`))LIMIT 1) AS `session`,
 		(SELECT `r`.`room_name`	FROM `rms_room` `r`	WHERE (`r`.`room_id` = `g`.`room_id`)) AS `room_name`,
 		`g`.`start_date`,`g`.`expired_date`,`g`.`note`
-		FROM `rms_group` `g`";
+		FROM `rms_group` as `g`";
 		$where =' WHERE 1 ';
 		$order =  ' ORDER BY `g`.`id` DESC ' ;
 		if(empty($search)){
