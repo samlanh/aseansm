@@ -117,7 +117,7 @@ dojo.ready(function(){
 									<td>
 										<select class="fullside"  name="student_province" id="student_province" dojoType="dijit.form.FilteringSelect"">
 											<?php if(!empty($this->province))foreach ($this->province as $row){?>
-											<option value="<?php echo $row['province_id']?>"<?php if($row['province_id']==$this->rs['province_id']) echo 'selected="selected"';?>><?php echo $row['province_kh_name']?></option>
+											<option value="<?php echo $row['province_id']?>"<?php if($row['province_id']==$this->rs['province_id']) echo 'selected="selected"';?>><?php echo $row['province_en_name']?></option>
 											<?php }?>
 										</select>
 									</td>
