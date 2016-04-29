@@ -20,6 +20,7 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     		    		else{
     		    			$search = array(
     		    					'adv_search' => '',
+    		    					'degree' => '',
 //     		    					'search_status' => -1,
     		    					'start_date'=> date('Y-m-01'),
     		    					'end_date'=>date('Y-m-d'));
@@ -29,8 +30,8 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     		$rs_rows = $glClass->getGernder($rs_rows, BASE_URL );
     		$rs_rows = $glClass->getGetPayTerm($rs_rows, BASE_URL );
     		$list = new Application_Form_Frmtable();
-    		$collumns = array("STUDENT_ID","RECEIPT_NO","NAME_KH","NAME_EN","SEX","CLASS","CLASSES",
-    				          "PAYMENT_TERM","TUITION_FEE","DISCOUND", "TOTALE","BOOKS","REMAINING","DATE_PAY");
+    		$collumns = array("STUDENT_ID","RECEIPT_NO","NAME_KH","NAME_EN","SEX","DEGREE","CLASS",
+    				          "PAYMENT_TERM","TUITION_FEE","DISCOUND", "TOTALE","DEPOSIT","BALANCE","DATE_PAY");
     		$link=array(
     				'module'=>'registrar','controller'=>'register','action'=>'edit',
     		);
@@ -39,6 +40,8 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     		Application_Form_FrmMessage::message("Application Error");
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
     	}
+    	$data = new Registrar_Model_DbTable_DbRegister();
+    	$db=$this->view->rows_degree=$data->getDegree();
     }
     public function addAction(){
       if($this->getRequest()->isPost()){
