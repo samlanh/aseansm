@@ -271,6 +271,9 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     		$s_where[]= " grade LIKE '%{$s_search}%'";
     		$where.=' AND ('.implode(' OR ', $s_where).')';
     	}
+    	if(!empty($search['degree'])){
+    		$where.=" AND s.degree=".$search['degree'];
+    	}
     	$order=" ORDER By stu_id DESC ";
     	//print_r($sql.$where);
     	return $db->fetchAll($sql.$where.$order);
@@ -391,6 +394,11 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	WHERE  stu_type=1 AND stu_id=$stu_id LIMIT 1";
     	return $db->fetchRow($sql);
     }
-    
+    ///select degree searching 
+    function getDegree(){
+    	$db=$this->getAdapter();
+    	$sql="SELECT dept_id AS id,CONCAT(en_name,'-',kh_name) AS `name` FROM rms_dept ";
+    	return $db->fetchAll($sql);
+    }
 }
 
