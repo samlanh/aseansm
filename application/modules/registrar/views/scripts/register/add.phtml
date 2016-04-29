@@ -27,6 +27,7 @@
 	    	dijit.byId('grade').attr('value','');
 	    	getallModel(dept_id,a=''); 
 	    	getStudentNo(dept_id);
+	    	 
 	    }
 	}, "dept");
 	
@@ -47,6 +48,7 @@
 	    	dijit.byId('remark').attr('value','0');
 	    	dijit.byId('char_price').attr('value','0');
 	    	dijit.byId('not').attr('value','');
+	    	getTotale();
 	    }
 	}, "grade");
 	
@@ -116,6 +118,7 @@
 				getPaymentTerms(generat,payment_term,grade,time);
 			}
 		}
+		
 	}
 	function paymentTerms(){
 		generat=dijit.byId('study_year').get('value');
@@ -124,6 +127,7 @@
 		time=dijit.byId('time').get('value');
 		if(generat!='' && payment_term !='' && grade !='' && time !=''){
 			getPaymentTerms(generat,payment_term,grade,time);
+			
 		}
 	}
 	var payment_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
@@ -323,24 +327,25 @@ fieldset{  background:none;}
 <table  cellspacing="10" style="margin: 0 auto; width: 100%;">
 	<tr>
 		<td>
-		<fieldset>
-					<legend align="center"><strong><?php echo $tr->translate("OFFICIAL_RECEIPT");?></strong></legend>
-					<table style="margin: 0 auto; width: 100%;padding:10px;" cellspacing="7" >
+  		<fieldset> 
+					<legend align="center"><strong><?php echo $tr->translate("OFFICIAL_RECEIPT");?></strong></legend> 
+					<table style="margin: 0 auto; width: 100%;padding:0px 10px 10px 10px;" cellspacing="5" >
+					    <tr>
+					        <td colspan="4"​ style="border-bottom:1px solid #ccc;"><strong><?php echo $tr->translate("STUDENT_INFO");?></strong></td>
+					    </tr>
 						<tr>
 							<td style="width: 160px"><?php echo $tr->translate("STUDENT_TYPE");?></td>
 							<td><?php echo $register->getElement('ids'); ?>
 							<?php  echo $register->getElement('student_type');?>
 							</td>
-							<td><?php echo $tr->translate("RECEIPT_NO");?></td>
-							<td><?php echo $register->getElement('reciept_no');?>
-							    <?php echo $register->getElement('id');?>
-							</td>
 						</tr>
 						<tr>
 							<td><?php echo $tr->translate("STUDENT_ID");?></td>
 							<td><div id="student_old"><?php echo $register->getElement('old_studens');?></div><div id="id_stu"><?php echo $register->getElement('stu_id');?></div></td>
-							<td style="width: 160px"><?php echo $tr->translate("ACADEMIC_YEAR");?></td>
-							<td><?php echo $register->getElement('study_year');?></td>
+							<td><?php echo $tr->translate("RECEIPT_NO");?></td>
+							<td><?php echo $register->getElement('reciept_no');?>
+							    <?php echo $register->getElement('id');?>
+							</td>
 						</tr>
 						<tr>
 						    <td><?php echo $tr->translate("NAME_KH");?></td>
@@ -351,9 +356,12 @@ fieldset{  background:none;}
 						<tr>
 							<td><?php echo $tr->translate("SEX");?></td>
 							<td><?php echo $register->getElement('sex');?></td>
-							<td><?php echo $tr->translate("SESSION");?></td>
-							<td><?php echo $register->getElement('session');?></td>
+							<td style="width: 160px"><?php echo $tr->translate("ACADEMIC_YEAR");?></td>
+							<td><?php echo $register->getElement('study_year');?></td>
 						</tr>
+						<tr>
+					        <td colspan="4"​ style="border-bottom:1px solid #ccc;"><strong><?php echo $tr->translate("STUDY_INFO");?></strong></td>
+					    </tr>
 						<tr>
 							<td style="white-space: nowrap;"><?php echo $tr->translate("TIME");?></td>
 							<td>
@@ -362,10 +370,8 @@ fieldset{  background:none;}
 										<option value="1"><?php echo $tr->translate("PART_TIME");?></option>
 								</select>
 							</td>
-									<td></td>
-									<td>
-									    
-									</td>
+							<td><?php echo $tr->translate("SESSION");?></td>
+							<td><?php echo $register->getElement('session');?></td>
 					     </tr>
 						<tr>
 							<td><?php echo $tr->translate("DEGREE");?><label class="red">*</label></td>
@@ -379,6 +385,9 @@ fieldset{  background:none;}
 						    <td><?php echo $tr->translate("TUITION_FEE");?></td>
 							<td><?php echo $register->getElement('tuitionfee');?></td>
 						</tr>
+						<tr>
+					        <td colspan="4"​ style="border-bottom:1px solid #ccc;"><strong><?php echo $tr->translate("PAYMENT_INFO");?></strong></td>
+					    </tr>
 						<tr>
 						    <td><?php echo $tr->translate("DISCOUND");?></td>
 							<td title='Ex: 20 or 10%'><?php echo $register->getElement('discount');?></td>
@@ -420,7 +429,7 @@ fieldset{  background:none;}
 							</td>
 						</tr>
 					</table>	
-		</fieldset>		
+ 	</fieldset>		 
 		</td>
 	</tr>
 </table>	
@@ -503,12 +512,12 @@ function printSave(){
 			</style>	
 			<table    class="print" bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;height: 11cm; font-size:12px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;">
 				<tr>
-				    <td colspan="8"  style="font:bold 20px 'Kh Muol';" align="center"><u><b><strong style=" font-family: Arial Black;font-family:'Khmer MEF2';">បង្កាន់ដៃបង់ប្រាក់</strong></b></u>
+				    <td colspan="8"  style="font:bold 20px 'Kh Muol';padding-top: 15px;" align="center"><u><b><strong style=" font-family: Arial Black;font-family:'Khmer MEF2';">បង្កាន់ដៃបង់ប្រាក់</strong></b></u>
 				        <br/><strong style="font-size: 20px;font-weight:bold">OFFICAL RECEIPT</strong>
 				    </td>
 				</tr>
 				<tr>
-				    <td class="one khmerbold">&nbsp;អត្តលេខសិស្ស<div class="h">Student ID</div> </td><td width="25%"><strong> &nbsp;<label id="lb_stu_id" class="value"></label></strong></td>
+				    <td class="one khmerbold" valign="middle">&nbsp;អត្តលេខសិស្ស<div class="h">Student ID</div> </td><td width="25%"><strong> &nbsp;<label id="lb_stu_id" class="value"></label></strong></td>
 				    <td></td><td ></td>
 				    <td> </td><td ></td>
 				    <td class="one khmerbold">&nbsp;លេខបង្កាន់ដៃ<div class="h">Receipt No</div></td><td width="25%"><strong>&nbsp;<label id="lb_receipt_no" class="value"></label></strong></td>
@@ -516,13 +525,13 @@ function printSave(){
 				<tr>
 				    <td class="one khmerbold">&nbsp;ឈ្មោះខ្មែរ/អង់គ្លេស&nbsp;<div class="h">Khmer/English</div> </td>
 				    <td width="25%" colspan="5"><strong> &nbsp;<label id="lb_kh_name" class="value"></label></strong></td>
-				    <td class="one khmerbold">&nbsp;ភេទ&nbsp;/&nbsp;Sex </td><td width="25%"><strong>&nbsp;<label id="lb_sex" class="value"></label></strong></td>
+				    <td class="one khmerbold"  valign="middle">&nbsp;ភេទ&nbsp;/&nbsp;Sex </td><td width="25%"><strong>&nbsp;<label id="lb_sex" class="value"></label></strong></td>
 				</tr>
 				<tr>
 				    <td class="one khmerbold">&nbsp;វេនសិក្សា <div class="h">Session</div></td><td width="25%"><strong> &nbsp;<label id="lb_session" class="value"></label></strong></td>
 				    <td class="one khmerbold">&nbsp;&nbsp;ម៉ោងសិក្សា <div class="h" style="margin-left:7px !important;">Study Hour</div></td><td width="25%"><strong> &nbsp;<label id="lb_hour" class="value"></label></strong></td>
-				    <td class="one khmerbold">&nbsp;&nbsp;ថ្នាក់&nbsp;/&nbsp;Grade </td><td width="25%"><strong>&nbsp;<label id="lb_dept" class="value"></label></strong></td>
-				    <td class="one khmerbold">&nbsp;&nbsp;បន្ទប់&nbsp;/&nbsp;Room </td><td width="25%"><strong>&nbsp;<label id="lb_grade" class="value"></label></strong></td>
+				    <td class="one khmerbold" valign="middle">&nbsp;&nbsp;ថ្នាក់&nbsp;/&nbsp;Grade </td><td width="25%"><strong>&nbsp;<label id="lb_dept" class="value"></label></strong></td>
+				    <td class="one khmerbold" valign="middle">&nbsp;&nbsp;បន្ទប់&nbsp;/&nbsp;Room </td><td width="25%"><strong>&nbsp;<label id="lb_grade" class="value"></label></strong></td>
 				</tr>
 				<tr>
 				    <td class="one khmerbold">&nbsp;តម្លៃសិក្សា <div class="h">Tuition Fee</div></td><td width="25%"><strong> &nbsp;<label id="lb_tuitionfee" class="value"></label></strong></td>
