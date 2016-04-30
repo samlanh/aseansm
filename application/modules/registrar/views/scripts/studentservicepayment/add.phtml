@@ -103,10 +103,10 @@ fieldset{  background:none;}
 								<table style="width:400px;border-collapse: collapse;" cellpadding="10" cellspacing="10" >
 									<tr>
 										<td ><?php echo $tr->translate("TOTAL_PAYMENT");?></td>
-										<td align="right"><input class="fullside" type="text" onkeyup="calculatBalanceAndReturn();" required="true" name="grand_total" id="grand_total" dojoType="dijit.form.NumberTextBox" /></td>
+										<td align="right"><input class="fullside" type="text" readonly="readonly" onkeyup="calculatBalanceAndReturn();" required="true" name="grand_total" id="grand_total" dojoType="dijit.form.NumberTextBox" /></td>
 									</tr>
 									<tr>	
-										<td><?php echo $tr->translate("BOOKS");?></td>
+										<td><?php echo $tr->translate("RECEIVED_AMOUNT");?></td>
 										<td align="right"><input class="fullside" type="text" onkeyup="calculatBalanceAndReturn();" required="true" name="total_received" id="total_received" dojoType="dijit.form.NumberTextBox" /></td>
 									</tr>
 									<tr>
@@ -418,7 +418,7 @@ function addRow() {
 			
 			template+='<td> <input type="text" onkeyup="calculateDiscount('+col+');" name="discount_'+col+'" value="<?php echo 0;?>" id="discount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="subsub"></label></td>';
 			template+='<td> <input type="text" required="true" readonly="readonly" name="subtotal_'+col+'" id="subtotal_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="qty"></label></td>';
-			template+='<td> <input type="text" required="true" onkeyup="calculatePaidAmount('+col+');"  name="paidamount_'+col+'" id="paidamount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="paidamount"></label></td>';
+			template+='<td> <input type="text" required="true" onkeyup="alerterror('+col+');calculatePaidAmount('+col+');"  name="paidamount_'+col+'" id="paidamount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="paidamount"></label></td>';
 			template+='<td> <input type="text" required="true"  name="date_start_'+col+'" onchange="getValidate('+col+');" id="date_start_'+col+'" dojoType="dijit.form.DateTextBox" style="width:100px;" value="<?php echo date('Y-m-d')?>" /><label id="validate"></label></td>';
 			template+='<td> <input type="text" required="true"  name="validate_'+col+'" id="validate_'+col+'" dojoType="dijit.form.DateTextBox" style="width:100px;" /><label id="validate"></label></td>';
 			template+='<td> <input type="text" required="true" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" style="width:170px;" /><label id="subsub"></label></td>';
@@ -460,6 +460,16 @@ function calculateDiscount(index){
 	dijit.byId('subtotal_'+index).attr('value',total-discount);
 	dijit.byId('paidamount_'+index).attr('value',total-discount);
 	netTotal();
+}
+
+function alerterror(index){
+	
+	subtotal = dijit.byId('subtotal_'+index).get('value');
+	paid = dijit.byId('paidamount_'+index).get('value');
+	if(paid>subtotal){
+		alert("Paid amount must be equal or smaller than subtotal");
+		dijit.byId('paidamount_'+index).attr('value',subtotal);
+	}
 }
 
 function calculatePaidAmount(index){

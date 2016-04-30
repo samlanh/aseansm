@@ -142,45 +142,6 @@ Class Registrar_Form_FrmStudentServicePayment extends Zend_Dojo_Form {
         if(!empty($years))foreach($years AS $row) $opt[$row['id']]=$row['years'];
 		$generation->setMultiOptions($opt);
 		
-		$rs_metion_opt = Application_Model_DbTable_DbGlobal::getAllMention();
-		$metion = new Zend_Dojo_Form_Element_FilteringSelect('metion');
-		$metion->setAttribs(array('dojoType'=>$this->filter,
-				'class'=>'fullside',
-				//'onchange'=>'getTuitionFee();]
-		));
-		$metion->setMultiOptions($rs_metion_opt);
-		
-		$_new_student = new Zend_Form_Element_Checkbox('is_new');
-		$_new_student->setAttribs(array('dojoType'=>"dijit.form.CheckBox",
-				'class'=>'fullside',
-				'Onchange'=>"getNewStudent();"));
-		
-		$old_student = new Zend_Form_Element_Checkbox('old_student');
-		$old_student->setAttribs(array('dojoType'=>"dijit.form.CheckBox",
-				 'class'=>'fullside',
-				 'onclick'=>'changControll();'
-				));
-		
-		$old_studens =  new Zend_Dojo_Form_Element_FilteringSelect('old_studens');
-		$old_studens->setAttribs(array('dojoType'=>$this->filter,
-				'class'=>'fullside',
-				'Onchange'=>"getGepOldStudentById();",
-				));
-// 		$opt_gep=$reciept->getAllGepOldStudent();
-// 		$opts=array(-1=>$this->tr->translate("student id"));
-// 		if(!empty($opt_gep))foreach($opt_gep AS $row) $opts[$row['stu_id']]=$row['stu_code'];
-// 		$old_studens->setMultiOptions($opts);
-		
-		$_is_hold = new Zend_Form_Element_Checkbox('is_hold');
-		$_is_hold->setAttribs(array('dojoType'=>"dijit.form.CheckBox",
-				'class'=>'fullside',
-			));
-		//$_is_hold->setValue(1);
-		
-		$_year_one = new Zend_Dojo_Form_Element_TextBox('is_year_one');
-		$_year_one->setAttribs(array('dojoType'=>"dijit.form.CheckBox",
-				'class'=>'fullside',
-				'Onchange'=>"getNewStudent();"));
 		
 		$_studid = new Zend_Dojo_Form_Element_TextBox('stu_id');
 		$_studid->setAttribs(array('dojoType'=>$this->text,'class'=>'fullside','style'=>'color:red;','readonly'=>'true'));
@@ -359,8 +320,8 @@ Class Registrar_Form_FrmStudentServicePayment extends Zend_Dojo_Form {
 // 			$old_studens->setValue($data['stu_id']);
 // 		}
 		$this->addElements(array(
-			  $old_studens,$old_student,$room,$session,/*$id,*/$generation,$char_price,$end_date,$start_date,$not,$books,$addmin_fee,$remaining,$total, $_year_one,$_new_student,$_invoice_no, $_pay_date, $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,$metion,
-			  $_phone,$_dept,$_major,$_batch,$_year,$_session,$_term,$_fee,$_disc,$_paid,$_paid_kh,$_remark,$_is_hold ));
+			  $room,$session,/*$id,*/$generation,$char_price,$end_date,$start_date,$not,$books,$addmin_fee,$remaining,$total ,$_invoice_no, $_pay_date, $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,
+			  $_phone,$_dept,$_major,$_batch,$_year,$_session,$_term,$_fee,$_disc,$_paid,$_paid_kh,$_remark  ));
 		
 		return $this;
 	}

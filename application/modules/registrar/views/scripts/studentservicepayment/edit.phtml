@@ -94,7 +94,7 @@ fieldset{  background:none;}
 					<legend align="center"><strong style="font-size: 18px;"><?php echo $tr->translate("EDIT_STUDENT_SERVICE_PAYMENT");?></strong></legend>
 					<table style="margin: 0 auto; width: 100%;padding:10px;" cellspacing="7" >
 						<tr>
-							<td style="width: 160px"><?php echo $tr->translate("YEARS");?></td>
+							<td style="width: 160px"><?php echo $tr->translate("ACADEMIC_YEARS");?></td>
 							<td><?php echo $register->getElement('study_year');?></td>
 							<td><?php echo $tr->translate("RECEIPT_NO");?></td>
 							<td><?php echo $register->getElement('reciept_no');?></td>
@@ -167,7 +167,7 @@ fieldset{  background:none;}
 										<td align="right"><input class="fullside" type="text" onkeyup="calculatBalanceAndReturn();" value="<?php //echo $this->row['total_payment'];?>"  required="true" name="grand_total" id="grand_total" dojoType="dijit.form.NumberTextBox" /></td>
 									</tr>
 									<tr>	
-										<td><?php echo $tr->translate("BOOKS");?></td>
+										<td><?php echo $tr->translate("RECEIVED_AMOUNT");?></td>
 										<td align="right"><input class="fullside" type="text" onkeyup="calculatBalanceAndReturn();" value="<?php //echo $this->row['paid_amount'];?>" required="true" name="total_received" id="total_received" dojoType="dijit.form.NumberTextBox" /></td>
 									</tr>
 									<tr>
