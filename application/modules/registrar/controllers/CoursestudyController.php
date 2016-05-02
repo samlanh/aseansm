@@ -93,6 +93,9 @@ class Registrar_CoursestudyController extends Zend_Controller_Action {
     			if(isset($_data['save_new'])){
     				$db->updateStudentGep($_data);
     				Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL . '/coursestudy/index');
+    			}else{
+    				$db->updateStudentGep($_data);
+    				Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL . '/coursestudy/index');
     			}
     		} catch (Exception $e) {
     			Application_Form_FrmMessage::message($this->tr->translate('INSERT_FAIL'));
