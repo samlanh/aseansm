@@ -8,7 +8,7 @@
 	  $gep=$this->url(array('module'=>'gep','controller'=>'index','action'=>'index'), null, true);
 	  $report=$this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'index'), null, true);
 	  $global=$this->url(array('module'=>'global','controller'=>'group','action'=>'index'), null, true);
-	  $inventory_path=$this->url(array('module'=>'inventory','controller'=>'tax-exemption','action'=>'index'), null, true);
+	  $kidergarten=$this->url(array('module'=>'kindergarten','controller'=>'register','action'=>'index'), null, true);
 	  $reference_path=$this->url(array('module'=>'analysis','controller'=>'query','action'=>'index'), null, true);
 	  $backup=$this->url(array('module'=>'backup','controller'=>'index','action'=>'index'), null, true);
       $user=$this->url(array('module'=>'user','controller'=>'index','action'=>'index'), null, true);
@@ -18,42 +18,44 @@
       $module=Zend_Controller_Front::getInstance()->getRequest()->getModuleName();
 	  
 	  $item_arr=array(
-		'index'=>'<li class="link">
+	   'index'=>'<li class="link">
 							<a title="ទំព័រដើម" href="'.$home.'">
 								<span>'.$tr->translate("HOME_PAGE").'</span>
 							</a>
 						</li>',	  
-	  	'registrar'=>'<li class="link">
+	  'registrar'=>'<li class="link">
 						<a title="ការិ.ចុះឈ្មោះ" href="'.$registrar.'">
 							<span>'.$tr->translate("REGISTRATION").'</span>
 						</a>
 				  </li>',
+	  'global'=>'<li class="link">
+	  		<a title="ព័ត៏មានផ្សេងៗ" href="'.$global.'">
+	  		<span>'.$tr->translate("OTHER_INFOMATION").'</span>
+	  		</a>
+	  		</li>',
 	  'foundation'=>'<li class="link">
 	  		<a title="ការិយាល័យរដ្ឋបាល" href="'.$foundation.'">
 	  		<span>'.$tr->translate("ADMINISTRATION").'</span>
 	  		</a>
 	  		</li>',
+	  'kindergarten'=>'<li class="link">
+	  		<a href="'.$kidergarten.'">
+	  			<span>'.$tr->translate("Kindergarten").'</span>
+	  		</a>
+	  	</li>',
 	 	'gep'=>'<li class="link">
-							<a title="ការិយាល័យរដ្ឋបាល" href="'.$foundation.'">
+							<a title="ការិយាល័យរដ្ឋបាល" href="'.$gep.'">
 								<span>'.$tr->translate("GEP").'</span>
 							</a>
 						</li>',
-	  	'kindergarten'=>'<li class="link">
-	  		<a href="'.$foundation.'">
-	  		<span>'.$tr->translate("Kindergarten").'</span>
-	  		</a>
-	  		</li>',
+	  
 	  
 	  	'accounting'=>'<li class="link">
 						<a title="ការិយាល័យគណនេយ្យ" href="'.$accounting.'">
 							<span>'.$tr->translate("ACCOUNTING").'</span>
 						</a>
 					</li>',
-	    'global'=>'<li class="link">
-						<a title="ព័ត៏មានផ្សេងៗ" href="'.$global.'">
-							<span>'.$tr->translate("OTHER_INFOMATION").'</span>
-						</a>
-					</li>',	  
+	     
 	    'allreport'=>'<li class="link">
 						<a title="របាយការណ៏" href="'.$report.'">
 							<span>'.$tr->translate("REPORT").'</span>
