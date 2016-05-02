@@ -300,7 +300,10 @@ fieldset{  background:none;}
 		<td>
 		<fieldset>
 					<legend align="center"><strong><?php echo $tr->translate("OFFICIAL_RECEIPT");?></strong></legend>
-					<table style="margin: 0 auto; width: 100%;padding:10px;" cellspacing="7" >
+					<table style="margin: 0 auto; width: 100%;padding:0px 10px 10px 10px;" cellspacing="7" >
+						<tr>
+					        <td colspan="4"​ style="border-bottom:1px solid #ccc;"><strong><?php echo $tr->translate("STUDENT_INFO");?></strong></td>
+					    </tr>
 						<tr>
 							<td style="width: 160px"><?php echo $tr->translate("STUDENT_TYPE");?>
 							      <?php echo $register->getElement('ids');?>
@@ -325,18 +328,21 @@ fieldset{  background:none;}
 						<tr>
 							<td><?php echo $tr->translate("STUDENT_ID");?></td>
 							<td><div id="student_id"><?php echo $register->getElement('stu_id');?></div><div id="student_ids"><?php echo $register->getElement('old_studens');?></div></td>
-							<td style="width: 160px"><?php echo $tr->translate("YEARS");?></td>
-							<td><?php echo $register->getElement('study_year');?></td>
+							<td><?php echo $tr->translate("NAME_KH");?></td>
+							<td><?php echo $register->getElement('kh_name');?></td>
 						</tr>
 						<tr>
-						    <td><?php echo $tr->translate("NAME_KH");?></td>
-							<td><?php echo $register->getElement('kh_name');?></td>
 							<td><?php echo $tr->translate("NAME_EN");?></td>
 							<td><?php echo $register->getElement('en_name');?></td>
-						</tr>
-						<tr>
 							<td><?php echo $tr->translate("SEX");?></td>
 							<td><?php echo $register->getElement('sex');?></td>
+						</tr>
+						<tr>
+					        <td colspan="4"​ style="border-bottom:1px solid #ccc;"><strong><?php echo $tr->translate("STUDY_INFO");?></strong></td>
+					    </tr>
+						<tr>
+							<td style="width: 160px"><?php echo $tr->translate("YEARS");?></td>
+							<td><?php echo $register->getElement('study_year');?></td>
 							<td><?php echo $tr->translate("SESSION");?></td>
 							<td>
 								<select class="fullside"  tabindex="24" name="session" id=""session"" dojoType="dijit.form.FilteringSelect" >
@@ -375,6 +381,9 @@ fieldset{  background:none;}
 						    <td><?php echo $tr->translate("TUITION_FEE");?></td>
 							<td><?php echo $register->getElement('tuitionfee');?></td>
 						</tr>
+						<tr>
+					        <td colspan="4"​ style="border-bottom:1px solid #ccc;"><strong><?php echo $tr->translate("PAYMENT_INFO");?></strong></td>
+					    </tr>
 						<tr>
 						    <td><?php echo $tr->translate("DISCOUND");?></td>
 							<td title='Ex: 20 or 10%'><?php echo $register->getElement('discount');?></td>
@@ -497,7 +506,7 @@ function printSave(){
 			   .khmer{font:12px 'Khmer OS Battambang';}
 			   .one{white-space:nowrap;}
 			</style>	
-			<table    class="print" bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;height: 12cm; font-size:12px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;">
+			<table    class="print" bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;height: 12cm; font-size:12px; color:rgba(14, 0, 107, 1); padding: 0px;padding-top: 20px; margin: 0px;">
 				<tr>
 				    <td colspan="8"  style="font:bold 20px 'Kh Muol';" align="center"><u><b><strong style=" font-family: Arial Black;font-family:'Khmer MEF2';">បង្កាន់ដៃបង់ប្រាក់</strong></b></u>
 				        <br/><strong style="font-size: 20px;font-weight:bold">OFFICAL RECEIPT</strong>
@@ -576,7 +585,7 @@ function printSave(){
 		    <tr>
 				 <td colspan="8" > 
 				       <hr style="background: rgba(251, 239, 13, 0.87) none repeat scroll 0% 0%; height: 4px; border: medium none rgb(240, 255, 0);"/>
-				       <p class=" khmerbold">អាគារលេខ១៤៧​K ផ្លូវ៥៩៨ សង្កាត់ទូលសង្កែ ខណ្ឌឬស្សីកែង រាជធានីភ្នំពេញ ព្រះរាជាណាចក្រកម្ពុជា</p>
+				       <p class=" khmerbold"></p>
 				 </td>
 				</tr>
 		</table>

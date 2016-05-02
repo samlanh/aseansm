@@ -3,11 +3,33 @@
     $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 ?>
 <meta charset="utf-8">
+<script type="text/javascript">
+	dojo.require("dojo.data.ObjectStore");
+	dojo.require("dojo.data.ItemFileWriteStore");  
+	dojo.require("dojo.store.Memory");
+	dojo.require("dojo.data.ObjectStore");
+	dojo.require('dojox.form.BusyButton');
+	dojo.ready(function(){ 
+ 	var dept_store= getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->rows_deg));?> );
+ 	new dijit.form.FilteringSelect({
+	     store: dept_store,
+	    autoComplete: true,                        
+	    id: "degree",
+	    name: "degree",           
+	    class: 'fullside', 
+	    placeHolder:"Selected degree",          
+	    onChange: function() {  
+	    	 
+	    }
+	}, "degree");
+	 dijit.byId('degree').attr('value','<?php echo $this->adv_search['degree'];?>');
+	});	
+</script>
  <form  action="<?php echo $this->url(array('module'=>'registrar','controller'=>'coursestudy','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post">
-					   <table style="width:60%">
+					   <table style="width:80%">
 						  <tr> 
 							   <td><input dojoType="dijit.form.TextBox" class="fullside" id="adv_search" name="adv_search" value="<?php echo $this->adv_search['adv_search']?>" placeholder="Search" type="text" ></td>
-							  
+							    <td ><input id="degree" /></td>
 							    <td> <input dojoType="dijit.form.DateTextBox" class="fullside" onchange="CalculateDate();" id="start_date" name="start_date" value="<?php  if(!empty($this->adv_search['start_date'])){echo $this->adv_search['start_date']; }else echo date('Y-m-d');?>"  type="text"></td>
 					           <td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="end_date" name="end_date" value="<?php if(empty($this->adv_search['end_date'])){ echo date('Y-m-d');}else echo $this->adv_search['end_date'];?>" type="text"></td>
 							  
