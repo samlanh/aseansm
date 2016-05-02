@@ -13,6 +13,16 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
     	$order=' ORDER BY id DESC';
     	return $db->fetchAll($sql.$order);
     }
+    
+    function getid($stu_id,$service_id){
+    	$db = $this->getAdapter();
+    	$sql = "SELECT spd.id from rms_student_paymentdetail as spd,rms_student_payment as sp where sp.student_id=".$stu_id." and sp.id=spd.payment_id
+    			and spd.service_id=".$service_id." and is_start=1";
+		//echo $sql;
+    	return $db->fetchOne($sql);
+    }
+    
+    
    public function addSuspendservice($data){
    	$db = $this->getAdapter();
    	$db->beginTransaction();
@@ -29,19 +39,34 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
 	   		$this->_name = 'rms_suspendservicedetail';
 	   		$ids = explode(',', $data['identity']);
 		   		foreach ($ids as $i){
-		   		$_arr = array(
-		   				'suspendservice_id'=>$id,
-		   				'service_id'=> $data['service_'.$i],
-		   				'date_back'=> $data['date_'.$i],
-		   				'type_suspend'=> $data['type_'.$i],
-		   				'reason'=> $data['reason_'.$i],
-		   				'note'=> $data['note_'.$i],
-		   				'define_date'=>date("Y-m-d"),
-		   				'user_id'=>$this->getUserId()
-		   				);
-		   		$this->insert($_arr);
+			   		$_arr = array(
+			   				'suspendservice_id'	=>$id,
+			   				'service_id'		=> $data['service_'.$i],
+			   				'date_back'			=> $data['date_'.$i],
+			   				'type_suspend'		=> $data['type_'.$i],
+			   				'reason'			=> $data['reason_'.$i],
+			   				'note'				=> $data['note_'.$i],
+			   				'define_date'		=>date("Y-m-d"),
+			   				'user_id'			=>$this->getUserId()
+			   				);
+			   		$this->insert($_arr);
 		   		}
-		   		$db->commit();
+		   	
+		   	$this->_name = 'rms_student_paymentdetail';
+			   	foreach ($ids as $i){
+			   		$getid = $this->getid($data['studentid'],$data['service_'.$i]);
+			   		if(!empty($getid)){	
+				   		$array=array(
+				   				'is_suspend'=> $data['type_'.$i],
+				   				'is_start'	=> 0,
+				   				);
+				   		$where=" id=".$getid." and rms_student_paymentdetail.service_id=".$data['service_'.$i];
+				   		$this->update($array, $where);
+			   		}
+		   		}
+		   		
+		   	$db->commit();
+		   	
    		}catch (Exception $e){
    			$db->rollBack();
    			echo $e->getMessage();
@@ -81,6 +106,9 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
    			);
    			$this->insert($_arr);
    		}
+   		
+   		
+   		
    		$db->commit();
    	}catch (Exception $e){
    		$db->rollBack();
