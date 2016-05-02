@@ -6,9 +6,7 @@ class Registrar_StudentpaymentlateController extends Zend_Controller_Action {
     	header('content-type: text/html; charset=utf8');
 	}
 	public function indexAction(){
-	}
 	
-	public function rptstudentpaymentlateAction(){
 		try{
 			if($this->getRequest()->isPost()){
 				$data=$this->getRequest()->getPost();
@@ -22,7 +20,7 @@ class Registrar_StudentpaymentlateController extends Zend_Controller_Action {
 						'txtsearch' =>'',
 						'start_date'=> date('Y-m-d'),
 						'end_date'	=>date('Y-m-d'),
-				);;
+				);
 			}
 			$db = new Registrar_Model_DbTable_DbRptStudentPaymentLate();
 			$abc = $this->view->row = $db->getAllStudentPaymentLate($search);

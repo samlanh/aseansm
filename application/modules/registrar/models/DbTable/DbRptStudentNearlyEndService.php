@@ -7,11 +7,9 @@ class Registrar_Model_DbTable_DbRptStudentNearlyEndService extends Zend_Db_Table
 //     public function getUserId(){
 //     	$session_user=new Zend_Session_Namespace('auth');
 //     	return $session_user->user_id;
-    	 
 //     }
     function getAllStudentNearlyEndService($search){
     	$db=$this->getAdapter();
-    	
     	$sql="SELECT 
 				  sp.`receipt_number` AS receipt,
 				  (select stu_code from rms_student where rms_student.stu_id=sp.student_id limit 1)AS code,
@@ -47,7 +45,7 @@ class Registrar_Model_DbTable_DbRptStudentNearlyEndService extends Zend_Db_Table
     			$where .=' AND ( '.implode(' OR ',$s_where).')';
     		}
     		
-    		echo $sql.$where;
+    		//echo $sql.$where;
     	return $db->fetchAll($sql.$where.$order);
     }
     

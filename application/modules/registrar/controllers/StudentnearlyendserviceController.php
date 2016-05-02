@@ -6,8 +6,8 @@ class Registrar_StudentnearlyendserviceController extends Zend_Controller_Action
     	header('content-type: text/html; charset=utf8');
 	}
 	public function indexAction(){
-	}
-	public function rptstudentnearlyendserviceAction(){
+	
+	
 		try{
 			if($this->getRequest()->isPost()){
 				$data=$this->getRequest()->getPost();
@@ -21,7 +21,7 @@ class Registrar_StudentnearlyendserviceController extends Zend_Controller_Action
 						'txtsearch' =>'',
 						'start_date'=> date('Y-m-d'),
 						'end_date'	=>date('Y-m-d'),
-				);;
+				);
 			}
 			$db = new Registrar_Model_DbTable_DbRptStudentNearlyEndService();
 			$abc = $this->view->row = $db->getAllStudentNearlyEndService($search);
