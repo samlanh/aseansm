@@ -34,4 +34,8 @@ class Registrar_StudentpaymentlateController extends Zend_Controller_Action {
 		}
 	}
 	
+	public function addAction(){
+		$this->_redirect('registrar/studentpaymentlate/index');
+	}
+	
 }

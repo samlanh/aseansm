@@ -6,8 +6,6 @@ class Registrar_StudentnearlyendserviceController extends Zend_Controller_Action
     	header('content-type: text/html; charset=utf8');
 	}
 	public function indexAction(){
-	
-	
 		try{
 			if($this->getRequest()->isPost()){
 				$data=$this->getRequest()->getPost();
@@ -33,6 +31,9 @@ class Registrar_StudentnearlyendserviceController extends Zend_Controller_Action
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			echo $e->getMessage();
 		}
+	}
+	public function addAction(){
+		$this->_redirect('registrar/studentnearlyendservice/index');
 	}
 	
 }
