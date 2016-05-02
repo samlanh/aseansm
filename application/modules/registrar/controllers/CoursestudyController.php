@@ -41,6 +41,8 @@ class Registrar_CoursestudyController extends Zend_Controller_Action {
     		Application_Form_FrmMessage::message("Application Error");
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
     	}
+    	$db=new Registrar_Model_DbTable_DbCourStudey();
+    	$this->view->rows_deg=$db->getDegree();
     }
     public function addAction()
     {
