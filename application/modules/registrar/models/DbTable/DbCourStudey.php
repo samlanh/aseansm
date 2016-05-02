@@ -254,6 +254,9 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
     		$s_where[]= " grade LIKE '%{$s_search}%'";
     		$where.=' AND ('.implode(' OR ', $s_where).')';
     	}
+    	if(!empty($search['degree'])){
+    		$where.=" AND s.degree=".$search['degree'];
+    	}
     	//print_r($sql.$where);
     	$order=" ORDER By stu_id DESC ";
     	return $db->fetchAll($sql.$where.$order);
@@ -354,6 +357,10 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
     	$this->_name='rms_student_paymentdetail';
     	$this->update($arr,$where);
     }
-    
+    function getDegree(){
+    	$db=$this->getAdapter();
+    	$sql="SELECT dept_id AS id,CONCAT(en_name,'-',kh_name) AS `name`  FROM rms_dept WHERE dept_id NOT IN(1,2,3,4)";
+    	return $db->fetchAll($sql);
+    }
 }
 
