@@ -133,6 +133,7 @@
 	var payment_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 	var url_getpaymentterm = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-payment-term')); ?>';
 	function getPaymentTerms(generat,pay,grade,time){
+			//alert(generat);
 			dojo.xhrPost({
 				url:url_getpaymentterm,
 				content:{
@@ -400,13 +401,13 @@ fieldset{  background:none;}
 						<tr>	
 							<td><?php echo $tr->translate("ADMIN_FEE");?></td>
 							<td title='Ex: 20 or 10%'><?php echo $register->getElement('addmin_fee');?></td>	
-							<td><?php echo $tr->translate("TOTALE");?></td>
+							<td><?php echo $tr->translate("TOTAL_PAYMENT");?></td>
 							<td title='Ex: 20 or 10%'><?php echo $register->getElement('total');?></td>
 						</tr>
 						<tr>	
-							<td><?php echo $tr->translate("BOOKS");?></td>
+							<td><?php echo $tr->translate("PAID_AMOUNT");?></td>
 							<td><?php echo $register->getElement('books');;?></td>
-							<td><?php echo $tr->translate("REMAINING");?></td>
+							<td><?php echo $tr->translate("BALANCE");?></td>
 							<td><?php echo $register->getElement('remaining');;?></td>
 						</tr>
 						<tr>	

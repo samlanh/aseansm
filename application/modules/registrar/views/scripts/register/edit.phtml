@@ -412,13 +412,13 @@ fieldset{  background:none;}
 						<tr>	
 							<td><?php echo $tr->translate("ADMIN_FEE");?></td>
 							<td title='Ex: 20 or 10%'><?php echo $register->getElement('addmin_fee');?></td>	
-							<td><?php echo $tr->translate("TOTALE");?></td>
+							<td><?php echo $tr->translate("TOTAL_PAYMENT");?></td>
 							<td title='Ex: 20 or 10%'><?php echo $register->getElement('total');?></td>
 						</tr>
 						<tr>	
-							<td><?php echo $tr->translate("BOOKS");?></td>
+							<td><?php echo $tr->translate("PAID_AMOUNT");?></td>
 							<td><?php echo $register->getElement('books');;?></td>
-							<td><?php echo $tr->translate("REMAINING");?></td>
+							<td><?php echo $tr->translate("BALANCE");?></td>
 							<td><?php echo $register->getElement('remaining');;?></td>
 						</tr>
 						<tr>	
@@ -430,7 +430,7 @@ fieldset{  background:none;}
 						<tr>
 							<td><?php echo $tr->translate("START_DATE");?></td>
 							<td><?php echo $register->getElement('start_date');?></td>
-							<td><?php echo $tr->translate("ENT_DATE");?></td>
+							<td><?php echo $tr->translate("END_DATE");?></td>
 							<td><?php echo $register->getElement('end_date');?></td>
 						</tr>
 						<tr>

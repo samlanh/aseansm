@@ -31,14 +31,15 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     		$rs_rows = $glClass->getGetPayTerm($rs_rows, BASE_URL );
     		$list = new Application_Form_Frmtable();
     		$collumns = array("STUDENT_ID","RECEIPT_NO","NAME_KH","NAME_EN","SEX","DEGREE","CLASS",
-    				          "PAYMENT_TERM","TUITION_FEE","DISCOUND", "TOTALE","DEPOSIT","BALANCE","DATE_PAY");
+    				          "PAYMENT_TERM","TUITION_FEE","DISCOUND", "TOTALE","PAID_AMOUNT","BALANCE","DATE_PAY");
     		$link=array(
     				'module'=>'registrar','controller'=>'register','action'=>'edit',
     		);
     		$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('stu_code'=>$link,'receipt_number'=>$link,'stu_khname'=>$link,'stu_enname'=>$link));
     	}catch (Exception $e){
-    		Application_Form_FrmMessage::message("Application Error");
+    		//Application_Form_FrmMessage::message("Application Error");
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+    		echo $e->getMessage();
     	}
     	$data = new Registrar_Model_DbTable_DbRegister();
     	$db=$this->view->rows_degree=$data->getDegree();
@@ -46,6 +47,7 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     public function addAction(){
       if($this->getRequest()->isPost()){
       	$_data = $this->getRequest()->getPost();
+//       	print_r($_data);exit();
       	try {
       		$db = new Registrar_Model_DbTable_DbRegister();
       		if(isset($_data['save_new'])){
@@ -57,8 +59,8 @@ class Registrar_RegisterController extends Zend_Controller_Action {
       		}
       	} catch (Exception $e) {
       		Application_Form_FrmMessage::message($this->tr->translate('INSERT_FAIL'));
-      		$err =$e->getMessage();
-      		Application_Model_DbTable_DbUserLog::writeMessageError($err);
+      		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+      		echo $e->getMessage();
       	}
       }
        $frm = new Registrar_Form_FrmRegister();
