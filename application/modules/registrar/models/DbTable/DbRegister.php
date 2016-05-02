@@ -397,7 +397,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     ///select degree searching 
     function getDegree(){
     	$db=$this->getAdapter();
-    	$sql="SELECT dept_id AS id,CONCAT(en_name,'-',kh_name) AS `name` FROM rms_dept ";
+    	$sql="SELECT dept_id AS id,CONCAT(en_name,'-',kh_name) AS `name` FROM rms_dept  WHERE dept_id  IN(1,2,3,4)";
     	return $db->fetchAll($sql);
     }
 }
