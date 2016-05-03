@@ -84,6 +84,7 @@ public function editAction(){
 	if($this->getRequest()->isPost())
 	{
 		$_data = $this->getRequest()->getPost();
+		//print_r($_data);exit();
 		try{
 			$_db = new Accounting_Model_DbTable_DbSuspendservice();
 			$row = $_db->editSuspendService($_data);

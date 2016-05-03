@@ -18,7 +18,6 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	$sql = "SELECT spd.id from rms_student_paymentdetail as spd,rms_student_payment as sp where sp.student_id=".$stu_id." and sp.id=spd.payment_id
     			and spd.service_id=".$service_id." and is_start=1";
-		//echo $sql;
     	return $db->fetchOne($sql);
     }
     
@@ -59,6 +58,7 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
 				   		$array=array(
 				   				'is_suspend'=> $data['type_'.$i],
 				   				'is_start'	=> 0,
+				   				'suspendservice_id'	=>$id,
 				   				);
 				   		$where=" id=".$getid." and rms_student_paymentdetail.service_id=".$data['service_'.$i];
 				   		$this->update($array, $where);
@@ -72,6 +72,12 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
    			echo $e->getMessage();
    		}
    	
+   }
+   
+   public function getIdEdit($suspendserviceid,$serviceid){
+   	$db = $this->getAdapter();
+   	$sql="select id from rms_student_paymentdetail where type=3 and suspendservice_id=".$suspendserviceid." and service_id=".$serviceid;
+   	return $db->fetchOne($sql);
    }
    
    public function editSuspendService($data){
@@ -93,27 +99,75 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
    		$this->delete($where);   		
    		
    		$ids = explode(',', $data['identity']);
+   		
+//    		foreach ($ids as $j){
+   			
+//    			$idedit = $this->getIdEdit($data['id'],$data['service_'.$j]);
+   			
+//    			if($data['status_'.$j]==0){
+//    				$this->_name = 'rms_student_paymentdetail';
+//    				$array=array(
+//    						'is_suspend'	=> 3,
+//    						'is_start'		=>1,
+//    				);
+//    				$where=" id=".$idedit;
+//    				$this->update($array, $where);
+//    			}else{
+//    				$this->_name = 'rms_student_paymentdetail';
+//    				$array=array(
+//    						'is_suspend'	=> $data['type_'.$j],
+//    						'is_start'		=>0,
+//    				);
+//    				$where=" id=".$idedit;
+//    				$this->update($array, $where);
+//    			}
+//    		}
+   		
+   		
    		foreach ($ids as $i){
-   			$_arr = array(
-   					'suspendservice_id'	=>$data['id'],
-   					'service_id'		=> $data['service_'.$i],
-   					'date_back'				=> $data['date_'.$i],
-   					'type_suspend'		=> $data['type_'.$i],
-   					'reason'			=> $data['reason_'.$i],
-   					'note'				=> $data['note_'.$i],
-   					'define_date'		=>date("Y-m-d"),
-   					'user_id'			=>$this->getUserId()
-   			);
-   			$this->insert($_arr);
+   			$idedit = $this->getIdEdit($data['id'],$data['service_'.$i]);
+   			if($data['status_'.$i]==0){
+   				$this->_name = 'rms_student_paymentdetail';
+   				//print_r($idedit);exit();
+					$array=array(
+						'is_suspend'	=> 3,
+						'is_start'		=>1,
+						);
+   				$where=" id=".$idedit;
+   				$this->update($array, $where);
+   			}else{
+   				$this->_name = 'rms_student_paymentdetail';
+//    				print_r($id);exit();
+   				$array=array(
+   						'is_suspend'	=> $data['type_'.$i],
+   						'is_start'		=>0,
+   				);
+   				$where=" id=".$idedit;
+   				$this->update($array, $where);
+   			}
+   			
+   			$this->_name = 'rms_suspendservicedetail';
+	   			$_arr = array(
+	   					'suspendservice_id'	=>$data['id'],
+	   					'service_id'		=> $data['service_'.$i],
+	   					'date_back'			=> $data['date_'.$i],
+	   					'type_suspend'		=> $data['type_'.$i],
+	   					'reason'			=> $data['reason_'.$i],
+	   					'note'				=> $data['note_'.$i],
+	   					'define_date'		=>date("Y-m-d"),
+	   					'user_id'			=>$this->getUserId(),
+	   					'suspend_status'	=> $data['status_'.$i],
+	   			);
+	   			$this->insert($_arr);
+   			
+   			
    		}
-   		
-   		
-   		
+
    		$db->commit();
    	}catch (Exception $e){
+   		echo $e->getMessage();
    		$db->rollBack();
    	}
-   	
    }
    public function getSuspendNo(){
    	$db = $this->getAdapter();
