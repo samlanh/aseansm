@@ -81,7 +81,7 @@ fieldset{  background:none;}
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2"><input type="hidden" id="identity" name="identity" /></td>
+							<td colspan="2"><input type="text" id="identity" name="identity" /></td>
 						</tr>
 						<tr>
 							<td colspan="4" align="center">
@@ -123,17 +123,21 @@ function addRow() {
 			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("REASON");?></th>';
 			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("DATE_BACK");?></th>';
 			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("NOTE");?></th>';
+			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("STATUS");?></th>';
+
 			dojo.query("#head-title").append(temp);
 			title=1;
 		}
 			template+='<td width="47px" align="center"><img onclick="deleteRecord('+col+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
 			template+='<td width="15px" align="center">'+no+'</td>';
-			template+='<td><select style="width:100%;"  dojoType="dijit.form.FilteringSelect" id="service_'+col+'" name="service_'+col+'">'+service+'</select></td>';			
+			template+='<td><select class="fullside"  dojoType="dijit.form.FilteringSelect" id="service_'+col+'" name="service_'+col+'">'+service+'</select></td>';			
 			column = 0;
-			template+='<td><select dojoType="dijit.form.FilteringSelect" id="type_'+col+'" name="type_'+col+'" style="width:100%;"><option value="1">Suspend</option><option value="2">Stop</option></select></td>';
-			template+='<td> <input type="text" required="true" name="reason_'+col+'" id="reason_'+col+'" dojoType="dijit.form.TextBox" style="width:100%;" /><label id="subsub"></label></td>';
-			template+='<td><select style="width:100%;"  dojoType="dijit.form.DateTextBox" id="date_'+col+'" name="date_'+col+'"></select></td>';
-			template+='<td> <input type="text" required="true" name="note_'+col+'" id="note_'+col+'" dojoType="dijit.form.TextBox" style="width:100%;" /></td>';
+			template+='<td><select class="fullside" dojoType="dijit.form.FilteringSelect" onchange="dateReadonly('+col+')" id="type_'+col+'" name="type_'+col+'" style="width:100%;"><option value="1">Suspend</option><option value="2">Stop</option></select></td>';
+			template+='<td> <input class="fullside" type="text" required="true" name="reason_'+col+'" id="reason_'+col+'" dojoType="dijit.form.TextBox" style="width:100%;" /><label id="subsub"></label></td>';
+			template+='<td><select class="fullside"  dojoType="dijit.form.DateTextBox" id="date_'+col+'" name="date_'+col+'"></select></td>';
+			template+='<td> <input class="fullside" type="text" required="true" name="note_'+col+'" id="note_'+col+'" dojoType="dijit.form.TextBox" style="width:100%;" /></td>';
+			template+='<td><select class="fullside"  dojoType="dijit.form.FilteringSelect" id="status_'+col+'" name="status_'+col+'"><option value="1">Active</option><option value="0">Deactive</option></select></td>';
+
 		tmp='<tr id="row'+col+'">';
 		tmp+="</tr>";
 		dojo.query("#table_row").append(tmp);
@@ -161,17 +165,20 @@ function initailize() {
 		temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("REASON");?></th>';
 		temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("DATE_BACK");?></th>';
 		temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("NOTE");?></th>';
+		temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("STATUS");?></th>';
 		dojo.query("#head-title").append(temp);
 		title=1;
 	}
 		template+='<td width="47px" align="center"><img onclick="deleteRecord('+col+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
-		template+='<td width="15px" align="center">'+no+'</td>';
-		template+='<td><select style="width:100%;"  dojoType="dijit.form.FilteringSelect" id="service_'+col+'" name="service_'+col+'">'+service+'</select></td>';			
+		template+='<td width="15px"  align="center">'+no+'</td>';
+		template+='<td><select class="fullside" style="width:100%;"  dojoType="dijit.form.FilteringSelect" id="service_'+col+'" name="service_'+col+'">'+service+'</select></td>';			
 		column = 0;
-		template+='<td><select dojoType="dijit.form.FilteringSelect" id="type_'+col+'" onchange="dateReadonly('+col+')" name="type_'+col+'" style="width:100%;"><option value="1">Suspend</option><option value="2">Stop</option></select></td>';
-		template+='<td> <input type="text" required="true" name="reason_'+col+'" id="reason_'+col+'" dojoType="dijit.form.TextBox" style="width:100%;" /><label id="subsub"></label></td>';
-		template+='<td><select style="width:100%;"  dojoType="dijit.form.DateTextBox" id="date_'+col+'" name="date_'+col+'"></select></td>';
-		template+='<td> <input type="text" required="true" name="note_'+col+'" id="note_'+col+'" dojoType="dijit.form.TextBox" style="width:100%;" /></td>';
+		template+='<td><select class="fullside" dojoType="dijit.form.FilteringSelect" id="type_'+col+'" onchange="dateReadonly('+col+')" name="type_'+col+'" style="width:100%;"><option value="1">Suspend</option><option value="2">Stop</option></select></td>';
+		template+='<td> <input class="fullside" type="text" required="true" name="reason_'+col+'" id="reason_'+col+'" dojoType="dijit.form.TextBox" style="width:100%;" /><label id="subsub"></label></td>';
+		template+='<td><select class="fullside"  dojoType="dijit.form.DateTextBox" id="date_'+col+'" name="date_'+col+'"></select></td>';
+		template+='<td> <input class="fullside" type="text" required="true" name="note_'+col+'" id="note_'+col+'" dojoType="dijit.form.TextBox" style="width:100%;" /></td>';
+		template+='<td><select class="fullside"  dojoType="dijit.form.FilteringSelect" id="status_'+col+'" name="status_'+col+'"><option value="1">Active</option><option value="0">Deactive</option></select></td>';
+
 	tmp='<tr id="row'+col+'">';
 	tmp+="</tr>";
 	dojo.query("#table_row").append(tmp);
@@ -188,6 +195,7 @@ function initailize() {
 	dijit.byId('type_'+col).attr('value','<?php echo $row['type_suspend']?>');
 	dijit.byId('reason_'+col).attr('value','<?php echo $row['reason']?>');
 	dijit.byId('note_'+col).attr('value','<?php echo $row['note']?>');
+	dijit.byId('status_'+col).attr('value','<?php echo $row['suspend_status']?>');
 
 	<?php } }?>
 }
