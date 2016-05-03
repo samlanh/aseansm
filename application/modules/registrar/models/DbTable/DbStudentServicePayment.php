@@ -90,7 +90,7 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     						'discount_fix'	=>$data['discount_'.$i],
     						'note'			=>$data['remark'.$i],
     						'subtotal'		=>$data['subtotal_'.$i],
-    						'type'			=>2,
+    						'type'			=>3,
     						'is_start'		=>1,
     						'is_parent'		=>$payment_id,
     						'is_complete'	=>$complete,
@@ -168,7 +168,6 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 				$this->delete($where);
 				
 				
-				
 				$ids = explode(',', $data['identity']);
 				$disc = 0;
 				$total = 0;
@@ -208,7 +207,7 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     						'discount_fix'	=>$data['discount_'.$i],
     						'note'			=>$data['remark'.$i],
     						'subtotal'		=>$data['subtotal_'.$i],
-    						'type'			=>2,
+    						'type'			=>3,
     						'is_parent'		=>$payment_id,
     						'is_complete'   =>$complete,
     						'comment'		=>$status,
