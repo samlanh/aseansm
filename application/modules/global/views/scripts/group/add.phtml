@@ -65,7 +65,7 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 								<?php $row= new Application_Model_DbTable_DbGlobal();
 								      $rows=$row->getSession();
 									foreach($rows as $key =>$rs){?>
-										<option value='<?php echo $key['key_code']?>' ><?php echo $rs['view_name'];?></option>
+										<option value="<?php echo $rs['key_code']?>" ><?php echo $rs['view_name'];?></option>
 								<?php 	}?>
 								</select>
 							</td>
