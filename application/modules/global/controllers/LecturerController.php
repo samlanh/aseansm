@@ -22,7 +22,7 @@ class Global_LecturerController extends Zend_Controller_Action {
 			$rs_rows= $db->getAllTeacher($search);
 			//print_r($rs_rows);exit();
 			$list = new Application_Form_Frmtable();
-			$collumns = array("CODE","NAME_KH","NAME_EN","SEX","PHONE","EMAIL","DEGREE","NOTE");
+			$collumns = array("LECTURER_ID","NAME_KH","NAME_EN","SEX","PHONE","EMAIL","DEGREE","NOTE");
 			 
 			$link=array(
 					'module'=>'global','controller'=>'lecturer','action'=>'edit',
