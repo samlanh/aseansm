@@ -29,7 +29,7 @@ class Foundation_studentdropController extends Zend_Controller_Action {
 			else{
 				$result = Application_Model_DbTable_DbGlobal::getResultWarning();
 			}
-			$collumns = array("STUDENT_CODE","NAME_KH","NAME_EN","SEX","TYPE","REASON","STOP_DATE","NOTE");
+			$collumns = array("STUDENT_ID","NAME_KH","NAME_EN","SEX","TYPE","REASON","STOP_DATE","NOTE");
 			$link=array(
 					'module'=>'foundation','controller'=>'studentdrop','action'=>'edit',
 			);

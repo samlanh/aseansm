@@ -120,15 +120,15 @@ $frm_set_price = $this->frm_set_charge;?>
 					<legend align="center"><strong>Search Group</strong></legend>
 					<table style="margin: 0 auto; width: 100%; background:#DFF7FD;" cellspacing="10" broder 1>
 						<tr>
-							<td>ឆ្នាំសិក្សា</td>
+							<td><?php echo $tr->translate("ACADEMIC_YEAR");?></td>
 							<td>
 								<select class="fullside" dojoType="dijit.form.FilteringSelect" required="true"  id="academy" name="academy" type="text">
 									<?php if(!empty($this->academy)) foreach($this->academy as $row){?>
-										<option value="<?php echo $row['id'];?>"><?php echo $row['years']; ?></option>
+										<option value="<?php echo $row['id'];?>"<?php if($row['id']==$this->value['academy']) echo "selected='selected'"?>><?php echo $row['years']; ?></option>
 									<?php }?>
 								</select>
 							</td>
-							<td>Degree</td>
+							<td><?php echo $tr->translate("DEGREE");?></td>
 							<td colspan="2">
 								<select class="fullside"  name="degree" id="degree" dojoType="dijit.form.FilteringSelect" onchange="getallGrade(1);">
 											<?php if(!empty($this->degree))foreach ($this->degree as $row){?>
@@ -138,17 +138,26 @@ $frm_set_price = $this->frm_set_charge;?>
 							</td>
 						</tr>
 						<tr>
-							<td>ថ្នាក់ទី*</td>
+							<td><?php echo $tr->translate("GRADE");?></td>
 							<td>
 							    <input id="grade" value="<?php echo $this->value['grade'];?>" />
 							</td>
-							<td>Session</td>
+							<td><?php echo $tr->translate("SESSION");?></td>
 							<td>
+<<<<<<< .mine
+								<select class="fullside"  tabindex="24" name="session" id="session" dojoType="dijit.form.FilteringSelect" >
+									<option value="1" <?php if($this->value['session']==1){{echo "selected='selected'"; }}?> label="morning" >ព្រឹក</option>
+									<option value="2" <?php if($this->value['session']==2){{echo "selected='selected'"; }}?> label="afternoon">រសៀល</option>
+									<option value="3" <?php if($this->value['session']==3){{echo "selected='selected'"; }}?> label="night">យប់</option>
+									<option value="4" <?php if($this->value['session']==4) {{ echo "selected='selected'"; }}?> label="weekend">ចុងសបា្តហ៏</option>
+								</select>
+=======
 								 <select class="fullside"  tabindex="24" name="session" id="session" dojoType="dijit.form.FilteringSelect" >
 								   <?php if(!empty($this->rs_session)) foreach ($this->rs_session As $rs_sesion){?>
 										    <option value="<?php echo $rs_sesion['key_code'];?>"><?php echo $rs_sesion['view_name'];?></option>
 								   <?php }?>		
 								</select>
+>>>>>>> .r648
 							</td>
 							<td colspan="2" align="center">
 								 	<input type="submit" dojoType="dijit.form.Button"  label="SEARCH" id="search"
@@ -202,10 +211,10 @@ $frm_set_price = $this->frm_set_charge;?>
 								</td>
 							</tr>
 							<tr>
-							<td align="center" colspan="8">
-								<input type="submit" dojoType="dijit.form.Button"  label="SAVE" id="save"
-								 		iconClass="dijitEditorIcon dijitEditorIconSave"/>
-							</td>
+								<td align="center" colspan="8">
+									<input type="submit" dojoType="dijit.form.Button"  label="SAVE" id="save"
+									 		iconClass="dijitEditorIcon dijitEditorIconSave"/>
+								</td>
 							</tr>
 						</tfoot>
 				 </table>
@@ -301,12 +310,11 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 											<option value="<?php echo $row['room_id']?>"><?php echo $row['room_name']?></option>
 									<?php }?>
 								</select>
-							
 							</td>
 						</tr>
 						<tr>
 							<td style="width: 5px">ថ្ងែចាប់ផ្តើម</td>
-							<td><input dojoType="dijit.form.DateTextBox" name="start_date" id="start_date" onchange="setEndDate();" value="2016-01-29" type="text"></td>
+							<td><input dojoType="dijit.form.DateTextBox" name="start_date" id="start_date" onchange="setEndDate();" value="now" type="text"></td>
 							<td>AMOUNT_MONTH</td>
 							<td><input dojoType="dijit.form.NumberTextBox"   name="amountmonth" id="amountmonth" value="" onkeyup="setEndDate();" type="text"></td>
 							<td style="width: 5px">ថ្ងៃបញ្ចប់</td>
@@ -347,7 +355,6 @@ function getStudentInfo(){
 					//alert(data.stu_enname);
 					dijit.byId("studentname").attr("value",data.stu_enname);
 					dijit.byId("gender").attr("value",data.sex);
-
 				},
 				error: function(err) {
 					alert(err);

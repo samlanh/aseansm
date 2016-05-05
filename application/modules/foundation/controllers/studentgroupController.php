@@ -1,3 +1,4 @@
+
 <?php
 class Foundation_StudentGroupController extends Zend_Controller_Action {
 	
@@ -17,7 +18,7 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 			else{
 				$result = Application_Model_DbTable_DbGlobal::getResultWarning();
 			}
-			$collumns = array("GROUP NAME","YEARS","SEMESTER","DEGREE","GRADE","SESSION","ROOM","START DATE","END DATE","NOTE","STATUS","ចំនួនសិស្ស");
+			$collumns = array("GROUP_ID","YEARS","SEMESTER","DEGREE","GRADE","SESSION","ROOM_NAME","START_DATE","END_DATE","NOTE","STATUS","AMOUNT_STUDENT");
 			$link=array(
 					'module'=>'foundation','controller'=>'studentgroup','action'=>'edit',
 			);
@@ -28,11 +29,13 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 		try{
 			if($this->getRequest()->isPost()){
 				$_data=$this->getRequest()->getPost();
+				//print_r($_data);exit();
 				$search = array(
 						'degree' => $_data['degree'],
 						'grade' => $_data['grade'],
 						'session' => $_data['session'],
 						'academy'=> $_data['academy']);
+				
 				$rs =$db->getSearchStudent($search);
 				$this->view->rs = $rs;
 			}else{
@@ -67,6 +70,7 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 		if($this->getRequest()->isPost()){
 			try{
 				$_data = $this->getRequest()->getPost();
+				
 				$db = new Foundation_Model_DbTable_DbGroup();
 				$db->addStudentGroup($_data);
 				Application_Form_FrmMessage::message("INSERT_SUCCESS");

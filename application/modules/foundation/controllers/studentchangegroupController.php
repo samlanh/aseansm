@@ -29,7 +29,7 @@ class Foundation_studentchangegroupController extends Zend_Controller_Action {
 			else{
 				$result = Application_Model_DbTable_DbGlobal::getResultWarning();
 			}
-			$collumns = array("STUDENT_CODE","NAME_KH","NAME_EN","SEX","FROM_GROUP","TO_GROUP","MOVING_DATE","NOTE");
+			$collumns = array("STUDENT_ID","NAME_KH","NAME_EN","SEX","FROM_GROUP","TO_GROUP","MOVING_DATE","NOTE");
 			$link=array(
 					'module'=>'foundation','controller'=>'studentchangegroup','action'=>'edit',
 			);

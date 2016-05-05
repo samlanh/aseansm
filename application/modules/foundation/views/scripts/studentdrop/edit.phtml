@@ -13,7 +13,7 @@
 							<td align="center" valign="top">
 								<table cellspacing="10" width="100%"​>
 									<tr>
-										<td><?php echo $tr->translate("STUDENT_CODE")?></td><input type="hidden" name="id" value="<?php echo $this->row['id'];?>" />
+										<td><?php echo $tr->translate("STUDENT_ID")?></td><input type="hidden" name="id" value="<?php echo $this->row['id'];?>" />
 										<td>
 											<select class="fullside" name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();" >
 										    	<?php if(!empty($this->rs))foreach ($this->rs as $row){?>

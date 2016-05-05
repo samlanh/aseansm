@@ -60,7 +60,7 @@
 												<option value="1" <?php if($this->rs['status']==1) echo 'selected="selected"';?>>Active</option>
 												<option value="0" <?php if($this->rs['status']==0) echo 'selected="selected"';?>>Deactive</option>
 											</select>
-											<input dojoType="dijit.form.TextBox"  type="text" name="identity" id="identity" value="" />
+											<input dojoType="dijit.form.TextBox"  type="hidden" name="identity" id="identity" value="" />
 										</td>
 									</tr>
 									<tr style="max-height: 100px;height: 100px;overflow: scroll;">
@@ -129,7 +129,7 @@ function getStudentFromGroup(test1){
 					for(var i=0;i<respone.length;i++){
 						inx = i+1;
 						
-							tem += '<tr><input type="text"  name="stu_id_'+inx+'" id="stu_id_'+inx+'" value="'+respone[i].stu_id+'" />';
+							tem += '<tr><input type="hidden"  name="stu_id_'+inx+'" id="stu_id_'+inx+'" value="'+respone[i].stu_id+'" />';
 						    tem += '<td align="center">&nbsp;'+inx+'&nbsp;</td>';
 							tem += '<td>&nbsp;<label style="font-size:11px;">'+respone[i].stu_code+'</label></td>';
 							tem += '<td>&nbsp;<label style="font-size:11px;">'+respone[i].stu_khname+'</label></td>';
