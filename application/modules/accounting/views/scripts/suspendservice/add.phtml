@@ -3,6 +3,13 @@
 	echo $this->headTitle($tr->translate('ADD_SUSPEND_SERVICE')); 
 	$base_url = Application_Form_FrmMessage::getUrl("/");
 ?>	
+
+<?php 
+
+// 	echo Zend_Date::now();exit();
+
+?>
+
 <script type="text/javascript"  src="<?php echo $this->baseUrl();?>/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript"  src="<?php echo $this->baseUrl();?>/js/convertion.js"></script>
 <script type="text/javascript">
@@ -39,7 +46,7 @@ fieldset{  background:none;}
 					<legend align="center"><strong><?php echo $tr->translate("ADD_SUSPEND_SERVICE");?></strong></legend>
 					<table style="margin: 0 auto; width: 100%;padding:10px;" cellspacing="7" >
 						<tr>
-							<td style="width: 160px"><?php echo $tr->translate("YEARS");?></td>
+							<td style="width: 160px"><?php echo $tr->translate("ACADEMIC_YEAR");?></td>
 							<td><?php echo $register->getElement('study_year');?></td>
 							<td><?php echo $tr->translate("RECEIPT_NO");?></td>
 							<td><?php echo $register->getElement('suspend_no');?></td>

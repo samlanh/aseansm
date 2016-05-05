@@ -219,7 +219,7 @@ function addRow() {
 			for(j=0;j<payment_term;j++){ column++;
 				template+='<td width="15%"><input type="text" required="true" id="fee'+col+'_'+column+'" name="fee'+col+'_'+column+'" dojoType="dijit.form.NumberTextBox" style="width: 100%;" /></td>';
 			}
-			template+='<td <input type="text" required="true" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ"style=""/><label id="subsub"></label></td>';
+			template+='<td <input type="text" required="true" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ"/><label id="subsub"></label></td>';
 		tmp='<tr id="row'+col+'">';
 		tmp+="</tr>";
 		dojo.query("#table_row").append(tmp);

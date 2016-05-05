@@ -42,7 +42,7 @@ fieldset{  background:none;}
 							<td><input type="hidden" id="id" name="id" value="<?php echo $this->id['id'];?>" /></td>
 						</tr>
 						<tr>
-							<td style="width: 160px"><?php echo $tr->translate("YEARS");?></td>
+							<td style="width: 160px"><?php echo $tr->translate("ACADEMIC_YEAR");?></td>
 							<td><?php echo $register->getElement('study_year');?></td>
 							<td><?php echo $tr->translate("RECEIPT_NO");?></td>
 							<td><?php echo $register->getElement('suspend_no');?></td>
@@ -81,7 +81,7 @@ fieldset{  background:none;}
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2"><input type="text" id="identity" name="identity" /></td>
+							<td colspan="2"><input type="hidden" id="identity" name="identity" /></td>
 						</tr>
 						<tr>
 							<td colspan="4" align="center">

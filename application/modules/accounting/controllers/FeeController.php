@@ -69,7 +69,7 @@ class Accounting_FeeController extends Zend_Controller_Action {
     			$payment_term.='"'.$value.'",';
     		}
     		$list = new Application_Form_Frmtable();
-    		$collumns = array("YEARS","BATCH","CLASS","QUARTER","SEMESTER","YEAR","TIME","CREATED_DATE","STATUS");
+    		$collumns = array("ACADEMIC_YEAR","BATCH","CLASS","QUARTER","SEMESTER","YEAR","TIME","CREATED_DATE","STATUS");
     		$link=array(
     				'module'=>'accounting','controller'=>'fee','action'=>'edit',
     		);
