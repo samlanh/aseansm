@@ -23,7 +23,7 @@
 									<tr>
 										<td style="white-space: nowrap;"><?php echo $tr->translate("FROM_GROUP")?></td>
 										<td colspan="2" >
-											<select style="width: 395px;" dojoType="dijit.form.FilteringSelect" required="required"  id="from_group" name="from_group" type="text" placeholder="select group" onchange="toStudentGroup(1);getStudentFromGroup();">
+											<select style="width: 395px;" dojoType="dijit.form.FilteringSelect" required="true"  id="from_group" name="from_group" type="text" placeholder="select group" onchange="toStudentGroup(1);getStudentFromGroup();">
 												<option value="0" > </option>
 												<?php if(!empty($this->row))foreach ($this->row as $_row){?>
 													<option value="<?php echo $_row['id']?>"><?php echo $_row['group_code']?></option>
