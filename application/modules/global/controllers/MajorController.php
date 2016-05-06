@@ -7,8 +7,6 @@ class Global_MajorController extends Zend_Controller_Action {
     	header('content-type: text/html; charset=utf8');
     	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
 	}
-	
-	
     public function indexAction()
     {
     	try{
@@ -22,7 +20,6 @@ class Global_MajorController extends Zend_Controller_Action {
 		    			'title' => $_data['title'],
 		    			'status' => $_data['status_search']
 	    		);
-	    		
     	   }
     	   else{
     		$search='';
@@ -57,6 +54,8 @@ class Global_MajorController extends Zend_Controller_Action {
     	Application_Model_Decorator::removeAllDecorator($frm_faculty);
     	$this->view->add_faculty =$frm_faculty;
     }
+    
+    
     public function addAction(){
     	if($this->getRequest()->isPost()){
     		$_data = $this->getRequest()->getPost();
@@ -75,7 +74,13 @@ class Global_MajorController extends Zend_Controller_Action {
     		}
     			
     	}
+    	$db = new Global_Model_DbTable_DbDept();
+    	$dept = $db->getAllDept();
+    	array_unshift($dept, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
+    	$this->view->dept = $dept;
     }
+    
+    
     public function editAction(){
     	$id = $this->getRequest()->getParam("id");
     	if($this->getRequest()->isPost()){
@@ -99,21 +104,37 @@ class Global_MajorController extends Zend_Controller_Action {
     	}else{
     		
     	}
+    	
+    	$db= new Global_Model_DbTable_DbDept();
+    	$row=$db->getMajorById($id);
+    	$this->view->rs = $row;
+    	
+    	$db = new Global_Model_DbTable_DbDept();
+    	$dept = $db->getAllDept();
+    	array_unshift($dept, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
+    	$this->view->dept = $dept;
     }
-    function addmajorAction(){
+    
+    function addDeptAction(){
     	if($this->getRequest()->isPost()){
-    			$_data = $this->getRequest()->getPost();
-    			$_dbmodel = new Global_Model_DbTable_DbDept();
-    			$_data['dept_id']=$_data['facultyid'];
-    			$_data['major_enname']=$_data['major_en'];
-    			$_data['major_khname']=$_data['major_kh'];
-    			$_data['shortcut']=$_data['shortcut'];
-    			$_data['status']=1;
-    			$_id =$_dbmodel->AddNewMajor($_data);
-    			print_r(Zend_Json::encode($_id));
+    		try{
+    			$data = $this->getRequest()->getPost();
+    			$db = new Global_Model_DbTable_DbDept();
+    			$row = $db->addDept($data);
+    			$result = array("id"=>$row);
+    			print_r(Zend_Json::encode($row));
     			exit();
+    			//Application_Form_FrmMessage::message("INSERT_SUCCESS");
+    		}catch(Exception $e){
+    			Application_Form_FrmMessage::message("INSERT_FAIL");
+    			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+    		}
     	}
     }
+    
+    
+    
+    
  
 }
 

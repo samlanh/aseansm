@@ -27,25 +27,17 @@ class Global_Model_DbTable_DbDept extends Zend_Db_Table_Abstract
 		}
 		return $sql.$where.$orderby;
 	}
-	function getAllDept($search, $start, $limit){        
-    	$sql_rs = $this->sqlDept($search)." LIMIT ".$start.", ".$limit;
-		if ($limit == 'All') {
-			$sql_rs = $this->sqlDept($search);
-		}
-		$sql_count = $this->sqlDept();
-		if(!empty($search)){
-			$sql_count = $this->sqlDept($search);
-		}
-		$_db = new Application_Model_DbTable_DbGlobal();
-		return($_db ->getGlobalResultList($sql_rs,$sql_count));
-		
+	function getAllDept(){        
+		$db = $this->getAdapter();
+		$sql="select dept_id as id,en_name as name from rms_dept";
+		return $db->fetchAll($sql);
 	}	
 	 function getAllFacultyList($search = ''){
 		$db = $this->getAdapter();
 		$sql = " SELECT dept_id,en_name,kh_name,shortcut,modify_date,is_active as status,
 		       (SELECT CONCAT(last_name,' ',first_name) FROM rms_users WHERE user_id=id ) AS user_name
 		       FROM rms_dept WHERE 1 ";
-		$orderby = " ORDER BY en_name ";
+		$orderby = " ORDER BY dept_id DESC ";
 		if(empty($search)){
 			return $db->fetchAll($sql.$orderby);
 		}
@@ -171,6 +163,26 @@ class Global_Model_DbTable_DbDept extends Zend_Db_Table_Abstract
 		$this->update($_arr, $where);
 	}
 
+	public function addDept($data){
+		$this->_name='rms_dept';
+		try{
+			$db= $this->getAdapter();
+			$arr = array(
+					'en_name'=>$data['fac_enname'],
+					'kh_name'=> $data['fac_khname'],
+					'shortcut'=> $data['shortcut_fac'],
+					'user_id'=>$this->getUserId(),
+					'is_active'=>$data['status_fac'],
+					'modify_date'=>Zend_Date::now(),
+			);
+			return $this->insert($arr);
+		}catch(Exception $e){
+			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+		}
+	}
+		
+	
+	
 }
 
 
