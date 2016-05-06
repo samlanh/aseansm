@@ -94,9 +94,9 @@ fieldset{  background:none;}
 					<legend align="center"><strong style="font-size: 18px;"><?php echo $tr->translate("EDIT_STUDENT_SERVICE_PAYMENT");?></strong></legend>
 					<table style="margin: 0 auto; width: 100%;padding:10px;" cellspacing="7" >
 						<tr>
-							<td style="width: 160px"><?php echo $tr->translate("ACADEMIC_YEARS");?></td>
+							<td style="width: 160px"><?php echo $tr->translate("ACADEMIC_YEAR");?></td>
 							<td><?php echo $register->getElement('study_year');?></td>
-							<td><?php echo $tr->translate("RECEIPT_NO");?></td>
+							<td align="right"><?php echo $tr->translate("RECEIPT_NO");?></td>
 							<td><?php echo $register->getElement('reciept_no');?></td>
 						</tr>
 						<tr>
@@ -108,7 +108,7 @@ fieldset{  background:none;}
 									<?php }?>
 								</select>
 							</td>	
-							<td><?php echo $tr->translate("NAME_KH");?></td>
+							<td align="right"><?php echo $tr->translate("NAME_KH");?></td>
 							<td><?php echo $register->getElement('kh_name');?></td>
 						</tr>
 						<tr>
@@ -116,13 +116,13 @@ fieldset{  background:none;}
 							<td><?php echo $tr->translate("NAME_EN");?></td>
 							<td><?php echo $register->getElement('en_name');?></td>
 							
-							<td><?php echo $tr->translate("SEX");?></td>
+							<td align="right"><?php echo $tr->translate("SEX");?></td>
 							<td><?php echo $register->getElement('sex');?></td>
 						</tr>
 						<tr>	
 						    <td><?php echo $tr->translate("NOT");?></td>
 							<td title='Ex: 20 or 10%' ><?php echo $register->getElement('not');?></td>	
-							<td><?php echo $tr->translate("CHAR_PRICE");?></td>
+							<td align="right"><?php echo $tr->translate("CHAR_PRICE");?></td>
 							<td title='Ex: 20 or 10%' ><?php echo $register->getElement('char_price');?></td>
 						</tr>
 						<tr>
@@ -164,7 +164,7 @@ fieldset{  background:none;}
 								<table style="width:400px;border-collapse: collapse;" cellpadding="10" cellspacing="10" >
 									<tr>
 										<td ><?php echo $tr->translate("TOTAL_PAYMENT");?></td>
-										<td align="right"><input class="fullside" type="text" onkeyup="calculatBalanceAndReturn();" value="<?php //echo $this->row['total_payment'];?>"  required="true" name="grand_total" id="grand_total" dojoType="dijit.form.NumberTextBox" /></td>
+										<td align="right"><input class="fullside" type="text" readonly="true" onkeyup="calculatBalanceAndReturn();" value="<?php //echo $this->row['total_payment'];?>"  required="true" name="grand_total" id="grand_total" dojoType="dijit.form.NumberTextBox" /></td>
 									</tr>
 									<tr>	
 										<td><?php echo $tr->translate("RECEIVED_AMOUNT");?></td>
@@ -477,7 +477,7 @@ function addRow() {
 			template+='<td> <input type="text" required="true" onkeyup="calculatePaidAmount('+col+');"  name="paidamount_'+col+'" id="paidamount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="paidamount"></label></td>';
 			template+='<td> <input type="text" required="true"  name="date_start_'+col+'" onchange="getValidate('+col+');" id="date_start_'+col+'" dojoType="dijit.form.DateTextBox" style="width:100px;" value="<?php echo date('Y-m-d')?>" /><label id="validate"></label></td>';
 			template+='<td> <input type="text" required="true"  name="validate_'+col+'" id="validate_'+col+'" dojoType="dijit.form.DateTextBox" style="width:100px;" /><label id="validate"></label></td>';
-			template+='<td> <input type="text" required="true" name="remark'+col+'" value="" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" style="width:170px;" /><label id="subsub"></label></td>';
+			template+='<td> <input type="text" required="true" name="remark'+col+'" value="" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" style="width:140px;" /><label id="subsub"></label></td>';
 		tmp='<tr id="row'+col+'">';
 		tmp+="</tr>";
 		dojo.query("#table_row").append(tmp);
@@ -697,7 +697,7 @@ function initailize(){
 		template+='<td> <input type="text" required="true" onkeyup="calculatePaidAmount('+col+');"  name="paidamount_'+col+'" id="paidamount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="paidamount"></label></td>';
 		template+='<td> <input type="text" required="true"  name="date_start_'+col+'" onchange="getValidate('+col+','+num+');" id="date_start_'+col+'" dojoType="dijit.form.DateTextBox" style="width:100px;" value="" /><label id="validate"></label></td>';
 		template+='<td> <input type="text" required="true"  name="validate_'+col+'" id="validate_'+col+'" dojoType="dijit.form.DateTextBox" style="width:100px;" /><label id="validate"></label></td>';
-		template+='<td> <input type="text" required="true" name="remark'+col+'" value="<?php //echo $this->row['note1'];?>" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" style="width:170px;" /><label id="subsub"></label></td>';
+		template+='<td> <input type="text" required="true" name="remark'+col+'" value="<?php //echo $this->row['note1'];?>" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" style="width:140px;" /><label id="subsub"></label></td>';
 	tmp='<tr id="row'+col+'">';
 	tmp+="</tr>";
 	dojo.query("#table_row").append(tmp);

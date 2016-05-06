@@ -27,13 +27,14 @@ Class Registrar_Form_FrmStudentServicePayment extends Zend_Dojo_Form {
 		
 		$this->_khname = new Zend_Dojo_Form_Element_TextBox('kh_name');
 		$this->_khname->setAttribs(array(
-				'dojoType'=>$this->text,'class'=>'fullside',
+				'dojoType'=>$this->text,'class'=>'fullside','style'=>'width:250px;','readonly'=>'readonly',
 		));
 		
 		$this->_enname = new Zend_Dojo_Form_Element_TextBox('en_name');
 		$this->_enname->setAttribs(array('dojoType'=>$this->tvalidate,
 				'required'=>'true',
-				'class'=>'fullside',));
+				'class'=>'fullside',
+				'readonly'=>'readonly',));
 		
 		$this->_dob = new Zend_Dojo_Form_Element_DateTextBox('dob');
 		
@@ -123,7 +124,7 @@ Class Registrar_Form_FrmStudentServicePayment extends Zend_Dojo_Form {
 				//'onkeyup'=>'CheckReceipt()'
 				'required'=>'true',
 				'readonly'=>'true',
-				'style'=>'color:red;'
+				'style'=>'color:red;width:250px;'
 				));
 		$reciept=new Registrar_Model_DbTable_DbRegister();
 		$opt=$reciept->getRecieptNo();
@@ -147,7 +148,7 @@ Class Registrar_Form_FrmStudentServicePayment extends Zend_Dojo_Form {
 		$_studid->setAttribs(array('dojoType'=>$this->text,'class'=>'fullside','style'=>'color:red;','readonly'=>'true'));
 		
 		$_sex =  new Zend_Dojo_Form_Element_FilteringSelect('sex');
-		$_sex->setAttribs(array('dojoType'=>$this->filter,'class'=>'fullside',));
+		$_sex->setAttribs(array('dojoType'=>$this->filter,'class'=>'fullside','style'=>'width:250px;','readonly'=>'true'));
 		$sex_opt = array(
 				1=>$this->tr->translate("MALE"),
 				2=>$this->tr->translate("FEMALE"));
@@ -258,6 +259,8 @@ Class Registrar_Form_FrmStudentServicePayment extends Zend_Dojo_Form {
 		$char_price->setAttribs(array(
 				'dojoType'=>$this->text,
 				'class'=>'fullside',
+				'style'=>'width:250px;',
+				
 		));
 		
 		$start_date= new Zend_Dojo_Form_Element_DateTextBox('start_date');
@@ -339,7 +342,7 @@ Class Registrar_Form_FrmStudentServicePayment extends Zend_Dojo_Form {
 		$_remark = $this->_remark;
 		
 		$_reciept_no = new Zend_Dojo_Form_Element_TextBox('reciept_no');
-		$_reciept_no->setAttribs(array('dojoType'=>$this->t_num,'class'=>'fullside',
+		$_reciept_no->setAttribs(array('dojoType'=>$this->t_num,'class'=>'fullside','style'=>'width:250px;',
 				//'onkeyup'=>'CheckReceipt()'
 				'dojoType'=>$this->t_num,
 				'required'=>'true',
