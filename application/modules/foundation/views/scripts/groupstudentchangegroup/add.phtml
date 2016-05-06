@@ -1,6 +1,6 @@
 <?php
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-	echo $this->headTitle($tr->translate('ADD_STUDENT_CHANGE_GROUP')); 
+	echo $this->headTitle($tr->translate('ADD_GROUP_STUDENT_CHANGE_GROUP')); 
 ?>
 <script type="dojo/method" event="onSubmit">   
 	   if(this.validate()) {
@@ -9,12 +9,13 @@
 		return false;
 	   }
 </script>
+
 <form id="add_car" action="<?php echo $this->url(array('module'=>'foundation','controller'=>'groupstudentchangegroup','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	<table cellspacing="20" style="margin: 0 auto; width:100%">
 		<tr>
 			<td>
 				<fieldset>
-					<legend align="center"><strong><?php echo $tr->translate("ADD_STUDENT_CHANGE_GROUP");?></strong></legend>
+					<legend align="center"><strong><?php echo $tr->translate("ADD_GROUP_STUDENT_CHANGE_GROUP");?></strong></legend>
 					<table cellspacing="20" width="100%" >
 						<tr>
 							<td align="center" valign="top">
@@ -22,7 +23,7 @@
 									<tr>
 										<td style="white-space: nowrap;"><?php echo $tr->translate("FROM_GROUP")?></td>
 										<td colspan="2" >
-											<select style="width: 395px;" dojoType="dijit.form.FilteringSelect" required="true"  id="from_group" name="from_group" type="text" placeholder="select group" onchange="toStudentGroup(1);getStudentFromGroup();">
+											<select style="width: 395px;" dojoType="dijit.form.FilteringSelect" required="required"  id="from_group" name="from_group" type="text" placeholder="select group" onchange="toStudentGroup(1);getStudentFromGroup();">
 												<option value="0" > </option>
 												<?php if(!empty($this->row))foreach ($this->row as $_row){?>
 													<option value="<?php echo $_row['id']?>"><?php echo $_row['group_code']?></option>
@@ -31,7 +32,7 @@
 										</td>
 										<td align="right"><?php echo $tr->translate("TO_GROUP")?></td>
 										<td colspan="2">
-											<select style="width: 395px;" dojoType="dijit.form.FilteringSelect" required="true"  id="to_group" name="to_group" type="text" placeholder="to group" onchange="toStudentGroup(2);">
+											<select style="width: 395px;" dojoType="dijit.form.FilteringSelect" required="required"  id="to_group" name="to_group" type="text" placeholder="to group" onchange="toStudentGroup(2);">
 												<option value="0" > </option>
 												<?php if(!empty($this->rs))foreach ($this->rs as $_row){?>
 													<option value="<?php echo $_row['id']?>"><?php echo $_row['group_code']?></option>

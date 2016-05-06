@@ -53,22 +53,28 @@ class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 			try{	
 				$_db= $this->getAdapter();
 				$_arr= array(
-						'user_id'=>$this->getUserId(),
-						'stu_id'=>$_data['studentid'],
-						'type'=>$_data['type'],
-						'status'=>$_data['status'],
-						'date'=>$_data['datestop'],
-						'reason'=>$_data['reason'],
-						'note'=>$_data['note']
+						'user_id'	=>$this->getUserId(),
+						'stu_id'	=>$_data['studentid'],
+						'type'		=>$_data['type'],
+						'status'	=>$_data['status'],
+						'date'		=>$_data['datestop'],
+						'reason'	=>$_data['reason'],
+						'note'		=>$_data['note'],
 						);
 				$id = $this->insert($_arr);
 				
 				$this->_name='rms_student';
 				
 				$where=" stu_id=".$_data['studentid'];
-				$arr=array(
-					'is_subspend'	=>	$_data['type'],
-						);
+				if($_data['status']==1){
+					$arr=array(
+						'is_subspend'	=>	$_data['type'],
+					);
+				}else{
+					$arr=array(
+						'is_subspend'	=>	0,
+					);
+				}
 				$this->update($arr, $where);
 				$_db->commit();
 			}catch(Exception $e){
@@ -79,12 +85,13 @@ class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 		$db= $this->getAdapter();
 		try{	
 			$_arr=array(
-					'user_id'=>$this->getUserId(),
-					'stu_id'=>$_data['studentid'],
-					'type'=>$_data['type'],
-					'date'=>$_data['datestop'],
-					'note'=>$_data['reason'],
-					'status'=>$_data['status'],
+					'user_id'	=>$this->getUserId(),
+					'stu_id'	=>$_data['studentid'],
+					'type'		=>$_data['type'],
+					'date'		=>$_data['datestop'],
+					'reason'	=>$_data['reason'],
+					'note'		=>$_data['note'],
+					'status'	=>$_data['status'],
 					);
 			$where=$this->getAdapter()->quoteInto("id=?", $_data["id"]);
 			$this->update($_arr, $where);
@@ -92,9 +99,15 @@ class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 			$this->_name='rms_student';
 			
 			$where=" stu_id=".$_data['studentid'];
-			$arr=array(
-					'is_subspend'	=>	$_data['type'],
-			);
+			if($_data['status']==1){
+				$arr=array(
+						'is_subspend'	=>	$_data['type'],
+				);
+			}else{
+				$arr=array(
+						'is_subspend'	=>	0,
+				);
+			}
 			$this->update($arr, $where);
 			
 			$db->commit();
