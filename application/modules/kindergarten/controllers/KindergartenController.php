@@ -1,5 +1,5 @@
 <?php
-class Foundation_KindergartenController extends Zend_Controller_Action {
+class Kindergarten_KindergartenController extends Zend_Controller_Action {
     public function init()
     {    	
     	header('content-type: text/html; charset=utf8');
@@ -18,7 +18,7 @@ public function indexAction(){
 						'end_date'=>date('Y-m-d'));
 			}
 // 			$search='';
-			$db_student= new Foundation_Model_DbTable_DbKindergarten();
+			$db_student= new Kindergarten_Model_DbTable_DbKindergarten();
 			$rs_rows = $db_student->getAllStudent($search);
 			$list = new Application_Form_Frmtable();
 			if(!empty($rs_rows)){
