@@ -139,19 +139,17 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		$this->update($data_gro, $where);
 
 	}
-	public function getGroupDetail(){
+	public function getGroupDetail($search){
 		$db = $this->getAdapter();
-		$sql = 'SELECT
+		$sql = " SELECT
 		`g`.`id`,
-		`g`.`group_code`    AS `group_code`,g.academic_year,
-		
-		
+		`g`.`group_code`    AS `group_code`,
+		(select CONCAT(from_academic,' - ',to_academic,'(',generation,')') from rms_tuitionfee where rms_tuitionfee.id=g.academic_year) as academic,
 		`g`.`semester` AS `semester`,
-		
-		(SELECT kh_name
+		(SELECT en_name
 		 FROM `rms_dept`
 		 WHERE (`rms_dept`.`dept_id`=`g`.`degree`)),
-		(SELECT major_khname
+		(SELECT major_enname
 		 FROM `rms_major`
 		 WHERE (`rms_major`.`major_id`=`g`.`grade`)),
 		(SELECT	`rms_view`.`name_en`
@@ -173,8 +171,31 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		AND (`rms_view`.`key_code` = `g`.`status`))
 		LIMIT 1) AS `status`,
 		(SELECT COUNT(`stu_id`) FROM `rms_group_detail_student` WHERE `group_id`=`g`.`id`)AS Num_Student
-		FROM `rms_group` `g`
-		ORDER BY `g`.`id` DESC ';	
+		FROM `rms_group` `g` where 1";
+		
+		$order = " ORDER BY `g`.`id` DESC " ;	
+		
+		$where=" ";
+		
+		if(empty($search)){
+			return $db->fetchAll($sql.$order);
+		}
+		if(!empty($search['adv_search'])){
+			$s_where = array();
+			$s_search = addslashes(trim($search['adv_search']));
+			$s_where[]="(select CONCAT(from_academic,'-',to_academic,'(',generation,')') from rms_tuitionfee where rms_tuitionfee.id=g.academic_year) LIKE '%{$s_search}%'";
+			$s_where[]="group_code LIKE '%{$s_search}%'";
+			$s_where[]="(SELECT room_name FROM rms_room WHERE rms_room.room_id = g.room_id) LIKE '%{$s_search}%'";
+			$s_where[]="(SELECT en_name FROM rms_dept WHERE rms_dept.dept_id=g.degree) LIKE '%{$s_search}%'";
+			$s_where[]="(SELECT major_enname FROM rms_major WHERE rms_major.major_id=g.grade) LIKE '%{$s_search}%'";
+			$s_where[]="(SELECT	rms_view.name_en FROM rms_view WHERE rms_view.type = 4 AND rms_view.key_code = g.session) LIKE '%{$s_search}%'";
+			$where .=' AND ( '.implode(' OR ',$s_where).')';
+		}
+		return $db->fetchAll($sql.$where.$order);
+		
+		
+		
+		
 		
 		return $db->fetchAll($sql);
 	}

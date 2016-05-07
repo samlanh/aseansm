@@ -10,7 +10,18 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 	}
 	public function indexAction(){
 			$db = new Foundation_Model_DbTable_DbGroup();
-			$rs= $db->getGroupDetail();
+			
+			if($this->getRequest()->isPost()){
+				$search=$this->getRequest()->getPost();
+				$this->view->adv_search=$search;
+			}
+			else{
+				$search = array(
+						'adv_search' => '',
+						);
+			}
+			
+			$rs= $db->getGroupDetail($search);
 			$list = new Application_Form_Frmtable();
 			
 			if(!empty($rs)){
