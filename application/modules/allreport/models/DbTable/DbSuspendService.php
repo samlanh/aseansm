@@ -21,8 +21,7 @@ class Allreport_Model_DbTable_DbSuspendService extends Zend_Db_Table_Abstract
 			(SELECT (SELECT (SELECT `name_en` FROM `rms_view` WHERE `type`=2 AND `key_code`=`sex`) FROM `rms_student` WHERE `stu_id`=`student_id`) FROM `rms_suspendservice` WHERE id =`suspendservice_id`) AS sex,
 			(SELECT (SELECT CONCAT(`from_academic`,"-",`to_academic`) FROM `rms_tuitionfee` WHERE id =`year`) FROM `rms_suspendservice` WHERE id=`suspendservice_id`) as academic,
 			(SELECT suspend_no FROM rms_suspendservice WHERE id = suspendservice_id) as suspend_no,
-			(SELECT title FROM `rms_program_name` WHERE TYPE =2 AND `service_id`= service_id LIMIT 1) as service,
-			(SELECT `name_en` FROM `rms_view` WHERE `type`=8 AND `key_code`= payment_term LIMIT 1) payment_term,
+			(SELECT title FROM `rms_program_name` WHERE TYPE =2 AND `service_id`= rms_suspendservicedetail.service_id LIMIT 1) as service,
 			(SELECT `name_en` FROM `rms_view` WHERE `type`=5 AND `key_code`= type_suspend LIMIT 1)AS type_suspend,
 			reason,note,
 			define_date
@@ -34,7 +33,7 @@ class Allreport_Model_DbTable_DbSuspendService extends Zend_Db_Table_Abstract
 			}
 			if(!empty($search['txtsearch'])){
 				$s_where = array();
-				$s_search = trim($search['txtsearch']);
+				$s_search = addslashes(trim($search['txtsearch']));
 				$s_where[] = " (SELECT suspend_no FROM rms_suspendservice WHERE id = suspendservice_id) LIKE '%{$s_search}%'";
 				$s_where[] = " (SELECT (SELECT `stu_enname` FROM `rms_student` WHERE `stu_id`=`student_id`) FROM `rms_suspendservice` WHERE id =`suspendservice_id`) LIKE '%{$s_search}%'";
 				$s_where[] = " (SELECT (SELECT `stu_khname` FROM `rms_student` WHERE `stu_id`=`student_id`) FROM `rms_suspendservice` WHERE id =`suspendservice_id`) LIKE '%{$s_search}%'";
@@ -42,6 +41,7 @@ class Allreport_Model_DbTable_DbSuspendService extends Zend_Db_Table_Abstract
 				$where .=' AND ( '.implode(' OR ',$s_where).')';
 			
 			}
+			//echo $sql.$where;exit();
 			return $db->fetchAll($sql.$where.$order);
 		}catch (Exception $e){
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());

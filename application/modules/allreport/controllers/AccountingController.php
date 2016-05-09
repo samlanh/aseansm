@@ -35,6 +35,7 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 		}catch(Exception $e){
 			Application_Form_FrmMessage::message("Application Error");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			echo $e->getMessage();
 		}
 	}
 	function  rptPaymentdetailbytypeAction(){
@@ -92,6 +93,7 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 		}catch(Exception $e){
 			Application_Form_FrmMessage::message("Application Error");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			echo $e->getMessage();
 		}
 		
 	}
@@ -114,14 +116,19 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 				);
 			}
 			else{
-				$search='';
+				$search=array(
+						'txtsearch' => '',
+				);
 			}
+		$this->view->search = $search;
 		$db = new Allreport_Model_DbTable_DbSuspendService();
 		$this->view->rs = $db->getStudetnSuspendServiceDetail($search);
 		}catch (Exception $e){
 			Application_Form_FrmMessage::message("APPLICATION_ERROR");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			echo $e->getMessage();
 		}
+		
 	}
 	function rptInvoiceAction(){
 	

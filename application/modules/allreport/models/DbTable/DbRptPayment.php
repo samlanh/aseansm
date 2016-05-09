@@ -18,19 +18,19 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     public function getStudentPayment($search){
     	$db = $this->getAdapter();
 
-    	$date = date_create($search["start_date"]);
-    	$from_date = date_format($date, "d-m-Y");
-    	print_r($from_date);
+    	//$date = date_create($search["start_date"]);
+    	//$from_date = date_format($date, "d-m-Y");
+    	//print_r($from_date);
     	
-    	$todate = date_create($search["end_date"]);
-    	$to_date = date_format($todate, "d-m-Y");
-		$where = " AND create_date BETWEEN '$from_date' AND '$to_date'";
+    	//$todate = date_create($search["end_date"]);
+    	//$to_date = date_format($todate, "d-m-Y");
+		//$where = " AND create_date BETWEEN '$from_date' AND '$to_date'";
+    	$where='';
     	
 	   	$sql=" SELECT * FROM v_getstudentpayment WHERE 1 ";
     	$order=" ORDER BY id DESC , receipt_number DESC ";
     	if(empty($search)){
     		return $db->fetchAll($sql.$order);
-    		
     	}
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
