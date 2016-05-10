@@ -144,7 +144,7 @@
 					},
 				handleAs:"json",
 				load: function(data) {
-				      if(data){
+				      if(data !=''){
 				    	 // dijit.byId('tuitionfee').attr('value',data.price_fee);
 				    	dijit.byId('tuitionfee').attr('value',data.tuition_fee);
 				    	dijit.byId('total').attr('value',data.tuition_fee);

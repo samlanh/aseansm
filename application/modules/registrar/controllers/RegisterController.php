@@ -22,7 +22,7 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     		    					'adv_search' => '',
     		    					'degree' => '',
 //     		    					'search_status' => -1,
-    		    					'start_date'=> date('Y-m-01'),
+    		    					'start_date'=> date('Y-m-d'),
     		    					'end_date'=>date('Y-m-d'));
     		    		}
     		$rs_rows= $db->getAllStudentRegister($search);
