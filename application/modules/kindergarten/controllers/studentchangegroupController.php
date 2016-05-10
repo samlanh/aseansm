@@ -21,7 +21,7 @@ class Kindergarten_studentchangegroupController extends Zend_Controller_Action {
 		}
 		
 		
-		$db_student= new Foundation_Model_DbTable_DbStudentChangeGroup();
+		$db_student= new Kindergarten_Model_DbTable_DbStudentChangeGroup();
 		$rs_rows = $db_student->selectAllStudentChangeGroup($search);
 		$list = new Application_Form_Frmtable();
 			if(!empty($rs_rows)){
@@ -40,7 +40,7 @@ class Kindergarten_studentchangegroupController extends Zend_Controller_Action {
 		if($this->getRequest()->isPost()){
 			try{
 				$_data = $this->getRequest()->getPost();
-				$_add = new Foundation_Model_DbTable_DbStudentChangeGroup();
+				$_add = new Kindergarten_Model_DbTable_DbStudentChangeGroup();
  				$_add->addStudentChangeGroup($_data);
  				if(!empty($_data['save_close'])){
  					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentchangegroup");
@@ -52,7 +52,7 @@ class Kindergarten_studentchangegroupController extends Zend_Controller_Action {
 			}
 		}
 		
-		$_add = new Foundation_Model_DbTable_DbStudentChangeGroup();
+		$_add = new Kindergarten_Model_DbTable_DbStudentChangeGroup();
 		
 		$this->view->rs = $add =$_add->getAllStudentID();
 // 		print_r($this->view->rs);exit();
@@ -65,7 +65,7 @@ class Kindergarten_studentchangegroupController extends Zend_Controller_Action {
 	}
 	public function editAction(){
 		$id=$this->getRequest()->getParam("id");
-		$db= new Foundation_Model_DbTable_DbStudentChangeGroup();
+		$db= new Kindergarten_Model_DbTable_DbStudentChangeGroup();
 		$row = $this->view->rows = $db->getAllStudentChangeGroupById($id);
 		
 		
@@ -74,7 +74,7 @@ class Kindergarten_studentchangegroupController extends Zend_Controller_Action {
 			try{
 				$data = $this->getRequest()->getPost();
 				$data["id"]=$id;
-				$db = new Foundation_Model_DbTable_DbStudentChangeGroup();
+				$db = new Kindergarten_Model_DbTable_DbStudentChangeGroup();
 				$row=$db->updateStudentChangeGroup($data);
 				
 				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/foundation/studentchangegroup/index");
@@ -84,7 +84,7 @@ class Kindergarten_studentchangegroupController extends Zend_Controller_Action {
 			}
 		}	
 		
-		$_add = new Foundation_Model_DbTable_DbStudentChangeGroup();
+		$_add = new Kindergarten_Model_DbTable_DbStudentChangeGroup();
 		
 		$this->view->rs = $add =$_add->getAllStudentID();
 		
@@ -96,7 +96,7 @@ class Kindergarten_studentchangegroupController extends Zend_Controller_Action {
 	function getGradeAction(){
 		if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();
-			$db = new Foundation_Model_DbTable_DbStudent();
+			$db = new Kindergarten_Model_DbTable_DbStudentChangeGroup();
 			$grade = $db->getAllGrade($data['dept_id']);
 			//print_r($grade);exit();
 			//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
@@ -108,7 +108,7 @@ class Kindergarten_studentchangegroupController extends Zend_Controller_Action {
 	function getGroupAction(){
 		if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();
-			$db = new Foundation_Model_DbTable_DbStudentChangeGroup();
+			$db = new Kindergarten_Model_DbTable_DbStudentChangeGroup();
 			$grade = $db->getStudentChangeGroupById($data['from_group']);
 			print_r(Zend_Json::encode($grade));
 			exit();
@@ -118,7 +118,7 @@ class Kindergarten_studentchangegroupController extends Zend_Controller_Action {
 	function getToGroupAction(){
 		if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();
-			$db = new Foundation_Model_DbTable_DbStudentChangeGroup();
+			$db = new Kindergarten_Model_DbTable_DbStudentChangeGroup();
 			$grade = $db->getStudentChangeGroup1ById($data['to_group']);
 			print_r(Zend_Json::encode($grade));
 			exit();
@@ -128,7 +128,7 @@ class Kindergarten_studentchangegroupController extends Zend_Controller_Action {
 	function getStudentAction(){
 		if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();
-			$db = new Foundation_Model_DbTable_DbStudentChangeGroup();
+			$db = new Kindergarten_Model_DbTable_DbStudentChangeGroup();
 			$grade = $db->getStudentInfoById($data['studentid']);
 			print_r(Zend_Json::encode($grade));
 			exit();

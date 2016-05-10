@@ -8,7 +8,7 @@ class Kindergarten_StudentGroupController extends Zend_Controller_Action {
     	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
 	}
 	public function indexAction(){
-			$db = new Foundation_Model_DbTable_DbGroup();
+			$db = new Kindergarten_Model_DbTable_DbGroup();
 			$rs= $db->getGroupDetail();
 			$list = new Application_Form_Frmtable();
 			
@@ -19,7 +19,7 @@ class Kindergarten_StudentGroupController extends Zend_Controller_Action {
 			}
 			$collumns = array("GROUP NAME","YEARS","SEMESTER","DEGREE","GRADE","SESSION","ROOM","START DATE","END DATE","NOTE","STATUS","ចំនួនសិស្ស");
 			$link=array(
-					'module'=>'foundation','controller'=>'studentgroup','action'=>'edit',
+					'module'=>'Kindergarten','controller'=>'studentgroup','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs,array('group_code'=>$link,'room_name'=>$link));
 	}
@@ -55,7 +55,7 @@ class Kindergarten_StudentGroupController extends Zend_Controller_Action {
 		
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$this->view->degree = $_db->getAllFecultyName();
-		$group = new Foundation_Model_DbTable_DbGroup();
+		$group = new Kindergarten_Model_DbTable_DbGroup();
 		$group_option = $group->getGroup();
 		array_unshift($group_option, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
 		$this->view->group = $group_option;
@@ -67,7 +67,7 @@ class Kindergarten_StudentGroupController extends Zend_Controller_Action {
 		if($this->getRequest()->isPost()){
 			try{
 				$_data = $this->getRequest()->getPost();
-				$db = new Foundation_Model_DbTable_DbGroup();
+				$db = new Kindergarten_Model_DbTable_DbGroup();
 				$db->addStudentGroup($_data);
 				Application_Form_FrmMessage::message("INSERT_SUCCESS");
 			}catch(Exception $e){
@@ -75,7 +75,7 @@ class Kindergarten_StudentGroupController extends Zend_Controller_Action {
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}
-		$this->_redirect('/foundation/studentgroup/add');
+		$this->_redirect('/Kindergarten/studentgroup/add');
 	}
 	
 	public function submit1Action(){
@@ -83,7 +83,7 @@ class Kindergarten_StudentGroupController extends Zend_Controller_Action {
 		if($this->getRequest()->isPost()){
 			try{
 				$_data = $this->getRequest()->getPost();
-				$db = new Foundation_Model_DbTable_DbGroup();
+				$db = new Kindergarten_Model_DbTable_DbGroup();
 				$row = $db->editStudentGroup($_data, $id);
 				
 				Application_Form_FrmMessage::message("INSERT_SUCCESS");
@@ -92,12 +92,12 @@ class Kindergarten_StudentGroupController extends Zend_Controller_Action {
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}
-		$this->_redirect('/foundation/studentgroup/index');
+		$this->_redirect('/Kindergarten/studentgroup/index');
 	}
 	function editAction(){
 		$id=$this->getRequest()->getParam("id");
 		$db = new 	Foundation_Model_DbTable_DbStudent();
-		$_db = new Foundation_Model_DbTable_DbGroup();
+		$_db = new Kindergarten_Model_DbTable_DbGroup();
 		$g_id = $_db->getGroupById($id);
 		$this->view->id = $g_id;
 		$row = $_db->getStudentGroup($id);
@@ -131,7 +131,7 @@ class Kindergarten_StudentGroupController extends Zend_Controller_Action {
 		$this->view->academy = $dbstudent->getAllYear();
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$this->view->degree = $_db->getAllFecultyName();
-		$group = new Foundation_Model_DbTable_DbGroup();
+		$group = new Kindergarten_Model_DbTable_DbGroup();
 		$group_option = $group->getGroupToEdit();
 		array_unshift($group_option, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
 		$this->view->group = $group_option;
@@ -154,7 +154,7 @@ class Kindergarten_StudentGroupController extends Zend_Controller_Action {
 	function addGroupAction(){
 		if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();
-			$db = new Foundation_Model_DbTable_DbGroup();
+			$db = new Kindergarten_Model_DbTable_DbGroup();
 			$group = $db->addGroup($data);
 			$result = array("id"=>$group);
 			print_r(Zend_Json::encode($group));

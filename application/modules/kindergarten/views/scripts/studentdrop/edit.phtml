@@ -2,7 +2,7 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	echo $this->headTitle($tr->translate('EDIT_STUDENT_DROP')); 
 ?>
-<form id="add_car" action="<?php echo $this->url(array('module'=>'foundation','controller'=>'studentdrop','action'=>'edit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form id="add_car" action="<?php echo $this->url(array('module'=>'kindergarten','controller'=>'studentdrop','action'=>'edit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	<table cellspacing="20" style="margin: 0 auto; width: 600px">
 		<tr>
 			<td>
@@ -86,7 +86,7 @@
 	</table>	
 </form>
 <script type="text/javascript">
-var url_student = '<?php echo $this->url(array('module'=>'foundation','controller'=>'register','action'=>'get-student')); ?>';
+var url_student = '<?php echo $this->url(array('module'=>'kindergarten','controller'=>'studentdrop','action'=>'get-student')); ?>';
 
 dojo.ready(function(){
 
