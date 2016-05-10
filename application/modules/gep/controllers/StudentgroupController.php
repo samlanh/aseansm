@@ -8,8 +8,19 @@ class Gep_StudentGroupController extends Zend_Controller_Action {
     	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
 	}
 	public function indexAction(){
-			$db = new Foundation_Model_DbTable_DbGroup();
-			$rs= $db->getGroupDetail();
+			$db = new Gep_Model_DbTable_DbGroup();
+			
+			if($this->getRequest()->isPost()){
+				$search=$this->getRequest()->getPost();
+				$this->view->adv_search=$search;
+			}
+			else{
+				$search = array(
+						'adv_search' => '',
+				);
+			}
+			
+			$rs= $db->getGroupDetail($search);
 			$list = new Application_Form_Frmtable();
 			
 			if(!empty($rs)){
@@ -24,7 +35,7 @@ class Gep_StudentGroupController extends Zend_Controller_Action {
 			$this->view->list=$list->getCheckList(0, $collumns, $rs,array('group_code'=>$link,'room_name'=>$link));
 	}
 	function addAction(){
-		$db = new 	Foundation_Model_DbTable_DbStudent();
+		$db = new 	Gep_Model_DbTable_DbStudent();
 		try{
 			if($this->getRequest()->isPost()){
 				$_data=$this->getRequest()->getPost();

@@ -2,7 +2,7 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	echo $this->headTitle($tr->translate('EDIT_STUDENT_DROP')); 
 ?>
-<form id="add_car" action="<?php echo $this->url(array('module'=>'foundation','controller'=>'studentdrop','action'=>'edit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form id="add_car" action="<?php echo $this->url(array('module'=>'gep','controller'=>'studentdrop','action'=>'edit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	<table cellspacing="20" style="margin: 0 auto; width: 600px">
 		<tr>
 			<td>
@@ -17,7 +17,7 @@
 										<td>
 											<select class="fullside" name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();" >
 										    	<?php if(!empty($this->rs))foreach ($this->rs as $row){?>
-													<option value="<?php echo $row['stu_id']?>"<?php if($row['stu_id']==$this->row['stu_id']) echo 'selected="selected"';?>><?php echo $row['stu_code']?></option>
+													<option value="<?php echo $row['stu_id']?>"  <?php if($row['stu_id']==$this->row['stu_id']){ echo 'selected="selected"';}?>><?php echo $row['stu_code']?></option>
 												<?php }?>
 											</select>
 										</td>
@@ -86,7 +86,7 @@
 	</table>	
 </form>
 <script type="text/javascript">
-var url_student = '<?php echo $this->url(array('module'=>'foundation','controller'=>'register','action'=>'get-student')); ?>';
+var url_student = '<?php echo $this->url(array('module'=>'gep','controller'=>'studentdrop','action'=>'get-student')); ?>';
 
 dojo.ready(function(){
 
@@ -99,6 +99,7 @@ dojo.ready(function(){
 
 function getStudentInfo(){
 			studentid = dijit.byId('studentid').get('value');
+			//alert(studentid);
 			dojo.xhrPost({
 				url:url_student,
 				content:{

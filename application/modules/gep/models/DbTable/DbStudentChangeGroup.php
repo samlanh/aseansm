@@ -1,6 +1,6 @@
 <?php
 
-class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstract
+class Gep_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstract
 {
 	
 	protected $_name = 'rms_student_change_group';
@@ -11,7 +11,7 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 	
 	public function getAllStudentID(){
 		$_db = $this->getAdapter();
-		$sql = "SELECT st.stu_id,st.stu_code FROM `rms_student` as st,rms_group_detail_student as gds where gds.is_pass=0 and gds.stu_id=st.stu_id group by gds.stu_id";
+		$sql = "SELECT st.stu_id,st.stu_code FROM `rms_student` as st,rms_group_detail_student as gds where st.stu_type=2 and is_subspend=0 and gds.is_pass=0 and gds.stu_id=st.stu_id group by gds.stu_id";
 		$orderby = " ORDER BY stu_code ";
 		return $_db->fetchAll($sql.$orderby);		
 	}

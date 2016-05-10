@@ -7,7 +7,7 @@
 // 	print_r($hour);exit();
 	
 ?>
-<form id="add_car" action="<?php echo $this->url(array('module'=>'foundation','controller'=>'groupstudentchangegroup','action'=>'edit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form id="add_car" action="<?php echo $this->url(array('module'=>'gep','controller'=>'groupstudentchangegroup','action'=>'edit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	<table cellspacing="20" style="margin: 0 auto; width:100%">
 		<tr>
 			<td>
@@ -100,7 +100,7 @@ dojo.ready(function(){
 
 
 
-var url_get_all_student_from_group_update = "<?php echo $this->url(array('module'=>'foundation','controller'=>'groupstudentchangegroup','action'=>'get-all-student-update')); ?>";
+var url_get_all_student_from_group_update = "<?php echo $this->url(array('module'=>'gep','controller'=>'groupstudentchangegroup','action'=>'get-all-student-update')); ?>";
 function getStudentFromGroup(test1){
 		
 		var arr = test1.split(',');
@@ -182,7 +182,7 @@ function check(i){
 	}
 }
 
-var url_to_group = '<?php echo $this->url(array('module'=>'foundation','controller'=>'studentchangegroup','action'=>'get-to-group')); ?>';
+var url_to_group = '<?php echo $this->url(array('module'=>'gep','controller'=>'groupstudentchangegroup','action'=>'get-to-group')); ?>';
 function toStudentGroup(type){
 	//alert(type);
 	if(type==1){

@@ -8,7 +8,7 @@ class Gep_groupstudentchangegroupController extends Zend_Controller_Action {
     	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
 	}
 	public function indexAction(){
-		$db_student= new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
+		$db_student= new Gep_Model_DbTable_DbGroupStudentChangeGroup();
 		$rs_rows = $db_student->selectAllStudentChangeGroup();
 		$list = new Application_Form_Frmtable();
 		if(!empty($rs_rows)){
@@ -18,7 +18,7 @@ class Gep_groupstudentchangegroupController extends Zend_Controller_Action {
 			}
 			$collumns = array("FROM_GROUP","GRADE","SESSION","TO_GROUP","GRADE","SESSION","MOVING_DATE","NOTE");
 			$link=array(
-					'module'=>'foundation','controller'=>'groupstudentchangegroup','action'=>'edit',
+					'module'=>'gep','controller'=>'groupstudentchangegroup','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('group_code'=>$link,'grade'=>$link,'session'=>$link,'to_group_code'=>$link));
 			
@@ -28,10 +28,10 @@ class Gep_groupstudentchangegroupController extends Zend_Controller_Action {
 			try{
 				$data = $this->getRequest()->getPost();
 // 				print_r($data);exit();
-				$_add = new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
+				$_add = new Gep_Model_DbTable_DbGroupStudentChangeGroup();
  				$_add->addGroupStudentChangeGroup($data);
  				if(!empty($data['save_close'])){
- 					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentchangegroup");
+ 					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/gep/groupstudentchangegroup");
  				}
 				Application_Form_FrmMessage::message("INSERT_SUCCESS");
 			}catch(Exception $e){
@@ -59,21 +59,21 @@ class Gep_groupstudentchangegroupController extends Zend_Controller_Action {
 			try{
 				$data = $this->getRequest()->getPost();
 				//$data["id"]=$id;
-				$db = new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
+				$db = new Gep_Model_DbTable_DbGroupStudentChangeGroup();
 				$row=$db->updateStudentChangeGroup($data,$id);
 				
-				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/foundation/groupstudentchangegroup/index");
+				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/gep/groupstudentchangegroup/index");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("EDIT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}	
-		$db= new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
+		$db= new Gep_Model_DbTable_DbGroupStudentChangeGroup();
 		$row = $this->view->rs = $db->getAllGroupStudentChangeGroupById($id);
 		
 // 		print_r($row);exit();
 		
-		$_add = new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
+		$_add = new Gep_Model_DbTable_DbGroupStudentChangeGroup();
 		
 		$this->view->row = $add =$_add->getfromGroup();
 		
@@ -82,7 +82,7 @@ class Gep_groupstudentchangegroupController extends Zend_Controller_Action {
 	function getToGroupAction(){
 		if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();
-			$db = new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
+			$db = new Gep_Model_DbTable_DbGroupStudentChangeGroup();
 			$grade = $db->getGroupStudentChangeGroup1ById($data['to_group'],$data['type']);
 			print_r(Zend_Json::encode($grade));
 			exit();
@@ -92,7 +92,7 @@ class Gep_groupstudentchangegroupController extends Zend_Controller_Action {
 	function getAllStudentAction(){
 		if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();
-			$db = new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
+			$db = new Gep_Model_DbTable_DbGroupStudentChangeGroup();
 			$student = $db->getAllStudentFromGroup($data['from_group']);
 			print_r(Zend_Json::encode($student));
 			exit();
@@ -102,7 +102,7 @@ class Gep_groupstudentchangegroupController extends Zend_Controller_Action {
 	function getAllStudentUpdateAction(){
 		if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();
-			$db = new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
+			$db = new Gep_Model_DbTable_DbGroupStudentChangeGroup();
 			$student = $db->getAllStudentFromGroupUpdate($data['from_group']);
 			print_r(Zend_Json::encode($student));
 			exit();

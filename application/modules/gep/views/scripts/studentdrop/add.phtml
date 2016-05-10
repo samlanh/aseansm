@@ -2,7 +2,7 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	echo $this->headTitle($tr->translate('ADD_STUDENT_DROP')); 
 ?>
-<form id="add_car" action="<?php echo $this->url(array('module'=>'foundation','controller'=>'studentdrop','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form id="add_car" action="<?php echo $this->url(array('module'=>'gep','controller'=>'studentdrop','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	<table cellspacing="20" style="margin: 0 auto; width: 600px">
 		<tr>
 			<td>
@@ -52,7 +52,7 @@
 									</tr>
 									<tr>
 										<td><?php echo $tr->translate("STOP_DATE")?></td>
-										<td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="datestop" name="datestop" value="1-26-2016" type="text"></td>
+										<td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="datestop" name="datestop" value="now" type="text"></td>
 									</tr>
 									<tr>
 										<td><?php echo $tr->translate("NOTE")?></td>
@@ -87,7 +87,7 @@
 	</table>	
 </form>
 <script type="text/javascript">
-var url_student = '<?php echo $this->url(array('module'=>'foundation','controller'=>'register','action'=>'get-student')); ?>';
+var url_student = '<?php echo $this->url(array('module'=>'gep','controller'=>'studentdrop','action'=>'get-student')); ?>';
 function getStudentInfo(){
 			studentid = dijit.byId('studentid').get('value');
 			dojo.xhrPost({

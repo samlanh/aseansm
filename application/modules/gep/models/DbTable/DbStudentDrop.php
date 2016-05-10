@@ -1,6 +1,6 @@
 <?php
 
-class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
+class Gep_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 {
 	
 	protected $_name = 'rms_student_drop';
@@ -11,9 +11,16 @@ class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 	
 	public function getAllStudentID(){
 		$_db = $this->getAdapter();
-		$sql = "SELECT stu_id,stu_code,stu_khname,sex FROM `rms_student` where status = 1 ";
-		$orderby = " ORDER BY stu_code ";
-		return $_db->fetchAll($sql.$orderby);		
+		$sql = "SELECT stu_id,stu_code FROM `rms_student` where stu_type=2 and is_subspend=0 and status = 1 ";
+		//$orderby = " ORDER BY stu_code ";
+		return $_db->fetchAll($sql);		
+	}
+	
+	public function getAllStudentIDEdit(){
+		$_db = $this->getAdapter();
+		$sql = "SELECT stu_id,stu_code FROM `rms_student` where stu_type=2 and  status = 1 ";
+		//$orderby = " ORDER BY stu_code ";
+		return $_db->fetchAll($sql);
 	}
 	
 	
@@ -25,7 +32,7 @@ class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 		(SELECT stu_enname FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_drop`.`stu_id` limit 1) AS en_name,
 		(SELECT name_kh FROM `rms_view` WHERE `rms_view`.`type`=2 and `rms_view`.`key_code`=(SELECT sex FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_drop`.`stu_id` limit 1))AS sex,
 		(SELECT name_kh FROM `rms_view` WHERE `rms_view`.`type`=5 and `rms_view`.`key_code`=`rms_student_drop`.`type` limit 1) as type,
-		reason,date,note from `rms_student_drop` where 1 ";
+		reason,date,note from `rms_student_drop` where 1 and status=1 ";
 		$order_by=" order by id DESC";
 		$where='';
 		if(empty($search)){
@@ -90,11 +97,18 @@ class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 			$this->update($_arr, $where);
 			
 			$this->_name='rms_student';
+			if($_data['status']==0){
+				$arr=array(
+						'is_subspend'	=>	0,
+				);
+			}else{
+				$arr=array(
+						'is_subspend'	=>	$_data['type'],
+				);
+			}
 			
 			$where=" stu_id=".$_data['studentid'];
-			$arr=array(
-					'is_subspend'	=>	$_data['type'],
-			);
+			
 			$this->update($arr, $where);
 			
 			$db->commit();
@@ -108,5 +122,31 @@ class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 		$order=' ORDER BY id DESC';
 		return $db->fetchAll($sql.$order);
 	}
+	
+	function getStudentInfoById($stu_id){
+		$db = $this->getAdapter();
+		$sql = "SELECT * FROM `rms_student` WHERE stu_id=".$stu_id;
+		return $db->fetchRow($sql);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 

@@ -9,7 +9,7 @@
 		return false;
 	   }
 </script>
-<form id="add_car" action="<?php echo $this->url(array('module'=>'foundation','controller'=>'groupstudentchangegroup','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form id="add_car" action="<?php echo $this->url(array('module'=>'gep','controller'=>'groupstudentchangegroup','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	<table cellspacing="20" style="margin: 0 auto; width:100%">
 		<tr>
 			<td>
@@ -85,7 +85,7 @@
 </form>
 
 <script type="text/javascript">
-var url_get_all_student_from_group = "<?php echo $this->url(array('module'=>'foundation','controller'=>'groupstudentchangegroup','action'=>'get-all-student')); ?>";
+var url_get_all_student_from_group = "<?php echo $this->url(array('module'=>'gep','controller'=>'groupstudentchangegroup','action'=>'get-all-student')); ?>";
 	function getStudentFromGroup(){
 			from_group = dijit.byId('from_group').get('value');
 			//alert(from_group);
@@ -137,7 +137,7 @@ var url_get_all_student_from_group = "<?php echo $this->url(array('module'=>'fou
 			});
 }
 
-var url_to_group = '<?php echo $this->url(array('module'=>'foundation','controller'=>'groupstudentchangegroup','action'=>'get-to-group')); ?>';
+var url_to_group = '<?php echo $this->url(array('module'=>'gep','controller'=>'groupstudentchangegroup','action'=>'get-to-group')); ?>';
 function toStudentGroup(type){
 	//alert(type);
 	if(type==1){
