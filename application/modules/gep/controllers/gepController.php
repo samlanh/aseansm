@@ -8,19 +8,35 @@ class Gep_gepController extends Zend_Controller_Action {
     	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
 	}
 	public function indexAction(){
+	  try{	
+		if($this->getRequest()->isPost()){
+			$search=$this->getRequest()->getPost();
+			$this->view->adv_search=$search;
+		}
+		else{
+			$search = array(
+					'adv_search' => '',
+					'start_date'=> date('Y-m-d'),
+					'end_date'=>date('Y-m-d'));
+		}
 		$db_student= new Gep_Model_DbTable_Dbgep();
-		$rs_rows = $db_student->getAllStudentStudy(2);
+		$rs_rows = $db_student->getAllStudentStudy($search,2);
 		$list = new Application_Form_Frmtable();
 		if(!empty($rs_rows)){
 			} 
 			else{
 				$result = Application_Model_DbTable_DbGlobal::getResultWarning();
 			}
-			$collumns = array("STUDENT_ID","NAME_KH","NAME_EN","SEX","DEGREE","GRADE","TIME","STATUS");
+			$collumns = array("STUDENT_ID","NAME_KH","NAME_EN","SEX","DEGREE","GRADE","TIME","STATUS","USER");
 			$link=array(
 					'module'=>'gep','controller'=>'gep','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('stu_enname'=>$link,'stu_khname'=>$link,'stu_code'=>$link));
+	  }catch (Exception $e){
+	  	Application_Form_FrmMessage::message("INSERT_FAIL");
+	  	Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+	  	//echo $e->getMessage();
+	  }
 			
 	}
 	function addAction(){
