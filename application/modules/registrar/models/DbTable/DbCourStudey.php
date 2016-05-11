@@ -33,9 +33,27 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 							'degree'=>$data['dept'],
 							'grade'=>$data['grade'],
 							'stu_type'=>2,
+							'create_date'=>date("Y-m-d H:i:s"),
 							'user_id'=>$this->getUserId(),
 					);
 					$id= $this->insert($arr);
+					
+					$this->_name='rms_study_history';
+					
+					$array=array(
+							'stu_code'	=>$data['stu_id'],
+							'stu_id'	=>$id,
+							'stu_type'	=>2,
+							'degree'	=>$data['dept'],
+							'grade'		=>$data['grade'],
+							'from_time'	=>$data['from_time'],
+							'to_time'	=>$data['to_time'],
+							'type_time'	=>$data['session'],
+							'remark'	=>$data['not'],
+							'start_date'=>$data['start_date'],
+							'user_id'	=>$this->getUserId(),
+							);
+					$this->insert($array);
 				}
 				$this->_name='rms_student_payment';
 				$arr=array(
