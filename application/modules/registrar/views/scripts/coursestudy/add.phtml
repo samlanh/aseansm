@@ -12,6 +12,7 @@
 	dojo.require("dojo.data.ObjectStore");
 	dojo.require('dojox.form.BusyButton');
 	var dept_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->all_dept));?> );
+
 	dojo.ready(function(){ changControll();getStudentNo(5);
 	new dijit.form.FilteringSelect({
 	    store: dept_store,
@@ -345,13 +346,13 @@ fieldset{  background:none;}
 					        <td colspan="4"​ style="border-bottom:1px solid #ccc;"><strong><?php echo $tr->translate("STUDY_INFO");?></strong></td>
 					    </tr>
 						<tr>
-							<td style="width: 160px"><?php echo $tr->translate("YEARS");?></td>
+							<td style="width: 160px"><?php echo $tr->translate("ACADEMIC_YEAR");?></td>
 							<td><?php echo $register->getElement('study_year');?></td>
 							<td><?php echo $tr->translate("SESSION");?></td>
 							<td>
 								<select class="fullside"  tabindex="24" name="session" id=""session"" dojoType="dijit.form.FilteringSelect" >
-										    <option value="1" label="FULL_TIME"><?php echo $tr->translate("FULL_TIME");?></option>
-										    <option value="2" label="PART_TIME"><?php echo $tr->translate("PART_TIME");?></option>
+										    <option value="2" label="FULL_TIME"><?php echo $tr->translate("FULL_TIME");?></option>
+										    <option value="1" label="PART_TIME"><?php echo $tr->translate("PART_TIME");?></option>
 										</select>
 							</td>
 						</tr>

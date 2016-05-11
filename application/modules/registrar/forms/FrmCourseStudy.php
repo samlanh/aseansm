@@ -343,8 +343,8 @@ Class Registrar_Form_FrmCourseStudy extends Zend_Dojo_Form {
 				'required'=>'true',
 				'class'=>'fullside',));
 		$opt_session = array(
-				1=>$this->tr->translate('FULL_TIME'),
-				2=>$this->tr->translate('PART_TIME'),
+				2=>$this->tr->translate('FULL_TIME'),
+				1=>$this->tr->translate('PART_TIME'),
 		);
 		$session->setMultiOptions($opt_session);
 		
