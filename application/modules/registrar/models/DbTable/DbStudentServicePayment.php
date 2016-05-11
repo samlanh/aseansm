@@ -46,7 +46,7 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 					'time'				=>$data['time'],
 					//'create_date'		=>date("Y-m-d"),
 					'create_date'		=>date("Y-m-d H:i:s"),
-					'user_id'			=>$this->getUserId()
+					'user_id'			=>$this->getUserId(),
 				);
 			
 			  $id = $this->insert($arr);
