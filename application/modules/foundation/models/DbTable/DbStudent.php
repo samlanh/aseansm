@@ -234,7 +234,7 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 	function getSearchStudent($data){
 		$db=$this->getAdapter();
 		$sql="SELECT stu_id ,stu_code,stu_enname,stu_khname,sex,degree,grade,academic_year from rms_student ";
-		 $sql.= ' WHERE `status`=1 AND is_setgroup = 0 ';
+		 $sql.= ' WHERE `status`=1 AND is_setgroup = 0 and is_subspend=0 ';
 		 if($data['grade']>0){
 		 	$sql.=" AND grade =".$data['grade'];
 		 }
