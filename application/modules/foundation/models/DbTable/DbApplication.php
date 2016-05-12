@@ -54,7 +54,7 @@ class Foundation_Model_DbTable_DbApplication extends Zend_Db_Table_Abstract
 						'from_time'=>$_data['from_time'],
 						'to_time'=>$_data['from_time'],
 						'start_date'=>$_data['start_date'],
-						'type_time'=>$_data['type_time'],
+						'type_time'=>$_data['session'],
 						'status'=>$_data['status'],
 						'remark'=>$_data['remark']
 						);
@@ -109,7 +109,7 @@ class Foundation_Model_DbTable_DbApplication extends Zend_Db_Table_Abstract
 						'from_time'=>$_data['from_time'],
 						'to_time'=>$_data['from_time'],
 						'start_date'=>$_data['start_date'],
-						'type_time'=>$_data['type_time'],
+						'type_time'=>$_data['session'],
 						'status'=>$_data['status'],
 						'remark'=>$_data['remark']
 						);
