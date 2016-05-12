@@ -14,9 +14,9 @@ class Kindergarten_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		$sql = "SELECT room_id,room_name FROM rms_room WHERE is_active = 1";
 		return $db->fetchAll($sql);
 	}
-	public function getGroup(){
+	public function getGroupKindergarten(){
 		$db = $this->getAdapter();
-		$sql="SELECT id,group_code as name FROM rms_group WHERE status = 1 AND is_use = 0 ";
+		$sql="SELECT id,group_code as name FROM rms_group WHERE status = 1 AND is_use = 0 and degree IN(1) ";
 		return $db->fetchAll($sql);
 	}
 	
@@ -173,8 +173,8 @@ class Kindergarten_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		AND (`rms_view`.`key_code` = `g`.`status`))
 		LIMIT 1) AS `status`,
 		(SELECT COUNT(`stu_id`) FROM `rms_group_detail_student` WHERE `group_id`=`g`.`id`)AS Num_Student
-		FROM `rms_group` `g`
-		ORDER BY `g`.`id` DESC ';	
+		FROM rms_group as g where g.degree IN (1)
+		 ORDER BY `g`.`id` DESC ';	
 		
 		return $db->fetchAll($sql);
 	}

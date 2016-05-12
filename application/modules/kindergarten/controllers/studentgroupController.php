@@ -1,5 +1,5 @@
 <?php
-class Kindergarten_StudentGroupController extends Zend_Controller_Action {
+class kindergarten_studentGroupController extends Zend_Controller_Action {
 	
     public function init()
     {    	
@@ -17,14 +17,14 @@ class Kindergarten_StudentGroupController extends Zend_Controller_Action {
 			else{
 				$result = Application_Model_DbTable_DbGlobal::getResultWarning();
 			}
-			$collumns = array("GROUP NAME","YEARS","SEMESTER","DEGREE","GRADE","SESSION","ROOM","START DATE","END DATE","NOTE","STATUS","ចំនួនសិស្ស");
+			$collumns = array("GROUP NAME","YEARS","SEMESTER","DEGREE","GRADE","SESSION","ROOM","START DATE","END DATE","NOTE","STATUS","AMOUNT_STUDENT");
 			$link=array(
-					'module'=>'Kindergarten','controller'=>'studentgroup','action'=>'edit',
+					'module'=>'kindergarten','controller'=>'studentgroup','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs,array('group_code'=>$link,'room_name'=>$link));
 	}
 	function addAction(){
-		$db = new 	Foundation_Model_DbTable_DbStudent();
+		$db = new 	Kindergarten_Model_DbTable_DbStudent();
 		try{
 			if($this->getRequest()->isPost()){
 				$_data=$this->getRequest()->getPost();
@@ -50,13 +50,13 @@ class Kindergarten_StudentGroupController extends Zend_Controller_Action {
 			Application_Form_FrmMessage::message("APPLICATION_ERROR");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
-		$dbstudent = new Foundation_Model_DbTable_DbStudent();
+		$dbstudent = new Kindergarten_Model_DbTable_DbStudent();
 		$this->view->academy = $dbstudent->getAllYear();
 		
 		$_db = new Application_Model_DbTable_DbGlobal();
-		$this->view->degree = $_db->getAllFecultyName();
+		$this->view->degree = $_db->getAllDegreeKindergarten();
 		$group = new Kindergarten_Model_DbTable_DbGroup();
-		$group_option = $group->getGroup();
+		$group_option = $group->getGroupKindergarten();
 		array_unshift($group_option, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
 		$this->view->group = $group_option;
 		$this->view->room = $group->getRoom();
@@ -75,7 +75,7 @@ class Kindergarten_StudentGroupController extends Zend_Controller_Action {
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}
-		$this->_redirect('/Kindergarten/studentgroup/add');
+		$this->_redirect('/kindergarten/studentgroup/add');
 	}
 	
 	public function submit1Action(){
@@ -92,11 +92,11 @@ class Kindergarten_StudentGroupController extends Zend_Controller_Action {
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}
-		$this->_redirect('/Kindergarten/studentgroup/index');
+		$this->_redirect('/kindergarten/studentgroup/index');
 	}
 	function editAction(){
 		$id=$this->getRequest()->getParam("id");
-		$db = new 	Foundation_Model_DbTable_DbStudent();
+		$db = new 	Kindergarten_Model_DbTable_DbStudent();
 		$_db = new Kindergarten_Model_DbTable_DbGroup();
 		$g_id = $_db->getGroupById($id);
 		$this->view->id = $g_id;
@@ -127,7 +127,7 @@ class Kindergarten_StudentGroupController extends Zend_Controller_Action {
 				Application_Form_FrmMessage::message("APPLICATION_ERROR");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
-		$dbstudent = new Foundation_Model_DbTable_DbStudent();
+		$dbstudent = new Kindergarten_Model_DbTable_DbStudent();
 		$this->view->academy = $dbstudent->getAllYear();
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$this->view->degree = $_db->getAllFecultyName();
@@ -142,7 +142,7 @@ class Kindergarten_StudentGroupController extends Zend_Controller_Action {
 	function getGradeAction(){
 		if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();
-			$db = new Foundation_Model_DbTable_DbStudent();
+			$db = new Kindergarten_Model_DbTable_DbStudent();
 			$grade = $db->getAllGrade($data['dept_id']);
 			//print_r($grade);exit();
 			//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );

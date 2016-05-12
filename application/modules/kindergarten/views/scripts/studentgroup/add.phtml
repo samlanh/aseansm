@@ -112,7 +112,7 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 </script>
 <?php
 $frm_set_price = $this->frm_set_charge;?>
-<form id='studentgroup' dojoType="dijit.form.Form" action="<?php echo $this->url(array('module'=>'Kindergarten','controller'=>'studentgroup','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form id='studentgroup' dojoType="dijit.form.Form" action="<?php echo $this->url(array('module'=>'kindergarten','controller'=>'studentgroup','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 <table cellspacing="10" style="margin: 0 auto;width:100%;" >
 	<tr>
 		<td>
@@ -378,7 +378,7 @@ function addGroup(){
 }
 
 
-var url_to_group = '<?php echo $this->url(array('module'=>'foundation','controller'=>'studentchangegroup','action'=>'get-to-group')); ?>';
+var url_to_group = '<?php echo $this->url(array('module'=>'kindergarten','controller'=>'studentchangegroup','action'=>'get-to-group')); ?>';
 function toStudentGroup(){
 		group = dijit.byId('group').get('value');
 		if(group==-1){
@@ -394,7 +394,7 @@ function toStudentGroup(){
 		load: function(data) {
 			//alert(data);
 
-				dojo.byId('lbldetail').innerHTML='<span style="color:red;">Academic :  </span>'+data.from_academic+'-'+data.to_academic+'<span style="color:red;">  Degree :  </span>'+data.degree+'<span style="color:red;">  Grade :  </span>'+data.grade+'<span style="color:red;">  Session :  </span>'+data.session+"<br />"+'<span style="color:red;">  Start Date :  </span>'+data.start_date+'<span style="color:red;">  Expired Date :  </span>'+data.expired_date;
+				dojo.byId('lbldetail').innerHTML='<span style="color:red;">Academic :  </span>'+data.year+'<span style="color:red;">  Degree :  </span>'+data.degree+'<span style="color:red;">  Grade :  </span>'+data.grade+'<span style="color:red;">  Session :  </span>'+data.session+"<br />"+'<span style="color:red;">  Start Date :  </span>'+data.start_date+'<span style="color:red;">  Expired Date :  </span>'+data.expired_date;
 
 		},
 		error: function(err) {

@@ -1,6 +1,6 @@
 <?php
 
-class Kindergarten_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
+class kindergarten_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 {
 	
 	protected $_name = 'rms_student';
@@ -29,11 +29,11 @@ class Kindergarten_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 		if(!empty($search['adv_search'])){
 			$s_where = array();
 			$s_search = addslashes(trim($search['adv_search']));
-			$s_where[]="stu_code LIKE '%{$s_search}%'";
-			$s_where[]="stu_khname LIKE '%{$s_search}%'";
-			$s_where[]="stu_enname LIKE '%{$s_search}%'";
-			$s_where[]="(SELECT `major_enname` FROM `rms_major` WHERE `major_id`=grade) LIKE '%{$s_search}%'";
-			$s_where[]="(SELECT name_kh FROM `rms_view` WHERE type=2 AND key_code = sex) LIKE '%{$s_search}%'";
+			$s_where[]="stu_code LIkE '%{$s_search}%'";
+			$s_where[]="stu_khname LIkE '%{$s_search}%'";
+			$s_where[]="stu_enname LIkE '%{$s_search}%'";
+			$s_where[]="(SELECT `major_enname` FROM `rms_major` WHERE `major_id`=grade) LIkE '%{$s_search}%'";
+			$s_where[]="(SELECT name_kh FROM `rms_view` WHERE type=2 AND key_code = sex) LIkE '%{$s_search}%'";
 			$where .=' AND ( '.implode(' OR ',$s_where).')';
 		}
 		return $_db->fetchAll($sql.$where.$orderby);
