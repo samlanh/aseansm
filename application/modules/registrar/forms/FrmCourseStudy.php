@@ -222,7 +222,7 @@ Class Registrar_Form_FrmCourseStudy extends Zend_Dojo_Form {
 				'class'=>'fullside'));
 		
 		  $_term = new Zend_Dojo_Form_Element_FilteringSelect("payment_term");
-		  $opt_term = $_db->getAllPaymentTerm();
+		  $opt_term = $_db->getAllPaymentTerm(null,1);
 // 		  $opt_term = array(
 // 		  		1=>$this->tr->translate('QUARTER'),
 // 		  		2=>$this->tr->translate('SEMESTER'),

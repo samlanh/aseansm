@@ -320,8 +320,9 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
     	return $db->fetchRow($sql);
     }
     function getPaymentGep($study_year,$levele,$payment_term){
+    	$pay=$payment_term-1;
     	$db = $this->getAdapter();
-    	$sql="SELECT id,tuition_fee FROM rms_tuitionfee_detail WHERE fee_id=$study_year AND class_id=$levele AND payment_term=$payment_term LIMIT 1";
+    	$sql="SELECT id,tuition_fee FROM rms_tuitionfee_detail WHERE fee_id=$study_year AND class_id=$levele AND payment_term=$pay LIMIT 1";
     	return $db->fetchRow($sql);
     }
     function getAllYears(){
