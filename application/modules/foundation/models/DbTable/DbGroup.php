@@ -193,11 +193,7 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		}
 		return $db->fetchAll($sql.$where.$order);
 		
-		
-		
-		
-		
-		return $db->fetchAll($sql);
+		//return $db->fetchAll($sql);
 	}
 }
 
