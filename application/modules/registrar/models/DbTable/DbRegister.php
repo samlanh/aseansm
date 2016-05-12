@@ -22,17 +22,24 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				if($data['student_type']==3){//old
 					$id=$data['old_studens'];
 				}else {
+					$stu_type='';
+					if($data['dept']==1){
+						$stu_type=3;
+					}else{
+						$stu_type=1;
+					}
 				    $arr=array(
-							'stu_code'=>$data['stu_id'],
-							'academic_year'=>$data['study_year'],
-							'stu_khname'=>$data['kh_name'],
-							'stu_enname'=>$data['en_name'],
-							'sex'=>$data['sex'],
-							'session'=>$data['session'],
-							'degree'=>$data['dept'],
-							'grade'=>$data['grade'],
-						    'stu_type'=>1,
-							'user_id'=>$this->getUserId(),
+							'stu_code'		=>$data['stu_id'],
+							'academic_year'	=>$data['study_year'],
+							'stu_khname'	=>$data['kh_name'],
+							'stu_enname'	=>$data['en_name'],
+							'sex'			=>$data['sex'],
+							'session'		=>$data['session'],
+							'degree'		=>$data['dept'],
+							'grade'			=>$data['grade'],
+						    'stu_type'		=>$stu_type,
+				    		'create_date'	=>date('Y-m-d H:i:s'),
+							'user_id'		=>$this->getUserId(),
 					);
 				    $db->getProfiler()->setEnabled(true);
 			    	$id= $this->insert($arr);
@@ -54,7 +61,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						'balance_due'=>$data['remaining'],
 						'note'=>$data['not'],
 						'student_type'=>$data['student_type'],
-						'create_date'=>	date('Y-m-d'),
+						'create_date'=>	date('Y-m-d H:i:s'),
 						'payfor_type'=>1,
 						'amount_in_khmer'=>$data['char_price'],
 						'user_id'=>$this->getUserId(),
@@ -120,7 +127,9 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				$db->rollBack();//អោយវាវិលត្រលប់ទៅដើមវីញពេលណាវាជួបErrore
 			}
 		}
-		function updateRegister($data){
+		
+		
+	function updateRegister($data){
 			$db = $this->getAdapter();//ស្ពានភ្ជាប់ទៅកាន់Data Base
 			$db->beginTransaction();//ទប់ស្កាត់មើលការErrore , មានErrore វាមិនអោយចូល
 	//	print_r($data);exit();
@@ -141,6 +150,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						$db->getProfiler()->setEnabled(false); 
 					}
 				}
+				$this->_name='rms_student';
 				if($data['student_type']==3){//old stu
 					
 				}else{  
@@ -153,7 +163,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 							'session'=>$data['session'],
 							'degree'=>$data['dept'],
 							'grade'=>$data['grade'],
-							'stu_type'=>1,
+							//'stu_type'=>1,
 							'user_id'=>$this->getUserId(),
 					);
 					$where="stu_id=".$data['id'];
@@ -163,7 +173,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				$this->_name='rms_student_payment';
 		  // print_r($data);exit();
 				$arr=array(
-						'student_id'=>$data['old_studens'],
+						'student_id'=>$data['id'],
 						'receipt_number'=>$data['reciept_no'],
 						'time'=>$data['time'],
 // 						'end_hour'=>$data['to_time'],
@@ -183,22 +193,22 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				$where="id=".$data['pay_id'];
 				$this->update($arr, $where);
 				
-				$payment_id_ser = $this->getStudentPaymentStart($data['old_studens'],1);
-				if($data['id']!=$data['old_studens']){
-				if(empty($payment_id_ser)){
-					$payment_id_ser=0;
-				}
-				$this->_name='rms_student_paymentdetail';
-				$where="payment_id = $payment_id_ser ";
-				$arr = array(
-						'is_start'=>0
-				);
-				$db->getProfiler()->setEnabled(true);
-				$this->update($arr,$where);
-				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-				$db->getProfiler()->setEnabled(false);
-				}
+// 				$payment_id_ser = $this->getStudentPaymentStart($data['old_studens'],1);
+// 				if($data['id']!=$data['old_studens']){
+	// 				if(empty($payment_id_ser)){
+	// 					$payment_id_ser=0;
+	// 				}
+	// 				$this->_name='rms_student_paymentdetail';
+	// 				$where="payment_id = $payment_id_ser ";
+	// 				$arr = array(
+	// 						'is_start'=>0
+	// 				);
+	// 				$db->getProfiler()->setEnabled(true);
+	// 				$this->update($arr,$where);
+	// 				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+	// 				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+	// 				$db->getProfiler()->setEnabled(false);
+// 				}
 				$this->_name='rms_student_paymentdetail';
 				if(!empty($data['ids'])){
 					$where="id=".$data['ids'];
@@ -237,7 +247,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						'references'=>'frome registration',
 						'is_complete'	=>$complete,
 						'comment'		=>$comment,
-					 	'is_parent'		=>$payment_id_ser,
+					 	//'is_parent'		=>$payment_id_ser,
 						'user_id'=>$this->getUserId(),
 				);
 				$where="payment_id=".$data['pay_id'];
@@ -252,14 +262,28 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	$session_user=new Zend_Session_Namespace('auth');
     	$user_id=$session_user->user_id;
     	$db=$this->getAdapter();
-     	$from_date = (empty($search["start_date"]))?'Y-m-01':$search["start_date"];
-     	$to_date =  (empty($search["end_date"]))?'Y-m-01' :$search["end_date"];
-     	$where =" AND sp.create_date BETWEEN '$from_date' AND '$to_date'";
+//      	$from_date = (empty($search["start_date"]))?'Y-m-01':$search["start_date"];
+//      	$to_date =  (empty($search["end_date"]))?'Y-m-01' :$search["end_date"];
+     	//$where =" AND sp.create_date BETWEEN '$from_date' AND '$to_date'";
+     	
+    	
+    	
+    	
+    	
     	$sql=" SELECT sp.id,s.stu_code,sp.receipt_number,s.stu_khname,s.stu_enname,s.sex,(SELECT en_name FROM rms_dept WHERE dept_id=s.degree)AS degree,
 		       (SELECT major_enname FROM rms_major WHERE major_id=s.grade ) AS grade,
  		       sp.payment_term,sp.tuition_fee,sp.discount_percent, sp.total,sp.paid_amount,
 		       sp.balance_due,sp.create_date
- 			   FROM rms_student AS s,rms_student_payment AS sp WHERE s.stu_id=sp.student_id AND s.stu_type=1 AND sp.user_id=$user_id";
+ 			   FROM rms_student AS s,rms_student_payment AS sp WHERE s.stu_id=sp.student_id AND s.stu_type IN (1,3) AND sp.user_id=".$user_id;
+    	
+    	$where=" ";
+    	
+    	$from_date =(empty($search['start_date']))? '1': "s.create_date >= '".$search['start_date']." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': "s.create_date <= '".$search['end_date']." 23:59:59'";
+    	$where = " AND ".$from_date." AND ".$to_date;
+    	
+    	
+    	$order=" ORDER BY s.stu_id DESC";
     	
     	if(!empty($search['adv_search'])){
     		$s_where=array();
@@ -274,7 +298,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	if(!empty($search['degree'])){
     		$where.=" AND s.degree=".$search['degree'];
     	}
-    	$order=" ORDER By stu_id DESC ";
+    	//$order=" ORDER By stu_id DESC ";
     	//print_r($sql.$where);
     	return $db->fetchAll($sql.$where.$order);
     }
@@ -294,10 +318,11 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	return $db->fetchAll($sql.$order);
     }
     function getPaymentTerm($generat,$payment_term,$grade,$time){
+    	$pay=$payment_term-1;
     	$db = $this->getAdapter();
-    		$sql="SELECT tfd.id,tfd.tuition_fee FROM rms_tuitionfee AS tf,rms_tuitionfee_detail AS tfd WHERE tf.id = fee_id
-    		AND tf.time=$time AND tfd.fee_id=$generat AND tfd.class_id=$grade AND tfd.payment_term=$payment_term LIMIT 1";
-    		return $db->fetchRow($sql);
+    	$sql="SELECT tfd.id,tfd.tuition_fee FROM rms_tuitionfee AS tf,rms_tuitionfee_detail AS tfd WHERE tf.id = fee_id
+    	AND tf.time=$time AND tfd.fee_id=$generat AND tfd.class_id=$grade AND tfd.payment_term=$pay LIMIT 1";
+    	return $db->fetchRow($sql);
     }
     function getBalance($serviceid,$studentid){
     	$db = $this->getAdapter();
@@ -336,7 +361,12 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
  
     public function getNewAccountNumber($type,$stu_type){
     	$db = $this->getAdapter();
-    	$sql="  SELECT COUNT(stu_id)  FROM rms_student WHERE stu_type=$stu_type";
+    	$sql='';
+    	if($stu_type==1){
+    		$sql="SELECT COUNT(stu_id) FROM rms_student WHERE stu_type IN (1,3)";
+    	}else if($stu_type==2){
+    		$sql="SELECT COUNT(stu_id) FROM rms_student WHERE stu_type = 2";
+    	}
     	$acc_no = $db->fetchOne($sql);
     	$new_acc_no= (int)$acc_no+1;
     	$new_acc_no=100+$new_acc_no;
