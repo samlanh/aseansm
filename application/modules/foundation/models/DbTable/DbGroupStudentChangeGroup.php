@@ -13,7 +13,7 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 	
 	public function getfromGroup(){
 		$db = $this->getAdapter();
-		$sql = "SELECT group_code,id FROM `rms_group` where status = 1  ";
+		$sql = "SELECT group_code,id FROM `rms_group` where status = 1 and degree IN (2,3,4)  ";
 // 		$orderby = " ORDER BY stu_code ";
 		return $db->fetchAll($sql);
 	}
@@ -29,7 +29,7 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 	
 	public function selectAllStudentChangeGroup($search){
 		$_db = $this->getAdapter();
-		$sql = "SELECT id,(select group_code from rms_group where rms_group.id=rms_group_student_change_group.from_group) as group_code,
+		$sql = "SELECT rms_group_student_change_group.id,(select group_code from rms_group where rms_group.id=rms_group_student_change_group.from_group) as group_code,
 				(select major_enname from rms_major where rms_major.major_id=(select grade from rms_group where rms_group.id=rms_group_student_change_group.from_group) limit 1) as grade,
 				(select name_en from rms_view where rms_view.type=4 and rms_view.key_code=(select session from rms_group where rms_group.id=rms_group_student_change_group.from_group) limit 1 ) as session,
 				
@@ -37,12 +37,13 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 				(select group_code from rms_group where rms_group.id=rms_group_student_change_group.to_group) as to_group_code,
 				(select major_enname from rms_major where rms_major.major_id=(select grade from rms_group where rms_group.id=rms_group_student_change_group.to_group) limit 1) as to_grade,
 				(select name_en from rms_view where rms_view.type=4 and rms_view.key_code=(select session from rms_group where rms_group.id=rms_group_student_change_group.to_group) limit 1 ) as to_session,
-				moving_date,note
+				
+				moving_date,rms_group_student_change_group.note
 		
-				FROM `rms_group_student_change_group`";
+				FROM `rms_group_student_change_group`,rms_group where rms_group.id=rms_group_student_change_group.from_group and rms_group.degree IN (2,3,4)";
 		
 		$order_by=" order by id DESC";
-		$where=" where 1";
+		$where=" ";
 		if(empty($search)){
 			return $_db->fetchAll($sql.$order_by);
 		}

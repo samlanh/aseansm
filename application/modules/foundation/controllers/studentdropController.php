@@ -63,6 +63,7 @@ class Foundation_studentdropController extends Zend_Controller_Action {
 	}
 	public function editAction(){
 		$id=$this->getRequest()->getParam("id");
+		
 		$db= new Foundation_Model_DbTable_DbStudentDrop();
 		$row = $this->view->row = $db->getStudentDropById($id);
 		
@@ -80,8 +81,11 @@ class Foundation_studentdropController extends Zend_Controller_Action {
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}	
+		
 		$_add = new Foundation_Model_DbTable_DbStudentDrop();
-		$this->view->rs = $add =$_add->getAllStudentID();
+		$add = $this->view->rs = $_add->getAllStudentIDEdit();
+		
+		//print_r($add);exit();
 	}
 
 	function getGradeAction(){
@@ -91,6 +95,17 @@ class Foundation_studentdropController extends Zend_Controller_Action {
 			$grade = $db->getAllGrade($data['dept_id']);
 			//print_r($grade);exit();
 			//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
+			print_r(Zend_Json::encode($grade));
+			exit();
+		}
+	}
+	
+	
+	function getStudentAction(){
+		if($this->getRequest()->isPost()){
+			$data=$this->getRequest()->getPost();
+			$db = new Foundation_Model_DbTable_DbStudentDrop();
+			$grade = $db->getStudentInfoById($data['studentid']);
 			print_r(Zend_Json::encode($grade));
 			exit();
 		}

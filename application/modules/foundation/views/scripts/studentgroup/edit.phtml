@@ -76,7 +76,7 @@ dojo.ready(function(){
 	//toStudentGroup();
 	<?php foreach($this->group as $row){
 	?>
-	dijit.byId('group').attr('value','<?php echo $row['id']?>'<?php if($row['id']==$this->id['group_id'])?>);	
+	dijit.byId('group').attr('value','<?php echo $this->id['group_id']?>');	
 	<?php } ?>
 	}); 
    

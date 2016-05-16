@@ -114,6 +114,9 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 		$db = new 	Foundation_Model_DbTable_DbStudent();
 		$_db = new Foundation_Model_DbTable_DbGroup();
 		$g_id = $_db->getGroupById($id);
+		
+		//print_r($g_id);exit();
+		
 		$this->view->id = $g_id;
 		$row = $_db->getStudentGroup($id);
 		$this->view->rr = $row;
@@ -148,6 +151,9 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 		$this->view->degree = $_db->getAllFecultyName();
 		$group = new Foundation_Model_DbTable_DbGroup();
 		$group_option = $group->getGroupToEdit();
+		
+		//print_r($group_option);exit();
+		
 		array_unshift($group_option, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
 		$this->view->group = $group_option;
 		$this->view->room = $group->getRoom();
