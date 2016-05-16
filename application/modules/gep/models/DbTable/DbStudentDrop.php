@@ -32,7 +32,7 @@ class Gep_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 		(SELECT stu_enname FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_drop`.`stu_id` limit 1) AS en_name,
 		(SELECT name_kh FROM `rms_view` WHERE `rms_view`.`type`=2 and `rms_view`.`key_code`=(SELECT sex FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_drop`.`stu_id` limit 1))AS sex,
 		(SELECT name_kh FROM `rms_view` WHERE `rms_view`.`type`=5 and `rms_view`.`key_code`=`rms_student_drop`.`type` limit 1) as type,
-		reason,date,note from `rms_student_drop` where 1 and status=1 ";
+		reason,date,note from `rms_student_drop`,rms_student where rms_student.stu_id=rms_student_drop.stu_id and rms_student_drop.status=1 and degree IN (5) ";
 		$order_by=" order by id DESC";
 		$where='';
 		if(empty($search)){

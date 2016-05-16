@@ -16,13 +16,13 @@ class Gep_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 	}
 	public function getGroup(){
 		$db = $this->getAdapter();
-		$sql="SELECT id,group_code as name FROM rms_group WHERE status = 1 AND is_use = 0 ";
+		$sql="SELECT id,group_code as name FROM rms_group WHERE status = 1 AND is_use = 0 and degree IN (5)";
 		return $db->fetchAll($sql);
 	}
 	
 	public function getGroupToEdit(){
 		$db = $this->getAdapter();
-		$sql="SELECT id,group_code as name FROM rms_group WHERE status = 1 AND is_use = 1 ";
+		$sql="SELECT id,group_code as name FROM rms_group WHERE status = 1 ";
 		return $db->fetchAll($sql);
 	}
 	
@@ -170,8 +170,9 @@ class Gep_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		WHERE ((`rms_view`.`type` = 1)
 		AND (`rms_view`.`key_code` = `g`.`status`))
 		LIMIT 1) AS `status`,
-		(SELECT COUNT(`stu_id`) FROM `rms_group_detail_student` WHERE `group_id`=`g`.`id`)AS Num_Student
-		FROM `rms_group` `g` where 1";
+		(SELECT COUNT(`stu_id`) FROM `rms_group_detail_student` WHERE `group_id`=`g`.`id` and is_pass=0 )AS Num_Student
+		
+		FROM rms_group g where g.degree IN(5)";
 		
 		$order = " ORDER BY `g`.`id` DESC " ;	
 		

@@ -31,7 +31,7 @@ class Gep_studentchangegroupController extends Zend_Controller_Action {
 			}
 			$collumns = array("STUDENT_CODE","NAME_KH","NAME_EN","SEX","FROM_GROUP","TO_GROUP","MOVING_DATE","NOTE");
 			$link=array(
-					'module'=>'foundation','controller'=>'studentchangegroup','action'=>'edit',
+					'module'=>'gep','controller'=>'studentchangegroup','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('code'=>$link,'kh_name'=>$link,'en_name'=>$link));
 		$this->view->adv_search=$search;	

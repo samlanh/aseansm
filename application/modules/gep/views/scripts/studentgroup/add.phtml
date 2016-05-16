@@ -75,7 +75,7 @@ dojo.ready(function(){
 	//toStudentGroup();
 }); 
 var grade_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
-var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=>'studentgroup','action'=>'get-grade')); ?>';
+var url_dept = '<?php echo $this->url(array('module'=>'gep','controller'=>'studentgroup','action'=>'get-grade')); ?>';
 	function getallGrade(type){
 		if(type==1){
 			dept_id = dijit.byId('degree').get('value');
@@ -112,7 +112,7 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 </script>
 <?php
 $frm_set_price = $this->frm_set_charge;?>
-<form id='studentgroup' dojoType="dijit.form.Form" action="<?php echo $this->url(array('module'=>'foundation','controller'=>'studentgroup','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form id='studentgroup' dojoType="dijit.form.Form" action="<?php echo $this->url(array('module'=>'gep','controller'=>'studentgroup','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 <table cellspacing="10" style="margin: 0 auto;width:100%;" >
 	<tr>
 		<td>
@@ -132,7 +132,7 @@ $frm_set_price = $this->frm_set_charge;?>
 							<td colspan="2">
 								<select class="fullside"  name="degree" id="degree" dojoType="dijit.form.FilteringSelect" onchange="getallGrade(1);">
 											<?php if(!empty($this->degree))foreach ($this->degree as $row){?>
-											<option value="<?php echo $row['dept_id']?>"<?php if($row['dept_id']==$this->value['degree']) echo "selected='selected'"?>><?php echo $row['en_name']?></option>
+											<option value="<?php echo $row['id']?>"><?php echo $row['name']?></option>
 											<?php }?>
 								</select>
 							</td>
@@ -163,7 +163,7 @@ $frm_set_price = $this->frm_set_charge;?>
 	</tr>
 </table>	
 </form>
-<form id='submitgroup' dojoType="dijit.form.Form" action="<?php echo $this->url(array('module'=>'foundation','controller'=>'studentgroup','action'=>'submit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form id='submitgroup' dojoType="dijit.form.Form" action="<?php echo $this->url(array('module'=>'gep','controller'=>'studentgroup','action'=>'submit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	<table class="set-style" border="2px" style="border:1px solid #ccc; border-collapse: collapse;margin: 0 auto; width: 100%; background:#DFF7FD;" >
 						<tfoot>
 							<tr>
@@ -354,7 +354,7 @@ function getStudentInfo(){
 				}
 			});
 }
-var url_add_group = '<?php echo $this->url(array('module'=>'foundation','controller'=>'studentgroup','action'=>'add-group')); ?>';
+var url_add_group = '<?php echo $this->url(array('module'=>'gep','controller'=>'studentgroup','action'=>'add-group')); ?>';
 function addGroup(){
 	group_code= dijit.byId('group_code').get('value');
 	dojo.xhrPost({
@@ -394,7 +394,7 @@ function toStudentGroup(){
 		load: function(data) {
 			//alert(data);
 
-				dojo.byId('lbldetail').innerHTML='<span style="color:red;">Academic :  </span>'+data.from_academic+'-'+data.to_academic+'<span style="color:red;">  Degree :  </span>'+data.degree+'<span style="color:red;">  Grade :  </span>'+data.grade+'<span style="color:red;">  Session :  </span>'+data.session+"<br />"+'<span style="color:red;">  Start Date :  </span>'+data.start_date+'<span style="color:red;">  Expired Date :  </span>'+data.expired_date;
+				dojo.byId('lbldetail').innerHTML='<span style="color:red;">Academic :  </span>'+data.year+'<span style="color:red;">  Degree :  </span>'+data.degree+'<span style="color:red;">  Grade :  </span>'+data.grade+'<span style="color:red;">  Session :  </span>'+data.session+"<br />"+'<span style="color:red;">  Start Date :  </span>'+data.start_date+'<span style="color:red;">  Expired Date :  </span>'+data.expired_date;
 
 		},
 		error: function(err) {

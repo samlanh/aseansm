@@ -28,9 +28,9 @@ class Gep_StudentGroupController extends Zend_Controller_Action {
 			else{
 				$result = Application_Model_DbTable_DbGlobal::getResultWarning();
 			}
-			$collumns = array("GROUP NAME","YEARS","SEMESTER","DEGREE","GRADE","SESSION","ROOM","START DATE","END DATE","NOTE","STATUS","ចំនួនសិស្ស");
+			$collumns = array("GROUP_ID","ACADEMIC_YEAR","SEMESTER","DEGREE","GRADE","SESSION","ROOM_NAME","START_DATE","END_DATE","NOTE","STATUS","ចំនួនសិស្ស");
 			$link=array(
-					'module'=>'foundation','controller'=>'studentgroup','action'=>'edit',
+					'module'=>'gep','controller'=>'studentgroup','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs,array('group_code'=>$link,'room_name'=>$link));
 	}
@@ -65,8 +65,8 @@ class Gep_StudentGroupController extends Zend_Controller_Action {
 		$this->view->academy = $dbstudent->getAllYear();
 		
 		$_db = new Application_Model_DbTable_DbGlobal();
-		$this->view->degree = $_db->getAllFecultyName();
-		$group = new Foundation_Model_DbTable_DbGroup();
+		$this->view->degree = $_db->getAllDegreeGEP();
+		$group = new Gep_Model_DbTable_DbGroup();
 		$group_option = $group->getGroup();
 		array_unshift($group_option, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
 		$this->view->group = $group_option;
@@ -78,7 +78,7 @@ class Gep_StudentGroupController extends Zend_Controller_Action {
 		if($this->getRequest()->isPost()){
 			try{
 				$_data = $this->getRequest()->getPost();
-				$db = new Foundation_Model_DbTable_DbGroup();
+				$db = new Gep_Model_DbTable_DbGroup();
 				$db->addStudentGroup($_data);
 				Application_Form_FrmMessage::message("INSERT_SUCCESS");
 			}catch(Exception $e){
@@ -86,7 +86,7 @@ class Gep_StudentGroupController extends Zend_Controller_Action {
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}
-		$this->_redirect('/foundation/studentgroup/add');
+		$this->_redirect('/gep/studentgroup/add');
 	}
 	
 	public function submit1Action(){
@@ -94,7 +94,7 @@ class Gep_StudentGroupController extends Zend_Controller_Action {
 		if($this->getRequest()->isPost()){
 			try{
 				$_data = $this->getRequest()->getPost();
-				$db = new Foundation_Model_DbTable_DbGroup();
+				$db = new Gep_Model_DbTable_DbGroup();
 				$row = $db->editStudentGroup($_data, $id);
 				
 				Application_Form_FrmMessage::message("INSERT_SUCCESS");
@@ -103,12 +103,12 @@ class Gep_StudentGroupController extends Zend_Controller_Action {
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}
-		$this->_redirect('/foundation/studentgroup/index');
+		$this->_redirect('/gep/studentgroup/index');
 	}
 	function editAction(){
 		$id=$this->getRequest()->getParam("id");
 		$db = new 	Foundation_Model_DbTable_DbStudent();
-		$_db = new Foundation_Model_DbTable_DbGroup();
+		$_db = new Gep_Model_DbTable_DbGroup();
 		$g_id = $_db->getGroupById($id);
 		$this->view->id = $g_id;
 		$row = $_db->getStudentGroup($id);
@@ -142,7 +142,7 @@ class Gep_StudentGroupController extends Zend_Controller_Action {
 		$this->view->academy = $dbstudent->getAllYear();
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$this->view->degree = $_db->getAllFecultyName();
-		$group = new Foundation_Model_DbTable_DbGroup();
+		$group = new Gep_Model_DbTable_DbGroup();
 		$group_option = $group->getGroupToEdit();
 		array_unshift($group_option, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
 		$this->view->group = $group_option;
@@ -165,7 +165,7 @@ class Gep_StudentGroupController extends Zend_Controller_Action {
 	function addGroupAction(){
 		if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();
-			$db = new Foundation_Model_DbTable_DbGroup();
+			$db = new Gep_Model_DbTable_DbGroup();
 			$group = $db->addGroup($data);
 			$result = array("id"=>$group);
 			print_r(Zend_Json::encode($group));

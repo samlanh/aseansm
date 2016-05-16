@@ -9,18 +9,32 @@ class Gep_groupstudentchangegroupController extends Zend_Controller_Action {
 	}
 	public function indexAction(){
 		$db_student= new Gep_Model_DbTable_DbGroupStudentChangeGroup();
-		$rs_rows = $db_student->selectAllStudentChangeGroup();
+		
+		if($this->getRequest()->isPost()){
+			$data = $this->getRequest()->getPost();
+			$search=array(
+					'txtsearch'	=>$data['adv_search'],
+			);
+		}else{
+			$search=array(
+					'txtsearch'	=>'',
+			);
+		}
+		
+		$this->view->adv_search=$search;
+		
+		$rs_rows = $db_student->selectAllStudentChangeGroup($search);
 		$list = new Application_Form_Frmtable();
 		if(!empty($rs_rows)){
 			} 
-			else{
-				$result = Application_Model_DbTable_DbGlobal::getResultWarning();
-			}
-			$collumns = array("FROM_GROUP","GRADE","SESSION","TO_GROUP","GRADE","SESSION","MOVING_DATE","NOTE");
-			$link=array(
-					'module'=>'gep','controller'=>'groupstudentchangegroup','action'=>'edit',
-			);
-			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('group_code'=>$link,'grade'=>$link,'session'=>$link,'to_group_code'=>$link));
+		else{
+			$result = Application_Model_DbTable_DbGlobal::getResultWarning();
+		}
+		$collumns = array("FROM_GROUP","GRADE","SESSION","TO_GROUP","GRADE","SESSION","MOVING_DATE","NOTE");
+		$link=array(
+				'module'=>'gep','controller'=>'groupstudentchangegroup','action'=>'edit',
+		);
+		$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('group_code'=>$link,'grade'=>$link,'session'=>$link,'to_group_code'=>$link));
 			
 	}
 	function addAction(){
@@ -40,7 +54,7 @@ class Gep_groupstudentchangegroupController extends Zend_Controller_Action {
 			}
 		}
 		
-		$_add = new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
+		$_add = new Gep_Model_DbTable_DbGroupStudentChangeGroup();
 		
 		$this->view->row = $add =$_add->getfromGroup();
 		

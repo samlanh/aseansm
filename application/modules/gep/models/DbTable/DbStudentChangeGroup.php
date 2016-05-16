@@ -32,7 +32,7 @@ class Gep_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstract
 		(SELECT name_kh FROM `rms_view` WHERE `rms_view`.`type`=2 and `rms_view`.`key_code`=(SELECT sex FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id` limit 1))AS sex,
 		(select group_code from rms_group where rms_group.id = rms_student_change_group.from_group limit 1)AS from_group,
 		(select group_code from rms_group where rms_group.id = rms_student_change_group.to_group limit 1)AS to_group,
-		moving_date,note from `rms_student_change_group` where 1 ";
+		moving_date,note from `rms_student_change_group`,rms_student where rms_student_change_group.stu_id=rms_student.stu_id and rms_student.degree IN (5) ";
 		$order_by=" order by id DESC";
 		$where='';
 		
@@ -45,7 +45,8 @@ class Gep_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstract
 			$s_where[] = " (SELECT stu_code FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id`) LIKE '%{$s_search}%'";
 			$s_where[] = " (SELECT stu_khname FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id`) LIKE '%{$s_search}%'";
 			$s_where[] = " (SELECT stu_enname FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id`) LIKE '%{$s_search}%'";
-			//$s_where[] = " en_name LIKE '%{$s_search}%'";
+			$s_where[] = " (select group_code from rms_group where rms_group.id = rms_student_change_group.from_group) LIKE '%{$s_search}%'";
+			$s_where[] = " (select group_code from rms_group where rms_group.id = rms_student_change_group.to_group) LIKE '%{$s_search}%'";
 			$where .=' AND ( '.implode(' OR ',$s_where).')';
 		}
 		
