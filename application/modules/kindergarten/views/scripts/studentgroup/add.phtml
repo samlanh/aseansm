@@ -132,7 +132,7 @@ $frm_set_price = $this->frm_set_charge;?>
 							<td colspan="2">
 								<select class="fullside"  name="degree" id="degree" dojoType="dijit.form.FilteringSelect" onchange="getallGrade(1);">
 											<?php if(!empty($this->degree))foreach ($this->degree as $row){?>
-											<option value="<?php echo $row['dept_id']?>"<?php if($row['dept_id']==$this->value['degree']) echo "selected='selected'"?>><?php echo $row['en_name']?></option>
+											<option value="<?php echo $row['id']?>"><?php echo $row['name']?></option>
 											<?php }?>
 								</select>
 							</td>
@@ -163,7 +163,7 @@ $frm_set_price = $this->frm_set_charge;?>
 	</tr>
 </table>	
 </form>
-<form id='submitgroup' dojoType="dijit.form.Form" action="<?php echo $this->url(array('module'=>'foundation','controller'=>'studentgroup','action'=>'submit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form id='submitgroup' dojoType="dijit.form.Form" action="<?php echo $this->url(array('module'=>'kindergarten','controller'=>'studentgroup','action'=>'submit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	<table class="set-style" border="2px" style="border:1px solid #ccc; border-collapse: collapse;margin: 0 auto; width: 100%; background:#DFF7FD;" >
 						<tfoot>
 							<tr>
@@ -354,7 +354,7 @@ function getStudentInfo(){
 				}
 			});
 }
-var url_add_group = '<?php echo $this->url(array('module'=>'foundation','controller'=>'studentgroup','action'=>'add-group')); ?>';
+var url_add_group = '<?php echo $this->url(array('module'=>'kindergarten','controller'=>'studentgroup','action'=>'add-group')); ?>';
 function addGroup(){
 	group_code= dijit.byId('group_code').get('value');
 	dojo.xhrPost({

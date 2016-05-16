@@ -9,7 +9,7 @@
 		return false;
 	   }
 </script>
-<form id="add_car" action="<?php echo $this->url(array('module'=>'Kindergarten','controller'=>'groupstudentchangegroup','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form id="add_car" action="<?php echo $this->url(array('module'=>'kindergarten','controller'=>'groupstudentchangegroup','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	<table cellspacing="20" style="margin: 0 auto; width:100%">
 		<tr>
 			<td>
@@ -58,7 +58,7 @@
 												<option value="1">Active</option>
 												<option value="0">Deactive</option>
 											</select>
-											<input dojoType="dijit.form.TextBox"  type="text" name="identity" id="identity" />
+											<input dojoType="dijit.form.TextBox"  type="hidden" name="identity" id="identity" />
 										</td>
 									</tr>
 									<tr style="max-height: 100px;height: 100px;overflow: scroll;">
@@ -85,7 +85,7 @@
 </form>
 
 <script type="text/javascript">
-var url_get_all_student_from_group = "<?php echo $this->url(array('module'=>'foundation','controller'=>'groupstudentchangegroup','action'=>'get-all-student')); ?>";
+var url_get_all_student_from_group = "<?php echo $this->url(array('module'=>'kindergarten','controller'=>'groupstudentchangegroup','action'=>'get-all-student')); ?>";
 	function getStudentFromGroup(){
 			from_group = dijit.byId('from_group').get('value');
 			//alert(from_group);
@@ -110,7 +110,7 @@ var url_get_all_student_from_group = "<?php echo $this->url(array('module'=>'fou
 						for(var i=0;i<respone.length;i++){
 							inx = i+1;
 
-								tem += '<tr><input type="text"  name="stu_id_'+inx+'" id="stu_id_'+inx+'" value="'+respone[i].stu_id+'" />';
+								tem += '<tr><input type="hidden"  name="stu_id_'+inx+'" id="stu_id_'+inx+'" value="'+respone[i].stu_id+'" />';
 							
 							    tem += '<td align="center">&nbsp;'+inx+'&nbsp;</td>';
 								tem += '<td>&nbsp;<label style="font-size:11px;">'+respone[i].stu_code+'</label></td>';
@@ -137,7 +137,7 @@ var url_get_all_student_from_group = "<?php echo $this->url(array('module'=>'fou
 			});
 }
 
-var url_to_group = '<?php echo $this->url(array('module'=>'foundation','controller'=>'groupstudentchangegroup','action'=>'get-to-group')); ?>';
+var url_to_group = '<?php echo $this->url(array('module'=>'kindergarten','controller'=>'groupstudentchangegroup','action'=>'get-to-group')); ?>';
 function toStudentGroup(type){
 	//alert(type);
 	if(type==1){

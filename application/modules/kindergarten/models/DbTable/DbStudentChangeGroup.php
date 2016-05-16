@@ -11,7 +11,7 @@ class Kindergarten_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abst
 	
 	public function getAllStudentID(){
 		$_db = $this->getAdapter();
-		$sql = "SELECT st.stu_id,st.stu_code FROM `rms_student` as st,rms_group_detail_student as gds where gds.is_pass=0 and gds.stu_id=st.stu_id group by gds.stu_id";
+		$sql = "SELECT st.stu_id,st.stu_code FROM `rms_student` as st,rms_group_detail_student as gds where st.is_subspend=0 and st.degree IN (1) and gds.is_pass=0 and gds.stu_id=st.stu_id group by gds.stu_id";
 		$orderby = " ORDER BY stu_code ";
 		return $_db->fetchAll($sql.$orderby);		
 	}
@@ -32,7 +32,7 @@ class Kindergarten_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abst
 		(SELECT name_kh FROM `rms_view` WHERE `rms_view`.`type`=2 and `rms_view`.`key_code`=(SELECT sex FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id` limit 1))AS sex,
 		(select group_code from rms_group where rms_group.id = rms_student_change_group.from_group limit 1)AS from_group,
 		(select group_code from rms_group where rms_group.id = rms_student_change_group.to_group limit 1)AS to_group,
-		moving_date,note from `rms_student_change_group` where 1 ";
+		moving_date,note from `rms_student_change_group`,rms_student where rms_student_change_group.stu_id=rms_student.stu_id and rms_student.degree IN (1) ";
 		$order_by=" order by id DESC";
 		$where='';
 		
@@ -46,6 +46,8 @@ class Kindergarten_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abst
 			$s_where[] = " (SELECT stu_khname FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id`) LIKE '%{$s_search}%'";
 			$s_where[] = " (SELECT stu_enname FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id`) LIKE '%{$s_search}%'";
 			//$s_where[] = " en_name LIKE '%{$s_search}%'";
+			$s_where[] = " (select group_code from rms_group where rms_group.id = rms_student_change_group.from_group) LIKE '%{$s_search}%'";
+			$s_where[] = " (select group_code from rms_group where rms_group.id = rms_student_change_group.to_group) LIKE '%{$s_search}%'";
 			$where .=' AND ( '.implode(' OR ',$s_where).')';
 		}
 		

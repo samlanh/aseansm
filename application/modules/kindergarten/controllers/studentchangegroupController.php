@@ -31,7 +31,7 @@ class Kindergarten_studentchangegroupController extends Zend_Controller_Action {
 			}
 			$collumns = array("STUDENT_CODE","NAME_KH","NAME_EN","SEX","FROM_GROUP","TO_GROUP","MOVING_DATE","NOTE");
 			$link=array(
-					'module'=>'foundation','controller'=>'studentchangegroup','action'=>'edit',
+					'module'=>'kindergarten','controller'=>'studentchangegroup','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('code'=>$link,'kh_name'=>$link,'en_name'=>$link));
 		$this->view->adv_search=$search;	
@@ -43,7 +43,7 @@ class Kindergarten_studentchangegroupController extends Zend_Controller_Action {
 				$_add = new Kindergarten_Model_DbTable_DbStudentChangeGroup();
  				$_add->addStudentChangeGroup($_data);
  				if(!empty($_data['save_close'])){
- 					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentchangegroup");
+ 					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/kindergarten/studentchangegroup");
  				}
 				Application_Form_FrmMessage::message("INSERT_SUCCESS");
 			}catch(Exception $e){
@@ -77,7 +77,7 @@ class Kindergarten_studentchangegroupController extends Zend_Controller_Action {
 				$db = new Kindergarten_Model_DbTable_DbStudentChangeGroup();
 				$row=$db->updateStudentChangeGroup($data);
 				
-				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/foundation/studentchangegroup/index");
+				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/kindergarten/studentchangegroup/index");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("EDIT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());

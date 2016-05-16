@@ -2,7 +2,7 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	echo $this->headTitle($tr->translate('ADD_STUDENT_CHANGE_GROUP')); 
 ?>
-<form id="add_car" action="<?php echo $this->url(array('module'=>'Kindergarten','controller'=>'studentchangegroup','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form id="add_car" action="<?php echo $this->url(array('module'=>'kindergarten','controller'=>'studentchangegroup','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	<table cellspacing="20" style="margin: 0 auto; width:100%">
 		<tr>
 			<td>
@@ -106,7 +106,7 @@
 	</table>	
 </form>
 <script type="text/javascript">
-var url_student = '<?php echo $this->url(array('module'=>'Kindergarten','controller'=>'studentchangegroup','action'=>'get-student')); ?>';
+var url_student = '<?php echo $this->url(array('module'=>'kindergarten','controller'=>'studentchangegroup','action'=>'get-student')); ?>';
 function getStudentInfo(){
 			studentid = dijit.byId('studentid').get('value');
 			dojo.xhrPost({
@@ -127,7 +127,7 @@ function getStudentInfo(){
 			});
 }
 
-var url_to_group = '<?php echo $this->url(array('module'=>'Kindergarten','controller'=>'studentchangegroup','action'=>'get-to-group')); ?>';
+var url_to_group = '<?php echo $this->url(array('module'=>'kindergarten','controller'=>'studentchangegroup','action'=>'get-to-group')); ?>';
 function toStudentGroup(type){
 	//alert(type);
 	if(type==1){
