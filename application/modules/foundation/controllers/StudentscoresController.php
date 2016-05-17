@@ -47,14 +47,14 @@ class Foundation_StudentscoresController extends Zend_Controller_Action {
 public	function addAction(){
 			if($this->getRequest()->isPost()){
 				$_data = $this->getRequest()->getPost();
-				$_model = new Global_Model_DbTable_DbHomeWorkScore();
+				$_model = new Foundation_Model_DbTable_DbHomeWorkScore();
 				try {
 					if(isset($_data['save_new'])){
 						$rs =  $_model->addStudentHomworkScore($_data);
-						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores/add");
+						//Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores/add");
 					}else {
 						$rs =  $_model->addStudentHomworkScore($_data);
-						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores");
+						//Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores");
 					}
 					Application_Form_FrmMessage::message("INSERT_SUCCESS");
 						
@@ -74,6 +74,8 @@ public	function addAction(){
 		$this->view->row_year=$db_homwork->getAllYears();
 		$db_session=new Application_Model_DbTable_DbGlobal();
 		$this->view->row_sesion=$db_session->getSession();
+//get subject id 
+        $this->view->rows_sub=$db_homwork->getSubjectId();
 		//print_r($dbs);exit();
 	}
 	

@@ -11,6 +11,7 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	echo $this->headTitle($tr->translate('ADD_FEE')); 
 	$payment_term = $this->payment_term;
+	$rs_sub=$this->rows_sub;
 	 
 ?>	
  
@@ -170,7 +171,7 @@ function getStudentByIdGroup(group_id){
 		},				    
 	   handleAs:"json", 
 	   load: function(data) {
-		       //alert(data);
+		        
 		   tem="";
 	       if(data!=""){
 				num =0;
@@ -178,49 +179,49 @@ function getStudentByIdGroup(group_id){
 				temp='';
 				str='';
 				    str+='<div id="accordion">';
-				for(i=0;i<data.length;i++){
+				for(i=0;i<data.length;i++){ //alert(data[i].stu_id);
 					inx = i+1;
 					num++;
-					str+='<h3>'+'Student id('+data[i].stu_code+')'+' Student Name('+data[i].stu_khname+')</h3><div>';
+					str+='<h3>'+inx+', Student id('+data[i].stu_code+')'+'&nbsp;|&nbsp;&nbsp;Student Name('+data[i].stu_khname+')&nbsp;|&nbsp;&nbsp;Sex('+gender(data[i].sex)+')&nbsp;|&nbsp;<input type="text" name="stu_id_'+inx+'" id="stu_id_'+inx+'" value="'+data[i].stu_id+'"/></h3><div>';
 					str+='<table>';
-                    str+='<tr><td>១.ភាសាខ្មែរ(Khmer)</td><td><input style="width:100px;" dojoType="dijit.form.validateNumberTextBox" class="fullside" name="totale_khmer_'+inx+'" id="totale_khmer_'+inx+'" required="true" value="" type="text"></td></tr>';
-	                str+='<tr><td>&nbsp;&nbsp;-ការស្តាប់(Listening)</td><td><input style="width:100px;" dojoType="dijit.form.validateNumberTextBox" class="fullside" name="listening_'+inx+'" id="listening_'+inx+'" required="true" value="" type="text"></td>';
-                    str+='<td style="padding-left: 30px ! important;">២.គណិតវិទ្យា(Mathematics)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="mathematics_'+inx+'" id="mathematics_'+inx+'" required="true" value="" type="text"></td>';
-	                str+='<td style="padding-left: 30px ! important;"> ១.តួរ្យតន្រ្តី(Music)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="music_'+inx+'" id="music_'+inx+'"  value="" type="text"></td></tr>';    
+                    str+='<tr><td>១.ភាសាខ្មែរ(Khmer)</td><td><input style="width:100px;" dojoType="dijit.form.validateNumberTextBox" class="fullside" name="totale_khmer_'+inx+'" id="totale_khmer_'+inx+'"   value="" type="text" onkeypress="return AllowOnlyNumbers(event);"><input type="hidden" name="total_kh_id_'+inx+'" id="total_kh_id_'+inx+'" value="1"/></td></tr>';
+	                str+='<tr><td>&nbsp;&nbsp;-ការស្តាប់(Listening)</td><td><input style="width:100px;" dojoType="dijit.form.validateNumberTextBox" class="fullside" name="listening_'+inx+'" id="listening_'+inx+'"   value="" type="text" onkeypress="return AllowOnlyNumbers(event);"><input type="hidden" name="listening_id_'+inx+'" id="listening_id_'+inx+'" value="2"/></td>';
+                    str+='<td style="padding-left: 30px ! important;">២.គណិតវិទ្យា(Mathematics)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="mathematics_'+inx+'" id="mathematics_'+inx+'"  value="" type="text" onkeypress="return AllowOnlyNumbers(event);"><input type="hidden" name="mathematics_id_'+inx+'" id="mathematics_id_'+inx+'" value="8"/></td>';
+	                str+='<td style="padding-left: 30px ! important;"> ១.តួរ្យតន្រ្តី(Music)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="music_'+inx+'" id="music_'+inx+'"  value="" type="text" onkeypress="return AllowOnlyNumbers(event);"><input type="hidden" name="music_id_'+inx+'" id="music_id_'+inx+'" value="17"/></td></tr>';    
 
-	                str+='<tr><td>&nbsp;&nbsp;-ការនិយាយ(Speaking)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="speaking_'+inx+'" id="speaking_'+inx+'"   value="" type="text"></td>';
-	                str+='<td style="padding-left: 30px ! important;">៣.វិទ្យាសាស្រ្តអនុវត្ថ(Sciences)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="sciences_'+inx+'" id="sciences_'+inx+'" required="true" value="" type="text"></td>';
-                    str+='<td style="padding-left: 30px ! important;"> ២.សិល្បៈរបាំ(Dance)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="dance_'+inx+'" id="dance_'+inx+'"  value="" type="text"></td></tr>';    
+	                str+='<tr><td>&nbsp;&nbsp;-ការនិយាយ(Speaking)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="speaking_'+inx+'" id="speaking_'+inx+'"   value="" type="text" onkeypress="return AllowOnlyNumbers(event);"><input type="hidden" name="speaking_id_'+inx+'" id="speaking_id_'+inx+'" value="3"/></td>';
+	                str+='<td style="padding-left: 30px ! important;">៣.វិទ្យាសាស្រ្តអនុវត្ថ(Sciences)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="sciences_'+inx+'" id="sciences_'+inx+'"   value="" type="text" onkeypress="return AllowOnlyNumbers(event);"><input type="hidden" name="sciences_id_'+inx+'" id="sciences_id_'+inx+'" value="9"/></td>';
+                    str+='<td style="padding-left: 30px ! important;"> ២.សិល្បៈរបាំ(Dance)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="dance_'+inx+'" id="dance_'+inx+'"  value="" type="text" onkeypress="return AllowOnlyNumbers(event);"><input type="hidden" name="dance_id" id="dance_id_'+inx+'" value="18"/></td></tr>';    
 
-                    str+='<tr><td>&nbsp;&nbsp;-កាអាន(Reading)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="reading_'+inx+'" id="reading_'+inx+'"   value="" type="text"></td>';
-                    str+='<td style="padding-left: 30px ! important;">៤.ភាសាអង់គ្លេស(English)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="english_'+inx+'" id="english_'+inx+'" required="true" value="" type="text"></td>';
-                    str+='<td style="padding-left: 30px ! important;"> ៣.គំនូរ និង ហត្ថកម្ម(Art & Craft)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="art_craft_'+inx+'" id="art_craft_'+inx+'"  value="" type="text"></td></tr>';    
+                    str+='<tr><td>&nbsp;&nbsp;-កាអាន(Reading)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="reading_'+inx+'" id="reading_'+inx+'"   value="" type="text" onkeypress="return AllowOnlyNumbers(event);"><input type="hidden" name="reading_id_'+inx+'" id="reading_id_'+inx+'" value="4"/></td>';
+                    str+='<td style="padding-left: 30px ! important;">៤.ភាសាអង់គ្លេស(English)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="english_'+inx+'" id="english_'+inx+'"  value="" type="text" onkeypress="return AllowOnlyNumbers(event);"><input type="hidden" name="english_id_'+inx+'" id="english_id_'+inx+'" value="14"/></td>';
+                    str+='<td style="padding-left: 30px ! important;"> ៣.គំនូរ និង ហត្ថកម្ម(Art & Craft)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="art_craft_'+inx+'" id="art_craft_'+inx+'"  value="" type="text" onkeypress="return AllowOnlyNumbers(event);"><input type="hidden" name="art_craft_id_'+inx+'" id="art_craft_id_'+inx+'" value="19"/></td></tr>';    
 
-                    str+='<tr><td>&nbsp;&nbsp;-សរសេរតាមអាន(Dictation)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="dictation_'+inx+'" id="dictation_'+inx+'"   value="" type="text"></td>';
-                    str+='<td style="padding-left: 30px ! important;">៥.កុំព្យូទ័រ(Computer)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="computer_'+inx+'" id="computer_'+inx+'" required="true" value="" type="text"></td>';
-                    str+='<td style="padding-left: 30px ! important;"> ៤.គេហកិច្ច-អប់រំសិល្បៈ(Home Economic)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="home_economic_'+inx+'" id="home_economic_'+inx+'"  value="" type="text"></td></tr>';    
+                    str+='<tr><td>&nbsp;&nbsp;-សរសេរតាមអាន(Dictation)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="dictation_'+inx+'" id="dictation_'+inx+'"   value="" type="text" onkeypress="return AllowOnlyNumbers(event);"><input type="hidden" name="dictation_id_'+inx+'" id="dictation_id_'+inx+'" value="5"/></td>';
+                    str+='<td style="padding-left: 30px ! important;">៥.កុំព្យូទ័រ(Computer)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="computer_'+inx+'" id="computer_'+inx+'"  value="" type="text" onkeypress="return AllowOnlyNumbers(event);"><input type="hidden" name="computer_id_'+inx+'" id="computer_id_'+inx+'" value="15"/></td>';
+                    str+='<td style="padding-left: 30px ! important;"> ៤.គេហកិច្ច-អប់រំសិល្បៈ(Home Economic)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="home_economic_'+inx+'" id="home_economic_'+inx+'"  value="" type="text" onkeypress="return AllowOnlyNumbers(event);"><input type="hidden" name="home_economic_id_'+inx+'" id="home_economic_id_'+inx+'" value="20"/></td></tr>';   
 
-                    str+='<tr><td>&nbsp;&nbsp;-តែងសេចក្តី(Composition)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="composition_'+inx+'" id="composition_'+inx+'"   value="" type="text"></td> ';
-                    str+='<td style="padding-left: 30px ! important;">៦.អប់រំកាយ-សុខភាព(PE / Health)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="pe_health_'+inx+'" id="pe_health_'+inx+'" required="true" value="" type="text"></td>';
-                    str+='<td style="padding-left: 30px ! important;"> ៥.កីឡា(Sport)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="sport_'+inx+'" id="sport_'+inx+'"  value="" type="text"></td></tr>';    
+                    str+='<tr><td>&nbsp;&nbsp;-តែងសេចក្តី(Composition)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="composition_'+inx+'" id="composition_'+inx+'"   value="" type="text"><input type="hidden" name="composition_id_'+inx+'" id="composition_id_'+inx+'" value="6"/></td> ';
+                    str+='<td style="padding-left: 30px ! important;">៦.អប់រំកាយ-សុខភាព(PE / Health)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="pe_health_'+inx+'" id="pe_health_'+inx+'"  value="" type="text" onkeypress="return AllowOnlyNumbers(event);"><input type="hidden" name="pe_health_id_'+inx+'" id="pe_health_id_'+inx+'" value="16"/></td>';
+                    str+='<td style="padding-left: 30px ! important;"> ៥.កីឡា(Sport)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="sport_'+inx+'" id="sport_'+inx+'"  value="" type="text" onkeypress="return AllowOnlyNumbers(event);"><input type="hidden" name="sport_id_'+inx+'" id="sport_id_'+inx+'" value="21"/></td></tr>';    
 
-                    str+='<tr><td>&nbsp;&nbsp;-អក្សរផ្ចង់(Calligraphy)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="calligraphy_'+inx+'" id="calligraphy_'+inx+'"   value="" type="text"></td>';
-                    str+='<td style="padding-left: 30px ! important;">អវត្តមានមានច្បាប់ / Absence with Permission</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="absence_with_permission_'+inx+'" id="absence_with_permission_'+inx+'" required="true" value="" type="text"></td>';
-                    str+='<td style="padding-left: 30px ! important;">អវត្តមានអត់ច្បាប់ / Absence without Permission</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="absence_without_per_'+inx+'" id="absence_without_per_'+inx+'" required="true" value="" type="text"></td></tr>';
+                    str+='<tr><td>&nbsp;&nbsp;-អក្សរផ្ចង់(Calligraphy)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="calligraphy_'+inx+'" id="calligraphy_'+inx+'"   value="" type="text" onkeypress="return AllowOnlyNumbers(event);"> <input type="hidden" name="calligraphy_id_'+inx+'" id="calligraphy_id_'+inx+'" value="7"/></td>';
+                    str+='<td style="padding-left: 30px ! important;">អវត្តមានមានច្បាប់ / Absence with Permission</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="absence_with_permission_'+inx+'" id="absence_with_permission_'+inx+'"  value="" type="text" onkeypress="return AllowOnlyNumbers(event);"></td>';
+                    str+='<td style="padding-left: 30px ! important;">អវត្តមានអត់ច្បាប់ / Absence without Permission</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="absence_without_per_'+inx+'" id="absence_without_per_'+inx+'"   value="" type="text" onkeypress="return AllowOnlyNumbers(event);"></td></tr>';
                     
-                    str+='<tr><td>៧.សិក្សាសង្គម(Social Studies)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="social_studies_'+inx+'" id="social_studies_'+inx+'"   value="" type="text"></td></tr>';
-                    str+='<tr><td>&nbsp;&nbsp;-សីលធម៍-ពលរដ្ឋវិជ្ជា(Moral/Civics)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="moral_civics_'+inx+'" id="moral_civics_'+inx+'" required="true" value="" type="text"></td>';
-                    str+='<td style="padding-left: 30px ! important;">អវត្តមានសរុប / Total Absence(s)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="total_bsence_'+inx+'" id="total_bsence_'+inx+'"   value="" type="text"></td>';
-                    str+='<td style="padding-left: 30px ! important;">ពិន្ទុសរុប / Total score</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="total_score_'+inx+'" id="total_score_'+inx+'"   value="" type="text"></td>';
+                    str+='<tr><td>៧.សិក្សាសង្គម(Social Studies)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="social_studies_'+inx+'" id="social_studies_'+inx+'"   value="" type="text" onkeypress="return AllowOnlyNumbers(event);"><input type="hidden" name="social_studies_id_'+inx+'" id="social_studies_id_'+inx+'" value="10"/></td></tr>';
+                    str+='<tr><td>&nbsp;&nbsp;-សីលធម៍-ពលរដ្ឋវិជ្ជា(Moral/Civics)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="moral_civics_'+inx+'" id="moral_civics_'+inx+'"   value="" type="text" onkeypress="return AllowOnlyNumbers(event);"><input type="hidden" name="moral_civics_id_'+inx+'" id="moral_civics_id_'+inx+'" value="11"/></td>';
+                    str+='<td style="padding-left: 30px ! important;">អវត្តមានសរុប / Total Absence(s)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="total_bsence_'+inx+'" id="total_bsence_'+inx+'"   value="" type="text" onkeypress="return AllowOnlyNumbers(event);"></td>';
+                    str+='<td style="padding-left: 30px ! important;">ពិន្ទុសរុប / Total score</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="total_score_'+inx+'" id="total_score_'+inx+'"   value="" type="text" onkeypress="return AllowOnlyNumbers(event);"></td>'; 
                      str+='</tr>';
 
-                    str+='<tr><td>&nbsp;&nbsp;-ភូមិវិទ្យា(Geography)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="geography_'+inx+'" id="geography_'+inx+'"  value="" type="text"></td>';
-                    str+='<td style="padding-left: 30px ! important;">មធ្យមភាគប្រចាំខែ /Monthly Average</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="monthly_average_'+inx+'" id="monthly_average_'+inx+'"   value="" type="text"></td>';
-                    str+='<td style="padding-left: 30px ! important;">និទ្ទេស / Letter Grade </td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="letter_grade_'+inx+'" id="letter_grade_'+inx+'"   value="" type="text"></td>';
+                    str+='<tr><td>&nbsp;&nbsp;-ភូមិវិទ្យា(Geography)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="geography_'+inx+'" id="geography_'+inx+'"  value="" type="text" onkeypress="return AllowOnlyNumbers(event);"><input type="hidden" name="geography_id_'+inx+'" id="geography_id_'+inx+'" value="12"/></td>';
+                    str+='<td style="padding-left: 30px ! important;">មធ្យមភាគប្រចាំខែ /Monthly Average</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="monthly_average_'+inx+'" id="monthly_average_'+inx+'"   value="" type="text" onkeypress="return AllowOnlyNumbers(event);"></td>';
+                    str+='<td style="padding-left: 30px ! important;">និទ្ទេស / Letter Grade </td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="letter_grade_'+inx+'" id="letter_grade_'+inx+'"   value="" type="text" onkeypress="return AllowOnlyNumbers(event);"></td>';
                     str+='</tr>';
 
-                    str+='<tr><td>&nbsp;&nbsp;-ប្រវត្តិវិទ្យា(History)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="history_'+inx+'" id="history_'+inx+'"  value="" type="text"></td>';
-                    str+='<td style="padding-left: 30px ! important;">ចំណាត់ថ្នាក់ / Rank</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="rank_'+inx+'" id="rank_'+inx+'"  value="" type="text"></td>';
+                    str+='<tr><td>&nbsp;&nbsp;-ប្រវត្តិវិទ្យា(History)</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="history_'+inx+'" id="history_'+inx+'"  value="" type="text" onkeypress="return AllowOnlyNumbers(event);"><input type="hidden" name="history_id_'+inx+'" id="history_id_'+inx+'" value="13"/></td>';
+                    str+='<td style="padding-left: 30px ! important;">ចំណាត់ថ្នាក់ / Rank</td><td><input style="width:100px;" dojoType="dijit.form.TextBox" class="fullside" name="rank_'+inx+'" id="rank_'+inx+'"  value="" type="text" onkeypress="return AllowOnlyNumbers(event);"></td>';
                     str+='<td></td><td></td>';
                     str+='</tr>';
 					str+='</table>';
@@ -481,4 +482,72 @@ function getSubjectByParent(){
 		$('#identity').val(strings);
 		dojo.query("#row"+index).remove();
 	}
+</script>
+<script> //validate controll form 
+function AllowOnlyNumbers(e) {
+
+    e = (e) ? e : window.event;
+    var key = null;
+    var charsKeys = [
+        97, // a  Ctrl + a Select All
+        65, // A Ctrl + A Select All
+        99, // c Ctrl + c Copy
+        67, // C Ctrl + C Copy
+        118, // v Ctrl + v paste
+        86, // V Ctrl + V paste
+        115, // s Ctrl + s save
+        83, // S Ctrl + S save
+        112, // p Ctrl + p print
+        80 // P Ctrl + P print
+    ];
+
+    var specialKeys = [
+    8, // backspace
+    9, // tab
+    27, // escape
+    13, // enter
+    35, // Home & shiftKey +  #
+    36, // End & shiftKey + $
+    37, // left arrow &  shiftKey + %
+    39, //right arrow & '
+    46, // delete & .
+    45 //Ins &  -
+    ];
+
+    key = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+
+    //console.log("e.charCode: " + e.charCode + ", " + "e.which: " + e.which + ", " + "e.keyCode: " + e.keyCode);
+    //console.log(String.fromCharCode(key));
+
+    // check if pressed key is not number 
+    if (key && key < 48 || key > 57) {
+
+        //Allow: Ctrl + char for action save, print, copy, ...etc
+        if ((e.ctrlKey && charsKeys.indexOf(key) != -1) ||
+            //Fix Issue: f1 : f12 Or Ctrl + f1 : f12, in Firefox browser
+            (navigator.userAgent.indexOf("Firefox") != -1 && ((e.ctrlKey && e.keyCode && e.keyCode > 0 && key >= 112 && key <= 123) || (e.keyCode && e.keyCode > 0 && key && key >= 112 && key <= 123)))) {
+            return true
+        }
+            // Allow: Special Keys
+        else if (specialKeys.indexOf(key) != -1) {
+            //Fix Issue: right arrow & Delete & ins in FireFox
+            if ((key == 39 || key == 45 || key == 46)) {
+                return (navigator.userAgent.indexOf("Firefox") != -1 && e.keyCode != undefined && e.keyCode > 0);
+            }
+                //DisAllow : "#" & "$" & "%"
+            else if (e.shiftKey && (key == 35 || key == 36 || key == 37)) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return true;
+       }
+    }
 </script>
