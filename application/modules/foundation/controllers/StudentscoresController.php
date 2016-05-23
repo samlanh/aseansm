@@ -45,24 +45,24 @@ class Foundation_StudentscoresController extends Zend_Controller_Action {
 		
 	}
 public	function addAction(){
-			if($this->getRequest()->isPost()){
-				$_data = $this->getRequest()->getPost();
-				$_model = new Foundation_Model_DbTable_DbHomeWorkScore();
-				try {
-					if(isset($_data['save_new'])){
+		if($this->getRequest()->isPost()){
+			$_data = $this->getRequest()->getPost();
+			$_model = new Foundation_Model_DbTable_DbHomeWorkScore();
+			try {
+				if(isset($_data['save_new'])){
 						$rs =  $_model->addStudentHomworkScore($_data);
-						//Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores/add");
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores/add");
 					}else {
 						$rs =  $_model->addStudentHomworkScore($_data);
-						//Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores");
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores");
 					}
-					Application_Form_FrmMessage::message("INSERT_SUCCESS");
-						
-				}catch(Exception $e){
-					Application_Form_FrmMessage::message("INSERT_FAIL");
-					Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
-				}
-			} 
+					 Application_Form_FrmMessage::message("INSERT_SUCCESS");
+		
+			}catch(Exception $e){
+				Application_Form_FrmMessage::message("INSERT_FAIL");
+				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			}
+		}
 		$model = new Application_Model_DbTable_DbGlobal();
 		$this->view->payment_term = $model->getAllPaymentTerm(null,1);
 		$db_subjec=new Global_Model_DbTable_DbStudentScore();
@@ -74,41 +74,56 @@ public	function addAction(){
 		$this->view->row_year=$db_homwork->getAllYears();
 		$db_session=new Application_Model_DbTable_DbGlobal();
 		$this->view->row_sesion=$db_session->getSession();
-//get subject id 
-        $this->view->rows_sub=$db_homwork->getSubjectId();
+		//get subject id
+		$this->view->rows_sub=$db_homwork->getSubjectId();
 		//print_r($dbs);exit();
+		
+ 
+		$db_homwork=new Global_Model_DbTable_DbHomeWorkScore();
+		$this->view->rows_sub=$db_homwork->getSubjectId();
+		$this->view->rows_parent=$db_homwork->getParent();
+		 
 	}
 	
 	public	function editAction(){
-// 		$id=$this->getRequest()->getParam('id');
-// 		if($this->getRequest()->isPost()){
-// 			$_data = $this->getRequest()->getPost();
-// 			$_model = new Global_Model_DbTable_DbHomeWorkScore();
-// 			try {
-// 				if(isset($_data['save_close'])){ 
-// 					$_data['score_id']=$id;
-// 					$rs =  $_model->updateStudentHomworkScore($_data);
-// 					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores");
-// 				}
-// 			}catch(Exception $e){
-// 				Application_Form_FrmMessage::message("INSERT_FAIL");
-// 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
-// 			}
-// 		}
-// 		$model = new Application_Model_DbTable_DbGlobal();
-// 		$this->view->payment_term = $model->getAllPaymentTerm(null,1);
-// 		$db_subjec=new Global_Model_DbTable_DbStudentScore();
-// 		$this->view->rows_parent=$db_subjec->getParentName();
-// 		//$dbs=$this->view->row_years=$db_subjec->getStudyYears();
-// 		$this->view->rows_group=$db_subjec->getGroupAll();
-// 		$db_years=new Registrar_Model_DbTable_DbRegister();
-// 		$db_homwork=new Global_Model_DbTable_DbHomeWorkScore();
-// 		$this->view->row_year=$db_homwork->getAllYears();
-// 		$this->view->row_home=$db_homwork->getHomeWorkScoreById($id);
-// 		$this->view->row_detial=$db_homwork->getHomeWorkDetailScoreById($id);
-// 		//print_r($dbs);exit();
-// 		$db_session=new Application_Model_DbTable_DbGlobal();
-// 		$this->view->row_sesion=$db_session->getSession();
+		if($this->getRequest()->isPost()){
+			$_data = $this->getRequest()->getPost();
+			$_model = new Foundation_Model_DbTable_DbHomeWorkScore();
+			try {
+				if(isset($_data['save_new'])){
+						$rs =  $_model->addStudentHomworkScore($_data);
+						//Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores/add");
+					}else {
+						$rs =  $_model->addStudentHomworkScore($_data);
+						//Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores");
+					}
+					//Application_Form_FrmMessage::message("INSERT_SUCCESS");
+		
+			}catch(Exception $e){
+				Application_Form_FrmMessage::message("INSERT_FAIL");
+				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			}
+		}
+		$model = new Application_Model_DbTable_DbGlobal();
+		$this->view->payment_term = $model->getAllPaymentTerm(null,1);
+		$db_subjec=new Global_Model_DbTable_DbStudentScore();
+		$this->view->rows_parent=$db_subjec->getParentName();
+		//$dbs=$this->view->row_years=$db_subjec->getStudyYears();
+		$this->view->rows_group=$db_subjec->getGroupAll();
+		$db_years=new Registrar_Model_DbTable_DbRegister();
+		$db_homwork=new Global_Model_DbTable_DbHomeWorkScore();
+		$this->view->row_year=$db_homwork->getAllYears();
+		$db_session=new Application_Model_DbTable_DbGlobal();
+		$this->view->row_sesion=$db_session->getSession();
+		//get subject id
+		$this->view->rows_sub=$db_homwork->getSubjectId();
+		//print_r($dbs);exit();
+		
+ 
+		$db_homwork=new Global_Model_DbTable_DbHomeWorkScore();
+		$this->view->rows_sub=$db_homwork->getSubjectId();
+		$this->view->rows_parent=$db_homwork->getParent();
+		 
 	}
 	
 	function addoldAction(){

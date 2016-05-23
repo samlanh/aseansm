@@ -24,6 +24,7 @@ class Foundation_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
 		//print_r($_data);exit();
 		$db = $this->getAdapter();
 		$db->beginTransaction();
+		$db_sub = new Global_Model_DbTable_DbHomeWorkScore();
 		try{
 			$_arr = array(
 					'academic_id'=>$_data['year_study'],
@@ -40,36 +41,62 @@ class Foundation_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
 				//print_r($ids);exit();
 				if(!empty($ids))foreach ($ids as $i){
 					//foreach ($ids as $rs){
-						// Listening
-						$arr=array(
-								'score_id'=>$id,
-								'student_id'=>$_data['stu_id_'.$i],
-								'subject_id'=>$_data['listening_id_'.$i],
-								'score'=>$_data['listening_'.$i],
-								'status'=>1,
-	    		                'user_id'=>$this->getUserId()
-						);
-						$this->_name='rms_score_detail';
-						$db->getProfiler()->setEnabled(true);
-						$this->insert($arr);
-						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-						$db->getProfiler()->setEnabled(false);
-						//Speaking
-						$arr=array(
-								'score_id'=>$id,
-								'student_id'=>$_data['stu_id_'.$i],
-								'subject_id'=>$_data['speaking_id_'.$i],
-								'score'=>$_data['speaking_'.$i],
-								'status'=>1,
-								'user_id'=>$this->getUserId()
-						);
-						$this->_name='rms_score_detail';
-						$db->getProfiler()->setEnabled(true);
-						$this->insert($arr);
-						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-						$db->getProfiler()->setEnabled(false);
+						
+						foreach ($db_sub->getParent() as $rs_parent){
+							$parent_id = $rs_parent["id"];
+								if(!empty($db_sub->getSubject($parent_id))){
+									foreach ($db_sub->getSubject($parent_id) as $rs_sub){    /////////if parent have subjects
+										echo $rs_sub["sub_name"];
+										$subject_id = $rs_sub["id"];
+										$sub_name = str_replace(' ','',$rs_sub["subject_titleen"]);
+										$arr=array(
+												'score_id'=>$id,
+												'student_id'=>$_data['stu_id_'.$i],
+												'subject_id'=> $subject_id,
+												'score'=> $_data["$sub_name".$i],
+												'status'=>1,
+												'user_id'=>$this->getUserId()
+										);
+										$this->_name='rms_score_detail';
+// 										$db->getProfiler()->setEnabled(true);
+										$this->insert($arr);
+// 										Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+// 										Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+// 										$db->getProfiler()->setEnabled(false);
+									}
+								}else{/////////if parent have not subjects
+									$sub_name = str_replace(' ','',$rs_parent["subject_titleen"]);
+									$subject_id = $rs_parent['id'];
+									echo $rs_parent["sub_name"];
+									$arr=array(
+											'score_id'=>$id,
+											'student_id'=>$_data['stu_id_'.$i],
+											'subject_id'=> $subject_id,
+											'score'=> $_data["$sub_name".$i],
+											'status'=>1,
+											'user_id'=>$this->getUserId()
+									);
+									$this->_name='rms_score_detail';
+// 									$db->getProfiler()->setEnabled(true);
+									$this->insert($arr);
+// 									Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+// 									Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+// 									$db->getProfiler()->setEnabled(false);
+								}
+								//print_r($sub_name);
+								//$score_val = $_data["$sub_name".$i];
+// 								$arr=array(
+// 										'score_id'=>$id,
+// 										'student_id'=>$_data['stu_id_'.$i],
+// 										'subject_id'=> $subject_id,
+// 										'score'=> $score_val,
+// 										'status'=>1,
+// 										'user_id'=>$this->getUserId()
+// 								);
+								
+						
+						}
+						//echo 'student_id'.$_data['stu_id_'.$i]."<hr />";
 					//}
 				}
 			}
