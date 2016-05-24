@@ -86,6 +86,7 @@ public	function addAction(){
 	}
 	
 	public	function editAction(){
+		$id=$this->getRequest()->getParam('id');
 		if($this->getRequest()->isPost()){
 			$_data = $this->getRequest()->getPost();
 			$_model = new Foundation_Model_DbTable_DbHomeWorkScore();
@@ -120,10 +121,14 @@ public	function addAction(){
 		//print_r($dbs);exit();
 		
  
-		$db_homwork=new Global_Model_DbTable_DbHomeWorkScore();
+		//$db_homwork=new Global_Model_DbTable_DbHomeWorkScore();
 		$this->view->rows_sub=$db_homwork->getSubjectId();
 		$this->view->rows_parent=$db_homwork->getParent();
-		 
+		//get id fore update 
+		$db=new Foundation_Model_DbTable_DbHomeWorkScore();
+		$this->view->row_g=$db->getGroupStudent($id);
+		$this->view->rows_scor=$db->getScoreStudents($id);
+		$data=$this->view->rows_detail=$db->getSubjectById($id);
 	}
 	
 	function addoldAction(){

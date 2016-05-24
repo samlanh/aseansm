@@ -21,7 +21,7 @@ class Foundation_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
     }
     
 	public function addStudentHomworkScore($_data){
-		//print_r($_data);exit();
+		 //print_r($_data);exit();
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		$db_sub = new Global_Model_DbTable_DbHomeWorkScore();
@@ -46,7 +46,7 @@ class Foundation_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
 							$parent_id = $rs_parent["id"];
 								if(!empty($db_sub->getSubject($parent_id))){
 									foreach ($db_sub->getSubject($parent_id) as $rs_sub){    /////////if parent have subjects
-										echo $rs_sub["sub_name"];
+										//echo $rs_sub["sub_name"];
 										$subject_id = $rs_sub["id"];
 										$sub_name = str_replace(' ','',$rs_sub["subject_titleen"]);
 										$arr=array(
@@ -67,7 +67,7 @@ class Foundation_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
 								}else{/////////if parent have not subjects
 									$sub_name = str_replace(' ','',$rs_parent["subject_titleen"]);
 									$subject_id = $rs_parent['id'];
-									echo $rs_parent["sub_name"];
+									//echo $rs_parent["sub_name"];
 									$arr=array(
 											'score_id'=>$id,
 											'student_id'=>$_data['stu_id_'.$i],
@@ -271,6 +271,21 @@ class Foundation_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
 	function getSubjectId(){
 		$db=$this->getAdapter();
 		$sql="SELECT id,parent,CONCAT(subject_titleen,'-',subject_titlekh) AS sub_name FROM rms_subject  WHERE `status` =1";
+		return $db->fetchAll($sql);
+	}
+	function getGroupStudent($id){
+		$db=$this->getAdapter();
+		$sql="SELECT id,academic_id,session_id,group_id,term_id FROM rms_score WHERE id=$id LIMIT 1";
+		return $db->fetchRow($sql);
+	}
+	function getScoreStudents($id){
+		$db=$this->getAdapter();
+		$sql="SELECT id,score_id,student_id,subject_id,score FROM rms_score_detail WHERE score_id=".$id;
+		return $db->fetchAll($sql);
+	}
+	function getSubjectById($id){
+		$db = $this->getAdapter();
+		$sql =" SELECT sd.student_id,sd.subject_id,sd.score FROM rms_score_detail AS sd WHERE sd.score_id=$id";
 		return $db->fetchAll($sql);
 	}
 }

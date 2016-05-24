@@ -81,7 +81,7 @@ dojo.ready(function(){
 		    }
 		}, "study_group");
 
-		 var metion = '<?php echo $this->all_metion; ?>';
+		 var metion = '<?php //echo $this->all_metion; ?>';
 		 
 		 
 	});
@@ -188,19 +188,19 @@ function getStudentByIdGroup(group_id){
 					inx = i+1;
 					num++;
 					str+='<h3>'+inx+', Student id('+data[i].stu_code+')'+'&nbsp;|&nbsp;&nbsp;Student Name('+data[i].stu_khname+')&nbsp;|&nbsp;&nbsp;Sex('+gender(data[i].sex)+')&nbsp;|&nbsp;<input   type="hidden" name="stu_id_'+inx+'" id="stu_id_'+inx+'" value="'+data[i].stu_id+'"/></h3><div >';
-					str+='<table style="border-collapse: collapse;border-spacing: 0;">';
+					str+='<center><table style="border-collapse: collapse;border-spacing: 0;width:700px;">';
 						
 					<?php   $db = new Global_Model_DbTable_DbHomeWorkScore();?>
-					<?php if (!empty($this->rows_parent)) foreach ($this->rows_parent As $key =>$rs_parent){ ?>
+					<?php if (!empty($this->rows_parent)) foreach ($this->rows_parent As $key =>$rs_parent){ $key=$key+1; ?>
 					
-                    str+='<tr><td style="border: 1px solid #CCC;"><?php echo $rs_parent['sub_name']?>';
-                    str+='</td><td  style="border: 1px solid #CCC;"><input style="width:100px;" dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rs_parent['subject_titleen'])?>'+inx+'" id="<?php echo $rs_parent['subject_titleen']?>'+inx+'"   value="0" type="text" onkeypress="return AllowOnlyNumbers(event);"></td></tr>';
+                    str+='<tr><td style="border: 1px solid #CCC;"><?php echo $key.".".$rs_parent['sub_name']?>';
+                    str+='</td><td  style="border: 1px solid #CCC;"><input   dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rs_parent['subject_titleen'])?>'+inx+'" id="<?php echo $rs_parent['subject_titleen']?>'+inx+'"   value="0" type="text" onkeypress="return AllowOnlyNumbers(event);"></td></tr>';
 					<?php foreach ($db->getSubject($rs_parent["id"]) as $rs){?>
-                           str+='<tr ><td  style="border: 1px solid #CCC;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $rs['sub_name']?></td><td style="border: 1px solid #CCC;"><input dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rs['subject_titleen']) ?>'+inx+'" id="<?php echo $rs['subject_titleen']?>'+inx+'"   value="0" type="text" onkeypress="return AllowOnlyNumbers(event);"></td></tr>';
+                           str+='<tr ><td  style="border: 1px solid #CCC;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;<?php echo $rs['sub_name']?></td><td style="border: 1px solid #CCC;"><input dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rs['subject_titleen']) ?>'+inx+'" id="<?php echo $rs['subject_titleen']?>'+inx+'"   value="0" type="text" onkeypress="return AllowOnlyNumbers(event);"></td></tr>';
 					<?php } }?>
 
                     str+='</tr>';
-					str+='</table>';
+					str+='</table></center>';
 					str+='</div>';
 				    if(inx!=1) {//identity set value 1,2,3,4,5
 						var identity = $('#identity').val();
@@ -214,6 +214,7 @@ function getStudentByIdGroup(group_id){
 				 $( "#accordion" ).accordion();
 	       }else{
 	    	   $('#identity').val('');
+	    	   document.getElementById("liststudent").innerHTML = '';
 	       }
 	   },		
 	    error: function(err) {
