@@ -45,6 +45,32 @@ class Foundation_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
 						foreach ($db_sub->getParent() as $rs_parent){
 							$parent_id = $rs_parent["id"];
 								if(!empty($db_sub->getSubject($parent_id))){
+									$count = count($db_sub->getSubject($parent_id));
+									echo $count."<br />";
+									$parent_score = 0;
+									
+									foreach ($db_sub->getSubject($parent_id) as $rs_subs){
+										$sub_name = str_replace(' ','',$rs_subs["subject_titleen"]);
+										$subject_id = $rs_parent['id'];
+										$parent_score = $parent_score + $_data["$sub_name".$i];
+									}
+									
+									//echo $rs_parent["sub_name"];
+									$arr=array(
+											'score_id'=>$id,
+											'student_id'=>$_data['stu_id_'.$i],
+											'subject_id'=> $subject_id,
+											'score'=> $parent_score/$count,
+											'status'=>1,
+											'user_id'=>$this->getUserId(),
+											'is_parent'=> $rs_parent["is_parent"]
+									);
+									$this->_name='rms_score_detail';
+									$db->getProfiler()->setEnabled(true);
+									$this->insert($arr);
+									Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+									Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+									$db->getProfiler()->setEnabled(false);
 									foreach ($db_sub->getSubject($parent_id) as $rs_sub){    /////////if parent have subjects
 										//echo $rs_sub["sub_name"];
 										$subject_id = $rs_sub["id"];
@@ -55,15 +81,18 @@ class Foundation_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
 												'subject_id'=> $subject_id,
 												'score'=> $_data["$sub_name".$i],
 												'status'=>1,
-												'user_id'=>$this->getUserId()
+												'user_id'=>$this->getUserId(),
+												'is_parent'=> $rs_sub["is_parent"]
 										);
 										$this->_name='rms_score_detail';
-// 										$db->getProfiler()->setEnabled(true);
+										$db->getProfiler()->setEnabled(true);
 										$this->insert($arr);
-// 										Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-// 										Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-// 										$db->getProfiler()->setEnabled(false);
+										Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+										Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+										$db->getProfiler()->setEnabled(false);
+										
 									}
+									
 								}else{/////////if parent have not subjects
 									$sub_name = str_replace(' ','',$rs_parent["subject_titleen"]);
 									$subject_id = $rs_parent['id'];
@@ -74,14 +103,15 @@ class Foundation_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
 											'subject_id'=> $subject_id,
 											'score'=> $_data["$sub_name".$i],
 											'status'=>1,
-											'user_id'=>$this->getUserId()
+											'user_id'=>$this->getUserId(),
+											'is_parent'=> $rs_parent["is_parent"]
 									);
 									$this->_name='rms_score_detail';
-// 									$db->getProfiler()->setEnabled(true);
+									$db->getProfiler()->setEnabled(true);
 									$this->insert($arr);
-// 									Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-// 									Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-// 									$db->getProfiler()->setEnabled(false);
+									Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+									Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+									$db->getProfiler()->setEnabled(false);
 								}
 								//print_r($sub_name);
 								//$score_val = $_data["$sub_name".$i];
@@ -100,7 +130,7 @@ class Foundation_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
 					//}
 				}
 			}
-			//exit();
+// 			exit();
 		  $db->commit();
 		}catch (Exception $e){
 			$db->rollBack();
@@ -285,7 +315,24 @@ class Foundation_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
 	}
 	function getSubjectById($id){
 		$db = $this->getAdapter();
-		$sql =" SELECT sd.student_id,sd.subject_id,sd.score FROM rms_score_detail AS sd WHERE sd.score_id=$id";
+		$sql =" SELECT 
+				  sd.student_id,
+				  (SELECT CONCAT(s.`stu_khname`,'-',`stu_enname`) FROM `rms_student`AS s WHERE s.`stu_id`=sd.`student_id`) AS student_name,
+				  (SELECT s.`stu_code` FROM `rms_student`AS s WHERE s.`stu_id`=sd.`student_id`) AS stu_code,
+				  (SELECT s.`sex` FROM `rms_student`AS s WHERE s.`stu_id`=sd.`student_id`) AS sex,
+				  sd.subject_id,
+				  (SELECT CONCAT(`subject_titlekh`,'-',`subject_titleen`) FROM `rms_subject` AS s WHERE s.`id`=sd.`subject_id`) AS subject_name,
+				  (SELECT `subject_titleen` FROM `rms_subject` AS s WHERE s.`id`=sd.`subject_id`) AS subject_titleen,
+				  sd.score ,
+  				  sd.`is_parent`
+				FROM
+				  rms_score_detail AS sd 
+				WHERE sd.score_id =$id ";
+		return $db->fetchAll($sql);
+	}
+	function countScore($id){
+		$db = $this->getAdapter();
+		$sql ="SELECT s.`score_id` FROM `rms_score_detail` AS s WHERE s.`score_id`=$id GROUP BY s.`student_id`";
 		return $db->fetchAll($sql);
 	}
 }

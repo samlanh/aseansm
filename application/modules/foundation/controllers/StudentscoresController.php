@@ -51,12 +51,12 @@ public	function addAction(){
 			try {
 				if(isset($_data['save_new'])){
 						$rs =  $_model->addStudentHomworkScore($_data);
-						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores/add");
+						//Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores/add");
 					}else {
 						$rs =  $_model->addStudentHomworkScore($_data);
-						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores");
+						//Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores");
 					}
-					 Application_Form_FrmMessage::message("INSERT_SUCCESS");
+					 //Application_Form_FrmMessage::message("INSERT_SUCCESS");
 		
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
@@ -66,7 +66,7 @@ public	function addAction(){
 		$model = new Application_Model_DbTable_DbGlobal();
 		$this->view->payment_term = $model->getAllPaymentTerm(null,1);
 		$db_subjec=new Global_Model_DbTable_DbStudentScore();
-		$this->view->rows_parent=$db_subjec->getParentName();
+		//$this->view->rows_parent=$db_subjec->getParentName();
 		//$dbs=$this->view->row_years=$db_subjec->getStudyYears();
 		$this->view->rows_group=$db_subjec->getGroupAll();
 		$db_years=new Registrar_Model_DbTable_DbRegister();

@@ -5,7 +5,8 @@
   	$core_id= $this->row_score;
 	//print_r($this->rows_scor);
 	 $score = $this->rows_detail;
-	 print_r($score);
+	print_r($this->row_g);
+	 
 ?>	
 <head>
   <meta charset="utf-8">
@@ -23,7 +24,7 @@
 	$rs_sub=$this->rows_sub;
 	
 ?>	
- 
+
 <script>
 dojo.require("dojo.NodeList-manipulate");
 dojo.require("dojo.parser");
@@ -81,20 +82,24 @@ dojo.ready(function(){
 		    	//document.getElementById("table_row").innerHTML = '';
 		    	getStudentAll();
 				  //  getStudent(study_group);
+				  //oldStudentScore();
 			    getParentName();
 		    }
 		}, "study_group");
 
 		 var metion = '<?php //echo $this->all_metion; ?>';
 		 dijit.byId('year_study').attr('value','<?php echo $this->row_g['academic_id']?>');
+		 dijit.byId('session').attr('value','<?php echo $this->row_g['term_id']?>');
 		 dijit.byId('study_group').attr('value','<?php echo $this->row_g['group_id']?>');
 		 dijit.byId('term').attr('value','<?php echo $this->row_g['term_id']?>');
 		 
 	});
+ 
 function getStudentAll(){
 	study_group=dijit.byId('study_group').get('value');
 	if(study_group !=''){
-		getStudentByIdGroup(study_group);
+		//getStudentByIdGroup(study_group);
+		getStudentGroup();
 	} 
 }
 //get parent name filter by group id
@@ -164,8 +169,9 @@ function getGroup(academic_id,session_id){
 function getStudent(){
 	//dijit.byId('parent_name').attr('value','');
 	group_id=dijit.byId('study_group').get('value');
+	getStudentGroup();
 	if(group_id !=''){
-		getStudentByIdGroup(group_id);
+		//getStudentByIdGroup(group_id);
 		
 	}else{
 		document.getElementById("table_row").innerHTML = '';
@@ -176,9 +182,67 @@ ccc='';
    $score_sub =json_encode($dbs);
    //echo $score_sub;exit();
 ?>
+var old_academic = '<?php echo $this->row_g['academic_id'];?>';
+var old_term = '<?php echo $this->row_g['term_id'];?>';
+var old_session = '<?php echo $this->row_g['session_id'];?>';
+var old_group = '<?php echo $this->row_g['group_id'];?>';
+
+
+function getStudentGroup(){
+	var new_group_id = dijit.byId('study_group').get('value');
+	var new_term_id = dijit.byId('term').get('value');
+	var new_session_id = dijit.byId('session').get('value');
+	var new_academic_id = dijit.byId('year_study').get('value');
+// 	alert(new_group_id+"="+old_group+"&&"+new_term_id+"="+old_term+"&&"+new_session_id+"="+old_session+"&&"+new_academic_id+"="+old_academic);
+	if(old_academic ==new_academic_id && old_term ==new_term_id && old_session ==new_session_id && old_group ==new_group_id){
+// 		alert("true")
+		oldStudentScore();
+	}else{
+// 		alert("false")
+		getStudentByIdGroup(new_group_id);
+	}
+}
+function oldStudentScore(){
+	str='';
+	str+='<div id="accordion">';
+		<?php 
+			$old_stu = null;
+			$i=0;
+			foreach ($score as $key=>$rs){
+				if($old_stu != $rs["student_id"]){
+				$i = $i+1;
+		?>
+		inx = '<?php echo $i; ?>';
+		str+='<h3>'+inx+', Student id(<?php echo $rs["stu_code"] ?>)'+'&nbsp;|&nbsp;&nbsp;Student Name(<?php echo $rs["student_name"] ?>)&nbsp;|&nbsp;&nbsp;Sex('+gender(<?php echo $rs["sex"] ?>)+')&nbsp;|&nbsp;<input   type="hidden" name="stu_id_'+inx+'" id="stu_id_'+inx+'" value="<?php echo $rs["student_id"] ?>"/></h3><div >';
+		str+='<center><table style="border-collapse: collapse;border-spacing: 0;width:700px;">';
+		<?php 
+			$j =0;
+			foreach ($score as $rss){
+				if($rs["student_id"]==$rss["student_id"]){
+		?>
+		<?php if($rss["is_parent"]== 1){ $j=$j+1;?>
+			index = '<?php echo $j;?>';
+			str+='<tr><td style="border: 1px solid #CCC;"><?php echo $j.".".$rss['subject_name']?>';
+	    	str+='</td><td  style="border: 1px solid #CCC;"><input   dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rss['subject_titleen'])?>'+inx+'" id="<?php echo $rss['subject_titleen']?>'+inx+'"   value="<?php echo $rss["score"];?>" type="text" onkeypress="return AllowOnlyNumbers(event);"></td></tr>';
+	    <?php }else{?>
+	    str+='<tr><td  style="border: 1px solid #CCC;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;<?php echo $rss['subject_name']?></td><td style="border: 1px solid #CCC;"><input dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rss['subject_titleen']) ?>'+inx+'" id="<?php echo $rss['subject_titleen']?>'+inx+'"   value="<?php echo $rss["score"] ?>" type="text" onkeypress="return AllowOnlyNumbers(event);"></td></tr>';
+		<?php }}}?>
+		str+='</table></center>';
+		str+='</div>';
+		if(inx!=1) {//identity set value 1,2,3,4,5
+			var identity = $('#identity').val();
+			$('#identity').val(identity+','+inx);
+		} else {
+			$('#identity').val(inx);
+		}
+		<?php } $old_stu=$rs["student_id"];}?>
+	str+='</div>';
+
+	document.getElementById("liststudent").innerHTML = str;
+	 $( "#accordion" ).accordion();
+}
 var url_getStudent= '<?php echo $this->url(array('module'=>'foundation','controller'=>'studentscores','action'=>'get-student')); ?>';
 function getStudentByIdGroup(group_id){
-	
 	dojo.xhrPost({
 	    url: url_getStudent,
 	    content : { 
@@ -197,23 +261,14 @@ function getStudentByIdGroup(group_id){
 				for(i=0;i<data.length;i++){ //alert(data[i].stu_id);
 					inx = i+1;
 					num++;
-					a= document.cookie = 'stu_id='+data[i].stu_code;
-					alert(a);
 					str+='<h3>'+inx+', Student id('+data[i].stu_code+')'+'&nbsp;|&nbsp;&nbsp;Student Name('+data[i].stu_khname+')&nbsp;|&nbsp;&nbsp;Sex('+gender(data[i].sex)+')&nbsp;|&nbsp;<input   type="hidden" name="stu_id_'+inx+'" id="stu_id_'+inx+'" value="'+data[i].stu_id+'"/></h3><div >';
 					str+='<center><table style="border-collapse: collapse;border-spacing: 0;width:700px;">';
-					<?php $stu_id = "<script>document.writeln(1);</script>" ?>
-					
+						
 					<?php   $db = new Global_Model_DbTable_DbHomeWorkScore();?>
 					<?php if (!empty($this->rows_parent)) foreach ($this->rows_parent As $key =>$rs_parent){ $key=$key+1; ?>
-					<?php 
-						foreach ($score as $rs_score){
-							if($rs_score["student_id"]==$stu_id){
-								echo "ewd";
-							
-					?>
+					
                     str+='<tr><td style="border: 1px solid #CCC;"><?php echo $key.".".$rs_parent['sub_name']?>';
                     str+='</td><td  style="border: 1px solid #CCC;"><input   dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rs_parent['subject_titleen'])?>'+inx+'" id="<?php echo $rs_parent['subject_titleen']?>'+inx+'"   value="0" type="text" onkeypress="return AllowOnlyNumbers(event);"></td></tr>';
-					<?php }}?>
 					<?php foreach ($db->getSubject($rs_parent["id"]) as $rs){?>
                            str+='<tr ><td  style="border: 1px solid #CCC;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;<?php echo $rs['sub_name']?></td><td style="border: 1px solid #CCC;"><input dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rs['subject_titleen']) ?>'+inx+'" id="<?php echo $rs['subject_titleen']?>'+inx+'"   value="0" type="text" onkeypress="return AllowOnlyNumbers(event);"></td></tr>';
 					<?php } }?>
@@ -320,7 +375,7 @@ function gender(sex){
 									else{$term.=','.$id;} ?>
 								<?php }?>
 									<input type="hidden" name="iden_term" id="iden_term"  value="<?php echo $term;?>" >
-									<input type="hidden" name="identity" id="identity"  value="" >
+									<input type="text" name="identity" id="identity"  value="" >
 								 </td>
 							</tr>
 							<tr>
@@ -498,16 +553,17 @@ function AllowOnlyNumbers(e) {
     ];
 
     var specialKeys = [
-    8, // backspace
-    9, // tab
-    27, // escape
-    13, // enter
-    35, // Home & shiftKey +  #
-    36, // End & shiftKey + $
-    37, // left arrow &  shiftKey + %
-    39, //right arrow & '
-    46, // delete & .
-    45 //Ins &  -
+	    8, // backspace
+	    9, // tab
+	    27, // escape
+	    13, // enter
+	    35, // Home & shiftKey +  #
+	    36, // End & shiftKey + $
+	    37, // left arrow &  shiftKey + %
+	    39, //right arrow & '
+	    46, // delete & .
+	    109,//.
+	    45 //Ins &  -
     ];
 
     key = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
@@ -517,7 +573,6 @@ function AllowOnlyNumbers(e) {
 
     // check if pressed key is not number 
     if (key && key < 48 || key > 57) {
-
         //Allow: Ctrl + char for action save, print, copy, ...etc
         if ((e.ctrlKey && charsKeys.indexOf(key) != -1) ||
             //Fix Issue: f1 : f12 Or Ctrl + f1 : f12, in Firefox browser
@@ -527,8 +582,9 @@ function AllowOnlyNumbers(e) {
             // Allow: Special Keys
         else if (specialKeys.indexOf(key) != -1) {
             //Fix Issue: right arrow & Delete & ins in FireFox
-            if ((key == 39 || key == 45 || key == 46)) {
-                return (navigator.userAgent.indexOf("Firefox") != -1 && e.keyCode != undefined && e.keyCode > 0);
+            if ((key == 39 || key == 45 || key == 46 || key == 109)) {
+                //return (navigator.userAgent.indexOf("Firefox") != -1 && e.keyCode != undefined && e.keyCode > 0);
+                return true
             }
                 //DisAllow : "#" & "$" & "%"
             else if (e.shiftKey && (key == 35 || key == 36 || key == 37)) {

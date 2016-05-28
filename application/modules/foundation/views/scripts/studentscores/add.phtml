@@ -2,6 +2,7 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	echo $this->headTitle($tr->translate("ADD_SCORE"));
 	$row_sub=$this->rows_sub;
+	print_r($this->rows_parent);
 ?>	
 <head>
   <meta charset="utf-8">
@@ -316,7 +317,7 @@ function gender(sex){
 						<tfoot>
 							<tr>
 								<td colspan="8" align="center">
-								 	<input iconClass="dijitIconClear" type="reset" value="សំអាត" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
+								 	<input iconClass="dijitIconClear" type="reset" value="ážŸáŸ†áž¢áž¶áž�" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
 									<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('SAVE_CLOSE');?>" dojoType="dijit.form.Button" 
 										iconClass="dijitEditorIcon dijitEditorIconSave" />
 									<input type="submit" value="save_new" name="save_new" label="<?php echo $tr->translate('SAVE_NEW');?>" dojoType="dijit.form.Button" 
@@ -479,16 +480,17 @@ function AllowOnlyNumbers(e) {
     ];
 
     var specialKeys = [
-    8, // backspace
-    9, // tab
-    27, // escape
-    13, // enter
-    35, // Home & shiftKey +  #
-    36, // End & shiftKey + $
-    37, // left arrow &  shiftKey + %
-    39, //right arrow & '
-    46, // delete & .
-    45 //Ins &  -
+	    8, // backspace
+	    9, // tab
+	    27, // escape
+	    13, // enter
+	    35, // Home & shiftKey +  #
+	    36, // End & shiftKey + $
+	    37, // left arrow &  shiftKey + %
+	    39, //right arrow & '
+	    46, // delete & .
+	    109,//.
+	    45 //Ins &  -
     ];
 
     key = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
@@ -498,7 +500,6 @@ function AllowOnlyNumbers(e) {
 
     // check if pressed key is not number 
     if (key && key < 48 || key > 57) {
-
         //Allow: Ctrl + char for action save, print, copy, ...etc
         if ((e.ctrlKey && charsKeys.indexOf(key) != -1) ||
             //Fix Issue: f1 : f12 Or Ctrl + f1 : f12, in Firefox browser
@@ -508,8 +509,9 @@ function AllowOnlyNumbers(e) {
             // Allow: Special Keys
         else if (specialKeys.indexOf(key) != -1) {
             //Fix Issue: right arrow & Delete & ins in FireFox
-            if ((key == 39 || key == 45 || key == 46)) {
-                return (navigator.userAgent.indexOf("Firefox") != -1 && e.keyCode != undefined && e.keyCode > 0);
+            if ((key == 39 || key == 45 || key == 46 || key == 109)) {
+                //return (navigator.userAgent.indexOf("Firefox") != -1 && e.keyCode != undefined && e.keyCode > 0);
+                return true
             }
                 //DisAllow : "#" & "$" & "%"
             else if (e.shiftKey && (key == 35 || key == 36 || key == 37)) {
