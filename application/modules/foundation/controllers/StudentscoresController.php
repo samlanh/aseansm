@@ -51,12 +51,11 @@ public	function addAction(){
 			try {
 				if(isset($_data['save_new'])){
 						$rs =  $_model->addStudentHomworkScore($_data);
-						//Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores/add");
+						 Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores/add");
 					}else {
 						$rs =  $_model->addStudentHomworkScore($_data);
-						//Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores");
+						 Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores");
 					}
-					 //Application_Form_FrmMessage::message("INSERT_SUCCESS");
 		
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
@@ -89,16 +88,13 @@ public	function addAction(){
 		$id=$this->getRequest()->getParam('id');
 		if($this->getRequest()->isPost()){
 			$_data = $this->getRequest()->getPost();
+			$_data['score_id']=$id;
 			$_model = new Foundation_Model_DbTable_DbHomeWorkScore();
 			try {
-				if(isset($_data['save_new'])){
-						$rs =  $_model->addStudentHomworkScore($_data);
-						//Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores/add");
-					}else {
-						$rs =  $_model->addStudentHomworkScore($_data);
-						//Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores");
-					}
-					//Application_Form_FrmMessage::message("INSERT_SUCCESS");
+				if(isset($_data['save_close'])){
+						$rs =  $_model->updateStudentHomworkScore($_data);
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores");
+					} 
 		
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");

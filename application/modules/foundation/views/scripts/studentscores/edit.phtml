@@ -5,7 +5,7 @@
   	$core_id= $this->row_score;
 	//print_r($this->rows_scor);
 	 $score = $this->rows_detail;
-	print_r($this->row_g);
+	//print_r($this->row_g);
 	 
 ?>	
 <head>
@@ -333,7 +333,7 @@ function gender(sex){
 							</td>
 							<td  ><?php echo $tr->translate("STUDENT_GROUP");?></td>
 							<td>
-								<input id="study_group" /><input type="text" name="old_group" id="old_group" value="<?php echo $this->row_g['group_id']?>"/>
+								<input id="study_group" /><input type="hidden" name="old_group" id="old_group" value="<?php echo $this->row_g['group_id']?>"/>
 							</td>
 							
 						</tr>
@@ -375,7 +375,7 @@ function gender(sex){
 									else{$term.=','.$id;} ?>
 								<?php }?>
 									<input type="hidden" name="iden_term" id="iden_term"  value="<?php echo $term;?>" >
-									<input type="text" name="identity" id="identity"  value="" >
+									<input type="hidden" name="identity" id="identity"  value="" >
 								 </td>
 							</tr>
 							<tr>
@@ -393,8 +393,7 @@ function gender(sex){
 								 	<input iconClass="dijitIconClear" type="reset" value="សំអាត" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
 									<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('SAVE_CLOSE');?>" dojoType="dijit.form.Button" 
 										iconClass="dijitEditorIcon dijitEditorIconSave" />
-									<input type="submit" value="save_new" name="save_new" label="<?php echo $tr->translate('SAVE_NEW');?>" dojoType="dijit.form.Button" 
-										iconClass="dijitEditorIcon dijitEditorIconSave" />
+									 
 								</td>
 							</tr>
 						</tfoot>
