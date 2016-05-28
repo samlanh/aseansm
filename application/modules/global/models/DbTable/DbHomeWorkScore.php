@@ -223,5 +223,27 @@ class Global_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
 		               FROM rms_score WHERE `status`=1 GROUP BY group_id";
 		return $db->fetchAll($sql);
 	}
+	///get subject id all 
+	function getSubjectId(){
+		$db=$this->getAdapter();
+		$sql="SELECT id,parent,CONCAT(subject_titleen,'-',subject_titlekh) AS sub_name,is_parent FROM rms_subject  WHERE `status` =1";
+		return $db->fetchAll($sql);
+	}
+	function getParent(){
+		$db=$this->getAdapter();
+		$sql="SELECT id,parent,CONCAT(subject_titleen,'-',subject_titlekh) AS sub_name,is_parent,subject_titleen,is_parent FROM rms_subject WHERE  `status`=1 AND is_parent=1";
+		return $db->fetchAll($sql);
+	}
+	function getSubject($id){
+		$db=$this->getAdapter();
+		$sql="SELECT id,parent,CONCAT(subject_titleen,'-',subject_titlekh) AS sub_name,subject_titleen,is_parent FROM rms_subject WHERE parent =".$id;
+		return $db->fetchAll($sql);
+	}
+	
+	function getSubjectById($id){
+		$db = $this->getAdapter();
+		$sql = "SELECT sd.student_id,sd.subject_id,sd.score FROM rms_score_detail AS sd WHERE sd.score_id=$id";
+		return $db->fetchAll($sql);
+	}
 }
 
