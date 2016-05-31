@@ -18,7 +18,7 @@ public function indexAction(){
 						'end_date'=>date('Y-m-d'));
 			}
 // 			$search='';
-			$db_student= new Kindergarten_Model_DbTable_DbKindergarten();
+			$db_student= new Foundation_Model_DbTable_DbKindergarten();
 			$rs_rows = $db_student->getAllStudent($search);
 			$list = new Application_Form_Frmtable();
 			if(!empty($rs_rows)){
@@ -28,7 +28,7 @@ public function indexAction(){
 				}
 				$collumns = array("STUDENT_CODE","NAME_KH","NAME_EN","SEX","GRADE","NATIONALITY","DOB","STATUS");
 				$link=array(
-						'module'=>'kindergarten','controller'=>'kindergarten','action'=>'edit',
+						'module'=>'foundation','controller'=>'kindergarten','action'=>'edit',
 				);
 				$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('stu_code'=>$link,'stu_enname'=>$link,'stu_khname'=>$link,'grade'=>$link));
 		}catch (Exception $e){
@@ -43,7 +43,7 @@ public function indexAction(){
 		if($this->getRequest()->isPost()){
 			try{
 				
-				$db = new Kindergarten_Model_DbTable_DbKindergarten();
+				$db = new Foundation_Model_DbTable_DbKindergarten();
 				
 				$num = $this->getStuNoGenerateAction();
 				$data = $this->getRequest()->getPost();
@@ -56,9 +56,9 @@ public function indexAction(){
 					Application_Form_FrmMessage::message("RECORD_EXIST");
 				}else{
 					if(isset($data['save_close'])){
-						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/kindergarten/kindergarten/index");
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/kindergarten/index");
 					}else{
-						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/kindergarten/kindergarten/add");
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/kindergarten/add");
 					}
 					Application_Form_FrmMessage::message("INSERT_SUCCESS");
 				}
@@ -73,7 +73,7 @@ public function indexAction(){
 		
 		$this->view->province = $row =$_db->getProvince();
 		
-		$db = new Kindergarten_Model_DbTable_DbKindergarten();
+		$db = new Foundation_Model_DbTable_DbKindergarten();
 		
 		$this->view->year = $db->getAllYear();
 		
@@ -94,10 +94,10 @@ public function indexAction(){
 		if($this->getRequest()->isPost()){
 			try{
 				$data = $this->getRequest()->getPost();
-				$db = new Kindergarten_Model_DbTable_DbKindergarten();
+				$db = new Foundation_Model_DbTable_DbKindergarten();
 				$row = $db->updateKindergarten($data,$id);
 				
-				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/kindergarten/kindergarten/index");
+				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/foundation/kindergarten/index");
 				
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
@@ -109,7 +109,7 @@ public function indexAction(){
 	
 		$this->view->province = $row =$_db->getProvince();
 	
-		$db = new Kindergarten_Model_DbTable_DbKindergarten();
+		$db = new Foundation_Model_DbTable_DbKindergarten();
 	
 		$this->view->year = $db->getAllYear();
 	
@@ -129,7 +129,7 @@ public function indexAction(){
 	function getStuNoAction(){
 		if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();
-			$db = new Kindergarten_Model_DbTable_DbKindergarten();
+			$db = new Foundation_Model_DbTable_DbKindergarten();
 			$stu_no = $db->getNewAccountNumber($data['newid'],1);
 			print_r(Zend_Json::encode($stu_no));
 			exit();
@@ -139,7 +139,7 @@ public function indexAction(){
 	function getStuNoGenerateAction(){
 		if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();
-			$db = new Kindergarten_Model_DbTable_DbKindergarten();
+			$db = new Foundation_Model_DbTable_DbKindergarten();
 			$stu_no = $db->getNewAccountNumber(1,1);
 			return $stu_no;
 		}
@@ -149,7 +149,7 @@ public function indexAction(){
 		if($this->getRequest()->isPost()){
 			try{
 				$data = $this->getRequest()->getPost();
-				$_dbmodel = new Kindergarten_Model_DbTable_DbKindergarten();
+				$_dbmodel = new Foundation_Model_DbTable_DbKindergarten();
 				$row = $_dbmodel->addNewOccupationPopup($data);
 				$result = array("id"=>$row);
 				print_r(Zend_Json::encode($row));

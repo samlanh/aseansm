@@ -1,6 +1,6 @@
 <?php
 
-class Kindergarten_Model_DbTable_DbKindergarten extends Zend_Db_Table_Abstract
+class Foundation_Model_DbTable_DbKindergarten extends Zend_Db_Table_Abstract
 {
 	
 	protected $_name = 'rms_student';
@@ -26,7 +26,7 @@ class Kindergarten_Model_DbTable_DbKindergarten extends Zend_Db_Table_Abstract
 		
 		try{
 			$arr = array(
-					'stu_type'		=>3,
+					'stu_type'		=>1,
 					'user_id'		=>$this->getUserId(),
 					
 					'stu_enname'	=>$data['name_en'],
@@ -91,7 +91,7 @@ class Kindergarten_Model_DbTable_DbKindergarten extends Zend_Db_Table_Abstract
 		try{
 			$db= $this->getAdapter();
 			$arr = array(
-					'stu_type'		=>3,
+					'stu_type'		=>1,
 					'user_id'		=>$this->getUserId(),
 						
 					'stu_enname'	=>$data['name_en'],
@@ -196,7 +196,7 @@ class Kindergarten_Model_DbTable_DbKindergarten extends Zend_Db_Table_Abstract
 	
 	public function getNewAccountNumber($newid,$stu_type){
 		$db = $this->getAdapter();
-		$sql="  SELECT COUNT(stu_id)  FROM rms_student WHERE stu_type!=2 ";
+		$sql="  SELECT COUNT(stu_id)  FROM rms_student WHERE stu_type=$stu_type";
 		$acc_no = $db->fetchOne($sql);
 		$new_acc_no= (int)$acc_no+1;
 		$new_acc_no=100+$new_acc_no;
@@ -233,7 +233,7 @@ class Kindergarten_Model_DbTable_DbKindergarten extends Zend_Db_Table_Abstract
 		(SELECT name_kh FROM `rms_view` WHERE type=2 AND key_code = sex) as sex
 		,(SELECT `major_enname` FROM `rms_major` WHERE `major_id`=grade) as grade,nationality,dob,
 		(SELECT name_kh FROM `rms_view` WHERE type=1 AND key_code = status) as status
-		FROM rms_student where status = 1 AND stu_type = 3 and is_subspend=0  and degree=1 ";
+		FROM rms_student where status = 1 AND stu_type = 1 and degree=1 ";
 		$orderby = " ORDER BY stu_id DESC ";
 	
 		$from_date =(empty($search['start_date']))? '1': "rms_student.create_date >= '".$search['start_date']." 00:00:00'";

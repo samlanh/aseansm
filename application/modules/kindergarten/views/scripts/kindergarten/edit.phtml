@@ -89,7 +89,7 @@ dojo.require("dijit.form.DateTextBox");
 					      		</tr>
 					      		<tr>
 					      			<td title="បញ្ជូលលេខសំគាល់និស្សិត"><?php echo $tr->translate("STUDENT_ID");?>*</td>
-									<td><input  dojoType="dijit.form.TextBox" style="color:red;" id="student_id" name="student_id" readonly="readonly" value="<?php echo $this->rs['stu_code']?>" type="text" ></td>
+									<td><input  dojoType="dijit.form.TextBox"  id="student_id" name="student_id" readonly="readonly" value="<?php echo $this->rs['stu_code']?>" type="text" ></td>
 									<td><?php echo $tr->translate("GRADE");?>*</td>
 									<td><select tabindex="24" name="grade" id="grade" dojoType="dijit.form.FilteringSelect" >
 										   <?php if(!empty($this->grade)){foreach ($this->grade as $grade){?>
@@ -268,7 +268,7 @@ function hideDialogJob() {
 	dijit.byId("popup_job").hide();
 }
 
-var url_add_job = '<?php echo $this->url(array("module"=>"kindergarten","controller"=>"kindergarten","action"=>"add-job")); ?>';
+var url_add_job = '<?php echo $this->url(array("module"=>"foundation","controller"=>"kindergarten","action"=>"add-job")); ?>';
 function addJob(){
 	var job_store  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->occupation));?> );
 	var job_store1  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->occupation));?> );
