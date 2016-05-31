@@ -207,7 +207,7 @@ class Global_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
 	}
 	function getGroupName($academic,$session){
 		$db=$this->getAdapter();
-		$sql="SELECT id,group_code AS `name` FROM  rms_group WHERE  `session`=$session AND academic_year=$academic  ";
+		$sql="SELECT id,group_code AS `name` FROM  rms_group WHERE degree IN(1,2) AND `session`=$session AND academic_year=$academic  ";
 		return $db->fetchAll($sql);
 	}
 	function getParentNameByGroupId($group_id){
