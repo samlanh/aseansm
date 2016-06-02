@@ -58,7 +58,7 @@ dojo.ready(function(){
 		    required:'true',
 		    placeHolder:"Selected Study Years",          
 		    onChange: function() {  
-			   
+		    	enableControll();
 		    	getGroupName();
 		    }
 		}, "year_study");
@@ -81,7 +81,7 @@ dojo.ready(function(){
 			    getParentName();
 		    }
 		}, "study_group");
-
+		disableControll();
 		 var metion = '<?php //echo $this->all_metion; ?>';
 		 
 		 
@@ -91,6 +91,15 @@ function getStudentAll(){
 	if(study_group !=''){
 		getStudentByIdGroup(study_group);
 	} 
+}
+//disable controll 
+function disableControll(){
+	dijit.byId('session').set('disabled', true);
+	dijit.byId('study_group').set('disabled', true);
+}
+function enableControll(){
+	dijit.byId('session').set('disabled', false);
+	dijit.byId('study_group').set('disabled', false);
 }
 //get parent name filter by group id
 function getParentName(){

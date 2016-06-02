@@ -1,6 +1,6 @@
 <?php
 
-class Kindergarten_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
+class Kindergarten_Model_DbTable_DbKindergartenScore extends Zend_Db_Table_Abstract
 {
     protected $_name = 'rms_score';
     public function getUserId(){
@@ -307,7 +307,7 @@ class Kindergarten_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
 		       (SELECT CONCAT(name_en ,'-',name_kh ) FROM rms_view WHERE `type`=4 AND rms_view.key_code=s.session_id) AS session_id,
 		        (SELECT CONCAT(subject_titleen,' - ',subject_titlekh) FROM rms_subject WHERE id=s.subject_id ) AS subject_id,
 		        s.term_id,s.status
-		        FROM rms_score AS s WHERE s.status=1";
+		        FROM rms_score AS s,rms_group AS g WHERE s.group_id=g.id AND g.degree IN(1,2) AND s.status=1";
 		$where ='';
 		if(!empty($search['group_name'])){
 			$where.= " AND s.group_id=".$search['group_name'];
@@ -364,8 +364,8 @@ class Kindergarten_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
 	}
 	function getGroupSearch(){
 		$db=$this->getAdapter();
-		$sql="SELECT group_id AS id,(SELECT group_code FROM rms_group WHERE id=rms_score.group_id) AS `name` 
-		               FROM rms_score WHERE `status`=1 GROUP BY group_id";
+		$sql="SELECT group_id AS id,(SELECT group_code FROM rms_group WHERE id=rms_score.group_id AND rms_group.degree IN (1,2)) AS `name` 
+		               FROM  rms_score  WHERE  `status`=1 GROUP BY group_id";
 		return $db->fetchAll($sql);
 	}
 	///get subject id all 

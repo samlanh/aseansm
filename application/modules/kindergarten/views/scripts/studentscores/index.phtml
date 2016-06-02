@@ -26,7 +26,7 @@ dojo.ready(function(){
 		}, "group_name");
 });
 </script>
-<form  action="<?php echo $this->url(array('module'=>'foundation','controller'=>'studentscores','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post">
+<form  action="<?php echo $this->url(array('module'=>'kindergarten','controller'=>'studentscores','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post">
 	<div dojoType="dijit.layout.AccordionPane">
       <input id="group_name" />
 	 <button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button>

@@ -12,7 +12,7 @@ class Kindergarten_StudentscoresController extends Zend_Controller_Action {
 	}
 	public function indexAction(){
 		try{
-			$db = new Global_Model_DbTable_DbHomeWorkScore();
+			$db = new Kindergarten_Model_DbTable_DbKindergartenScore();
 			$this->view->g_all_name=$db->getGroupSearch();
 			if($this->getRequest()->isPost()){
 				$_data=$this->getRequest()->getPost();
@@ -33,7 +33,7 @@ class Kindergarten_StudentscoresController extends Zend_Controller_Action {
 			$list = new Application_Form_Frmtable();
 			$collumns = array( "STUDENT_GROUP","STUDY_YEAR","SESSION","SUBJECT","TERM","STATUS");
 			$link=array(
-					'module'=>'foundation','controller'=>'studentscores','action'=>'edit',
+					'module'=>'kindergarten','controller'=>'studentscores','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs,array('student_no'=>$link,'student_id'=>$link,'academic_id'=>$link,'session_id'=>$link,'group_id'=>$link));
 	
@@ -47,14 +47,14 @@ class Kindergarten_StudentscoresController extends Zend_Controller_Action {
 public	function addAction(){
 		if($this->getRequest()->isPost()){
 			$_data = $this->getRequest()->getPost();
-			$_model = new Foundation_Model_DbTable_DbHomeWorkScore();
+			$_model = new Kindergarten_Model_DbTable_DbKindergartenScore();
 			try {
 				if(isset($_data['save_new'])){
 						$rs =  $_model->addStudentHomworkScore($_data);
-						 Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores/add");
+						 Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/kindergarten/studentscores/add");
 					}else {
 						$rs =  $_model->addStudentHomworkScore($_data);
-						 Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores");
+						 Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/kindergarten/studentscores");
 					}
 		
 			}catch(Exception $e){
@@ -89,11 +89,11 @@ public	function addAction(){
 		if($this->getRequest()->isPost()){
 			$_data = $this->getRequest()->getPost();
 			$_data['score_id']=$id;
-			$_model = new Foundation_Model_DbTable_DbHomeWorkScore();
+			$_model = new Kindergarten_Model_DbTable_DbKindergartenScore();
 			try {
 				if(isset($_data['save_close'])){
 						$rs =  $_model->updateStudentHomworkScore($_data);
-						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscores");
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/kindergarten/studentscores");
 					} 
 		
 			}catch(Exception $e){
