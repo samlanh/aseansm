@@ -34,11 +34,11 @@ class Foundation_Model_DbTable_DbMediumStudentScore extends Zend_Db_Table_Abstra
 					'status'=>$_data['status'],
     		        'user_id'=>$this->getUserId()
 			);
-			$db->getProfiler()->setEnabled(true);
+// 			$db->getProfiler()->setEnabled(true);
 			$id=$this->insert($_arr);
-			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-			$db->getProfiler()->setEnabled(false);
+// 			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+// 			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+// 			$db->getProfiler()->setEnabled(false);
 			if(!empty($_data['identity'])){
 				$ids = explode(',', $_data['identity']);
 				//print_r($ids);exit();
@@ -48,7 +48,7 @@ class Foundation_Model_DbTable_DbMediumStudentScore extends Zend_Db_Table_Abstra
 						foreach ($db_sub->getParent() as $rs_parent){
 									$parent_name = str_replace(' ','',$rs_parent["subject_titleen"]);
 									$parent_id = $rs_parent['id'];
-									echo $rs_parent["sub_name"];
+								//	echo $rs_parent["sub_name"];
 									$arr=array(
 											'score_id'=>$id,
 											'student_id'=>$_data['stu_id_'.$i],
@@ -59,11 +59,11 @@ class Foundation_Model_DbTable_DbMediumStudentScore extends Zend_Db_Table_Abstra
 											'is_parent'=> $rs_parent["is_parent"]
 									);
 									$this->_name='rms_score_detail';
-									$db->getProfiler()->setEnabled(true);
+								//	$db->getProfiler()->setEnabled(true);
 									$this->insert($arr);
-									Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-									Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-									$db->getProfiler()->setEnabled(false);
+// 									Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+// 									Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+// 									$db->getProfiler()->setEnabled(false);
 						}
 						 //echo 'student_id'.$_data['stu_id_'.$i]."<hr />";
 				}
@@ -97,16 +97,16 @@ class Foundation_Model_DbTable_DbMediumStudentScore extends Zend_Db_Table_Abstra
 		   ///delect score_detail
 		   $this->_name='rms_score_detail';
 		   $this->delete("score_id=".$_data['score_id']);
-		   Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-		   Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-		   $db->getProfiler()->setEnabled(false);
+// 		   Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+// 		   Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+// 		   $db->getProfiler()->setEnabled(false);
 			if(!empty($_data['identity'])){
 				$ids = explode(',', $_data['identity']);
 				if(!empty($ids))foreach ($ids as $i){
 						foreach ($db_sub->getParent() as $rs_parent){
 									$parent_name = str_replace(' ','',$rs_parent["subject_titleen"]);
 									$parent_id = $rs_parent['id'];
-									echo $rs_parent["sub_name"];
+					//				echo $rs_parent["sub_name"];
 									$arr=array(
 											'score_id'=>$_data['score_id'],
 											'student_id'=>$_data['stu_id_'.$i],
@@ -179,7 +179,7 @@ class Foundation_Model_DbTable_DbMediumStudentScore extends Zend_Db_Table_Abstra
 		       (SELECT CONCAT(name_en ,'-',name_kh ) FROM rms_view WHERE `type`=4 AND rms_view.key_code=s.session_id) AS session_id,
 		        (SELECT CONCAT(subject_titleen,' - ',subject_titlekh) FROM rms_subject WHERE id=s.subject_id ) AS subject_id,
 		        s.term_id,s.status
-		        FROM rms_score AS s WHERE s.status=1";
+		        FROM rms_score AS s,rms_group AS g WHERE s.status=1  AND s.group_id=g.id AND g.degree IN(3,4)";
 		$where ='';
 		if(!empty($search['group_name'])){
 			$where.= " AND s.group_id=".$search['group_name'];
@@ -236,8 +236,8 @@ class Foundation_Model_DbTable_DbMediumStudentScore extends Zend_Db_Table_Abstra
 	}
 	function getGroupSearch(){
 		$db=$this->getAdapter();
-		$sql="SELECT group_id AS id,(SELECT group_code FROM rms_group WHERE id=rms_score.group_id) AS `name` 
-		               FROM rms_score WHERE `status`=1 GROUP BY group_id";
+		$sql="SELECT group_id AS id,(SELECT group_code FROM rms_group WHERE id=rms_score.group_id AND rms_group.degree IN(3,4) ) AS `name` 
+		               FROM rms_score WHERE `status`=1 GROUP BY group_id ";
 		return $db->fetchAll($sql);
 	}
 	///get subject id all 

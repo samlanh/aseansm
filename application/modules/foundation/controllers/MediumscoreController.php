@@ -12,7 +12,7 @@ class Foundation_MediumscoreController extends Zend_Controller_Action {
 	}
 	public function indexAction(){
 		try{
-			$db = new Global_Model_DbTable_DbHomeWorkScore();
+			$db = new Foundation_Model_DbTable_DbMediumStudentScore();
 			$this->view->g_all_name=$db->getGroupSearch();
 			if($this->getRequest()->isPost()){
 				$_data=$this->getRequest()->getPost();
