@@ -8,6 +8,7 @@
   $rpt_group_student_change_group=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rptgroupstudentchangegroup'), null, true);
   $student_score=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rpt-student-score'), null, true);
   $attendent=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rpt-attendent'), null, true);
+  $rpt_medium_score=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rpt-medium-score'), null, true);
   ?>
   <style>
   ul.link-rpt li a {
@@ -43,6 +44,7 @@
   		<li><a href="<?php echo $rpt_group_student_change_group;?>"><?php echo $tr->translate('RPT_GROUP_STUDENT_CHANGE_GROUP');?></a></li>
   		<li><a href="<?php echo $student_score;?>"><?php echo $tr->translate('RPT_STUDENT_SCORE');?></a></li>
   	    <li><a href="<?php echo $attendent;?>"><?php echo $tr->translate('RPT_STUDENT_ATTENDENT');?></a></li>
+  	    <li><a href="<?php echo $rpt_medium_score;?>"><?php echo $tr->translate('RPT_MEDIUM_SCORE');?></a></li>
   	</ul>
   </div>
   <div style="clear: both;"></div>

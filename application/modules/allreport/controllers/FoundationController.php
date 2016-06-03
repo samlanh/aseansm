@@ -12,7 +12,10 @@ public function init()
 	{	
 		
 	}
-	
+	public  function rptMediumScoreAction(){
+		$data_sub=new Allreport_Model_DbTable_DbMediumScore();
+		$this->view->rows_sub=$data_sub->getSubjectParent();
+	}
 	public function rptamountstudentbygenerationAction()
 	{
 		$db= new Allreport_Model_DbTable_DbRptAmountStudent();
@@ -437,6 +440,83 @@ public function init()
     	$data_att=new Allreport_Model_DbTable_DbRptStudentAttendent();
     	$this->view->row_att=$data_att->getStudentAttendent();
     	
+    }
+    
+///////////////report score 
+    function rptScorestAction(){
+    	$group= new Allreport_Model_DbTable_DbRptGroup();
+    	$this->view->rs = $rs_rows = $group->getAllGroup($search=null);
+    	$this->view->search = $search;
+    	$parent=new Allreport_Model_DbTable_DbRptStudentScore();
+    	$this->view->row_parent=$parent->getParentName();
+    	$this->view->row_sub=$parent->getSubjectdByParent();
+    	$this->view->row_studet=$parent->getAllSubjectByStudent();
+    	$this->view->row_aca=$parent->getAcademic();
+    	$rows = $parent->getStudenetGroupSubject();
+    	$result = array();
+    	if(!empty($rows))foreach ($rows as $key =>$rs){
+    
+    		$result[$key]=array(
+    				'stu_id'=>$rs['stu_id'],
+    				'stu_enname'=>$rs['stu_enname'],
+    				'stu_code'=>$rs['stu_code'],
+    				'id'=>$rs['id'],
+    				'group_code'=>$rs['group_code'],
+    				'group_id'=>$rs['group_id'],
+    				'tuitionfee_id'=>$rs['tuitionfee_id'],
+    				'room_id'=>$rs['room_id'],
+    				'from_academic'=>$rs['from_academic'],
+    				'to_academic'=>$rs['to_academic'],
+    				'semester'=>$rs['semester'],
+    				'session'=>$rs['session'],
+    				'degree'=>$rs['degree'],
+    				'grade'=>$rs['grade'],
+    				'amount_month'=>$rs['amount_month'],
+    				'is_check'=>$rs['is_check'],
+    				'start_date'=>$rs['start_date'],
+    				'expired_date'=>$rs['expired_date'],
+    				'user_id'=>$rs['user_id'],
+    				'academic_year'=>$rs['academic_year'],
+    				'subject_name'=>$rs['subject_name'],
+    				'subject_id'=>$rs['subject_id'],
+    		);
+    
+    		$itemrs = $parent->getScoreByGroupId($rs['stu_id'],$rs['subject_id'],$rs['group_id']);
+    		
+    		//     		$itemrs = $parent->getScoreByGroupId($rs['subject_id'],$rs['group_id']);
+    		foreach ($itemrs as $index => $item){
+    			$result[$key]['subject_id'.$index]=$item['subject_name'];
+    			$result[$key]['total_score'.$index]=$item['total_score'];
+    		}
+    	}
+    	//$data= $this->view->row_group=$parent->getStudenetGroupSubject();
+    
+    	$data= $this->view->row_group=$result;
+    	//     	print_r($data);exit();
+    	$test = $this->array_2D_inverse($result);
+    	print_r($test);
+        
+    }
+    
+    public function array_2D_inverse($arr) {
+    	$out = array();
+    	$ridx = 0;
+    	foreach ($arr as $row) {
+    		foreach ($row as $colidx => $val) {
+    			while ($ridx > count($out[$colidx]))
+    				$out[$colidx][] = null;
+    			$out[$colidx][] = $val;
+    		}
+    		$ridx++;
+    	}
+    	$max_width = 0;
+    	foreach($out as $v)
+    		$max_width = ($max_width < count($v)) ? count($v) : $max_width;
+    	foreach($out as $k => $v){
+    		while(count($out[$k]) < $max_width)
+    			$out[$k][] = null;
+    	}
+    	return $out;
     }
 }
 
