@@ -36,6 +36,14 @@ class Allreport_Model_DbTable_DbMediumScore extends Zend_Db_Table_Abstract
     	$sql="SELECT id,subject_titleen,is_parent FROM rms_subject WHERE is_parent=1 AND access_type IN (3,4) AND `status`=1";
     	return $db->fetchAll($sql);
     }
+    function getSubject($is_parent){
+        $db=$this->getAdapter();
+        $sql="SELECT sd.id,sd.score_id,st.stu_code,(SELECT stu_enname FROM rms_student AS s WHERE s.stu_id =sd.student_id) AS stu_name,
+				       (SELECT subject_titlekh FROM rms_subject AS sb WHERE  sb.id=sd.subject_id )AS subject_name,
+				        sd.score,sd.is_parent FROM rms_score_detail AS sd,rms_student AS st 
+				 WHERE st.stu_id = sd.student_id AND sd.status=1 AND sd.subject_id=$is_parent";
+        return $db->fetchAll($sql);
+    }
 }
 
 
