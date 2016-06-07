@@ -44,6 +44,14 @@ class Allreport_Model_DbTable_DbMediumScore extends Zend_Db_Table_Abstract
 				 WHERE st.stu_id = sd.student_id AND sd.status=1 AND sd.subject_id=$is_parent";
         return $db->fetchAll($sql);
     }
+    //get academic year 
+    function getAcademicYear(){
+    	$db=$this->getAdapter();
+    	$sql="SELECT s.id,s.academic_id,s.session_id,s.group_id,s.term_id FROM rms_score AS s,rms_group AS g
+                WHERE s.group_id = g.id AND g.degree IN(3,4) ";
+        return $db->fetchAll($sql);
+        
+    }
 }
 
 

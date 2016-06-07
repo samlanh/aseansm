@@ -17,21 +17,20 @@
 				<td>
 							<strong align="center"><?php echo $tr->translate("");?></strong> 
 							<table style="width:30cm;background:#fff; margin: 0 auto; ">
-							<?php $data=new Allreport_Model_DbTable_DbMediumScore();
-											      
-											?>
+							<?php $data=new Allreport_Model_DbTable_DbMediumScore();?>
+							<?php if(!empty($this->rows_acade)) foreach($this->rows_acade As $rs_academic){?>
 							<tr style="font-size: 18px;">
 									 
 									<td align="center">
-										<strong>ស្ថិតិនិស្សិត ជំនាន់ទី១១ ឆ្នាំទី១ ថ្នាក់បរិញ្ញាបត្រ ឆ្នាំសិក្សា ២០១៣-១៤ ចុះឈ្មោះលើកទី១</strong>
+										<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">ស្ថិតិនិស្សិត ជំនាន់ទី១១ ឆ្នាំទី១ ថ្នាក់បរិញ្ញាបត្រ ឆ្នាំសិក្សា ២០១៣-១៤ ចុះឈ្មោះលើកទី១</strong>
 									</td>
 							</tr>
 							<?php if(!empty($this->rows_sub)) foreach($this->rows_sub As $key=>$rs_sub){$key=$key+1;?>
 								<tr>
-									<td colspan="4" align="center"><strong><?php echo $key." . ".$rs_sub['subject_titleen']?></strong>
+									<td colspan="4" align="left" ><strong style="padding-left: 112px;" ><?php echo $key.". ".$rs_sub['subject_titleen']?></strong>
 									
-										<table cellpadding="5"​ style="margin:0 auto;width:100%; border-collapse: collapse;" border="1" >
-											<tr style="font-size:14px; height: 30px;" align="center" >
+										<table cellpadding="5"​ style="margin:0 auto;width:80%; border-collapse: collapse;" border="1" >
+											<tr style="font-size:10px; height: 20px;" align="center" >
 												<th>No</th>
 												<th>Student No</th>
 												<th>Student Name</th>
@@ -54,6 +53,7 @@
 								   
 									</td>
 								</tr>
+						 <?php }?>
 						 <?php }?>
 					</table>
 				</td>

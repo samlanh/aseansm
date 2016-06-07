@@ -15,6 +15,7 @@ public function init()
 	public  function rptMediumScoreAction(){
 		$data_sub=new Allreport_Model_DbTable_DbMediumScore();
 		$this->view->rows_sub=$data_sub->getSubjectParent();
+		$this->view->rows_acade=$data_sub->getAcademicYear();
 	}
 	public function rptamountstudentbygenerationAction()
 	{
