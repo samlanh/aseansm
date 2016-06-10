@@ -11,18 +11,15 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 	}
 	public function getAllStudent($search){
 		$_db = $this->getAdapter();
-		$sql = "SELECT stu_id,stu_code,stu_khname,stu_enname,
-		(SELECT name_kh FROM `rms_view` WHERE type=2 AND key_code = sex) as sex
-		,(SELECT `major_enname` FROM `rms_major` WHERE `major_id`=grade) as grade,nationality,dob,tel,email ,
-		(SELECT name_kh FROM `rms_view` WHERE type=1 AND key_code = status) as status
-		FROM rms_student where is_subspend=0 and status = 1 AND stu_type = 1 and degree IN(2,3,4) ";
-		$orderby = " ORDER BY stu_id DESC ";
-		
-		$from_date =(empty($search['start_date']))? '1': "rms_student.create_date >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': "rms_student.create_date <= '".$search['end_date']." 23:59:59'";
-		
+		$from_date =(empty($search['start_date']))? '1': "s.create_date >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': "s.create_date <= '".$search['end_date']." 23:59:59'";
 		$where = " AND ".$from_date." AND ".$to_date;
-		
+		$sql = "SELECT s.stu_id,s.stu_code,s.stu_khname,s.stu_enname,
+		(SELECT name_kh FROM `rms_view` WHERE TYPE=2 AND key_code = sex) AS sex
+		,(SELECT `major_enname` FROM `rms_major` WHERE `major_id`=grade) AS grade,nationality,dob,tel,email ,
+		(SELECT name_kh FROM `rms_view` WHERE TYPE=1 AND key_code = STATUS) AS STATUS
+		FROM rms_student AS s  WHERE s.is_subspend=0 AND s.status = 1 AND s.stu_type = 1 AND s.degree IN(2,3,4) ";
+		$orderby = " ORDER BY stu_id DESC ";
 		if(empty($search)){
 			return $_db->fetchAll($sql.$orderby);
 		}
@@ -36,6 +33,7 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 			$s_where[]="(SELECT name_kh FROM `rms_view` WHERE type=2 AND key_code = sex) LIKE '%{$s_search}%'";
 			$where .=' AND ( '.implode(' OR ',$s_where).')';
 		}
+		//print_r($where);
 		return $_db->fetchAll($sql.$where.$orderby);
 	}
 	public function getStudentById($id){

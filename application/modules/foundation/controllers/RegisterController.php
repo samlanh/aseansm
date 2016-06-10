@@ -22,12 +22,8 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 			}
 			$db_student= new Foundation_Model_DbTable_DbStudent();
 			$rs_rows = $db_student->getAllStudent($search);
+			 
 			$list = new Application_Form_Frmtable();
-			if(!empty($rs_rows)){
-				} 
-				else{
-					$result = Application_Model_DbTable_DbGlobal::getResultWarning();
-				}
 				$collumns = array("STUDENT_ID","NAME_KH","NAME_EN","SEX","GRADE","NATIONALITY","DOB","PHONE","EMAIL","STATUS");
 				$link=array(
 						'module'=>'foundation','controller'=>'register','action'=>'edit',
