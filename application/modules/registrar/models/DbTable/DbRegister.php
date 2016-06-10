@@ -29,6 +29,18 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						$stu_type=1;
 					}
 				    $arr=array(
+ 
+							'stu_code'=>$data['stu_id'],
+							'academic_year'=>$data['study_year'],
+							'stu_khname'=>$data['kh_name'],
+							'stu_enname'=>$data['en_name'],
+							'sex'=>$data['sex'],
+							'session'=>$data['session'],
+							'degree'=>$data['dept'],
+							'grade'=>$data['grade'],
+						    'stu_type'=>1,
+							'user_id'=>$this->getUserId(),
+ 
 							'stu_code'		=>$data['stu_id'],
 							'academic_year'	=>$data['study_year'],
 							'stu_khname'	=>$data['kh_name'],
@@ -40,6 +52,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						    'stu_type'		=>$stu_type,
 				    		'create_date'	=>date('Y-m-d H:i:s'),
 							'user_id'		=>$this->getUserId(),
+ 
 					);
 				    $db->getProfiler()->setEnabled(true);
 			    	$id= $this->insert($arr);
@@ -163,7 +176,12 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 							'session'=>$data['session'],
 							'degree'=>$data['dept'],
 							'grade'=>$data['grade'],
+ 
+							'create_date'=>	date('Y-m-d'),
+							'stu_type'=>1,
+  
 							//'stu_type'=>1,
+ 
 							'user_id'=>$this->getUserId(),
 					);
 					$where="stu_id=".$data['id'];
@@ -186,6 +204,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						'paid_amount'=>$data['books'],
 						'balance_due'=>$data['remaining'],
 						'note'=>$data['not'],
+						'create_date'=>	date('Y-m-d'),
 						'amount_in_khmer'=>$data['char_price'],
 						'payfor_type'=>1,
 						'user_id'=>$this->getUserId(),
