@@ -89,8 +89,9 @@
 		study_year=dijit.byId('study_year').get('value');
 		payment_term=dijit.byId('payment_term').get('value');
 		levele=dijit.byId('grade').get('value');
-		if(study_year!='' && payment_term !='' && levele !=''){
-			getPaymentTerms(study_year,levele,payment_term);
+		time_type=dijit.byId('time_type').get('value');
+		if(study_year!='' && payment_term !='' && levele !='' && time_type !='' ){
+			getPaymentTerms(study_year,levele,payment_term,time_type);
 		}
 	}
 ///get price balance where complete=0
@@ -143,13 +144,23 @@
 	}
 	var payment_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 	var url_getpaymentterm = '<?php echo $this->url(array('module'=>'registrar','controller'=>'coursestudy','action'=>'get-payment-gep')); ?>';
-	function getPaymentTerms(study_year,levele,payment_term){
+	function getPaymentTerms(study_year,levele,payment_term,time_type){
+		dijit.byId('tuitionfee').attr('value',0);
+    	dijit.byId('total').attr('value',0);
+    	dijit.byId('books').attr('value',0);
+    	dijit.byId('discount').attr('value',0);
+    	dijit.byId('addmin_fee').attr('value',0);
+    	dijit.byId('remaining').attr('value',0);
+    	dijit.byId('remark').attr('value',0);
+    	dijit.byId('char_price').attr('value',0);
+    	
 			dojo.xhrPost({
 				url:url_getpaymentterm,
 				content:{
 					'study_year':study_year,
 					'levele':levele,
-					'payment_term':payment_term
+					'payment_term':payment_term,
+					'time_type':time_type
 					},
 				handleAs:"json",
 				load: function(data) {
@@ -179,7 +190,7 @@
 				      
 				},
 				error: function(err) {
-					//alert(err);
+					alert(err);
 				}
 			});
 	}
@@ -350,11 +361,18 @@ fieldset{  background:none;}
 							<td><?php echo $register->getElement('study_year');?></td>
 							<td><?php echo $tr->translate("SESSION");?></td>
 							<td>
-								<select class="fullside"  tabindex="24" name="session" id=""session"" dojoType="dijit.form.FilteringSelect" >
+								<select class="fullside"  tabindex="24" name="session" id="time_type" onchange="paymentTerm();" dojoType="dijit.form.FilteringSelect" >
 										    <option value="2" label="FULL_TIME"><?php echo $tr->translate("FULL_TIME");?></option>
 										    <option value="1" label="PART_TIME"><?php echo $tr->translate("PART_TIME");?></option>
 										</select>
 							</td>
+						</tr>
+						
+						<tr>
+							<td><?php echo $tr->translate("DEGREE");?><label class="red">*</label></td>
+							<td><input id="dept" /><?php //echo $register->getElement('dept');?></td>
+							<td><?php echo $tr->translate("CLASS");?><label class="red">*</label></td>
+							<td><input id="grade" /><?php //echo $register->getElement('metion');?></td>
 						</tr>
 						<tr>
 							<td title="ចាប់ពីម៉ោង"><?php echo $tr->translate("FROM_TIME");?>*</td>
@@ -374,12 +392,6 @@ fieldset{  background:none;}
 										</select>
 									</td>
 					      		</tr>
-						<tr>
-							<td><?php echo $tr->translate("DEGREE");?><label class="red">*</label></td>
-							<td><input id="dept" /><?php //echo $register->getElement('dept');?></td>
-							<td><?php echo $tr->translate("CLASS");?><label class="red">*</label></td>
-							<td><input id="grade" /><?php //echo $register->getElement('metion');?></td>
-						</tr>
 						<tr>
 						    <td><?php echo $tr->translate("PAYMENT_TERM");?><label class="red">*</label></td>
 							<td><?php echo $register->getElement('payment_term');?></td>

@@ -194,7 +194,7 @@ class Registrar_CoursestudyController extends Zend_Controller_Action {
     	if($this->getRequest()->isPost()){
     		$data=$this->getRequest()->getPost();
     		$db = new Registrar_Model_DbTable_DbCourStudey();
-    		$payment = $db->getPaymentGep($data['study_year'],$data['levele'],$data['payment_term']);
+    		$payment = $db->getPaymentGep($data['study_year'],$data['levele'],$data['payment_term'],$data['time_type']);
     		//print_r($grade);exit();
     		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
     		print_r(Zend_Json::encode($payment));

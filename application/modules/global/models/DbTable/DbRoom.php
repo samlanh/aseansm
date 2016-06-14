@@ -50,10 +50,11 @@ class Global_Model_DbTable_DbRoom extends Zend_Db_Table_Abstract
 		(SELECT  CONCAT(first_name,' ', last_name) FROM rms_users WHERE id=user_id )AS user_name
 		FROM rms_room
 		WHERE 1 ";
-		$order=" order by room_name";
+		$order=" order by id DESC ";
 		$where = '';
 		
 		if(!empty($search['title'])){
+			$search['title']=addslashes(trim($search['title']));
 			$where.=" AND room_name LIKE '%".$search['title']."%'";
 		}
 		if($search['status']>-1){

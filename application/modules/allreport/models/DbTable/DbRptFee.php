@@ -41,7 +41,6 @@ class Allreport_Model_DbTable_DbRptFee extends Zend_Db_Table_Abstract
     		$s_where[] = " (select name_en from rms_view where rms_view.type=7 and rms_view.key_code=rms_tuitionfee.time) LIKE '%{$s_search}%'";
     		$where .=' AND ( '.implode(' OR ',$s_where).')';
     	}
-    	echo $sql.$where;
 
     	return $db->fetchAll($sql.$where.$order);
     }

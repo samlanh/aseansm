@@ -1,7 +1,8 @@
 <?php 
    
 	$tr=Application_Form_FrmLanguages::getCurrentlanguage();
-	$base_url = Application_Form_FrmMessage::getUrl("/");
+	//$base_url = Application_Form_FrmMessage::getUrl("/");
+	$base_url = $this->baseUrl();
 	$request=Zend_Controller_Front::getInstance()->getRequest();
 	$action=$request->getActionName();
 	$controller=$request->getControllerName();

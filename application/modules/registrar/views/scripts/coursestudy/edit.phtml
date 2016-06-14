@@ -101,8 +101,10 @@ dojo.ready(function(){changControll();
 		study_year=dijit.byId('study_year').get('value');
 		payment_term=dijit.byId('payment_term').get('value');
 		levele=dijit.byId('grade').get('value');
-		if(study_year!='' && payment_term !='' && levele !=''){
+		time_type=dijit.byId('time_type').get('value');
+		if(study_year!='' && payment_term !='' && levele !='' && time_type !=''){
 			getPaymentTerms(study_year,levele,payment_term);
+			
 		}
 		dijit.byId('discount').attr('value','0');
     	dijit.byId('books').attr('value','0');
@@ -115,13 +117,22 @@ dojo.ready(function(){changControll();
 	}
 	var payment_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 	var url_getpaymentterm = '<?php echo $this->url(array('module'=>'registrar','controller'=>'coursestudy','action'=>'get-payment-gep')); ?>';
-	function getPaymentTerms(study_year,levele,payment_term){
+	function getPaymentTerms(study_year,levele,payment_term,time_type){
+		dijit.byId('tuitionfee').attr('value',0);
+    	dijit.byId('total').attr('value',0);
+    	dijit.byId('books').attr('value',0);
+    	dijit.byId('discount').attr('value',0);
+    	dijit.byId('addmin_fee').attr('value',0);
+    	dijit.byId('remaining').attr('value',0);
+    	dijit.byId('remark').attr('value',0);
+    	dijit.byId('char_price').attr('value',0);
 			dojo.xhrPost({
 				url:url_getpaymentterm,
 				content:{
 					'study_year':study_year,
 					'levele':levele,
-					'payment_term':payment_term
+					'payment_term':payment_term,
+					'time_type':time_type
 					},
 				handleAs:"json",
 				load: function(data) {

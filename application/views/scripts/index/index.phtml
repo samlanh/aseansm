@@ -6,6 +6,7 @@ $base_url = Application_Form_FrmMessage::getUrl("/");
 <!DOCTYPE HTML> 
 <html>
 <head>
+<style> .red{color:red;}</style>
 <?php /*
 */?>
 <script src="<?php echo $base_url;?>/js/dojo-1.6.1/dojo/dojo.js"  djConfig="isDebug: true,parseOnLoad: true"></script>
@@ -35,30 +36,22 @@ $base_url = Application_Form_FrmMessage::getUrl("/");
 			<td class="textblue" align="center">
 				<div class="textgreen footertitle"​ style="text-align: center; font-weight:bold;font-family: Arial Black;color:#BDC5CD; font-size: 22px;font-family:'Khmer MEF2'">ប្រព័ន្ធគ្រប់គ្រង ការចុះឈ្មោះសិស្ស</div>
 				<label class="textgreen footertitle"​ style="text-align: right; font-weight:bold;font-family: Arial Black;color:#BDC5CD; font-size: 22px;line-height: 17px;"><strong>S</strong>tudent <strong>M</strong>anagement <strong>S</strong>ystem</label></td>
-			<td class="textblue" align="left" width="33%"></td>
+			<td class="textblue" align="center" width="33%">
+			<img src="<?php echo $this->baseUrl()."/images/camapp.png"?>" height="45px" /></td>
 		</tr>
 	</table>
 </div>
-<div id="content">
-	<div id='marquee'>
+<div id="content" >
+<div id='marquee'>
 		<marquee behavior="scroll" direction="left" onmouseout="this.start()" onmouseover="this.stop()" scrollamount="5"><?php echo $this->data["label_animation"];?></marquee>
-	</div>
+</div>
+</div>
+<div id="content" style="position:absolute;bottom: 42%;" >
+	
 	<table cellpadding="0" cellspacing="0" id="main">
 		<tr>
-			<td style="width: 472px;padding-left:50px;" >				
+			<td style="width:50%;padding-left:50px;" >				
 				<img alt="<?php ?>" src="<?php //echo $base_url.$this->data['logo-path-name']?>">
-				<img src="<?php echo $this->baseUrl()."/images/camapp.png"?>" height="70px" />
-			</td>
-			<td valign="top" style="width: 120px">
-				<label class="lblheader"></label>
-				<ul>
-					<?php						
-// 						$services = explode("," , $this->data['services']);						
-// 						foreach ($services AS $i =>$s){
-// 							echo "<li>". $s ."</li>";
-// 						}
-					?>
-				</ul>
 			</td>
 			<td align="right">
 				<div id="login">
@@ -116,40 +109,38 @@ $base_url = Application_Form_FrmMessage::getUrl("/");
 		</tr>
 	</table>	
 </div>
-<div id="footer">
-	<table id="main" border="1">
+<div id="footer" style="position: absolute; bottom: 0;">
+	<table id="main">
 		<tr>
-			<td><br />
-				<label class="textgreen footertitle">អាសយដ្ឋាន​ ៖</label>
-				<dl>
-				   <lable class="textblue"><?php echo $this->data['branch_add']?></lable><br />
-				  	<?php						
-						$tels = explode("," , $this->data['branch-tel']);						
-						foreach ($tels AS $i =>$tel){
-							echo "<dd>". $tel ."</dd>";
+			<td valign="top">
+			<span style="font-weight: bold;font-family: Arial Black;color: #BDC5CD;font-size: 22px;">Our Services</span>
+			<?php						
+						$services= explode("," , $this->data['camappservices']);						
+						foreach ($services AS $i =>$service){
+							echo "<p class='t_shadow' style='font-weight:bold;font-size:15px;color:#5F8EC2;line-height:5px;white-space:nowrap; '>".$service."</p>";
 						}
 					?>	
-					<lable class="textblue"><?php echo $this->data['branch_email']?></lable><br />		   
-				</dl>
-				<br />
 			</td>
-			<td align="right" class="textwithe" rowspan="2" valign="bottom">
-			<img src="<?php echo $this->baseUrl()."/images/camapp.png"?>" height="70px" />
-				<label class="textgreen footertitle">បង្កើតដោយ៖</label>
-				<a href="http://western.edu.kh/" target="_blank"><label class="textyellow footertitle">
+			<td align="right" class="textwithe" valign="middle" style="padding-top:10px;">
+			<span style="font-weight: bold;font-family: Arial Black;color: #BDC5CD;font-size: 18px;">Cam App Technology&nbsp;</span><span style="text-align: center; font-weight:bold;
+					color:gold;font-size: 18px;font-family:'Khmer MEF2'"><?php echo $this->data['camappservice']?></span>
+			<dl style="margin-top:-2px;">
+				   <lable class="f_style"><b><?php echo $this->data['camappadress']?></b></lable><br />
+				  	<?php						
+						$tels = explode("," , $this->data['camapptel']);						
+						foreach ($tels AS $i =>$tel){
+							echo "<span class='t_shadow' style='font-weight:bold;font-size:20px;'>".$tel."<span><br />";
+						}
+					?>	
+					<lable class='t_shadow' style='font-weight:bold; font-size:21px;'><a target="_blank" href="http://<?php echo $this->data['website']?>"><?php echo $this->data['website']?></a></lable><br />
+				</dl>
+				<label class="textgreen footertitle">បង្កើតនិងរក្សាសិទ្ធ&copy ដោយ៖</label>
+				<a href="http://cam-app.com/" target="_blank"><label class="textyellow footertitle">
 					<?php echo $this->data['power_by']?>
 				</label>				
 			</td>
 		</tr>
-		<tr>
-			<td class="textgreenlight">
-				<label class="textgreen footertitle">&copy រក្សាសិទ្វិដោយ</label>
-				<a href="http://western.edu.kh/" target="_blank"><label class="textyellow footertitle">
-					<?php echo $this->data['branch']?>
-				</label>	
-			</td>
-			
-		</tr>
+		
 	</table>
 </div>
 </body>

@@ -133,13 +133,15 @@
 	}
 	var payment_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 	var url_getpaymentterm = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-payment-term')); ?>';
-	function getPaymentTerms(generat,pay,grade,time){
-			//alert(generat);
+	function getPaymentTerms(generat,payment_term,grade,time){//time (full/part time)
+		dijit.byId('tuitionfee').attr('value',0);
+    	dijit.byId('total').attr('value',0);
+    	dijit.byId('books').attr('value',0);
 			dojo.xhrPost({
 				url:url_getpaymentterm,
 				content:{
 					'generat_id':generat,
-					'pay_id':pay,
+					'pay_id':payment_term,
 					'grade_id':grade,
 					'time':time
 					},
