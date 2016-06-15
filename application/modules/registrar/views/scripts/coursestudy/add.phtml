@@ -467,10 +467,22 @@ function printSave(){
 		if(dijit.byId('office_receipt').validate()) {
 			dojo.byId("lb_term").innerHTML = dijit.byId("payment_term").attr('displayedValue');
 			dojo.byId("lb_enroll_id").innerHTML = dijit.byId("reciept_no").get('value');
-			 var d = dojo.byId("start_date").value.split('/');
-			 dojo.byId("lb_term_start").innerHTML = d[1] + "/" + d[0] +"/"+d[2];
-			 var d = dojo.byId("end_date").value.split('/');
-			 dojo.byId("lb_term_end").innerHTML = d[1] + "/" + d[0] +"/"+d[2];
+
+			//	 var d = dojo.byId("start_date").value.split('/');
+			//   dojo.byId("lb_term_start").innerHTML = d[1] + "/" + d[0] +"/"+d[2];
+				 var d=dijit.byId('start_date').get('value');
+				 var day = d.getDate();
+				 var x = d.toDateString().substr(4,3);
+				 var year = d.getFullYear();
+				 dojo.byId("lb_term_start").innerHTML = day+'-'+x+'-'+year;
+				// var d = dojo.byId("end_date").value.split('/');
+				// dojo.byId("lb_term_end").innerHTML = d[1] + "/" + d[0] +"/"+d[2];
+				 var d=dijit.byId('end_date').get('value');
+				 var day = d.getDate();
+				 var x = d.toDateString().substr(4,3);
+				 var year = d.getFullYear();
+				 dojo.byId("lb_term_end").innerHTML = day+'-'+x+'-'+year;
+			
 	 dojo.byId("lb_student").innerHTML =dijit.byId("kh_name").get('value')+" - "+ dijit.byId("en_name").get('value');
 	 dojo.byId("lb_student_id").innerHTML = dijit.byId("stu_id").get('value');
 	 dojo.byId("lb_level").innerHTML = dijit.byId("grade").attr('displayedValue');
