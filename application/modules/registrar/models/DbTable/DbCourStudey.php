@@ -270,9 +270,12 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
     	$session_user=new Zend_Session_Namespace('auth');
     	$user_id=$session_user->user_id;
     	$db=$this->getAdapter();
-    	$from_date = (empty($search["start_date"]))?'Y-m-01':$search["start_date"];
-     	$to_date =  (empty($search["end_date"]))?'Y-m-01' :$search["end_date"];
-     	$where =" AND sp.create_date BETWEEN '$from_date' AND '$to_date'";
+//     	$from_date = (empty($search["start_date"]))?'Y-m-01':$search["start_date"];
+//      $to_date =  (empty($search["end_date"]))?'Y-m-01' :$search["end_date"];
+    	//$where =" AND sp.create_date BETWEEN '$from_date' AND '$to_date'";
+    	$from_date =(empty($search['start_date']))? '1': "s.create_date >= '".$search['start_date']." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': "s.create_date <= '".$search['end_date']." 23:59:59'";
+    	$where = " AND ".$from_date." AND ".$to_date;
     	$sql=" SELECT sp.id,s.stu_code,sp.receipt_number,s.stu_khname,s.stu_enname,s.sex,(SELECT en_name FROM rms_dept WHERE dept_id=s.degree)AS degree,
 		       (SELECT major_enname FROM rms_major WHERE major_id=s.grade ) AS grade,
 		       sp.payment_term,
