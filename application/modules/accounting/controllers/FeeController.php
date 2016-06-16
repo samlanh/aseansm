@@ -10,13 +10,20 @@ class Accounting_FeeController extends Zend_Controller_Action {
     	try{
     		if($this->getRequest()->isPost()){
     			$_data = $this->getRequest()->getPost();
+    			$this->view->row_ace=$_data;
     			$search = array(
     					'txtsearch' => $_data['txtsearch'],
+    					'year' => $_data['year'],
+//     					'session' => $_data['session'],
+//     					'grade' => $_data['grade'],
     			);
     		}
     		else{
     			$search=array(
     					'txtsearch' => '',
+    					'year' =>'',
+//     					'session' => '',
+//     					'grade' => '',
     			);
     		}
     		$db = new Accounting_Model_DbTable_DbTuitionFee();
@@ -84,6 +91,10 @@ class Accounting_FeeController extends Zend_Controller_Action {
     	Application_Model_Decorator::removeAllDecorator($frm);
     	$this->view->frm_search = $frm;
     	$this->view->adv_search = $search;
+    	$data=$this->view->rows_session=$db->getSession();
+    	$data=$this->view->rows_year=$db->getAceYear();
+    	$this->view->rows_grade=$db->getGrad();
+    	  
     }
     public function headAddRecordTuitionFee($rs,$key){
     	$result[$key] = array(
@@ -126,6 +137,7 @@ class Accounting_FeeController extends Zend_Controller_Action {
     	$_model = new Application_Model_GlobalClass();
     	$this->view->all_metion = $_model ->getAllMetionOption();
     	$this->view->all_faculty = $_model ->getAllFacultyOption();
+    	$data=$this->view->all_session=$_model->getAllSession();
     	$model = new Application_Model_DbTable_DbGlobal();
     	$this->view->payment_term = $model->getAllPaymentTerm(null,1);
     	
@@ -153,6 +165,7 @@ class Accounting_FeeController extends Zend_Controller_Action {
 		$_model = new Application_Model_GlobalClass();
 		$this->view->all_metion = $_model ->getAllMetionOption();
 		$this->view->all_faculty = $_model ->getAllFacultyOption();
+		$data=$this->view->all_session=$_model->getAllSession();
 		$model = new Application_Model_DbTable_DbGlobal();
 		$this->view->payment_term = $model->getAllPaymentTerm(null,1);
 		 
@@ -175,6 +188,7 @@ class Accounting_FeeController extends Zend_Controller_Action {
 						
 						$rs_rows[$key] = array(
 								'class_id'=>$payment_tran['class_id'],
+								'session_id'=>$payment_tran['session'],
 								'quarter'=>$payment_tran['tuition_fee'],
 								'semester'=>'',
 								'year'=>'',
@@ -187,15 +201,17 @@ class Accounting_FeeController extends Zend_Controller_Action {
 						$key++;
 					}elseif($payment_tran['payment_term']==3){
 						$rs_rows[$key_old]['year'] = $payment_tran['tuition_fee'];
+						
 		
 					}elseif($payment_tran['payment_term']==2){
 						$rs_rows[$key_old]['semester'] = $payment_tran['tuition_fee'];
+						 
 					}
 	
 				}
 				
 			   $this->view->rows =$rs_rows;
-// 			   print_r($rs_rows);exit();
+			 //  print_r($rs_rows);
 			   
 	}
     

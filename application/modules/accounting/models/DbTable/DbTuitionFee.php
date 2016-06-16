@@ -9,7 +9,7 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     	return $session_user->user_id;
     	 
     }
-    function getAllTuitionFee($search=''){
+    function getAllTuitionFee($search=''){  
     	$db=$this->getAdapter();
     	$sql = "SELECT id,CONCAT(from_academic,' - ',to_academic) AS academic,
     		    generation,(select name_kh from `rms_view` where `rms_view`.`type`=7 and `rms_view`.`key_code`=`rms_tuitionfee`.`time`)AS time,
@@ -19,15 +19,20 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     	if(empty($search)){
     		return $db->fetchAll($sql.$order);
     	}
+    	if(!empty($search['year'])){
+    		$where.=" AND id=".$search['year'];
+    	}
+    	 
 	    if(!empty($search['txtsearch'])){
 	    	$s_where = array();
 	    	$s_search = addslashes(trim($search['txtsearch']));
 		 	$s_where[] = " CONCAT(from_academic,'-',to_academic) LIKE '%{$s_search}%'";
 	    	$s_where[] = " generation LIKE '%{$s_search}%'";
-	    	$s_where[] = " (select name_kh from `rms_view` where `rms_view`.`type`=7 and `rms_view`.`key_code`=`rms_tuitionfee`.`time`) LIKE '%{$s_search}%'";
 // 	    	$s_where[] = " en_name LIKE '%{$s_search}%'";
 	    	$where .=' AND ( '.implode(' OR ',$s_where).')';
 	    }
+	    
+	   // print_r($sql.$where);
     	return $db->fetchAll($sql.$where.$order);
     }
     function getFeebyOther($fee_id){
@@ -51,6 +56,7 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     	$db->beginTransaction();
 		
     	$fee_id = $this->getCondition($_data);
+    	 
     	try{
     		if(!empty($fee_id)){
     			
@@ -76,6 +82,7 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
 	    				$_arr = array(
 	    						'fee_id'=>$fee_id,
 	    						'class_id'=>$_data['class_'.$i],
+	    						'session'=>$_data['session_'.$i],
 	    						'payment_term'=>$j,
 	    						'tuition_fee'=>$_data['fee'.$i.'_'.$j],
 	    						'remark'=>$_data['remark'.$i]
@@ -121,6 +128,7 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     				$_arr = array(
     						'fee_id'=>$_data['id'],
     						'class_id'=>$_data['class_'.$i],
+    						'session'=>$_data['session_'.$i],
     						'payment_term'=>$j,
     						'tuition_fee'=>$_data['fee'.$i.'_'.$j],
     						'remark'=>$_data['remark'.$i],
@@ -198,31 +206,25 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     	$where=$this->getAdapter()->quoteInto("id=?", $data['id']);
     	$this->update($_arr, $where);
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    function getSession(){
+    	$db=$this->getAdapter();
+    	$sql="SELECT key_code AS id,CONCAT(name_en,'-',name_kh) AS `name` FROM rms_view WHERE `type`=4 AND `status`=1 ";
+    	return $db->fetchAll($sql);
+    }
+    function getAceYear(){
+    	$db=$this->getAdapter();
+    	$sql="SELECT id,CONCAT(from_academic,'-',to_academic,'(',generation,')') AS `name`     
+                     FROM rms_tuitionfee WHERE `status`=1 ";
+        $oder=" ORDER BY id DESC ";
+    	return $db->fetchAll($sql.$oder);
+    }
+    function getGrad(){
+    	$db=$this->getAdapter();
+    	$sql="SELECT major_id AS id,CONCAT(major_enname,'-',major_khname) AS `name` FROM rms_major WHERE is_active=1";
+    	return $db->fetchAll($sql);
+    }
+ 
+     
     
     
 }

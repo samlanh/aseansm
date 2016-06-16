@@ -35,7 +35,7 @@ table .set-style tr.st1{ background: none repeat scroll 0% 0% rgba(218, 250, 255
 									<?php }?>
 								</select>
 							</td>
-							<td style="white-space: nowrap;text-align: right; "><?php echo $tr->translate("TO");?></td>
+							<td style="white-space: nowrap;  "><?php echo $tr->translate("TO");?></td>
 							<td align="center">
 								<select dojoType="dijit.form.FilteringSelect" required="true" readonly="true"  id="to_year" name="to_year" type="text">
 									<?php for($i=2015;$i<=date('Y')+2;$i++){?>
@@ -44,7 +44,7 @@ table .set-style tr.st1{ background: none repeat scroll 0% 0% rgba(218, 250, 255
 								</select>
 							</td>
 							
-							<td style="white-space: nowrap;text-align: right;"><?php echo $tr->translate("GENERATION");?></td>
+							<td style="white-space: nowrap;text-align: center;"><?php echo $tr->translate("GENERATION");?></td>
 							<td width="200px" ><input dojoType="dijit.form.TextBox" readonly="true" required="true" class="fullside" id="generation" value="<?php echo $this->rs['generation']; ?>" name="generation"  type="text"></td>
 							
 						</tr>
@@ -58,11 +58,11 @@ table .set-style tr.st1{ background: none repeat scroll 0% 0% rgba(218, 250, 255
 							</td>
 							
 							
-							<td  style="white-space: nowrap;text-align: right;"><?php echo $tr->translate("NOTE");?></td>
+							<td  style="white-space: nowrap; "><?php echo $tr->translate("NOTE");?></td>
 							<td width="200px"><input dojoType="dijit.form.TextBox" readonly="true" required="true" class="fullside" id="note" name="note"  value="<?php echo $this->rs['note']; ?>" type="text"></td>
 							
 							
-							<td style="white-space: nowrap;text-align: right;"><?php echo $tr->translate("STATUS");?></td>
+							<td style="white-space: nowrap;text-align: center;"><?php echo $tr->translate("STATUS");?></td>
 							<td>
 								<select dojoType="dijit.form.FilteringSelect" required="true"  id="status" name="status" type="text">								
 										<option value="1" <?php if($this->rs['status']==1){ echo "selected='selected'";}?>>Active</option>
@@ -95,7 +95,7 @@ table .set-style tr.st1{ background: none repeat scroll 0% 0% rgba(218, 250, 255
 							<tr>
 								<td colspan="8">
 									<table id="table_row" border="1px" style="border-collapse: collapse; border:1px solid #ccc;">
-										<tr id="head-title" class="head-td" align="right"></tr>
+										<tr id="head-title" class="head-td" align="center" style="text-align: center;"></tr>
 									</table>
 								</td>
 							</tr>
@@ -180,7 +180,7 @@ var template = '';
 var faculty = '<?php echo $this->all_faculty; ?>';
 var metion = '<?php echo $this->all_metion; ?>';
 var payment_term = '<?php echo count($this->payment_term);?>';
-//var pay_term ="<?php //print_r($payment_term);?>";
+var session='<?php echo $this->all_session;?>';
 
 var col = 0;
 var no = 0;
@@ -194,7 +194,8 @@ function addRow() {
 			temp+='<th><?php echo $tr->translate("DEL");?></th>';
 			temp+='<th><?php echo $tr->translate("N_O");?></th>';
 			
-			temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("GRADE");?></th>';
+			temp+='<th id="lbl_titlemetion"><?php echo $tr->translate("GRADE");?></th>';
+			temp+='<th id="lbl_titlemetion"><?php echo $tr->translate("SESSION");?></th>';
 			
 			<?php $s=0; ?>
 			<?php  foreach ($payment_term as $value){?>
@@ -202,20 +203,21 @@ function addRow() {
 			<?php echo"temp+='<th>$value</th>';"; ?>			
 			<?php }?>
 			temp+='<th><?php echo $tr->translate("REMARK");?></th>';
-			temp+='<th><?php echo $tr->translate("STATUS");?></th>';
+			temp+='<th ><?php echo $tr->translate("STATUS");?></th>';
 			dojo.query("#head-title").append(temp);
 			title=1;
 		}
 			template+='<td width="47px"align="center"><img onclick="deleteRecord('+col+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
 			template+='<td width="6%" align="center">'+no+'</td>';
 			template+='<td><select dojoType="dijit.form.FilteringSelect" id="class_'+col+'" name="class_'+col+'">'+faculty+'</select></td>';			
+			template+='<td><select dojoType="dijit.form.FilteringSelect" id="session_'+col+'" name="session_'+col+'">'+session+'</select></td>';
 			
 			column = 0;
 			for(j=0;j<payment_term;j++){ column++;
-				template+='<td width="15%"><input type="text" required="true" id="fee'+col+'_'+column+'" name="fee'+col+'_'+column+'" dojoType="dijit.form.NumberTextBox" style="width: 100%;" /></td>';
+				template+='<td ><input type="text" required="true" id="fee'+col+'_'+column+'" name="fee'+col+'_'+column+'" dojoType="dijit.form.NumberTextBox" style="width: 100px;" /></td>';
 			}
-			template+='<td <input type="text" required="true" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ"style=""/><label id="subsub"></label></td>';
-			template+='<td><select dojoType="dijit.form.FilteringSelect" id="status_'+col+'" name="status_'+col+'"><option value="1">Active</option><option value="0">Deactive</option></select></td>';			
+			template+='<td> <input type="text" required="true" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" style="width: 100px;"/><label id="subsub"></label></td>';
+			template+='<td><select dojoType="dijit.form.FilteringSelect" id="status_'+col+'" name="status_'+col+'" style="width: 100px;"><option value="1">Active</option><option value="0">Deactive</option></select></td>';			
 			
 		tmp='<tr id="row'+col+'">';
 		tmp+="</tr>";
@@ -244,8 +246,8 @@ function initailize(){
 		temp+='<th><?php echo $tr->translate("DEL");?></th>';
 		temp+='<th><?php echo $tr->translate("N_O");?></th>';
 		
-		temp+='<th id="lbl_titlemetion" width="100px"><?php echo $tr->translate("GRADE");?></th>';
-		
+		temp+='<th id="lbl_titlemetion" ><?php echo $tr->translate("GRADE");?></th>';
+		temp+='<th id="lbl_titlemetion" ><?php echo $tr->translate("SESSION");?></th>';
 		<?php $s=0; ?>
 		<?php  foreach ($payment_term as $value){?>
 		
@@ -259,14 +261,15 @@ function initailize(){
 		template+='<td width="47px"align="center"><img onclick="deleteRecord('+col+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
 		template+='<td width="6%" align="center">'+no+'</td>';
 		template+='<td><select dojoType="dijit.form.FilteringSelect" id="class_'+col+'" name="class_'+col+'">'+faculty+'</select></td>';			
+		template+='<td><select dojoType="dijit.form.FilteringSelect" id="session_'+col+'" name="session_'+col+'">'+session+'</select></td>';
 		
 		column = 0;
 		for(j=0;j<payment_term;j++){ column++;
-			template+='<td width="15%"><input type="text" required="true" id="fee'+col+'_'+column+'" name="fee'+col+'_'+column+'" dojoType="dijit.form.NumberTextBox" style="width: 100%;" /></td>';
+			template+='<td ><input type="text" required="true" id="fee'+col+'_'+column+'" name="fee'+col+'_'+column+'" dojoType="dijit.form.NumberTextBox" style="width: 100px;" /></td>';
 			
 		}
-		template+='<td <input type="text" required="true" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ"style=""/><label id="subsub"></label></td>';
-		template+='<td><select dojoType="dijit.form.FilteringSelect" id="status_'+col+'" name="status_'+col+'"><option value="1">Active</option><option value="0">Deactive</option></select></td>';			
+		template+='<td width="100px" > <input type="text" required="true" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" style="width: 100px;"  /><label id="subsub"></label></td>';
+		template+='<td width="100px" ><select dojoType="dijit.form.FilteringSelect" id="status_'+col+'" name="status_'+col+'" style="width: 100px;" ><option value="1">Active</option><option value="0">Deactive</option></select></td>';			
 		
 	tmp='<tr id="row'+col+'">';
 	tmp+="</tr>";
@@ -285,6 +288,7 @@ function initailize(){
 	dijit.byId('fee'+col+'_3').attr('value',<?php echo $row['year']?>);
 	dijit.byId('remark'+col).attr('value','<?php echo $row['note']?>');
 	dijit.byId('status_'+col).attr('value','<?php echo $row['status']?>');
+	dijit.byId('session_'+col).attr('value','<?php echo $row['session_id']?>');
 	
 	<?php } }?>
 }

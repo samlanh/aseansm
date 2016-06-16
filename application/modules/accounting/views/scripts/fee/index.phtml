@@ -2,55 +2,67 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	echo $this->headTitle($tr->translate("FEE"));
 ?>	
+<script type="text/javascript">
+	dojo.require("dojo.data.ObjectStore");
+	dojo.require("dojo.data.ItemFileWriteStore");  
+	dojo.require("dojo.store.Memory");
+	dojo.require("dojo.data.ObjectStore");
+	dojo.require('dojox.form.BusyButton');
+	var aca_year= getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->rows_year));?> );
+	var session  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->rows_session));?> );
+	var grade= getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->rows_grade));?> );
+	dojo.ready(function(){
+	new dijit.form.FilteringSelect({
+	    store: aca_year,
+	    autoComplete: true,                        
+	    required: false,
+	    id: "year",
+	    name: "year",           
+	    class: 'fullside',  
+	    placeHolder:"Selected Acdemice Year",          
+	    onChange: function() {  
+	    	 
+	    }
+	}, "year");
+	dijit.byId('year').attr('value','<?php echo $this->row_ace['year']?>');
+/*	new dijit.form.FilteringSelect({
+	    store: session,
+	    autoComplete: true,                        
+	    required: false,
+	    id: "session",
+	    name: "session",           
+	    class: 'fullside',  
+	    placeHolder:"Selected Session",          
+	    onChange: function() {  
+	    	 
+	    }
+	}, "session");
+	new dijit.form.FilteringSelect({
+	    store: grade,
+	    autoComplete: true,                        
+	    required: false,
+	    id: "grade",
+	    name: "grade",           
+	    class: 'fullside',  
+	    placeHolder:"Selected Grade",          
+	    onChange: function() {  
+	    	 
+	    }
+	}, "grade");
+	*/
+});
+</script>
 <form id="list" name="list" action="<?php echo $this->url(array('module'=>'accounting','controller'=>'fee','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post">
-	<table style="width:60%">
+	<table style="width:40%" style="width:100px;">
 	  <tr> 
-		<td> <input dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Search....." value="<?php echo $this->adv_search['txtsearch']; ?>" type="text">
-		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
+		<td ><input dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Search....." value="<?php echo $this->adv_search['txtsearch']; ?>" type="text"></td>
+		<td><input id="year" /></td>
+		<td><button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
+	    <td></td>
+	     <td></td>
 	  </tr>
 	</table>
 </form>
 <?php echo $this->list; ?>
 
-<?php $frm_search = $this->frm_search;?>
-<div class="dijitHidden">
-	<div data-dojo-type="dijit.Dialog" style="width:7cm;" data-dojo-props="title:'<?php echo $tr->translate("SEARCH");?>', onCancel:hideDialog" id="popup_dept" >
-		<form id='frm_add_dept' dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<table cellpadding="5" cellspacing="5">
-			<tr>
-				<td><?php echo $tr->translate("CODE");?></td>
-				<td><?php echo $frm_search->getElement("fee_code");?></td>
-				<td><?php echo $tr->translate("DEGREE");?></td>
-				<td><?php echo $frm_search->getElement("degree");?></td>
-			</tr>
-			<tr>
-				<td><?php echo $tr->translate("BATCH");?></td>
-				<td><?php echo $frm_search->getElement("batch");?></td>
-				<td><?php echo $tr->translate("FACULTIES");?></td>
-				<td><?php echo $frm_search->getElement("faculty");?></td>
-			</tr>
-			<tr>
-				<td><?php echo $tr->translate("MENTION");?></td>
-				<td><?php echo $frm_search->getElement("metion");?></td>
-				<td><?php echo $tr->translate("STATUS");?></td>
-				<td><?php echo $frm_search->getElement("status_search");?></td>
-			</tr>
-			<tr>
-				<td colspan="4" align="center"><br />
-					<input type="submit"  label="<?php echo $tr->translate("SEARCH");?>" id="submitButton" 
-					dojoType="dijit.form.Button" iconClass="dijitIconSearch" />
-			</tr>
-			
-		</table>
-		</form>
-	</div>
-</div>
- <script type="text/javascript">
-function showDialog() {	
-	dijit.byId("popup_dept").show();
-}
-function hideDialog() {		
-	dijit.byId("popup_dept").hide();
-}
- </script>
  
