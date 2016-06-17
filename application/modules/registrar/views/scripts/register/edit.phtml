@@ -3,6 +3,7 @@
 	echo $this->headTitle($tr->translate('SRMS_WUREGISTER')); 
 	$base_url = Application_Form_FrmMessage::getUrl("/");
 	//print_r($this->degree_row);exit();
+	//print_r($this->degree_row);
 ?>	
 <script type="text/javascript"  src="<?php echo $this->baseUrl();?>/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript"  src="<?php echo $this->baseUrl();?>/js/convertion.js"></script>
@@ -99,8 +100,9 @@
 			payment_term=dijit.byId('payment_term').get('value');
 			grade=dijit.byId('grade').get('value');
 			time=dijit.byId('time').get('value');
-			if(generat!='' && payment_term !='' && grade !='' && time !=''){
-				getPaymentTerms(generat,payment_term,grade,time);
+			session=dijit.byId('session').get('value');
+			if(generat!='' && payment_term !='' && grade !='' && time !='' && session !=''){
+				getPaymentTerms(generat,payment_term,grade,time,session);
 			}
 			dijit.byId('discount').attr('value','0');
 	    	dijit.byId('books').attr('value','0');
@@ -116,21 +118,23 @@
 		payment_term=dijit.byId('payment_term').get('value');
 		grade=dijit.byId('grade').get('value');
 		time=dijit.byId('time').get('value');
-		if(generat!='' && payment_term !='' && grade !='' && time !=''){
-			getPaymentTerms(generat,payment_term,grade,time);
+		session=dijit.byId('session').get('value');
+		if(generat!='' && payment_term !='' && grade !='' && time !='' && session !=''){
+			getPaymentTerms(generat,payment_term,grade,time,session);
 		}
 	}
 	
 	var payment_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 	var url_getpaymentterm = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-payment-term')); ?>';
-	function getPaymentTerms(generat,pay,grade,time){
+	function getPaymentTerms(generat,pay,grade,time,session){
 			dojo.xhrPost({
 				url:url_getpaymentterm,
 				content:{
 					'generat_id':generat,
 					'pay_id':pay,
 					'grade_id':grade,
-					'time':time
+					'time':time,
+					'session':session
 					},
 				handleAs:"json",
 				load: function(data) {
@@ -158,6 +162,7 @@
 			});
 	}
 	function defaultPayment(){
+		
 		dijit.byId('tuitionfee').attr('value','<?php echo $this->degree_row['tuition_fee'];?>');
     	dijit.byId('total').attr('value','<?php echo $this->degree_row['total'];?>');
     	dijit.byId('discount').attr('value','<?php echo $this->degree_row['discount_percent'];?>');

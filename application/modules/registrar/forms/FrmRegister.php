@@ -103,7 +103,9 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		$this->_session->setAttribs(array(
 				'dojoType'=>$this->filter,
 				'required'=>'true',
-				'class'=>'fullside',));
+				'class'=>'fullside',
+				'onchange'=>'paymentTerm();'
+				));
 		//	$pay_date = date('Y-m-d', mktime(date('h'), date('i'), date('s'), date('m'), date('d')+45, date('Y')));
 		$this->_pay_date = new Zend_Dojo_Form_Element_DateTextBox('dob');
 		$this->_pay_date->setAttribs(array('dojoType'=>$this->t_date,'class'=>'fullside',

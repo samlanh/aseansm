@@ -102,6 +102,7 @@
 		payment_term=dijit.byId('payment_term').get('value');
 		grade=dijit.byId('grade').get('value');
 		time=dijit.byId('time').get('value');
+		session=dijit.byId('session').get('value');
 		student_type=dijit.byId('student_type').get('value');
 		if(student_type==3){
 			old_studens=dijit.byId('old_studens').get('value');
@@ -109,13 +110,13 @@
 				getBalancePrice(1,old_studens);
 			}else
 			{
-				if(generat!='' && payment_term !='' && grade !='' && time !=''){
-					getPaymentTerms(generat,payment_term,grade,time);
+				if(generat!='' && payment_term !='' && grade !='' && time !='' && session !=''){
+					getPaymentTerms(generat,payment_term,grade,time,session);
 				}
 			}
 		}else{
-			if(generat!='' && payment_term !='' && grade !='' && time !=''){
-				getPaymentTerms(generat,payment_term,grade,time);
+			if(generat!='' && payment_term !='' && grade !='' && time !='' && session !=''){
+				getPaymentTerms(generat,payment_term,grade,time,session);
 			}
 		}
 		
@@ -126,14 +127,15 @@
 		//payment_term=payment_term-1;
 		grade=dijit.byId('grade').get('value');
 		time=dijit.byId('time').get('value');
-		if(generat!='' && payment_term !='' && grade !='' && time !=''){
-			getPaymentTerms(generat,payment_term,grade,time);
+		session=dijit.byId('session').get('value');
+		if(generat!='' && payment_term !='' && grade !='' && time !='' && session !=''){
+			getPaymentTerms(generat,payment_term,grade,time,session);
 			
 		}
 	}
 	var payment_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 	var url_getpaymentterm = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-payment-term')); ?>';
-	function getPaymentTerms(generat,payment_term,grade,time){//time (full/part time)
+	function getPaymentTerms(generat,payment_term,grade,time,session){//time (full/part time)
 		dijit.byId('tuitionfee').attr('value',0);
     	dijit.byId('total').attr('value',0);
     	dijit.byId('books').attr('value',0);
@@ -143,7 +145,8 @@
 					'generat_id':generat,
 					'pay_id':payment_term,
 					'grade_id':grade,
-					'time':time
+					'time':time,
+					'session':session
 					},
 				handleAs:"json",
 				load: function(data) {
