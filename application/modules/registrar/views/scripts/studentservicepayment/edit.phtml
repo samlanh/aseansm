@@ -376,13 +376,17 @@ function printSave(){
 						</table>
 	</div>
 	<button dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconPrint"
-				showLabel="false" type="button" onclick="doPrint();">Print</button>
+				showLabel="false" type="button" onclick="printSubmit();doPrint();">Print</button>
 		<button dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconCancel"
 				showLabel="false" type="button" onclick="hideDialog();">Cancel</button>
 </div>
 </div>
 
 <script>
+//save daata when sub button print 
+function printSubmit(){
+	$('#office_receipt').submit();
+}
 function calculatePrice() {
 	var total = $('#tuitionfee').val();
 	var ds = $('#discount').val();

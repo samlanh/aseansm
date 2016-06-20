@@ -101,18 +101,17 @@ dojo.ready(function(){changControll();
 		study_year=dijit.byId('study_year').get('value');
 		payment_term=dijit.byId('payment_term').get('value');
 		levele=dijit.byId('grade').get('value');
-		time_type=dijit.byId('time_type').get('value');
-		if(study_year!='' && payment_term !='' && levele !='' && time_type !=''){
-			getPaymentTerms(study_year,levele,payment_term);
-			
-		}
-		dijit.byId('discount').attr('value','0');
-    	dijit.byId('books').attr('value','0');
-    	dijit.byId('addmin_fee').attr('value','0');
-    	dijit.byId('remaining').attr('value','0');
-    	dijit.byId('remark').attr('value','0');
-    	dijit.byId('char_price').attr('value','0');
-    	dijit.byId('not').attr('value',''); 
+		session=dijit.byId('session').get('value');
+		if(study_year!='' && payment_term !='' && levele !='' && session !=''){
+			getPaymentTerms(study_year,levele,payment_term,session);
+		} 
+			dijit.byId('discount').attr('value','0');
+	    	dijit.byId('books').attr('value','0');
+	    	dijit.byId('addmin_fee').attr('value','0');
+	    	dijit.byId('remaining').attr('value','0');
+	    	dijit.byId('remark').attr('value','0');
+	    	dijit.byId('char_price').attr('value','0');
+	    	dijit.byId('not').attr('value',''); 
 	    }
 	}
 	var payment_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
@@ -639,7 +638,7 @@ function CheckAmount(){
 	
 	//alert('hello');
 	remain=calculatePrice();
-	if(dijit.byId('tuitionfee').get('value') < dijit.byId('discount').get('value')){
+	if(100 < dijit.byId('discount').get('value')){
 		alert("Discount cannot greather than fee value!");
 		dijit.byId("discount").focus();
 		return false;

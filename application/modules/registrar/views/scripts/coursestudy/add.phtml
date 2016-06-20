@@ -670,7 +670,7 @@ function CheckAmount(){
 	
 	//alert('hello');
 	remain=calculatePrice();
-	if(dijit.byId('tuitionfee').get('value') < dijit.byId('discount').get('value')){
+	if( 100 < dijit.byId('discount').get('value') ){
 		alert("Discount cannot greather than fee value!");
 		dijit.byId("discount").focus();
 		return false;

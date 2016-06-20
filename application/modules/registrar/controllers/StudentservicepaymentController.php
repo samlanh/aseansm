@@ -95,6 +95,9 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     			if(isset($_data['save_new'])){
     				$db->updateStudentServicePayment($_data);
     				Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL . '/studentservicepayment/index');
+    			}else{
+    				$db->updateStudentServicePayment($_data);
+    				Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL . '/studentservicepayment/index');
     			}
     		} catch (Exception $e) {
     			Application_Form_FrmMessage::message($this->tr->translate('INSERT_FAIL'));
