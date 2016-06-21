@@ -70,7 +70,7 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 	}
 	
 	function rptStudentpaymentdetailAction(){
-		try{
+		//try{
 			if($this->getRequest()->isPost()){
 				$_data=$this->getRequest()->getPost();
 				$search = array(
@@ -90,11 +90,11 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 			$this->view->row = $db->getStudentPaymentDetail($search);
 			$this->view->service = $db->getService();
 			$this->view->search = $search;
-		}catch(Exception $e){
+		//}catch(Exception $e){
 			Application_Form_FrmMessage::message("Application Error");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			echo $e->getMessage();
-		}
+		//}
 		
 	}
 
