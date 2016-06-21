@@ -12,9 +12,12 @@ class Registrar_Model_DbTable_DbReportStudentByuser extends Zend_Db_Table_Abstra
 	    	$session_user=new Zend_Session_Namespace('auth');
 	    	$user_id=$session_user->user_id;
 	    	$db=$this->getAdapter();
-	     	$from_date = (empty($search["start_date"]))?'Y-m-01':$search["start_date"];
-	     	$to_date =  (empty($search["end_date"]))?'Y-m-01' :$search["end_date"];
-	     	$where =" AND sp.create_date BETWEEN '$from_date' AND '$to_date'";
+// 	     	$from_date = (empty($search["start_date"]))?'Y-m-01':$search["start_date"];
+// 	     	$to_date =  (empty($search["end_date"]))?'Y-m-01' :$search["end_date"];
+// 	     	$where =" AND sp.create_date BETWEEN '$from_date' AND '$to_date'";
+        	$from_date =(empty($search['start_date']))? '1': "sp.create_date >= '".$search['start_date']." 00:00:00'";
+	    	$to_date = (empty($search['end_date']))? '1': "sp.create_date <= '".$search['end_date']." 23:59:59'";
+	    	$where = " AND ".$from_date." AND ".$to_date;
 	    	$sql=" SELECT  spd.id,sp.receipt_number,s.stu_code,s.stu_khname,s.stu_enname, 
                    spd.type,(SELECT pg.title FROM rms_program_name AS pg WHERE pg.service_id=spd.service_id) AS service_id,
                    spd.fee,spd.discount_percent,spd.subtotal,spd.paidamount,spd.balance,spd.start_date,sp.user_id,spd.note
@@ -33,8 +36,14 @@ class Registrar_Model_DbTable_DbReportStudentByuser extends Zend_Db_Table_Abstra
 	    		$where.=' AND ('.implode(' OR ', $s_where).')';
 	    	}
 	    	$order=" ORDER By stu_id DESC ";
-	    	//print_r($sql.$where);
+	    	print_r($sql.$where);
 	    	return $db->fetchAll($sql.$where.$order);
 	    }
+	  public function getServices($service_id){
+	   	    $db=$this->getAdapter();
+	   	    $sql="SELECT pn.service_id,pn.title FROM  rms_program_name AS pn,rms_student_paymentdetail AS spd 
+						WHERE pn.service_id=spd.service_id AND pn.type=2 AND spd.service_id=$service_id";
+	   	    return $db->fetchOne($sql);
+	   }
 }
 

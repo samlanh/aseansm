@@ -21,7 +21,7 @@
 <tr>
     <td>
 		<input  dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Advance Search....." value="<?php echo $this->search['txtsearch'];?>" type="text">
-		<input  name="from_date" id="from_date" dojoType="dijit.form.DateTextBox"  value="<?php if(empty($this->search['start_date'])){echo date('Y-m-01');} else echo $this->search['start_date'];?>" type="text">
+		<input  name="from_date" id="from_date" dojoType="dijit.form.DateTextBox"  value="<?php if(empty($this->search['start_date'])){echo date('Y-m-d');} else echo $this->search['start_date'];?>" type="text">
 		<input  name="to_date" id="to_date" dojoType="dijit.form.DateTextBox"  value="<?php if(empty($this->search['end_date'])){echo date('Y-m-d');} else echo $this->search['end_date'];?>" type="text">
 		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
     </td>
@@ -80,13 +80,14 @@
 										  </tr>
 										  <tr></tr>
 												<style> td{padding:0 3px; }</style>
+												<?php $ser_id=new Registrar_Model_DbTable_DbReportStudentByuser();?>
 										 <?php $i=0; $total=0;$total_paid=0;$total_balance=0; if (!empty($this->row)){  foreach($this->row as $rs){ $i++;
 										 	if($rs['type']==1){
 										 		$ser_type="Registration Fee Service";
 										 	}elseif ($rs["type"]==2){
 										 		$ser_type="GEP Fee Service";
 										 	}else {
-										 		$ser_type=$rs["type"];
+										 		$ser_type=$rs["service_id"];
 										 	}
 										 
 										 ?>

@@ -284,11 +284,6 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 //      	$from_date = (empty($search["start_date"]))?'Y-m-01':$search["start_date"];
 //      	$to_date =  (empty($search["end_date"]))?'Y-m-01' :$search["end_date"];
      	//$where =" AND sp.create_date BETWEEN '$from_date' AND '$to_date'";
-     	
-    	
-    	
-    	
-    	
     	$sql=" SELECT sp.id,s.stu_code,sp.receipt_number,s.stu_khname,s.stu_enname,s.sex,(SELECT en_name FROM rms_dept WHERE dept_id=s.degree)AS degree,
 		       (SELECT major_enname FROM rms_major WHERE major_id=s.grade ) AS grade,
  		       sp.payment_term,sp.tuition_fee,sp.discount_percent, sp.total,sp.paid_amount,

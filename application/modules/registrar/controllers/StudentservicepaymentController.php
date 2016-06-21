@@ -10,7 +10,6 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
     	
 	}
-
     public function indexAction()
     {
     	try{
@@ -92,7 +91,7 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
 //     		$_data['id']=$id;
     		try {
     			$db = new Registrar_Model_DbTable_DbStudentServicePayment();
-    			if(isset($_data['save_new'])){
+    			if(isset($_data['save_close'])){
     				$db->updateStudentServicePayment($_data);
     				Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL . '/studentservicepayment/index');
     			}else{

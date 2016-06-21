@@ -23,7 +23,7 @@ class Registrar_AllreportsController extends Zend_Controller_Action {
     		else{
     			$search = array(
     					'txtsearch' =>'',
-    					'start_date'=> date('Y-m-01'),
+    					'start_date'=> date('Y-m-d'),
     					'end_date'=>date('Y-m-d'),
     			);
     		}
