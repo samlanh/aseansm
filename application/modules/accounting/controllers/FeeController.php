@@ -41,6 +41,7 @@ class Accounting_FeeController extends Zend_Controller_Action {
     								
     								$rs_rows[$key]['status'] = Application_Model_DbTable_DbGlobal::getAllStatus($payment_tran['status']);
     								$rs_rows[$key]['class'] = $payment_tran['class'];
+    								$rs_rows[$key]['session'] = $payment_tran['session'];
     								$rs_rows[$key]['quarter'] = $payment_tran['tuition_fee'];
     								$key_old=$key;
     								$key++;
@@ -76,7 +77,7 @@ class Accounting_FeeController extends Zend_Controller_Action {
     			$payment_term.='"'.$value.'",';
     		}
     		$list = new Application_Form_Frmtable();
-    		$collumns = array("ACADEMIC_YEAR","BATCH","CLASS","QUARTER","SEMESTER","YEAR","TIME","CREATED_DATE","STATUS");
+    		$collumns = array("ACADEMIC_YEAR","BATCH","CLASS","SESSION","QUARTER","SEMESTER","YEAR","CREATED_DATE","STATUS");
     		$link=array(
     				'module'=>'accounting','controller'=>'fee','action'=>'edit',
     		);
@@ -102,10 +103,10 @@ class Accounting_FeeController extends Zend_Controller_Action {
     						'academic'=> $rs['academic'],
     						'generation'=> $rs['generation'],	
     						'class'=>'',
+    		            	'session'=>'',
     						'quarter'=>'',
 			    			'semester'=>'',
 			    			'year'=>'',
-    						'time'=>$rs['time'],
     						'date'=>$rs['create_date'],
     						'status'=>''
     				);

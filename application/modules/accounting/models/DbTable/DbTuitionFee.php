@@ -37,7 +37,7 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     }
     function getFeebyOther($fee_id){
     	$db = $this->getAdapter();
-    	$sql = "select *,
+    	$sql = "select *,(SELECT CONCAT(name_en,'-',name_kh) FROM rms_view WHERE rms_tuitionfee_detail.session=rms_view.key_code AND rms_view.type=4)  AS `session`,
 		(SELECT major_enname FROM `rms_major` WHERE major_id=rms_tuitionfee_detail.class_id) as class
     	from rms_tuitionfee_detail where fee_id =".$fee_id." ORDER BY id";
     	return $db->fetchAll($sql);
