@@ -12,6 +12,18 @@
 ?>
 <div style="width: 28cm;margin: 0 auto;">
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'registrar','controller'=>'studentnearlyendservice','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+	<table width="100%">
+	      <tr>
+		       <td>
+					<div class="menureport">
+										<ul>
+											<li class="preview"><a title="Preview" href="#" onclick="preview();"></a></li>
+											<li class="print"><a href="#" title="Print" onclick="doPrint();" ></a></li>
+										</ul>
+					</div>
+		      </td>
+		</tr>
+	</table>
 	<table>	
 		<tr>
 			<td>
@@ -106,7 +118,29 @@
 							
 			</div>		
 </div>
-
+<script type="text/javascript">
+function doPrint() {
+	window.frames["print_frame"].document.body.innerHTML=dojo.byId('divPrint').innerHTML;
+    window.frames["print_frame"].window.focus();
+    window.frames["print_frame"].window.print();
+    hideDialog();
+}
+function preview()
+{ 
+  var disp_setting="toolbar=no,status=no,resizable=no,location=no,directories=yes,menubar=no,"; 
+      disp_setting+="scrollbars=no,width=1200, height=700, left=100, top=25"; 
+  var content_vlue = document.getElementById("divPrint").innerHTML; 
+  
+  var docprint=window.open("","",disp_setting); 
+   docprint.document.open(); 
+   docprint.document.write('<html><head>'); 
+   docprint.document.write('</head><div style=" font-size:16px !important; margin:0px; font-family:Verdana;"><style>table th {font-size:14px !important;} table td{font-size:12px !important;}</style><center>');          
+   docprint.document.write(content_vlue);          
+   docprint.document.write('</center></div></html>'); 
+   docprint.document.close(); 
+   docprint.focus(); 
+}
+</script>
 
 
 

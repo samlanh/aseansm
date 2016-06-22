@@ -45,7 +45,7 @@ class Registrar_Model_DbTable_DbRptStudentNearlyEndService extends Zend_Db_Table
     			$where .=' AND ( '.implode(' OR ',$s_where).')';
     		}
     		
-    		//echo $sql.$where;
+    	//	echo $sql.$where;
     	return $db->fetchAll($sql.$where.$order);
     }
     
