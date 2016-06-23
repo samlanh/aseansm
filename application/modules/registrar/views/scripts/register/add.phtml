@@ -46,7 +46,7 @@
 	    	dijit.byId('addmin_fee').attr('value','0');
 	    	dijit.byId('remaining').attr('value','0');
 	    	dijit.byId('remark').attr('value','0');
-	    	dijit.byId('char_price').attr('value','0');
+	    	//dijit.byId('char_price').attr('value','0');
 	    	dijit.byId('not').attr('value','');
 	    	getTotale();
 	    }
@@ -163,12 +163,13 @@
 					     dijit.byId('addmin_fee').attr('value','0');
 					     dijit.byId('remaining').attr('value','0');
 					     dijit.byId('remark').attr('value','0');
-					     dijit.byId('char_price').attr('value','0');
+					 //    dijit.byId('char_price').attr('value','0');
 					     dijit.byId('not').attr('value','');
 				      }
-				      a = dojo.number.format(data.tuition_fee);
+				 /*     a = dojo.number.format(data.tuition_fee);
 					  money_khmer=read_money_in_khmer(a);
 					  dijit.byId('char_price').attr('value',money_khmer.trim()+'ដុល្លាគត់');
+					  */
 				},
 				error: function(err) {
 					//alert(err);
@@ -419,12 +420,12 @@ fieldset{  background:none;}
 						<tr>	
 						    <td><?php echo $tr->translate("NOT");?></td>
 							<td title='Ex: 20 or 10%' ><?php echo $register->getElement('not');?></td>	
-							<td><?php echo $tr->translate("CHAR_PRICE");?></td>
-							<td title='Ex: 20 or 10%' ><?php echo $register->getElement('char_price');?></td>
-						</tr>
-						<tr>
 							<td><?php echo $tr->translate("START_DATE");?></td>
 							<td><?php echo $register->getElement('start_date');?></td>
+						</tr>
+						<tr>
+							<td><?php //echo $tr->translate("CHAR_PRICE");?></td>
+							<td title='Ex: 20 or 10%' ><?php //echo $register->getElement('char_price');?></td>
 							<td><?php echo $tr->translate("END_DATE");?></td>
 							<td><?php echo $register->getElement('end_date');?></td>
 						</tr>
@@ -495,7 +496,7 @@ function printSave(){
 	
 }
 </script>
-<div class="dijitHidden">
+<div class="dijitHidden" style="width: 21cm; height: 11cm ; padding: 0px; margin: 0px;">
 <?php $keycode = $this->keycode;?>
 	<div data-dojo-type="dijit.Dialog" style="width:7cm;" align="center" data-dojo-props="title:'<?php echo $tr->translate("STUDENT_PAYMENT_RECEIPT");?>'" id="terms" >
 		<div class="header">
@@ -661,7 +662,7 @@ function CheckAmount(){
 	b=dijit.byId('total').get('value');
 	a = dojo.number.format(b);
 	money_khmer=read_money_in_khmer(a);
-	dijit.byId('char_price').attr('value',money_khmer.trim()+'ដុល្លាគត់');
+	//dijit.byId('char_price').attr('value',money_khmer.trim()+'ដុល្លាគត់');
 }
 function getNewStudent(){
 	if (dojo.byId("is_new").checked){
