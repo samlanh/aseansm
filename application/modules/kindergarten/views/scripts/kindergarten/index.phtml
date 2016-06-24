@@ -4,7 +4,7 @@
 	echo $this->headTitle(''); 
 	
 ?>	
-<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'foundation','controller'=>'kindergarten','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'kindergarten','controller'=>'kindergarten','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	<table style="width:60%">
 	  <tr> 
 		<td> <input dojoType="dijit.form.TextBox"   id="adv_search" name="adv_search" placeholder="Search....." value="<?php echo $this->adv_search['adv_search']; ?>" type="text"></td>

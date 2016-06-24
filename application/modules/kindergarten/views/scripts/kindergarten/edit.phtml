@@ -32,9 +32,9 @@ dojo.require("dijit.form.DateTextBox");
 					      	<table cellspacing="5" style="margin:0 auto; white-space: nowrap;" width="100%" >
 					      		<tr>
 					      			<td  title="ឈ្មោះជាភាសារខ្មែរ"><?php echo $tr->translate("NAME_KH");?>*</td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="name_kh" name="name_kh" value="<?php echo $this->rs['stu_khname']?>" type="text" required="required"></td>	
+									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="name_kh" name="name_kh" value="<?php echo $this->rs['stu_khname']?>" type="text"  ></td>	
 									<td  title="ឈ្មោះជាភាសារអង់គ្លេស"><?php echo $tr->translate("NAME_EN");?>*</td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="name_en" name="name_en" value="<?php echo $this->rs['stu_enname']?>" type="text" required="required"></td>
+									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="name_en" name="name_en" value="<?php echo $this->rs['stu_enname']?>" type="text"  ></td>
 									<td title="បញ្ជូលភេទនិស្សិត"><?php echo $tr->translate("SEX");?>*</td>
 									<td>
 									    <select tabindex="24" name="sex" id="sex" dojoType="dijit.form.FilteringSelect" >
@@ -55,7 +55,7 @@ dojo.require("dijit.form.DateTextBox");
 									<td ><?php echo $tr->translate("POB");?>*</td>
 									<td  colspan="3" >
 										<textarea style="width: 639px;height: 50px !important;"
-										tabindex="21" dojoType=""  id="pob" name="pob" value="" required="required"><?php echo $this->rs['address']?></textarea>
+										tabindex="21" dojoType=""  id="pob" name="pob" value=""  ><?php echo $this->rs['address']?></textarea>
 									</td>
 									
 					      		</tr>
@@ -144,9 +144,9 @@ dojo.require("dijit.form.DateTextBox");
 								<tr><td>&nbsp;</td></tr>
 								<tr>
 					      			<td width="12%"><?php echo $tr->translate("NAME_KH");?>*</td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="fa_name_kh" name="fa_name_kh" value="<?php echo $this->rs['father_khname']?>" type="text" required="required"></td>
+									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="fa_name_kh" name="fa_name_kh" value="<?php echo $this->rs['father_khname']?>" type="text" required="required" ></td>
 									<td ><?php echo $tr->translate("NAME_EN");?>*</td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="fa_name_en" name="fa_name_en" value="<?php echo $this->rs['father_enname']?>" type="text" required="required"></td>
+									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="fa_name_en" name="fa_name_en" value="<?php echo $this->rs['father_enname']?>" type="text"  ></td>
 									<td><?php echo $tr->translate("AGE");?></td>
 									<td><input tabindex="15" dojoType="dijit.form.TextBox"  id="fa_age" name="fa_age" value="<?php echo $this->rs['father_old']?>"  type="text" ></td>
 					      		</tr>
@@ -157,7 +157,7 @@ dojo.require("dijit.form.DateTextBox");
 								    <td><?php echo $tr->translate("OCCUPATION");?></td>
 									<td><input  id="fa_job"  /></td>
 					      		    <td><?php echo $tr->translate("PHONE");?>*</td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="fa_phone" name="fa_phone" value="<?php echo $this->rs['father_phone']?>" type="text" required="required" ></td>
+									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="fa_phone" name="fa_phone" value="<?php echo $this->rs['father_phone']?>" type="text"   ></td>
 					      		</tr>
 					      		<tr><td>&nbsp;</td></tr>
 								<tr>
@@ -166,9 +166,9 @@ dojo.require("dijit.form.DateTextBox");
 								<tr><td>&nbsp;</td></tr>
 					      		<tr>
 					      			<td width="12%"><?php echo $tr->translate("NAME_KH");?>*</td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="mo_name_kh" name="mo_name_kh" value="<?php echo $this->rs['mother_khname']?>" type="text" required="required"></td>
+									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="mo_name_kh" name="mo_name_kh" value="<?php echo $this->rs['mother_khname']?>" type="text"  ></td>
 									<td ><?php echo $tr->translate("NAME_EN");?>*</td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="mo_name_en" name="mo_name_en" value="<?php echo $this->rs['mother_enname']?>" type="text" required="required"></td>
+									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="mo_name_en" name="mo_name_en" value="<?php echo $this->rs['mother_enname']?>" type="text"  ></td>
 									<td><?php echo $tr->translate("AGE");?></td>
 									<td><input tabindex="15" dojoType="dijit.form.TextBox"  id="mo_age" name="mo_age"  value="<?php echo $this->rs['mother_old']?>" type="text" ></td>
 					      		</tr>
@@ -179,7 +179,7 @@ dojo.require("dijit.form.DateTextBox");
 								    <td><?php echo $tr->translate("OCCUPATION");?></td>
 									<td><input  id="mo_job"  /></td>
 					      		    <td><?php echo $tr->translate("PHONE");?>*</td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="mo_phone" name="mo_phone" value="<?php echo $this->rs['mother_phone']?>" type="text" required="required" ></td>
+									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="mo_phone" name="mo_phone" value="<?php echo $this->rs['mother_phone']?>" type="text"   ></td>
 					      		</tr>
 					      	</table>
 					      </div>
@@ -195,7 +195,7 @@ dojo.require("dijit.form.DateTextBox");
 									<td ><?php echo $tr->translate("NAME");?>*</td>
 									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="tr_name" name="tr_name" value="<?php echo $this->rs['tr_name']?>" type="text" required="required"></td>
 									<td width="12%"><?php echo $tr->translate("RELATIONSHIP_TO_CHILD");?></td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="tr_relationship_to_child" name="tr_relationship_to_child" value="<?php echo $this->rs['tr_relate_to_stu']?>" type="text" required="required"></td>
+									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="tr_relationship_to_child" name="tr_relationship_to_child" value="<?php echo $this->rs['tr_relate_to_stu']?>" type="text"  ></td>
 					      		</tr>
 					      		
 					      		<tr>
@@ -203,13 +203,13 @@ dojo.require("dijit.form.DateTextBox");
 									<td><input tabindex="15" dojoType="dijit.form.TextBox"  id="tr_passport_no" name="tr_identity_no" value="<?php echo $this->rs['tr_identity_no']?>" type="text" ></td>
 					      		    
 									<td ><?php echo $tr->translate("PHONE");?>*</td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="tr_phone" name="tr_phone" value="<?php echo $this->rs['tr_phone']?>" type="text" required="required"></td>
+									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="tr_phone" name="tr_phone" value="<?php echo $this->rs['tr_phone']?>" type="text" ></td>
 					      		</tr>
 					      		<tr>
 					      		    <td ><?php echo $tr->translate("ADDRESS");?></td>
 									<td colspan="3">
 									     <textarea   style="width: 766px;height: 50px !important;"
-										    tabindex="21" dojoType=""  id="tr_address" name="tr_address" required="required"><?php echo $this->rs['tr_address']?></textarea>
+										    tabindex="21" dojoType=""  id="tr_address" name="tr_address"  ><?php echo $this->rs['tr_address']?></textarea>
 									</td>
 					      		</tr>
 					      		<tr>
@@ -223,23 +223,23 @@ dojo.require("dijit.form.DateTextBox");
 								</tr>
 					      		<tr>
 					      			<td width="12%"><?php echo $tr->translate("NAME");?>*</td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="ur_name" name="ur_name" value="<?php echo $this->rs['ur_name']?>" type="text" required="required"></td>
+									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="ur_name" name="ur_name" value="<?php echo $this->rs['ur_name']?>" type="text"  ></td>
 									<td width="12%"><?php echo $tr->translate("RELATIONSHIP_TO_CHILD");?>*</td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="ur_relationship_to_child" name="ur_relationship_to_child" value="<?php echo $this->rs['ur_identity_no']?>" type="text" required="required"></td>
+									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="ur_relationship_to_child" name="ur_relationship_to_child" value="<?php echo $this->rs['ur_identity_no']?>" type="text"  ></td>
 					      		</tr>
 					      		
 					      		<tr>
 					      		    <td ><?php echo $tr->translate("IDENTITTY_PASSPORT_NO");?>*</td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="ur_identity_no" name="ur_identity_no" value="<?php echo $this->rs['ur_relate_to_stu']?>" type="text" required="required"></td>
+									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="ur_identity_no" name="ur_identity_no" value="<?php echo $this->rs['ur_relate_to_stu']?>" type="text"  ></td>
 					      		    <td><?php echo $tr->translate("PHONE");?>*</td>
-									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="ur_phone" name="ur_phone" value="<?php echo $this->rs['ur_phone']?>" type="text" required="required" ></td>
+									<td><input tabindex="15" dojoType="dijit.form.ValidationTextBox"  id="ur_phone" name="ur_phone" value="<?php echo $this->rs['ur_phone']?>" type="text"   ></td>
 					      		</tr>
 					      		
 					      		<tr>
 					      		    <td ><?php echo $tr->translate("ADDRESS");?></td>
 									<td colspan="3">
 									     <textarea   style="width: 766px;height: 50px !important;"
-										    tabindex="21" dojoType=""  id="ur_address" name="ur_address" required="required"><?php echo $this->rs['ur_address']?></textarea>
+										    tabindex="21" dojoType=""  id="ur_address" name="ur_address"  ><?php echo $this->rs['ur_address']?></textarea>
 									</td>
 					      		</tr>
 					      	</table>
@@ -311,7 +311,7 @@ dojo.ready(function(){
 	new dijit.form.FilteringSelect({
 		store: job_store,
 		autoComplete: true,                        
-		required: true,                      
+		required: false,                      
 	    id: "fa_job",
 	    name: "fa_job",  
 	    tabindex: "17",         
@@ -331,7 +331,7 @@ dojo.ready(function(){
 	new dijit.form.FilteringSelect({
 		store: job_store,
 		autoComplete: true,                        
-		required: true,                      
+		required: false,                      
 	    id: "mo_job",
 	    name: "mo_job",  
 	    tabindex: "17",         
@@ -368,21 +368,21 @@ dojo.ready(function(){
 							<tr>
 								<td><?php echo $tr->translate('OCCUPATION_KHNAME');?></td>
 								<td>
-									<input dojoType="dijit.form.ValidationTextBox" required="true" class="fullside" id="occu_name" name="occu_name" value="" type="text">
+									<input dojoType="dijit.form.ValidationTextBox"   class="fullside" id="occu_name" name="occu_name" value="" type="text">
 								</td>
 							</tr>
 							<tr>
 								<td><?php echo $tr->translate('OCCUPATION_ENNAME');?></td>
 								<td>
 									<input dojoType="dijit.form.TextBox" type="hidden" name="value_j" id="value_j" value=""   />
-									<input dojoType="dijit.form.ValidationTextBox" required="true" class="fullside" id="occu_enname" name="occu_enname" value="" type="text">
+									<input dojoType="dijit.form.ValidationTextBox"  class="fullside" id="occu_enname" name="occu_enname" value="" type="text">
 								</td>
 							</tr>
 							<tr>
 							<tr>
 								<td><?php echo $tr->translate('STATUS');?></td>
 								<td>
-									<select name="status_j" id="status_j" dojoType="dijit.form.FilteringSelect" required="true" class="fullside">
+									<select name="status_j" id="status_j" dojoType="dijit.form.FilteringSelect"   class="fullside">
 	    								<option value="1" label="active">Active</option>
 	    								<option value="0" label="deactive">Deactive</option>
 									</select>

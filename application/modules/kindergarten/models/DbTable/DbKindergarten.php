@@ -1,6 +1,6 @@
 <?php
 
-class Foundation_Model_DbTable_DbKindergarten extends Zend_Db_Table_Abstract
+class Kindergarten_Model_DbTable_DbKindergarten extends Zend_Db_Table_Abstract
 {
 	
 	protected $_name = 'rms_student';
@@ -88,10 +88,11 @@ class Foundation_Model_DbTable_DbKindergarten extends Zend_Db_Table_Abstract
 	}
 	
 	public function updateKindergarten($data,$id){
+	
 		try{
 			$db= $this->getAdapter();
 			$arr = array(
-					'stu_type'		=>1,
+					'stu_type'		=>3,
 					'user_id'		=>$this->getUserId(),
 						
 					'stu_enname'	=>$data['name_en'],
@@ -110,7 +111,7 @@ class Foundation_Model_DbTable_DbKindergarten extends Zend_Db_Table_Abstract
 						
 					'academic_year'	=>$data['academic_year'],
 					'stu_code'		=>$data['student_id'],
-					'degree'		=>1,
+					//'degree'		=>$data['grade'],
 					'grade'			=>$data['grade'],
 					'session'		=>$data['session'],
 					'status'		=>$data['status'],
@@ -130,26 +131,26 @@ class Foundation_Model_DbTable_DbKindergarten extends Zend_Db_Table_Abstract
 					'mother_job'	=>$data['mo_job'],
 					'mother_phone'	=>$data['mo_phone'],
 						
-					'tr_name'		=>$data['tr_name'],
-					'tr_identity_no'=>$data['tr_identity_no'],
-					'tr_relate_to_stu'=>$data['tr_relationship_to_child'],
-					'tr_phone'		=>$data['tr_phone'],
-					'tr_address'	=>$data['tr_address'],
+				 	'tr_name'		=>$data['tr_name'],
+				 	'tr_identity_no'=>$data['tr_identity_no'],
+				 	'tr_relate_to_stu'=>$data['tr_relationship_to_child'],
+				 	'tr_phone'		=>$data['tr_phone'],
+				 	'tr_address'	=>$data['tr_address'],
 						
-					'ur_name'		=>$data['ur_name'],
-					'ur_identity_no'=>$data['ur_identity_no'],
-					'ur_relate_to_stu'=>$data['ur_relationship_to_child'],
-					'ur_phone'		=>$data['ur_phone'],
-					'ur_address'	=>$data['ur_address'],
-						
+				 	'ur_name'		=>$data['ur_name'],
+				 	'ur_identity_no'=>$data['ur_identity_no'],
+				 	'ur_relate_to_stu'=>$data['ur_relationship_to_child'],
+				 	'ur_phone'		=>$data['ur_phone'],
+				 	'ur_address'	=>$data['ur_address'],
 					//'create_date'	=>date("Y-m-d H:i:s"),
 			);
 			
 			$where=" stu_id = ".$id;
-			
+			$db->getProfiler()->setEnabled(true);
 			$this->update($arr, $where);
-			
-			//return $this->insert($arr);
+			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+			$db->getProfiler()->setEnabled(false);//exit();
 		}catch(Exception $e){
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
@@ -233,7 +234,7 @@ class Foundation_Model_DbTable_DbKindergarten extends Zend_Db_Table_Abstract
 		(SELECT name_kh FROM `rms_view` WHERE type=2 AND key_code = sex) as sex
 		,(SELECT `major_enname` FROM `rms_major` WHERE `major_id`=grade) as grade,nationality,dob,
 		(SELECT name_kh FROM `rms_view` WHERE type=1 AND key_code = status) as status
-		FROM rms_student where status = 1 AND stu_type = 1 and degree=1 ";
+		FROM rms_student where status = 1 AND stu_type =3 and degree=1 ";
 		$orderby = " ORDER BY stu_id DESC ";
 	
 		$from_date =(empty($search['start_date']))? '1': "rms_student.create_date >= '".$search['start_date']." 00:00:00'";

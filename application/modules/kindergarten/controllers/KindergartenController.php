@@ -18,7 +18,7 @@ public function indexAction(){
 						'end_date'=>date('Y-m-d'));
 			}
 // 			$search='';
-			$db_student= new Foundation_Model_DbTable_DbKindergarten();
+			$db_student= new Kindergarten_Model_DbTable_DbKindergarten();
 			$rs_rows = $db_student->getAllStudent($search);
 			$list = new Application_Form_Frmtable();
 			if(!empty($rs_rows)){
@@ -28,7 +28,7 @@ public function indexAction(){
 				}
 				$collumns = array("STUDENT_CODE","NAME_KH","NAME_EN","SEX","GRADE","NATIONALITY","DOB","STATUS");
 				$link=array(
-						'module'=>'foundation','controller'=>'kindergarten','action'=>'edit',
+						'module'=>'kindergarten','controller'=>'kindergarten','action'=>'edit',
 				);
 				$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('stu_code'=>$link,'stu_enname'=>$link,'stu_khname'=>$link,'grade'=>$link));
 		}catch (Exception $e){
@@ -42,23 +42,18 @@ public function indexAction(){
 	function addAction(){
 		if($this->getRequest()->isPost()){
 			try{
-				
 				$db = new Foundation_Model_DbTable_DbKindergarten();
-				
 				$num = $this->getStuNoGenerateAction();
 				$data = $this->getRequest()->getPost();
-				
 				$row = $db->addKindergarten($data,$num);
-				
 // 				print_r($row);exit();
-
 				if($row==-1){
 					Application_Form_FrmMessage::message("RECORD_EXIST");
 				}else{
 					if(isset($data['save_close'])){
-						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/kindergarten/index");
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/kindergarten/kindergarten/index");
 					}else{
-						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/kindergarten/add");
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/kindergarten/kindergarten/add");
 					}
 					Application_Form_FrmMessage::message("INSERT_SUCCESS");
 				}
@@ -68,64 +63,39 @@ public function indexAction(){
 				echo $e->getMessage();
 			}
 		}
-		
+		$this->_redirect('kindergarten/kindergarten/index');
 		$_db = new Application_Model_DbTable_DbGlobal(); 		
-		
 		$this->view->province = $row =$_db->getProvince();
-		
 		$db = new Foundation_Model_DbTable_DbKindergarten();
-		
 		$this->view->year = $db->getAllYear();
-		
 		$this->view->grade = $db->getAllGrade();
-		
 		$row=$db->getAllOccupation();
 		array_unshift($row, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
 		$this->view->occupation = $row;
-		
 	}
-	
 	function editAction(){
-		
 		$id=$this->getRequest()->getParam("id");
-		
-// 		print_r($id);exit();
-		
 		if($this->getRequest()->isPost()){
 			try{
 				$data = $this->getRequest()->getPost();
-				$db = new Foundation_Model_DbTable_DbKindergarten();
+				$db = new Kindergarten_Model_DbTable_DbKindergarten();
 				$row = $db->updateKindergarten($data,$id);
-				
-				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/foundation/kindergarten/index");
-				
+				Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/kindergarten/kindergarten/index");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}
-	
 		$_db = new Application_Model_DbTable_DbGlobal();
-	
 		$this->view->province = $row =$_db->getProvince();
-	
-		$db = new Foundation_Model_DbTable_DbKindergarten();
-	
+		$db = new Kindergarten_Model_DbTable_DbKindergarten();
 		$this->view->year = $db->getAllYear();
-	
 		$this->view->grade = $db->getAllGrade();
-	
 		$row=$db->getAllOccupation();
 		array_unshift($row, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
 		$this->view->occupation = $row;
-	
 		$this->view->rs = $db->getStudentById($id);
-		
-// 		print_r($this->view->rs);exit();
-		
 	}
-	
-	
 	function getStuNoAction(){
 		if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();
