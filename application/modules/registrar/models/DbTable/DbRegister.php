@@ -166,7 +166,13 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				$this->_name='rms_student';
 				if($data['student_type']==3){//old stu
 					
-				}else{  
+				}else{
+					$stu_type='';
+					if($data['dept']==1){
+						$stu_type=3;
+					}else{
+						$stu_type=1;
+					}  
 					$arr=array(
 							'stu_code'=>$data['stu_id'],
 							'academic_year'=>$data['study_year'],
@@ -178,7 +184,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 							'grade'=>$data['grade'],
  
 							'create_date'=>	date('Y-m-d'),
-							'stu_type'=>1,
+							'stu_type'=>$stu_type,
   
 							//'stu_type'=>1,
  
