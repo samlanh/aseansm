@@ -1,5 +1,5 @@
 <?php
-class Gep_gepController extends Zend_Controller_Action {
+class Gep_GepController extends Zend_Controller_Action {
 	
     public function init()
     {    	
