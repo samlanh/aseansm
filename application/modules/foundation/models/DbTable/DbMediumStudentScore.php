@@ -224,7 +224,7 @@ class Foundation_Model_DbTable_DbMediumStudentScore extends Zend_Db_Table_Abstra
 	}
 	function getGroupName($academic,$session){
 		$db=$this->getAdapter();
-		$sql="SELECT id,group_code AS `name` FROM  rms_group WHERE degree IN(3,4) AND `session`=$session AND academic_year=$academic  ";
+		$sql="SELECT id,group_code AS `name` FROM  rms_group WHERE degree IN(2,3,4) AND `session`=$session AND academic_year=$academic  ";
 		return $db->fetchAll($sql);
 	}
 	function getParentNameByGroupId($group_id){
