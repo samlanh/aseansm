@@ -206,7 +206,7 @@ class Application_Model_GlobalClass  extends Zend_Db_Table_Abstract
 			$db=$this->getAdapter();
 			$sql=" SELECT key_code AS id,CONCAT(name_en,'-',name_kh) AS `name` FROM rms_view WHERE `type`=4 AND `status`=1 ";
 		    $rows=$db->fetchAll($sql);
-		    array_unshift($rows, array('id'=>-1,'name'=>"Add New"));
+// 		    array_unshift($rows, array('id'=>-1,'name'=>"Add New"));
 		    $options = '';
 		    if(!empty($rows))foreach($rows as $value){
 		    	$options .= '<option value="'.$value['id'].'" >'.htmlspecialchars($value['name'], ENT_QUOTES).'</option>';
