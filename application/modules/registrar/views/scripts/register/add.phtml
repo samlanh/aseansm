@@ -508,7 +508,7 @@ function printSave(){
 		          </tr>
 		     </table>
 		</div>
-		<div id="divPrint" style="width: 23cm !important; height: 11cm ; padding: 0px; margin: 0px;">
+		<div id="divPrint" style="width: 23cm !important; height: 12cm ; padding: 0px; margin: 0px;">
 			<style>
 				.fontbig{
 					font-size: 15px;	
@@ -524,81 +524,71 @@ function printSave(){
 						margin-top: -25px; line-height: 25px;}
 				.values{ border: 1px solid rgba(14, 0, 107, 1);; height: 25px; padding: 0 10px;display: block;
 						line-height: 25px;}
-				.h{ margin-top: -8px;margin-left:4px;}
+				.h{ margin-top: -8px;/*margin-left:4px;*/}
 ​​               .print td{ font:bold 12px 'Khmer OS Battambang';}
 			   .khmerbold{font:bold 12px 'Khmer OS Battambang';}
 			   .khmer{font:12px 'Khmer OS Battambang';}
 			   .one{white-space:nowrap;}
 			</style>	
-			<table    class="print" bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="height: 11cm; font-size:12px; color:rgba(14, 0, 107, 1); padding: 0px;padding-top:25px; margin: 0px;">
+			<table    class="print" bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="height: 11cm; font-size:12px; color:rgba(14, 0, 107, 1);  padding:25px 10px 0px 5px; margin: 0px;">
 				<tr>
 				    <td colspan="8"  style="font:bold 20px 'Kh Muol';" align="center"><u><b><strong style=" font-family: Arial Black;font-family:'Khmer MEF2';">បង្កាន់ដៃបង់ប្រាក់</strong></b></u>
 				        <br/><strong style="font-size: 20px;font-weight:bold">OFFICAL RECEIPT</strong>
 				    </td>
 				</tr>
 				<tr>
-				    <td class="one khmerbold" valign="middle">&nbsp;អត្តលេខសិស្ស<div class="h">Student ID</div> </td><td width="25%"><strong> &nbsp;<label id="lb_stu_id" class="value"></label></strong></td>
+				    <td class="one khmerbold" valign="middle">អត្តលេខសិស្ស<div class="h">Student ID</div> </td><td width="25%"><strong> &nbsp;<label id="lb_stu_id" class="value"></label></strong></td>
 				    <td></td><td ></td>
 				    <td> </td><td ></td>
-				    <td class="one khmerbold">&nbsp;លេខបង្កាន់ដៃ<div class="h">Receipt No</div></td><td width="25%"><strong>&nbsp;<label id="lb_receipt_no" class="value"></label></strong></td>
+				    <td class="one khmerbold">លេខបង្កាន់ដៃ<div class="h">Receipt No</div></td><td width="25%"><strong>&nbsp;<label id="lb_receipt_no" class="value"></label></strong></td>
 				</tr>
 				<tr>
-				    <td class="one khmerbold">&nbsp;ឈ្មោះខ្មែរ/អង់គ្លេស&nbsp;<div class="h">Khmer/English</div> </td>
+				    <td class="one khmerbold">ឈ្មោះខ្មែរ/អង់គ្លេស&nbsp;<div class="h">Khmer/English</div> </td>
 				    <td width="25%" colspan="5"><strong> &nbsp;<label id="lb_kh_name" class="value"></label></strong></td>
 				    <td class="one khmerbold"  valign="middle">&nbsp;ភេទ&nbsp;/&nbsp;Sex </td><td width="25%"><strong>&nbsp;<label id="lb_sex" class="value"></label></strong></td>
 				</tr>
 				<tr>
-				    <td class="one khmerbold">&nbsp;វេនសិក្សា <div class="h">Session</div></td><td width="25%"><strong> &nbsp;<label id="lb_session" class="value"></label></strong></td>
+				    <td class="one khmerbold">វេនសិក្សា <div class="h">Session</div></td><td width="25%"><strong> &nbsp;<label id="lb_session" class="value"></label></strong></td>
 				    <td class="one khmerbold">&nbsp;&nbsp;ម៉ោងសិក្សា <div class="h" style="margin-left:7px !important;">Study Hour</div></td><td width="25%"><strong> &nbsp;<label id="lb_hour" class="value"></label></strong></td>
 				    <td class="one khmerbold" valign="middle">&nbsp;&nbsp;កម្រិត&nbsp;/&nbsp;Degree </td><td width="25%"><strong>&nbsp;<label id="lb_dept" class="value"></label></strong></td>
 				    <td class="one khmerbold" valign="middle">&nbsp;&nbsp;ថ្នាក់ទី&nbsp;/&nbsp;Grade </td><td width="25%"><strong>&nbsp;<label id="lb_grade" class="value"></label></strong></td>
 				</tr>
 				<tr>
-				    <td class="one khmerbold">&nbsp;តម្លៃសិក្សា <div class="h">Tuition Fee</div></td><td width="25%"><strong> &nbsp;<label id="lb_tuitionfee" class="value"></label></strong></td>
-				    <td class="one khmerbold">&nbsp;&nbsp;ការបង់  <div class="h" style="margin-left:7px !important;">Payment&nbsp;Term&nbsp;</div></td><td width="25%"><strong>&nbsp;<label id="lb_payment_term" class="value"></label></strong></td>
+				    <td class="one khmerbold">ការបង់  <div class="h" >Payment&nbsp;Term&nbsp;</div></td><td width="25%"><strong>&nbsp;<label id="lb_payment_term" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;&nbsp;តម្លៃសិក្សា <div class="h" style="margin-left:7px !important;">Tuition Fee</div></td><td width="25%"><strong> &nbsp;<label id="lb_tuitionfee" class="value"></label></strong></td>
 				    <td class="one khmerbold">&nbsp;&nbsp;បញ្ចុះតម្លៃ <div class="h" style="margin-left:7px !important;">Discount</div></td><td width="25%"><strong>&nbsp; <label id="lb_discount" class="value"></label></strong></td>
 				    <td class="one khmerbold">&nbsp;&nbsp;តម្លៃរដ្ឋបាល <div class="h" style="margin-left:7px !important;">Admin Fee</div></td><td width="25%"><strong>&nbsp; <label id="lb_addmin_fee" class="value"></label></strong></td>
 				</tr>
 				<tr>
-				    <td class="one khmerbold">&nbsp;&nbsp;តម្លៃផ្សេងៗ <div class="h" style="margin-left:7px !important;">Other Fee</div></td><td width="25%"><strong>&nbsp;<label id="lb_remark" class="value"></label></strong></td>
-				    <td class="one khmerbold">&nbsp;តម្លៃសរុប <div class="h">Total</div></td><td width="25%"><strong> &nbsp;<label id="lb_total" class="value"></label></strong></td>
+				    <td class="one khmerbold">តម្លៃផ្សេងៗ <div class="h" >Other Fee</div></td><td width="25%"><strong>&nbsp;<label id="lb_remark" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;&nbsp;តម្លៃសរុប <div class="h" style="margin-left:7px !important;">Total</div></td><td width="25%"><strong> &nbsp;<label id="lb_total" class="value"></label></strong></td>
 				    <td class="one khmerbold">&nbsp;&nbsp;ប្រាក់បានទទួល <div class="h" style="margin-left:7px !important;">Paid Amount</div></td><td width="25%"><strong>&nbsp;<label id="lb_books" class="value"></label></strong></td>
 				    <td class="one khmerbold">&nbsp;&nbsp;ប្រាក់នៅសល់ <div class="h" style="margin-left:7px !important;">Balance</div></td><td width="25%"><strong>&nbsp;<label id="lb_remaining" class="value"></label></strong></td>
 				</tr>
 				<tr>
-				    <td class="one khmerbold">&nbsp;&nbsp;សម្គាល់ :<div class="h" style="margin-left:7px !important;">Note</div></td><td  colspan="7"><strong >&nbsp; <label style="width: 100% ! important;padding-right: 0px !important;" id="lb_note" class="value"></label></strong></td>
+				    <td class="one khmerbold">សម្គាល់ :<div class="h" >Note</div></td><td  colspan="7"><strong >&nbsp; <label style="width: 100% ! important;padding-right: 0px !important;" id="lb_note" class="value"></label></strong></td>
 				</tr>
 				<tr>
-				    <td class="one khmerbold">&nbsp;ថ្ងៃចាប់ផ្តើម <div class="h">Start Date</div></td><td width="25%"><strong>&nbsp; <label id="lb_start_date" class="value"></label></strong></td>
+				    <td class="one khmerbold">ថ្ងៃចាប់ផ្តើម <div class="h">Start Date</div></td><td width="25%"><strong>&nbsp; <label id="lb_start_date" class="value"></label></strong></td>
 				    <td class="one khmerbold">&nbsp;&nbsp;ថ្ងៃបញ្ចប់  <div class="h" style="margin-left:7px !important;">End Date</div></td><td width="25%"><strong>&nbsp; <label id="lb_end_date" class="value"></label></strong></td>
  				</tr> 
 				<tr>
 				    <td colspan="4" class="khmerbold">&nbsp;ហត្ថលេខា និង​ ឈ្មោះអ្នកបង់ </td>
 				    <td  colspan="4" align="right" class="khmerbold" style="line-height: 16px;">
 				        <hr style="margin-bottom: -15px !important; color:#000; height: 0.5px; border-width:0px; background-color: #000;" align="right" width="100%" /><br/>
-				        <h3 style="padding-right: 0px ! important;margin-bottom: -16px  !important;"> 
+				        <h4 style="padding-right: 0px ! important;margin-bottom: -16px  !important;"> 
 				                 <?php $session_user=new Zend_Session_Namespace('auth');
 						           $last_name=$session_user->last_name;
 						           $username = $session_user->first_name;
 						           echo "បេឡា  /​​​ Cashier: ".$last_name." ".$username;?>
-				        </h3><br/> 26/Dec/2015 08:05AM <br/>
+				        </h4><br/> 26/Dec/2015 08:05AM <br/>
 				    </td>
 				</tr>
-				<tr><td colspan="8" style="height:20px;"></td></tr>
+				<tr><td colspan="8" style="height:15px;"></td></tr>
 				<tr>
-				    <td colspan="8">&nbsp;បញ្ជាក់ៈទឹកប្រាក់ដែលបង់ហើយ  មិនអាចផ្ទេរ ឬ ដកវិញបានទែ  Note: All fees are not transferable or refundable.</td>
+				    <td colspan="8" class="one khmerbold">&nbsp;បញ្ជាក់ៈទឹកប្រាក់ដែលបង់ហើយ  មិនអាចផ្ទេរ ឬ ដកវិញបានទែ  Note: All fees are not transferable or refundable.</td>
 				</tr>
 			</table>
-		</div>
-		<div class="footer_re"  >
-		<table  bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 24cm;  font-size:14px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;" >
-		    <tr>
-				 <td colspan="8" > 
-				       <hr style="background: rgba(251, 239, 13, 0.87) none repeat scroll 0% 0%; height: 4px; border: medium none rgb(240, 255, 0);"/>
-				       <p class=" khmerbold"></p>
-				 </td>
-				</tr>
-		</table>
 		</div>
 		<iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>	
 		<button dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconPrint"
