@@ -496,11 +496,11 @@ function printSave(){
 	
 }
 </script>
-<div class="dijitHidden" style="width: 21cm; height: 11cm ; padding: 0px; margin: 0px;">
+<div class="dijitHidden" style="width: 23cm !important; height: 11cm ; padding: 0px; margin: 0px;">
 <?php $keycode = $this->keycode;?>
-	<div data-dojo-type="dijit.Dialog" style="width:7cm;" align="center" data-dojo-props="title:'<?php echo $tr->translate("STUDENT_PAYMENT_RECEIPT");?>'" id="terms" >
+	<div data-dojo-type="dijit.Dialog" style="width:24cm;" align="center" data-dojo-props="title:'<?php echo $tr->translate("STUDENT_PAYMENT_RECEIPT");?>'" id="terms" >
 		<div class="header">
-		     <table     bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;  font-size:14px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;">
+		     <table     bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width:23cm;font-size:14px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;">
 		          <tr>
 		              <td colspan="8"  align="center"><strong style="font-family:'Khmer OS Muol';font-size: 20px;color: rgb(47, 70, 149);"> សាលារៀន &nbsp;<font style="color: rgb(246, 86, 74);">អាស៊ាន </font>&nbsp;ហ៊ែរីថេជ</strong>
 		              ​​​​​<br/><strong style="font-size: 20px;font-weight:bold;color: rgb(47, 70, 149);">ASEAN <font style="color: rgb(246, 86, 74);">HERITAGE</font> SCHOOL</strong>
@@ -508,7 +508,7 @@ function printSave(){
 		          </tr>
 		     </table>
 		</div>
-		<div id="divPrint" style="width: 21cm; height: 11cm ; padding: 0px; margin: 0px;">
+		<div id="divPrint" style="width: 23cm !important; height: 11cm ; padding: 0px; margin: 0px;">
 			<style>
 				.fontbig{
 					font-size: 15px;	
@@ -525,12 +525,12 @@ function printSave(){
 				.values{ border: 1px solid rgba(14, 0, 107, 1);; height: 25px; padding: 0 10px;display: block;
 						line-height: 25px;}
 				.h{ margin-top: -8px;margin-left:4px;}
-​​               .print td{ font:bold 11px 'Khmer OS Battambang';}
+​​               .print td{ font:bold 12px 'Khmer OS Battambang';}
 			   .khmerbold{font:bold 12px 'Khmer OS Battambang';}
 			   .khmer{font:12px 'Khmer OS Battambang';}
 			   .one{white-space:nowrap;}
 			</style>	
-			<table    class="print" bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;height: 11cm; font-size:12px; color:rgba(14, 0, 107, 1); padding: 0px;padding-top:70px; margin: 0px;">
+			<table    class="print" bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="height: 11cm; font-size:12px; color:rgba(14, 0, 107, 1); padding: 0px;padding-top:25px; margin: 0px;">
 				<tr>
 				    <td colspan="8"  style="font:bold 20px 'Kh Muol';" align="center"><u><b><strong style=" font-family: Arial Black;font-family:'Khmer MEF2';">បង្កាន់ដៃបង់ប្រាក់</strong></b></u>
 				        <br/><strong style="font-size: 20px;font-weight:bold">OFFICAL RECEIPT</strong>
@@ -573,8 +573,8 @@ function printSave(){
 				    <td class="one khmerbold">&nbsp;&nbsp;ថ្ងៃបញ្ចប់  <div class="h" style="margin-left:7px !important;">End Date</div></td><td width="25%"><strong>&nbsp; <label id="lb_end_date" class="value"></label></strong></td>
  				</tr> 
 				<tr>
-				    <td colspan="6" class="khmerbold">&nbsp;ហត្ថលេខា និង​ ឈ្មោះអ្នកបង់ </td>
-				    <td  colspan="2" align="right" class="khmerbold" style="line-height: 16px;">
+				    <td colspan="4" class="khmerbold">&nbsp;ហត្ថលេខា និង​ ឈ្មោះអ្នកបង់ </td>
+				    <td  colspan="4" align="right" class="khmerbold" style="line-height: 16px;">
 				        <hr style="margin-bottom: -15px !important; color:#000; height: 0.5px; border-width:0px; background-color: #000;" align="right" width="100%" /><br/>
 				        <h3 style="padding-right: 0px ! important;margin-bottom: -16px  !important;"> 
 				                 <?php $session_user=new Zend_Session_Namespace('auth');
@@ -591,7 +591,7 @@ function printSave(){
 			</table>
 		</div>
 		<div class="footer_re"  >
-		<table  bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;  font-size:14px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;" >
+		<table  bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 24cm;  font-size:14px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;" >
 		    <tr>
 				 <td colspan="8" > 
 				       <hr style="background: rgba(251, 239, 13, 0.87) none repeat scroll 0% 0%; height: 4px; border: medium none rgb(240, 255, 0);"/>
