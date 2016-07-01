@@ -471,11 +471,11 @@ function printSave(){
 }
 }
 </script>
-<div class="dijitHidden" style="width: 21cm; height: 11cm ; padding: 0px; margin: 0px;">
+<div class="dijitHidden" style="width: 24cm; height: 11cm ; padding: 0px; margin: 0px;">
 <?php $keycode = $this->keycode;?>
 	<div data-dojo-type="dijit.Dialog" style="width:7cm;" align="center" data-dojo-props="title:'<?php echo $tr->translate("STUDENT_PAYMENT_RECEIPT");?>'" id="terms" >
 		 <div class="header">
-		     <table     bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;  font-size:14px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;">
+		     <table      bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width:23cm;font-size:14px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;">
 		          <tr>
 		              <td colspan="8"  align="center"><strong style="font-family:'Khmer OS Muol';font-size: 20px;color: rgb(47, 70, 149);"> សាលារៀន &nbsp;<font style="color: rgb(246, 86, 74);">អាស៊ាន </font>&nbsp;ហ៊ែរីថេជ</strong>
 		              ​​​​​<br/><strong style="font-size: 20px;font-weight:bold;color: rgb(47, 70, 149);">ASEAN <font style="color: rgb(246, 86, 74);">HERITAGE</font> SCHOOL</strong>
@@ -483,7 +483,7 @@ function printSave(){
 		          </tr>
 		     </table>
 		</div>
-		<div id="divPrint" style="width: 21cm; height: 12cm ; padding: 0px; margin: 0px;">
+		<div id="divPrint" style="width: 23cm !important; height: 12cm ; padding: 0px; margin: 0px;">
 			<style>
 				.fontbig{
 					font-size: 15px;	
@@ -505,12 +505,13 @@ function printSave(){
 			   .khmer{font:12px 'Khmer OS Battambang';}
 			   .one{white-space:nowrap;}
 			</style>	
-			<table    class="print" bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;height: 12cm; font-size:12px; color:rgba(14, 0, 107, 1); padding: 0px;padding-top:30px; margin: 0px;">
+			<table    class="print" bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="height: 11cm; font-size:12px; color:rgba(14, 0, 107, 1); padding:25px 10px 0px 5px; margin: 0px;">
 				<tr>
 				    <td colspan="8"  style="font:bold 20px 'Kh Muol';" align="center"><u><b><strong style=" font-family: Arial Black;font-family:'Khmer MEF2';">បង្កាន់ដៃបង់ប្រាក់</strong></b></u>
 				        <br/><strong style="font-size: 20px;font-weight:bold">OFFICAL RECEIPT</strong>
 				    </td>
 				</tr>
+				<tr><td colspan="8" style="height: 20px;"></td></tr>
 				<tr>
 				    <td  class="one khmerbold" style="width: 20%;">&nbsp;ការបង់&nbsp;/&nbsp;Payment Term</td>
 				    <td width="25%" ><strong> &nbsp;<label id="lb_term" class="value"></label></strong></td>
@@ -600,6 +601,9 @@ function printSave(){
 //save daata when sub button print 
 function printSubmit(){
 	 $('#office_receipt').submit();
+}
+function hideDialog(){
+	dijit.byId('terms').hide();
 }
 function calculatePrice() {
 	var total = $('#tuitionfee').val();

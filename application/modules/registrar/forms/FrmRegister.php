@@ -228,7 +228,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		  		'dojoType'=>$this->filter,
 		  		'required'=>'true',
 		  		'class'=>'fullside',
-		  		'onchange'=>'paymentTerm();'
+		  		'onchange'=>'paymentTerm();getDateTerm();'
 		  		));
 		
 		$_fee = new Zend_Dojo_Form_Element_NumberTextBox('tuitionfee');
@@ -297,10 +297,11 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		));
 		
 		$start_date= new Zend_Dojo_Form_Element_DateTextBox('start_date');
-		$date = date("Y-m-01");
+		$date = date("Y-m-d");
 		$start_date->setAttribs(array(
 				'dojoType'=>"dijit.form.DateTextBox",
 				'class'=>'fullside',
+				'onChange'=>'getDateTerm();',
 				'required'=>true));
 		$start_date->setValue($date);
 		
@@ -308,7 +309,8 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		$date = date("Y-m-d");
 		$end_date->setAttribs(array(
 				'dojoType'=>"dijit.form.DateTextBox",
-				'class'=>'fullside', 
+				'class'=>'fullside',
+				'onChange'=>'getDateTerm();',
 				'required'=>true));
 		$end_date->setValue($date);
 		

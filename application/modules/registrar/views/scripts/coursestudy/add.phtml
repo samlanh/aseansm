@@ -633,6 +633,9 @@ function printSave(){
 function printSubmit(){
 	 $('#office_receipt').submit();
 }
+function hideDialog(){
+	dijit.byId('terms').hide();
+}
 function calculatePrice() {
 	var total = $('#tuitionfee').val();
 	var ds = $('#discount').val();
