@@ -63,7 +63,7 @@ public function indexAction(){
 				echo $e->getMessage();
 			}
 		}
-		$this->_redirect('kindergarten/kindergarten/index');
+		//$this->_redirect('kindergarten/kindergarten/index');
 		$_db = new Application_Model_DbTable_DbGlobal(); 		
 		$this->view->province = $row =$_db->getProvince();
 		$db = new Foundation_Model_DbTable_DbKindergarten();
