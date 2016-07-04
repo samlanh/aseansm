@@ -187,6 +187,16 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     		exit();
     	}
     }
+    function getStudentNameAction(){
+    	if($this->getRequest()->isPost()){
+    		$data=$this->getRequest()->getPost();
+    		$db = new Registrar_Model_DbTable_DbStudentServicePayment();
+    		$year = $db->getStudentName($data['study_year']);
+    		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
+    		print_r(Zend_Json::encode($year));
+    		exit();
+    	}
+    }
     
     
 }

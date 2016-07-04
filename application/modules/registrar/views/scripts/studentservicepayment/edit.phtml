@@ -12,8 +12,27 @@
 	dojo.require("dojo.data.ItemFileWriteStore");  
 	dojo.require('dojox.form.BusyButton');
 	dojo.require("dojo.NodeList-manipulate");
-	
-
+	var student_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->rs));?> );
+	dojo.ready(function(){ 
+		addRow();
+		new dijit.form.FilteringSelect({
+		    store: student_store,
+		    autoComplete: true,                        
+		    required: true,
+		    id: "studentid",
+		    name: "studentid",           
+		    class: 'fullside',  
+		    placeHolder:"Selected Student id",          
+		    onChange: function() {  
+		    	//dept_id = dijit.byId('dept').get('value');
+		    	//dijit.byId('grade').attr('value','');
+		    	//getallModel(dept_id,a=''); 
+		    	//getStudentNo(dept_id);
+		    	getStudentInfo();
+		    	 
+		    }
+		}, "studentid");
+	});
 	var url_getstuno = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-stu-no')); ?>';
 	function getStudentNo(dept_id){
 			dojo.xhrPost({
@@ -101,12 +120,12 @@ fieldset{  background:none;}
 						</tr>
 						<tr>
 							<td><?php echo $tr->translate("STUDENT_ID");?><input type="hidden" id="id" name="id" value="<?php echo $this->row['id'];?>" /></td>
-							<td>
-								<select class="fullside" name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();" >
-									<?php if(!empty($this->rs))foreach ($this->rs as $row){?>
-										<option value="<?php echo $row['stu_id']?>" <?php if($row['stu_id']==$this->row['student_id']) echo 'selected="selected"';?>><?php echo $row['stu_code']?></option>
-									<?php }?>
-								</select>
+							<td><input id="studentid"/>
+								<!-- <select class="fullside" name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();" >
+									<?php //if(!empty($this->rs))foreach ($this->rs as $row){?>
+										<option value="<?php //echo $row['id']?>" <?php //if($row['id']==$this->row['student_id']) echo 'selected="selected"';?>><?php //echo $row['name']?></option>
+									<?php //}?>
+								</select> -->
 							</td>	
 							<td align="right"><?php echo $tr->translate("NAME_KH");?></td>
 							<td><?php echo $register->getElement('kh_name');?></td>
@@ -383,6 +402,33 @@ function printSave(){
 </div>
 
 <script>
+//ajax get student name by academic year
+var student_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
+var get_name = "<?php echo $this->url(array('module'=>'registrar','controller'=>'studentservicepayment','action'=>'get-student-name')); ?>";
+function getStudentName(){
+	study_year= dijit.byId('study_year').get('value');
+	dojo.xhrPost({
+		url:get_name,
+		content:{
+			'study_year':study_year
+			},
+		handleAs:"json",
+		load: function(data) {
+			if(data !=''){
+			student_store  = getDataStorefromJSON('id','name', data);
+		    dijit.byId('studentid').set('store',student_store);  
+			//dijit.byId("studentid").attr("value",data);
+			}else{clearControll()}
+		},
+		error: function(err) {
+			alert(err);
+		}
+	});
+}
+function clearControll(){
+	dijit.byId('en_name').attr('value','');
+	dijit.byId('studentid').attr('value','');
+}
 //save daata when sub button print 
 function printSubmit(){
 	$('#office_receipt').submit();
@@ -646,7 +692,7 @@ function getservicefee(key,num){
 
 dojo.ready(function(){
 	 initailize();
-	 getStudentInfo();
+	 //getStudentInfo();
 	 dijit.byId('study_year').attr('value','<?php echo $this->row['year']?>');
 	 dijit.byId('reciept_no').attr('value','<?php echo $this->row['receipt_number']?>');
 	 dijit.byId('not').attr('value','<?php echo $this->row['note']?>');

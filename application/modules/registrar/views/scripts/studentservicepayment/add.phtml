@@ -11,9 +11,26 @@
 	dojo.require("dojo.NodeList-manipulate");
 	dojo.require("dojo.data.ObjectStore");
 	dojo.require("dojo.store.Memory");
-	
+	var student_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->rs));?> );
 	dojo.ready(function(){ 
 		addRow();
+		new dijit.form.FilteringSelect({
+		    store: student_store,
+		    autoComplete: true,                        
+		    required: true,
+		    id: "studentid",
+		    name: "studentid",           
+		    class: 'fullside',  
+		    placeHolder:"Selected Student id",          
+		    onChange: function() {  
+		    	//dept_id = dijit.byId('dept').get('value');
+		    	//dijit.byId('grade').attr('value','');
+		    	//getallModel(dept_id,a=''); 
+		    	//getStudentNo(dept_id);
+		    	getStudentInfo();getservicefee();
+		    	 
+		    }
+		}, "studentid");
 	});	
 
 </script>
@@ -40,13 +57,14 @@ fieldset{  background:none;}
 						</tr>
 						<tr>
 							<td><?php echo $tr->translate("STUDENT_ID");?></td>
-							<td>
-								<select class="fullside" name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();getservicefee();" >
+							<td><input id="studentid"/>
+								<!-- <select class="fullside" name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();getservicefee();" >
 										<option value='-1'><?php echo $tr->translate("STUDENT_ID");?>សិស្ស</option>
-									<?php if(!empty($this->rs))foreach ($this->rs as $row){?>
-										<option value="<?php echo $row['stu_id']?>"><?php echo $row['stu_code']?></option>
-									<?php }?>
+									<?php //if(!empty($this->rs))foreach ($this->rs as $row){?>
+										<option value="<?php //echo $row['stu_id']?>"><?php //echo $row['stu_code']?></option>
+									<?php// }?>
 								</select>
+								 -->
 							</td>	
 							<td align="right"><?php echo $tr->translate("NAME_KH");?></td>
 							<td align="center"><?php echo $register->getElement('kh_name');?></td>
@@ -327,6 +345,27 @@ function printSave(){
 
 
 <script>
+//ajax get student name by academic year
+var student_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
+var get_name = "<?php echo $this->url(array('module'=>'registrar','controller'=>'studentservicepayment','action'=>'get-student-name')); ?>";
+function getStudentName(){
+	study_year= dijit.byId('study_year').get('value');
+	dojo.xhrPost({
+		url:get_name,
+		content:{
+			'study_year':study_year
+			},
+		handleAs:"json",
+		load: function(data) {
+			student_store  = getDataStorefromJSON('id','name', data);
+		    dijit.byId('studentid').set('store',student_store);  
+			//dijit.byId("studentid").attr("value",data);
+		},
+		error: function(err) {
+			alert(err);
+		}
+	});
+}
 //save daata when sub button print 
 function printSubmit(){
 	$('#office_receipt').submit();

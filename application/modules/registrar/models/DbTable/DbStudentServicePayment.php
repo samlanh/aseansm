@@ -349,7 +349,7 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     
     public function getAllStudentCode(){
     	$db = $this->getAdapter();
-    	$sql="SELECT stu_id,stu_code  FROM rms_student ORDER BY  stu_code DESC ";
+    	$sql="SELECT stu_id as id,stu_code as name  FROM rms_student ORDER BY  stu_code DESC ";
     	return $db->fetchAll($sql);
     	
     }
@@ -393,6 +393,17 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     	return $db->fetchRow($sql);
     	
     	echo $sql;
+    }
+    function getStudentName($acacemic){
+    	$db=$this->getAdapter();
+    	$sql="SELECT stu_id As id,stu_code As name  FROM rms_student  WHERE academic_year=$acacemic";
+    	return $db->fetchAll($sql);
+    }
+    function getTuiTionFee(){
+    	$db=$this->getAdapter();
+    	$sql="SELECT id,CONCAT(from_academic,'-',to_academic,'(',generation,')') AS years FROM rms_tuitionfee 
+							WHERE `status`= 1 GROUP BY from_academic,to_academic,generation,`time` ORDER BY id DESC";
+    	return $db->fetchAll($sql);
     }
     
 }

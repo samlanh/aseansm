@@ -286,6 +286,29 @@ dojo.ready(function(){changControll();
 		dijit.byId("sender_code_no").attr('value', dijit.byId('sender_name').item.code_no);
 		}
 	}
+	//calculator date by select term_payment
+	function getDateTerm() {
+		payment_term=dijit.byId('payment_term').get('value');
+		start_date=dijit.byId('start_date').get('value');
+			var a = new Date(start_date);
+			if(payment_term==2){
+				mm = a.getMonth()+2+1;
+			}else if(payment_term==3){
+				mm = a.getMonth()+4+1;
+			}else if(payment_term==4){
+				mm = a.getMonth()+8+1;
+			}
+				var dd = a.getDate();
+				 if(dd<10){
+					 dd = "0"+dd;
+				}
+				 if(mm<10){
+					 mm = "0"+mm;
+				}
+				var y = a.getFullYear();
+				var epx_date = y + '-'+ mm + '-'+dd ;
+				dijit.byId('end_date').attr('value',epx_date);	
+	}
 </script>
 <style>
 select{ width:100%;}
@@ -462,7 +485,7 @@ function printSave(){
 		 dojo.byId("lb_room").innerHTML = dijit.byId("room").attr('displayedValue');
 		 dojo.byId("lb_note").innerHTML = dijit.byId("not").get('value');
 		 dojo.byId("lb_course_cost").innerHTML ="$"+dijit.byId("tuitionfee").get('value').toFixed(2);
-		 dojo.byId("lb_discount").innerHTML ="$"+dijit.byId("discount").get('value')+"%";
+		 dojo.byId("lb_discount").innerHTML =dijit.byId("discount").get('value')+"%";
 		 dojo.byId("lb_total").innerHTML ="$"+dijit.byId("total").get('value');
 		 dojo.byId("lb_book").innerHTML ="$"+dijit.byId("books").get('value').toFixed(2);
 		 dojo.byId("lb_balance").innerHTML ="$"+dijit.byId("remaining").get('value');
@@ -471,9 +494,9 @@ function printSave(){
 }
 }
 </script>
-<div class="dijitHidden" style="width: 24cm; height: 11cm ; padding: 0px; margin: 0px;">
+<div class="dijitHidden" style="width: 23cm !important; height: 11cm ; padding: 0px; margin: 0px;">
 <?php $keycode = $this->keycode;?>
-	<div data-dojo-type="dijit.Dialog" style="width:7cm;" align="center" data-dojo-props="title:'<?php echo $tr->translate("STUDENT_PAYMENT_RECEIPT");?>'" id="terms" >
+	<div data-dojo-type="dijit.Dialog" style="width:24cm;" align="center" data-dojo-props="title:'<?php echo $tr->translate("STUDENT_PAYMENT_RECEIPT");?>'" id="terms" >
 		 <div class="header">
 		     <table      bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width:23cm;font-size:14px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;">
 		          <tr>
@@ -500,7 +523,7 @@ function printSave(){
 				.values{ border: 1px solid rgba(14, 0, 107, 1);; height: 25px; padding: 0 10px;display: block;
 						line-height: 25px;}
 				.h{ margin-top: -5px;margin-left:4px;}
-​​               .print td{ font:bold 11px 'Khmer OS Battambang';}
+​​               .print td{ font:bold 12px 'Khmer OS Battambang';}
 			   .khmerbold{font:bold 12px 'Khmer OS Battambang';}
 			   .khmer{font:12px 'Khmer OS Battambang';}
 			   .one{white-space:nowrap;}
@@ -563,12 +586,12 @@ function printSave(){
 				<tr>
 				    <td colspan="4" class="khmerbold" style="line-height: 14px;">&nbsp;&nbsp;ហត្ថលេខា និង​ ឈ្មោះអ្នកបង់   </td>
 				    <td colspan="4" align="right" class="khmerbold" style="line-height: 14px;">
-				        <h3 style="padding-right: 5px ! important;margin-bottom: -10px  !important;">
+				        <h4 style="padding-right: 5px ! important;margin-bottom: -10px  !important;">
 				              <?php $session_user=new Zend_Session_Namespace('auth');
 						           $last_name=$session_user->last_name;
 						           $username = $session_user->first_name;
 						           echo " Official's Signature : ".$last_name." ".$username;?>
-				        </h3><br/>15/Aug/2015 10:30AM Sek Sokny
+				        </h4><br/><?php  $today = date("F j, Y, g:i a");echo $today; ?>
 				    </td>
 				</tr>
 				<tr><td style="height: 30px;"></td></tr>
@@ -579,16 +602,6 @@ function printSave(){
 				    </td>
 				</tr>
 			</table>
-		</div>
-		<div class="footer_re"  >
-		<table  bgcolor="fef7e4" cellspacing="0"  cellpadding="0" style="width: 21cm;  font-size:14px; color:rgba(14, 0, 107, 1); padding: 0px; margin: 0px;" >
-		    <tr>
-				 <td colspan="8" > 
-				       <hr style="background: rgba(251, 239, 13, 0.87) none repeat scroll 0% 0%; height: 4px; border: medium none rgb(240, 255, 0);"/>
-				       <p class=" khmerbold"></p>
-				 </td>
-				</tr>
-		</table>
 		</div>
 		<iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>	
 		<button dojoType="dijit.form.Button" iconClass="dijitEditorIcon dijitEditorIconPrint"
