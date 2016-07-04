@@ -24,7 +24,7 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 			$rs_rows = $db_student->getAllStudent($search);
 			 
 			$list = new Application_Form_Frmtable();
-				$collumns = array("STUDENT_ID","NAME_KH","NAME_EN","SEX","GRADE","NATIONALITY","DOB","PHONE","EMAIL","STATUS");
+				$collumns = array("STUDENT_ID","NAME_KH","NAME_EN","SEX","NATIONALITY","ACADEMIC_YEAR","DEGREE","GRADE","SESSION","STATUS");
 				$link=array(
 						'module'=>'foundation','controller'=>'register','action'=>'edit',
 				);

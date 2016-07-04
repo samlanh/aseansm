@@ -15,8 +15,16 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 		$to_date = (empty($search['end_date']))? '1': "s.create_date <= '".$search['end_date']." 23:59:59'";
 		$where = " AND ".$from_date." AND ".$to_date;
 		$sql = "SELECT s.stu_id,s.stu_code,s.stu_khname,s.stu_enname,
-		(SELECT name_kh FROM `rms_view` WHERE TYPE=2 AND key_code = sex) AS sex
-		,(SELECT `major_enname` FROM `rms_major` WHERE `major_id`=grade) AS grade,nationality,dob,tel,email ,
+		(SELECT name_kh FROM `rms_view` WHERE TYPE=2 AND key_code = sex) AS sex,nationality ,
+		
+		(select CONCAT(from_academic,'-',to_academic,'(',generation,')') from rms_tuitionfee where rms_tuitionfee.id=s.academic_year) as academic,
+		
+		(SELECT `en_name` FROM `rms_dept` WHERE `dept_id`=degree) AS degree,
+		
+		(SELECT `major_enname` FROM `rms_major` WHERE `major_id`=grade) AS grade,
+		
+		(SELECT	`rms_view`.`name_en` FROM `rms_view` WHERE ((`rms_view`.`type` = 4) AND (`rms_view`.`key_code` = `s`.`session`)) LIMIT 1) AS `session`,
+		
 		(SELECT name_kh FROM `rms_view` WHERE TYPE=1 AND key_code = STATUS) AS STATUS
 		FROM rms_student AS s  WHERE s.is_subspend=0 AND s.status = 1 AND s.stu_type = 1 AND s.degree IN(2,3,4) ";
 		$orderby = " ORDER BY stu_id DESC ";
@@ -27,8 +35,12 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 			$s_where = array();
 			$s_search = addslashes(trim($search['adv_search']));
 			$s_where[]="stu_code LIKE '%{$s_search}%'";
+			$s_where[]="(select CONCAT(from_academic,'-',to_academic,'(',generation,')') from rms_tuitionfee where rms_tuitionfee.id=s.academic_year) LIKE '%{$s_search}%'";
 			$s_where[]="stu_khname LIKE '%{$s_search}%'";
 			$s_where[]="stu_enname LIKE '%{$s_search}%'";
+			$s_where[]="(SELECT en_name FROM rms_dept WHERE rms_dept.dept_id=s.degree) LIKE '%{$s_search}%'";
+			$s_where[]="(SELECT major_enname FROM rms_major WHERE rms_major.major_id=s.grade) LIKE '%{$s_search}%'";
+			$s_where[]="(SELECT	rms_view.name_en FROM rms_view WHERE rms_view.type = 4 AND rms_view.key_code = s.session) LIKE '%{$s_search}%'";
 			$s_where[]="(SELECT `major_enname` FROM `rms_major` WHERE `major_id`=grade) LIKE '%{$s_search}%'";
 			$s_where[]="(SELECT name_kh FROM `rms_view` WHERE type=2 AND key_code = sex) LIKE '%{$s_search}%'";
 			$where .=' AND ( '.implode(' OR ',$s_where).')';

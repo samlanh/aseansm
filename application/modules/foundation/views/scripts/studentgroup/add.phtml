@@ -15,14 +15,26 @@
     dojo.require("dojo.data.ItemFileWriteStore"); 
 	 
 </script>
+
+
 <style>
 select{ width:100%;}
 fieldset{  background:#DFF7FD;}
 table tr.head-title{ background: none repeat scroll 0% 0% rgba(213, 249, 244, 1); padding:2px;}
 table tr td.null-border{ background: #fff; border-left:none !important;}
-table .set-style td,table .set-style th{ padding: 5px; border:1px solid #ccc;}
+table .set-style td,table .set-style th{ padding: 5px; border:0px solid #ccc;}
 table .set-style tr.st1{ background: none repeat scroll 0% 0% rgba(218, 250, 255, 1);}
+
+table .set-style tr td a {
+    font-size: 14px;
+}
+
+.ms-container .ms-selectable {
+    margin: 0 3.2%;
+}
+
 </style>
+
 
 <script type="text/javascript">
 var group_store  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->group));?> );
@@ -115,27 +127,31 @@ $frm_set_price = $this->frm_set_charge;?>
 <form id='studentgroup' dojoType="dijit.form.Form" action="<?php echo $this->url(array('module'=>'foundation','controller'=>'studentgroup','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 <table cellspacing="10" style="margin: 0 auto;width:100%;" >
 	<tr>
-		<td>
-		<fieldset>
+		<td width="50%" valign="top">
+			
+				<fieldset>
+			
 					<legend align="center"><strong>Search Group</strong></legend>
 					<table style="margin: 0 auto; width: 100%; background:#DFF7FD;" cellspacing="10" broder 1>
 						<tr>
-							<td><?php echo $tr->translate("ACADEMIC_YEAR");?></td>
-							<td>
-								<select class="fullside" dojoType="dijit.form.FilteringSelect" required="true"  id="academy" name="academy" type="text">
-									<?php if(!empty($this->academy)) foreach($this->academy as $row){?>
-										<option value="<?php echo $row['id'];?>"<?php if($row['id']==$this->value['academy']) echo "selected='selected'"?>><?php echo $row['years']; ?></option>
-									<?php }?>
-								</select>
-							</td>
-							<td><?php echo $tr->translate("DEGREE");?></td>
-							<td colspan="2">
-								<select class="fullside"  name="degree" id="degree" dojoType="dijit.form.FilteringSelect" onchange="getallGrade(1);">
-											<?php if(!empty($this->degree))foreach ($this->degree as $row){?>
-											<option value="<?php echo $row['dept_id']?>"<?php if($row['dept_id']==$this->value['degree']) echo "selected='selected'"?>><?php echo $row['en_name']?></option>
-											<?php }?>
-								</select>
-							</td>
+								<td><?php echo $tr->translate("ACADEMIC_YEAR");?></td>
+								<td>
+									<select class="fullside" dojoType="dijit.form.FilteringSelect" required="true"  id="academy" name="academy" type="text">
+										<?php if(!empty($this->academy)) foreach($this->academy as $row){?>
+											<option value="<?php echo $row['id'];?>"<?php if($row['id']==$this->value['academy']) echo "selected='selected'"?>><?php echo $row['years']; ?></option>
+										<?php }?>
+									</select>
+								</td>
+								<td><?php echo $tr->translate("DEGREE");?></td>
+								<td colspan="2">
+									<select class="fullside"  name="degree" id="degree" dojoType="dijit.form.FilteringSelect" onchange="getallGrade(1);">
+												<?php if(!empty($this->degree))foreach ($this->degree as $row){?>
+												<option value="<?php echo $row['dept_id']?>"<?php if($row['dept_id']==$this->value['degree']) echo "selected='selected'"?>><?php echo $row['en_name']?></option>
+												<?php }?>
+									</select>
+								</td>
+							
+							
 						</tr>
 						<tr>
 							<td><?php echo $tr->translate("GRADE");?></td>
@@ -144,44 +160,38 @@ $frm_set_price = $this->frm_set_charge;?>
 							</td>
 							<td><?php echo $tr->translate("SESSION");?></td>
 							<td>
-
-
 								 <select class="fullside"  tabindex="24" name="session" id="session" dojoType="dijit.form.FilteringSelect" >
 								   <?php if(!empty($this->rs_session)) foreach ($this->rs_session As $rs_sesion){?>
 										    <option value="<?php echo $rs_sesion['key_code'];?>"><?php echo $rs_sesion['view_name'];?></option>
 								   <?php }?>		
 								</select>
-
 							</td>
-							<td colspan="2" align="center">
+						</tr>
+						
+						<tr>
+							<td colspan="6" align="center">
 								 	<input type="submit" dojoType="dijit.form.Button"  label="SEARCH" id="search"
 								 		iconClass="dijitEditorIcon dijitEditorIconSearch"/>
 							</td>
 						</tr>
-						
-					
-					</table>
-		</fieldset>		
+					</table>				
+				</fieldset>		
 		</td>
-	</tr>
-</table>	
-</form>
-<form id='submitgroup' dojoType="dijit.form.Form" action="<?php echo $this->url(array('module'=>'foundation','controller'=>'studentgroup','action'=>'submit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-	<table class="set-style" border="2px" style="border:1px solid #ccc; border-collapse: collapse;margin: 0 auto; width: 100%; background:#DFF7FD;" >
-						<tfoot>
-							<tr>
-								<td><a id="select-all" href="#">select all</a></td>
-								<td><a id="deselect-all" href="#">deselect all</a></td>
-								<td><a id="select-100" href="#">select 100 elems</a></td>
-								<td><a id="deselect-100" href="#">deselect 100 elems</a></td>
-								<td><a id="add-option" href="#">Add option</a></td>
-								<td><a id="refresh" href="#">refresh</a></td>
-							</tr>
+		
+		
+		<td width="50%" valign="top">
+			
+				<fieldset>
+			
+					<legend align="center"><strong>To Group</strong></legend>
+					<table style="margin: 0 auto; width: 100%; background:#DFF7FD;" cellspacing="10" broder="0">
 							<tr>
 								<td>Group</td>
 								<td>
 								<input id="group" />
 								</td>
+							</tr> 
+							<tr>
 								<td><?php echo $tr->translate("DETAIL")?></td>
 								<td  colspan="3" rowspan="1"><label id="lbldetail" name=lbldetail style="background:#fff;width:100%;height:70px;display:block;"></label></td>
 							</tr> 
@@ -194,8 +204,29 @@ $frm_set_price = $this->frm_set_charge;?>
 									</select>
 								</td>
 							</tr>
+					</table>				
+				</fieldset>		
+				
+		</td>
+	</tr>
+</table>	
+</form>
+<form id='submitgroup' dojoType="dijit.form.Form" action="<?php echo $this->url(array('module'=>'foundation','controller'=>'studentgroup','action'=>'submit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+	<table class="set-style"  style="border:0px solid #ccc; border-collapse: collapse;margin: 0 auto; width: 100%; background:#DFF7FD;" >
+						<tfoot>
 							<tr>
-								<td colspan="8">
+								<td colspan="6" align="center">
+									<a id="select-all" href="#">select all</a> <span style="font-size: 16px;"> | </span>
+									<a id="deselect-all" href="#">deselect all</a> <span style="font-size: 16px;"> | </span>
+									<a id="select-100" href="#">select 100 elems</a> <span style="font-size: 16px;"> | </span>
+									<a id="add-option" href="#">Add option</a> <span style="font-size: 16px;"> | </span>
+									<a id="refresh" href="#">refresh</a>
+								</td>
+								
+							</tr>
+							
+							<tr>
+								<td colspan="1">
 									<select multiple id="public-methods" name="public-methods[]">
 										<?php if(!empty($this->rs)) foreach($this->rs as $row){?>
 										<option value="<?php echo $row['stu_id'];?>">
