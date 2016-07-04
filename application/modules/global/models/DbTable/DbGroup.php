@@ -241,8 +241,10 @@ class Global_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 			$s_where = array();
 			$s_search = addslashes(trim($search['title']));
 			$s_where[] = " `g`.`group_code` LIKE '%{$s_search}%'";
+			$s_where[]="(select CONCAT(from_academic,'-',to_academic,'(',generation,')') from rms_tuitionfee where rms_tuitionfee.id=g.academic_year) LIKE '%{$s_search}%'";
 			$s_where[] = " `g`.`semester` LIKE '%{$s_search}%'";
 			$s_where[] = " (SELECT major_khname FROM `rms_major` WHERE (`rms_major`.`major_id`=`g`.`grade`)) LIKE '%{$s_search}%'";
+			$s_where[]="(SELECT kh_name FROM rms_dept WHERE rms_dept.dept_id=g.degree) LIKE '%{$s_search}%'";
 			$s_where[] = " (SELECT `r`.`room_name`	FROM `rms_room` `r`	WHERE (`r`.`room_id` = `g`.`room_id`)) LIKE '%{$s_search}%'";
 			$s_where[] = " (SELECT`rms_view`.`name_en`	FROM `rms_view`	WHERE ((`rms_view`.`type` = 4)
 			AND (`rms_view`.`key_code` = `g`.`session`))LIMIT 1) LIKE '%{$s_search}%'";
