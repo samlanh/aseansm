@@ -133,7 +133,7 @@ Class Registrar_Form_FrmStudentServicePayment extends Zend_Dojo_Form {
 		$generation = new Zend_Dojo_Form_Element_FilteringSelect('study_year');
 		$generation->setAttribs(array('dojoType'=>'dijit.form.FilteringSelect','class'=>'fullside',
 				//'onkeyup'=>'CheckReceipt()'
-				'required'=>'true',
+				'required'=>'false',
 				'class'=>'fullside',
 				'onchange'=>'getStudentName();',
 		));

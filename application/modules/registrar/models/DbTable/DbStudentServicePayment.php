@@ -396,8 +396,9 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     }
     function getStudentName($acacemic){
     	$db=$this->getAdapter();
-    	$sql="SELECT stu_id As id,stu_code As name  FROM rms_student  WHERE academic_year=$acacemic";
-    	return $db->fetchAll($sql);
+    	
+    		$sql="SELECT stu_id As id,stu_code As name  FROM rms_student  WHERE academic_year=$acacemic";
+    		return $db->fetchAll($sql);
     }
     function getTuiTionFee(){
     	$db=$this->getAdapter();

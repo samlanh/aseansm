@@ -357,14 +357,28 @@ function getStudentName(){
 			},
 		handleAs:"json",
 		load: function(data) {
-			student_store  = getDataStorefromJSON('id','name', data);
-		    dijit.byId('studentid').set('store',student_store);  
+			if(data !=''){
+			student_stores  = getDataStorefromJSON('id','name', data);
+		    dijit.byId('studentid').set('store',student_stores);  
 			//dijit.byId("studentid").attr("value",data);
+			}else{
+				dijit.byId('studentid').set('store',student_store); 
+				dijit.byId('en_name').attr('value','');
+				dijit.byId('studentid').attr('value','');
+				dijit.byId('kh_name').attr('value','');
+				dijit.byId('sex').attr('value','');
+			}
 		},
 		error: function(err) {
-			alert(err);
+			//alert(err);
 		}
 	});
+}
+function clearControll(){
+	dijit.byId('en_name').attr('value','');
+	dijit.byId('studentid').attr('value','');
+	dijit.byId('kh_name').attr('value','');
+	dijit.byId('sex').attr('value','');
 }
 //save daata when sub button print 
 function printSubmit(){
@@ -587,11 +601,6 @@ var url_student_info = "<?php echo $this->url(array('module'=>'registrar','contr
 function getStudentInfo(){
 			studentid = dijit.byId('studentid').get('value');
 			//alert(studentid);
-			if(studentid==-1){
-				dijit.byId("kh_name").attr("value",'');
-				dijit.byId("en_name").attr("value",'');
-				dijit.byId("sex").attr("value",'');
-			}else{
 			dojo.xhrPost({
 				url:url_student_info,
 				content:{
@@ -608,10 +617,9 @@ function getStudentInfo(){
 					//dijit.byId("price_"+key).attr("value",data.price_fee);
 				},
 				error: function(err) {
-					alert(err);
+					//alert(err);
 				}
 			});
-			}
 }
 var url_service_fee = "<?php echo $this->url(array('module'=>'registrar','controller'=>'studentservicepayment','action'=>'get-price')); ?>";
 function getservicefee(key){
