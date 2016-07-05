@@ -76,7 +76,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						'student_type'=>$data['student_type'],
 						'create_date'=>	date('Y-m-d H:i:s'),
 						'payfor_type'=>1,
-						'amount_in_khmer'=>$data['char_price'],
+						//'amount_in_khmer'=>$data['char_price'],
 						'user_id'=>$this->getUserId(),
 				);
 				$db->getProfiler()->setEnabled(true);
@@ -211,7 +211,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						'balance_due'=>$data['remaining'],
 						'note'=>$data['not'],
 						'create_date'=>	date('Y-m-d'),
-						'amount_in_khmer'=>$data['char_price'],
+					//	'amount_in_khmer'=>$data['char_price'],
 						'payfor_type'=>1,
 						'user_id'=>$this->getUserId(),
 				);
