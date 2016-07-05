@@ -109,8 +109,13 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 			$this->update($data, $where);
 		}
 	}
+	
+	
 	public function addStudentGroup($_data){
-		//print_r($_data);exit();
+		
+// 		print_r($_data);exit();
+		
+		
 		$db = $this->getAdapter();
 		$a = $_data['public-methods'];
 		foreach ($a as $rs){

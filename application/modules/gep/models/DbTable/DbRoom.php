@@ -1,6 +1,6 @@
 <?php
 
-class Foundation_Model_DbTable_DbRoom extends Zend_Db_Table_Abstract
+class Gep_Model_DbTable_DbRoom extends Zend_Db_Table_Abstract
 {
 
     protected $_name = 'rms_room';

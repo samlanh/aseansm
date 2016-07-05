@@ -1,6 +1,6 @@
 <?php
 
-class Foundation_Model_DbTable_DbSubjectExam extends Zend_Db_Table_Abstract
+class Kindergarten_Model_DbTable_DbSubjectExam extends Zend_Db_Table_Abstract
 {
 
     protected $_name = 'rms_subject_exam';

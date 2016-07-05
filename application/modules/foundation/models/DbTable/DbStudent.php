@@ -104,18 +104,21 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 						'lang_level'=>$_data['level'],
 						'session'=>$_data['session'],
 						//'school_location'=>$_data['school_location'],
+				
 						'father_enname'=>$_data['fa_name_en'],
 						'father_khname'=>$_data['fa_name_kh'],
 						'father_old'=>$_data['fa_age'],
 						'father_nation'=>$_data['fa_national'],
 						'father_job'=>$_data['fa_job'],
 						'father_phone'=>$_data['fa_phone'],
+						
 						'mother_khname'=>$_data['mom_name_kh'],
 						'mother_enname'=>$_data['mom_name_en'],
 						'mother_old'=>$_data['age'],
 						'mother_nation'=>$_data['mom_nation'],
 						'mother_job'=>$_data['mo_job'],
 						'mother_phone'=>$_data['mon_phone'],
+
 						'guardian_enname'=>$_data['guardian_name_en'],
 						'guardian_khname'=>$_data['guardian_name_kh'],
 						'guardian_old'=>$_data['guardian_age'],
@@ -124,9 +127,11 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 						'guardian_job'=>$_data['gu_job'],
 						'guardian_tel'=>$_data['guardian_phone'],
 						'guardian_email'=>$_data['guardian_email'],
+						
 						'status'=>$_data['status'],
 						'remark'=>$_data['remark'],
 						'create_date'=>date("Y-m-d H:i:s"),
+						
 						);
 				$id = $this->insert($_arr);
 				
@@ -177,18 +182,21 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 					'lang_level'	=>$_data['level'],
 					'session'		=>$_data['session'],
 					//'school_location'=>$_data['school_location'],
+					
 					'father_enname'	=>$_data['fa_name_en'],
 					'father_khname'	=>$_data['fa_name_kh'],
 					'father_old'	=>$_data['fa_age'],
 					'father_nation'	=>$_data['fa_national'],					
 					'father_job'	=>$_data['fa_job'],					
 					'father_phone'	=>$_data['fa_phone'],
+					
 					'mother_khname'	=>$_data['mom_name_kh'],
 					'mother_enname'	=>$_data['mom_name_en'],
 					'mother_old'	=>$_data['age'],
 					'mother_nation'	=>$_data['mom_nation'],
 					'mother_job'	=>$_data['mo_job'],
 					'mother_phone'	=>$_data['mon_phone'],
+					
 					'guardian_enname'=>$_data['guardian_name_en'],
 					'guardian_khname'=>$_data['guardian_name_kh'],
 					'guardian_old'	=>$_data['guardian_age'],
@@ -197,6 +205,7 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 					'guardian_job'	=>$_data['gu_job'],
 					'guardian_tel'	=>$_data['guardian_phone'],
 					'guardian_email'=>$_data['guardian_email'],
+					
 					'status'		=>$_data['status'],
 					'remark'		=>$_data['remark']
 		
