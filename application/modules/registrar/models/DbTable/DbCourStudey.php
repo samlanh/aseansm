@@ -70,7 +70,7 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 						'paid_amount'=>$data['books'],
 						'balance_due'=>$data['remaining'],
 						'note'=>$data['not'],
-						'amount_in_khmer'=>$data['char_price'],
+						//'amount_in_khmer'=>$data['char_price'],
 						'room_id'=>$data['room'],
 						'student_type'=>$data['student_type'],
 						'create_date'=>	date('Y-m-d'),
@@ -90,7 +90,7 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 				);
 				$this->update($arr,$where);
 				
-//update is_complet = 1 becuse for get balance price
+				//update is_complet = 1 becuse for get balance price
 				if(!empty($data['ids'])){
 					$this->updateIsComplete($data['ids']);
 				}
@@ -102,30 +102,13 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 					$complete=1;
 					$comment="បង់រួច";
 				}
-				
-				$arr=array(
-						'payment_id'=>$paymentid,
-						'type'=>2,
-						'service_id'=>2,
-						'payment_term'=>$data['payment_term'],
-						'fee'=>$data['tuitionfee'],
-						'qty'=>1,
-						'subtotal'=>$data['total'],
-						'paidamount'=>$data['books'],
-						'balance'=>$data['remaining'],
-						'discount_percent'=>$data['discount'],
-						'discount_fix'=>0,
-						'note'=>$data['not'],
-						'start_date'=>$data['start_date'],
-						'validate'=>$data['end_date'],
-						'references'=>'frome registration',
-					 	'is_parent'		=>$payment_id_ser,
-						'is_complete'	=>$complete,
-						'comment'		=>$comment,
-						'user_id'=>$this->getUserId(),
-				);
-				$this->_name='rms_student_paymentdetail';
-				$this->insert($arr);
+				//add rms_student_paymentdetail 3 service (tuttionfee,remake,admin_fee)		
+                if($data){
+                	$this->addStudentPaymentDetial($data,4, $paymentid, $complete, $comment, $payment_id_ser);
+                	$this->addStudentPaymentDetial($data,5, $paymentid, $complete, $comment, $payment_id_ser);
+                	$this->addStudentPaymentDetial($data,6, $paymentid, $complete, $comment, $payment_id_ser);
+                }		
+				//exit();
 				$db->commit();//if not errore it do....
 			}catch (Exception $e){
 				$db->rollBack();//អោយវាវិលត្រលប់ទៅដើមវីញពេលណាវាជួបErrore
@@ -203,7 +186,7 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 			    		'paid_amount'=>$data['books'],
 			    		'balance_due'=>$data['remaining'],
 			    		'note'=>$data['not'],
-			    		'amount_in_khmer'=>$data['char_price'],
+			    	//	'amount_in_khmer'=>$data['char_price'],
 			    		'room_id'=>$data['room'],
 			    		'payfor_type'=>2,
 			    		'user_id'=>$this->getUserId(),
@@ -235,31 +218,16 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 			    	$complete=1;
 			    	$comment="បង់រួច";
 			    }
-			    
-			    $arr=array(
-			    		'payment_id'=>$data['id'],
-			    		'type'=>2,
-						'service_id'=>2,
-						'payment_term'=>$data['payment_term'],
-						'fee'=>$data['tuitionfee'],
-						'qty'=>1,
-						'subtotal'=>$data['total'],
-						'paidamount'=>$data['books'],
-						'balance'=>$data['remaining'],
-						'discount_percent'=>$data['discount'],
-						'discount_fix'=>0,
-						'note'=>$data['not'],
-						'start_date'=>$data['start_date'],
-						'validate'=>$data['end_date'],
-						'references'=>'frome registration',
-			    		'is_parent'		=>$payment_id_ser,
-			    		'is_complete'	=>$complete,
-			    		'comment'		=>$comment,
-						'user_id'=>$this->getUserId(),
-			    );
-			    $where="payment_id=".$data['id'];
+			    //update rms_student_paymentdetail 3 service (tuttionfee,remake,admin_fee)	
 			    $this->_name='rms_student_paymentdetail';
-			    $this->update($arr, $where);
+			    $where="payment_id=".$data['id'];
+			    $this->delete($where);
+			    if($data){
+			    	$paymentid=$data['id'];
+			    	$this->addStudentPaymentDetial($data, 4, $paymentid, $complete, $comment, $payment_id_ser);
+			    	$this->addStudentPaymentDetial($data, 5, $paymentid, $complete, $comment, $payment_id_ser);
+			    	$this->addStudentPaymentDetial($data, 6, $paymentid, $complete, $comment, $payment_id_ser);
+			    }
                 //exit();
 			     $db->commit();//if not errore it do....
 			}catch (Exception $e){
@@ -403,5 +371,44 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
     	$sql="SELECT dept_id AS id,CONCAT(en_name,'-',kh_name) AS `name`  FROM rms_dept WHERE dept_id NOT IN(1,2,3,4)";
     	return $db->fetchAll($sql);
     }
+//functon add 3service rms_student_paymentdetail
+    function addStudentPaymentDetial($data,$type,$paymentid,$complete,$comment,$payment_id_ser){
+    	$db=$this->getAdapter();
+    	if($type==4){
+    		$fee=$data['tuitionfee'];
+    	}elseif ($type==5){
+    		$fee=$data['remark'];
+    	}elseif ($type==6){
+    		$fee=$data['addmin_fee'];
+    	}
+    	$arr=array(
+    			'payment_id'=>$paymentid,
+    			'type'=>2,
+    			'service_id'=>$type,
+    			'payment_term'=>$data['payment_term'],
+    			'fee'=>$fee,
+    			'qty'=>1,
+    			'subtotal'=>$data['total'],
+    			'paidamount'=>$data['books'],
+    			'balance'=>$data['remaining'],
+    			'discount_percent'=>$data['discount'],
+    			'discount_fix'=>0,
+    			'note'=>$data['not'],
+    			'start_date'=>$data['start_date'],
+    			'validate'=>$data['end_date'],
+    			'references'=>'frome registration',
+    			'is_parent'		=>$payment_id_ser,
+    			'is_complete'	=>$complete,
+    			'comment'		=>$comment,
+    			'user_id'=>$this->getUserId(),
+    	);
+    	$this->_name='rms_student_paymentdetail';
+    	$db->getProfiler()->setEnabled(true);
+    	$this->insert($arr);
+    	Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+    	Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+    	$db->getProfiler()->setEnabled(false);
+    }
+    
 }
 
