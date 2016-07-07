@@ -127,11 +127,7 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 						);
 						$this->_name='rms_student_paymentdetail';
 						$where="payment_id = " .$data["parent_id"];
-						$db->getProfiler()->setEnabled(true);
 						$this->update($arr,$where);
-						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-						$db->getProfiler()->setEnabled(false);
 					}
 				}
 			    if($data['student_type']==3){
@@ -362,7 +358,6 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
     			'is_complete'=>1,
     			'comment'=>"បង់រួច",
     	);
-    	$db->getProfiler()->setEnabled(true);
     	$this->_name='rms_student_paymentdetail';
     	$this->update($arr,$where);
     }
@@ -403,11 +398,7 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
     			'user_id'=>$this->getUserId(),
     	);
     	$this->_name='rms_student_paymentdetail';
-    	$db->getProfiler()->setEnabled(true);
     	$this->insert($arr);
-    	Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-    	Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-    	$db->getProfiler()->setEnabled(false);
     }
     
 }
