@@ -43,6 +43,10 @@ class Registrar_CoursestudyController extends Zend_Controller_Action {
     	}
     	$db=new Registrar_Model_DbTable_DbCourStudey();
     	$this->view->rows_deg=$db->getDegree();
+    	$form=new Registrar_Form_FrmSearchInfor();
+    	$form->FrmSearchRegister();
+    	Application_Model_Decorator::removeAllDecorator($form);
+    	$this->view->form_search=$form;
     }
     public function addAction()
     {

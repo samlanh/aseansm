@@ -1,6 +1,7 @@
 <title>Course Study</title>
 <?php 
     $tr = Application_Form_FrmLanguages::getCurrentlanguage();
+    $frm =  $this->form_search;
 ?>
 <meta charset="utf-8">
 <script type="text/javascript">
@@ -26,11 +27,17 @@
 	});	
 </script>
  <form  action="<?php echo $this->url(array('module'=>'registrar','controller'=>'coursestudy','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post">
-					   <table style="width:80%">
+					   <table style="width:100%">
 						  <tr> 
 							   <td><input dojoType="dijit.form.TextBox" class="fullside" id="adv_search" name="adv_search" value="<?php echo $this->adv_search['adv_search']?>" placeholder="Search" type="text" ></td>
-							    <td ><input id="degree" /></td>
-							    <td> <input dojoType="dijit.form.DateTextBox" class="fullside" onchange="CalculateDate();" id="start_date" name="start_date" value="<?php  if(!empty($this->adv_search['start_date'])){echo $this->adv_search['start_date']; }else echo date('Y-m-d');?>"  type="text"></td>
+							   <td> <?php echo $frm->getElement("study_year");?></td>
+							   <td> <?php echo $frm->getElement("time");?></td>
+							   <td> <?php echo $frm->getElement("session");?></td>
+							   <td ><input id="degree" /></td>
+							   <td> <?php echo $frm->getElement("grade");?></td> 
+					   	  </tr>
+					   	  <tr>
+					   	      <td> <input dojoType="dijit.form.DateTextBox" class="fullside" onchange="CalculateDate();" id="start_date" name="start_date" value="<?php  if(!empty($this->adv_search['start_date'])){echo $this->adv_search['start_date']; }else echo date('Y-m-d');?>"  type="text"></td>
 					           <td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="end_date" name="end_date" value="<?php if(empty($this->adv_search['end_date'])){ echo date('Y-m-d');}else echo $this->adv_search['end_date'];?>" type="text"></td>
 							  
 							   <td> <button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>

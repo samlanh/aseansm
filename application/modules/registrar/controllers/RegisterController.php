@@ -43,6 +43,10 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     	}
     	$data = new Registrar_Model_DbTable_DbRegister();
     	$db=$this->view->rows_degree=$data->getDegree();
+    	$form=new Registrar_Form_FrmSearchInfor();
+    	$form->FrmSearchRegister();
+    	Application_Model_Decorator::removeAllDecorator($form);
+    	$this->view->form_search=$form;
     }
     public function addAction(){
       if($this->getRequest()->isPost()){
