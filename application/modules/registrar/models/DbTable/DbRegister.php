@@ -54,7 +54,6 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 							'user_id'		=>$this->getUserId(),
  
 					);
-				    $db->getProfiler()->setEnabled(true);
 			    	$id= $this->insert($arr);
 				}
 				
@@ -79,7 +78,6 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						//'amount_in_khmer'=>$data['char_price'],
 						'user_id'=>$this->getUserId(),
 				);
-				$db->getProfiler()->setEnabled(true);
 				$paymentid = $this->insert($arr);
 				$this->_name='rms_student_paymentdetail';
 	            //update is_start=0 and is_parent=$payment_id_ser when add old student 
@@ -91,7 +89,6 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				$arr = array(
 						'is_start'=>0
 				);
-				$db->getProfiler()->setEnabled(true);
 				$this->update($arr,$where);
 				//update is_complet = 1 becuse for get balance price 
 				$this->_name='rms_student_paymentdetail';
@@ -101,7 +98,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 							'is_complete'=>1,
 							'comment'=>"បង់រួច",
 					);
-					$db->getProfiler()->setEnabled(true);
+					
 					$this->update($arr,$where);
 				}
 				$complete=1;
@@ -140,11 +137,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						);
 						$this->_name='rms_student_paymentdetail';
 						$where="payment_id = " .$data["parent_id"];
-						$db->getProfiler()->setEnabled(true);
 						$this->update($arr,$where);
-						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-						$db->getProfiler()->setEnabled(false); 
 					}
 				}
 				$this->_name='rms_student';
@@ -226,7 +219,6 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 							
 							'comment'=>"បង់រួច",
 					);
-					$db->getProfiler()->setEnabled(true);
 					$this->update($arr,$where);
 				}
 				$complete=1;
@@ -476,11 +468,8 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     				'comment'		=>$comment,
     				'user_id'=>$this->getUserId(),
     		);
-    		$db->getProfiler()->setEnabled(true);
+    		
     		$this->insert($arr);
-//     		Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-//     		Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-//     		$db->getProfiler()->setEnabled(false);
     }
 }
 
