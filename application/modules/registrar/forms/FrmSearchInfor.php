@@ -99,6 +99,34 @@ class Registrar_Form_FrmSearchInfor extends Zend_Dojo_Form
 		);
 		$sess_gep->setMultiOptions($ses_gep);
 		
+		$service = new Zend_Dojo_Form_Element_FilteringSelect('service');
+		$service->setAttribs(array('dojoType'=>$this->filter,
+				'placeholder'=>$this->tr->translate("SERVIC"),
+				'class'=>'fullside',
+				'required'=>false
+		));
+		$service->setValue($request->getParam("service"));
+		$opt_ser = array(''=>$this->tr->translate("SERVICE_CATE"));
+		$ser_rows=$db_years->getServicesAll();
+		if(!empty($ser_rows))foreach($ser_rows As $row)$opt_ser[$row['id']]=$row['title'];
+		$service->setMultiOptions($opt_ser);
+		
+		$pay_term = new Zend_Dojo_Form_Element_FilteringSelect('pay_term');
+		$pay_term->setAttribs(array('dojoType'=>$this->filter,
+				'placeholder'=>$this->tr->translate("PAYMENT_TERM"),
+				'class'=>'fullside',
+				'required'=>false
+		));
+		$pay_term->setValue($request->getParam("pay_term"));
+		$opt_term = array(
+				''=>$this->tr->translate("PAYMENT_TERM"),
+   				2=>$this->tr->translate('QUARTER'),
+   				3=>$this->tr->translate('SEMESTER'),
+   				4=>$this->tr->translate('YEAR'),
+   		
+   		);
+		$pay_term->setMultiOptions($opt_term);
+		
 		$_status=  new Zend_Dojo_Form_Element_FilteringSelect('status_search');
 		$_status->setAttribs(array('dojoType'=>$this->filter,));
 		$_status_opt = array(
@@ -108,7 +136,7 @@ class Registrar_Form_FrmSearchInfor extends Zend_Dojo_Form
 		$_status->setMultiOptions($_status_opt);
 		$_status->setValue($request->getParam("status_search"));
 	
-		$this->addElements(array($sess_gep,$_title,$generation,$_session,$_time,$_grade,$_status,$_grade_gep));
+		$this->addElements(array($sess_gep,$_title,$generation,$_session,$_time,$_grade,$_status,$_grade_gep,$service,$pay_term));
 		return $this;
 	} 
 

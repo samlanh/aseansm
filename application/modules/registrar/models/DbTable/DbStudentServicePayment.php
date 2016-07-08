@@ -260,6 +260,10 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 //     		$s_where[] = " spd.comment LIKE '%{$s_search}%'";
     		$where .=' AND ( '.implode(' OR ',$s_where).')';
     	}
+    	if(!empty($search['study_year'])){
+    		$where.=" AND s.academic_year=".$search['study_year'];
+    	}
+    	print_r($sql.$where);
     	return $db->fetchAll($sql.$where.$order);
     }
     function getStudentServicePaymentByID($id){

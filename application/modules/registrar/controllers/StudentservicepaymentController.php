@@ -21,6 +21,10 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     		    		else{
     		    			$search = array(
     		    					'adv_search' => '',
+    		    					'study_year' => '',
+    		    					'grade' => '',
+    		    					'service' => '',
+    		    					'pay_term' => '',
 //     		    					'search_status' => -1,
     		    					'start_date'=> date('Y-m-d'),
     		    					'end_date'=>date('Y-m-d'));
@@ -38,6 +42,10 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
     		echo $e->getMessage();
     	}
+    	$forms=new Registrar_Form_FrmSearchInfor();
+    	$form=$forms->FrmSearchRegister();
+    	Application_Model_Decorator::removeAllDecorator($form);
+    	$this->view->form_search=$form;
     }
     public function addAction()
     {
