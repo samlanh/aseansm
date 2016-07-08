@@ -20,7 +20,11 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     		    		else{
     		    			$search = array(
     		    					'adv_search' => '',
+    		    					'study_year' => '',
     		    					'degree' => '',
+    		    					'time'   =>'', 
+    		    					'session'=>'',
+    		    					'grade'=>'',
 //     		    					'search_status' => -1,
     		    					'start_date'=> date('Y-m-d'),
     		    					'end_date'=>date('Y-m-d'));

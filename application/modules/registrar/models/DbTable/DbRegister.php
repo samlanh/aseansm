@@ -305,6 +305,18 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	if(!empty($search['degree'])){
     		$where.=" AND s.degree=".$search['degree'];
     	}
+    	if(!empty($search['study_year'])){
+    		$where.=" AND s.academic_year=".$search['study_year'];
+    	}
+    	if(!empty($search['time'])){
+    		$where.=" AND sp.time=".$search['time'];
+    	}
+    	if(!empty($search['session'])){
+    		$where.=" AND s.session=".$search['session'];
+    	}
+    	if(!empty($search['grade'])){
+    		$where.=" AND s.grade=".$search['grade'];
+    	}
     	//$order=" ORDER By stu_id DESC ";
     	//print_r($sql.$where);
     	return $db->fetchAll($sql.$where.$order);
@@ -470,6 +482,16 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     		);
     		
     		$this->insert($arr);
+    }
+    function getGradeAll(){
+    	$db=$this->getAdapter();
+    	$sql="SELECT major_id AS id,major_enname AS `name` FROM rms_major WHERE dept_id IN(1,2,3,4) AND is_active=1 ";
+    	return $db->fetchAll($sql);
+    }
+    function getGradeGepAll(){
+    	$db=$this->getAdapter();
+    	$sql="SELECT major_id AS id,major_enname AS `name` FROM rms_major WHERE dept_id NOT IN(1,2,3,4) AND is_active=1 ";
+    	return $db->fetchAll($sql);
     }
 }
 

@@ -260,6 +260,15 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
     	if(!empty($search['degree'])){
     		$where.=" AND s.degree=".$search['degree'];
     	}
+    	if(!empty($search['study_year'])){
+    		$where.=" AND s.academic_year=".$search['study_year'];
+    	}
+    	if(!empty($search['sess_gep'])){
+    		$where.=" AND s.session=".$search['sess_gep'];
+    	}
+    	if(!empty($search['grade_gep'])){
+    		$where.=" AND s.grade=".$search['grade_gep'];
+    	}
     	//print_r($sql.$where);
     	$order=" ORDER By stu_id DESC ";
     	return $db->fetchAll($sql.$where.$order);
@@ -363,7 +372,7 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
     }
     function getDegree(){
     	$db=$this->getAdapter();
-    	$sql="SELECT dept_id AS id,CONCAT(en_name,'-',kh_name) AS `name`  FROM rms_dept WHERE dept_id NOT IN(1,2,3,4)";
+    	$sql="SELECT dept_id AS id,en_name AS `name`  FROM rms_dept WHERE dept_id NOT IN(1,2,3,4)";
     	return $db->fetchAll($sql);
     }
 //functon add 3service rms_student_paymentdetail
