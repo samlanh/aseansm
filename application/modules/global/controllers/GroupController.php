@@ -10,13 +10,18 @@ class Global_GroupController extends Zend_Controller_Action {
 	public function indexAction(){
 		try{
 			if($this->getRequest()->isPost()){
-				$_data=$this->getRequest()->getPost();
-				$search = array(
-						'title' => $_data['title']);
+				$search=$this->getRequest()->getPost();
 			}
 			else{
 				$search = array(
-						'title' => '');
+						'title' => '',
+						'study_year' => '',
+						'grade' => '',
+						'time' => '',
+						'session' =>'',
+						'start_date'=>date("Y-m-d"),
+						'end_date' => date("Y-m-d")
+						);
 			}
 			$db = new Global_Model_DbTable_DbGroup();
 			$rs_rows= $db->getAllGroups($search);
@@ -41,6 +46,10 @@ class Global_GroupController extends Zend_Controller_Action {
 		$frm = $frm->frmSearchTeacher();
 		Application_Model_Decorator::removeAllDecorator($frm);
 		$this->view->frm_search = $frm;
+		$form=new Registrar_Form_FrmSearchInfor();
+		$forms=$form->FrmSearchRegister();
+		Application_Model_Decorator::removeAllDecorator($forms);
+		$this->view->form_search=$form;
 	}
 	function addAction(){
 		if($this->getRequest()->isPost()){
