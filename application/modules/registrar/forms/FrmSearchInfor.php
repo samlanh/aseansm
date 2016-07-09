@@ -20,7 +20,9 @@ class Registrar_Form_FrmSearchInfor extends Zend_Dojo_Form
 		$request=Zend_Controller_Front::getInstance()->getRequest();
 	
 		$_title = new Zend_Dojo_Form_Element_TextBox('title');
-		$_title->setAttribs(array('dojoType'=>$this->text,
+		$_title->setAttribs(array(
+				'dojoType'=>$this->text,
+				'class'=>'fullside',
 				'placeholder'=>$this->tr->translate("SEARCH_FACULTY_NAME")));
 		$_title->setValue($request->getParam("title"));
 	    
@@ -135,8 +137,32 @@ class Registrar_Form_FrmSearchInfor extends Zend_Dojo_Form
 				0=>$this->tr->translate("DACTIVE"));
 		$_status->setMultiOptions($_status_opt);
 		$_status->setValue($request->getParam("status_search"));
+		//date 
+		$start_date= new Zend_Dojo_Form_Element_DateTextBox('start_date');
+		$dates = date("Y-m-d");
+		$start_date->setAttribs(array(
+				'dojoType'=>"dijit.form.DateTextBox",
+				'class'=>'fullside',
+				'required'=>false));
+		$_date = $request->getParam("start_date");
+		if(empty($_date)){
+			$_date = date('Y-m-d');
+		}
+		$start_date->setValue($_date);
+		
+		$end_date= new Zend_Dojo_Form_Element_DateTextBox('end_date');
+		$date = date("Y-m-d");
+		$end_date->setAttribs(array(
+				'dojoType'=>"dijit.form.DateTextBox",
+				'class'=>'fullside',
+				'required'=>false));
+		$_date = $request->getParam("end_date");
+		if(empty($_date)){
+			$_date = date("Y-m-d");
+		}
+		$end_date->setValue($_date);
 	
-		$this->addElements(array($sess_gep,$_title,$generation,$_session,$_time,$_grade,$_status,$_grade_gep,$service,$pay_term));
+		$this->addElements(array($start_date,$end_date,$sess_gep,$_title,$generation,$_session,$_time,$_grade,$_status,$_grade_gep,$service,$pay_term));
 		return $this;
 	} 
 
