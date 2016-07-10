@@ -40,7 +40,6 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 							'grade'=>$data['grade'],
 						    'stu_type'=>1,
 							'user_id'=>$this->getUserId(),
- 
 							'stu_code'		=>$data['stu_id'],
 							'academic_year'	=>$data['study_year'],
 							'stu_khname'	=>$data['kh_name'],
@@ -56,13 +55,15 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 					);
 			    	$id= $this->insert($arr);
 				}
-				
 				$this->_name='rms_student_payment';
 				$arr=array(
 						'student_id'=>$id,
 						'receipt_number'=>$data['reciept_no'],
-            			'time'=>$data['time'],
-// 						'end_hour'=>$data['to_time'],
+						'year'=>$data['study_year'],
+						'degree'		=>$data['dept'],
+						'grade'			=>$data['grade'],
+						'time'=>$data['time'],
+						'session'=>$data['session'],
 						'payment_term'=>$data['payment_term'],
 						'tuition_fee'=>$data['tuitionfee'],
 						'discount_percent'=>$data['discount'],
@@ -109,16 +110,20 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 					$complete=1;
 					$comment="បង់រួច";
 				}
-//add rms_student_paymentdetail 3 rows if (tuitionfee !=0 or admin_fee!=0 or other_fee!=0) 		
+                 //add rms_student_paymentdetail 3 rows if (tuitionfee !=0 or admin_fee!=0 or other_fee!=0) 		
 	             if($data){
-	             	$this->addStudentPaymentDetail($data,4, $paymentid, $complete, $comment, $payment_id_ser);
-	             	$this->addStudentPaymentDetail($data,5, $paymentid, $complete, $comment, $payment_id_ser);
-	             	$this->addStudentPaymentDetail($data,6, $paymentid,  $complete, $comment, $payment_id_ser);
-	             	//exit();
+	             	$this->addStudentPaymentDetail($data,4, $paymentid, $complete, $comment, $payment_id_ser);//fee
+	             	if($data['remark']){
+	             		$this->addStudentPaymentDetail($data,5, $paymentid, $complete, $comment, $payment_id_ser);//other fee
+	             	}
+	             	if($data['addmin_fee']){
+	             		$this->addStudentPaymentDetail($data,6, $paymentid,  $complete, $comment, $payment_id_ser);//admin fee
+	             	}
 	             }
 				 $db->commit();//if not errore it do....
 			}catch (Exception $e){
 				$db->rollBack();//អោយវាវិលត្រលប់ទៅដើមវីញពេលណាវាជួបErrore
+				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}
 		
@@ -195,22 +200,6 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				$where="id=".$data['pay_id'];
 				$this->update($arr, $where);
 				
-// 				$payment_id_ser = $this->getStudentPaymentStart($data['old_studens'],1);
-// 				if($data['id']!=$data['old_studens']){
-	// 				if(empty($payment_id_ser)){
-	// 					$payment_id_ser=0;
-	// 				}
-	// 				$this->_name='rms_student_paymentdetail';
-	// 				$where="payment_id = $payment_id_ser ";
-	// 				$arr = array(
-	// 						'is_start'=>0
-	// 				);
-	// 				$db->getProfiler()->setEnabled(true);
-	// 				$this->update($arr,$where);
-	// 				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-	// 				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-	// 				$db->getProfiler()->setEnabled(false);
-// 				}
 				$this->_name='rms_student_paymentdetail';
 				if(!empty($data['ids'])){
 					$where="id=".$data['ids'];
@@ -230,15 +219,19 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 					
 					$comment="បង់រួច";
 				}
-//update rms_student_paymentdetail 3 rows if (tuitionfee !=0 or admin_fee!=0 or other_fee!=0)
+               //update rms_student_paymentdetail 3 rows if (tuitionfee !=0 or admin_fee!=0 or other_fee!=0)
 				$this->_name='rms_student_paymentdetail';
 				$where="payment_id=".$data['pay_id'];
 				$this->delete($where);
 				if($data){
 					$paymentid=$data['pay_id'];
-					$this->addStudentPaymentDetail($data,4, $paymentid,$complete, $comment);
-					$this->addStudentPaymentDetail($data,5, $paymentid,$complete, $comment);
-					$this->addStudentPaymentDetail($data,6, $paymentid,$complete, $comment);
+					$this->addStudentPaymentDetail($data,4, $paymentid,$complete, $comment);//
+					if($data['remark']){
+						$this->addStudentPaymentDetail($data,5, $paymentid,$complete, $comment);
+					}
+					if($data['addmin_fee']){
+						$this->addStudentPaymentDetail($data,6, $paymentid,$complete, $comment);
+					}
 					//exit();
 				}
 // 				$arr=array(
@@ -274,23 +267,19 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	$session_user=new Zend_Session_Namespace('auth');
     	$user_id=$session_user->user_id;
     	$db=$this->getAdapter();
-//      	$from_date = (empty($search["start_date"]))?'Y-m-01':$search["start_date"];
-//      	$to_date =  (empty($search["end_date"]))?'Y-m-01' :$search["end_date"];
-     	//$where =" AND sp.create_date BETWEEN '$from_date' AND '$to_date'";
-    	$sql=" SELECT sp.id,s.stu_code,sp.receipt_number,s.stu_khname,s.stu_enname,s.sex,(SELECT en_name FROM rms_dept WHERE dept_id=s.degree)AS degree,
-		       (SELECT major_enname FROM rms_major WHERE major_id=s.grade ) AS grade,
- 		       sp.payment_term,sp.tuition_fee,sp.discount_percent, sp.total,sp.paid_amount,
+    	$sql=" SELECT sp.id,s.stu_code,s.stu_khname,s.stu_enname,s.sex,
+    	        (SELECT en_name FROM rms_dept WHERE dept_id=sp.degree)AS degree,
+		       (SELECT major_enname FROM rms_major WHERE major_id=sp.grade ) AS grade
+		       ,sp.receipt_number,sp.payment_term,
+ 		       sp.tuition_fee,sp.discount_percent, sp.total,sp.paid_amount,
 		       sp.balance_due,sp.create_date
  			   FROM rms_student AS s,rms_student_payment AS sp WHERE s.stu_id=sp.student_id AND s.stu_type IN (1,3) AND sp.user_id=".$user_id;
     	
     	$where=" ";
     	
-    	$from_date =(empty($search['start_date']))? '1': "s.create_date >= '".$search['start_date']." 00:00:00'";
-    	$to_date = (empty($search['end_date']))? '1': "s.create_date <= '".$search['end_date']." 23:59:59'";
+    	$from_date =(empty($search['start_date']))? '1': " sp.create_date >= '".$search['start_date']." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': " sp.create_date <= '".$search['end_date']." 23:59:59'";
     	$where = " AND ".$from_date." AND ".$to_date;
-    	
-    	
-    	$order=" ORDER BY s.stu_id DESC";
     	
     	if(!empty($search['adv_search'])){
     		$s_where=array();
@@ -303,22 +292,22 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     		$where.=' AND ('.implode(' OR ', $s_where).')';
     	}
     	if(!empty($search['degree'])){
-    		$where.=" AND s.degree=".$search['degree'];
+    		$where.=" AND sp.degree=".$search['degree'];
     	}
     	if(!empty($search['study_year'])){
-    		$where.=" AND s.academic_year=".$search['study_year'];
+    		$where.=" AND sp.year=".$search['study_year'];
     	}
     	if(!empty($search['time'])){
     		$where.=" AND sp.time=".$search['time'];
     	}
     	if(!empty($search['session'])){
-    		$where.=" AND s.session=".$search['session'];
+    		$where.=" AND sp.session=".$search['session'];
     	}
     	if(!empty($search['grade'])){
-    		$where.=" AND s.grade=".$search['grade'];
+    		$where.=" AND sp.grade=".$search['grade'];
     	}
     	//$order=" ORDER By stu_id DESC ";
-    	//print_r($sql.$where);
+    	$order=" ORDER BY sp.id DESC";
     	return $db->fetchAll($sql.$where.$order);
     }
     function getRegisterById($id){

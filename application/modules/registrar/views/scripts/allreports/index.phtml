@@ -5,48 +5,52 @@
 	$base_url = Application_Form_FrmMessage::getUrl("/");
 	$session_user=new Zend_Session_Namespace('auth');
 	$user_id=$session_user->user_id;
+	$frm =  $this->form_search;
 ?>
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'registrar','controller'=>'allreports','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 <table width="100%">
    <tr>
-       <td>
+       <td colspan="4">
 			<div class="menureport">
-								<ul>
-									<li class="preview"><a title="Preview" href="#" onclick="preview();"></a></li>
-									<li class="print"><a href="#" title="Print" onclick="doPrint();" ></a></li>
-								</ul>
+				<ul>
+					<li class="preview"><a title="Preview" href="#" onclick="preview();"></a></li>
+					<li class="print"><a href="#" title="Print" onclick="doPrint();" ></a></li>
+				</ul>
 			</div>
       </td>
 </tr>
-<tr>
-    <td>
-		<input  dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Advance Search....." value="<?php echo $this->search['txtsearch'];?>" type="text">
-		<input  name="from_date" id="from_date" dojoType="dijit.form.DateTextBox"  value="<?php if(empty($this->search['start_date'])){echo date('Y-m-d');} else echo $this->search['start_date'];?>" type="text">
-		<input  name="to_date" id="to_date" dojoType="dijit.form.DateTextBox"  value="<?php if(empty($this->search['end_date'])){echo date('Y-m-d');} else echo $this->search['end_date'];?>" type="text">
-		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
-    </td>
+<tr> 
+	 <td><input dojoType="dijit.form.TextBox" class="fullside" id="adv_search" name="adv_search" value="<?php echo $this->adv_search['adv_search']?>" placeholder="Search" type="text" ></td>
+	 <td> <?php echo $frm->getElement("study_year");?></td>
+	 <td> <?php echo $frm->getElement("service");?></td>
+	<!--<td> <?php //echo $frm->getElement("session");?></td> -->
+	 <td> <input dojoType="dijit.form.DateTextBox" class="fullside" onchange="CalculateDate();" id="start_date" name="start_date" value="<?php  if(empty($this->adv_search['start_date'])){echo date('Y-m-d');}else   echo $this->adv_search['start_date']; ?>"  type="text"></td>
+     <td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="end_date" name="end_date" value="<?php if(empty($this->adv_search['end_date'])){ echo date('Y-m-d');}else echo $this->adv_search['end_date'];?>" type="text"></td>
+	 <td> <button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
 </tr>
+<tr>
+	<!--<td> <?php //echo $frm->getElement("time");?></td> -->
+	</tr>
 </table>
 </form>
 <style>
-#footer{display: none;}
-</style>	
+.hover:hover{ background: #ddd;}
+</style>
 <div style="border: 1px dotted #000;background: #fff; margin: 0 auto;min-height: 27cm;">
 		<div id="divPrint"  >
 			<table style="background:#fff; margin: 0 auto; width: 100%; padding: 1cm; ">
 							<tr style="font-size: 13px;">
 								<td colspan="3" align="center">
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">ព្រះរាជាណាចក្រកម្ពុជា</strong><br />
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">ជាតិ សាសនា ព្រះមហាក្សត្រ</strong><br />
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"><u>របាយការណ៏ប្រាក់ចំណូលពី ការបង់ប្រាក់របស់សិស្ស</u></strong><br />
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">For Date <?php echo date("d-M-Y",strtotime($this->search["start_date"]))?> to <?php echo date("d-M-Y",strtotime($this->search["end_date"]));?></strong><br />
 								</td>
 							</tr>
-							
 							<tr>
 								<td width="20%" align="left">
-									<img style="width: 90%;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br /><br />
+									<img style="width: 155px;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br /><br />
 								</td>
 								<td align="center">
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"><u>របាយការណ៏ប្រាក់ចំណូលពី ការបង់ប្រាក់របស់សិស្ស</u></strong><br >
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"></strong><br >
 								</td>
 								<td align="right" width="20%">&nbsp;</td>
 							</tr>
@@ -64,10 +68,11 @@
 									<table class="padd" width="99%" border="1" align="center" style="white-space:nowrap;">
 										  <tr style="font-size:10px; height: 20px;" align="center">
 										    <th>&nbsp;N.o&nbsp;</th>
-										    <th>&nbsp;Reciept N.o&nbsp;</th>
 										    <th>&nbsp;Student ID&nbsp;</th>
 											<th>&nbsp;Khmer Name&nbsp;</th>
 											<th>&nbsp;English Name&nbsp;</th>
+											<th>&nbsp;Year&nbsp;</th>
+											<th>&nbsp;Reciept N.o&nbsp;</th>
 											<th>&nbsp;Servic Name&nbsp;</th>
 											<th>&nbsp;Tuition Fee&nbsp;</th>
 											<th>&nbsp;Discount&nbsp;</th>
@@ -82,25 +87,26 @@
 												<style> td{padding:0 3px; }</style>
 												<?php $ser_id=new Registrar_Model_DbTable_DbReportStudentByuser();?>
 										 <?php $i=0; $total=0;$total_paid=0;$total_balance=0; if (!empty($this->row)){  foreach($this->row as $rs){ $i++;
-										 	if($rs['type']==1){
-										 		$ser_type="Registration Fee Service";
-										 	}elseif ($rs["type"]==2){
-										 		$ser_type="GEP Fee Service";
-										 	}else {
-										 		$ser_type=$rs["service_id"];
-										 	}
+// 										 	if($rs['type']==1){
+// 										 		$ser_type="Registration Fee Service";
+// 										 	}elseif ($rs["type"]==2){
+// 										 		$ser_type="GEP Fee Service";
+// 										 	}else {
+// 										 		$ser_type=$rs["service_id"];
+// 										 	}
 										 
 										 ?>
-										  <tr style="font-size:10px; height: 18px;"​ align="center">
+										  <tr style="font-size:10px; height: 18px;"​ class="hover">
 										    <td><?php echo $i;?></td>
-										    <td><a style=" text-decoration: none; color:#000;" ><?php echo $rs['receipt_number']; ?></a></td>
 										    <td><a style=" text-decoration: none; color:#000;" ><?php echo $rs['stu_code']; ?></a></td>
 										    <td style=" white-space:nowrap; text-align:left"><a style=" text-decoration: none; color:#000;" ><?php echo $rs['stu_khname']; ?></a></td>
 										    <td style=" white-space:nowrap; text-align:left"><a style=" text-decoration: none; color:#000;" ><?php echo $rs['stu_enname']; ?></a></td>
-										    <td><?php echo $ser_type ?></td>
-										    <td>$ <?php echo $rs['fee']; if(empty($rs['fee']))echo '0.00'; ?></td>
-										    <td><?php echo $rs['discount_percent']; if(empty($rs['discount_percent']))echo '0'; ?>%</td>
-										    <td>$ <?php echo $rs['subtotal']; if(empty($rs['subtotal']))echo '0.00'; ?></td>
+										    <td><?php echo $rs['year'] ?></td>
+										    <td><a style=" text-decoration: none; color:#000;" ><?php echo $rs['receipt_number']; ?></a></td>
+										    <td style="text-align:left"><?php echo $rs["service_id"] ?></td>
+										    <td>$ <?php echo number_format($rs['fee'],2); ?></td>
+										    <td><?php echo number_format($rs['discount_percent'],2); ?>%</td>
+										    <td>$ <?php echo number_format($rs['subtotal'],2); ?></td>
 										    <td>$ <?php echo number_format($rs['paidamount'],2); ?></td>
 										    <td>$ <?php echo number_format($rs['balance'],2);  ?></td>
 										    <td><?php echo date('d-m-Y', strtotime($rs['start_date'])); ?></td>

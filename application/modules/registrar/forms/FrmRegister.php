@@ -310,7 +310,7 @@ Class Registrar_Form_FrmRegister extends Zend_Dojo_Form {
 		$end_date->setAttribs(array(
 				'dojoType'=>"dijit.form.DateTextBox",
 				'class'=>'fullside',
-				'onChange'=>'getDateTerm();',
+				//'onChange'=>'getDateTerm();',
 				'required'=>true));
 		$end_date->setValue($date);
 		

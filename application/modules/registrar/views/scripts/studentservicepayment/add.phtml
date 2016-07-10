@@ -43,6 +43,13 @@ fieldset{  background:none;}
 //print_r($register);
 ?>
 <form id='office_receipt' action="<?php echo $this->url(array('module'=>'registrar','controller'=>'studentservicepayment','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<script type="dojo/method" event="onSubmit">   
+   if(this.validate()) {
+    return true;
+   }else {
+    return false;
+   }
+</script>
 <table  cellspacing="10" style="margin: 0 auto; width: 100%;">
 	<tr>
 		<td>
@@ -172,8 +179,6 @@ function printSave(){
 	var balance_due = dijit.byId("total_balance").get('value');
 	var toral_return = dijit.byId("total_return").get('value');
 	
-
-	
 	var rowId = $('#identity').val();
 	var rowIDArray = rowId.split(',');
 	template="";
@@ -244,8 +249,8 @@ function printSave(){
 
 <div class="dijitHidden">
 	<div data-dojo-type="dijit.Dialog" id="popup_invoice" >
-		<div id="divPrint" style=" width: 23cm; height: 12cm ; padding: 0px; margin: 0px;">
-			<table style="background:#fff; margin: 0 auto; width: 23cm;height: 12cm; padding: 1cm; margin: 0 auto;" align="center">
+		<div id="divPrint" style=" width: 26cm; height: 12cm ; padding: 0px; margin: 0px;">
+			<table style="background:#fff; margin: 0 auto; width: 26cm;height: 12cm; padding: 1cm; margin: 0 auto;" align="center">
 							<tr>
 								<td width="25%" align="left">
 								</td>

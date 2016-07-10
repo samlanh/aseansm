@@ -31,7 +31,7 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     		    		}
     		$rs_rows= $db->getAllStudenTServicePayment($search);
     		$list = new Application_Form_Frmtable();
-    		$collumns = array("RECEIPT_NO","ACADEMIC_YEAR","STUDENT_ID","NAME","SEX","GRAND_TOTAL","DISCOUNT",
+    		$collumns = array("STUDENT_ID","NAME","SEX","ACADEMIC_YEAR","RECEIPT_NO","GRAND_TOTAL","DISCOUNT",
     				          "TOTAL_PAYMENT","MONEY_RECEIVED","BALANCE","RETURN","DATE_PAY","USER");
     		$link=array(
     				'module'=>'registrar','controller'=>'studentservicepayment','action'=>'edit',

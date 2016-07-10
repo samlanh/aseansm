@@ -8,7 +8,6 @@ class Registrar_CoursestudyController extends Zend_Controller_Action {
     	header('content-type: text/html; charset=utf8');
     	$this->tr=Application_Form_FrmLanguages::getCurrentlanguage();
     	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
-    	
 	}
 
     public function indexAction()
@@ -35,7 +34,7 @@ class Registrar_CoursestudyController extends Zend_Controller_Action {
     		$rs_rows = $glClass->getGernder($rs_rows, BASE_URL);
     		$rs_rows = $glClass->getGetPayTerm($rs_rows, BASE_URL );
     		$list = new Application_Form_Frmtable();
-    		$collumns = array("STUDENT_ID","RECEIPT_NO","NAME_KH","NAME_EN","SEX","DEGREE","CLASS",
+    		$collumns = array("STUDENT_ID","NAME_KH","NAME_EN","SEX","RECEIPT_NO","DEGREE","CLASS",
     				          "PAYMENT_TERM","TUITION_FEE","DISCOUND","TOTALE","BOOKS","REMAINING","DATE_PAY");
     		$link=array(
     				'module'=>'registrar','controller'=>'coursestudy','action'=>'edit',
@@ -58,11 +57,10 @@ class Registrar_CoursestudyController extends Zend_Controller_Action {
       	$_data = $this->getRequest()->getPost();
       	try {
       		$db = new Registrar_Model_DbTable_DbCourStudey();
+      		$db->addStudentGep($_data);
       		if(isset($_data['save_new'])){
-      			$db->addStudentGep($_data);
       			Application_Form_FrmMessage::message($this->tr->translate('INSERT_SUCCESS'));
       		}else{
-      			$db->addStudentGep($_data);
       			Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL . '/coursestudy/index');
       		}
       	} catch (Exception $e) {

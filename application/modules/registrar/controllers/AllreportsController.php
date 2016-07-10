@@ -12,17 +12,12 @@ class Registrar_AllreportsController extends Zend_Controller_Action {
     public function indexAction(){
     	try{
     		if($this->getRequest()->isPost()){
-    			$_data=$this->getRequest()->getPost();
-    			$search = array(
-    					'txtsearch' =>$_data['txtsearch'],
-    					'start_date'=> $_data['from_date'],
-    					'end_date'=> $_data['to_date']
-    			);
-    			$this->view->search = $search;
+    			$search=$this->getRequest()->getPost();
     		}
     		else{
     			$search = array(
-    					'txtsearch' =>'',
+    					'adv_search' =>'',
+    					'service'=>-1,
     					'start_date'=> date('Y-m-d'),
     					'end_date'=>date('Y-m-d'),
     			);
@@ -36,6 +31,11 @@ class Registrar_AllreportsController extends Zend_Controller_Action {
     		Application_Form_FrmMessage::message("Application Error");
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
     	}
+    	$form=new Registrar_Form_FrmSearchInfor();
+    	$form->FrmSearchRegister();
+    	Application_Model_Decorator::removeAllDecorator($form);
+    	$this->view->form_search=$form;
+    	$this->view->search = $search;
     }
     public function addAction(){
     	try{
@@ -63,6 +63,7 @@ class Registrar_AllreportsController extends Zend_Controller_Action {
     		Application_Form_FrmMessage::message("Application Error");
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
     	}
+    	$this->_redirect("/registrar/allreports");
     }
     public function wuRegisterAction()
     {

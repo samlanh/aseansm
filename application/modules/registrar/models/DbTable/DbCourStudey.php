@@ -16,7 +16,7 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
     	return $db->fetchOne($sql);
     }
 	function addStudentGep($data){
-		//print_r($data);exit();
+// 		print_r($data);exit();
 		$db = $this->getAdapter();//ស្ពានភ្ជាប់ទៅកាន់Data Base
 			$db->beginTransaction();//ទប់ស្កាត់មើលការErrore , មានErrore វាមិនអោយចូល
 			try{
@@ -37,9 +37,7 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 							'user_id'=>$this->getUserId(),
 					);
 					$id= $this->insert($arr);
-					
 					$this->_name='rms_study_history';
-					
 					$array=array(
 							'stu_code'	=>$data['stu_id'],
 							'stu_id'	=>$id,
@@ -59,6 +57,12 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 				$arr=array(
 						'student_id'=>$id,
 						'receipt_number'=>$data['reciept_no'],
+						
+						'year'=>$data['study_year'],
+						'degree'=>$data['dept'],
+						'grade'=>$data['grade'],
+						'time'=>$data['session'],
+						
 						'start_hour'=>$data['from_time'],
 						'end_hour'=>$data['to_time'],
 						'payment_term'=>$data['payment_term'],
@@ -105,13 +109,18 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 				//add rms_student_paymentdetail 3 service (tuttionfee,remake,admin_fee)		
                 if($data){
                 	$this->addStudentPaymentDetial($data,4, $paymentid, $complete, $comment, $payment_id_ser);
-                	$this->addStudentPaymentDetial($data,5, $paymentid, $complete, $comment, $payment_id_ser);
-                	$this->addStudentPaymentDetial($data,6, $paymentid, $complete, $comment, $payment_id_ser);
+                	if(!empty($data['remark'])){
+                		$this->addStudentPaymentDetial($data,5, $paymentid, $complete, $comment, $payment_id_ser);
+                	}
+                	if(!empty($data['addmin_fee'])){
+                		$this->addStudentPaymentDetial($data,6, $paymentid, $complete, $comment, $payment_id_ser);
+                	}
                 }		
 				//exit();
 				$db->commit();//if not errore it do....
 			}catch (Exception $e){
 				$db->rollBack();//អោយវាវិលត្រលប់ទៅដើមវីញពេលណាវាជួបErrore
+				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}
 		function updateStudentGep($data){
@@ -165,12 +174,16 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 			    	$where="stu_id=".$data['stus_id'];
 			    	$this->update($array, $where);
 			    	
-			    	
 			    }
 			    $this->_name='rms_student_payment';
 			    $arr=array(
 			    		'student_id'=>$data['stus_id'],
 			    		'receipt_number'=>$data['reciept_no'],
+			    		'year'=>$data['study_year'],
+			    		'degree'=>$data['dept'],
+			    		'grade'=>$data['grade'],
+			    		'time'=>$data['session'],
+			    		
 			    		'start_hour'=>$data['from_time'],
 			    		'end_hour'=>$data['to_time'],
 			    		'payment_term'=>$data['payment_term'],
@@ -220,32 +233,38 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 			    $this->delete($where);
 			    if($data){
 			    	$paymentid=$data['id'];
-			    	$this->addStudentPaymentDetial($data, 4, $paymentid, $complete, $comment, $payment_id_ser);
-			    	$this->addStudentPaymentDetial($data, 5, $paymentid, $complete, $comment, $payment_id_ser);
-			    	$this->addStudentPaymentDetial($data, 6, $paymentid, $complete, $comment, $payment_id_ser);
+			    	$this->addStudentPaymentDetial($data,4, $paymentid, $complete, $comment, $payment_id_ser);
+			    	if(!empty($data['remark'])){
+			    		$this->addStudentPaymentDetial($data,5, $paymentid, $complete, $comment, $payment_id_ser);
+			    	}
+			    	if(!empty($data['addmin_fee'])){
+			    		$this->addStudentPaymentDetial($data,6, $paymentid, $complete, $comment, $payment_id_ser);
+			    	}
+			    	
 			    }
                 //exit();
 			     $db->commit();//if not errore it do....
 			}catch (Exception $e){
 				$db->rollBack();//អោយវាវិលត្រលប់ទៅដើមវីញពេលណាវាជួបErrore
+				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}
     function getAllStudentGep($search=null){
     	$session_user=new Zend_Session_Namespace('auth');
     	$user_id=$session_user->user_id;
     	$db=$this->getAdapter();
-//     	$from_date = (empty($search["start_date"]))?'Y-m-01':$search["start_date"];
-//      $to_date =  (empty($search["end_date"]))?'Y-m-01' :$search["end_date"];
-    	//$where =" AND sp.create_date BETWEEN '$from_date' AND '$to_date'";
-    	$from_date =(empty($search['start_date']))? '1': "s.create_date >= '".$search['start_date']." 00:00:00'";
-    	$to_date = (empty($search['end_date']))? '1': "s.create_date <= '".$search['end_date']." 23:59:59'";
+    	$from_date =(empty($search['start_date']))? '1': " sp.create_date >= '".$search['start_date']." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': " sp.create_date <= '".$search['end_date']." 23:59:59'";
     	$where = " AND ".$from_date." AND ".$to_date;
-    	$sql=" SELECT sp.id,s.stu_code,sp.receipt_number,s.stu_khname,s.stu_enname,s.sex,(SELECT en_name FROM rms_dept WHERE dept_id=s.degree)AS degree,
-		       (SELECT major_enname FROM rms_major WHERE major_id=s.grade ) AS grade,
+    	$sql=" SELECT sp.id,s.stu_code,s.stu_khname,s.stu_enname,s.sex,
+    	        sp.receipt_number,
+    	       (SELECT en_name FROM rms_dept WHERE dept_id=sp.degree)AS degree,
+		       (SELECT major_enname FROM rms_major WHERE major_id=sp.grade ) AS grade,
 		       sp.payment_term,
 		       sp.tuition_fee,sp.discount_percent,sp.total,sp.paid_amount,
 		       sp.balance_due,sp.create_date
- 			   FROM rms_student AS s,rms_student_payment AS sp WHERE s.stu_id=sp.student_id AND s.stu_type=2 AND sp.user_id=$user_id";
+ 			   FROM rms_student AS s,rms_student_payment AS sp WHERE s.stu_id=sp.student_id 
+    	       AND sp.user_id=$user_id";
     	
     	if(!empty($search['adv_search'])){
     		$s_where=array();
@@ -254,23 +273,24 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
     		$s_where[]=" receipt_number LIKE '%{$s_search}%'";
     		$s_where[]= " stu_khname LIKE '%{$s_search}%'";
     		$s_where[]= " stu_enname LIKE '%{$s_search}%'";
-    		$s_where[]= " grade LIKE '%{$s_search}%'";
+    		$s_where[]= " sp.grade LIKE '%{$s_search}%'";
     		$where.=' AND ('.implode(' OR ', $s_where).')';
     	}
     	if(!empty($search['degree'])){
-    		$where.=" AND s.degree=".$search['degree'];
+    		$where.=" AND sp.degree=".$search['degree'];
     	}
     	if(!empty($search['study_year'])){
-    		$where.=" AND s.academic_year=".$search['study_year'];
+    		$where.=" AND sp.year=".$search['study_year'];
     	}
     	if(!empty($search['sess_gep'])){
-    		$where.=" AND s.session=".$search['sess_gep'];
+    		$where.=" AND sp.time=".$search['sess_gep'];
     	}
     	if(!empty($search['grade_gep'])){
-    		$where.=" AND s.grade=".$search['grade_gep'];
+    		$where.=" AND sp.grade=".$search['grade_gep'];
     	}
     	//print_r($sql.$where);
     	$order=" ORDER By stu_id DESC ";
+//         echo $sql.$where.$order;
     	return $db->fetchAll($sql.$where.$order);
     }
     function getStuentGepById($id){

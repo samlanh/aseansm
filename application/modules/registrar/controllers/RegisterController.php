@@ -25,7 +25,6 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     		    					'time'   =>'', 
     		    					'session'=>'',
     		    					'grade'=>'',
-//     		    					'search_status' => -1,
     		    					'start_date'=> date('Y-m-d'),
     		    					'end_date'=>date('Y-m-d'));
     		    		}
@@ -34,16 +33,14 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     		$rs_rows = $glClass->getGernder($rs_rows, BASE_URL );
     		$rs_rows = $glClass->getGetPayTerm($rs_rows, BASE_URL );
     		$list = new Application_Form_Frmtable();
-    		$collumns = array("STUDENT_ID","RECEIPT_NO","NAME_KH","NAME_EN","SEX","DEGREE","CLASS",
+    		$collumns = array("STUDENT_ID","NAME_KH","NAME_EN","SEX","DEGREE","CLASS","RECEIPT_NO",
     				          "PAYMENT_TERM","TUITION_FEE","DISCOUND", "TOTALE","PAID_AMOUNT","BALANCE","DATE_PAY");
     		$link=array(
     				'module'=>'registrar','controller'=>'register','action'=>'edit',
     		);
     		$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('stu_code'=>$link,'receipt_number'=>$link,'stu_khname'=>$link,'stu_enname'=>$link));
     	}catch (Exception $e){
-    		//Application_Form_FrmMessage::message("Application Error");
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
-    		echo $e->getMessage();
     	}
     	$data = new Registrar_Model_DbTable_DbRegister();
     	$db=$this->view->rows_degree=$data->getDegree();
@@ -55,14 +52,12 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     public function addAction(){
       if($this->getRequest()->isPost()){
       	$_data = $this->getRequest()->getPost();
-//       	print_r($_data);exit();
       	try {
       		$db = new Registrar_Model_DbTable_DbRegister();
+      		$db->addRegister($_data);
       		if(isset($_data['save_new'])){
-      			$db->addRegister($_data);
       			Application_Form_FrmMessage::message($this->tr->translate('INSERT_SUCCESS'));
       		}else{
-      			$db->addRegister($_data);
       			Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL . '/register/index');
       		}
       	} catch (Exception $e) {
@@ -97,11 +92,10 @@ class Registrar_RegisterController extends Zend_Controller_Action {
     		$_data['pay_id']=$id;
     		try {
     			$db = new Registrar_Model_DbTable_DbRegister();
+    			$db->updateRegister($_data);
     			if(isset($_data['save_new'])){
-    				$db->updateRegister($_data);
     				Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL . '/register/index');
     			}else{
-    				$db->updateRegister($_data);
     				Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL . '/register/index');
     			}
     		} catch (Exception $e) {

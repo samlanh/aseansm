@@ -18,4 +18,9 @@ class Registrar_CalculatorController extends Zend_Controller_Action {
 		$this->view->keycode=$key->getKeyCodeMiniInv(TRUE);
         
     }
+    public function addAction()
+    {
+    	$this->_redirect("/registrar/calculator");
+    	
+    }
 }

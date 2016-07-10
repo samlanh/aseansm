@@ -231,39 +231,35 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     function getAllStudenTServicePayment($search){
     	$user=$this->getUserId();
     	$db=$this->getAdapter();
-    	$sql="select rms_student_payment.id,receipt_number,
-		(select CONCAT(from_academic,' - ',to_academic) from rms_servicefee where rms_servicefee.id=rms_student_payment.year limit 1)AS year,
-    	(select stu_code from rms_student where rms_student.stu_id=rms_student_payment.student_id limit 1)AS code,
-    	(select CONCAT(stu_khname,' - ',stu_enname) from rms_student where rms_student.stu_id=rms_student_payment.student_id limit 1)AS name,
-    	(select name_kh from rms_view where rms_view.type=2 and rms_view.key_code=(select sex from rms_student where rms_student.stu_id=rms_student_payment.student_id limit 1) limit 1)AS sex,
-    	total,rms_student_payment.discount_fix,total_payment,receive_amount,balance_due,return_amount,create_date,
-    	(select CONCAT(last_name,' ',first_name) from rms_users where rms_users.id=rms_student_payment.user_id) AS user
-    	from rms_student_payment where 1 and
-    	(select type from rms_student_paymentdetail where rms_student_paymentdetail.payment_id=rms_student_payment.id limit 1)=3 and rms_student_payment.user_id=".$user;
+    	$sql="select sp.id,
+			(select stu_code from rms_student where rms_student.stu_id=sp.student_id limit 1)AS code,
+	    	(select CONCAT(stu_khname,' - ',stu_enname) from rms_student where rms_student.stu_id=sp.student_id limit 1)AS name,
+	    	(select name_kh from rms_view where rms_view.type=2 and rms_view.key_code=(select sex from rms_student where rms_student.stu_id=sp.student_id limit 1) limit 1)AS sex,
+	    	(select CONCAT(from_academic,' - ',to_academic) from rms_servicefee where rms_servicefee.id=sp.year limit 1)AS year,
+	    	receipt_number,
+	    	total,sp.discount_fix,total_payment,receive_amount,balance_due,return_amount,create_date,
+	    	(select CONCAT(last_name,' ',first_name) from rms_users where rms_users.id=sp.user_id) AS user
+	    	from rms_student_payment as sp where 1 and
+	    	(select type from rms_student_paymentdetail where rms_student_paymentdetail.payment_id=sp.id limit 1)=3 and sp.user_id=".$user;
     	
-    	$from_date =(empty($search['start_date']))? '1': "rms_student_payment.create_date >= '".$search['start_date']." 00:00:00'";
-    	$to_date = (empty($search['end_date']))? '1': "rms_student_payment.create_date <= '".$search['end_date']." 23:59:59'";
+    	$from_date =(empty($search['start_date']))? '1': " sp.create_date >= '".$search['start_date']." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': " sp.create_date <= '".$search['end_date']." 23:59:59'";
     	$where = " AND ".$from_date." AND ".$to_date;
 		
-    	$limit=" limit 1";
-    	
     	$order=" ORDER BY id DESC ";
     	
     	if(!empty($search['adv_search'])){
     		$s_where = array();
     		$s_search = addslashes(trim($search['adv_search']));
-    		$s_where[] = " (select CONCAT(from_academic,'-',to_academic) from rms_servicefee where rms_servicefee.id=rms_student_payment.year limit 1) LIKE '%{$s_search}%'";
+    		$s_where[] = " (select CONCAT(from_academic,'-',to_academic) from rms_servicefee where rms_servicefee.id=sp.year limit 1) LIKE '%{$s_search}%'";
     		$s_where[] = " receipt_number LIKE '%{$s_search}%'";
-    		$s_where[] = " (select stu_code from rms_student where rms_student.stu_id=rms_student_payment.student_id) LIKE '%{$s_search}%'";
-    		$s_where[] = " (select CONCAT(stu_khname,stu_enname) from rms_student where rms_student.stu_id=rms_student_payment.student_id) LIKE '%{$s_search}%'";
-//     		$s_where[] = " (select title from rms_program_name where rms_program_name.service_id=spd.service_id) LIKE '%{$s_search}%'";
-//     		$s_where[] = " spd.comment LIKE '%{$s_search}%'";
+    		$s_where[] = " (select stu_code from rms_student where rms_student.stu_id=sp.student_id) LIKE '%{$s_search}%'";
+    		$s_where[] = " (select CONCAT(stu_khname,stu_enname) from rms_student where rms_student.stu_id=sp.student_id) LIKE '%{$s_search}%'";
     		$where .=' AND ( '.implode(' OR ',$s_where).')';
     	}
     	if(!empty($search['study_year'])){
-    		$where.=" AND s.academic_year=".$search['study_year'];
+    		$where.=" AND sp.year=".$search['study_year'];
     	}
-    	print_r($sql.$where);
     	return $db->fetchAll($sql.$where.$order);
     }
     function getStudentServicePaymentByID($id){

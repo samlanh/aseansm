@@ -2,14 +2,9 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$this->headTitle('Report Student Nearly End Service'); 
 	echo $this->headTitle(''); 
+	$frm =  $this->form_search;
 	
 ?>	
-<?php
-// 			$date1=date_create("2013-03-15");
-// 			$date2=date_create("2013-04-15");
-// 			$diff=date_diff($date1,$date2);
-// 			echo $diff->format("%R%a days");exit();
-?>
 <div style="width: 28cm;margin: 0 auto;">
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'registrar','controller'=>'studentnearlyendservice','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	<table width="100%">
@@ -25,23 +20,21 @@
 		</tr>
 	</table>
 	<table>	
-		<tr>
-			<td>
-				<input dojoType="dijit.form.TextBox" required="true"  id="txtsearch" name="txtsearch" placeholder="Search....." value="<?php echo $this->search['txtsearch'];?>" type="text">
-			</td>
-			<td>
-				<input class="fullside" name="from_date" id="from_date" dojoType="dijit.form.DateTextBox" placeholder="from date" value="<?php echo $this->search['start_date'];?>" type="text">
-			</td>
-			<td>
-				<input class="fullside" name="to_date" id="to_date" dojoType="dijit.form.DateTextBox" placeholder="to date" value="<?php echo $this->search['end_date'];?>" type="text">
-			</td>
-			<td>
-				<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
-			</td>
+		<tr> 
+			 <td><input dojoType="dijit.form.TextBox" class="fullside" id="adv_search" name="adv_search" value="<?php echo $this->search['adv_search']?>" placeholder="Search" type="text" ></td>
+			 <td> <?php echo $frm->getElement("study_year");?></td>
+			 <td> <?php echo $frm->getElement("service");?></td>
+			<!--<td> <?php //echo $frm->getElement("session");?></td> -->
+			 <td> <input dojoType="dijit.form.DateTextBox" class="fullside" onchange="CalculateDate();" id="start_date" name="start_date" value="<?php  if(empty($this->adv_search['start_date'])){echo date('Y-m-d');}else   echo $this->adv_search['start_date']; ?>"  type="text"></td>
+		     <td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="end_date" name="end_date" value="<?php if(empty($this->adv_search['end_date'])){ echo date('Y-m-d');}else echo $this->adv_search['end_date'];?>" type="text"></td>
+			 <td> <button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
 		</tr>
 	</table>
 </form>	
 </div>
+<style>
+.hover:hover{background: #ddd;}
+</style>
 <div style="border: 1px dotted #000;background: #fff;width: 27cm;margin: 0 auto;min-height: 27cm; padding: 0.5cm;">
 	<div id="divPrint">
 									<table style="background:#fff;width:90%; margin: 0 auto;width: 100%;">
@@ -62,15 +55,15 @@
 												<table cellpadding="5"​ style="margin:0 auto;border: 1px solid #000;width:100%; border-collapse: collapse;white-space: nowrap;"  border="1" >
 													<tr style="font-size:11px; height: 20px;border: 1px solid #000;" align="center" >
 														<th style="border: 1px solid #000;">&nbsp;N.o&nbsp;</th>
-														<th style="border: 1px solid #000;">&nbsp;Receipt No&nbsp;</th>
-														<th style="border: 1px solid #000;">Code</th>
+														<th style="border: 1px solid #000;">Student Id</th>
 														<th style="border: 1px solid #000;">&nbsp;Student Name&nbsp;</th>
 														<th style="border: 1px solid #000;">&nbsp;Sex&nbsp;</th>
+														<th style="border: 1px solid #000;">&nbsp;Tel&nbsp;</th>
+														<th style="border: 1px solid #000;">&nbsp;Receipt No&nbsp;</th>
 														<th style="border: 1px solid #000;">Service Name</th>
 														<th style="border: 1px solid #000;">Paid Date</th>
 														<th style="border: 1px solid #000;">Validate</th>
-														<th style="border: 1px solid #000;">Remain (Days)</th>
-														
+														<th style="border: 1px solid #000;">Remain Days</th>
 													</tr>
 												<?php $i=0;$totalpaid=0;$totalbalance=0; if(!empty($this->row)){foreach ($this->row AS $row) { $i++;
 												
@@ -78,19 +71,23 @@
 													$date2=date_create(date('Y-m-d'));
 													$diff=date_diff($date1,$date2);
 													$day=$diff->format("%R%a");
-// 													echo $diff->format('%R'); // use for point out relation: smaller/greater
-// 													echo $diff->days;
 												?>
-													<tr style="font-size:10px; height: 20px;border: 1px solid #000;" align="center" >
+													<tr style="font-size:10px; height: 20px;border: 1px solid #000;" align="center" class="hover" >
 														<th style="border: 1px solid #000;"><?php echo $i;?></th>
-														<th style="border: 1px solid #000;"><?php echo $row['receipt'];?></th>
 														<th style="border: 1px solid #000;">&nbsp;<?php echo $row['code'];?>&nbsp;</th>
 														<th align="left" style="border: 1px solid #000;">&nbsp;<?php echo $row['name'];?></th>	
 														<th align="left" style="border: 1px solid #000;">&nbsp;<?php echo $row['sex'];?></th>
+														<th align="left" style="border: 1px solid #000;">&nbsp;<?php echo $row['tel'];?></th>
+														<th style="border: 1px solid #000;"><?php echo $row['receipt'];?></th>
 														<th align="left" style="border: 1px solid #000;">&nbsp;<?php echo $row['service'];?></th>
 														<th style="border: 1px solid #000;">&nbsp;<?php echo date("d-M-Y",strtotime($row['start']));?>&nbsp;</th>
 														<th style="border: 1px solid #000;color: red;">&nbsp;<?php echo date("d-M-Y",strtotime($row['end']));?>&nbsp;</th>
-														<th align="center" style="border: 1px solid #000;color: red;">&nbsp;<?php echo abs($day);?> days</th>
+														<?php if($day>=0){
+															$daylate ="Late ".abs($day);
+														}else{
+															$daylate ="Remain ".abs($day);
+														}?>
+														<th align="center" style="border: 1px solid #000;color: red;<?php if($day>=0){echo"background:red;color:#fff;";}?>">&nbsp;<?php echo ($daylate);?> days</th>
  													</tr>
 												<?php }}?>	 
 												</table>	
