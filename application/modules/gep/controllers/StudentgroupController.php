@@ -141,7 +141,7 @@ class Gep_StudentGroupController extends Zend_Controller_Action {
 		$dbstudent = new Foundation_Model_DbTable_DbStudent();
 		$this->view->academy = $dbstudent->getAllYear();
 		$_db = new Application_Model_DbTable_DbGlobal();
-		$this->view->degree = $_db->getAllFecultyName();
+		$this->view->degree = $_db->getGepDept();
 		$group = new Gep_Model_DbTable_DbGroup();
 		$group_option = $group->getGroupToEdit();
 		array_unshift($group_option, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
