@@ -54,8 +54,9 @@ class Foundation_studentdropController extends Zend_Controller_Action {
 		}
 		
 		$_add = new Foundation_Model_DbTable_DbStudentDrop();
-		$this->view->rs = $add =$_add->getAllStudentID();
+		$a = $this->view->rs = $add =$_add->getAllStudentID();
 		
+// 		print_r($a);exit();
 // 		$_db = new Application_Model_DbTable_DbGlobal();
 // 		$this->view->degree = $rows = $_db->getAllFecultyName();
 // 		$this->view->occupation = $row =$_db->getOccupation();

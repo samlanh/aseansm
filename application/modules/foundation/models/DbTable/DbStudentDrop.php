@@ -11,7 +11,7 @@ class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 	
 	public function getAllStudentID(){
 		$_db = $this->getAdapter();
-		$sql = "SELECT stu_id,stu_code FROM `rms_student` where status = 1 and is_subspend=0 and stu_type=1 ";
+		$sql = "SELECT stu_id,stu_code FROM `rms_student` where status = 1 and is_subspend=0 and stu_type=1 and degree IN (2,3,4) ";
 		$orderby = " ORDER BY stu_code ";
 		return $_db->fetchAll($sql.$orderby);		
 	}

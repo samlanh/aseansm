@@ -138,15 +138,19 @@ class kindergarten_studentGroupController extends Zend_Controller_Action {
 				Application_Form_FrmMessage::message("APPLICATION_ERROR");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
+			
 		$dbstudent = new Kindergarten_Model_DbTable_DbStudent();
 		$this->view->academy = $dbstudent->getAllYear();
+		
 		$_db = new Application_Model_DbTable_DbGlobal();
-		$this->view->degree = $_db->getAllFecultyName();
+		$this->view->degree = $_db->getAllDegreeKindergarten();
+		
 		$group = new Kindergarten_Model_DbTable_DbGroup();
 		$group_option = $group->getGroupToEdit();
 		array_unshift($group_option, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
 		$this->view->group = $group_option;
 		$this->view->room = $group->getRoom();
+		
 		$db=new Application_Model_DbTable_DbGlobal();
 		$this->view->rs_session=$db->getSession();
 	}

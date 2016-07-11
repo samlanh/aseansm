@@ -144,7 +144,7 @@ class Kindergarten_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		$sql = " SELECT
 		`g`.`id`,
 		`g`.`group_code`    AS `group_code`,
-		(select CONCAT(from_academic,' - ',to_academic,'(',generation,')') from rms_tuitionfee where rms_tuitionfee.id=g.academic_year) as academic,
+		(select CONCAT(from_academic,'-',to_academic,'(',generation,')') from rms_tuitionfee where rms_tuitionfee.id=g.academic_year) as academic,
 		`g`.`semester` AS `semester`,
 		(SELECT en_name
 		 FROM `rms_dept`
