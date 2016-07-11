@@ -26,7 +26,7 @@ public function indexAction(){
 				else{
 					$result = Application_Model_DbTable_DbGlobal::getResultWarning();
 				}
-				$collumns = array("STUDENT_CODE","NAME_KH","NAME_EN","SEX","GRADE","NATIONALITY","DOB","STATUS");
+				$collumns = array("STUDENT_CODE","NAME_KH","NAME_EN","SEX","NATIONALITY","ACADEMIC_YEAR","DEGREE","GRADE","SESSION","STATUS");
 				$link=array(
 						'module'=>'kindergarten','controller'=>'kindergarten','action'=>'edit',
 				);
