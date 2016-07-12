@@ -9,6 +9,13 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		return $session_user->user_id;
 	
 	}
+	
+	function getAllYear(){
+		$db = $this->getAdapter();
+		$sql = "select id,CONCAT(from_academic,'-',to_academic,'(',generation,')')as years from rms_tuitionfee ";
+		return $db->fetchAll($sql);
+	}
+	
 	public function getRoom(){
 		$db = $this->getAdapter();
 		$sql = "SELECT room_id,room_name FROM rms_room WHERE is_active = 1";
@@ -31,8 +38,7 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		$arr = array(
 				'group_code' => $_data['group_code'],
 				'room_id' => $_data['room'],
-				'from_academic' => $_data['start_year'],
-				'to_academic' => $_data['end_year'],
+				'academic_year' => $_data['academic_year'],
 				'semester' => $_data['semester'],
 				'session' => $_data['session_group'],
 				'degree' => $_data['degree_group'],

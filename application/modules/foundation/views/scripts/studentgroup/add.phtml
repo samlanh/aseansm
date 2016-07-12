@@ -65,6 +65,7 @@ dojo.ready(function(){
 	    }
 	}, "grade_group");
 	getallGrade(1);
+	getallGrade(2);
 
 	new dijit.form.FilteringSelect({
 	    store: group_store,
@@ -93,8 +94,7 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 			dept_id = dijit.byId('degree').get('value');
 		}
 		else if(type==2){
-		dept_id = dijit.byId('degree_group').get('value');
-		
+			dept_id = dijit.byId('degree_group').get('value');
 		}
 			dojo.xhrPost({
 				url:url_dept,
@@ -235,7 +235,7 @@ $frm_set_price = $this->frm_set_charge;?>
 </table>	
 
 <div class="dijitHidden">
-	<div data-dojo-type="dijit.Dialog" style="width:7cm;" id="popup_dept" >
+	<div data-dojo-type="dijit.Dialog" style="width:21cm;" id="popup_dept" >
 <form id='frm_add_tran' action="" 
 dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 <script type="dojo/method" event="onSubmit">			
@@ -263,43 +263,21 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 		<td>
 				<fieldset style="margin-top:-13px;">
 					<legend align="center" ><strong>Group Faculty</strong></legend>
-					<table style="margin: 0 auto; width: 100%;" cellspacing="10">
+					<table style="margin: 0 auto;" cellspacing="10">
 						<tr>
-							<td width="110px">Group Code</td>
+							<td width="110px">GROUP_CODE</td>
 							<td><input dojoType="dijit.form.ValidationTextBox" required="true" id="group_code" name="group_code" value="" type="text"></td>
 						    
-						    <td width="110px">ឆ្នាំសិក្សា</td>
+						    <td width="110px"><?php echo $tr->translate("ACADEMIC_YEAR")?></td>
 							<td>
-								<select name="start_year" id="start_year" type="text" dojoType="dijit.form.FilteringSelect">
-									<?php for($i=2014;$i<=date('Y')+1;$i++){?>
-										<option value="<?php echo $i;?>"><?php echo $i; ?></option>
-									<?php }?>
+								<select name="academic_year" id="academic_year" type="text" dojoType="dijit.form.FilteringSelect">
+									<option value="0">Select AcademicYear</option>
+									<?php if(!empty($this->academy)){ foreach ($this->academy as $row){?>
+										<option value="<?php echo $row['id'];?>"><?php echo $row['years']; ?></option>
+									<?php }}?>
 							    </select>
 							</td>
-							
-							<td width="110px">ដល់</td>
-							<td>
-								<select name="end_year" id="end_year" type="text" dojoType="dijit.form.FilteringSelect">
-									<?php for($i=2015;$i<=date('Y')+2;$i++){?>
-										<option value="<?php echo $i;?>"><?php echo $i; ?></option>
-									<?php }?>
-							   </select>
-							</td>
-							
-						</tr>
-						<tr>
-							<td>ឆមាស</td>
-							<td><input dojoType="dijit.form.ValidationTextBox" required="true" name="semester" value="" type="text"></td>
-							<td>វេនសិក្សា</td>
-							<td>
-								<select name="session_group" id="session_group" dojoType="dijit.form.FilteringSelect">
-									<option value='1' >ព្រឹក</option>
-									<option value='2' >រសៀល</option>
-									<option value='3' >យប់</option>
-									<option value='4' >ចុងសបា្តហ៏</option>
-								</select>
-							</td>
-							<td >កំរិត</td>
+							<td ><?php echo $tr->translate("DEGREE")?></td>
 							<td>
 								<select name="degree_group" id="degree_group" dojoType="dijit.form.FilteringSelect" onchange="getallGrade(2);">
 										<?php if(!empty($this->degree))foreach ($this->degree as $row){?>
@@ -309,12 +287,32 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 							</td>
 						</tr>
 						<tr>
-							<td>ថ្នាក់សិក្សា</td>
+							<td><?php echo $tr->translate("GRADE")?></td>
 							<td width="100px">
 								<input id="grade_group" name="grade_group" />
 							</td>
-
-							<td>បន្ទប់សិក្សា</td>
+							<td><?php echo $tr->translate("SEMESTER")?></td>
+							<td><input dojoType="dijit.form.ValidationTextBox" required="true" name="semester" value="" type="text"></td>
+							<td><?php echo $tr->translate("SESSION")?></td>
+							<td>
+								<select name="session_group" id="session_group" dojoType="dijit.form.FilteringSelect">
+									<?php if(!empty($this->rs_session)){ foreach ($this->rs_session as $row){?>
+										<option value="<?php echo $row['key_code'];?>"><?php echo $row['view_name']; ?></option>
+									<?php }}?>
+								</select>
+							</td>
+						</tr>
+						
+						<tr>
+							<td style="width: 5px"><?php echo $tr->translate("START_DATE")?></td>
+							<td><input dojoType="dijit.form.DateTextBox" name="start_date" id="start_date" onchange="setEndDate();" value="now" type="text"></td>
+							<td><?php echo $tr->translate("AMOUNT_MONTH")?></td>
+							<td><input dojoType="dijit.form.NumberTextBox"   name="amountmonth" id="amountmonth" value="" onkeyup="setEndDate();" type="text"></td>
+							<td style="width: 5px"><?php echo $tr->translate("END_DATE")?></td>
+							<td><input dojoType="dijit.form.DateTextBox" id="end_date" name="end_date" type="text" value="now" ></td>
+						</tr>
+						<tr>
+							<td><?php echo $tr->translate("ROOM_NAME")?></td>
 							<td>
 								<select name="room" id="room" dojoType="dijit.form.FilteringSelect" >
 									<?php if(!empty($this->room))foreach ($this->room as $row){?>
@@ -322,17 +320,7 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 									<?php }?>
 								</select>
 							</td>
-						</tr>
-						<tr>
-							<td style="width: 5px">ថ្ងែចាប់ផ្តើម</td>
-							<td><input dojoType="dijit.form.DateTextBox" name="start_date" id="start_date" onchange="setEndDate();" value="now" type="text"></td>
-							<td>AMOUNT_MONTH</td>
-							<td><input dojoType="dijit.form.NumberTextBox"   name="amountmonth" id="amountmonth" value="" onkeyup="setEndDate();" type="text"></td>
-							<td style="width: 5px">ថ្ងៃបញ្ចប់</td>
-							<td><input dojoType="dijit.form.DateTextBox" id="end_date" name="end_date" type="text" readonly="readonly" value="2016-01-29" ></td>
-						</tr>
-						<tr>
-							<td style="width: 5px">NOTE</td>
+							<td style="width: 5px"><?php echo $tr->translate("NOTE")?></td>
 							<td><input dojoType="dijit.form.TextBox"   name="note" value="" type="text"></td>
 						</tr>
 						<tr>
