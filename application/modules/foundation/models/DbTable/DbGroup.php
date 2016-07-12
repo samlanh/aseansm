@@ -196,6 +196,17 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 			$s_where[]="(SELECT	rms_view.name_en FROM rms_view WHERE rms_view.type = 4 AND rms_view.key_code = g.session) LIKE '%{$s_search}%'";
 			$where .=' AND ( '.implode(' OR ',$s_where).')';
 		}
+		
+		if(!empty($search['study_year'])){
+			$where.=' AND g.academic_year='.$search['study_year'];
+		}
+		if(!empty($search['grade'])){
+			$where.=' AND g.grade='.$search['grade'];
+		}
+		if(!empty($search['session'])){
+			$where.=' AND g.session='.$search['session'];
+		}
+		
 		return $db->fetchAll($sql.$where.$order);
 		
 		//return $db->fetchAll($sql);

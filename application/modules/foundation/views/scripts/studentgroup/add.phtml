@@ -1,6 +1,6 @@
 <?php
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-	echo $this->headTitle($tr->translate('STUDENT_GROUP')); 
+	echo $this->headTitle($tr->translate('ADD_STUDENT_GROUP')); 
 	$payment_term = $this->payment_term;
 	$rate = $this->rate;
 ?>	
@@ -211,16 +211,16 @@ $frm_set_price = $this->frm_set_charge;?>
 					
 							
 					<div align="center">
-						<a id="select-all" href="#">select all</a> <span style="font-size: 16px;"> | </span>
-						<a id="deselect-all" href="#">deselect all</a> <span style="font-size: 16px;"> | </span>
-						<a id="select-100" href="#">select 100 elems</a> <span style="font-size: 16px;"> | </span>
-						<a id="add-option" href="#">Add option</a> <span style="font-size: 16px;"> | </span>
-						<a id="refresh" href="#">refresh</a>
+						<a id="select-all" href="#"><span style="font-size: 15px;">select all</span></a> <span style="font-size: 16px;"> | </span>
+						<a id="select-100" href="#"><span style="font-size: 15px;">select 100 elems</span></a> <span style="font-size: 16px;"> | </span>
+						<a id="deselect-all" href="#"><span style="font-size: 15px;">deselect all</span></a> <span style="font-size: 16px;"> | </span>
+						<a id="refresh" href="#"><span style="font-size: 15px;">refresh</span></a>
 					</div>
 					<select multiple id="public-methods" name="public-methods[]">
-						<?php if(!empty($this->rs)) foreach($this->rs as $row){?>
+						<?php $no=0; if(!empty($this->rs)) foreach($this->rs as $row){ $no++;?>
 							<option value="<?php echo $row['stu_id'];?>">
-							<?php echo $row['stu_code']," ",$row['stu_enname']," ",$row['stu_khname']; ?></option>
+								<?php echo $no, ". " , $row['stu_code']," ",$row['stu_enname']," ",$row['stu_khname']; ?>
+							</option>
 						<?php }?>
 					</select>
 												
