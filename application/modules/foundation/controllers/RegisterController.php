@@ -17,6 +17,10 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 			else{
 				$search = array(
 						'adv_search' => '',
+						'study_year'=> '',
+						'grade'=> '',
+						'session'=> '',
+						'time'=> '',
 						'start_date'=> date('Y-m-d'),
 						'end_date'=>date('Y-m-d'));
 			}
@@ -33,8 +37,11 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 			Application_Form_FrmMessage::message("Application Error");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			echo $e->getMessage();
-		}		
-	
+		}	
+		$form=new Registrar_Form_FrmSearchInfor();
+		$form->FrmSearchRegister();
+		Application_Model_Decorator::removeAllDecorator($form);
+		$this->view->form_search=$form;
 	}
 	function addAction(){
 		$db = new Foundation_Model_DbTable_DbStudent();
