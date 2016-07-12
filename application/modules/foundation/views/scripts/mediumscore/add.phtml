@@ -77,8 +77,8 @@ dojo.ready(function(){
 		    	study_group=dijit.byId('study_group').get('value');
 		    	//document.getElementById("table_row").innerHTML = '';
 		    	getStudentAll();
-				  //  getStudent(study_group);
-			    getParentName();
+			   // getStudent(study_group);
+			    //getParentName();
 		    }
 		}, "study_group");
 		disableControll();
@@ -185,6 +185,7 @@ function getStudentByIdGroup(group_id){
 		},				    
 	   handleAs:"json", 
 	   load: function(data) {
+		   alert(data);
 		   tem="";
 	       if(data!=""){
 				num =0;

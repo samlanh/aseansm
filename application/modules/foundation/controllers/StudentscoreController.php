@@ -12,7 +12,7 @@ class Foundation_StudentscoreController extends Zend_Controller_Action {
 	}
 	public function indexAction(){
 		try{
-			$db = new Global_Model_DbTable_DbHomeWorkScore();
+			$db = new Kindergarten_Model_DbTable_DbKindergartenScore();
 			$this->view->g_all_name=$db->getGroupSearch();
 			if($this->getRequest()->isPost()){
 				$_data=$this->getRequest()->getPost();
@@ -33,7 +33,7 @@ class Foundation_StudentscoreController extends Zend_Controller_Action {
 			$list = new Application_Form_Frmtable();
 			$collumns = array( "STUDENT_GROUP","STUDY_YEAR","SESSION","SUBJECT","TERM","STATUS");
 			$link=array(
-					'module'=>'global','controller'=>'studentscore','action'=>'edit',
+					'module'=>'kindergarten','controller'=>'studentscores','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs,array('student_no'=>$link,'student_id'=>$link,'academic_id'=>$link,'session_id'=>$link,'group_id'=>$link));
 	
@@ -45,28 +45,27 @@ class Foundation_StudentscoreController extends Zend_Controller_Action {
 		
 	}
 public	function addAction(){
-			if($this->getRequest()->isPost()){
-				$_data = $this->getRequest()->getPost();
-				$_model = new Global_Model_DbTable_DbHomeWorkScore();
-				try {
-					if(isset($_data['save_new'])){
+		if($this->getRequest()->isPost()){
+			$_data = $this->getRequest()->getPost();
+			$_model = new Kindergarten_Model_DbTable_DbKindergartenScore();
+			try {
+				if(isset($_data['save_new'])){
 						$rs =  $_model->addStudentHomworkScore($_data);
-						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/global/studentscore/add");
+						 Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscore/add");
 					}else {
 						$rs =  $_model->addStudentHomworkScore($_data);
-						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/global/studentscore");
+						 Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscore");
 					}
-					Application_Form_FrmMessage::message("INSERT_SUCCESS");
-						
-				}catch(Exception $e){
-					Application_Form_FrmMessage::message("INSERT_FAIL");
-					Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
-				}
-			} 
+		
+			}catch(Exception $e){
+				Application_Form_FrmMessage::message("INSERT_FAIL");
+				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+			}
+		}
 		$model = new Application_Model_DbTable_DbGlobal();
 		$this->view->payment_term = $model->getAllPaymentTerm(null,1);
 		$db_subjec=new Global_Model_DbTable_DbStudentScore();
-		$this->view->rows_parent=$db_subjec->getParentName();
+		//$this->view->rows_parent=$db_subjec->getParentName();
 		//$dbs=$this->view->row_years=$db_subjec->getStudyYears();
 		$this->view->rows_group=$db_subjec->getGroupAll();
 		$db_years=new Registrar_Model_DbTable_DbRegister();
@@ -74,20 +73,29 @@ public	function addAction(){
 		$this->view->row_year=$db_homwork->getAllYears();
 		$db_session=new Application_Model_DbTable_DbGlobal();
 		$this->view->row_sesion=$db_session->getSession();
+		//get subject id
+		$this->view->rows_sub=$db_homwork->getSubjectId();
 		//print_r($dbs);exit();
+		
+ 
+		$db_homwork=new Global_Model_DbTable_DbHomeWorkScore();
+		$this->view->rows_sub=$db_homwork->getSubjectId();
+		$this->view->rows_parent=$db_homwork->getParent();
+		 
 	}
 	
 	public	function editAction(){
 		$id=$this->getRequest()->getParam('id');
 		if($this->getRequest()->isPost()){
 			$_data = $this->getRequest()->getPost();
-			$_model = new Global_Model_DbTable_DbHomeWorkScore();
+			$_data['score_id']=$id;
+			$_model = new Kindergarten_Model_DbTable_DbKindergartenScore();
 			try {
-				if(isset($_data['save_close'])){ 
-					$_data['score_id']=$id;
-					$rs =  $_model->updateStudentHomworkScore($_data);
-					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/global/studentscore");
-				}
+				if(isset($_data['save_close'])){
+						$rs =  $_model->updateStudentHomworkScore($_data);
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentscore");
+					} 
+		
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
@@ -102,11 +110,21 @@ public	function addAction(){
 		$db_years=new Registrar_Model_DbTable_DbRegister();
 		$db_homwork=new Global_Model_DbTable_DbHomeWorkScore();
 		$this->view->row_year=$db_homwork->getAllYears();
-		$this->view->row_home=$db_homwork->getHomeWorkScoreById($id);
-		$this->view->row_detial=$db_homwork->getHomeWorkDetailScoreById($id);
-		//print_r($dbs);exit();
 		$db_session=new Application_Model_DbTable_DbGlobal();
 		$this->view->row_sesion=$db_session->getSession();
+		//get subject id
+		$this->view->rows_sub=$db_homwork->getSubjectId();
+		//print_r($dbs);exit();
+		
+ 
+		//$db_homwork=new Global_Model_DbTable_DbHomeWorkScore();
+		$this->view->rows_sub=$db_homwork->getSubjectId();
+		$this->view->rows_parent=$db_homwork->getParent();
+		//get id fore update 
+		$db=new Foundation_Model_DbTable_DbHomeWorkScore();
+		$this->view->row_g=$db->getGroupStudent($id);
+		$this->view->rows_scor=$db->getScoreStudents($id);
+		$data=$this->view->rows_detail=$db->getSubjectById($id);
 	}
 	
 	function addoldAction(){
@@ -184,6 +202,7 @@ public	function addAction(){
 			$data = $this->getRequest()->getPost();
 			$_dbmodel = new Global_Model_DbTable_DbHomeWorkScore();
 			$data=$_dbmodel->getParentNameByGroupId($data['group_id']);
+			$this->view->row_parent=$data;
 			print_r(Zend_Json::encode($data));
 			exit();
 		}
