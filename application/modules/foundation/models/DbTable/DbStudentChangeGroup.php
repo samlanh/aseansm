@@ -11,7 +11,7 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 	
 	public function getAllStudentID(){
 		$_db = $this->getAdapter();
-		$sql = "SELECT st.stu_id,st.stu_code FROM `rms_student` as st,rms_group_detail_student as gds where gds.is_pass=0 and gds.stu_id=st.stu_id and st.degree IN(2,3,4) group by gds.stu_id";
+		$sql = "SELECT st.stu_id,st.stu_code FROM `rms_student` as st,rms_group_detail_student as gds where gds.is_pass=0 and gds.stu_id=st.stu_id and is_setgroup=1 and st.is_subspend=0 and st.status=1 and st.degree IN(2,3,4) group by gds.stu_id";
 		$orderby = " ORDER BY stu_code ";
 		return $_db->fetchAll($sql.$orderby);		
 	}
@@ -26,13 +26,13 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 	
 	public function selectAllStudentChangeGroup($search){
 		$_db = $this->getAdapter();
-		$sql = "SELECT id,(SELECT stu_code FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id`) AS code,
+		$sql = "SELECT rms_student_change_group.id,(SELECT stu_code FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id`) AS code,
 		(SELECT stu_khname FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id`) AS kh_name,
 		(SELECT stu_enname FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id`) AS en_name,
 		(SELECT name_kh FROM `rms_view` WHERE `rms_view`.`type`=2 and `rms_view`.`key_code`=(SELECT sex FROM `rms_student` WHERE `rms_student`.`stu_id`=`rms_student_change_group`.`stu_id` limit 1))AS sex,
 		(select group_code from rms_group where rms_group.id = rms_student_change_group.from_group limit 1)AS from_group,
 		(select group_code from rms_group where rms_group.id = rms_student_change_group.to_group limit 1)AS to_group,
-		moving_date,note from `rms_student_change_group`,rms_student where rms_student_change_group.stu_id=rms_student.stu_id and rms_student.is_subspend=0 and rms_student.degree IN (2,3,4) ";
+		moving_date,rms_student_change_group.note from `rms_student_change_group`,rms_student,rms_group where rms_student_change_group.from_group=rms_group.id and rms_student_change_group.stu_id=rms_student.stu_id and rms_student.is_subspend=0 and rms_group.degree IN(2,3,4) ";
 		$order_by=" order by id DESC";
 		$where='';
 		
@@ -62,8 +62,17 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 		return $db->fetchRow($sql);
 	}
 	
+	public function getDegreeAndGradeToGroup($to_group){
+		$db = $this->getAdapter();
+		$sql = "SELECT academic_year,degree,grade,session FROM rms_group WHERE id =".$to_group;
+		return $db->fetchRow($sql);
+	}
+	
 	
 	public function addStudentChangeGroup($_data){
+		
+			$test = $this->getDegreeAndGradeToGroup($_data['to_group']);
+			//print_r($test);exit();
 			try{	
 				$_db= $this->getAdapter();
 				$stu_id=$_data['studentid'];
@@ -87,6 +96,26 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 				
 				$this->update($arr, $where);
 				
+				$this->_name='rms_student';
+				
+				if($test['degree']==1){
+					$stu_type=3;
+				}else if($test['degree']==2 || $test['degree']==3 || $test['degree']==4){
+					$stu_type=1;
+				}else if($test['degree']>4){
+					$stu_type=2;
+				}
+				
+				$array = array(
+							'academic_year'=>$test['academic_year'],
+							'degree'=>$test['degree'],
+							'grade'=>$test['grade'],
+							'session'=>$test['session'],
+							'stu_type'=>$stu_type,
+						);
+				$where = " stu_id=".$_data['studentid'];
+				$this->update($array, $where);
+				
 			}catch(Exception $e){
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
@@ -94,6 +123,9 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 	public function updateStudentChangeGroup($_data){
 // 		print_r($_data);exit();
 		try{	
+			
+			$test = $this->getDegreeAndGradeToGroup($_data['to_group']);
+			
 			$stu_id=$_data['studentid'];
 			$_arr=array(
 						'user_id'=>$this->getUserId(),
@@ -116,6 +148,28 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 			$where="stu_id=".$stu_id." and is_pass=0";
 			
 			$this->update($arr, $where);
+			
+			$this->_name='rms_student';
+			
+			if($test['degree']==1){
+				$stu_type=3;
+			}else if($test['degree']==2 || $test['degree']==3 || $test['degree']==4){
+				$stu_type=1;
+			}else if($test['degree']>4){
+				$stu_type=2;
+			}
+			
+			$array = array(
+					'academic_year'=>$test['academic_year'],
+					'degree'=>$test['degree'],
+					'grade'=>$test['grade'],
+					'session'=>$test['session'],
+					'stu_type'=>$stu_type,
+			);
+			$where = " stu_id=".$_data['studentid'];
+			$this->update($array, $where);
+			
+			
 			
 		}catch(Exception $e){
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());

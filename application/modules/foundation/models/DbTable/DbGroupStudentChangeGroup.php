@@ -130,11 +130,21 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 					$group_detail = $this->getGroupDetail($_data['to_group']);
 					$idss=explode(',', $_data['identity']);
 					foreach ($idss as $j){
+						
+						if($group_detail['degree']==1){
+							$stu_type=3;
+						}else if($group_detail['degree']== 2 || $group_detail['degree']== 3 || $group_detail['degree']== 4){
+							$stu_type=1;
+						}else if($group_detail['degree'] > 4){
+							$stu_type=2;
+						}
+						
 						$array=array(
 								'session'		=>$group_detail['session'],
 								'degree'		=>$group_detail['degree'],
 								'grade'			=>$group_detail['grade'],
 								'academic_year'	=>$group_detail['academic_year'],
+								'stu_type'		=>$stu_type,
 								);
 						$where = " stu_id=".$_data['stu_id_'.$j];
 						$this->update($array, $where);
