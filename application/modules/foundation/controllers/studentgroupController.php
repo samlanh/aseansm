@@ -34,6 +34,10 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 					'module'=>'foundation','controller'=>'studentgroup','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs,array('group_code'=>$link,'room_name'=>$link));
+			$form=new Registrar_Form_FrmSearchInfor();
+			$form->FrmSearchRegister();
+			Application_Model_Decorator::removeAllDecorator($form);
+			$this->view->form_search=$form;
 	}
 	function addAction(){
 		$db = new 	Foundation_Model_DbTable_DbStudent();
