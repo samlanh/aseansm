@@ -49,14 +49,12 @@ public	function addAction(){
 			$_data = $this->getRequest()->getPost();
 			$_model = new Foundation_Model_DbTable_DbMediumStudentScore();
 			try {
+				  $rs =  $_model->addStudentHomworkScore($_data);
 				if(isset($_data['save_new'])){
-						$rs =  $_model->addStudentHomworkScore($_data);
-						 Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/mediumscore/add");
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/mediumscore/add");
 					}else {
-						$rs =  $_model->addStudentHomworkScore($_data);
-						 Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/mediumscore");
-					}
-		
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/mediumscore");
+				}
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());

@@ -30,25 +30,20 @@ class Foundation_Model_DbTable_DbMediumStudentScore extends Zend_Db_Table_Abstra
 					'academic_id'=>$_data['year_study'],
 					'session_id'=>$_data['session'],
 					'group_id'=>$_data['study_group'],
+					'reportdate'=>$_data['reportdate'],
+					'date_input'=>date("Y-m-d"),
 					'term_id'=>$_data['term'],
 					'status'=>$_data['status'],
     		        'user_id'=>$this->getUserId()
 			);
-// 			$db->getProfiler()->setEnabled(true);
 			$id=$this->insert($_arr);
-// 			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-// 			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-// 			$db->getProfiler()->setEnabled(false);
 			if(!empty($_data['identity'])){
 				$ids = explode(',', $_data['identity']);
-				//print_r($ids);exit();
 				if(!empty($ids))foreach ($ids as $i){
-					//foreach ($ids as $rs){
-						
-						foreach ($db_sub->getParent() as $rs_parent){
+					foreach ($db_sub->getParent() as $rs_parent){
 									$parent_name = str_replace(' ','',$rs_parent["subject_titleen"]);
 									$parent_id = $rs_parent['id'];
-								//	echo $rs_parent["sub_name"];
+								if($_data["$parent_name".$i]==''){
 									$arr=array(
 											'score_id'=>$id,
 											'student_id'=>$_data['stu_id_'.$i],
@@ -59,19 +54,15 @@ class Foundation_Model_DbTable_DbMediumStudentScore extends Zend_Db_Table_Abstra
 											'is_parent'=> $rs_parent["is_parent"]
 									);
 									$this->_name='rms_score_detail';
-								//	$db->getProfiler()->setEnabled(true);
 									$this->insert($arr);
-// 									Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-// 									Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-// 									$db->getProfiler()->setEnabled(false);
-						}
-						 //echo 'student_id'.$_data['stu_id_'.$i]."<hr />";
+								}
+					}
 				}
 			}
-  			//exit();
 		  $db->commit();
 		}catch (Exception $e){
 			$db->rollBack();
+			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
    }
    public function updateStudentHomworkScore($_data){
