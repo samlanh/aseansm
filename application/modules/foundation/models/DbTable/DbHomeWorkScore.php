@@ -376,7 +376,7 @@ class Foundation_Model_DbTable_DbHomeWorkScore extends Zend_Db_Table_Abstract
 	}
 	function getGroupStudent($id){
 		$db=$this->getAdapter();
-		$sql="SELECT id,academic_id,session_id,group_id,term_id FROM rms_score WHERE id=$id LIMIT 1";
+		$sql="SELECT id,academic_id,session_id,group_id,term_id,status,reportdate FROM rms_score WHERE id=$id LIMIT 1";
 		return $db->fetchRow($sql);
 	}
 	function getScoreStudents($id){

@@ -21,7 +21,6 @@ class Foundation_Model_DbTable_DbMediumStudentScore extends Zend_Db_Table_Abstra
     }
     
 	public function addStudentHomworkScore($_data){
-		// print_r($_data);exit();
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		$db_sub = new Global_Model_DbTable_DbHomeWorkScore();
@@ -37,13 +36,15 @@ class Foundation_Model_DbTable_DbMediumStudentScore extends Zend_Db_Table_Abstra
     		        'user_id'=>$this->getUserId()
 			);
 			$id=$this->insert($_arr);
+			//print_r($_data);exit();
 			if(!empty($_data['identity'])){
 				$ids = explode(',', $_data['identity']);
 				if(!empty($ids))foreach ($ids as $i){
 					foreach ($db_sub->getParent() as $rs_parent){
 									$parent_name = str_replace(' ','',$rs_parent["subject_titleen"]);
 									$parent_id = $rs_parent['id'];
-								if($_data["$parent_name".$i]==''){
+// 									echo $rs_parent["is_parent"];exit();
+								if(!$_data["$parent_name".$i]==''){
 									$arr=array(
 											'score_id'=>$id,
 											'student_id'=>$_data['stu_id_'.$i],
@@ -53,6 +54,7 @@ class Foundation_Model_DbTable_DbMediumStudentScore extends Zend_Db_Table_Abstra
 											'user_id'=>$this->getUserId(),
 											'is_parent'=> $rs_parent["is_parent"]
 									);
+									
 									$this->_name='rms_score_detail';
 									$this->insert($arr);
 								}
@@ -75,22 +77,18 @@ class Foundation_Model_DbTable_DbMediumStudentScore extends Zend_Db_Table_Abstra
 					'academic_id'=>$_data['year_study'],
 					'session_id'=>$_data['session'],
 					'group_id'=>$_data['study_group'],
+					'reportdate'=>$_data['reportdate'],
+					'date_input'=>date("Y-m-d"),
 					'term_id'=>$_data['term'],
 					'status'=>$_data['status'],
-    		        'user_id'=>$this->getUserId()
+					'user_id'=>$this->getUserId()
 			);
+			
 			$where="id=".$_data['score_id'];
-// 			$db->getProfiler()->setEnabled(true);
 			$id=$this->update($_arr, $where);
-// 			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-// 			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-// 			$db->getProfiler()->setEnabled(false);
-		   ///delect score_detail
 		   $this->_name='rms_score_detail';
 		   $this->delete("score_id=".$_data['score_id']);
-// 		   Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-// 		   Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-// 		   $db->getProfiler()->setEnabled(false);
+		   
 			if(!empty($_data['identity'])){
 				$ids = explode(',', $_data['identity']);
 				if(!empty($ids))foreach ($ids as $i){
@@ -110,17 +108,13 @@ class Foundation_Model_DbTable_DbMediumStudentScore extends Zend_Db_Table_Abstra
 									$this->_name='rms_score_detail';
 // 									$db->getProfiler()->setEnabled(true);
 									$this->insert($arr);
-// 									Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
-// 									Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
-// 									$db->getProfiler()->setEnabled(false);
 						}
-						 echo 'student_id'.$_data['stu_id_'.$i]."<hr />";
 				}
 			}
-			//exit();
 		  $db->commit();
 		}catch (Exception $e){
 			$db->rollBack();
+			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
    }
 	public function getSubexamById($id){
@@ -165,17 +159,45 @@ class Foundation_Model_DbTable_DbMediumStudentScore extends Zend_Db_Table_Abstra
 	}
 	function getAllHoweWorkScore($search=null){
 		$db=$this->getAdapter();
-		$sql="SELECT s.id,(SELECT group_code FROM rms_group WHERE id=s.group_id ) AS  group_id,
-	           (SELECT CONCAT(from_academic,'-',to_academic,'(',generation,')') FROM rms_tuitionfee AS f WHERE id=s.academic_id AND `status`=1 GROUP BY from_academic,to_academic,generation) AS academic_id,
+		$sql="SELECT s.id,
+		(SELECT CONCAT(from_academic,'-',to_academic,'(',generation,')') FROM rms_tuitionfee AS f WHERE id=s.academic_id AND `status`=1 GROUP BY from_academic,to_academic,generation) AS academic_id,
+		       (SELECT group_code FROM rms_group WHERE id=s.group_id ) AS  group_id,
+		       (SELECT group_code FROM rms_group WHERE id=s.group_id ) AS  group_id,
+	           (SELECT major_enname FROM `rms_major` WHERE major_id=g.grade) AS grade_name,
 		       (SELECT CONCAT(name_en ,'-',name_kh ) FROM rms_view WHERE `type`=4 AND rms_view.key_code=s.session_id) AS session_id,
-		        (SELECT CONCAT(subject_titleen,' - ',subject_titlekh) FROM rms_subject WHERE id=s.subject_id ) AS subject_id,
-		        s.term_id,s.status
+		        s.term_id,s.reportdate,
+		        s.status
 		        FROM rms_score AS s,rms_group AS g WHERE s.status=1  AND s.group_id=g.id AND g.degree IN(3,4)";
 		$where ='';
+		
+		$from_date =(empty($search['start_date']))? '1': " s.reportdate >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " s.reportdate <= '".$search['end_date']." 23:59:59'";
+		$where = " AND ".$from_date." AND ".$to_date;
+		
+		if(!empty($search['adv_search'])){
+			$s_where=array();
+			$s_search=addslashes(trim($search['adv_search']));
+			$s_where[]= " g.group_code LIKE '%{$s_search}%'";
+			$where.=' AND ('.implode(' OR ', $s_where).')';
+		}
+		
 		if(!empty($search['group_name'])){
 			$where.= " AND s.group_id=".$search['group_name'];
 		}
+		if(!empty($search['study_year'])){
+			$where.= " AND g.academic_year=".$search['study_year'];
+		}
+		if(!empty($search['grade'])){
+			$where.= " AND g.grade=".$search['grade'];
+		}
+		if(!empty($search['session'])){
+			$where.= " AND g.session=".$search['session'];
+		}
+// 		if(!empty($search['time'])){
+// 			$where.= " AND s.group_id=".$search['time'];
+// 		}
 		$order=" ORDER BY id DESC ";
+// 		echo $sql.$where.$order;
 		return $db->fetchAll($sql.$where.$order);
 	}
 	function getAllHoweWorkScoreOld(){

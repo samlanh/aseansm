@@ -3,52 +3,32 @@
 	echo $this->headTitle($tr->translate("ADD_SCORE"));
 	$row_sub=$this->rows_sub;
   	$core_id= $this->row_score;
-	//print_r($this->rows_scor);
-	 $score = $this->rows_detail;
-	//print_r($this->row_g);
-	 
+	$score = $this->rows_detail;
 ?>	
 <head>
   <meta charset="utf-8">
-  <title>jQuery UI Accordion - Default functionality</title>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-  <link rel="stylesheet" href="/resources/demos/style.css">
 </head>
-
 <?php
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-	//echo $this->headTitle($tr->translate('ADD_FEE')); 
 	$payment_term = $this->payment_term;
 	$rs_sub=$this->rows_sub;
-	
 ?>	
-
 <script>
 dojo.require("dojo.NodeList-manipulate");
-dojo.require("dojo.parser");
 dojo.require("dijit.layout.AccordionContainer");
 dojo.require("dijit.layout.ContentPane");
 dojo.require("dijit.form.NumberTextBox");
 dojo.require("dijit.form.DateTextBox");
 dojo.require("dojo.data.ItemFileWriteStore");  
-dojo.require("dijit.form.DateTextBox");
+dojo.require('dojox.form.BusyButton');
 </script>
 <style>
-select{ width:100%;}
-fieldset{  background:none;}
-table tr.head-title{ background: none repeat scroll 0% 0% rgba(213, 249, 244, 1); padding:2px;}
-table tr td.null-border{ background: #fff; border-left:none !important;}
-table .set-style td,table .set-style th{ padding: 0px; border:1px solid #ccc;font-size: 12px;}
-table .set-style tr.st1{ background: none repeat scroll 0% 0% rgba(218, 250, 255, 1);}
+
 </style>
 <script type="text/javascript">
-dojo.require("dojo.data.ObjectStore");
-dojo.require("dojo.data.ItemFileWriteStore");  
-dojo.require("dojo.store.Memory");
-dojo.require("dojo.data.ObjectStore");
-dojo.require('dojox.form.BusyButton');
 dojo.ready(function(){
 	//control study year
 		var years_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->row_year));?> );
@@ -56,13 +36,13 @@ dojo.ready(function(){
 		    store:years_store,
 		    autoComplete: true,                        
 		    required: true,
+		    value:'<?php echo $this->row_g['academic_id']?>',
 		    id: "year_study",
 		    name: "year_study",           
 		    class: 'fullside',  
 		    required:'true',
 		    placeHolder:"Selected Study Years",          
 		    onChange: function() {  
-			   
 		    	getGroupName();
 		    }
 		}, "year_study");
@@ -73,25 +53,19 @@ dojo.ready(function(){
 		    autoComplete: true,                        
 		    required: true,
 		    id: "study_group",
-		    name: "study_group",           
+		    name: "study_group",   
+		    value:"<?php echo $this->row_g['group_id']?>",
 		    class: 'fullside',  
 		    required:'',
 		    placeHolder:"Selected Study Group",          
 		    onChange: function() {  
 		    	study_group=dijit.byId('study_group').get('value');
-		    	//document.getElementById("table_row").innerHTML = '';
 		    	getStudentAll();
-				  //  getStudent(study_group);
-				  //oldStudentScore();
 			    getParentName();
 		    }
 		}, "study_group");
 
 		 var metion = '<?php //echo $this->all_metion; ?>';
-		 dijit.byId('year_study').attr('value','<?php echo $this->row_g['academic_id']?>');
-		 dijit.byId('session').attr('value','<?php echo $this->row_g['term_id']?>');
-		 dijit.byId('study_group').attr('value','<?php echo $this->row_g['group_id']?>');
-		 dijit.byId('term').attr('value','<?php echo $this->row_g['term_id']?>');
 		 
 	});
  
@@ -326,7 +300,7 @@ function gender(sex){
 							<td>
 								<select dojoType="dijit.form.FilteringSelect" required="true"  class="fullside"  id="session" name="session" type="text" onChange="getGroupName();">
 								  <?php if(!empty($this->row_sesion)) foreach($this->row_sesion As $rs_sesion){?>
-									<option value="<?php echo $rs_sesion['key_code']?>"><?php echo  $rs_sesion['view_name'];?></option>
+									<option value="<?php $rs_sesion['key_code']?>" <?php if($this->row_g['session_id']==$rs_sesion['key_code']){ echo "selected='selected'";} ?>><?php echo  $rs_sesion['view_name'];?></option>
 								  <?php }?> 
 								</select>
 							</td>
@@ -342,19 +316,19 @@ function gender(sex){
 							<td align="center">
 								<select dojoType="dijit.form.FilteringSelect" required="true"  class="fullside"  id="term" name="term" type="text">
 									<?php for($i=1;$i<=6;$i++){?>
-									<option value="<?php echo $i;?>"><?php echo $i;?></option>
+									<option value="<?php echo $i;?>" <?php if($i == $this->row_g['term_id']){echo"selected='selected'"; }?>><?php echo $i;?></option>
 									<?php }?>
 								</select>
 							</td>
+							<td><?php echo $tr->translate("Monthly Report");?></td>
+							<td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="reportdate" name="reportdate" type="text" value="<?php echo date("Y-m-d",strtotime($this->row_g['reportdate']));?>">	</td>
 						    <td style="white-space: nowrap;text-align: right;"><?php echo $tr->translate("STATUS");?></td>
 							<td>
 								<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside" id="status" name="status" type="text">								
-										<option value="1">ប្រើប្រាស់</option>
-										<option value="0">មិនប្រើប្រាស់</option>
+										<option value="1" <?php if($this->row_g['status']==1){echo "selected='selected'";}?>>ប្រើប្រាស់</option>
+										<option value="0" <?php if($this->row_g['status']==0){echo "selected='selected'";}?>>មិនប្រើប្រាស់</option>
 								</select>
 							</td>	
-							<td></td>
-							<td></td>
 						</tr>
 						<tr>
 							<td colspan="8">
@@ -384,7 +358,6 @@ function gender(sex){
 							         </table>
 								</td>
 							</tr>
-							 
 						</thead>
 						<tfoot>
 							<tr>

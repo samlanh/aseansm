@@ -15,23 +15,27 @@ class Foundation_MediumscoreController extends Zend_Controller_Action {
 			$db = new Foundation_Model_DbTable_DbMediumStudentScore();
 			$this->view->g_all_name=$db->getGroupSearch();
 			if($this->getRequest()->isPost()){
-				$_data=$this->getRequest()->getPost();
-				$this->view->g_name=$_data;
-				$search = array(
-						'group_name' => $_data['group_name'],
-						);
+				$search=$this->getRequest()->getPost();
 			}
 			else{
 				$search = array(
-						'group_name' => ''
+						'adv_search'=>'',
+						'group_name' => '',
+						'study_year' => '',
+						'grade' => '',
+						'session' => '',
+						'time' => '',
+						'start_date'=> date('Y-m-d'),
+						'end_date'=>date('Y-m-d')
 						);
 			}
+			
 			$rs_rows = $db->getAllHoweWorkScore($search);
 			$glClass = new Application_Model_GlobalClass();
 			$rs = $glClass->getImgActive($rs_rows, BASE_URL, true);
 			//$rs = $glClass->getSession($rs_rows,BASE_URL, true);
 			$list = new Application_Form_Frmtable();
-			$collumns = array( "STUDENT_GROUP","STUDY_YEAR","SESSION","SUBJECT","TERM","STATUS");
+			$collumns = array( "STUDENT_GROUP","STUDY_YEAR","GRADE","SESSION","TERM","REPORTDATE","STATUS");
 			$link=array(
 					'module'=>'foundation','controller'=>'mediumscore','action'=>'edit',
 			);
@@ -41,8 +45,11 @@ class Foundation_MediumscoreController extends Zend_Controller_Action {
 			Application_Form_FrmMessage::message("Application Error");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
-		
-		
+		$form=new Registrar_Form_FrmSearchInfor();
+		$form->FrmSearchRegister();
+		Application_Model_Decorator::removeAllDecorator($form);
+		$this->view->form_search=$form;
+		$this->view->adv_search=$search;
 	}
 public	function addAction(){
 		if($this->getRequest()->isPost()){

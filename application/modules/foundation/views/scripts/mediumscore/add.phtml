@@ -300,7 +300,6 @@ function gender(sex){
 </table>	
 </form>
 <?php $frm_dept = $this->add_dept;?>
-
 <script type="text/javascript">
 function showPopupDept() {
 	if(dijit.byId('faculty').value==-1){
@@ -322,54 +321,5 @@ function ResetRecordRecord() {
 			deleteRecord(arrays[i]);
 		}
 	}
-}
-
-var url_get_faculty ='<?php echo $this->url(array('module'=>'global','controller'=>'globals','action'=>'getfaculty-option')); ?>';
-function getAllFucaltyOption(f_id){                                                                      
-	dojo.xhrPost({
-		url: url_get_faculty,				    
-		handleAs:"json", 
-		load: function(response){
-			//alert(response.option);
-			dojo.html.set(dojo.byId("lbl_metion"+r_index),'',{
-			     parseContent: true});
-			faculty=response.option;
-			    select='<select class="full" dojoType="dijit.form.FilteringSelect" name="metion'+r_index+'" id="metion'+r_index+'" >'+faculty+'</select>';
-				dojo.html.set(dojo.byId("lbl_metion"+r_index),select, {
-				     parseContent: true
-				});
-				dijit.byId("metion"+r_index).attr( 'value',f_id);
-				alert('<?php echo $tr->translate("INSERT_SUCCESS"); ?>');
-				//dijit.byId('frm_service').reset();
-		},error:function(err){
-			alert(err);
-		}
-	});
-}
-
- 
-//////bong 
-function getSubjectByParent(){
-	temp="";
-	 
-	dojo.xhrPost({
-		url:url_getSubject,
-		content:{
-			'parent_id':parent_id
-			},
-		handleAs:"json",
-		load: function(data) {
-			array = data.length;
-			for(var k=0;k<data.length;k++) {
-				temp+='<th>'+data[k].name+'</th>';
-				tem+='<td>&nbsp;<input style="width:240px;padding-left:10px;" dojoType="dijit.form.TextBox" class="fullside" name="note_'+k+'" id="note_'+k+'" value="" type="text"></td>';
-			}
-		//	document.getElementById('sub_subject').innerHTML = temp;
-			document.getElementById('text_score').innerHTML = tem;
-		},
-		error: function(err) {
-			 //alert(err);
-		}
-	});
 }
 </script>
