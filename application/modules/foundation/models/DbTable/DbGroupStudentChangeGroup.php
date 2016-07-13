@@ -25,31 +25,28 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 		return $db->fetchAll($sql);
 	}
 	
-	
-	
 	public function selectAllStudentChangeGroup($search){
 		$_db = $this->getAdapter();
 		$sql = "SELECT rms_group_student_change_group.id,(select group_code from rms_group where rms_group.id=rms_group_student_change_group.from_group) as group_code,
+				(SELECT CONCAT(from_academic,'-',to_academic,'(',generation,')') FROM rms_tuitionfee WHERE rms_tuitionfee.id=(select academic_year from rms_group where rms_group.id=rms_group_student_change_group.from_group)) AS academic,
 				(select major_enname from rms_major where rms_major.major_id=(select grade from rms_group where rms_group.id=rms_group_student_change_group.from_group) limit 1) as grade,
 				(select name_en from rms_view where rms_view.type=4 and rms_view.key_code=(select session from rms_group where rms_group.id=rms_group_student_change_group.from_group) limit 1 ) as session,
 				
-				
 				(select group_code from rms_group where rms_group.id=rms_group_student_change_group.to_group) as to_group_code,
+				(SELECT CONCAT(from_academic,'-',to_academic,'(',generation,')') FROM rms_tuitionfee WHERE rms_tuitionfee.id=(select academic_year from rms_group where rms_group.id=rms_group_student_change_group.to_group)) AS to_academic,
 				(select major_enname from rms_major where rms_major.major_id=(select grade from rms_group where rms_group.id=rms_group_student_change_group.to_group) limit 1) as to_grade,
 				(select name_en from rms_view where rms_view.type=4 and rms_view.key_code=(select session from rms_group where rms_group.id=rms_group_student_change_group.to_group) limit 1 ) as to_session,
 				
 				moving_date,rms_group_student_change_group.note
-		
 				FROM `rms_group_student_change_group`,rms_group where rms_group.id=rms_group_student_change_group.from_group and rms_group.degree IN (2,3,4)";
-		
 		$order_by=" order by id DESC";
 		$where=" ";
 		if(empty($search)){
 			return $_db->fetchAll($sql.$order_by);
 		}
-		if(!empty($search['txtsearch'])){
+		if(!empty($search['adv_search'])){
 			$s_where = array();
-			$s_search = addslashes(trim($search['txtsearch']));
+			$s_search = addslashes(trim($search['adv_search']));
 			$s_where[] = " (select group_code from rms_group where rms_group.id=rms_group_student_change_group.from_group limit 1) LIKE '%{$s_search}%'";
 			$s_where[] = " (select group_code from rms_group where rms_group.id=rms_group_student_change_group.to_group limit 1) LIKE '%{$s_search}%'";
 			$s_where[] = " (SELECT major_enname FROM rms_major WHERE rms_major.major_id=(select grade from rms_group where rms_group.id=
@@ -61,15 +58,15 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 							rms_group_student_change_group.to_group limit 1)) LIKE '%{$s_search}%'";
 			$s_where[] = " (SELECT name_en FROM rms_view WHERE rms_view.type=4 and key_code=(select session from rms_group where rms_group.id=
 							rms_group_student_change_group.from_group limit 1)) LIKE '%{$s_search}%'";
-			
-			//$s_where[] = " en_name LIKE '%{$s_search}%'";
 			$where .=' AND ( '.implode(' OR ',$s_where).')';
 		}
+// 		if(!empty($search['study_year'])){
+// 			//$where.=' AND (select academic_year from rms_group where rms_group.id=rms_group_student_change_group.from_group limit 1) like '.$search['study_year'].' and (select academic_year from rms_group where rms_group.id=rms_group_student_change_group.to_group limit 1) like '.$search['study_year'].'';
+// 			$where.=' AND (select academic_year from rms_group where rms_group.id=rms_group_student_change_group.from_group)='.$search['study_year'];
+// 		}
 		
 		return $_db->fetchAll($sql.$where.$order_by);
-// 		(select name_kh from `rms_view` where `rms_view`.`type`=6 and `rms_view`.`key_code`=`rms_student_change_group`.`status`)AS status
 	}
-	
 	public function getAllGroupStudentChangeGroupById($id){
 		$db = $this->getAdapter();
 		$sql = "SELECT * FROM rms_group_student_change_group WHERE id =".$id;
@@ -236,7 +233,12 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 		return $db->fetchRow($sql);
 	}
 	
-	
+	function getAllYears(){
+		$db = $this->getAdapter();
+		$sql = "SELECT id,CONCAT(from_academic,'-',to_academic,'(',generation,')') AS years FROM rms_tuitionfee WHERE `status`=1 ";
+		$order=' ORDER BY id DESC';
+		return $db->fetchAll($sql.$order);
+	}
 	
 	
 	
