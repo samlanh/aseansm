@@ -12,19 +12,21 @@ class Foundation_StudentscoreController extends Zend_Controller_Action {
 	}
 	public function indexAction(){
 		try{
-			$db = new Kindergarten_Model_DbTable_DbKindergartenScore();
+			$db = new Foundation_Model_DbTable_DbStudentScore();
 			$this->view->g_all_name=$db->getGroupSearch();
 			if($this->getRequest()->isPost()){
-				$_data=$this->getRequest()->getPost();
-				$this->view->g_name=$_data;
-				$search = array(
-						'group_name' => $_data['group_name'],
-						);
+				$search=$this->getRequest()->getPost();
+				$this->view->g_name=$search;
 			}
 			else{
 				$search = array(
-						'group_name' => ''
-						);
+						'group_name' => '',
+						'study_year'=> '',
+						'grade'=> '',
+						'session'=> '',
+						'time'=> '',
+						'start_date'=> date('Y-m-d'),
+						'end_date'=>date('Y-m-d'));
 			}
 			$rs_rows = $db->getAllHoweWorkScore($search);
 			$glClass = new Application_Model_GlobalClass();
@@ -41,13 +43,16 @@ class Foundation_StudentscoreController extends Zend_Controller_Action {
 			Application_Form_FrmMessage::message("Application Error");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
-		
+		$form=new Registrar_Form_FrmSearchInfor();
+		$form->FrmSearchRegister();
+		Application_Model_Decorator::removeAllDecorator($form);
+		$this->view->form_search=$form;
 		
 	}
 public	function addAction(){
 		if($this->getRequest()->isPost()){
 			$_data = $this->getRequest()->getPost();
-			$_model = new Kindergarten_Model_DbTable_DbKindergartenScore();
+			$_model = new Foundation_Model_DbTable_DbStudentScore();
 			try {
 				if(isset($_data['save_new'])){
 						$rs =  $_model->addStudentHomworkScore($_data);
@@ -89,7 +94,7 @@ public	function addAction(){
 		if($this->getRequest()->isPost()){
 			$_data = $this->getRequest()->getPost();
 			$_data['score_id']=$id;
-			$_model = new Kindergarten_Model_DbTable_DbKindergartenScore();
+			$_model = new Foundation_Model_DbTable_DbStudentScore();
 			try {
 				if(isset($_data['save_close'])){
 						$rs =  $_model->updateStudentHomworkScore($_data);

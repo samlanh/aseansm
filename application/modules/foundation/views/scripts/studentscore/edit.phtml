@@ -43,6 +43,11 @@ table tr td.null-border{ background: #fff; border-left:none !important;}
 table .set-style td,table .set-style th{ padding: 0px; border:1px solid #ccc;font-size: 12px;}
 table .set-style tr.st1{ background: none repeat scroll 0% 0% rgba(218, 250, 255, 1);}
 </style>
+<style>
+ul.blogscoresubject li{list-style: none;width:23%;float: left; }
+ol.blogscoresubject li{list-style: none;width:23%;float: left; }
+ol{margin: 10px;}
+</style>
 <script type="text/javascript">
 dojo.require("dojo.data.ObjectStore");
 dojo.require("dojo.data.ItemFileWriteStore");  
@@ -348,7 +353,7 @@ function gender(sex){
 								</select>
 							</td>
 							<td><?php echo $tr->translate("Monthly Report");?></td>
-							<td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="monthly_date" name="monthly_date" type="text" value="<?php echo date("Y-m-d");?>"></td>
+							<td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="reportdate" name="reportdate" type="text" value="<?php echo date("Y-m-d");?>"></td>
 						    <td style="white-space: nowrap;text-align: right;"><?php echo $tr->translate("STATUS");?></td>
 							<td>
 								<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside" id="status" name="status" type="text">								

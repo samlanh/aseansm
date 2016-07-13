@@ -209,10 +209,10 @@ function getStudentByIdGroup(group_id){
 					<?php if (!empty($this->rows_parent)) foreach ($this->rows_parent As $key =>$rs_parent){ $key=$key+1; ?>
 					
                     str+='<li style="white-space: nowrap;text-align:left;padding:0px 5px; width:25%;font-size:12px;"><?php echo $key.".".$rs_parent['sub_name']?></li>';
-                    str+='<li><input   dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rs_parent['subject_titleen'])?>'+inx+'" id="<?php echo $rs_parent['subject_titleen']?>'+inx+'"   value="0" type="text" onkeypress="return AllowOnlyNumbers(event);"></li>';
-                    str+='<br/>';
+                    str+='<li><input   dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rs_parent['subject_titleen'])?>'+inx+'" id="<?php echo $rs_parent['subject_titleen']?>'+inx+'"   value="" type="text" onkeypress="return AllowOnlyNumbers(event);"></li>';
+                   
 					<?php foreach ($db->getSubject($rs_parent["id"]) as $rs){ ?>
-                           str+='<br/><li style="white-space: nowrap;text-align:left;padding:0px 5px; width:25%;font-size:12px;">&nbsp;&nbsp;-&nbsp;<?php echo $rs['sub_name']?></li><li><input dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rs['subject_titleen']) ?>'+inx+'" id="<?php echo $rs['subject_titleen']?>'+inx+'"   value="0" type="text" onkeypress="return AllowOnlyNumbers(event);"></li>';
+                           str+='<li style="white-space: nowrap;text-align:left;padding:0px 5px; width:25%;font-size:12px;">&nbsp;&nbsp;-&nbsp;<?php echo $rs['sub_name']?></li><li><input dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rs['subject_titleen']) ?>'+inx+'" id="<?php echo $rs['subject_titleen']?>'+inx+'"   value="" type="text" onkeypress="return AllowOnlyNumbers(event);"></li>';
 					<?php }?>
 					 
                    <?php }?>
@@ -290,7 +290,7 @@ function gender(sex){
 								</select>
 							</td>
 							<td><?php echo $tr->translate("Monthly Report");?></td>
-							<td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="monthly_date" name="monthly_date" type="text" value="<?php echo date("Y-m-d");?>"></td>
+							<td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="reportdate" name="reportdate" type="text" value="<?php echo date("Y-m-d");?>"></td>
 						    <td style="white-space: nowrap;text-align: right;"><?php echo $tr->translate("STATUS");?></td>
 							<td>
 								<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside" id="status" name="status" type="text">								
