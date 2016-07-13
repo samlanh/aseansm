@@ -68,10 +68,10 @@ class Foundation_Model_DbTable_DbMediumStudentScore extends Zend_Db_Table_Abstra
 		}
    }
    public function updateStudentHomworkScore($_data){
-		 //print_r($_data);exit();
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		$db_sub = new Global_Model_DbTable_DbHomeWorkScore();
+// 		print_r($_data);exit();
 		try{
 			$_arr = array(
 					'academic_id'=>$_data['year_study'],
@@ -83,7 +83,7 @@ class Foundation_Model_DbTable_DbMediumStudentScore extends Zend_Db_Table_Abstra
 					'status'=>$_data['status'],
 					'user_id'=>$this->getUserId()
 			);
-			
+// 			print_r($_arr);exit();
 			$where="id=".$_data['score_id'];
 			$id=$this->update($_arr, $where);
 		   $this->_name='rms_score_detail';
@@ -95,19 +95,19 @@ class Foundation_Model_DbTable_DbMediumStudentScore extends Zend_Db_Table_Abstra
 						foreach ($db_sub->getParent() as $rs_parent){
 									$parent_name = str_replace(' ','',$rs_parent["subject_titleen"]);
 									$parent_id = $rs_parent['id'];
-					//				echo $rs_parent["sub_name"];
-									$arr=array(
-											'score_id'=>$_data['score_id'],
-											'student_id'=>$_data['stu_id_'.$i],
-											'subject_id'=> $parent_id,
-											'score'=> $_data["$parent_name".$i],
-											'status'=>1,
-											'user_id'=>$this->getUserId(),
-											'is_parent'=> $rs_parent["is_parent"]
-									);
-									$this->_name='rms_score_detail';
-// 									$db->getProfiler()->setEnabled(true);
-									$this->insert($arr);
+									if(!empty($_data["$parent_name".$i]) AND !$_data["$parent_name".$i]==''){
+										$arr=array(
+												'score_id'=>$_data['score_id'],
+												'student_id'=>$_data['stu_id_'.$i],
+												'subject_id'=> $parent_id,
+												'score'=> $_data["$parent_name".$i],
+												'status'=>1,
+												'user_id'=>$this->getUserId(),
+												'is_parent'=> $rs_parent["is_parent"]
+										);
+										$this->_name='rms_score_detail';
+										$this->insert($arr);
+									}
 						}
 				}
 			}

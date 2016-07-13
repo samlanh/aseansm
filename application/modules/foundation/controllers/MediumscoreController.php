@@ -91,16 +91,13 @@ public	function addAction(){
 	
 	public	function editAction(){
 		$id=$this->getRequest()->getParam('id');
+		$_model = new Foundation_Model_DbTable_DbMediumStudentScore();
 		if($this->getRequest()->isPost()){
 			$_data = $this->getRequest()->getPost();
 			$_data['score_id']=$id;
-			$_model = new Foundation_Model_DbTable_DbMediumStudentScore();
 			try {
-				if(isset($_data['save_close'])){
-						$rs =  $_model->updateStudentHomworkScore($_data);
-						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/mediumscore");
-					} 
-		
+				$rs =  $_model->updateStudentHomworkScore($_data);
+				//Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/mediumscore");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
@@ -127,9 +124,12 @@ public	function addAction(){
 		$this->view->rows_parent=$db_homwork->getParent();
 		//get id fore update 
 		$db=new Foundation_Model_DbTable_DbHomeWorkScore();
-		$this->view->row_g=$db->getGroupStudent($id);
+		$row_score = $db->getGroupStudent($id);
+		$this->view->row_g=$row_score;//for score main form
 		$this->view->rows_scor=$db->getScoreStudents($id);
 		$data=$this->view->rows_detail=$db->getSubjectById($id);
+		
+	    $this->view-> rsallstudentingroup =$_model->getStudent($row_score['group_id']);
 	}
 	
 	function addoldAction(){
