@@ -266,8 +266,9 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 					<table style="margin: 0 auto;" cellspacing="10">
 						<tr>
 							<td width="110px"><?php echo $tr->translate("GROUP_CODE")?></td>
-							<td><input dojoType="dijit.form.ValidationTextBox" required="true" id="group_code" name="group_code" value="" type="text"></td>
-						    
+							<td>
+								<input dojoType="dijit.form.ValidationTextBox" required="true" id="group_code" name="group_code" value="" type="text">
+							</td>
 						    <td width="110px"><?php echo $tr->translate("ACADEMIC_YEAR")?></td>
 							<td>
 								<select name="academic_year" id="academic_year" type="text" dojoType="dijit.form.FilteringSelect">
