@@ -347,6 +347,8 @@ function gender(sex){
 									<?php }?>
 								</select>
 							</td>
+							<td><?php echo $tr->translate("Monthly Report");?></td>
+							<td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="monthly_date" name="monthly_date" type="text" value="<?php echo date("Y-m-d");?>"></td>
 						    <td style="white-space: nowrap;text-align: right;"><?php echo $tr->translate("STATUS");?></td>
 							<td>
 								<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside" id="status" name="status" type="text">								

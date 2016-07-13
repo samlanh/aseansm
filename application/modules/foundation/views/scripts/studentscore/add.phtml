@@ -39,6 +39,11 @@ table tr td.null-border{ background: #fff; border-left:none !important;}
 table .set-style td,table .set-style th{ padding: 0px; border:1px solid #ccc;font-size: 12px;}
 table .set-style tr.st1{ background: none repeat scroll 0% 0% rgba(218, 250, 255, 1);}
 </style>
+<style>
+ul.blogscoresubject li{list-style: none;width:23%;float: left; }
+ol.blogscoresubject li{list-style: none;width:23%;float: left; }
+ol{margin: 10px;}
+</style>
 <script type="text/javascript">
 dojo.require("dojo.data.ObjectStore");
 dojo.require("dojo.data.ItemFileWriteStore");  
@@ -198,19 +203,20 @@ function getStudentByIdGroup(group_id){
 					inx = i+1;
 					num++;
 					str+='<h3>'+inx+', Student id('+data[i].stu_code+')'+'&nbsp;|&nbsp;&nbsp;Student Name('+data[i].stu_khname+')&nbsp;|&nbsp;&nbsp;Sex('+gender(data[i].sex)+')&nbsp;|&nbsp;<input   type="hidden" name="stu_id_'+inx+'" id="stu_id_'+inx+'" value="'+data[i].stu_id+'"/></h3><div >';
-					str+='<center><table style="border-collapse: collapse;border-spacing: 0;width:700px;">';
+					str+='<center><ul class="blogscoresubject" style="width:100%;">';
 						
 					<?php   $db = new Global_Model_DbTable_DbHomeWorkScore();?>
 					<?php if (!empty($this->rows_parent)) foreach ($this->rows_parent As $key =>$rs_parent){ $key=$key+1; ?>
 					
-                    str+='<tr><td style="border: 1px solid #CCC;"><?php echo $key.".".$rs_parent['sub_name']?>';
-                    str+='</td><td  style="border: 1px solid #CCC;"><input   dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rs_parent['subject_titleen'])?>'+inx+'" id="<?php echo $rs_parent['subject_titleen']?>'+inx+'"   value="0" type="text" onkeypress="return AllowOnlyNumbers(event);"></td></tr>';
-					<?php foreach ($db->getSubject($rs_parent["id"]) as $rs){?>
-                           str+='<tr ><td  style="border: 1px solid #CCC;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;<?php echo $rs['sub_name']?></td><td style="border: 1px solid #CCC;"><input dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rs['subject_titleen']) ?>'+inx+'" id="<?php echo $rs['subject_titleen']?>'+inx+'"   value="0" type="text" onkeypress="return AllowOnlyNumbers(event);"></td></tr>';
-					<?php } }?>
-
-                    str+='</tr>';
-					str+='</table></center>';
+                    str+='<li style="white-space: nowrap;text-align:left;padding:0px 5px; width:25%;font-size:12px;"><?php echo $key.".".$rs_parent['sub_name']?></li>';
+                    str+='<li><input   dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rs_parent['subject_titleen'])?>'+inx+'" id="<?php echo $rs_parent['subject_titleen']?>'+inx+'"   value="0" type="text" onkeypress="return AllowOnlyNumbers(event);"></li>';
+                    str+='<br/>';
+					<?php foreach ($db->getSubject($rs_parent["id"]) as $rs){ ?>
+                           str+='<br/><li style="white-space: nowrap;text-align:left;padding:0px 5px; width:25%;font-size:12px;">&nbsp;&nbsp;-&nbsp;<?php echo $rs['sub_name']?></li><li><input dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rs['subject_titleen']) ?>'+inx+'" id="<?php echo $rs['subject_titleen']?>'+inx+'"   value="0" type="text" onkeypress="return AllowOnlyNumbers(event);"></li>';
+					<?php }?>
+					 
+                   <?php }?>
+					str+='</ul></center>';
 					str+='</div>';
 				    if(inx!=1) {//identity set value 1,2,3,4,5
 						var identity = $('#identity').val();
@@ -283,6 +289,8 @@ function gender(sex){
 									<?php }?>
 								</select>
 							</td>
+							<td><?php echo $tr->translate("Monthly Report");?></td>
+							<td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="monthly_date" name="monthly_date" type="text" value="<?php echo date("Y-m-d");?>"></td>
 						    <td style="white-space: nowrap;text-align: right;"><?php echo $tr->translate("STATUS");?></td>
 							<td>
 								<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside" id="status" name="status" type="text">								
