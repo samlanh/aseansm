@@ -138,7 +138,7 @@ $frm_set_price = $this->frm_set_charge;?>
 					<legend align="center"><strong>Search Group</strong></legend>
 					<table style="margin: 0 auto; width: 100%; background:#DFF7FD;" cellspacing="10" broder 1>
 						<tr>
-							<td>ឆ្នាំសិក្សា</td>
+							<td><?php echo $tr->translate("ACADEMIC_YEAR");?></td>
 							<td>
 								<select class="fullside" dojoType="dijit.form.FilteringSelect" required="true"  id="academy" name="academy" type="text">
 									<?php if(!empty($this->academy)) foreach($this->academy as $row){?>
@@ -146,7 +146,7 @@ $frm_set_price = $this->frm_set_charge;?>
 									<?php }?>
 								</select>
 							</td>
-							<td>Degree</td>
+							<td><?php echo $tr->translate("DEGREE");?></td>
 							<td colspan="2">
 								<select class="fullside"  name="degree" id="degree" dojoType="dijit.form.FilteringSelect" onchange="getallGrade(1);">
 											<?php if(!empty($this->degree))foreach ($this->degree as $row){?>
@@ -156,15 +156,15 @@ $frm_set_price = $this->frm_set_charge;?>
 							</td>
 						</tr>
 						<tr>
-							<td>ថ្នាក់ទី*</td>
+							<td><?php echo $tr->translate("GRADE");?></td>
 							<td>
 							    <input id="grade" value="<?php echo $this->value['grade'];?>" />
 							</td>
-							<td>Session</td>
+							<td><?php echo $tr->translate("SESSION");?></td>
 							<td>
 								 <select class="fullside"  tabindex="24" name="session" id="session" dojoType="dijit.form.FilteringSelect" >
 								       <?php if(!empty($this->rs_session)) foreach ($this->rs_session As $rs_sesion){?>
-										    <option value="<?php echo $rs_sesion['key_code'];?>"><?php echo $rs_sesion['view_name'];?></option>
+										    <option value="<?php echo $rs_sesion['key_code'];?>" <?php if($rs_sesion['key_code']==$this->value['session']) echo "selected='selected'"?> ><?php echo $rs_sesion['view_name'];?></option>
 								       <?php }?>			
 								 </select>
 							</td>
@@ -186,20 +186,18 @@ $frm_set_price = $this->frm_set_charge;?>
 				<legend align="center"><strong><?php echo $tr->translate("TO_GROUP")?></strong></legend>
 					<table style="margin: 0 auto; width: 100%; background:#DFF7FD;" cellspacing="10" broder 1>
 						<tr>
-							<td>Group</td>
+							<td><?php echo $tr->translate("GROUP");?></td>
 							<td>
 								<input id="group" />
 							</td>
 									
 						</tr> 
 						<tr>
-											
 							<td><?php echo $tr->translate("DETAIL")?></td>
 							<td  colspan="3" rowspan="1"><label id="lbldetail" name=lbldetail style="background:#fff;width:100%;height:70px;display:block;"></label></td>
-										
 						</tr> 
 						<tr>
-							<td>ស្ថានការណ៍</td>
+							<td><?php echo $tr->translate("STATUS");?></td>
 							<td>
 								<select class="fullside" dojoType="dijit.form.FilteringSelect" required="true"  id="status" name="status" type="text">		
 									<option value="1"<?php if($this->id['status']==1) echo "selected='selected'"?>><?php echo $tr->translate("Active");?></option>						
@@ -213,10 +211,8 @@ $frm_set_price = $this->frm_set_charge;?>
 										iconClass="dijitEditorIcon dijitEditorIconSave"/>
 							</td>
 						</tr>
-						
 					</table>
 				</fieldset>		
-			
 					<div  align="center">
 						<a id="select-all" href="#">select all</a> <span style="font-size: 16px;"> | </span>
 						<a id="deselect-all" href="#">deselect all</a> <span style="font-size: 16px;"> | </span>
@@ -224,16 +220,16 @@ $frm_set_price = $this->frm_set_charge;?>
 						<a id="add-option" href="#">Add option</a> <span style="font-size: 16px;"> | </span>
 						<a id="refresh" href="#">refresh</a>
 					</div>
-										
 					<select multiple id="public-methods" name="public-methods[]">
 						<?php if(!empty($this->rs)) foreach($this->rs as $row ){?>
-						<option value="<?php echo $row['stu_id'];?>" >
-						<?php echo $row['stu_code']," ",$row['stu_enname']," ",$row['stu_khname']; ?></option>
+							<option value="<?php echo $row['stu_id'];?>" >
+								<?php echo $row['stu_code']," ",$row['stu_enname']," ",$row['stu_khname']; ?>
+							</option>
 						<?php }?>
-												
 						<?php if(!empty($this->rr)) foreach($this->rr as $row ){?>
-						<option value="<?php echo $row['stu_id'];?>" <?php echo "selected='Selected'";?>>
-						<?php echo $row['code']," ",$row['kh_name']," ",$row['en_name']; ?></option>
+							<option value="<?php echo $row['stu_id'];?>" <?php echo "selected='Selected'";?>>
+								<?php echo $row['code']," ",$row['kh_name']," ",$row['en_name']; ?>
+							</option>
 						<?php }?>
 					</select>
 						

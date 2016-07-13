@@ -26,7 +26,7 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 				(SELECT	`rms_view`.`name_en` FROM `rms_view` WHERE ((`rms_view`.`type` = 4) AND (`rms_view`.`key_code` = `s`.`session`)) LIMIT 1) AS `session`,
 				
 				(SELECT name_kh FROM `rms_view` WHERE TYPE=1 AND key_code = STATUS) AS STATUS
-				FROM rms_student AS s,rms_student_payment AS sp  WHERE s.stu_id=sp.student_id AND s.is_subspend=0 AND s.status = 1 AND s.stu_type = 1 AND s.degree IN(2,3,4) ";
+				FROM rms_student AS s  WHERE  s.is_subspend=0 AND s.status = 1 AND s.stu_type = 1 AND s.degree IN(2,3,4) ";
 		$orderby = " ORDER BY stu_id DESC ";
 		if(empty($search)){
 			return $_db->fetchAll($sql.$orderby);

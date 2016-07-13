@@ -14,21 +14,22 @@ class Foundation_Model_DbTable_DbGroupStudy extends Zend_Db_Table_Abstract
 		//$db->beginTransaction();
 		try{
 			$_arr=array(
-					'group_code' => $_data['group_code'],
+					'group_code' 	=> $_data['group_code'],
 					'academic_year' => $_data['academic_year'],
-					'room_id' => $_data['room'],
-					'semester' => $_data['semester'],
-					'session' => $_data['session'],
-					'degree' => $_data['degree'],
-					'grade' => $_data['grade'],
-					'amount_month' => $_data['amountmonth'],
-					'start_date' => $_data['start_date'],
-					'expired_date'=>$_data['end_date'],
-					'date' => date("Y-m-d"),
-					'status'   => $_data['status'],
-					'note'   => $_data['note'],
-					'user_id'	  => $this->getUserId(),
-					'is_use' => 0
+					'room_id' 		=> $_data['room'],
+					'semester' 		=> $_data['semester'],
+					'session' 		=> $_data['session'],
+					'degree' 		=> $_data['degree'],
+					'time' 			=> $_data['time'],
+					'grade' 		=> $_data['grade'],
+					'amount_month' 	=> $_data['amountmonth'],
+					'start_date' 	=> $_data['start_date'],
+					'expired_date'	=>$_data['end_date'],
+					'date' 			=> date("Y-m-d"),
+					'status'   		=> $_data['status'],
+					'note'   		=> $_data['note'],
+					'user_id'	  	=> $this->getUserId(),
+					'is_use' 		=> 0
 			);
 			$id = $this->insert($_arr);
 // 			return $db->commit();
@@ -41,27 +42,25 @@ class Foundation_Model_DbTable_DbGroupStudy extends Zend_Db_Table_Abstract
 	
 	public function updateGroup($_data){
 		$db = $this->getAdapter();
-// 		$db->beginTransaction();
 		try{
 			$_arr=array(
-					'group_code' => $_data['group_code'],
-					'room_id' => $_data['room'],
+					'group_code' 	=> $_data['group_code'],
+					'room_id' 		=> $_data['room'],
 					'academic_year' => $_data['academic_year'],
-					'semester' => $_data['semester'],
-					'session' => $_data['session'],
-					'degree' => $_data['degree'],
-					'grade' => $_data['grade'],
-					'amount_month' => $_data['amountmonth'],
-					'start_date' => $_data['start_date'],
-					'expired_date'=>$_data['end_date'],
-					//'date' => date("Y-m-d"),
-					'status'   => $_data['status'],
-					'note'   => $_data['note'],
-					'user_id'	  => $this->getUserId()
+					'semester' 		=> $_data['semester'],
+					'session' 		=> $_data['session'],
+					'degree' 		=> $_data['degree'],
+					'time' 			=> $_data['time'],
+					'grade' 		=> $_data['grade'],
+					'amount_month' 	=> $_data['amountmonth'],
+					'start_date' 	=> $_data['start_date'],
+					'expired_date'	=>$_data['end_date'],
+					'status'   		=> $_data['status'],
+					'note'   		=> $_data['note'],
+					'user_id'	  	=> $this->getUserId()
 			);
 			$where=$this->getAdapter()->quoteInto("id=?", $_data['id']);
 			$this->update($_arr, $where);
-			//return $db->commit();
 		}catch (Exception $e){
 			$db->rollBack();
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());

@@ -36,20 +36,21 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 	public function addGroup($_data){
 		$db = $this->getAdapter();
 		$arr = array(
-				'group_code' => $_data['group_code'],
-				'room_id' => $_data['room'],
+				'group_code' 	=> $_data['group_code'],
+				'room_id' 		=> $_data['room'],
 				'academic_year' => $_data['academic_year'],
-				'semester' => $_data['semester'],
-				'session' => $_data['session_group'],
-				'degree' => $_data['degree_group'],
-				'grade' => $_data['grade_group'],
-				'amount_month' => $_data['amountmonth'],
-				'start_date' => $_data['start_date'],
-				'expired_date'=>$_data['end_date'],
-				'date' => date("Y-m-d"),
-				'status'   => 1,
-				'note'   => $_data['note'],
-				'user_id'	  => $this->getUserId()
+				'semester' 		=> $_data['semester'],
+				'session' 		=> $_data['session_group'],
+				'degree' 		=> $_data['degree_group'],
+				'grade' 		=> $_data['grade_group'],
+				'time' 			=> $_data['time'],
+				'amount_month'	=> $_data['amountmonth'],
+				'start_date' 	=> $_data['start_date'],
+				'expired_date'	=>$_data['end_date'],
+				'date' 			=> date("Y-m-d"),
+				'status'   		=> 1,
+				'note'   		=> $_data['note'],
+				'user_id'	  	=> $this->getUserId()
 				
 				);
 		$this->_name='rms_group';
