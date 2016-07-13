@@ -33,7 +33,7 @@ class Foundation_StudentscoreController extends Zend_Controller_Action {
 			$list = new Application_Form_Frmtable();
 			$collumns = array( "STUDENT_GROUP","STUDY_YEAR","SESSION","SUBJECT","TERM","STATUS");
 			$link=array(
-					'module'=>'kindergarten','controller'=>'studentscores','action'=>'edit',
+					'module'=>'foundation','controller'=>'studentscore','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs,array('student_no'=>$link,'student_id'=>$link,'academic_id'=>$link,'session_id'=>$link,'group_id'=>$link));
 	
