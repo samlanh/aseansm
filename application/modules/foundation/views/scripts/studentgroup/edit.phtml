@@ -194,7 +194,7 @@ $frm_set_price = $this->frm_set_charge;?>
 						</tr> 
 						<tr>
 							<td><?php echo $tr->translate("DETAIL")?></td>
-							<td  colspan="3" rowspan="1"><label id="lbldetail" name=lbldetail style="background:#fff;width:100%;height:70px;display:block;"></label></td>
+							<td  colspan="3" rowspan="1"><label id="lbldetail"  name=lbldetail style="background:#fff;width:100%;height:70px;display:block;border: 1px solid #ccc;"></label></td>
 						</tr> 
 						<tr>
 							<td><?php echo $tr->translate("STATUS");?></td>
@@ -214,11 +214,11 @@ $frm_set_price = $this->frm_set_charge;?>
 					</table>
 				</fieldset>		
 					<div  align="center">
-						<a id="select-all" href="#">select all</a> <span style="font-size: 16px;"> | </span>
-						<a id="deselect-all" href="#">deselect all</a> <span style="font-size: 16px;"> | </span>
-						<a id="select-100" href="#">select 100 elems</a> <span style="font-size: 16px;"> | </span>
-						<a id="add-option" href="#">Add option</a> <span style="font-size: 16px;"> | </span>
-						<a id="refresh" href="#">refresh</a>
+						<a id="select-all" href="#">Select all</a> <span style="font-size: 16px;"> | </span>
+						<a id="select-100" href="#">Select 100 elems</a> <span style="font-size: 16px;"> | </span>
+						<a id="deselect-all" href="#">Deselect all</a> <span style="font-size: 16px;"> | </span>
+						
+						<a id="refresh" href="#">Refresh</a>
 					</div>
 					<select multiple id="public-methods" name="public-methods[]">
 						<?php if(!empty($this->rs)) foreach($this->rs as $row ){?>

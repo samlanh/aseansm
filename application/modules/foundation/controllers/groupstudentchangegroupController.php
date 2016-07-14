@@ -8,16 +8,16 @@ class Foundation_groupstudentchangegroupController extends Zend_Controller_Actio
     	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
 	}
 	public function indexAction(){
-		
 		if($this->getRequest()->isPost()){
 			$search = $this->getRequest()->getPost();
 		}else{
 			$search=array(
-					'adv_search'	=>'',
-					//'study_year' => '',
+					'title'	=>'',
+					'study_year' => '',
+					'grade'	=>'',
+					'session' => '',
 			);
 		}
-		
 		$db_student= new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
 		$rs_rows = $db_student->selectAllStudentChangeGroup($search);
 		$list = new Application_Form_Frmtable();

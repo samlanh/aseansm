@@ -189,7 +189,7 @@ $frm_set_price = $this->frm_set_charge;?>
 								</tr> 
 								<tr>
 									<td><?php echo $tr->translate("DETAIL")?></td>
-									<td  colspan="3" rowspan="1"><label id="lbldetail" name=lbldetail style="background:#fff;width:100%;height:70px;display:block;"></label></td>
+									<td  colspan="3" rowspan="1"><label id="lbldetail" name=lbldetail style="border: 1px solid #ccc;background:#fff;width:100%;height:70px;display:block;"></label></td>
 								</tr> 
 								<tr>
 									<td><?php echo $tr->translate("STATUS");?></td>
@@ -211,10 +211,10 @@ $frm_set_price = $this->frm_set_charge;?>
 					
 							
 					<div align="center">
-						<a id="select-all" href="#"><span style="font-size: 15px;">select all</span></a> <span style="font-size: 16px;"> | </span>
-						<a id="select-100" href="#"><span style="font-size: 15px;">select 100 elems</span></a> <span style="font-size: 16px;"> | </span>
-						<a id="deselect-all" href="#"><span style="font-size: 15px;">deselect all</span></a> <span style="font-size: 16px;"> | </span>
-						<a id="refresh" href="#"><span style="font-size: 15px;">refresh</span></a>
+						<a id="select-all" href="#"><span style="font-size: 15px;">Select all</span></a> <span style="font-size: 16px;"> | </span>
+						<a id="select-100" href="#"><span style="font-size: 15px;">Select 100 elems</span></a> <span style="font-size: 16px;"> | </span>
+						<a id="deselect-all" href="#"><span style="font-size: 15px;">Deselect all</span></a> <span style="font-size: 16px;"> | </span>
+						<a id="refresh" href="#"><span style="font-size: 15px;">Refresh</span></a>
 					</div>
 					<select multiple id="public-methods" name="public-methods[]">
 						<?php $no=0; if(!empty($this->rs)) foreach($this->rs as $row){ $no++;?>
@@ -423,7 +423,11 @@ function toStudentGroup(){
 	});
 }
 function popupgroup(){
-	//alert(2);
+	dijit.byId('academic_year').attr('value',dijit.byId('academy').get('value'));
+	dijit.byId('degree_group').attr('value',dijit.byId('degree').get('value'));
+	dijit.byId('grade_group').attr('value',dijit.byId('grade').get('value'));
+	dijit.byId('session_group').attr('value',dijit.byId('session').get('value'));
+	
 	dijit.byId("popup_dept").show();
 }
 function HidePopupGroup(){

@@ -186,9 +186,9 @@ class Foundation_Model_DbTable_DbGroupStudy extends Zend_Db_Table_Abstract
 		`g`.`start_date`,`g`.`expired_date`,`g`.`note`
 		FROM `rms_group` as `g`";
 		$where =' WHERE 1 ';
-		$from_date =(empty($search['start_date']))? '1': "g.start_date >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': "g.start_date <= '".$search['end_date']." 23:59:59'";
-		$where.= " AND ".$from_date." AND ".$to_date;
+// 		$from_date =(empty($search['start_date']))? '1': "g.start_date >= '".$search['start_date']." 00:00:00'";
+// 		$to_date = (empty($search['end_date']))? '1': "g.start_date <= '".$search['end_date']." 23:59:59'";
+// 		$where.= " AND ".$from_date." AND ".$to_date;
 		$order =  ' ORDER BY `g`.`id` DESC ' ;
 		if(empty($search)){
 			return $db->fetchAll($sql.$order);

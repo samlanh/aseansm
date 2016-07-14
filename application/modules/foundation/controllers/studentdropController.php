@@ -10,16 +10,21 @@ class Foundation_studentdropController extends Zend_Controller_Action {
 	public function indexAction(){
 		
 		if($this->getRequest()->isPost()){
-			$data=$this->getRequest()->getPost();
-			$search=array(
-				'txtsearch'	=>$data['adv_search'],	
-					);
+			$search=$this->getRequest()->getPost();
 		}
 		else{
 			$search=array(
-				'txtsearch'	=>'',
-						);
+				'title'	=>'',
+				'study_year'=> '',
+				'grade'=> '',
+				'session'=> ''
+			);
 		}
+		
+		$form=new Registrar_Form_FrmSearchInfor();
+		$form->FrmSearchRegister();
+		Application_Model_Decorator::removeAllDecorator($form);
+		$this->view->form_search=$form;
 		
 		$db_student= new Foundation_Model_DbTable_DbStudentDrop();
 		$rs_rows = $db_student->getAllStudentDrop($search);
@@ -29,7 +34,7 @@ class Foundation_studentdropController extends Zend_Controller_Action {
 			else{
 				$result = Application_Model_DbTable_DbGlobal::getResultWarning();
 			}
-			$collumns = array("STUDENT_ID","NAME_KH","NAME_EN","SEX","TYPE","REASON","STOP_DATE","NOTE");
+			$collumns = array("STUDENT_ID","NAME_KH","NAME_EN","SEX","ACADEMIC_YEAR","GRADE","SESSION","TYPE","REASON","STOP_DATE","NOTE");
 			$link=array(
 					'module'=>'foundation','controller'=>'studentdrop','action'=>'edit',
 			);

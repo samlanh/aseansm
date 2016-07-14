@@ -3,7 +3,7 @@
 	echo $this->headTitle($tr->translate('EDIT_STUDENT_DROP')); 
 ?>
 <form id="add_car" action="<?php echo $this->url(array('module'=>'foundation','controller'=>'studentdrop','action'=>'edit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-	<table cellspacing="20" style="margin: 0 auto; width: 600px">
+	<table cellspacing="20" style="margin: 0 auto; width: 100%">
 		<tr>
 			<td>
 				<fieldset>
@@ -21,19 +21,30 @@
 												<?php }?>
 											</select>
 										</td>
-									</tr>
-									<tr>
 										<td><?php echo $tr->translate("STUDENT_NAME")?></td>
-										<td><input dojoType="dijit.form.TextBox" readonly="readonly" class="fullside" id="studentname" name="studentname" value="" type="text">
+										<td>
+											<input dojoType="dijit.form.TextBox" readonly="readonly" class="fullside" id="studentname" name="studentname" value="" type="text">
 										</td>
-									</tr>
-									<tr>
 										<td><?php echo $tr->translate("SEX")?></td>
 										<td>
 											<select dojoType="dijit.form.FilteringSelect"  readonly="readonly" class="fullside" id="gender" name="gender" type="text">
 												<option value="1">Male</option>
 												<option value="2">Female</option>
 											</select>
+										</td>
+									</tr>
+									<tr>
+										<td><?php echo $tr->translate("ACADEMIC_YEAR")?></td>
+										<td>
+											<input dojoType="dijit.form.TextBox" readonly="readonly" class="fullside" id="academic_year" name="academic_year" value="" type="text">
+										</td>
+										<td><?php echo $tr->translate("GRADE")?></td>
+										<td>
+											<input dojoType="dijit.form.TextBox" readonly="readonly" class="fullside" id="grade" name="grade" value="" type="text">
+										</td>
+										<td><?php echo $tr->translate("SESSION")?></td>
+										<td>
+											<input dojoType="dijit.form.TextBox" readonly="readonly" class="fullside" id="session" name="session" value="" type="text">
 										</td>
 									</tr>
 									<tr>
@@ -44,20 +55,18 @@
 												<option value="2" <?php if($this->row['type']==2) echo 'selected="selected"';?>>Stop</option>
 											</select>
 										</td>
-									</tr>
-									<tr>
 										<td><?php echo $tr->translate("REASON")?></td>
-										<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="reason" name="reason" value="<?php echo $this->row['reason'];?>" type="text"></td>
-									</tr>
-									<tr>
+										<td>
+											<input dojoType="dijit.form.TextBox" required="true" class="fullside" id="reason" name="reason" value="<?php echo $this->row['reason'];?>" type="text">
+										</td>
 										<td><?php echo $tr->translate("STOP_DATE")?></td>
-										<td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="datestop" name="datestop" value="<?php echo $this->row['date'];?>" type="text"></td>
+										<td>
+											<input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="datestop" name="datestop" value="<?php echo $this->row['date'];?>" type="text">
+										</td>
 									</tr>
 									<tr>
 										<td><?php echo $tr->translate("NOTE")?></td>
 										<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="note" name="note" value="<?php echo $this->row['note'];?>" type="text"></td>
-									</tr>
-									<tr>
 										<td><?php echo $tr->translate("STATUS")?></td>
 										<td>
 											<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside" id="status" name="status" type="text">
@@ -67,7 +76,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td colspan="2" align="center">
+										<td colspan="6" align="center">
 											<input iconClass="dijitIconClear" type="reset" value="សំអាត" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button"/>
 											<input type="button" label="<?php echo $tr->translate('GO_BACK');?>" id="back" dojoType="dijit.form.Button" 
 									 		iconClass="dijitIconUndo" onclick="window.location = '<?php echo $this->url(array('module'=>'foundation','controller'=>"studentdrop",'action'=>'index'),null,true); ?>';" />
@@ -89,14 +98,8 @@
 var url_student = '<?php echo $this->url(array('module'=>'foundation','controller'=>'studentdrop','action'=>'get-student')); ?>';
 
 dojo.ready(function(){
-
 	getStudentInfo();
-
-
 });
-
-
-
 function getStudentInfo(){
 			studentid = dijit.byId('studentid').get('value');
 			dojo.xhrPost({
@@ -107,10 +110,11 @@ function getStudentInfo(){
 				handleAs:"json",
 				load: function(data) {
 					//alert(data.stu_enname);
-					dijit.byId("studentname").attr("value",data.stu_enname);
+					dijit.byId("studentname").attr("value",data.name);
 					dijit.byId("gender").attr("value",data.sex);
-					
-
+					dijit.byId("academic_year").attr("value",data.academic_year);
+					dijit.byId("grade").attr("value",data.grade);
+					dijit.byId("session").attr("value",data.session);
 				},
 				error: function(err) {
 					alert(err);
