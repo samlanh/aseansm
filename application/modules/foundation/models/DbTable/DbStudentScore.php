@@ -261,22 +261,26 @@ class Foundation_Model_DbTable_DbStudentScore extends Zend_Db_Table_Abstract
 		        s.term_id,s.status
 		        FROM rms_score AS s,rms_group AS g WHERE s.group_id=g.id AND g.degree IN(1,2) AND s.status=1";
 		$where ='';
+		$from_date =(empty($search['start_date']))? '1': " s.reportdate >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " s.reportdate <= '".$search['end_date']." 23:59:59'";
+		$where = " AND ".$from_date." AND ".$to_date;
+		
 		if(!empty($search['group_name'])){
 			$where.= " AND s.group_id=".$search['group_name'];
 		}
 		if(!empty($search['study_year'])){
 			$where.=" AND s.academic_id=".$search['study_year'];
 		}
-// 		if(!empty($search['grade'])){
-// 			$where.=" AND s.grade=".$search['grade'];
-// 		}
+		if(!empty($search['grade'])){
+			$where.=" AND s.group_id=".$search['grade'];
+		}
 		if(!empty($search['session'])){
 			$where.=" AND s.session_id=".$search['session'];
 		}
 // 		if(!empty($search['time'])){
 // 			$where.=" AND sp.time=".$search['time'];
 // 		}
-		print_r($sql.$where);
+//		print_r($sql.$where);
 		$order=" ORDER BY id DESC ";
 		return $db->fetchAll($sql.$where.$order);
 	}
