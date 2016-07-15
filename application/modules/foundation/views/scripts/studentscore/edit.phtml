@@ -6,7 +6,6 @@
 	//print_r($this->rows_scor);
 	 $score = $this->rows_detail;
 	//print_r($this->row_g);
-	 
 ?>	
 <head>
   <meta charset="utf-8">
@@ -207,7 +206,7 @@ function getStudentGroup(){
 		getStudentByIdGroup(new_group_id);
 	}
 }
-function oldStudentScore(){
+function oldStudentScore(){ 
 	str='';
 	str+='<div id="accordion">';
 		<?php 
@@ -219,7 +218,7 @@ function oldStudentScore(){
 		?>
 		inx = '<?php echo $i; ?>';
 		str+='<h3>'+inx+', Student id(<?php echo $rs["stu_code"] ?>)'+'&nbsp;|&nbsp;&nbsp;Student Name(<?php echo $rs["student_name"] ?>)&nbsp;|&nbsp;&nbsp;Sex('+gender(<?php echo $rs["sex"] ?>)+')&nbsp;|&nbsp;<input   type="hidden" name="stu_id_'+inx+'" id="stu_id_'+inx+'" value="<?php echo $rs["student_id"] ?>"/></h3><div >';
-		str+='<center><table style="border-collapse: collapse;border-spacing: 0;width:700px;">';
+		str+='<center><ul class="blogscoresubject" style="width:100%;">';
 		<?php 
 			$j =0;
 			foreach ($score as $rss){
@@ -227,12 +226,12 @@ function oldStudentScore(){
 		?>
 		<?php if($rss["is_parent"]== 1){ $j=$j+1;?>
 			index = '<?php echo $j;?>';
-			str+='<tr><td style="border: 1px solid #CCC;"><?php echo $j.".".$rss['subject_name']?>';
-	    	str+='</td><td  style="border: 1px solid #CCC;"><input   dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rss['subject_titleen'])?>'+inx+'" id="<?php echo $rss['subject_titleen']?>'+inx+'"   value="<?php echo $rss["score"];?>" type="text" onkeypress="return AllowOnlyNumbers(event);"></td></tr>';
+			str+='<li style="white-space: nowrap;text-align:left;padding:0px 5px; width:25%;font-size:12px;"><?php echo $j.".".$rss['subject_name']?></li>';
+	    	str+='<li><input   dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rss['subject_titleen'])?>'+inx+'" id="<?php echo $rss['subject_titleen']?>'+inx+'"   value="<?php echo $rss["score"];?>" type="text" onkeypress="return AllowOnlyNumbers(event);"></li>';
 	    <?php }else{?>
-	    str+='<tr><td  style="border: 1px solid #CCC;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;<?php echo $rss['subject_name']?></td><td style="border: 1px solid #CCC;"><input dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rss['subject_titleen']) ?>'+inx+'" id="<?php echo $rss['subject_titleen']?>'+inx+'"   value="<?php echo $rss["score"] ?>" type="text" onkeypress="return AllowOnlyNumbers(event);"></td></tr>';
+	    str+='<li style="white-space: nowrap;text-align:left;padding:0px 5px; width:25%;font-size:12px;">&nbsp;&nbsp;-&nbsp;<?php echo $rss['subject_name']?></li><li><input dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rss['subject_titleen']) ?>'+inx+'" id="<?php echo $rss['subject_titleen']?>'+inx+'"   value="<?php echo $rss["score"] ?>" type="text" onkeypress="return AllowOnlyNumbers(event);"></li>';
 		<?php }}}?>
-		str+='</table></center>';
+		str+='</ul></center>';
 		str+='</div>';
 		if(inx!=1) {//identity set value 1,2,3,4,5
 			var identity = $('#identity').val();
@@ -247,7 +246,7 @@ function oldStudentScore(){
 	 $( "#accordion" ).accordion();
 }
 var url_getStudent= '<?php echo $this->url(array('module'=>'foundation','controller'=>'studentscore','action'=>'get-student')); ?>';
-function getStudentByIdGroup(group_id){
+function getStudentByIdGroup(group_id){ 
 	dojo.xhrPost({
 	    url: url_getStudent,
 	    content : { 
@@ -267,19 +266,17 @@ function getStudentByIdGroup(group_id){
 					inx = i+1;
 					num++;
 					str+='<h3>'+inx+', Student id('+data[i].stu_code+')'+'&nbsp;|&nbsp;&nbsp;Student Name('+data[i].stu_khname+')&nbsp;|&nbsp;&nbsp;Sex('+gender(data[i].sex)+')&nbsp;|&nbsp;<input   type="hidden" name="stu_id_'+inx+'" id="stu_id_'+inx+'" value="'+data[i].stu_id+'"/></h3><div >';
-					str+='<center><table style="border-collapse: collapse;border-spacing: 0;width:700px;">';
+					str+='<center><ul class="blogscoresubject" style="width:100%;">';
 						
 					<?php   $db = new Global_Model_DbTable_DbHomeWorkScore();?>
 					<?php if (!empty($this->rows_parent)) foreach ($this->rows_parent As $key =>$rs_parent){ $key=$key+1; ?>
 					
-                    str+='<tr><td style="border: 1px solid #CCC;"><?php echo $key.".".$rs_parent['sub_name']?>';
-                    str+='</td><td  style="border: 1px solid #CCC;"><input   dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rs_parent['subject_titleen'])?>'+inx+'" id="<?php echo $rs_parent['subject_titleen']?>'+inx+'"   value="0" type="text" onkeypress="return AllowOnlyNumbers(event);"></td></tr>';
+                    str+='<li style="white-space: nowrap;text-align:left;padding:0px 5px; width:25%;font-size:12px;"><?php echo $key.".".$rs_parent['sub_name']?></li>';
+                    str+='<li><input   dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rs_parent['subject_titleen'])?>'+inx+'" id="<?php echo $rs_parent['subject_titleen']?>'+inx+'"   value="" type="text" onkeypress="return AllowOnlyNumbers(event);"></li>';
 					<?php foreach ($db->getSubject($rs_parent["id"]) as $rs){?>
-                           str+='<tr ><td  style="border: 1px solid #CCC;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;<?php echo $rs['sub_name']?></td><td style="border: 1px solid #CCC;"><input dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rs['subject_titleen']) ?>'+inx+'" id="<?php echo $rs['subject_titleen']?>'+inx+'"   value="0" type="text" onkeypress="return AllowOnlyNumbers(event);"></td></tr>';
+                           str+='<li style="white-space: nowrap;text-align:left;padding:0px 5px; width:25%;font-size:12px;">&nbsp;&nbsp;-&nbsp;<?php echo $rs['sub_name']?></li><li><input dojoType="dijit.form.validateNumberTextBox" class="fullside" name="<?php echo str_replace(' ','',$rs['subject_titleen']) ?>'+inx+'" id="<?php echo $rs['subject_titleen']?>'+inx+'"   value="" type="text" onkeypress="return AllowOnlyNumbers(event);"></li>';
 					<?php } }?>
-
-                    str+='</tr>';
-					str+='</table></center>';
+					str+='</ul></center>';
 					str+='</div>';
 				    if(inx!=1) {//identity set value 1,2,3,4,5
 						var identity = $('#identity').val();

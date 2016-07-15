@@ -127,36 +127,64 @@ class Foundation_Model_DbTable_DbStudentScore extends Zend_Db_Table_Abstract
 			$id=$this->update($_arr, $where);
 		   $this->_name='rms_score_detail';
 		   $this->delete("score_id=".$_data['score_id']);
+		  
 			if(!empty($_data['identity'])){
 				$ids = explode(',', $_data['identity']);
+				//print_r($ids);exit();
 				if(!empty($ids))foreach ($ids as $i){
+					//foreach ($ids as $rs){
+						
 						foreach ($db_sub->getParent() as $rs_parent){
 							$parent_id = $rs_parent["id"];
-								if(!empty($db_sub->getSubject($parent_id))){
+								if(!empty($db_sub->getSubject($parent_id))){ 
 									$count = count($db_sub->getSubject($parent_id));
+									//echo $count."<br />";
 									$parent_score = 0;
-									foreach ($db_sub->getSubject($parent_id) as $rs_subs){
+									
+									foreach ($db_sub->getSubject($parent_id) as $rs_subs){ 
 										$sub_name = str_replace(' ','',$rs_subs["subject_titleen"]);
 										$subject_id = $rs_parent['id'];
-										$parent_score = $parent_score + $_data["$sub_name".$i];
+										if(!empty($_data["$sub_name".$i])){
+											$parent_score = $parent_score + $_data["$sub_name".$i];
+										}
 									}
 									if(!empty($parent_score)){
-									$arr=array(
-											'score_id'=>$_data['score_id'],
-											'student_id'=>$_data['stu_id_'.$i],
-											'subject_id'=> $subject_id,
-											'score'=> $parent_score/$count,
-											'status'=>1,
-											'user_id'=>$this->getUserId(),
-											'is_parent'=> $rs_parent["is_parent"]
-									);
-									$this->_name='rms_score_detail';
-									$this->insert($arr);
+										$arr=array(
+												'score_id'=>$_data['score_id'],
+												'student_id'=>$_data['stu_id_'.$i],
+												'subject_id'=> $subject_id,
+												'score'=> $parent_score/$count,
+												'status'=>1,
+												'user_id'=>$this->getUserId(),
+												'is_parent'=> $rs_parent["is_parent"]
+										);
+										$this->_name='rms_score_detail';
+										$this->insert($arr);
 									}
 									foreach ($db_sub->getSubject($parent_id) as $rs_sub){    /////////if parent have subjects
+										//echo $rs_sub["sub_name"];
 										$subject_id = $rs_sub["id"];
 										$sub_name = str_replace(' ','',$rs_sub["subject_titleen"]);
-										if(!empty($_data["$sub_name".$i]) AND !$_data["$sub_name".$i]==''){
+										if(!empty($_data["$sub_name".$i])){
+											$arr=array(
+													'score_id'=>$_data['score_id'],
+													'student_id'=>$_data['stu_id_'.$i],
+													'subject_id'=> $subject_id,
+													'score'=> $_data["$sub_name".$i],
+													'status'=>1,
+													'user_id'=>$this->getUserId(),
+													'is_parent'=> $rs_sub["is_parent"]
+											);
+											$this->_name='rms_score_detail';
+											$this->insert($arr);
+										}
+									}
+									
+								}else{/////////if parent have not subjects
+									$sub_name = str_replace(' ','',$rs_parent["subject_titleen"]);
+									$subject_id = $rs_parent['id'];
+									//echo $rs_parent["sub_name"];
+									if(!empty($_data["$sub_name".$i])){
 										$arr=array(
 												'score_id'=>$_data['score_id'],
 												'student_id'=>$_data['stu_id_'.$i],
@@ -164,30 +192,17 @@ class Foundation_Model_DbTable_DbStudentScore extends Zend_Db_Table_Abstract
 												'score'=> $_data["$sub_name".$i],
 												'status'=>1,
 												'user_id'=>$this->getUserId(),
-												'is_parent'=> $rs_sub["is_parent"]
+												'is_parent'=> $rs_parent["is_parent"]
 										);
 										$this->_name='rms_score_detail';
 										$this->insert($arr);
-										}
 									}
-								}else{/////////if parent have not subjects
-									$sub_name = str_replace(' ','',$rs_parent["subject_titleen"]);
-									$subject_id = $rs_parent['id'];
-									if(!empty($_data["$sub_name".$i]) AND !$_data["$sub_name".$i]==''){
-									$arr=array(
-											'score_id'=>$_data['score_id'],
-											'student_id'=>$_data['stu_id_'.$i],
-											'subject_id'=> $subject_id,
-											'score'=> $_data["$sub_name".$i],
-											'status'=>1,
-											'user_id'=>$this->getUserId(),
-											'is_parent'=> $rs_parent["is_parent"]
-									);
-									$this->_name='rms_score_detail';
-									$this->insert($arr);
-									}
+// 									
 								}
+						
 						}
+						//echo 'student_id'.$_data['stu_id_'.$i]."<hr />";
+					//}
 				}
 			}
 // 			exit();
@@ -354,6 +369,13 @@ class Foundation_Model_DbTable_DbStudentScore extends Zend_Db_Table_Abstract
 	function countScore($id){
 		$db = $this->getAdapter();
 		$sql ="SELECT s.`score_id` FROM `rms_score_detail` AS s WHERE s.`score_id`=$id GROUP BY s.`student_id`";
+		return $db->fetchAll($sql);
+	}
+	function studentScore($id){
+		$db=$this->getAdapter();
+		$sql="SELECT s.id,s.subject_titleen,s.is_parent
+		FROM rms_subject AS s,rms_score_detail AS sd WHERE s.id=sd.subject_id AND sd.score_id=$id";
+		//echo $sql;
 		return $db->fetchAll($sql);
 	}
 }
