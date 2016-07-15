@@ -109,12 +109,15 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 							<td><input dojoType="dijit.form.TextBox"   name="note" value="" type="text"></td>
 						</tr>
 						<tr>
-							<td align="center" colspan="4">
-									<input type="hidden" dojoType="dijit.form.TextBox" id="record_row" name="record_row" />
-									<div  id="test"></div>
+							<td style="width: 5px"><?php echo $tr->translate("TIME")?></td>
+							<td><select name="time" id="time" dojoType="dijit.form.FilteringSelect">
+									<option value="-1" label="ប្រើប្រាស់">Select Time</option>
+								    <option value="1" label="ប្រើប្រាស់">Part Time</option>
+								    <option value="2" label="មិនប្រើប្រាស់">Full Time</option>
+								</select>
 							</td>
-							<td colspan="2">&nbsp;</td>
-				    	</tr>	
+						</tr>
+						
 				    	<tr>
 							<td colspan="4" align="left">
 									<input type="button" label="<?php echo $tr->translate('ADD_ROW');?>" dojoType="dijit.form.Button" 

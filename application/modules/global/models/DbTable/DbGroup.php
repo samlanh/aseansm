@@ -14,29 +14,23 @@ class Global_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		$db->beginTransaction();
 		try{
 			$_arr=array(
-					'group_code' => $_data['group_code'],
-					'room_id' => $_data['room'],
-//				'tuitionfee_id'=>$_data['academic_year'],
-//					'from_academic' => $_data['from_year'],
-//  				'to_academic' => $_data['to_year'],
-					'room_id' => $_data['room'],
+					'group_code' 	=> $_data['group_code'],
+					'room_id' 		=> $_data['room'],
 					'academic_year' => $_data['academic_year'],
-					'semester' => $_data['semester'],
-					'session' => $_data['session'],
-					'degree' => $_data['degree'],
-					'grade' => $_data['grade'],
-					'amount_month' => $_data['amountmonth'],
-// 					'is_check' => $_data['degree'],
-					'start_date' => $_data['start_date'],
-// 					'academic_year' => $_data['academic'],
-					'expired_date'=>$_data['end_date'],
-					'date' => date("Y-m-d"),
-					'status'   => $_data['status'],
-					'note'   => $_data['note'],
-					'user_id'	  => $this->getUserId(),
-					'is_use' => 0
+					'semester' 		=> $_data['semester'],
+					'session' 		=> $_data['session'],
+					'degree' 		=> $_data['degree'],
+					'grade' 		=> $_data['grade'],
+					'time' 			=> $_data['time'],
+					'amount_month' 	=> $_data['amountmonth'],
+					'start_date'	=> $_data['start_date'],
+					'expired_date'	=>$_data['end_date'],
+					'date' 			=> date("Y-m-d"),
+					'status'   		=> $_data['status'],
+					'note'   		=> $_data['note'],
+					'user_id'	 	=> $this->getUserId(),
+					'is_use' 		=> 0
 			);
-			
 			$id = $this->insert($_arr);
 			
 			$this->_name='rms_group_subject_detail';
@@ -65,27 +59,21 @@ class Global_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		$db->beginTransaction();
 		try{
 			$_arr=array(
-					'group_code' => $_data['group_code'],
-					'room_id' => $_data['room'],
-//					'tuitionfee_id'=>$_data['academic_year'],
-//					'from_academic' => $_data['from_year'],
-//  				'to_academic' => $_data['to_year'],
- 
+					'group_code' 	=> $_data['group_code'],
+					'room_id' 		=> $_data['room'],
 					'academic_year' => $_data['academic_year'],
- 
-					'semester' => $_data['semester'],
-					'session' => $_data['session'],
-					'degree' => $_data['degree'],
-					'grade' => $_data['grade'],
-					'amount_month' => $_data['amountmonth'],
-					// 					'is_check' => $_data['degree'],
-					'start_date' => $_data['start_date'],
-					// 					'academic_year' => $_data['academic'],
-					'expired_date'=>$_data['end_date'],
-					'date' => date("Y-m-d"),
-					'status'   => $_data['status'],
-					'note'   => $_data['note'],
-					'user_id'	  => $this->getUserId()
+					'semester' 		=> $_data['semester'],
+					'session' 		=> $_data['session'],
+					'degree' 		=> $_data['degree'],
+					'time'	 		=> $_data['time'],
+					'grade'		 	=> $_data['grade'],
+					'amount_month' 	=> $_data['amountmonth'],
+					'start_date' 	=> $_data['start_date'],
+					'expired_date'	=>$_data['end_date'],
+					'date' 			=> date("Y-m-d"),
+					'status'   		=> $_data['status'],
+					'note'   		=> $_data['note'],
+					'user_id'	  	=> $this->getUserId()
 			);
 			$where=$this->getAdapter()->quoteInto("id=?", $_data['id']);
 			$this->update($_arr, $where);
@@ -224,18 +212,18 @@ class Global_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		$db = $this->getAdapter();
 		$sql = "SELECT `g`.`id`,`g`.`group_code` AS `group_code`,
 		(SELECT CONCAT(from_academic,'-',to_academic,'(',generation,')') FROM rms_tuitionfee AS f WHERE f.id=g.academic_year AND `status`=1 GROUP BY from_academic,to_academic,generation) AS tuitionfee_id,
-		 `g`.`semester` AS `semester`,
+		 
 		(SELECT kh_name FROM `rms_dept` WHERE (`rms_dept`.`dept_id`=`g`.`degree`)) AS degree,
-		(SELECT major_khname FROM `rms_major` WHERE (`rms_major`.`major_id`=`g`.`grade`))AS grade,
+		(SELECT major_khname FROM `rms_major` WHERE (`rms_major`.`major_id`=`g`.`grade`))AS grade,`g`.`semester` AS `semester`,
 		(SELECT`rms_view`.`name_en`	FROM `rms_view`	WHERE ((`rms_view`.`type` = 4)
 		AND (`rms_view`.`key_code` = `g`.`session`))LIMIT 1) AS `session`,
 		(SELECT `r`.`room_name`	FROM `rms_room` `r`	WHERE (`r`.`room_id` = `g`.`room_id`)) AS `room_name`,
 		`g`.`start_date`,`g`.`expired_date`,`g`.`note`
 		FROM `rms_group` as `g`";
 		$where =' WHERE 1 ';
-		$from_date =(empty($search['start_date']))? '1': "g.start_date >= '".$search['start_date']." 00:00:00'";
-		$to_date = (empty($search['end_date']))? '1': "g.start_date <= '".$search['end_date']." 23:59:59'";
-		$where.= " AND ".$from_date." AND ".$to_date;
+// 		$from_date =(empty($search['start_date']))? '1': "g.start_date >= '".$search['start_date']." 00:00:00'";
+// 		$to_date = (empty($search['end_date']))? '1': "g.start_date <= '".$search['end_date']." 23:59:59'";
+// 		$where.= " AND ".$from_date." AND ".$to_date;
 		$order =  ' ORDER BY `g`.`id` DESC ' ;
 		if(empty($search)){
 			return $db->fetchAll($sql.$order);

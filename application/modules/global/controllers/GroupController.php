@@ -29,7 +29,7 @@ class Global_GroupController extends Zend_Controller_Action {
 			//$rs_rows = $glClass->getGetPayTerm($rs_rows, BASE_URL );
 			$list = new Application_Form_Frmtable();
 			
-			$collumns = array("GROUP_CODE","YEARS","SEMESTER","DEGREE","GRADE","SESSION","ROOM_NAME","START_DATE","END_DATE","NOTE");
+			$collumns = array("GROUP_CODE","YEARS","DEGREE","GRADE","SEMESTER","SESSION","ROOM_NAME","START_DATE","END_DATE","NOTE");
 			
 			$link=array(
 					'module'=>'global','controller'=>'group','action'=>'edit',
@@ -78,6 +78,8 @@ class Global_GroupController extends Zend_Controller_Action {
 		$this->view->payment_term = $model->getAllPaymentTerm(null,1);
 		$room = $model->getAllRoom();
 		array_unshift($room, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
+		array_unshift($room, array ( 'id' => 0,'name' => 'Select Room'));
+		
 		$this->view->room = $room;
 		$_model = new Global_Model_DbTable_DbGroup();
     	$this->view->subject = $_model->getAllSubjectStudy();
