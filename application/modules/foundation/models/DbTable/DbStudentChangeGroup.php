@@ -8,7 +8,7 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 	}
 	public function getAllStudentID(){
 		$_db = $this->getAdapter();
-		$sql = "SELECT st.stu_id,st.stu_code FROM `rms_student` as st,rms_group_detail_student as gds where gds.is_pass=0 and gds.stu_id=st.stu_id and is_setgroup=1 and st.is_subspend=0 and st.status=1 and st.degree IN(2,3,4) group by gds.stu_id";
+		$sql = "SELECT st.stu_id,st.stu_code FROM `rms_student` as st,rms_group_detail_student as gds where gds.type=1 and gds.is_pass=0 and gds.stu_id=st.stu_id and is_setgroup=1 and st.is_subspend=0 and st.status=1 and st.degree IN(2,3,4) group by gds.stu_id";
 		$orderby = " ORDER BY stu_code ";
 		return $_db->fetchAll($sql.$orderby);		
 	}
@@ -186,7 +186,7 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 	}
 	function getStudentInfoById($stu_id){
 		$db = $this->getAdapter();
-		$sql = "SELECT st.stu_enname,st.`sex`,gds.`group_id` FROM `rms_student` AS st,rms_group_detail_student AS gds WHERE gds.is_pass=0 and  st.stu_id=$stu_id AND st.stu_id=gds.stu_id LIMIT 1";
+		$sql = "SELECT CONCAT(st.stu_khname,' - ',st.stu_enname) as name , st.`sex`,gds.`group_id` FROM `rms_student` AS st,rms_group_detail_student AS gds WHERE gds.is_pass=0 and  st.stu_id=$stu_id AND st.stu_id=gds.stu_id LIMIT 1";
 // 		echo $sql;exit();
 		return $db->fetchRow($sql);
 	}

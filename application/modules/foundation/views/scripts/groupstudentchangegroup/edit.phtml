@@ -3,8 +3,8 @@
 	echo $this->headTitle($tr->translate('EDIT_GROUP_STUDENT_CHANGE_GROUP')); 
 	
 	//$hour=explode(',', $this->rs['array_checkbox']);
-	$hour=$this->rs['array_checkbox'];
-// 	print_r($hour);exit();
+	//$hour=$this->rs['array_checkbox'];
+	//print_r($hour);exit();
 	
 ?>
 <form id="add_car" action="<?php echo $this->url(array('module'=>'foundation','controller'=>'groupstudentchangegroup','action'=>'edit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
@@ -51,6 +51,7 @@
 													<option value="<?php echo $_row['id']?>" <?php if($_row['id']==$this->rs['to_group']) echo 'selected="selected"';?>><?php echo $_row['group_code']?></option>
 												<?php }?>
 											</select>
+											<input type="hidden" name="old_to_group" id="old_to_group" value="<?php echo $this->rs['to_group'];?>" />
 										</td>
 									</tr>
 									
@@ -92,7 +93,13 @@
 											<input type="submit" value="save_close" name="save_close" label="<?php echo $tr->translate('GO_EDIT');?>" dojoType="dijit.form.Button" 
 											iconClass="dijitEditorIcon dijitEditorIconSave" />
 										</td>
-									</tr>					
+									</tr>	
+									<?php $test=""; foreach ($this->studentpass as $id => $rs){?>
+										<input type="hidden" name="old_student<?php echo $id?>" id="old_student<?php echo $id?>" value="<?php echo $rs['stu_id']?>"/>
+										<?php if($id==0){$test.=$id;}else{$test.=','.$id;}?>
+										
+									<?php }?>	
+										<input type="hidden" name="old_iden" id="old_iden" value="<?php echo $test;?>"/>
 								</table>
 							</td>	
 							
@@ -112,16 +119,13 @@ dojo.ready(function(){
 	toStudentGroup(1);
 	toStudentGroup(2);
 	getStudentFromGroup(test);
-	
 });
-
-
 
 var url_get_all_student_from_group_update = "<?php echo $this->url(array('module'=>'foundation','controller'=>'groupstudentchangegroup','action'=>'get-all-student-update')); ?>";
 function getStudentFromGroup(test1){
-		
+		//alert(test1);
 		var arr = test1.split(',');
-		//alert(arr);
+
 		from_group = dijit.byId('from_group').get('value');
 		dojo.xhrPost({
 			url:url_get_all_student_from_group_update,
@@ -130,7 +134,6 @@ function getStudentFromGroup(test1){
 				},
 			handleAs:"json",
 			load: function(respone) {
-				
 				tem='<table class="collape tablesorter" style="font-size:12px;background-color:white;width: 99.5%;"  id="table">'
 					+'<thead><tr ><th class="tdheader"><?php echo $tr->translate('NUM');?></th>'
 						+'<th class="tdheader"><?php echo $tr->translate('CODE');?></th>'
@@ -141,28 +144,27 @@ function getStudentFromGroup(test1){
 						+'<th style="white-space:nowrap;border-left: 0px none;" class="tdheader" > <?php echo $tr->translate('CHECK_ALL');?></th></tr>'
 					+'</thead>';
 				if(respone!=""){
-					
 					num=0;
 					for(var i=0;i<respone.length;i++){
 						inx = i+1;
-						
-							tem += '<tr><input type="hidden"  name="stu_id_'+inx+'" id="stu_id_'+inx+'" value="'+respone[i].stu_id+'" />';
-						    tem += '<td align="center">&nbsp;'+inx+'&nbsp;</td>';
+							tem += '<tr>';
+						    tem += '<td align="center">&nbsp;'+inx+'&nbsp;<input type="hidden" name="stu_id_'+inx+'" id="stu_id_'+inx+'" value="'+respone[i].stu_id+'" /></td>';
 							tem += '<td>&nbsp;<label style="font-size:11px;">'+respone[i].stu_code+'</label></td>';
 							tem += '<td>&nbsp;<label style="font-size:11px;">'+respone[i].stu_khname+'</label></td>';
 							tem += '<td>&nbsp;<label style="font-size:11px;">'+respone[i].stu_enname+'</label></td>';
 							tem += '<td colspan="2" align="center">&nbsp;<label style="font-size:11px;">'+respone[i].sex+'</label></td>';
-							tem += '<td align="center" colspan="2"><input style="height: 13px;" type="checkBox"   value="'+inx+'"  onclick="setValue('+respone.length+');" name="checkbox'+inx+'" id="checkbox'+inx+'"/></td>';
-						    tem += '</tr>';
-						
+							tem += '<td align="center" colspan="2"><input style="height: 13px;" type="checkBox"  name="checkbox'+inx+'" id="checkbox'+inx+'"/></td>';
+							
+							tem += '</tr>';
 						    if($("#identity").val()!="") {
 								var identity = $("#identity").val();
 								$("#identity").val(identity+','+inx);
 							} else { $("#identity").val(inx);}
+						    
 					}
 				}
 				tem+='</table>';
-				dojo.byId('data_table').innerHTML = tem;
+				dojo.byId('data_table').innerHTML = tem;setpassstudent();
 				
 			},
 			error: function(err) {
@@ -170,21 +172,27 @@ function getStudentFromGroup(test1){
 			}
 		});
 }
-
-
-function setValue(i){
-	$('#identity').val('');
-	for(var j=1;j<=i;j++){
-		if(dojo.byId('checkbox'+j).checked){
-			if($("#identity").val()!="") {
-				var iden = $("#identity").val();
-				$("#identity").val(iden+','+j);
-			} else{
-				$("#identity").val(j);
+function setpassstudent(){
+	var identity = $('#identity').val();
+	var arrays = identity.split(',');
+	for(var i=1;i<=arrays.length;i++) {
+		var stu_id = $("#stu_id_"+i).val();
+		//alert(iden);
+		var pass_identity = $('#old_iden').val();
+		var arr = pass_identity.split(',');
+		
+		for(var j=0;j<arr.length;j++) {
+			var pass_stu_id = $("#old_student"+j).val();
+			//alert(stu_id);alert(pass_stu_id);
+			if(stu_id==pass_stu_id){
+				$('#checkbox'+i).prop('checked', true);
+				
 			}
 		}
 	}
+	
 }
+
 
 
 function check(i){
@@ -207,7 +215,6 @@ function toStudentGroup(type){
 	}else{
 		togroup = dijit.byId('to_group').get('value');
 		}
-	
 	dojo.xhrPost({
 		url:url_to_group,
 		content:{
@@ -222,17 +229,13 @@ function toStudentGroup(type){
 			}else{
 				dojo.byId('lbltogroup').innerHTML='<span style="color:red;">Academic :  </span>'+data.year+'<span style="color:red;">  Degree :  </span>'+data.degree+'<span style="color:red;">  Grade :  </span>'+data.grade+'<span style="color:red;">  Session :  </span>'+data.session+"<br />"+'<span style="color:red;">  Start Date :  </span>'+data.start_date+'<span style="color:red;">  Expired Date :  </span>'+data.expired_date;
 			}
-				//dijit.byId("from_detail").attr("value",);
-			//dijit.byId("gender").attr("value",data.to_academic);
 		},
 		error: function(err) {
 			alert(err);
 		}
 	});
 }
-
 function clear(){
-	
 	dojo.byId('lblfromgroup').innerHTML='';
 	dojo.byId('lbltogroup').innerHTML='';
 	dijit.byId("studentid").attr("value",'');
@@ -243,8 +246,4 @@ function clear(){
 	dijit.byId("note").attr("value",'');
 }
 
-
-
-
 </script>
-

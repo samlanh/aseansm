@@ -130,9 +130,9 @@ var url_get_all_student_from_group = "<?php echo $this->url(array('module'=>'fou
 						for(var i=0;i<respone.length;i++){
 							inx = i+1;
 
-								tem += '<tr><input type="hidden"  name="stu_id_'+inx+'" id="stu_id_'+inx+'" value="'+respone[i].stu_id+'" />';
+								tem += '<tr>';
 							
-							    tem += '<td align="center">&nbsp;'+inx+'&nbsp;</td>';
+							    tem += '<td align="center">&nbsp;'+inx+'&nbsp;<input type="hidden"  name="stu_id_'+inx+'" id="stu_id_'+inx+'" value="'+respone[i].stu_id+'" /></td>';
 								tem += '<td>&nbsp;<label style="font-size:11px;">'+respone[i].stu_code+'</label></td>';
 								tem += '<td>&nbsp;<label style="font-size:11px;">'+respone[i].stu_khname+'</label></td>';
 								tem += '<td>&nbsp;<label style="font-size:11px;">'+respone[i].stu_enname+'</label></td>';

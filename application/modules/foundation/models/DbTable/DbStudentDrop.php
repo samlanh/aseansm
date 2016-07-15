@@ -77,7 +77,6 @@ class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 				$id = $this->insert($_arr);
 				
 				$this->_name='rms_student';
-				
 				$where=" stu_id=".$_data['studentid'];
 				if($_data['status']==1){
 					$arr=array(
@@ -89,6 +88,20 @@ class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 					);
 				}
 				$this->update($arr, $where);
+				
+				
+				$this->_name='rms_group_detail_student';
+				$where = " stu_id=".$_data['studentid']." and is_pass = 0";
+				if($_data['status']==1){
+					$ar=array(
+							'type'	=>	2,
+					);
+				}else{
+					$ar=array(
+							'type'	=>	1,
+					);
+				}
+				$this->update($ar, $where);
 				$_db->commit();
 			}catch(Exception $e){
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
@@ -124,6 +137,18 @@ class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 			}
 			$this->update($arr, $where);
 			
+			$this->_name='rms_group_detail_student';
+			$where = " stu_id=".$_data['studentid']." and is_pass = 0";
+			if($_data['status']==1){
+				$ar=array(
+						'type'	=>	2,
+				);
+			}else{
+				$ar=array(
+						'type'	=>	1,
+				);
+			}
+			$this->update($ar, $where);
 			$db->commit();
 		}catch(Exception $e){
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());

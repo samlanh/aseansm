@@ -117,8 +117,6 @@ dojo.ready(function(){
 
 });
 
-
-
 function getStudentInfo(){
 			studentid = dijit.byId('studentid').get('value');
 			var i=0;
@@ -130,11 +128,9 @@ function getStudentInfo(){
 				handleAs:"json",
 				load: function(data) {
 					//alert(data.stu_enname);
-					dijit.byId("studentname").attr("value",data.stu_enname);
+					dijit.byId("studentname").attr("value",data.name);
 					dijit.byId("gender").attr("value",data.sex);
-					
-						//dijit.byId("from_group").attr("value",data.group_id);
-					
+					//dijit.byId("from_group").attr("value",data.group_id);
 				},
 				error: function(err) {
 					alert(err);
@@ -161,9 +157,9 @@ function toStudentGroup(type){
 			//alert(data);
 
 			if(type==1){
-				dojo.byId('lblfromgroup').innerHTML='<span style="color:red;">Academic :  </span>'+data.year+'-'+data.to_academic+'<span style="color:red;">  Degree :  </span>'+data.degree+'<span style="color:red;">  Grade :  </span>'+data.grade+'<span style="color:red;">  Session :  </span>'+data.session+"<br />"+'<span style="color:red;">  Start Date :  </span>'+data.start_date+'<span style="color:red;">  Expired Date :  </span>'+data.expired_date;
+				dojo.byId('lblfromgroup').innerHTML='<span style="color:red;">Academic :  </span>'+data.year+'<span style="color:red;">  Degree :  </span>'+data.degree+'<span style="color:red;">  Grade :  </span>'+data.grade+'<span style="color:red;">  Session :  </span>'+data.session+"<br />"+'<span style="color:red;">  Start Date :  </span>'+data.start_date+'<span style="color:red;">  Expired Date :  </span>'+data.expired_date;
 			}else{
-				dojo.byId('lbltogroup').innerHTML='<span style="color:red;">Academic :  </span>'+data.year+'-'+data.to_academic+'<span style="color:red;">  Degree :  </span>'+data.degree+'<span style="color:red;">  Grade :  </span>'+data.grade+'<span style="color:red;">  Session :  </span>'+data.session+"<br />"+'<span style="color:red;">  Start Date :  </span>'+data.start_date+'<span style="color:red;">  Expired Date :  </span>'+data.expired_date;
+				dojo.byId('lbltogroup').innerHTML='<span style="color:red;">Academic :  </span>'+data.year+'<span style="color:red;">  Degree :  </span>'+data.degree+'<span style="color:red;">  Grade :  </span>'+data.grade+'<span style="color:red;">  Session :  </span>'+data.session+"<br />"+'<span style="color:red;">  Start Date :  </span>'+data.start_date+'<span style="color:red;">  Expired Date :  </span>'+data.expired_date;
 			}
 				//dijit.byId("from_detail").attr("value",);
 			//dijit.byId("gender").attr("value",data.to_academic);

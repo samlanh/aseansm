@@ -117,7 +117,7 @@ function getStudentInfo(){
 				handleAs:"json",
 				load: function(data) {
 					//alert(data.stu_enname);
-					dijit.byId("studentname").attr("value",data.stu_enname);
+					dijit.byId("studentname").attr("value",data.name);
 					dijit.byId("gender").attr("value",data.sex);
 					dijit.byId("from_group").attr("value",data.group_id);
 				},

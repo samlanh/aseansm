@@ -16,8 +16,12 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 			  FROM
 			    `rms_group_detail_student` AS gds,
 			    `rms_group` AS g 
-			  WHERE gds.is_pass=0 AND gds.group_id = g.id AND g.`degree` IN (2,3,4)
-			  GROUP BY gds.group_id ";
+			  WHERE  gds.type=1 AND gds.group_id = g.id AND g.`degree` IN (2,3,4)";
+			$request=Zend_Controller_Front::getInstance()->getRequest();
+			if($request->getActionName()=='add'){
+				$sql.=" AND gds.is_pass=0 ";
+			}
+			 $sql.=" GROUP BY gds.group_id ";
 		return $db->fetchAll($sql);
 	}
 	public function gettoGroup(){
@@ -85,8 +89,12 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 	}
 	
 	public function addGroupStudentChangeGroup($_data){
+		$_db= $this->getAdapter();
+		$_db->beginTransaction();
+		
 			try{	
-				$_db= $this->getAdapter();
+				
+				
 				$con = $this->getCondition($_data);
 				if($con!=''){
 					$identity = explode(',', $_data['identity']);
@@ -185,6 +193,7 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 				return $_db->commit();
 					
 			}catch(Exception $e){
+				$_db->rollBack();
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 	}
@@ -195,11 +204,17 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 		return $db->fetchRow($sql);
 		
 	}
-	
+	function getAllStudentOldGroup($from_group){
+		$db = $this->getAdapter();
+		$sql="select gd_id from rms_group_detail_student where rms_group_detail_student.group_id=".$from_group;
+		return $db->fetchAll($sql);
+	}
 	
 	public function updateStudentChangeGroup($_data,$id){
-// 		print_r($_data);exit();
+ 		$_db= $this->getAdapter();
+ 		$_db->beginTransaction();
 		try{	
+			
 			$_arr=array(
 						'user_id'=>$this->getUserId(),
 						'from_group'=>$_data['from_group'],
@@ -211,17 +226,107 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 			$where=" id = ".$id;
 			$this->update($_arr, $where);
 			
+			$this->_name='rms_group_detail_student';
+			$StudentOldGroup = $this->getAllStudentOldGroup($_data['from_group']);
+			if(!empty($StudentOldGroup)){
+				foreach($StudentOldGroup as $result){
+					$arra=array(
+							'is_pass'=>0,
+							);
+					$where=" gd_id=".$result['gd_id'];
+					
+					$this->update($arra, $where);
+				}
+			}
+			
+			
+			$this->_name='rms_group_detail_student';
+			$where = "old_group = ".$_data['from_group']." and group_id = ".$_data['old_to_group'];
+			$this->delete($where);
+			
+			$group_detail = $this->getGroupDetail($_data['to_group']);
+			if($group_detail['degree']==1){
+				$stu_type=3;
+			}else if($group_detail['degree']== 2 || $group_detail['degree']== 3 || $group_detail['degree']== 4){
+				$stu_type=1;
+			}else if($group_detail['degree'] > 4){
+				$stu_type=2;
+			}
+			
+			
+			
+					$idsss=explode(',', $_data['identity']);
+					foreach ($idsss as $k){
+						if(!empty($_data['checkbox'.$k])){
+							
+							$this->_name='rms_group_detail_student';
+							$is_pass=array(
+									'is_pass'	=>1,
+							);
+							$where = " stu_id=".$_data['stu_id_'.$k];
+							$this->update($is_pass, $where);
+							
+							
+							$this->_name='rms_group_detail_student';
+							$stu=array(
+								'group_id'	=>$_data['to_group'],
+								'stu_id'	=>$_data['stu_id_'.$k],
+								'user_id'	=>$this->getUserId(),
+								'status'	=>1,
+								//'date'		=>date('Y-m-d'),
+								'type'		=>1,
+								'old_group'	=>$_data['from_group'],
+							);
+							$this->insert($stu);
+							
+							$this->_name = 'rms_student';
+								$array=array(
+										'session'		=>$group_detail['session'],
+										'degree'		=>$group_detail['degree'],
+										'grade'			=>$group_detail['grade'],
+										'academic_year'	=>$group_detail['academic_year'],
+										'stu_type'		=>$stu_type,
+								);
+								$where = " stu_id=".$_data['stu_id_'.$k];
+								$this->update($array, $where);
+							}
+						}
+
+			$this->_name = 'rms_group';
+			$group=array(
+					'is_use'	=>0
+				);
+			$where=" id=".$_data['old_to_group'];
+			$this->update($group, $where);
+
+			$this->_name = 'rms_group';
+			$group=array(
+					'is_use'	=>0
+				);
+			$where=" id=".$_data['from_group'];
+			$this->update($group, $where);
+							
+						
+			$this->_name = 'rms_group';
+			$group=array(
+					'is_use'	=>1
+					);
+			$where=" id=".$_data['to_group'];
+			$this->update($group, $where);
+							
+			return $_db->commit();
 		}catch(Exception $e){
+			$_db->rollBack();
+			echo $e->getMessage();exit();
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
 	}
-	
 	
 	function getAllStudentFromGroup($from_group){
 		$db=$this->getAdapter();
 		$sql="select gds.stu_id as stu_id,st.stu_enname,st.stu_khname,st.stu_code,
 			 (select name_en from rms_view where rms_view.type=2 and rms_view.key_code=st.sex) as sex
-			 from rms_group_detail_student as gds,rms_student as st where is_pass=0 and gds.stu_id=st.stu_id and gds.group_id=$from_group";
+			 from rms_group_detail_student as gds,rms_student as st where st.is_subspend = 0 and gds.type=1 and is_pass=0 and gds.stu_id=st.stu_id and gds.group_id=$from_group";
 		return $db->fetchAll($sql);
 	}
 	
@@ -230,7 +335,7 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 		$db=$this->getAdapter();
 		$sql="select gds.stu_id as stu_id,st.stu_enname,st.stu_khname,st.stu_code,
 		(select name_en from rms_view where rms_view.type=2 and rms_view.key_code=st.sex) as sex
-		from rms_group_detail_student as gds,rms_student as st where gds.stu_id=st.stu_id and gds.group_id=$from_group";
+		from rms_group_detail_student as gds,rms_student as st where st.is_subspend=0 and gds.type=1 and gds.stu_id=st.stu_id and gds.group_id=$from_group";
 		return $db->fetchAll($sql);
 	}
 	
@@ -252,7 +357,12 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 		return $db->fetchAll($sql.$order);
 	}
 	
-	
+	function selectStudentPass($id){
+		$db = $this->getAdapter();
+		$sql = "SELECT stu_id  FROM rms_group_detail_student as gds WHERE gds.old_group=$id";
+		//$order=' ORDER BY id DESC';
+		return $db->fetchAll($sql);
+	}
 	
 }
 

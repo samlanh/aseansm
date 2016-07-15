@@ -74,6 +74,7 @@ class Foundation_groupstudentchangegroupController extends Zend_Controller_Actio
 			try{
 				$data = $this->getRequest()->getPost();
 				//$data["id"]=$id;
+				//print_r($data);exit();
 				$db = new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
 				$row=$db->updateStudentChangeGroup($data,$id);
 				
@@ -84,16 +85,21 @@ class Foundation_groupstudentchangegroupController extends Zend_Controller_Actio
 			}
 		}	
 		$db= new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
-		$row = $this->view->rs = $db->getAllGroupStudentChangeGroupById($id);
+		$result = $db->getAllGroupStudentChangeGroupById($id);
+		$this->view->rs = $result;
 		
-// 		print_r($row);exit();
+		$this->view->studentpass = $db->selectStudentPass($result['from_group']);
 		
 		$_add = new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
 		
 		$this->view->row = $add =$_add->getfromGroup();
 		
 		$this->view->rows = $add =$_add->gettoGroup();
+		
+		
 	}
+	
+	
 	function getToGroupAction(){
 		if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();

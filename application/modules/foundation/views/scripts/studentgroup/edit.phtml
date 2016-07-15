@@ -221,14 +221,14 @@ $frm_set_price = $this->frm_set_charge;?>
 						<a id="refresh" href="#">Refresh</a>
 					</div>
 					<select multiple id="public-methods" name="public-methods[]">
-						<?php if(!empty($this->rs)) foreach($this->rs as $row ){?>
+						<?php $no=0; if(!empty($this->rs)) foreach($this->rs as $row ){$no++;?>
 							<option value="<?php echo $row['stu_id'];?>" >
-								<?php echo $row['stu_code']," ",$row['stu_enname']," ",$row['stu_khname']; ?>
+								<?php echo $no," . ",$row['stu_code']," ",$row['stu_enname']," ",$row['stu_khname']; ?>
 							</option>
 						<?php }?>
-						<?php if(!empty($this->rr)) foreach($this->rr as $row ){?>
+						<?php if(!empty($this->rr)) foreach($this->rr as $row ){$no++;?>
 							<option value="<?php echo $row['stu_id'];?>" <?php echo "selected='Selected'";?>>
-								<?php echo $row['code']," ",$row['kh_name']," ",$row['en_name']; ?>
+								<?php echo $no," . ", $row['code']," ",$row['kh_name']," ",$row['en_name']; ?>
 							</option>
 						<?php }?>
 					</select>
