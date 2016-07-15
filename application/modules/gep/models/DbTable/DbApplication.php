@@ -73,7 +73,7 @@ class Gep_Model_DbTable_DbApplication extends Zend_Db_Table_Abstract
 		,nationality,dob,tel,
 		(SELECT name_kh FROM `rms_view` WHERE type=1 AND key_code = status) as status
 		FROM rms_student where status = 1 AND stu_type=".$stu_type;
-		$orderby = " ORDER BY stu_enname ";
+		$orderby = " ORDER BY stu_id DESC ";
 		return $_db->fetchAll($sql.$orderby);
 	}
 	public function updateStudentGep($_data){
