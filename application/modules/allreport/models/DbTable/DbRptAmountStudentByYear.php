@@ -73,11 +73,12 @@ class Allreport_Model_DbTable_DbRptAmountStudentByYear extends Zend_Db_Table_Abs
 			  (select major_enname from rms_major where rms_major.major_id=g.`grade`) as grade
 			 FROM
 			  `rms_group_detail_student` AS gds,
-			  `rms_group` AS g 
-			 WHERE g.id = gds.`group_id` 
+			  `rms_group` AS g ,
+			  rms_student as st
+			 WHERE st.stu_id=gds.stu_id and  g.id = gds.`group_id` and gds.is_pass=0
 			  ";
     	$groupby=" GROUP BY g.`academic_year`,g.`grade`,g.`session`";
-    	$where  = '';
+    	$where  = ' ';
     	
    		 if(empty($search)){
     		return $db->fetchAll($sql.$groupby);
@@ -90,6 +91,8 @@ class Allreport_Model_DbTable_DbRptAmountStudentByYear extends Zend_Db_Table_Abs
     		$s_where[] = " (select name_en from rms_view where rms_view.type=4 and rms_view.key_code=g.session) LIKE '%{$s_search}%'";
     		$where .=' AND ( '.implode(' OR ',$s_where).')';
     	}
+    	
+    	//$where  = ' limit 1';
     	
     	$row = $db->fetchAll($sql.$where.$groupby);
     	if($row){

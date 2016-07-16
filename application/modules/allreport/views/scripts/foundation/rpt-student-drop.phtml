@@ -2,12 +2,24 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$this->headTitle('Report Student Drop'); 
 	echo $this->headTitle(''); 
-	
+	$frm =  $this->form_search;
 ?>	
 <div style="width: 28cm;margin: 0 auto;">
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rpt-student-drop')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<input dojoType="dijit.form.TextBox" required="true"  id="txtsearch" name="txtsearch" placeholder="Search....." value="<?php echo $this->search['txtsearch']?>" type="text">
-		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
+		
+		<table width="80%">
+	       <tr>
+	           <td><?php echo $frm->getElement("title");?></td>
+	           <td> <?php echo $frm->getElement("study_year");?></td>
+	           <td> <?php echo $frm->getElement("grade_bac");?></td>
+			   <td> <?php echo $frm->getElement("session");?></td>
+			   <td>
+			   		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
+	       	   </td>
+	       </tr>
+		</table>
+		
+		
 </form>		
 </div>
 	<div style="border: 1px dotted #000;background: #fff;width: 27cm;margin: 0 auto;min-height: 27cm;padding: 0.5cm;">	
@@ -23,11 +35,11 @@
 									<td width="28%" align="right">
 									</td>
 								</tr>
-<style>
-	table tr th{
-		border: 1px solid #000;	
-	}
-</style>
+							<style>
+								table tr th{
+									border: 1px solid #000;	
+								}
+							</style>
 								<tr>
 									<td colspan="3">
 										<table cellpadding="5"​ style="margin:0 auto;width:100%; border-collapse: collapse;"  border="1" >
@@ -36,6 +48,9 @@
 												<th >Student ID</th>
 												<th >Student Name</th>
 												<th >Gender</th>
+												<th >AcademicYear</th>
+												<th >Grade</th>
+												<th >Session</th>
 												<th >Type</th>
 												<th >Date Stop</th>
 												<th >Note</th>
@@ -47,6 +62,9 @@
 												<th ><?php echo $row['stu_id'];?></th>
 												<th align="left">&nbsp;&nbsp;<?php echo $row['name'];?></th>
 												<th ><?php echo $row['sex'];?></th>
+												<th ><?php echo $row['academic_year'];?></th>
+												<th ><?php echo $row['grade'];?></th>
+												<th ><?php echo $row['session'];?></th>
 												<th ><?php echo $row['type'];?></th>
 												<th ><?php echo $row['date'];?></th>
 												<th ><?php echo $row['note'];?></th>

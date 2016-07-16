@@ -28,9 +28,6 @@ public function init()
 		//$this->view->search=$search;
 	}
 	
-	
-	
-	
 	public function rptamountstudentbyyearAction()
 	{
 		$db= new Allreport_Model_DbTable_DbRptAmountStudentByYear();
@@ -85,19 +82,22 @@ public function init()
 	public function rptStudentDropAction(){
 	
 		if($this->getRequest()->isPost()){
-			$_data=$this->getRequest()->getPost();
-			$search = array(
-					'txtsearch' => $_data['txtsearch'],
-					//'searchby' => $_data['searchby'],
-			);
+			$search=$this->getRequest()->getPost();
 		}
 		else{
 			$search=array(
-					'txtsearch' =>'',
-					//'searchby' => $_data['searchby'],
+					'title' =>'',
+					'study_year' =>'',
+					'grade_bac' =>'',
+					'session' =>'',
 			);
 		}
-	
+		
+		$form=new Registrar_Form_FrmSearchInfor();
+		$forms=$form->FrmSearchRegister();
+		Application_Model_Decorator::removeAllDecorator($forms);
+		$this->view->form_search=$form;
+		
 		$group= new Allreport_Model_DbTable_DbRptStudentDrop();
 		$this->view->rs = $rs_rows = $group->getAllStudentDrop($search);
 		$this->view->search=$search;
@@ -146,21 +146,24 @@ public function init()
 	public function rptStudentAction(){
 	
 		if($this->getRequest()->isPost()){
-			$_data=$this->getRequest()->getPost();
-			$search = array(
-					'txtsearch' => $_data['txtsearch'],
-					'start_date'=> $_data['start_date'],
-					'end_date'=> $_data['end_date'],
-			);
+			$search=$this->getRequest()->getPost();
 		}
 		else{
 			$search=array(
-					'txtsearch' =>'',
+					'title'  	=>'',
+					'study_year'=>'',
+					'grade_bac' =>'',
+					'session'  	=>'',
 					'start_date'=> date('Y-m-d'),
 					'end_date'	=> date('Y-m-d'),
 			);
 		}
-	
+		
+		$form=new Registrar_Form_FrmSearchInfor();
+		$forms=$form->FrmSearchRegister();
+		Application_Model_Decorator::removeAllDecorator($forms);
+		$this->view->form_search=$form;
+		
 		$group= new Allreport_Model_DbTable_DbRptStudent();
 		$this->view->rs = $rs_rows = $group->getAllStudent($search);
 		$this->view->search=$search;
