@@ -46,6 +46,7 @@ class Foundation_GroupstudyController extends Zend_Controller_Action {
 		$frm = $frm->frmSearchTeacher();
 		Application_Model_Decorator::removeAllDecorator($frm);
 		$this->view->frm_search = $frm;
+		
 		$form=new Registrar_Form_FrmSearchInfor();
 		$forms=$form->FrmSearchRegister();
 		Application_Model_Decorator::removeAllDecorator($forms);
