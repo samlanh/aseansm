@@ -277,17 +277,22 @@ public function init()
 	public function studentGroupAction()
 	{	
 		if($this->getRequest()->isPost()){
-			$_data=$this->getRequest()->getPost();
-			$search = array(
-					'txtsearch' => $_data['txtsearch']
-			);
-		
+			$search=$this->getRequest()->getPost();
 		}
 		else{
 			$search = array(
-					'txtsearch' => ""
+					'title' 		=> "",
+					'study_year'	=> "",
+					'grade' 		=> "",
+					'session' 		=> "",
 			);
 		}
+		
+		$form=new Registrar_Form_FrmSearchInfor();
+		$forms=$form->FrmSearchRegister();
+		Application_Model_Decorator::removeAllDecorator($forms);
+		$this->view->form_search=$form;
+		
 		$db = new Allreport_Model_DbTable_DbRptGroup();
 		$rs= $db->getGroupDetail($search);
 		$this->view->rs = $rs;	

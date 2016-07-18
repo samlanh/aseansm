@@ -2,12 +2,19 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$this->headTitle('Report Student Group'); 
 	echo $this->headTitle(''); 
-	
+	$frm =  $this->form_search;
 ?>	
 <div style="width: 28cm;margin: 0 auto;">
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'other','action'=>'rpt-group')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<input dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Search....." value="<?php echo $this->search['txtsearch'];?>" type="text">
-		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
+		<table width="100%" >
+	       <tr>
+	           <td><?php echo $frm->getElement("title");?></td>
+	           <td> <?php echo $frm->getElement("study_year");?></td>
+	           <td> <?php echo $frm->getElement("grade");?></td>
+			   <td> <?php echo $frm->getElement("session");?></td>
+	           <td><button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
+	       </tr>
+		</table>
 </form>
 </div>
 	<div style="border: 1px dotted #000;background: #fff;width: 27cm;margin: 0 auto;min-height: 27cm;padding: 0.5cm;">
@@ -35,12 +42,12 @@
 											<tr style="font-size:11px; height: 20px;" align="center" >
 												<th >No.</th>
 												<th >Group Code</th>
-												<th >Room Name</th>
 												<th>Academic</th>
-												<th >Semester</th>
-												<th >Session</th>
 												<th >Degree</th>
 												<th >Grade</th>
+												<th >Semester</th>
+												<th >Session</th>
+												<th >Room Name</th>
 												<th >Amount Mount</th>
 												<th >Start Date</th>					
 												<th >Expired Date</th>
@@ -50,12 +57,14 @@
 											<tr style="font-size:11px; height: 20px;" align="center" >
 												<th ><?php echo $i;?></th>
 												<th ><?php echo $row['group_code'];?></th>
-												<th align="left">&nbsp;&nbsp;<?php echo $row['room_name'];?></th>
+												
 												<th ><?php echo $row['academic_year'];?></th>	
-												<th ><?php echo $row['semester'];?></th>
-												<th ><?php echo $row['session'];?></th>
+												
 												<th align="left">&nbsp;&nbsp;<?php echo $row['degree'];?></th>
 												<th align="left">&nbsp;&nbsp;<?php echo $row['grade'];?></th>
+												<th ><?php echo $row['semester'];?></th>
+												<th ><?php echo $row['session'];?></th>
+												<th align="left">&nbsp;&nbsp;<?php echo $row['room_name'];?></th>
 												<th ><?php echo $row['amount_month'];?></th>
 												<th ><?php echo date("d-M-Y",strtotime($row['start_date']));?></th>					
 												<th ><?php echo date("d-M-Y",strtotime($row['expired_date']));?></th>
