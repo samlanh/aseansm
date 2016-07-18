@@ -262,18 +262,18 @@ class Foundation_Model_DbTable_DbStudent extends Zend_Db_Table_Abstract
 		$sql = "SELECT * FROM `rms_student` WHERE stu_id=$stu_id LIMIT 1 ";
 		return $db->fetchRow($sql);
 	}
-	function getSearchStudent($data){
+	function getSearchStudent($search){
 		$db=$this->getAdapter();
 		$sql="SELECT stu_id ,stu_code,stu_enname,stu_khname,sex,degree,grade,academic_year from rms_student ";
-		 $sql.= ' WHERE `status`=1 AND is_setgroup = 0 and is_subspend=0 ';
-		 if($data['grade']>0){
-		 	$sql.=" AND grade =".$data['grade'];
+		$sql.= ' WHERE `status`=1 AND is_setgroup = 0 and is_subspend=0 and stu_type=1 ';
+		 if(!empty($search['grade'])){
+		 	$sql.=" AND grade =".$search['grade'];
 		 }
-		 if($data['session']>0){
-		 	$sql.=" AND session =".$data['session'];
+		 if(!empty($search['session'])){
+		 	$sql.=" AND session =".$search['session'];
 		 }
-		 if($data['academy']>0){
-		 	$sql.=" AND academic_year =".$data['academy'];
+		 if(!empty($search['academy'])){
+		 	$sql.=" AND academic_year =".$search['academy'];
 		 }
 		return $db->fetchAll($sql);
 	}

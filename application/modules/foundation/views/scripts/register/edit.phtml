@@ -19,7 +19,7 @@ dojo.require("dijit.form.Textarea");
 dojo.require("dijit.form.DateTextBox");
 dojo.require("dijit.form.CheckBox");
 
-var service_store  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->serviecename));?> );
+var language_store  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->language));?> );
 var job_store  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->occupation));?> );
 var job_store1  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->occupation));?> );
 var job_store2  = getDataStorefromJSON('id','name',<?php print_r(Zend_Json::encode($this->occupation));?> );
@@ -104,7 +104,7 @@ dojo.ready(function(){
 
 	
 	new dijit.form.FilteringSelect({
-		store: service_store,
+		store: language_store,
 		autoComplete: true,                        
 		required: false,                      
 	    id: "level",
@@ -165,11 +165,11 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 					      <div class="tabContentSection" dojoType="dijit.layout.ContentPane" title="<?php echo $tr->translate("STUDENT_INFO");?>" selected="true">
 					      	<table  cellspacing="5" style="margin:0 auto;" width="100%">
 					      		<tr>
-					      			<td  title="ឈ្មោះជាភាសារខ្មែរ"><?php echo $tr->translate("NAME_KH");?>*</td>
+					      			<td ><?php echo $tr->translate("NAME_KH");?>*</td>
 									<td><input class="fullside"  tabindex="1" dojoType="dijit.form.ValidationTextBox"  id="name_kh" name="name_kh" value="<?php echo $this->rs['stu_khname'];?>" type="text" required="required"></td>	
-									<td  title="ឈ្មោះជាភាសារអង់គ្លេស"><?php echo $tr->translate("NAME_EN");?>*</td>
+									<td ><?php echo $tr->translate("NAME_EN");?>*</td>
 									<td><input class="fullside"  tabindex="2" dojoType="dijit.form.ValidationTextBox"  id="name_en" name="name_en" value="<?php echo $this->rs['stu_enname'];?>" type="text" required="required"></td>
-									<td title="បញ្ជូលភេទនិស្សិត"><?php echo $tr->translate("SEX");?>*</td>
+									<td ><?php echo $tr->translate("SEX");?>*</td>
 									<td>
 									    <select class="fullside"  tabindex="3" name="sex" id="sex" dojoType="dijit.form.FilteringSelect" >
 										    <option value="1" <?php if($this->rs['sex']==1){{ echo "selected='selected'"; }} ?> ><?php echo $tr->translate("MALE")?></option>
@@ -190,8 +190,8 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 					      			<td title="អ៊ីម៉ែល"><?php echo $tr->translate("EMAIL_ADDRESS");?></td>
 									<td><input class="fullside"  tabindex="7" dojoType="dijit.form.ValidationTextBox"  id="st_email" name="st_email" value="<?php echo $this->rs['email'];?>" type="text"   ></td>
 									<td title="ទីកន្លែងកំណើត"><?php echo $tr->translate("POB");?></td>
-									<td  colspan="4" >
-										<textarea class="fullside" tabindex="8" style="width: 644px;height: 60px !important;"
+									<td  colspan="3" >
+										<textarea class="fullside" tabindex="8" style=" height: 60px !important;"
 										tabindex="21" dojoType=""  id="place_of_birth" name="place_of_birth"  ><?php echo $this->rs['address'];?></textarea>
 									</td>
 					      		</tr>
@@ -251,7 +251,7 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 								</tr>
 								<tr>
 									<td title="បញ្ជូលលេខសំគាល់និស្សិត"><?php echo $tr->translate("STUDENT_ID");?>*</td>
-									<td><input class="fullside" tabindex="15" dojoType="dijit.form.TextBox" readonly="readonly" id="student_id" name="student_id" value="<?php echo $this->rs['stu_code']; ?>" type="text" ></td>
+									<td><input class="fullside"  style="color: red;" tabindex="15" dojoType="dijit.form.TextBox" readonly="readonly" id="student_id" name="student_id" value="<?php echo $this->rs['stu_code']; ?>" type="text" ></td>
 									<td title="កំរិតភាសា"><?php echo $tr->translate("LANGUAGE_LEVEL");?>*</td>
 									<td>
 									    <input id="level" class="fullside" value="<?php echo $this->rs['lang_level'];?>"/>
@@ -276,8 +276,8 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 										</select>
 									</td>
 									<td title="ពណ៌នា"><?php echo $tr->translate("REMARK");?>*</td>
-									<td  colspan="4" >
-										<textarea class="fullside" style="width: 644px;height: 60px !important;"
+									<td  colspan="3" >
+										<textarea class="fullside" style=" height: 60px !important;"
 										tabindex="21" dojoType=""  id="remark" name="remark"  ><?php echo $this->rs['remark'];?></textarea>
 									</td>
 					      		</tr>
@@ -289,8 +289,8 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 									<td colspan="6" style="border-bottom:1px solid #ccc;"><strong><?php echo $tr->translate("FATHER_INFO");?></strong></td>
 								</tr>
 					      		<tr>
-					      			<td width="12%"><?php echo $tr->translate("NAME_KH");?>*</td>
-									<td><input class="fullside"  tabindex="22" dojoType="dijit.form.ValidationTextBox"  id="fa_name_kh" name="fa_name_kh" value="<?php echo $this->rs['father_khname'];?>" type="text" required="required" ></td>
+					      			<td ><?php echo $tr->translate("NAME_KH");?>*</td>
+									<td><input class="fullside"  tabindex="22" dojoType="dijit.form.ValidationTextBox"  id="fa_name_kh" name="fa_name_kh" value="<?php echo $this->rs['father_khname'];?>" type="text"  ></td>
 									<td ><?php echo $tr->translate("NAME_EN");?>*</td>
 									<td><input class="fullside"  tabindex="23" dojoType="dijit.form.ValidationTextBox"  id="fa_name_en" name="fa_name_en" value="<?php echo $this->rs['father_enname'];?>" type="text" ></td>
 									<td><?php echo $tr->translate("AGE");?></td>
@@ -310,7 +310,7 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 									<td colspan="6" style="border-bottom:1px solid #ccc;"><strong><?php echo $tr->translate("MOTHER_INFO");?></strong></td>
 								</tr>
 					      		<tr>
-					      			<td width="12%"><?php echo $tr->translate("NAME_KH");?>*</td>
+					      			<td ><?php echo $tr->translate("NAME_KH");?>*</td>
 									<td><input class="fullside"  tabindex="28" dojoType="dijit.form.ValidationTextBox"  id="mom_name_kh" name="mom_name_kh" value="<?php echo $this->rs['mother_khname'];?>" type="text"  ></td>
 									<td ><?php echo $tr->translate("NAME_EN");?>*</td>
 									<td><input class="fullside"  tabindex="29" dojoType="dijit.form.ValidationTextBox"  id="mom_name_en" name="mom_name_en" value="<?php echo $this->rs['mother_enname'];?>" type="text"  ></td>
@@ -332,7 +332,7 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 									<td colspan="6" style="border-bottom:1px solid #ccc;"><strong><?php echo $tr->translate("GUARDIAN_INFO");?></strong></td>
 								</tr>
 					      		<tr>
-					      			<td width="12%"><?php echo $tr->translate("NAME_KH");?>*</td>
+					      			<td ><?php echo $tr->translate("NAME_KH");?>*</td>
 									<td><input class="fullside"  tabindex="34" dojoType="dijit.form.ValidationTextBox"  id="guardian_name_kh" name="guardian_name_kh" value="<?php echo $this->rs['guardian_khname'];?>" type="text"  ></td>
 									<td ><?php echo $tr->translate("NAME_EN");?>*</td>
 									<td><input class="fullside"  tabindex="35" dojoType="dijit.form.ValidationTextBox"  id="guardian_name_en" name="guardian_name_en" value="<?php echo $this->rs['guardian_enname'];?>" type="text"  ></td>
@@ -342,7 +342,7 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 					      		<tr>
 					      			<td><?php echo $tr->translate("NATIONALITY");?></td>
 								    <td><input class="fullside"  tabindex="37" dojoType="dijit.form.TextBox"  id="guardian_national" name="guardian_national" value="<?php echo $this->rs['guardian_nation'];?>" type="text" required="required" ></td>
-					      			<td><?php echo $tr->translate("IDENTITTY_PASSPORT_NO");?></td>
+					      			<td  width="100px"><?php echo $tr->translate("IDENTITTY_PASSPORT_NO");?></td>
 									<td><input class="fullside"  tabindex="38" dojoType="dijit.form.TextBox"  id="guardian_identity" name="guardian_identity" value="<?php echo $this->rs['guardian_document'];?>" type="text" required="required" ></td>
 					      			<td><?php echo $tr->translate("OCCUPATION");?></td>
 									<td>
@@ -608,36 +608,4 @@ function addJob(){
 		</form>
 	</div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

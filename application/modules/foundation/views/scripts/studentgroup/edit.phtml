@@ -141,6 +141,7 @@ $frm_set_price = $this->frm_set_charge;?>
 							<td><?php echo $tr->translate("ACADEMIC_YEAR");?></td>
 							<td>
 								<select class="fullside" dojoType="dijit.form.FilteringSelect" required="true"  id="academy" name="academy" type="text">
+									<option value="-1">Select AcademicYear</option>
 									<?php if(!empty($this->academy)) foreach($this->academy as $row){?>
 										<option value="<?php echo $row['id'];?>"><?php echo $row['years']; ?></option>
 									<?php }?>
@@ -149,9 +150,10 @@ $frm_set_price = $this->frm_set_charge;?>
 							<td><?php echo $tr->translate("DEGREE");?></td>
 							<td colspan="2">
 								<select class="fullside"  name="degree" id="degree" dojoType="dijit.form.FilteringSelect" onchange="getallGrade(1);">
-											<?php if(!empty($this->degree))foreach ($this->degree as $row){?>
-											<option value="<?php echo $row['dept_id']?>"<?php if($row['dept_id']==$this->value['degree']) echo "selected='selected'"?>><?php echo $row['en_name']?></option>
-											<?php }?>
+									<option value="-1">Select Degree</option>		
+									<?php if(!empty($this->degree))foreach ($this->degree as $row){?>
+										<option value="<?php echo $row['dept_id']?>"<?php if($row['dept_id']==$this->value['degree']) echo "selected='selected'"?>><?php echo $row['en_name']?></option>
+									<?php }?>
 								</select>
 							</td>
 						</tr>
@@ -163,6 +165,7 @@ $frm_set_price = $this->frm_set_charge;?>
 							<td><?php echo $tr->translate("SESSION");?></td>
 							<td>
 								 <select class="fullside"  tabindex="24" name="session" id="session" dojoType="dijit.form.FilteringSelect" >
+								      <option value="-1">Select Session</option>
 								       <?php if(!empty($this->rs_session)) foreach ($this->rs_session As $rs_sesion){?>
 										    <option value="<?php echo $rs_sesion['key_code'];?>" <?php if($rs_sesion['key_code']==$this->value['session']) echo "selected='selected'"?> ><?php echo $rs_sesion['view_name'];?></option>
 								       <?php }?>			
@@ -246,7 +249,7 @@ $frm_set_price = $this->frm_set_charge;?>
 
 
 <div class="dijitHidden">
-	<div data-dojo-type="dijit.Dialog" style="width:21cm;" id="popup_dept" >
+	<div data-dojo-type="dijit.Dialog" style="width:27cm;" id="popup_dept" >
 <form id='frm_add_tran' dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 <script type="dojo/method" event="onSubmit">			
 			if(this.validate()) {

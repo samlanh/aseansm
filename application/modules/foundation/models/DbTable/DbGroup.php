@@ -23,7 +23,7 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 	}
 	public function getGroup(){
 		$db = $this->getAdapter();
-		$sql="SELECT id,group_code as name FROM rms_group WHERE status = 1 AND is_use = 0 and degree IN (2,3,4) ";
+		$sql="SELECT id,group_code as name FROM rms_group WHERE status = 1 AND is_pass = 2 and degree IN (2,3,4) ";
 		return $db->fetchAll($sql);
 	}
 	
@@ -70,7 +70,7 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 			SELECT `group_id`,stu_id,(SELECT `stu_code` FROM `rms_student`WHERE `stu_id`=`rms_group_detail_student`.`stu_id`)AS code,
 			(SELECT `stu_enname` FROM `rms_student`WHERE `stu_id`=`rms_group_detail_student`.`stu_id`)AS en_name, 
 			(SELECT `stu_khname` FROM `rms_student`WHERE `stu_id`=`rms_group_detail_student`.`stu_id`)AS kh_name
-			FROM `rms_group_detail_student` WHERE type=1 and `status`=1 and is_pass = 0 AND`group_id`=".$id;
+			FROM `rms_group_detail_student` WHERE `status`=1 AND`group_id`=".$id;
 		return $db->fetchAll($sql);
 		
 	}
@@ -146,6 +146,7 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		$this->_name = 'rms_group';
 		$data_gro = array(
 				'is_use'=> 1,
+				'is_pass'=> 0,
 		);
 		$where = 'id = '.$_data['group'];
 		$this->update($data_gro, $where);
@@ -176,13 +177,8 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		`g`.`start_date`,
 		`g`.`expired_date`,
 		`g`.`note`,
-		(SELECT
-		`rms_view`.`name_en`
-		FROM `rms_view`
-		WHERE ((`rms_view`.`type` = 1)
-		AND (`rms_view`.`key_code` = `g`.`status`))
-		LIMIT 1) AS `status`,
-		(SELECT COUNT(gds.`stu_id`) FROM `rms_group_detail_student` as gds WHERE gds.type=1 and gds.`group_id`=`g`.`id` GROUP BY gds.group_id)AS Num_Student
+		(select name_en from rms_view where rms_view.type=9 and key_code=g.is_pass) as status,
+		(SELECT COUNT(gds.`stu_id`) FROM `rms_group_detail_student` as gds WHERE gds.`group_id`=`g`.`id` GROUP BY gds.group_id)AS Num_Student
 		FROM rms_group g where g.degree IN (2,3,4)";
 		
 		$order = " ORDER BY `g`.`id` DESC " ;	

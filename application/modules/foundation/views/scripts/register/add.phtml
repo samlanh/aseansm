@@ -36,7 +36,7 @@ dojo.ready(function(){
 	    autoComplete: true,                        
 	    id: "grade",
 	    name: "grade",  
-	    tabindex: "16",         
+	    tabindex: "16",  
 	    class: 'fullside',  
 	    placeHolder:"Selected Grade",          
 	    onChange: function() {  
@@ -52,7 +52,8 @@ dojo.ready(function(){
 		autoComplete: true,                        
 	    id: "fa_job",
 	    name: "fa_job",  
-	    tabindex: "17",         
+	    tabindex: "17",    
+	         
 	    class: 'fullside',  
 	    placeHolder:"Selected job", 
 	    onChange: function() {          
@@ -65,6 +66,7 @@ dojo.ready(function(){
 	    }  
 	   } 
 	}, "fa_job");
+	dijit.byId('fa_job').attr('value',0);
 
 	new dijit.form.FilteringSelect({
 		store: job_store,
@@ -84,6 +86,7 @@ dojo.ready(function(){
 	    }  
 	   } 
 	}, "mo_job");
+	dijit.byId('mo_job').attr('value',0);
 
 	new dijit.form.FilteringSelect({
 		store: job_store,
@@ -103,7 +106,7 @@ dojo.ready(function(){
 	    }  
 	   } 
 	}, "gu_job");
-
+	dijit.byId('gu_job').attr('value',0);
 
 
 	new dijit.form.FilteringSelect({
@@ -123,6 +126,7 @@ dojo.ready(function(){
 	    }  
 	   } 
 	}, "level");
+	dijit.byId('level').attr('value',0);
 	
 }); 
 var grade_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
@@ -147,7 +151,6 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 				}
 			});
 	}
-
 
 var url_getstuno = '<?php echo $this->url(array('module'=>'foundation','controller'=>'register','action'=>'get-stu-no')); ?>';
 	function getStudentNo(newid){
@@ -184,13 +187,13 @@ var url_getstuno = '<?php echo $this->url(array('module'=>'foundation','controll
 						<td>
 						 <div id="mainTabContainer" style="width: 1150px;height: 500px;" dojoType="dijit.layout.TabContainer" region="center" width="1000px !importand" >
 					      <div class="tabContentSection" dojoType="dijit.layout.ContentPane" title="<?php echo $tr->translate("STUDENT_INFO");?>" selected="true">
-					      	<table  cellspacing="5" style="margin:0 auto;" width="100%">
+					      	<table cellspacing="5" style="margin:0 auto;" width="100%">
 					      		<tr>
-					      			<td  title="ឈ្មោះជាភាសារខ្មែរ"><?php echo $tr->translate("NAME_KH");?>*</td>
+					      			<td><?php echo $tr->translate("NAME_KH");?>*</td>
 									<td><input class="fullside" tabindex="1" dojoType="dijit.form.ValidationTextBox"  id="name_kh" name="name_kh" value="" type="text" required="required"></td>	
-									<td  title="ឈ្មោះជាភាសារអង់គ្លេស"><?php echo $tr->translate("NAME_EN");?>*</td>
-									<td><input class="fullside"  tabindex="2" dojoType="dijit.form.ValidationTextBox"  id="name_en" name="name_en" value="" type="text"  ></td>
-									<td title="បញ្ជូលភេទនិស្សិត"><?php echo $tr->translate("SEX");?>*</td>
+									<td><?php echo $tr->translate("NAME_EN");?>*</td>
+									<td><input class="fullside"  tabindex="2" dojoType="dijit.form.ValidationTextBox"  id="name_en" name="name_en" value="" type="text" required="required"  ></td>
+									<td><?php echo $tr->translate("SEX");?>*</td>
 									<td>
 									    <select class="fullside"  tabindex="3" name="sex" id="sex" dojoType="dijit.form.FilteringSelect" >
 										    <option value="1" label="Active">Male</option>
@@ -210,8 +213,8 @@ var url_getstuno = '<?php echo $this->url(array('module'=>'foundation','controll
 					      			<td title="អ៊ីម៉ែល"><?php echo $tr->translate("EMAIL_ADDRESS");?></td>
 									<td><input class="fullside"  tabindex="7" dojoType="dijit.form.ValidationTextBox"  id="st_email" name="st_email" value="" type="text"  ></td>
 									<td title="ទីកន្លែងកំណើត"><?php echo $tr->translate("POB");?></td>
-									<td  colspan="4" >
-										<textarea class="fullside"  dojoType="dijit.form.ValidationTextBox" style="width: 644px;height: 60px !important;"
+									<td  colspan="3" >
+										<textarea class="fullside"  dojoType="dijit.form.ValidationTextBox" style=" height: 60px !important;"
 										tabindex="8" dojoType=""  id="place_of_birth" name="place_of_birth"  ></textarea>
 									</td>
 					      		</tr>
@@ -225,7 +228,6 @@ var url_getstuno = '<?php echo $this->url(array('module'=>'foundation','controll
 									<td><input class="fullside" tabindex="10" dojoType="dijit.form.TextBox"  id="way_note" name="way_note" value="" type="text" ></td>
 									<td><?php echo $tr->translate("VILLAGE");?></td>
 									<td><input class="fullside"  dojoType="dijit.form.TextBox"  id="village_note" name="village_note" value="" type="text" ></td>
-									
 								</tr>
 								<tr>								
 									<td><?php echo $tr->translate("COMMUNE");?></td>
@@ -268,7 +270,7 @@ var url_getstuno = '<?php echo $this->url(array('module'=>'foundation','controll
 								</tr>
 								<tr>
 									<td title="បញ្ជូលលេខសំគាល់និស្សិត"><?php echo $tr->translate("STUDENT_ID");?>*</td>
-									<td style="color: red;"><input class="fullside" tabindex="14" dojoType="dijit.form.TextBox"  id="student_id" name="student_id" value="" readonly="readonly" type="text" ></td>
+									<td><input  style="color: red;" class="fullside" tabindex="14" dojoType="dijit.form.TextBox"  id="student_id" name="student_id" value="" readonly="readonly" type="text" ></td>
 									<td title="កំរិតភាសា"><?php echo $tr->translate("LANGUAGE_LEVEL");?>*</td>
 									<td>
 									   <input id="level" />
@@ -287,14 +289,14 @@ var url_getstuno = '<?php echo $this->url(array('module'=>'foundation','controll
 					      		<tr>
 					      			<td title="ស្ថានការណ៍"><?php echo $tr->translate("STATUS");?>*</td>
 									<td>
-										<select class="fullside" tabindex="19" dojoType="dijit.form.FilteringSelect" required="true"  id="status" name="status" type="text">								
+										<select class="fullside" tabindex="19" dojoType="dijit.form.FilteringSelect"   id="status" name="status" type="text">								
 											<option value="1" ><?php echo $this->translate("Active")?></option>
 											<option value="0" ><?php echo $this->translate("Deactive")?></option>
 										</select>
 									</td>
 									<td title="ពណ៌នា"><?php echo $tr->translate("REMARK");?>*</td>
-									<td  colspan="4" >
-										<textarea class="fullside" dojoType="dijit.form.ValidationTextBox" style="width: 644px;height: 60px !important;"
+									<td  colspan="3" >
+										<textarea class="fullside" dojoType="dijit.form.ValidationTextBox" style=" height: 60px !important;"
 										tabindex="20" dojoType=""  id="remark" name="remark"  ></textarea>
 									</td>
 					      		</tr>
@@ -306,7 +308,7 @@ var url_getstuno = '<?php echo $this->url(array('module'=>'foundation','controll
 									<td colspan="6" style="border-bottom:1px solid #ccc;"><strong><?php echo $tr->translate("FATHER_INFO");?></strong></td>
 								</tr>
 					      		<tr>
-					      			<td width="12%"><?php echo $tr->translate("NAME_KH");?>*</td>
+					      			<td ><?php echo $tr->translate("NAME_KH");?>*</td>
 									<td><input class="fullside"  tabindex="1" dojoType="dijit.form.ValidationTextBox"  id="fa_name_kh" name="fa_name_kh" value="" type="text" ></td>
 									<td ><?php echo $tr->translate("NAME_EN");?>*</td>
 									<td><input class="fullside"  tabindex="2" dojoType="dijit.form.ValidationTextBox"  id="fa_name_en" name="fa_name_en" value="" type="text"  ></td>
@@ -327,8 +329,8 @@ var url_getstuno = '<?php echo $this->url(array('module'=>'foundation','controll
 									<td colspan="6" style="border-bottom:1px solid #ccc;"><strong><?php echo $tr->translate("MOTHER_INFO");?></strong></td>
 								</tr>
 					      		<tr>
-					      			<td width="12%"><?php echo $tr->translate("NAME_KH");?>*</td>
-									<td><input class="fullside"  tabindex="7" dojoType="dijit.form.ValidationTextBox"  id="mom_name_kh" name="mom_name_kh" value="" type="text" required="required"></td>
+					      			<td ><?php echo $tr->translate("NAME_KH");?>*</td>
+									<td><input class="fullside"  tabindex="7" dojoType="dijit.form.ValidationTextBox"  id="mom_name_kh" name="mom_name_kh" value="" type="text" ></td>
 									<td ><?php echo $tr->translate("NAME_EN");?>*</td>
 									<td><input class="fullside"  tabindex="8" dojoType="dijit.form.ValidationTextBox"  id="mom_name_en" name="mom_name_en" value="" type="text"  ></td>
 									<td><?php echo $tr->translate("AGE");?></td>
@@ -348,7 +350,7 @@ var url_getstuno = '<?php echo $this->url(array('module'=>'foundation','controll
 									<td colspan="6" style="border-bottom:1px solid #ccc;"><strong><?php echo $tr->translate("GUARDIAN_INFO");?></strong></td>
 								</tr>
 					      		<tr>
-					      			<td width="12%"><?php echo $tr->translate("NAME_KH");?>*</td>
+					      			<td ><?php echo $tr->translate("NAME_KH");?>*</td>
 									<td><input class="fullside"  tabindex="13" dojoType="dijit.form.ValidationTextBox"  id="guardian_name_kh" name="guardian_name_kh" value="" type="text"  ></td>
 									<td ><?php echo $tr->translate("NAME_EN");?>*</td>
 									<td><input class="fullside"  tabindex="14" dojoType="dijit.form.ValidationTextBox"  id="guardian_name_en" name="guardian_name_en" value="" type="text"  ></td>
@@ -358,7 +360,7 @@ var url_getstuno = '<?php echo $this->url(array('module'=>'foundation','controll
 					      		<tr>
 					      			<td><?php echo $tr->translate("NATIONALITY");?></td>
 								    <td><input class="fullside"  tabindex="16" dojoType="dijit.form.TextBox"  id="guardian_national" name="guardian_national" value="" type="text"  ></td>
-					      			<td><?php echo $tr->translate("IDENTITTY_PASSPORT_NO");?></td>
+					      			<td  width="100px"><?php echo $tr->translate("IDENTITTY_PASSPORT_NO");?></td>
 									<td><input class="fullside"  tabindex="17" dojoType="dijit.form.TextBox"  id="guardian_identity" name="guardian_identity" value="" type="text"  ></td>
 					      			<td><?php echo $tr->translate("OCCUPATION");?></td>
 									<td>

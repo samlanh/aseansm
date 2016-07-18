@@ -72,12 +72,15 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 		$service = new Foundation_Model_DbTable_DbApplication();
 		$rows = $service->getlang();
 		array_unshift($rows, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
+		array_unshift($rows, array ( 'id' => 0,'name' => 'Select Language Level'));
+		
 		$this->view->language = $rows;
 		
 		$_db = new Application_Model_DbTable_DbGlobal();
 		
 		$row =$_db->getOccupation();
 		array_unshift($row, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
+		array_unshift($row, array ( 'id' => 0,'name' => 'Select Job'));
 		$this->view->occupation = $row;
 		
 		$this->view->row = $db->getDegreeLanguage();
@@ -112,7 +115,9 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 		$service = new Foundation_Model_DbTable_DbApplication();
 		$rows = $service->getlang();
 		array_unshift($rows, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
-		$this->view->serviecename = $rows;
+		array_unshift($rows, array ( 'id' => 0,'name' => 'Select Language Level'));
+		$this->view->language = $rows;
+		
 		$this->view->row = $db->getDegreeLanguage();
 		
 		$_db = new Application_Model_DbTable_DbGlobal();

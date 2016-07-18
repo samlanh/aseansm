@@ -34,14 +34,14 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 		<td>
 				<fieldset style="margin-top:-13px;">
 					<legend align="center" ><strong style="font-size: 18px;"><?php echo $tr->translate("ADD_STUDY_GROUP");?></strong></legend>
-					<table style="margin: 0 auto; width: 100%;" cellspacing="10">
+					<table style="margin: 0 auto; width: 100%; white-space: nowrap;" cellspacing="10">
 						<tr>
-							<td width="110px"><?php echo $tr->translate("GROUP_CODE")?></td>
-							<td><input dojoType="dijit.form.ValidationTextBox" required="true" id="group_code" name="group_code" value="" type="text"></td>
+							<td ><?php echo $tr->translate("GROUP_CODE")?></td>
+							<td><input dojoType="dijit.form.ValidationTextBox" class="fullside" required="true" id="group_code" name="group_code" value="" type="text"></td>
 						    
-						    <td width="110px"><?php echo $tr->translate("ACADEMIC_YEAR")?></td>
+						    <td><?php echo $tr->translate("ACADEMIC_YEAR")?></td>
 							<td>
-								<select name="academic_year" id="academic_year" placeholder="Select Year" type="text" dojoType="dijit.form.FilteringSelect">
+								<select class="fullside" name="academic_year" id="academic_year" placeholder="Select Year" type="text" dojoType="dijit.form.FilteringSelect">
 									<option></option>
 									<?php foreach($this->year as $year){?>
 										<option value="<?php echo $year['id'];?>"><?php echo $year['years'];?></option>
@@ -50,7 +50,7 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 							</td>
 							<td ><?php echo $tr->translate("DEGREE")?></td>
 							<td>
-								<select   name="degree" id="degree" dojoType="dijit.form.FilteringSelect" placeholder="Select Degree" onchange="getallGrade();">
+								<select  class="fullside" name="degree" id="degree" dojoType="dijit.form.FilteringSelect" placeholder="Select Degree" onchange="getallGrade();">
 									<option></option>
 									<?php 
 									if(!empty($this->degree))foreach ($this->degree as $row){?>
@@ -62,17 +62,17 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 						<tr>
 						
 							<td style="white-space: nowrap;"><?php echo $tr->translate("GRADE")?></td>
-							<td width="100px">
+							<td>
 								<input id="grade" name="grade" />
 							</td>
 							
 							<td><?php echo $tr->translate("SEMESTER")?></td>
-							<td><input dojoType="dijit.form.ValidationTextBox" required="true" name="semester" value="" type="text"></td>
+							<td><input class="fullside" dojoType="dijit.form.ValidationTextBox" required="true" name="semester" value="" type="text"></td>
 							
 							
 							<td><?php echo $tr->translate("SESSION")?></td>
 							<td>
-								<select name="session" id="session" dojoType="dijit.form.FilteringSelect">
+								<select class="fullside" name="session" id="session" dojoType="dijit.form.FilteringSelect">
 								<?php $row= new Application_Model_DbTable_DbGlobal();
 								      $rows=$row->getSession();
 									foreach($rows as $key =>$rs){?>
@@ -82,31 +82,31 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 							</td>
 						</tr>
 						<tr>
-							<td style="width: 5px"><?php echo $tr->translate("START_DATE")?></td>
-							<td><input dojoType="dijit.form.DateTextBox" name="start_date" id="start_date" onchange="setEndDate();" value="<?php echo date('Y-m-d');?>" type="text"></td>
+							<td ><?php echo $tr->translate("START_DATE")?></td>
+							<td><input class="fullside" dojoType="dijit.form.DateTextBox" name="start_date" id="start_date" onchange="setEndDate();" value="<?php echo date('Y-m-d');?>" type="text"></td>
 							<td><?php echo $tr->translate("AMOUNT_MONTH")?></td>
-							<td><input dojoType="dijit.form.NumberTextBox"   name="amountmonth" id="amountmonth" value="" onkeyup="setEndDate();" type="text"></td>
-							<td style="width: 5px;white-space: nowrap;"><?php echo $tr->translate("END_DATE")?></td>
-							<td><input dojoType="dijit.form.DateTextBox" id="end_date" name="end_date" type="text"  value="<?php echo date('Y-m-d');?>" ></td>
+							<td><input class="fullside" dojoType="dijit.form.NumberTextBox"   name="amountmonth" id="amountmonth" value="" onkeyup="setEndDate();" type="text"></td>
+							<td ><?php echo $tr->translate("END_DATE")?></td>
+							<td><input class="fullside" dojoType="dijit.form.DateTextBox" id="end_date" name="end_date" type="text"  value="<?php echo date('Y-m-d');?>" ></td>
 						</tr>
 						<tr>
 							<td><?php echo $tr->translate("ROOM_NAME")?></td>
 							<td>
-								<input id="room" />
+								<input class="fullside" id="room" />
 							</td>
-							<td style="width: 5px"><?php echo $tr->translate("STATUS")?></td>
-							<td><select name="status" id="status" dojoType="dijit.form.FilteringSelect">
+							<td ><?php echo $tr->translate("STATUS")?></td>
+							<td><select class="fullside" name="status" id="status" dojoType="dijit.form.FilteringSelect">
 								    <option value="1" label="ប្រើប្រាស់">ប្រើប្រាស់</option>
 								    <option value="0" label="មិនប្រើប្រាស់">មិនប្រើប្រាស់</option>
 								</select>
 							</td>
-							<td style="width: 5px"><?php echo $tr->translate("NOTE")?></td>
-							<td><input dojoType="dijit.form.TextBox"   name="note" value="" type="text"></td>
+							<td ><?php echo $tr->translate("NOTE")?></td>
+							<td><input class="fullside" dojoType="dijit.form.TextBox"   name="note" value="" type="text"></td>
 						</tr>
 						<tr>
-							<td style="width: 5px"><?php echo $tr->translate("TIME")?></td>
+							<td ><?php echo $tr->translate("TIME")?></td>
 							<td>
-								<select name="time" id="time" dojoType="dijit.form.FilteringSelect">
+								<select class="fullside" name="time" id="time" dojoType="dijit.form.FilteringSelect">
 									<option value="-1" >Select Time</option>
 								    <option value="1" >Part Time</option>
 								    <option value="2" >Full Time</option>
@@ -142,7 +142,8 @@ dojo.ready(function(){
 				store: room_store,
 			    autoComplete: true,                        
 			    id: "room",
-			    name: "room",           
+			    name: "room", 
+			    class: "fullside",          
 			    placeHolder:"Select Room",          
 			    onChange: function() {  
 			    	room = dijit.byId('room').get('value');

@@ -88,7 +88,12 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 				
 				$db = new Foundation_Model_DbTable_DbGroup();
 				$db->addStudentGroup($_data);
-				Application_Form_FrmMessage::message("INSERT_SUCCESS");
+				if(isset($_data['save_close'])){
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentgroup");
+				}else{
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentgroup/add");
+				}
+				//Application_Form_FrmMessage::message("INSERT_SUCCESS");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
@@ -104,7 +109,6 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 				$_data = $this->getRequest()->getPost();
 				$db = new Foundation_Model_DbTable_DbGroup();
 				$row = $db->editStudentGroup($_data, $id);
-				
 				Application_Form_FrmMessage::message("INSERT_SUCCESS");
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
@@ -170,7 +174,7 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 			$db = new Foundation_Model_DbTable_DbStudent();
 			$grade = $db->getAllGrade($data['dept_id']);
 			//print_r($grade);exit();
-			//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
+			array_unshift($grade, array ( 'id' => -1, 'name' => 'Select Grade') );
 			print_r(Zend_Json::encode($grade));
 			exit();
 		}
