@@ -253,23 +253,10 @@ $frm_set_price = $this->frm_set_charge;?>
 <form id='frm_add_tran' dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 <script type="dojo/method" event="onSubmit">			
 			if(this.validate()) {
-                major = dijit.byId('major').get('value');
-                room = dijit.byId('room').get('value');
-
-				if (major=='' || major==-1){
-					alert('Please Select Faculty !');
-                    dijit.byId('major').focus();
-			        return false;
-                }
-               if (room=='' || room==-1){
-					alert('Please Select room !');
-                    dijit.byId('room').focus();
-			        return false;
-                }
 				return true;
-			}else {
+	  		}else {
 				return false;
-			}
+	   		}
 </script>
 <table width="100%">
 	<tr>

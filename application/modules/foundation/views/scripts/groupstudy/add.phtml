@@ -42,7 +42,7 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 						    <td><?php echo $tr->translate("ACADEMIC_YEAR")?></td>
 							<td>
 								<select class="fullside" name="academic_year" id="academic_year" placeholder="Select Year" type="text" dojoType="dijit.form.FilteringSelect">
-									<option></option>
+									<option value="1">Select AcademicYear</option>
 									<?php foreach($this->year as $year){?>
 										<option value="<?php echo $year['id'];?>"><?php echo $year['years'];?></option>
 									<?php }?>
@@ -51,7 +51,7 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 							<td ><?php echo $tr->translate("DEGREE")?></td>
 							<td>
 								<select  class="fullside" name="degree" id="degree" dojoType="dijit.form.FilteringSelect" placeholder="Select Degree" onchange="getallGrade();">
-									<option></option>
+									<option value="-1">Select Degree</option>
 									<?php 
 									if(!empty($this->degree))foreach ($this->degree as $row){?>
 										<option value="<?php echo $row['dept_id']?>"><?php echo $row['en_name']?></option>
@@ -67,7 +67,7 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 							</td>
 							
 							<td><?php echo $tr->translate("SEMESTER")?></td>
-							<td><input class="fullside" dojoType="dijit.form.ValidationTextBox" required="true" name="semester" value="" type="text"></td>
+							<td><input class="fullside" dojoType="dijit.form.ValidationTextBox" name="semester" value="" type="text"></td>
 							
 							
 							<td><?php echo $tr->translate("SESSION")?></td>
@@ -152,7 +152,9 @@ dojo.ready(function(){
 				    }
 			    }
 			}, "room");
-	
+			dijit.byId('room').attr('value',0);
+
+			
 			new dijit.form.FilteringSelect({
 			    autoComplete: true,                        
 			    id: "grade",

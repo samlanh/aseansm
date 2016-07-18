@@ -15,7 +15,7 @@
 									<tr>
 										<td><?php echo $tr->translate("STUDENT_ID")?></td><input type="hidden" name="id" value="<?php echo $this->row['id'];?>" />
 										<td>
-											<select class="fullside" name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();" >
+											<select readonly="readonly" class="fullside" name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();" >
 										    	<?php if(!empty($this->rs))foreach ($this->rs as $row){?>
 													<option value="<?php echo $row['stu_id']?>"<?php if($row['stu_id']==$this->row['stu_id']) echo 'selected="selected"';?>><?php echo $row['stu_code']?></option>
 												<?php }?>
@@ -65,8 +65,6 @@
 										</td>
 									</tr>
 									<tr>
-										<td><?php echo $tr->translate("NOTE")?></td>
-										<td><input dojoType="dijit.form.TextBox" required="true" class="fullside" id="note" name="note" value="<?php echo $this->row['note'];?>" type="text"></td>
 										<td><?php echo $tr->translate("STATUS")?></td>
 										<td>
 											<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside" id="status" name="status" type="text">

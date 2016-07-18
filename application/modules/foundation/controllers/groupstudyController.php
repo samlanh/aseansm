@@ -75,13 +75,14 @@ class Foundation_GroupstudyController extends Zend_Controller_Action {
 		
 		$years=new Foundation_Model_DbTable_DbGroupStudy();
 		$this->view->row_year=$years->getAllYears();
+		
 		$model = new Application_Model_DbTable_DbGlobal();
 		$this->view->payment_term = $model->getAllPaymentTerm(null,1);
 		$room = $model->getAllRoom();
 		array_unshift($room, array ('id' => -1,'name' => 'Add New'));
 		array_unshift($room, array ( 'id' => 0,'name' => 'Select Room'));
-		
 		$this->view->room = $room;
+		
 		//print_r($room);exit();
 		$_model = new Foundation_Model_DbTable_DbGroupStudy();
     	$this->view->subject = $_model->getAllSubjectStudy();

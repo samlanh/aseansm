@@ -175,7 +175,6 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 						$this->insert($arr);
 					}
 					
-					
 				$this->_name = 'rms_group';
 					$group=array(
 							'is_use'	=>0,
@@ -191,9 +190,7 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 					);
 					$where=" id=".$_data['to_group'];
 					$this->update($group, $where);
-					
 				return $_db->commit();
-					
 			}catch(Exception $e){
 				$_db->rollBack();
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
@@ -296,14 +293,17 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 
 			$this->_name = 'rms_group';
 			$group=array(
-					'is_use'	=>0
+					'is_use'	=>0,
+					'is_pass'	=>2,
+					
 				);
 			$where=" id=".$_data['old_to_group'];
 			$this->update($group, $where);
 
 			$this->_name = 'rms_group';
 			$group=array(
-					'is_use'	=>0
+					'is_use'	=>0,
+					'is_pass'	=>1,
 				);
 			$where=" id=".$_data['from_group'];
 			$this->update($group, $where);
@@ -311,7 +311,8 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 						
 			$this->_name = 'rms_group';
 			$group=array(
-					'is_use'	=>1
+					'is_use'	=>1,
+					'is_pass'	=>0,
 					);
 			$where=" id=".$_data['to_group'];
 			$this->update($group, $where);

@@ -107,7 +107,7 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 					}
 				},
 				error: function(err) {
-					alert(222);
+					//alert(222);
 				}
 			});
 		
@@ -228,23 +228,10 @@ $frm_set_price = $this->frm_set_charge;?>
 dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 <script type="dojo/method" event="onSubmit">			
 			if(this.validate()) {
-                major = dijit.byId('major').get('value');
-                room = dijit.byId('room').get('value');
-
-				if (major=='' || major==-1){
-					alert('Please Select Faculty !');
-                    dijit.byId('major').focus();
-			        return false;
-                }
-               if (room=='' || room==-1){
-					alert('Please Select room !');
-                    dijit.byId('room').focus();
-			        return false;
-                }
 				return true;
-			}else {
+	   		}else {
 				return false;
-			}
+	   		}
 </script>
 <table width="100%">
 	<tr>
@@ -295,8 +282,10 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 						<tr>
 							<td><?php echo $tr->translate("START_DATE")?></td>
 							<td><input dojoType="dijit.form.DateTextBox" name="start_date" id="start_date" onchange="setEndDate();" value="now" type="text"></td>
+							
 							<td><?php echo $tr->translate("AMOUNT_MONTH")?></td>
 							<td><input dojoType="dijit.form.NumberTextBox"   name="amountmonth" id="amountmonth" value="" onkeyup="setEndDate();" type="text"></td>
+							
 							<td><?php echo $tr->translate("END_DATE")?></td>
 							<td><input dojoType="dijit.form.DateTextBox" id="end_date" name="end_date" type="text" value="now" ></td>
 						</tr>
