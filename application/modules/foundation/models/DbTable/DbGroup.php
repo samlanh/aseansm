@@ -182,7 +182,7 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		WHERE ((`rms_view`.`type` = 1)
 		AND (`rms_view`.`key_code` = `g`.`status`))
 		LIMIT 1) AS `status`,
-		(SELECT COUNT(gds.`stu_id`) FROM `rms_group_detail_student` as gds,rms_student as st WHERE gds.type=1 and  gds.`group_id`=`g`.`id` and gds.stu_id=st.stu_id and st.is_subspend=0 and is_pass=0 GROUP BY gds.group_id)AS Num_Student
+		(SELECT COUNT(gds.`stu_id`) FROM `rms_group_detail_student` as gds WHERE gds.type=1 and gds.`group_id`=`g`.`id` GROUP BY gds.group_id)AS Num_Student
 		FROM rms_group g where g.degree IN (2,3,4)";
 		
 		$order = " ORDER BY `g`.`id` DESC " ;	
