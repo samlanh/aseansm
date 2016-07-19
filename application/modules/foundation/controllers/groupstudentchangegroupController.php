@@ -58,9 +58,26 @@ class Foundation_groupstudentchangegroupController extends Zend_Controller_Actio
 		$_add = new Foundation_Model_DbTable_DbGroupStudentChangeGroup();
 		
 		$this->view->row = $add =$_add->getfromGroup();
-		
 		$this->view->rs = $add =$_add->gettoGroup();
 		
+		$dbstudent = new Foundation_Model_DbTable_DbGroup();
+		$this->view->academy = $dbstudent->getAllYear();
+		
+		$_db = new Application_Model_DbTable_DbGlobal();
+		$this->view->degree = $_db->getAllFecultyName();
+		
+		$db=new Application_Model_DbTable_DbGlobal();
+		$this->view->rs_session=$db->getSession();
+		
+		$group = new Foundation_Model_DbTable_DbGroup();
+		
+		$group_option = $group->getGroupToEdit();
+		array_unshift($group_option, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
+		$this->view->group = $group_option;
+		
+		$room =  $group->getRoom();
+		array_unshift($room, array ( 'room_id' => 0, 'room_name' => 'Select Room') );
+		$this->view->room = $room;
 		
 // 		$_db = new Application_Model_DbTable_DbGlobal();
 // 		$this->view->degree = $rows = $_db->getAllFecultyName();
@@ -96,7 +113,24 @@ class Foundation_groupstudentchangegroupController extends Zend_Controller_Actio
 		
 		$this->view->rows = $add =$_add->gettoGroup();
 		
+		$dbstudent = new Foundation_Model_DbTable_DbGroup();
+		$this->view->academy = $dbstudent->getAllYear();
 		
+		$_db = new Application_Model_DbTable_DbGlobal();
+		$this->view->degree = $_db->getAllFecultyName();
+		
+		$db=new Application_Model_DbTable_DbGlobal();
+		$this->view->rs_session=$db->getSession();
+		
+		$group = new Foundation_Model_DbTable_DbGroup();
+		
+		$group_option = $group->getGroupToEdit();
+		array_unshift($group_option, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
+		$this->view->group = $group_option;
+		
+		$room =  $group->getRoom();
+		array_unshift($room, array ( 'room_id' => 0, 'room_name' => 'Select Room') );
+		$this->view->room = $room;
 	}
 	
 	

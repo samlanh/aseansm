@@ -31,7 +31,7 @@ class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 		(SELECT	`rms_view`.`name_en` FROM `rms_view` WHERE `rms_view`.`type` = 4 AND `rms_view`.`key_code` = session ) AS session,
 		
 		(SELECT name_kh FROM `rms_view` WHERE `rms_view`.`type`=5 and `rms_view`.`key_code`=`rms_student_drop`.`type` limit 1) as type,
-		reason,date,note from `rms_student_drop`,rms_student where rms_student.stu_id=rms_student_drop.stu_id and rms_student.degree IN (2,3,4) and rms_student_drop.status=1 ";
+		reason,date from `rms_student_drop`,rms_student where rms_student.stu_id=rms_student_drop.stu_id and rms_student.degree IN (2,3,4) and rms_student_drop.status=1 ";
 		$order_by=" order by id DESC";
 		$where='';
 		if(empty($search)){
@@ -72,7 +72,7 @@ class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 						'status'	=>$_data['status'],
 						'date'		=>$_data['datestop'],
 						'reason'	=>$_data['reason'],
-						'note'		=>$_data['note'],
+						//'note'		=>$_data['note'],
 						);
 				$id = $this->insert($_arr);
 				
@@ -116,7 +116,7 @@ class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 					'type'		=>$_data['type'],
 					'date'		=>$_data['datestop'],
 					'reason'	=>$_data['reason'],
-					'note'		=>$_data['note'],
+					//'note'		=>$_data['note'],
 					'status'	=>$_data['status'],
 					);
 			$where=$this->getAdapter()->quoteInto("id=?", $_data["id"]);

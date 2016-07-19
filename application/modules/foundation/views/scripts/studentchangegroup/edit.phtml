@@ -2,6 +2,15 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	echo $this->headTitle($tr->translate('EDIT_STUDENT_CHANGE_GROUP')); 
 ?>
+
+<script type="text/javascript">
+dojo.require("dojo.data.ItemFileWriteStore");  
+dojo.require("dijit.form.NumberTextBox");
+dojo.require("dijit.form.Textarea");
+dojo.require("dijit.form.DateTextBox");
+dojo.require("dijit.form.CheckBox");
+</script>
+
 <form id="add_car" action="<?php echo $this->url(array('module'=>'foundation','controller'=>'studentchangegroup','action'=>'edit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	<table cellspacing="20" style="margin: 0 auto; width:100%">
 		<tr>
@@ -68,17 +77,17 @@
 									
 									<tr>
 										<td><?php echo $tr->translate("MOVING_DATE")?></td>
-										<td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="moving_date" name="moving_date" value="<?php echo $this->rows['moving_date'];?>" type="text"></td>
+										<td><input dojoType="dijit.form.DateTextBox"  class="fullside" id="moving_date" name="moving_date" value="<?php echo $this->rows['moving_date'];?>" type="text"></td>
 									
 										<td align="right"><?php echo $tr->translate("NOTE")?></td>
 										<td>
-											<input dojoType="dijit.form.TextBox" required="true" class="fullside" value="<?php echo $this->rows['note'];?>" id="note" name="note" type="text" />
+											<input dojoType="dijit.form.TextBox" class="fullside"  value="<?php echo $this->rows['note'];?>" id="note" name="note" type="text" />
 												
 										</td>
 									
 										<td align="right"><?php echo $tr->translate("STATUS")?></td>
 										<td>
-											<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside" id="status" name="status" type="text">
+											<select dojoType="dijit.form.FilteringSelect" class="fullside" id="status" name="status" type="text">
 												<option value="1" <?php if($this->rows['status']==1) echo 'selected="selected"';?>>Active</option>
 												<option value="0" <?php if($this->rows['status']==0) echo 'selected="selected"';?>>Deactive</option>
 											</select>

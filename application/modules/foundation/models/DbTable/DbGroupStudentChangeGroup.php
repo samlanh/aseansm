@@ -21,7 +21,7 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 			if($request->getActionName()=='add'){
 				$sql.=" AND gds.is_pass=0 ";
 			}
-			 $sql.=" GROUP BY gds.group_id ";
+			$sql.=" GROUP BY gds.group_id ";
 		return $db->fetchAll($sql);
 	}
 	public function gettoGroup(){

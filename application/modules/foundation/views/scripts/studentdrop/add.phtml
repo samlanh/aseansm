@@ -2,6 +2,22 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	echo $this->headTitle($tr->translate('ADD_STUDENT_DROP')); 
 ?>
+<script type="text/javascript">
+dojo.require("dojo.data.ItemFileWriteStore");  
+dojo.require("dijit.form.NumberTextBox");
+dojo.require("dijit.form.Textarea");
+dojo.require("dijit.form.DateTextBox");
+dojo.require("dijit.form.CheckBox");
+</script>
+<script type="dojo/method" event="onSubmit">
+	if(this.validate()) {
+		return true;
+	} else {
+		return false;
+	}
+</script>
+
+
 <form id="add_car" action="<?php echo $this->url(array('module'=>'foundation','controller'=>'studentdrop','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	<table cellspacing="20" style="margin: 0 auto; width: 100%">
 		<tr>
@@ -15,7 +31,7 @@
 									<tr>
 										<td><?php echo $tr->translate("STUDENT_ID")?></td>
 										<td>
-											<select class="fullside" name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" placeholder="Select student " onchange="getStudentInfo();" >
+											<select class="fullside" required="true" name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" placeholder="Select student " onchange="getStudentInfo();" >
 										    	<option value="-1"> </option>
 										    	<?php if(!empty($this->rs))foreach ($this->rs as $row){?>
 													<option value="<?php echo $row['stu_id']?>"><?php echo $row['stu_code']?></option>
@@ -101,7 +117,6 @@ function getStudentInfo(){
 					},
 				handleAs:"json",
 				load: function(data) {
-					//alert(data.stu_enname);
 					dijit.byId("studentname").attr("value",data.name);
 					dijit.byId("gender").attr("value",data.sex);
 					dijit.byId("academic_year").attr("value",data.academic_year);

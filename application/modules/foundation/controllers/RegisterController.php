@@ -121,11 +121,9 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 		$this->view->row = $db->getDegreeLanguage();
 		
 		$_db = new Application_Model_DbTable_DbGlobal();
-		
 		$row =$_db->getOccupation();
-		
 		array_unshift($row, array ( 'id' => -1,'name' => 'បន្ថែមថ្មី'));
-		
+		array_unshift($row, array ( 'id' => 0,'name' => 'Select Job'));
 		$this->view->occupation = $row;
 		
 		$this->view->degree = $_db->getAllFecultyName();

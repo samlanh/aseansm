@@ -28,7 +28,8 @@ dojo.ready(function(){
 	new dijit.form.FilteringSelect({
 	    autoComplete: true,                        
 	    id: "grade",
-	    name: "grade",           
+	    name: "grade",
+	    required : "false",           
 	    class: 'fullside',  
 	    placeHolder:"Selected Grade",          
 	    onChange: function() {  
@@ -42,7 +43,7 @@ dojo.ready(function(){
 	new dijit.form.FilteringSelect({
 		store: job_store,
 		autoComplete: true,                        
-		required: false,                      
+		                     
 	    id: "fa_job",
 	    name: "fa_job",  
 	    tabindex: "17",         
@@ -63,7 +64,7 @@ dojo.ready(function(){
 	new dijit.form.FilteringSelect({
 		store: job_store,
 		autoComplete: true,                        
-		required: false,                      
+		                    
 	    id: "mo_job",
 	    name: "mo_job",  
 	    tabindex: "17",         
@@ -84,7 +85,7 @@ dojo.ready(function(){
 	new dijit.form.FilteringSelect({
 		store: job_store,
 		autoComplete: true,                        
-		required: false,                      
+		                
 	    id: "gu_job",
 	    name: "gu_job",  
 	    tabindex: "17",         
@@ -106,7 +107,7 @@ dojo.ready(function(){
 	new dijit.form.FilteringSelect({
 		store: language_store,
 		autoComplete: true,                        
-		required: false,                      
+		                  
 	    id: "level",
 	    name: "level",  
 	    tabindex: "17",         
@@ -270,7 +271,7 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 					      		<tr>
 					      			<td title="ស្ថានការណ៍"><?php echo $tr->translate("STATUS");?>*</td>
 									<td>
-										<select class="fullside" tabindex="20" dojoType="dijit.form.FilteringSelect" required="true"  id="status" name="status" type="text">								
+										<select class="fullside" tabindex="20" dojoType="dijit.form.FilteringSelect"   id="status" name="status" type="text">								
 											<option value="1" <?php if($this->rs['status']==1){{ echo "selected='selected'"; }}?>><?php echo $this->translate("Active")?></option>
 											<option value="0" <?php if($this->rs['status']==0){{ echo "selected='selected'"; }}?>><?php echo $this->translate("Deactive")?></option>
 										</select>
@@ -283,6 +284,7 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 					      		</tr>
 					      	</table>
 					      </div><!-- end tab 1 -->
+					      
 					      <div class="tabContentSection" dojoType="dijit.layout.ContentPane" title="<?php echo $tr->translate("PARENT_INFO");?>" selected="false">
 					     	<table width="100%" style="margin:0 auto;" cellspacing="5">
 					      		<tr>
@@ -298,10 +300,10 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 					      		</tr>
 					      		<tr>
 					      			<td><?php echo $tr->translate("NATIONALITY");?></td>
-					      			<td><input class="fullside"  tabindex="25" dojoType="dijit.form.TextBox"  id="fa_national" name="fa_national" value="<?php echo $this->rs['father_nation'];?>" type="text" required="required" ></td>
+					      			<td><input class="fullside"  tabindex="25" dojoType="dijit.form.TextBox"  id="fa_national" name="fa_national" value="<?php echo $this->rs['father_nation'];?>" type="text"  ></td>
 					      			<td><?php echo $tr->translate("OCCUPATION");?></td>
 									<td>
-										<input id="fa_job" />
+										<input id="fa_job" required="false" />
 									</td>
 									<td><?php echo $tr->translate("PHONE");?>*</td>
 									<td><input class="fullside"  tabindex="27" dojoType="dijit.form.ValidationTextBox"  id="fa_phone" name="fa_phone" value="<?php echo $this->rs['father_phone'];?>" type="text"  ></td>
@@ -341,9 +343,9 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 					      		</tr>
 					      		<tr>
 					      			<td><?php echo $tr->translate("NATIONALITY");?></td>
-								    <td><input class="fullside"  tabindex="37" dojoType="dijit.form.TextBox"  id="guardian_national" name="guardian_national" value="<?php echo $this->rs['guardian_nation'];?>" type="text" required="required" ></td>
+								    <td><input class="fullside"  tabindex="37" dojoType="dijit.form.TextBox"  id="guardian_national" name="guardian_national" value="<?php echo $this->rs['guardian_nation'];?>" type="text"  ></td>
 					      			<td  width="100px"><?php echo $tr->translate("IDENTITTY_PASSPORT_NO");?></td>
-									<td><input class="fullside"  tabindex="38" dojoType="dijit.form.TextBox"  id="guardian_identity" name="guardian_identity" value="<?php echo $this->rs['guardian_document'];?>" type="text" required="required" ></td>
+									<td><input class="fullside"  tabindex="38" dojoType="dijit.form.TextBox"  id="guardian_identity" name="guardian_identity" value="<?php echo $this->rs['guardian_document'];?>" type="text" ></td>
 					      			<td><?php echo $tr->translate("OCCUPATION");?></td>
 									<td>
 										<input id="gu_job" />
@@ -355,8 +357,7 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 									<td><?php echo $tr->translate("EMAIL_ADDRESS");?>*</td>
 									<td><input class="fullside"  tabindex="41" dojoType="dijit.form.ValidationTextBox"  id="guardian_email" name="guardian_email" value="<?php echo $this->rs['guardian_email'];?>" type="text"   ></td>
 								</tr>
-								 	
-						</table>
+							</table>
 					      </div>
 					       <div class="tabContentSection" dojoType="dijit.layout.ContentPane" title="<?php echo $tr->translate("SERVICES");?>" selected="false">
 					     	<table width="100%" style="margin:0 auto;" cellspacing="5">
@@ -515,7 +516,7 @@ function addJob(){
 					<table style="margin: 0 auto; width: 95%;" cellspacing="5">
 						<tr>
 							<td style="width:100px"><?php echo $tr->translate("ចំណងជើងភាសា")?></td>
-							<td><input class="fullside" tabindex="1" value="" dojoType="dijit.form.ValidationTextBox" name="language_title" id="language_title" type="text" required="required" /></td>
+							<td><input class="fullside" tabindex="1" value="" dojoType="dijit.form.ValidationTextBox" name="language_title" id="language_title" type="text" /></td>
 						</tr>
 						<tr>
 							<td>ពណ៌នា</td>
@@ -565,7 +566,7 @@ function addJob(){
 							<tr>
 								<td><?php echo $tr->translate('OCCUPATION_KHNAME');?></td>
 								<td>
-									<input dojoType="dijit.form.ValidationTextBox" required="true" class="fullside" id="occu_name" name="occu_name" value="" type="text">
+									<input dojoType="dijit.form.ValidationTextBox"  class="fullside" id="occu_name" name="occu_name" value="" type="text">
 								</td>
 							</tr>
 							<tr>
@@ -576,14 +577,14 @@ function addJob(){
 									<input dojoType="dijit.form.TextBox" type="hidden" name="value_j" id="value_j" value=""   />
 									
 									
-									<input dojoType="dijit.form.ValidationTextBox" required="true" class="fullside" id="occu_enname" name="occu_enname" value="" type="text">
+									<input dojoType="dijit.form.ValidationTextBox"  class="fullside" id="occu_enname" name="occu_enname" value="" type="text">
 								</td>
 							</tr>
 							<tr>
 							<tr>
 								<td><?php echo $tr->translate('STATUS');?></td>
 								<td>
-									<select name="status_j" id="status_j" dojoType="dijit.form.FilteringSelect" required="true" class="fullside">
+									<select name="status_j" id="status_j" dojoType="dijit.form.FilteringSelect"  class="fullside">
 	    								<option value="1" label="active">Active</option>
 	    								<option value="0" label="deactive">Deactive</option>
 									</select>

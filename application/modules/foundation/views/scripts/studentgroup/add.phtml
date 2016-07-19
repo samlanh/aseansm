@@ -56,6 +56,9 @@ dojo.ready(function(){
 	    class: 'fullside',  
 	    placeHolder:"Selected Grade",          
 	}, "grade_group");
+
+	
+	
 	getallGrade(1);
 	getallGrade(2);
 
@@ -134,7 +137,7 @@ $frm_set_price = $this->frm_set_charge;?>
 									</select>
 								</td>
 								<td><?php echo $tr->translate("DEGREE");?></td>
-								<td colspan="2">
+								<td >
 									<select class="fullside"  name="degree" id="degree" dojoType="dijit.form.FilteringSelect" onchange="getallGrade(1);">
 										<option value="-1">Select Degree</option>
 										<?php if(!empty($this->degree))foreach ($this->degree as $row){?>
@@ -170,16 +173,16 @@ $frm_set_price = $this->frm_set_charge;?>
 			<form id='submitgroup' dojoType="dijit.form.Form" action="<?php echo $this->url(array('module'=>'foundation','controller'=>'studentgroup','action'=>'submit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 					<fieldset style="width: 49%;">
 						<legend align="center"><strong>To Group</strong></legend>
-							<table style="margin: 0 auto; width: 100%; background:#DFF7FD;" cellspacing="10" broder="0">
+							<table style="margin: 0 auto; width: 100%; background:#DFF7FD;white-space: nowrap;" cellspacing="10" border="0">
 								<tr>
-									<td><?php echo $tr->translate("GROUP_CODE");?></td>
+									<td width="100px"><?php echo $tr->translate("GROUP_CODE");?></td>
 									<td>
 										<input id="group" />
 									</td>
 								</tr> 
 								<tr>
 									<td><?php echo $tr->translate("DETAIL")?></td>
-									<td  colspan="3" rowspan="1"><label id="lbldetail" name=lbldetail style="border: 1px solid #ccc;background:#fff;width:100%;height:70px;display:block;"></label></td>
+									<td><label id="lbldetail" name=lbldetail style="border: 1px solid #ccc; background:#fff;height:70px;display:block;"></label></td>
 								</tr> 
 								<tr>
 									<td><?php echo $tr->translate("STATUS");?></td>
@@ -224,8 +227,7 @@ $frm_set_price = $this->frm_set_charge;?>
 
 <div class="dijitHidden">
 	<div data-dojo-type="dijit.Dialog" style="width:27cm;" id="popup_dept" >
-<form id='frm_add_tran' action="" 
-dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form id='frm_add_tran' action="" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 <script type="dojo/method" event="onSubmit">			
 			if(this.validate()) {
 				return true;
@@ -255,7 +257,7 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 							</td>
 							<td ><?php echo $tr->translate("DEGREE")?></td>
 							<td>
-								<select name="degree_group" id="degree_group" dojoType="dijit.form.FilteringSelect" onchange="getallGrade(2);">
+								<select name="degree_group" id="degree_group" type="text" dojoType="dijit.form.FilteringSelect" onchange="getallGrade(2);">
 										<?php if(!empty($this->degree))foreach ($this->degree as $row){?>
 											<option value="<?php echo $row['dept_id']?>"<?php if($row['dept_id']==$this->value['degree']) echo "selected='selected'"?>><?php echo $row['en_name']?></option>
 										<?php }?>
@@ -391,7 +393,7 @@ function toStudentGroup(){
 		load: function(data) {
 			//alert(data);
 
-				dojo.byId('lbldetail').innerHTML='<span style="color:red;">Academic :  </span>'+data.year+'<span style="color:red;">  Degree :  </span>'+data.degree+'<span style="color:red;">  Grade :  </span>'+data.grade+'<span style="color:red;">  Session :  </span>'+data.session+"<br />"+'<span style="color:red;">  Start Date :  </span>'+data.start_date+'<span style="color:red;">  Expired Date :  </span>'+data.expired_date;
+				dojo.byId('lbldetail').innerHTML='<span style="color:red;">Academic :  </span>'+data.year+'<span style="color:red;">  Degree :  </span>'+data.degree+'<span style="color:red;">  Grade :  </span>'+data.grade+"<br />"+'<span style="color:red;">  Session :  </span>'+data.session+'<span style="color:red;">  Start Date :  </span>'+data.start_date+'<span style="color:red;">  Expired Date :  </span>'+data.expired_date;
 
 		},
 		error: function(err) {

@@ -14,7 +14,7 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 	}
 	public function getAllStudentChangeGroup(){
 		$db = $this->getAdapter();
-		$sql = "SELECT group_code,id FROM `rms_group` where status = 1 ";
+		$sql = "SELECT group_code,id FROM `rms_group` where status = 1 and is_pass IN (0,2) ";
 // 		$orderby = " ORDER BY stu_code ";
 		return $db->fetchAll($sql);
 	}
@@ -95,7 +95,7 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 						'group_id'=>$_data['to_group'],
 						'old_group'	=>$_data['from_group'],
 				);
-				$where="stu_id=".$stu_id." and is_pass=0";
+				$where="stu_id=".$stu_id." and is_pass=0 and group_id=".$_data['from_group'];
 				
 				$this->update($arr, $where);
 				
