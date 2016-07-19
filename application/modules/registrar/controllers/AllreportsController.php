@@ -16,16 +16,16 @@ class Registrar_AllreportsController extends Zend_Controller_Action {
     		}
     		else{
     			$search = array(
-    					'adv_search' =>'',
-    					'service'=>-1,
-    					'start_date'=> date('Y-m-d'),
-    					'end_date'=>date('Y-m-d'),
+    					'adv_search' 	=>'',
+    					'service'		=>-1,
+    					'study_year' 	=>'',
+    					'start_date'	=> date('Y-m-d'),
+    					'end_date'		=>date('Y-m-d'),
     			);
     		}
     		
     		$db = new Registrar_Model_DbTable_DbReportStudentByuser();
     		$data=$this->view->row = $db->getAllGernAndGepRegister($search);
-    		 
     			
     	}catch(Exception $e){
     		Application_Form_FrmMessage::message("Application Error");
@@ -65,6 +65,12 @@ class Registrar_AllreportsController extends Zend_Controller_Action {
     	}
     	$this->_redirect("/registrar/allreports");
     }
+    
+    public function editAction(){
+    	
+    	
+    }
+    
     public function wuRegisterAction()
     {
        $frm = new Registrar_Form_FrmRegister();

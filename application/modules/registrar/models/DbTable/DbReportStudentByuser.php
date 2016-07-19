@@ -45,7 +45,7 @@ class Registrar_Model_DbTable_DbReportStudentByuser extends Zend_Db_Table_Abstra
 	    		$where.= " AND sp.year = ".$search['study_year'];
 	    	}
 	    	$order=" ORDER By sp.id DESC ";
-	    	print_r($sql.$where.$order);
+	    	//print_r($sql.$where.$order);
 	    	return $db->fetchAll($sql.$where.$order);
 	    }
 	  public function getServices($service_id){
