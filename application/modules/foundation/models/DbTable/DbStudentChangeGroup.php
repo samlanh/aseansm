@@ -12,7 +12,7 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 		$orderby = " ORDER BY stu_code ";
 		return $_db->fetchAll($sql.$orderby);		
 	}
-	public function getAllStudentChangeGroup(){
+	public function getAllGroup(){
 		$db = $this->getAdapter();
 		$sql = "SELECT group_code,id FROM `rms_group` where status = 1 and is_pass IN (0,2) ";
 // 		$orderby = " ORDER BY stu_code ";
@@ -75,9 +75,10 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 		return $db->fetchRow($sql);
 	}
 	public function addStudentChangeGroup($_data){
+			$_db= $this->getAdapter();
+			$_db->beginTransaction();
 			$test = $this->getDegreeAndGradeToGroup($_data['to_group']);
 			try{	
-				$_db= $this->getAdapter();
 				$stu_id=$_data['studentid'];
 				$_arr= array(
 						'user_id'=>$this->getUserId(),
@@ -99,6 +100,15 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 				
 				$this->update($arr, $where);
 				
+				
+				$this->_name='rms_group';
+				$arra = array(
+						'is_pass'	=> 0,
+						);
+				$where = " id = ".$_data['to_group'];
+				$this->update($arra, $where);
+				
+				
 				$this->_name='rms_student';
 				
 				if($test['degree']==1){
@@ -117,12 +127,17 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 						);
 				$where = " stu_id=".$_data['studentid'];
 				$this->update($array, $where);
+				
+				return $_db->commit();
+				
 			}catch(Exception $e){
+				$_db->rollBack();
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 	}
 	public function updateStudentChangeGroup($_data){
-// 		print_r($_data);exit();
+		$_db= $this->getAdapter();
+		$_db->beginTransaction();
 		try{	
 			$test = $this->getDegreeAndGradeToGroup($_data['to_group']);
 			$stu_id=$_data['studentid'];
@@ -143,11 +158,10 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 					'group_id'	=>$_data['to_group'],
 					'old_group'	=>$_data['from_group'],
 			);
-			$where="stu_id=".$stu_id." and is_pass=0";
+			$where="stu_id=".$stu_id." and is_pass=0 and group_id=".$_data['from_group'];
 			$this->update($arr, $where);
 			
 			$this->_name='rms_student';
-			
 			if($test['degree']==1){
 				$stu_type=3;
 			}else if($test['degree']==2 || $test['degree']==3 || $test['degree']==4){
@@ -164,7 +178,11 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 			);
 			$where = " stu_id=".$_data['studentid'];
 			$this->update($array, $where);
+			
+			return $_db->commit();
+			
 		}catch(Exception $e){
+			$_db->rollBack();
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
 	}

@@ -93,8 +93,6 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 		$_db->beginTransaction();
 		
 			try{	
-				
-				
 				$con = $this->getCondition($_data);
 				if($con!=''){
 					$identity = explode(',', $_data['identity']);

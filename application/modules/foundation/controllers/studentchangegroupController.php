@@ -58,7 +58,7 @@ class Foundation_studentchangegroupController extends Zend_Controller_Action {
 		
 		$this->view->rs = $add =$_add->getAllStudentID();
 // 		print_r($this->view->rs);exit();
-		$this->view->row = $add =$_add->getAllStudentChangeGroup();
+		$this->view->row = $add =$_add->getAllGroup();
 		
 // 		$_db = new Application_Model_DbTable_DbGlobal();
 // 		$this->view->degree = $rows = $_db->getAllFecultyName();
@@ -90,7 +90,7 @@ class Foundation_studentchangegroupController extends Zend_Controller_Action {
 		
 		$this->view->rs = $add =$_add->getAllStudentID();
 		
-		$this->view->row = $add =$_add->getAllStudentChangeGroup();
+		$this->view->row = $add =$_add->getAllGroup();
 		
 		
 	}
