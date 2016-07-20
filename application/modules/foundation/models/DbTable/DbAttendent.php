@@ -10,6 +10,7 @@ class Foundation_Model_DbTable_DbAttendent extends Zend_Db_Table_Abstract
 	
 	}
 	public function addAttendent($_data){
+// 		print_r($_data);exit();
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
@@ -34,7 +35,9 @@ class Foundation_Model_DbTable_DbAttendent extends Zend_Db_Table_Abstract
 							'sex'=>$_data['sex_'.$i],
 							'grade_id'=>$_data['grade_'.$i],
 							'att_type'=>$_data['at_type_'.$i],
+							'no_att_type'=>$_data['studen_out_'.$i],
 							'permission'=>$_data['permiss_'.$i],
+							'no_permission'=>$_data['no_permiss_'.$i],
 							'note'=>$_data['note_'.$i],
 							'status'=>$_data['status'],
 							'user_id'=>$this->getUserId()
@@ -83,7 +86,9 @@ class Foundation_Model_DbTable_DbAttendent extends Zend_Db_Table_Abstract
 							'sex'=>$_data['sex_'.$i],
 							'grade_id'=>$_data['grade_'.$i],
 							'att_type'=>$_data['at_type_'.$i],
+							'no_att_type'=>$_data['studen_out_'.$i],
 							'permission'=>$_data['permiss_'.$i],
+							'no_permission'=>$_data['no_permiss_'.$i],
 							'note'=>$_data['note_'.$i],
 							'status'=>$_data['status'],
 							'user_id'=>$this->getUserId()
@@ -110,9 +115,26 @@ class Foundation_Model_DbTable_DbAttendent extends Zend_Db_Table_Abstract
 	        `date`,note,`status` 
 	        FROM rms_attendent WHERE `status`=1";
 		$where ='';
-		if(!empty($search['group_name'])){
+		$from_date =(empty($search['start_date']))? '1': " date >= '".$search['start_date']." 00:00:00'";
+		$to_date = (empty($search['end_date']))? '1': " date <= '".$search['end_date']." 23:59:59'";
+		$where = " AND ".$from_date." AND ".$to_date;
+		
+  		if(!empty($search['group_name'])){
 			$where.= " AND  group_id=".$search['group_name'];
 		}
+		if(!empty($search['study_year'])){
+			$where.=" AND academic_id=".$search['study_year'];
+		}
+		if(!empty($search['grade'])){
+			$where.=" AND group_id=".$search['grade'];
+		}
+		if(!empty($search['session'])){
+			$where.=" AND session_id=".$search['session'];
+		}
+		// 		if(!empty($search['time'])){
+		// 			$where.=" AND sp.time=".$search['time'];
+		// 		}
+// 		print_r($sql.$where);
 		$order=" ORDER BY id DESC ";
 		return $db->fetchAll($sql.$where.$order);
 	}
@@ -129,9 +151,24 @@ class Foundation_Model_DbTable_DbAttendent extends Zend_Db_Table_Abstract
 	}
 	function getAttendentDetail($id){
 		$db=$this->getAdapter();
-		$sql=" SELECT id,attd_id,student_id,student_code,sex,grade_id,permission,note,att_type 
-		      FROM rms_attendent_detail WHERE attd_id=$id";
+		$sql=" SELECT id,attd_id,student_id,
+				   (SELECT
+				     CONCAT(stu_enname,'-',stu_khname)
+				   FROM rms_student AS s
+				   WHERE s.stu_id = rms_attendent_detail.student_id) AS stu_name,
+				  (SELECT CONCAT(major_enname) FROM rms_major WHERE rms_attendent_detail.grade_id=rms_major.major_id) AS grade_name,grade_id,
+				  student_code,sex,permission,note,att_type,no_permission,no_att_type
+				FROM rms_attendent_detail
+				WHERE attd_id = $id";
 		return $db->fetchAll($sql);
+	}
+	function getStudent($data){
+		$db=$this->getAdapter();
+		$sql="SELECT s.stu_id,s.stu_code,CONCAT(s.stu_enname,' - ',s.stu_khname) AS stu_khname,s.sex,(SELECT CONCAT(major_enname,' - ',major_khname ) AS major_enname
+		FROM rms_major WHERE rms_major.major_id=s.grade) AS grade,s.grade As grade_id
+		FROM rms_student AS s,rms_group_detail_student AS g  WHERE s.stu_id=g.stu_id AND g.group_id=$data";
+		$order=" ORDER BY stu_code ASC";
+		return $db->fetchAll($sql.$order);
 	}
 	 
 }

@@ -1,6 +1,7 @@
 <?php
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	echo $this->headTitle($tr->translate("ADD_ATTENDENT"));
+	$frm =  $this->form_search;
 ?>	
 <script type="text/javascript">
 dojo.require("dojo.data.ObjectStore");
@@ -16,7 +17,8 @@ dojo.ready(function(){
 		    autoComplete: true,                        
 		    required:false,
 		    id: "group_name",
-		    name: "group_name",  
+		    name: "group_name",
+		    class:'fullside',  
 		    value:'<?php echo $this->g_name['group_name'];?>',         
 		    required:'true',
 		    placeHolder:"Selected Group Name",          
@@ -27,10 +29,20 @@ dojo.ready(function(){
 });
 </script>
 <form  action="<?php echo $this->url(array('module'=>'foundation','controller'=>'attendent','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post">
-	<div dojoType="dijit.layout.AccordionPane">
-      <input id="group_name" />
-	 <button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button>
-	</div>
+	<table style="width:90%">
+	  <tr> 
+		<td><input id="group_name" /></td>
+							   <td> <?php echo $frm->getElement("study_year");?></td>
+							   <td> <?php echo $frm->getElement("grade");?></td>
+							   <td> <?php echo $frm->getElement("session");?></td>
+							   <td> <?php echo $frm->getElement("time");?></td>
+	  </tr>
+	  <tr>
+	  	<td> <?php echo $frm->getElement("start_date");?></td>
+	  	<td> <?php echo $frm->getElement("end_date");?></td>
+		<td> <button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
+	  </tr>
+	 </table>
 </form>
 <?php 
    echo $this->list;

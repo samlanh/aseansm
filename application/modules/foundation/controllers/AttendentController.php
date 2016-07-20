@@ -13,16 +13,18 @@ class Foundation_AttendentController extends Zend_Controller_Action {
 			$db = new Foundation_Model_DbTable_DbAttendent();
 			$this->view->g_all_name=$db->getGroupSearch();
 			if($this->getRequest()->isPost()){
-				$_data=$this->getRequest()->getPost();
-				$this->view->g_name=$_data;
-				$search = array(
-						'group_name' => $_data['group_name'],
-				);
+				$search=$this->getRequest()->getPost();
+				$this->view->g_name=$search;
 			}
 			else{
 				$search = array(
-						'group_name' => ''
-				);
+						'group_name' => '',
+						'study_year'=> '',
+						'grade'=> '',
+						'session'=> '',
+						'time'=> '',
+						'start_date'=> date('Y-m-d'),
+						'end_date'=>date('Y-m-d'));
 			}
 			$rs_rows = $db->getAllAttendent($search);
 			$glClass = new Application_Model_GlobalClass();
@@ -39,17 +41,20 @@ class Foundation_AttendentController extends Zend_Controller_Action {
 			Application_Form_FrmMessage::message("Application Error");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
+		$form=new Registrar_Form_FrmSearchInfor();
+		$form=$form->FrmSearchRegister();
+		Application_Model_Decorator::removeAllDecorator($form);
+		$this->view->form_search=$form;
 	}
 	function addAction(){
 		if($this->getRequest()->isPost()){
 			$_data = $this->getRequest()->getPost();
 			$_model = new Foundation_Model_DbTable_DbAttendent();
 			try {
+				$rs =  $_model->addAttendent($_data);
 				if(isset($_data['save_new'])){
-					$rs =  $_model->addAttendent($_data);
 					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/attendent/add");
 				}else {
-					$rs =  $_model->addAttendent($_data);
 					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/attendent");
 				}
 				Application_Form_FrmMessage::message("INSERT_SUCCESS");
@@ -76,13 +81,12 @@ class Foundation_AttendentController extends Zend_Controller_Action {
 			$_data = $this->getRequest()->getPost();
 			$_model = new Foundation_Model_DbTable_DbAttendent();
 			try {
+				$_data['id']=$id;
+				$rs =  $_model->updateAttendent($_data);
 				if(isset($_data['save_close'])){
-					$_data['id']=$id;
-					$rs =  $_model->updateAttendent($_data);
 					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/attendent");
 				}
 				Application_Form_FrmMessage::message("INSERT_SUCCESS");
-		
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message("INSERT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
@@ -101,5 +105,14 @@ class Foundation_AttendentController extends Zend_Controller_Action {
 		$this->view->row_att_detial=$_model_att->getAttendentDetail($id);
 		$db_session=new Application_Model_DbTable_DbGlobal();
 		$this->view->row_sesion=$db_session->getSession();
+	}
+	function getStudentAction(){
+		if($this->getRequest()->isPost()){
+			$data = $this->getRequest()->getPost();
+			$_dbmodel = new Foundation_Model_DbTable_DbAttendent();
+			$data=$_dbmodel->getStudent($data['group_id']);
+			print_r(Zend_Json::encode($data));
+			exit();
+		}
 	}
 }
