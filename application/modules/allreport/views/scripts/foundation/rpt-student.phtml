@@ -58,6 +58,7 @@
 												<th colspan="3">Father Info</th>					
 												<th colspan="3">Mother Info</th>
 												<th colspan="3">Guardian Info</th>
+												<th rowspan="2">Status</th>
 											</tr>
 											<tr style="font-size:9px; height: 20px;" align="center" >
 												<th >Home</th>
@@ -119,6 +120,8 @@
 												<th align="left"><?php echo $row['guardian_name'];?></th>
 												<th align="left"><?php echo $row['guardian_job'];?></th>
 												<th ><?php echo $row['guardian_tel'];?></th>
+												
+												<th style="color: red;"><?php echo $row['status'];?></th>
 											</tr>
 										<?php }?>	
 										</table>	

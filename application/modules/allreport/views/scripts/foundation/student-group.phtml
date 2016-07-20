@@ -69,8 +69,8 @@
 										    <td><?php echo $rs['grade']; ?></td>
 										    <td><?php echo $rs['session']; ?></td>
 										    <td align="left">&nbsp;&nbsp;<?php echo $rs['room_name']; ?></td>
-										    <td><?php echo $rs['start_date']; ?></td>
-										    <td><?php echo $rs['expired_date']; ?></td>
+										    <td><?php echo date('d-M-Y',strtotime($rs['start_date'])); ?></td>
+										    <td><?php echo date('d-M-Y',strtotime($rs['expired_date'])); ?></td>
 										    <td align="left">&nbsp;&nbsp;<?php echo $rs['note']; ?></td>
 										    <td><?php echo $rs['status']; ?></td>
 										    <td><?php echo $rs['Num_Student']; ?></td>

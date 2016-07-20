@@ -18,7 +18,7 @@ class Allreport_Model_DbTable_DbRptStudentDrop extends Zend_Db_Table_Abstract
 		(SELECT name_kh FROM `rms_view` WHERE `rms_view`.`type`=2 and `rms_view`.`key_code`=st.sex )AS sex,
 		(SELECT name_kh FROM `rms_view` WHERE `rms_view`.`type`=5 and `rms_view`.`key_code`=stdp.`type`) as type,stdp.note,stdp.date,
 		(select name_kh from `rms_view` where `rms_view`.`type`=6 and `rms_view`.`key_code`=`stdp`.`status`)AS status
-		 from rms_student_drop as stdp,rms_student as st where stdp.stu_id=st.stu_id ";
+		 from rms_student_drop as stdp,rms_student as st where stdp.stu_id=st.stu_id and stdp.status=1 ";
 
     	$where=' ';
     	$order=" order by id DESC";

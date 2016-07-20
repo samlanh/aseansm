@@ -65,7 +65,7 @@ class Allreport_Model_DbTable_DbRptAmountStudentByYear extends Zend_Db_Table_Abs
     
     function getAllStu($search){
     	$db= $this->getAdapter();
-    	$sql="SELECT COUNT(gds.`stu_id`) AS amount,gds.stu_id,g.`academic_year`,
+    	$sql="SELECT COUNT(gds.`stu_id`) AS amount,gds.stu_id,g.`academic_year`,g.group_code,
     		  (select from_academic from rms_tuitionfee where rms_tuitionfee.id=g.academic_year limit 1) as from_academic,
     		  (select to_academic from rms_tuitionfee where rms_tuitionfee.id=g.academic_year limit 1) as to_academic,
     		  (select generation from rms_tuitionfee where rms_tuitionfee.id=g.academic_year limit 1) as generation,
@@ -92,7 +92,15 @@ class Allreport_Model_DbTable_DbRptAmountStudentByYear extends Zend_Db_Table_Abs
     		$where .=' AND ( '.implode(' OR ',$s_where).')';
     	}
     	
-    	//$where  = ' limit 1';
+    	if(!empty($search['study_year'])){
+    		$where.=' AND g.academic_year='.$search['study_year'];
+    	}
+    	if(!empty($search['grade_bac'])){
+    		$where.=' AND g.grade='.$search['grade_bac'];
+    	}
+    	if(!empty($search['session'])){
+    		$where.=' AND g.session='.$search['session'];
+    	}
     	
     	$row = $db->fetchAll($sql.$where.$groupby);
     	if($row){

@@ -123,7 +123,8 @@ class Allreport_Model_DbTable_DbRptGroup extends Zend_Db_Table_Abstract
    		$s_search = addslashes(trim($search['title']));
    		$s_where[] = " `g`.`group_code` LIKE '%{$s_search}%'";
    		$s_where[] = " 	`g`.`semester` LIKE '%{$s_search}%'";
-   		$s_where[] = "  (SELECT	`rms_view`.`name_en`FROM `rms_view` WHERE ((`rms_view`.`type` = 4) AND (`rms_view`.`key_code` = `g`.`session`)) LIMIT 1) LIKE '%{$s_search}%'";
+   		$s_where[] = "  (SELECT	name_en FROM rms_view WHERE rms_view.type = 4 AND rms_view.key_code = g.session LIMIT 1) LIKE '%{$s_search}%'";
+   		$s_where[] = "  (SELECT	name_en FROM rms_view WHERE rms_view.type = 9 AND rms_view.key_code = g.is_pass LIMIT 1) LIKE '%{$s_search}%'";
    		$sql .=' AND ( '.implode(' OR ',$s_where).')';
    	}
    	

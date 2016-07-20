@@ -17,6 +17,9 @@ class Allreport_Model_DbTable_DbRptAllStudent extends Zend_Db_Table_Abstract
     		  (select name_en from rms_view where rms_view.type=4 and rms_view.key_code=rms_student.session limit 1)AS session,
     		  (select major_enname from rms_major where rms_major.major_id=rms_student.grade limit 1)AS grade,
     		  (select en_name from rms_dept where rms_dept.dept_id=rms_student.degree limit 1)AS degree,
+    		  
+    		  (select name_en from rms_view where type=5 and key_code=is_subspend) as status,
+    		  
     		  (select province_en_name from rms_province where rms_province.province_id = rms_student.province_id limit 1)AS province,	   	
     		  (select name_en from rms_view where rms_view.type=2 and rms_view.key_code=rms_student.sex limit 1)AS sex
     		  from rms_student ';

@@ -6,12 +6,21 @@
 	$ac = null;
 	$ad = null;
 	$i=null;
+	$frm =  $this->form_search;
 	//print_r($this->rs);exit();
 ?>	
 <div style="width: 28cm;margin: 0 auto;">
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'rptamountstudent')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-		<input dojoType="dijit.form.TextBox"   id="txtsearch" name="txtsearch" placeholder="Search....." value="<?php echo $this->search['txtsearch'];?>" type="text">
-		<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>
+	<table width="80%">
+	       <tr>
+	           <td><?php echo $frm->getElement("title");?></td>
+	           <td> <?php echo $frm->getElement("study_year");?></td>
+	           <td> <?php echo $frm->getElement("grade_bac");?></td>
+			   <td> <?php echo $frm->getElement("session");?></td>
+			   <td><button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
+	       </tr>
+	</table>
+	
 </form>
 </div>
 		<div style="border: 1px dotted #000;background: #fff;width: 27cm;margin: 0 auto;min-height: 27cm;padding: 0.5cm;">
@@ -43,8 +52,8 @@
 										?>
 											<?php if($ad!=$stu["academic_year"] AND $key>0 ){?>
 											<tr>
-												<td align="right" colspan="3" style="font-size: 12px;font-weight: bold;">Total Students &nbsp;</td>
-												<td align="center"><?php echo number_format($ac,0);?></td>
+												<td align="right" colspan="4" style="font-size: 12px;font-weight: bold;">Total Students &nbsp;</td>
+												<td align="center" style="color: red;"><?php echo number_format($ac,0);?></td>
 											</tr>
 											</table>
 											<br/>
@@ -55,29 +64,31 @@
 												if($ad!=$stu["academic_year"]){
 													$ac=0;$i=1;
 											?>
-											<tr style="font-size:14px; height: 20px;" align="center" border: "0" ><td colspan="4" style="border: 1px solid white;border-bottom: 1px solid black;"><span style="font-size: 15px;font-weight: bold;">Academic Year &nbsp;<?php echo $stu["from_academic"]?> - <?php echo $stu["to_academic"]?>&nbsp; Generation &nbsp;<?php echo $stu['generation']?></span></td></tr>
+											<tr style="font-size:14px; height: 20px;" align="center" border: "0" ><td colspan="5" style="border: 1px solid white;border-bottom: 1px solid black;"><span style="font-size: 15px;font-weight: bold;">Academic Year &nbsp;<?php echo $stu["from_academic"]?> - <?php echo $stu["to_academic"]?>&nbsp; Generation &nbsp;<?php echo $stu['generation']?></span></td></tr>
 											<input type="hidden" name="academic" id="academic" value="<?php echo $stu["academic_year"];?>"/>
 											<tr style="font-size:12px; height: 15px;border-collapse: collapse;" align="center" >
 												<th style="width: 10%;">N.o</th>
-												<th style="width: 30%;">Grade</th>
-												<th style="width: 30%;">Session</th>
-												<th style="width: 30%;">Total</th>
+												<th style="width: 20%;">Group Code</th>
+												<th style="width: 20%;">Grade</th>
+												<th style="width: 20%;">Session</th>
+												<th style="width: 20%;">Total</th>
 											</tr>
 											<?php }?>
 											<?php $ad=$stu["academic_year"];?>
 											
 											<tr style="font-size:12px;height: 15px;border: 1px solid #000;border-collapse: collapse;"​ align="center">
 												<td style="width: 10%;"><?php echo $i;?></td>
-												<td style="width: 30%;"><?php echo $stu['grade'];?></td>
-												<td style="width: 30%;"><?php echo $stu['session'];?></td>
-												<td style="width: 30%;"><?php echo $stu['amount'];?></td>
+												<td style="width: 20%;"><?php echo $stu['group_code'];?></td>
+												<td style="width: 20%;"><?php echo $stu['grade'];?></td>
+												<td style="width: 20%;"><?php echo $stu['session'];?></td>
+												<td style="width: 20%;"><?php echo $stu['amount'];?></td>
 											</tr>
 												<?php $ac=$ac+$stu['amount'];?>
 												<?php $total_stu=$total_stu+$stu['amount'];?>
 										<?php }?>
 										<tr>
-											<td align="right" colspan="3" style="font-size: 12px;font-weight: bold;">Total Students &nbsp;</td>
-											<td align="center"><?php echo number_format($ac,0);?></td>
+											<td align="right" colspan="4" style="font-size: 12px;font-weight: bold;">Total Students &nbsp;</td>
+											<td align="center" style="color: red;"><?php echo number_format($ac,0);?></td>
 										</tr>
 										</table>	
 									</td>

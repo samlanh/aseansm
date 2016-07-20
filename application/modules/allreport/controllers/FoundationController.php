@@ -42,15 +42,20 @@ public function init()
 	public function rptamountstudentAction()
 	{
 		if($this->getRequest()->isPost()){
-			$data=$this->getRequest()->getPost();
-			$search=array(
-					'txtsearch' => $data['txtsearch'],
-					);
+			$search=$this->getRequest()->getPost();
 		}else{
 			$search=array(
-					'txtsearch' => '',
+					'title' => '',
+					'study_year' => '',
+					'grade_bac' => '',
+					'session' => '',
 			);
 		}
+		
+		$form=new Registrar_Form_FrmSearchInfor();
+		$forms=$form->FrmSearchRegister();
+		Application_Model_Decorator::removeAllDecorator($forms);
+		$this->view->form_search=$form;
 		
 		$db= new Allreport_Model_DbTable_DbRptAmountStudentByYear();
 		$this->view->rs = $db->getAllStu($search);
@@ -61,16 +66,21 @@ public function init()
 	public function rptgroupstudentchangegroupAction()
 	{
 		if($this->getRequest()->isPost()){
-			$data=$this->getRequest()->getPost();
-			$search=array(
-					'txtsearch' => $data['txtsearch'],
-			);
+			$search=$this->getRequest()->getPost();
 		}else{
 			$search=array(
-					'txtsearch' => '',
+					'title' => '',
+					'study_year' => '',
+					'grade_bac' => '',
+					'session' => '',
 			);
 		}
-	
+		
+		$form=new Registrar_Form_FrmSearchInfor();
+		$forms=$form->FrmSearchRegister();
+		Application_Model_Decorator::removeAllDecorator($forms);
+		$this->view->form_search=$form;
+		
 		$db= new Allreport_Model_DbTable_DbRptGroupStudentChangeGroup();
 		$this->view->rs = $db->getAllStu($search);
 // 		print_r($this->view->rs);exit();
@@ -105,14 +115,14 @@ public function init()
 	public function rptStudentChangeGroupAction(){
 	
 		if($this->getRequest()->isPost()){
-			$_data=$this->getRequest()->getPost();
-			$search = array(
-					'txtsearch' => $_data['txtsearch'],
-			);
+			$search=$this->getRequest()->getPost();
 		}
 		else{
 			$search=array(
-					'txtsearch' => '',
+					'title' => '',
+					'study_year' => '',
+					'grade_bac' => '',
+					'session' => '',
 			);
 		}
 	
@@ -120,6 +130,11 @@ public function init()
 	
 		$this->view->rs = $rs_rows = $group->getAllStudentChangeGroup($search);
 		$this->view->search=$search;
+		
+		$form=new Registrar_Form_FrmSearchInfor();
+		$forms=$form->FrmSearchRegister();
+		Application_Model_Decorator::removeAllDecorator($forms);
+		$this->view->form_search=$form;
 	}
 	
 	public function rptGroupAction(){

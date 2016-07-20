@@ -54,13 +54,14 @@
 												<th rowspan="2">Nationality</th>
 												<th rowspan="2">Tel</th>
 												<th rowspan="2">Email</th>
-												<th colspan="4">Study Info</th>
+												<th colspan="5">Study Info</th>
 											</tr>
 											<tr style="font-size:10px; height: 20px;" align="center" >
 												<th >AcademicYear</th>
 												<th >Degree</th>
 												<th >Grade</th>
 												<th >Session</th>
+												<th >Status</th>
 											</tr>
 										<?php $i=0; foreach ($this->rs AS $row) { $i++;?>
 											<tr style="font-size:11px; height: 23px;" align="center" >
@@ -77,6 +78,7 @@
 												<th ><?php echo $row['degree'];?></th>
 												<th align="left">&nbsp;<?php echo $row['grade'];?></th>
 												<th ><?php echo $row['session'];?></th>	
+												<th style="color: red;"><?php echo $row['status'];?></th>	
 												
 											</tr>
 										<?php }?>	
