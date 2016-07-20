@@ -5,6 +5,7 @@
 // 	print_r($this->rs['academic_year']);exit();
 	
 ?>	
+<script src="<?php echo $this->baseUrl();?>/js/help.js"  type="text/javascript"></script>
 <script type="dojo/method" event="onSubmit">			
 	if(this.validate()) {
 				return true;
@@ -52,14 +53,18 @@ dojo.ready(function(){
 	    onChange: function() {          
 	   	fa_job = dijit.byId('fa_job').get('value');
 	    if(fa_job==-1){
-	   	 dijit.byId("popup_dept2").show();
+	   	 	dijit.byId("popup_dept2").show();
 		   	dijit.byId('value_j').attr('value',1);
-	     }
+	    }
 	    else {
 	    }  
 	   } 
 	}, "fa_job");
 	dijit.byId('fa_job').attr('value',"<?php echo $this->rs['father_job']?>");
+	fa = dijit.byId('fa_job').get('value');
+	if(fa==''){
+		dijit.byId('fa_job').attr('value',0);
+	}
 
 	new dijit.form.FilteringSelect({
 		store: job_store,
@@ -81,6 +86,10 @@ dojo.ready(function(){
 	   } 
 	}, "mo_job");
 	dijit.byId('mo_job').attr('value',"<?php echo $this->rs['mother_job']?>");
+	mo = dijit.byId('mo_job').get('value');
+	if(mo==''){
+		dijit.byId('mo_job').attr('value',0);
+	}
 
 	new dijit.form.FilteringSelect({
 		store: job_store,
@@ -102,7 +111,10 @@ dojo.ready(function(){
 	   } 
 	}, "gu_job");
 	dijit.byId('gu_job').attr('value',"<?php echo $this->rs['guardian_job']?>");
-
+	fa = dijit.byId('gu_job').get('value');
+	if(fa==''){
+		dijit.byId('gu_job').attr('value',0);
+	}
 	
 	new dijit.form.FilteringSelect({
 		store: language_store,
@@ -124,6 +136,11 @@ dojo.ready(function(){
 	   } 
 	}, "level");
 	dijit.byId('level').attr('value',"<?php echo $this->rs['lang_level']?>");
+	level = dijit.byId('level').get('value');
+	if(fa==''){
+		dijit.byId('level').attr('value',0);
+	}
+	
 	dijit.byId('academic_year').attr('value',"<?php echo $this->rs['academic_year']?>");
 }); 
 
@@ -303,7 +320,7 @@ var url_dept = '<?php echo $this->url(array('module'=>'foundation','controller'=
 					      			<td><input class="fullside"  tabindex="25" dojoType="dijit.form.TextBox"  id="fa_national" name="fa_national" value="<?php echo $this->rs['father_nation'];?>" type="text"  ></td>
 					      			<td><?php echo $tr->translate("OCCUPATION");?></td>
 									<td>
-										<input id="fa_job" required="false" />
+										<input id="fa_job" />
 									</td>
 									<td><?php echo $tr->translate("PHONE");?>*</td>
 									<td><input class="fullside"  tabindex="27" dojoType="dijit.form.ValidationTextBox"  id="fa_phone" name="fa_phone" value="<?php echo $this->rs['father_phone'];?>" type="text"  ></td>
