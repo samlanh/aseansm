@@ -6,6 +6,7 @@
 	$registrar=$acl=$this->url(array('module'=>'allreport','controller'=>'receiptionist','action'=>'index'), null, true);
 	$accoutning=$acl=$this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'index'), null, true);
 	$fundation=$acl=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'index'), null, true);
+	$allstudent=$acl=$this->url(array('module'=>'allreport','controller'=>'allstudent','action'=>'rpt-all-student'), null, true);
 	
 	/*--------------------URLs link display--------------------------*/
 		  $tr=Application_Form_FrmLanguages::getCurrentlanguage();
@@ -154,10 +155,11 @@
 						'index'=>'<li><a href="">'.$tr->translate("Backup List").'</a></li>',
 				),
 			'allreport'=>array(
-				'other'=>"<li><span class''><a href=".$other.">".$tr->translate("OTHER_REPORT")."</a></span></li>",
+				'allstudent'=>"<li><span class''><a href=".$allstudent.">".$tr->translate("ALL_STUDENT_REPORT")."</a></span></li>",
 				//'registra'=>"<li><span class''><a href=".$registrar.">".$tr->translate("REGISTRATION_REPORT")."</a></span></li>",
 				'fundation'=>"<li><span class''><a href=".$fundation.">".$tr->translate("ADMINISTRATION_REPORT")."</a></span></li>",
 				'accounting'=>"<li><span class''><a href=".$accoutning.">".$tr->translate("ACCOUNTING_REPORT")."</a></span></li>",
+				'other'=>"<li><span class''><a href=".$other.">".$tr->translate("OTHER_REPORT")."</a></span></li>",
 				'rpt-student-list'=>"<li><span class''><a href='".$baseurl."/allreport/foundation/rpt-student-list'>".$tr->translate("STUDENT_LIST")."</a></span></li>",
 				'rpt-student-info'=>"<li><span class''><a href='".$baseurl."/allreport/foundation/rpt-student-info'>".$tr->translate("STUDENT_INFOMATION")."</a></span></li>",
 				'poc'=>"<li><a href='".$baseurl."/allreport/foundation/rpt-exam-degree'>".$tr->translate('STUDENT_EXAM_LIST')."</a></li>",
