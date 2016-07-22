@@ -168,7 +168,6 @@
     	dijit.byId('addmin_fee').attr('value','<?php echo $this->degree_row['admin_fee'];?>');
     	dijit.byId('remaining').attr('value','<?php echo $this->degree_row['balance_due'];?>');
     	dijit.byId('remark').attr('value','<?php echo $this->degree_row['other_fee'];?>');
-    //	dijit.byId('char_price').attr('value','<?php echo $this->degree_row['amount_in_khmer'];?>');
     	dijit.byId('not').attr('value','<?php echo $this->degree_row['note'];?>');
      
 	}
@@ -418,8 +417,8 @@ fieldset{  background:none;}
 							<td style="white-space: nowrap;"><?php echo $tr->translate("TIME");?></td>
 							<td>
 								<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside"  id="time" name="time" type="text" onchange="paymentTerm()">								
-										<option value="<?php echo $this->degree_row['time'];?>"  <?php if($this->degree_row['time']== 2) echo "selected"; ?> ><?php echo $tr->translate("FULL_TIME");?></option>
-										<option value="<?php echo $this->degree_row['time'];?>" <?php if($this->degree_row['time']== 1) echo "selected"; ?> ><?php echo $tr->translate("PART_TIME");?></option>
+										<option value="2"  <?php if($this->degree_row['time']== 2)  { echo ' selected="selected"'; } ?> ><?php echo $tr->translate("FULL_TIME");?></option>
+										<option value="1" <?php if($this->degree_row['time']== 1) { echo ' selected="selected"'; } ?> ><?php echo $tr->translate("PART_TIME");?></option>
 								</select>
 							</td>
 					    </tr>
