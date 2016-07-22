@@ -15,7 +15,17 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	//     	echo $sql;exit();
     	return $db->fetchOne($sql);
     }
+    function getStuidExist($stu_code){
+    	$db=$this->getAdapter();
+    	$sql="SELECT stu_id,stu_code FROM rms_student WHERE stu_code=$stu_code LIMIT 1";
+    	return $db->fetchRow($sql);
+    }
 	function addRegister($data){
+		$stu_exist=$this->getStuidExist($data['stu_id']);
+		if(!empty($stu_exist)){
+			$dta=$this->getNewStudent(1,1);
+			$data['stu_id']=$dta;
+		}
 		$db = $this->getAdapter();//ស្ពានភ្ជាប់ទៅកាន់Data Base
 		$db->beginTransaction();//ទប់ស្កាត់មើលការErrore , មានErrore វាមិនអោយចូល
 			try{
@@ -511,6 +521,19 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	$db=$this->getAdapter();
     	$sql="SELECT service_id AS id,title FROM rms_program_name WHERE `type` = 2";
     	return $db->fetchAll($sql);
+    }
+    public function getNewStudent($newid,$stu_type){
+    	$db = $this->getAdapter();
+    	$sql="  SELECT COUNT(stu_id)  FROM rms_student WHERE stu_type IN (1,3)";
+    	$acc_no = $db->fetchOne($sql);
+    	$new_acc_no= (int)$acc_no+1;
+    	$new_acc_no=100+$new_acc_no;
+    	$pre='';
+    	$acc_no= strlen((int)$acc_no+1);
+    	for($i = $acc_no;$i<5;$i++){
+    		$pre.='0';
+    	}
+    	return $pre.$new_acc_no;
     }
 }
 
