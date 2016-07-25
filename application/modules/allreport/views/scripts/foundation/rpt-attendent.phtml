@@ -33,8 +33,11 @@
 								</tr>
 								<tr>
 									<td colspan="4">
-									<?php $i=0;$old_row='';?>
-									<?php if(!empty($this->row_att)) foreach($this->row_att As $rs_att){ $i++;?>
+									  
+									  <?php if(!empty($this->att_years)) foreach($this->att_years As $att_year){ ?> 
+									  <strong​​ style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';">ឆ្មាំក្រុមសិក្សា  ៖  <?php echo $att_year['year'];?> វេនសិក្សា : <?php echo $att_year['session_name'];?>
+									  			ថ្នាក់ទី : <?php echo $att_year['group_name'];?>
+									  </strong​​>
 										<table cellpadding="5"​ style="margin:0 auto;width:100%; border-collapse: collapse;"  border="1" >
 											<tr style="font-size:14px; height: 30px;" align="center" >
 											<style> th{border-top:double;}</style>
@@ -47,12 +50,12 @@
 												<th rowspan="2">Total</th>
 											</tr>
 											<tr style="font-family: italic;"><?php $date="28-Nov-2013";
-												for ($i=0;$i<10;$i++){?>
+												for ($i=1;$i<49;$i++){?>
 												<th>
 													<small>
 														<svg xmlns="http://www.w3.org/2000/svg" width="12" height="90"> 
 																<text transform="rotate(270, 12, 0) translate(-70,-2)">
-																	<?php echo $rs_att['date'];?>
+																	<?php echo $date;?>
 																</text> 
 														</svg>
 													</small>
@@ -62,12 +65,13 @@
 											</tr>
 											<tr></tr>
 											<tr></tr>
-											<?php for ($j=1;$j<5;$j++){?>
+											<?php $db=new Allreport_Model_DbTable_DbAttendentList();?>
+											<?php  foreach ($db->getStudentById($att_year["id"]) as $k=>$rs){ $k=$k+1?>
 											<tr align="center">
-												<td><?php echo $j;?></td>
-												<td>Bo Sokhon</td>
-												<td>M</td>
-												<td>B11-0987</td>
+												<td><?php echo $k; ?></td>
+												<td><?php echo $rs['stu_name'] ?></td>
+												<td><?php echo $rs['sex'] ?></td>
+												<td><?php echo $rs['student_code'] ?></td>
 												<?php $att="p";
 												for ($a=1;$a<49;$a++){?>
 												<td>
@@ -80,8 +84,8 @@
 											</tr>
 											<?php }?>
 										</table>
-										<?php }?>
 										<br><br>	
+									 <?php }?>
 									</td>
 								</tr>
 								

@@ -451,18 +451,8 @@ public function init()
     				'txtsearch' => '',
     		);
     	}
-    
-    	$db= new Allreport_Model_DbTable_DbRptAmountStudentByYear();
-    	$this->view->grade = $rs_rows = $db->getAllTitle();
-    	$this->view->session = $rs_row = $db->getAllSession();
-    	$this->view->year = $db->getAllYearGeneration();
-    
-    	$this->view->rs = $db->getAllStu($search);
-    	//print_r($this->view->year);
-    	$this->view->search=$search;
-    	
-    	$data_att=new Allreport_Model_DbTable_DbRptStudentAttendent();
-    	$this->view->row_att=$data_att->getStudentAttendent();
+        $att=new Allreport_Model_DbTable_DbAttendentList();
+        $this->view->att_years=$att->getAttByYear();
     	
     }
     
