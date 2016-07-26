@@ -66,12 +66,17 @@ class Allreport_Model_DbTable_DbAttendentList extends Zend_Db_Table_Abstract
     }
     function getStudentById($score_id){
     	$db=$this->getAdapter();
-    	$sql="SELECT id,
-				  (SELECT CONCAT(stu_enname,'-',stu_khname) FROM rms_student AS st WHERE st.stu_id=atd.student_id) AS stu_name,
+    	$sql="SELECT id,attd_id,student_id,(SELECT CONCAT(stu_enname,'-',stu_khname) FROM rms_student AS st WHERE st.stu_id=atd.student_id) AS stu_name,
 				   student_code,
 				   sex
 				FROM rms_attendent_detail AS atd
-				WHERE attd_id =$score_id";
+				WHERE attd_id=$score_id  ORDER BY atd.student_id DESC ";
+    	return $db->fetchAll($sql);
+    }
+    function getStudentByIds(){
+    	$db=$this->getAdapter();
+    	$sql="SELECT id,student_id,student_code, sex, grade_id, permission, no_permission, att_type,no_att_type
+			FROM rms_attendent_detail WHERE `status`=1 ORDER BY student_id   DESC ";
     	return $db->fetchAll($sql);
     }
 }

@@ -45,46 +45,50 @@
 												<th rowspan="2">Full Name</th>
 												<th rowspan="2">Sex</th>
 												<th rowspan="2">ID N<sup>o</sup></th>
-												<th colspan="48">Date</th>	
+												<th colspan="32">Date</th>	
 												<th rowspan="2">Total</th>
 												<th rowspan="2">Total</th>
 											</tr>
-											<tr style="font-family: italic;"><?php $date="28-Nov-2013";
-												for ($i=1;$i<49;$i++){?>
-												<th>
-													<small>
-														<svg xmlns="http://www.w3.org/2000/svg" width="12" height="90"> 
-																<text transform="rotate(270, 12, 0) translate(-70,-2)">
-																	<?php echo $date;?>
-																</text> 
-														</svg>
-													</small>
-												</th>
-												<?php }?>
-												
+											<tr style="font-family: italic;"><?php //$date="28-Nov-2013";
+													// Set timezone
+													date_default_timezone_set('UTC');
+													// Start date
+													$date =date('Y-m-01');
+													// End date
+													$end_date =date('Y-m-d');
+													while (strtotime($date) <= strtotime($end_date)) {
+														echo '<th><small><svg xmlns="http://www.w3.org/2000/svg" width="12" height="90"> ';
+														   echo '<text transform="rotate(270, 12, 0) translate(-70,-2)">'; 
+												                echo "$date";
+												                $date = date ("Y-m-d", strtotime("+1 day", strtotime($date)));
+												           echo '</text> ';
+													    echo '</svg></small></th>';
+													}
+												?>
 											</tr>
-											<tr></tr>
-											<tr></tr>
-											<?php $db=new Allreport_Model_DbTable_DbAttendentList();?>
+											<?php $db=new Allreport_Model_DbTable_DbAttendentList(); $old_stu='';?>
 											<?php  foreach ($db->getStudentById($att_year["id"]) as $k=>$rs){ $k=$k+1?>
+											  <?php if ($rs['student_id']!=$old_stu){ //echo $rs['student_id']."!=".$old_stu;?>
+											
 											<tr align="center">
 												<td><?php echo $k; ?></td>
 												<td><?php echo $rs['stu_name'] ?></td>
 												<td><?php echo $rs['sex'] ?></td>
 												<td><?php echo $rs['student_code'] ?></td>
 												<?php $att="p";
-												for ($a=1;$a<49;$a++){?>
+												if(!empty($this->stus_id)) foreach($this->stus_id As $stus){?>
+												  <?php if($rs['student_id']==$stus['student_id']){ ?>
 												<td>
 													<?php echo $att;?>
 													
 												</td>
-												<?php }?>
+												<?php }}?>
 												<td>A</td>
 												<td>P</td>
 											</tr>
-											<?php }?>
+											<?php $old_stu=$rs['student_id'];}}?>
 										</table>
-										<br><br>	
+										<br>
 									 <?php }?>
 									</td>
 								</tr>

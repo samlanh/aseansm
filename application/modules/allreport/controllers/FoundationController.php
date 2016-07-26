@@ -453,6 +453,7 @@ public function init()
     	}
         $att=new Allreport_Model_DbTable_DbAttendentList();
         $this->view->att_years=$att->getAttByYear();
+        $this->view->stus_id=$att->getStudentByIds();
     	
     }
     
