@@ -7,7 +7,7 @@
 // 	echo $degree;exit();
 ?>	
 <div style="width: 30cm;margin: 0 auto;">
-<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'allstudent','action'=>'rpt-all-student')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'allstudent','action'=>'rpt-all-amount-student')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 		
 		<table width="80%">
 	       <tr>
@@ -30,7 +30,7 @@
 							<table border="0" style="background:#fff; margin: 0 auto; width: 100%; ">
 								<tr>
 									<td width="28%" >
-										<img style="width: 155px;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br />
+										<img style="width: 70%;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br />
 									</td>
 									<td width="44%" align="center">
 										<strong​​ style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 14px;font-family:'Khmer MEF2';"><?php echo $tr->translate("ALL_STUDENT_REPORT");?></strong>
@@ -79,8 +79,16 @@
 												<td >Session</td>
 												<td >Status</td>
 											</tr>
-										<?php $i=0;$degree=0; foreach ($this->rs AS $row) { $i++;$degree=$row['degree'];?>
+										<?php $i=0;$degree=0;$count=0; foreach ($this->rs AS $key=>$row) { ?>
 											
+											<?php if($degree!=$row['degree'] && $key>0){?>
+												<tr>
+													<td colspan="10"></td>
+													<td align="center" style="font-size: 15px"> Total : </td>
+													<td align="center" style="font-size: 15px"><?php echo $count;$count=0;$i=0;?></td>
+												</tr>
+											<?php }?>
+											<?php $i++;$count++; ?>
 											<tr style="font-size:11px; height: 23px;" align="center" >
 												<td ><?php echo $i;?></td>
 												<td ><?php echo $row['stu_code'];?></td>
@@ -89,16 +97,21 @@
 												<td ><?php echo $row['nationality'];?></td>
 												<td ><?php echo $row['tel'];?></td>
 												<td align="left">&nbsp;<?php echo $row['email'];?></td>
-												
-												
 												<td ><?php echo $row['academic_year'];?></td>
 												<td ><?php echo $row['degree'];?></td>
 												<td align="left">&nbsp;<?php echo $row['grade'];?></td>
 												<td ><?php echo $row['session'];?></td>	
 												<td style="color: red;"><?php echo $row['status'];?></td>	
-												
 											</tr>
+											<?php $degree=$row['degree'];?>
 										<?php }?>	
+										
+											<tr>
+												<td colspan="10"></td>
+												<td align="center" style="font-size: 15px;">Total</td>
+												<td align="center" style="font-size: 15px;"><?php echo $count;$count=0;?></td>
+											</tr>
+										
 										</table>	
 									</div>	
 									</td>
