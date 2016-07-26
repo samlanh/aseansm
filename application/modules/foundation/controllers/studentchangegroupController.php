@@ -15,14 +15,16 @@ class Foundation_studentchangegroupController extends Zend_Controller_Action {
 			$search=array(
 				'title'	=>'',
 				'study_year'=> '',
-				'grade'=> '',
+				'grade_bac'=> '',
 				'session'=> ''
 			);
 		}
+		
 		$form=new Registrar_Form_FrmSearchInfor();
 		$form->FrmSearchRegister();
 		Application_Model_Decorator::removeAllDecorator($form);
 		$this->view->form_search=$form;
+		
 		$db_student= new Foundation_Model_DbTable_DbStudentChangeGroup();
 		$rs_rows = $db_student->selectAllStudentChangeGroup($search);
 		$list = new Application_Form_Frmtable();

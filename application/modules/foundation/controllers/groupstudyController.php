@@ -16,7 +16,7 @@ class Foundation_GroupstudyController extends Zend_Controller_Action {
 				$search = array(
 						'title' => '',
 						'study_year' => '',
-						'grade' => '',
+						'grade_bac' => '',
 						'time' => '',
 						'session' =>'',
 						'start_date'=>date("Y-m-d"),

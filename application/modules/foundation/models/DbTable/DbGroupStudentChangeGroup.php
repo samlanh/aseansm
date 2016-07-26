@@ -67,8 +67,8 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 		if(!empty($search['study_year'])){
 			$where.=" AND rms_group.academic_year=".$search['study_year'];
 		}
-		if(!empty($search['grade'])){
-			$where.=" AND rms_group.grade=".$search['grade'];
+		if(!empty($search['grade_bac'])){
+			$where.=" AND rms_group.grade=".$search['grade_bac'];
 		}
 		if(!empty($search['session'])){
 			$where.=" AND rms_group.session=".$search['session'];
@@ -192,6 +192,7 @@ class Foundation_Model_DbTable_DbGroupStudentChangeGroup extends Zend_Db_Table_A
 			}catch(Exception $e){
 				$_db->rollBack();
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
+				echo $e->getMessage();
 			}
 	}
 	

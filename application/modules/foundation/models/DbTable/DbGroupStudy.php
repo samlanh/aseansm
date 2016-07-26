@@ -185,7 +185,7 @@ class Foundation_Model_DbTable_DbGroupStudy extends Zend_Db_Table_Abstract
 		(SELECT `r`.`room_name`	FROM `rms_room` `r`	WHERE (`r`.`room_id` = `g`.`room_id`)) AS `room_name`,
 		`g`.`start_date`,`g`.`expired_date`,`g`.`note`
 		FROM `rms_group` as `g`";
-		$where =' WHERE 1 ';
+		$where =' WHERE 1 and degree IN (2,3,4) ';
 // 		$from_date =(empty($search['start_date']))? '1': "g.start_date >= '".$search['start_date']." 00:00:00'";
 // 		$to_date = (empty($search['end_date']))? '1': "g.start_date <= '".$search['end_date']." 23:59:59'";
 // 		$where.= " AND ".$from_date." AND ".$to_date;
@@ -209,8 +209,8 @@ class Foundation_Model_DbTable_DbGroupStudy extends Zend_Db_Table_Abstract
 		if(!empty($search['study_year'])){
 			$where.=' AND g.academic_year='.$search['study_year'];
 		}
-		if(!empty($search['grade'])){
-			$where.=' AND g.grade='.$search['grade'];
+		if(!empty($search['grade_bac'])){
+			$where.=' AND g.grade='.$search['grade_bac'];
 		}
 		if(!empty($search['session'])){
 			$where.=' AND g.session='.$search['session'];

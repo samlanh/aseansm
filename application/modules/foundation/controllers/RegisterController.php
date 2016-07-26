@@ -87,7 +87,7 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 		
 		$this->view->year = $db->getAllYear();
 		
-		$this->view->degree = $rows = $_db->getAllFecultyName();
+		$this->view->degree = $rows = $db->getAllFecultyName();
 		
 		$this->view->province = $row =$_db->getProvince();
 		
@@ -126,7 +126,7 @@ class Foundation_RegisterController extends Zend_Controller_Action {
 		array_unshift($row, array ( 'id' => 0,'name' => 'Select Job'));
 		$this->view->occupation = $row;
 		
-		$this->view->degree = $_db->getAllFecultyName();
+		$this->view->degree = $db->getAllFecultyName();
 		
 		//$this->view->occupation = $_db->getOccupation();
 		

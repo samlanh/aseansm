@@ -18,6 +18,9 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 			else{
 				$search = array(
 						'adv_search' => '',
+						'study_year' => '',
+						'grade_bac' => '',
+						'session' => '',
 						);
 			}
 			
@@ -34,6 +37,7 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 					'module'=>'foundation','controller'=>'studentgroup','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs,array('group_code'=>$link,'room_name'=>$link));
+			
 			$form=new Registrar_Form_FrmSearchInfor();
 			$form->FrmSearchRegister();
 			Application_Model_Decorator::removeAllDecorator($form);
@@ -71,7 +75,7 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 		$dbstudent = new Foundation_Model_DbTable_DbGroup();
 		$this->view->academy = $dbstudent->getAllYear();
 		
-		$_db = new Application_Model_DbTable_DbGlobal();
+		$_db = new Foundation_Model_DbTable_DbGroup();
 		$this->view->degree = $_db->getAllFecultyName();
 		
 		$group = new Foundation_Model_DbTable_DbGroup();
@@ -92,9 +96,11 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 				$db = new Foundation_Model_DbTable_DbGroup();
 				$db->addStudentGroup($_data);
 				if(isset($_data['save_close'])){
-					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentgroup");
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS");
+					$this->_redirect('/foundation/studentgroup/index');
 				}else{
-					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/foundation/studentgroup/add");
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS");
+					$this->_redirect('/foundation/studentgroup/add');
 				}
 				//Application_Form_FrmMessage::message("INSERT_SUCCESS");
 			}catch(Exception $e){
@@ -102,7 +108,7 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 				Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 			}
 		}
-		$this->_redirect('/foundation/studentgroup/add');
+		//$this->_redirect('/foundation/studentgroup/add');
 	}
 	
 	public function submit1Action(){

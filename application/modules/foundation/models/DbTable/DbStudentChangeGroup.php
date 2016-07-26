@@ -56,8 +56,8 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 		if(!empty($search['study_year'])){
 			$where.=" AND rms_group.academic_year like ".$search['study_year'];
 		}
-		if(!empty($search['grade'])){
-			$where.=" AND rms_group.grade=".$search['grade'];
+		if(!empty($search['grade_bac'])){
+			$where.=" AND rms_group.grade=".$search['grade_bac'];
 		}
 		if(!empty($search['session'])){
 			$where.=" AND rms_group.session=".$search['session'];
@@ -158,7 +158,7 @@ class Foundation_Model_DbTable_DbStudentChangeGroup extends Zend_Db_Table_Abstra
 					'group_id'	=>$_data['to_group'],
 					'old_group'	=>$_data['from_group'],
 			);
-			$where="stu_id=".$stu_id." and is_pass=0 and group_id=".$_data['from_group'];
+			$where="stu_id=".$stu_id." and is_pass=0 " ;
 			$this->update($arr, $where);
 			
 			$this->_name='rms_student';

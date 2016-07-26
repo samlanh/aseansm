@@ -132,7 +132,7 @@ $frm_set_price = $this->frm_set_charge;?>
 									<select class="fullside" dojoType="dijit.form.FilteringSelect" required="true"  id="academy" name="academy" type="text">
 										<option value="-1">Select AcademicYear</option>
 										<?php if(!empty($this->academy)) foreach($this->academy as $row){?>
-											<option value="<?php echo $row['id'];?>"<?php if($row['id']==$this->value['academy']) echo "selected='selected'"?>><?php echo $row['years']; ?></option>
+											<option value="<?php echo $row['id'];?>" <?php if($row['id']==$this->value['academy']) echo "selected='selected'"?>><?php echo $row['years']; ?></option>
 										<?php }?>
 									</select>
 								</td>
@@ -163,7 +163,7 @@ $frm_set_price = $this->frm_set_charge;?>
 						</tr>
 						<tr>
 							<td colspan="6" align="center">
-								<input type="submit" dojoType="dijit.form.Button"  label="SEARCH" id="search"
+								<input type="submit" dojoType="dijit.form.Button"  label="<?php echo $tr->translate("SEARCH")?>" id="search"
 								 	iconClass="dijitEditorIcon dijitEditorIconSearch"/>
 							</td>
 						</tr>
@@ -195,9 +195,9 @@ $frm_set_price = $this->frm_set_charge;?>
 								</tr>
 								<tr>
 									<td colspan="2" align="center">
-										<input type="submit" dojoType="dijit.form.Button"  label="<?php echo $tr->translate("SAVE");?>" id="save"
+										<input type="submit" dojoType="dijit.form.Button"  label="<?php echo $tr->translate("SAVE");?>" id="save" name="save"
 											iconClass="dijitEditorIcon dijitEditorIconSave"/>
-										<input type="submit" dojoType="dijit.form.Button"  label="<?php echo $tr->translate("SAVE_CLOSE");?>" id="save_close"
+										<input type="submit" dojoType="dijit.form.Button"  label="<?php echo $tr->translate("SAVE_CLOSE");?>" id="save_close" name="save_close"
 											iconClass="dijitEditorIcon dijitEditorIconSave"/>
 									</td>
 								</tr>

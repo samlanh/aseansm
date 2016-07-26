@@ -16,7 +16,7 @@ class Foundation_studentdropController extends Zend_Controller_Action {
 			$search=array(
 				'title'	=>'',
 				'study_year'=> '',
-				'grade'=> '',
+				'grade_bac'=> '',
 				'session'=> ''
 			);
 		}

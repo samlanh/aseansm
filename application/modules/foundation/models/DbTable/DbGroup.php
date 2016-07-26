@@ -51,11 +51,9 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 				'status'   		=> 1,
 				'note'   		=> $_data['note'],
 				'user_id'	  	=> $this->getUserId()
-				
 				);
 		$this->_name='rms_group';
 		return $this->insert($arr);
-		 
 	}
 	public function getGroupById($id){
 		$db = $this->getAdapter();
@@ -178,7 +176,7 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		`g`.`expired_date`,
 		`g`.`note`,
 		(select name_en from rms_view where rms_view.type=9 and key_code=g.is_pass) as status,
-		(SELECT COUNT(gds.`stu_id`) FROM `rms_group_detail_student` as gds WHERE gds.`group_id`=`g`.`id` GROUP BY gds.group_id)AS Num_Student
+		(SELECT COUNT(gds.`stu_id`) FROM `rms_group_detail_student` as gds WHERE gds.`group_id`=`g`.`id` and is_pass=0 GROUP BY gds.group_id)AS Num_Student
 		FROM rms_group g where g.degree IN (2,3,4)";
 		
 		$order = " ORDER BY `g`.`id` DESC " ;	
@@ -203,16 +201,22 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		if(!empty($search['study_year'])){
 			$where.=' AND g.academic_year='.$search['study_year'];
 		}
-		if(!empty($search['grade'])){
-			$where.=' AND g.grade='.$search['grade'];
+		if(!empty($search['grade_bac'])){
+			$where.=' AND g.grade='.$search['grade_bac'];
 		}
 		if(!empty($search['session'])){
 			$where.=' AND g.session='.$search['session'];
 		}
 		
 		return $db->fetchAll($sql.$where.$order);
-		
-		//return $db->fetchAll($sql);
 	}
+	
+	public function getAllFecultyName(){
+		$db = $this->getAdapter();
+		$sql ="SELECT dept_id AS id, en_name AS NAME,en_name,dept_id,shortcut FROM rms_dept WHERE is_active=1 AND en_name!='' AND dept_id IN(2,3,4) ORDER BY id DESC";
+		return $db->fetchAll($sql);
+	}
+	
+	
 }
 

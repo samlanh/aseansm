@@ -9,7 +9,7 @@ class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 	}
 	public function getAllStudentID(){
 		$_db = $this->getAdapter();
-		$sql = "SELECT stu_id,stu_code FROM `rms_student` where status = 1 and is_subspend=0 and stu_type=1 and degree IN (2,3,4) ";
+		$sql = "SELECT stu_id,stu_code FROM `rms_student` where status = 1 and is_subspend=0 and stu_type=1 ";
 		$orderby = " ORDER BY stu_code ";
 		return $_db->fetchAll($sql.$orderby);		
 	}
@@ -49,8 +49,8 @@ class Foundation_Model_DbTable_DbStudentDrop extends Zend_Db_Table_Abstract
 		if(!empty($search['study_year'])){
 			$where.=" AND rms_student.academic_year = ".$search['study_year'];
 		}
-		if(!empty($search['grade'])){
-			$where.=" AND rms_student.grade=".$search['grade'];
+		if(!empty($search['grade_bac'])){
+			$where.=" AND rms_student.grade=".$search['grade_bac'];
 		}
 		if(!empty($search['session'])){
 			$where.=" AND rms_student.session=".$search['session'];
