@@ -77,7 +77,7 @@ class Accounting_FeeController extends Zend_Controller_Action {
     			$payment_term.='"'.$value.'",';
     		}
     		$list = new Application_Form_Frmtable();
-    		$collumns = array("ACADEMIC_YEAR","BATCH","CLASS","SESSION","QUARTER","SEMESTER","YEAR","CREATED_DATE","STATUS");
+    		$collumns = array("ACADEMIC_YEAR","BATCH","CLASS","SESSION","TIME","QUARTER","SEMESTER","YEAR","CREATED_DATE","STATUS");
     		$link=array(
     				'module'=>'accounting','controller'=>'fee','action'=>'edit',
     		);
@@ -99,16 +99,17 @@ class Accounting_FeeController extends Zend_Controller_Action {
     }
     public function headAddRecordTuitionFee($rs,$key){
     	$result[$key] = array(
-    						'id' 	  => $rs['id'],
-    						'academic'=> $rs['academic'],
+    						'id' 	  	=> $rs['id'],
+    						'academic'	=> $rs['academic'],
     						'generation'=> $rs['generation'],	
-    						'class'=>'',
-    		            	'session'=>'',
-    						'quarter'=>'',
-			    			'semester'=>'',
-			    			'year'=>'',
-    						'date'=>$rs['create_date'],
-    						'status'=>''
+    						'class'		=>'',
+    		            	'session'	=> '',
+    						'time'		=> $rs['time'],
+    						'quarter'	=>'',
+			    			'semester'	=>'',
+			    			'year'		=>'',
+    						'date'		=>$rs['create_date'],
+    						'status'	=>''
     				);
     	return $result[$key];
     }

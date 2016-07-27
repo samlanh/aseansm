@@ -29,7 +29,7 @@ table .set-style tr.st1{ background: none repeat scroll 0% 0% rgba(218, 250, 255
 						<tr>
 							<td style="white-space: nowrap;"><?php echo $tr->translate("YEARS");?><input type="hidden" name="id" value="<?php echo $this->rs['id'];?>" /> </td>
 							<td>
-								<select dojoType="dijit.form.FilteringSelect" required="true" readonly="true"  id="from_year" name="from_year"  type="text">
+								<select dojoType="dijit.form.FilteringSelect"  readonly="true"  id="from_year" name="from_year"  type="text">
 									<?php for($i=2014;$i<=date('Y')+1;$i++){?>
 										<option value="<?php echo $i;?>" <?php if($i==$this->rs['from_academic']) echo 'selected="selected"';?> ><?php echo $i; ?></option>
 									<?php }?>
@@ -37,7 +37,7 @@ table .set-style tr.st1{ background: none repeat scroll 0% 0% rgba(218, 250, 255
 							</td>
 							<td style="white-space: nowrap;  "><?php echo $tr->translate("TO");?></td>
 							<td align="center">
-								<select dojoType="dijit.form.FilteringSelect" required="true" readonly="true"  id="to_year" name="to_year" type="text">
+								<select dojoType="dijit.form.FilteringSelect" readonly="true"  id="to_year" name="to_year" type="text">
 									<?php for($i=2015;$i<=date('Y')+2;$i++){?>
 										<option value="<?php echo $i;?>" <?php if($i==$this->rs['to_academic']) echo 'selected="selected"';?> ><?php echo $i; ?></option>
 									<?php }?>
@@ -45,13 +45,13 @@ table .set-style tr.st1{ background: none repeat scroll 0% 0% rgba(218, 250, 255
 							</td>
 							
 							<td style="white-space: nowrap;text-align: center;"><?php echo $tr->translate("GENERATION");?></td>
-							<td width="200px" ><input dojoType="dijit.form.TextBox" readonly="true" required="true" class="fullside" id="generation" value="<?php echo $this->rs['generation']; ?>" name="generation"  type="text"></td>
+							<td width="200px" ><input dojoType="dijit.form.TextBox" readonly="true" class="fullside" id="generation" value="<?php echo $this->rs['generation']; ?>" name="generation"  type="text"></td>
 							
 						</tr>
 						<tr>
 							<td style="white-space: nowrap;"><?php echo $tr->translate("TIME");?></td>
 							<td width="200px">
-								<select dojoType="dijit.form.FilteringSelect" readonly="true" required="true"  id="time" name="time" type="text">								
+								<select dojoType="dijit.form.FilteringSelect" readonly="true" id="time" name="time" type="text">								
 										<option value="1" <?php if($this->rs['time']==1){ echo "selected='selected'";}?>>ក្រៅម៉ោង</option>
 										<option value="2" <?php if($this->rs['time']==2){ echo "selected='selected'";}?>>ពេញម៉ោង</option>
 								</select>
@@ -59,12 +59,12 @@ table .set-style tr.st1{ background: none repeat scroll 0% 0% rgba(218, 250, 255
 							
 							
 							<td  style="white-space: nowrap; "><?php echo $tr->translate("NOTE");?></td>
-							<td width="200px"><input dojoType="dijit.form.TextBox" readonly="true" required="true" class="fullside" id="note" name="note"  value="<?php echo $this->rs['note']; ?>" type="text"></td>
+							<td width="200px"><input dojoType="dijit.form.TextBox" readonly="true" class="fullside" id="note" name="note"  value="<?php echo $this->rs['note']; ?>" type="text"></td>
 							
 							
 							<td style="white-space: nowrap;text-align: center;"><?php echo $tr->translate("STATUS");?></td>
 							<td>
-								<select dojoType="dijit.form.FilteringSelect" required="true"  id="status" name="status" type="text">								
+								<select dojoType="dijit.form.FilteringSelect"  id="status" name="status" type="text">								
 										<option value="1" <?php if($this->rs['status']==1){ echo "selected='selected'";}?>>Active</option>
 										<option value="0" <?php if($this->rs['status']==0){ echo "selected='selected'";}?>>Deactive</option>
 								</select>
@@ -216,7 +216,7 @@ function addRow() {
 			for(j=0;j<payment_term;j++){ column++;
 				template+='<td ><input type="text" required="true" id="fee'+col+'_'+column+'" name="fee'+col+'_'+column+'" dojoType="dijit.form.NumberTextBox" style="width: 100px;" /></td>';
 			}
-			template+='<td> <input type="text" required="true" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" style="width: 100px;"/><label id="subsub"></label></td>';
+			template+='<td> <input type="text" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" style="width: 100px;"/><label id="subsub"></label></td>';
 			template+='<td><select dojoType="dijit.form.FilteringSelect" id="status_'+col+'" name="status_'+col+'" style="width: 100px;"><option value="1">Active</option><option value="0">Deactive</option></select></td>';			
 			
 		tmp='<tr id="row'+col+'">';
@@ -268,7 +268,7 @@ function initailize(){
 			template+='<td ><input type="text" required="true" id="fee'+col+'_'+column+'" name="fee'+col+'_'+column+'" dojoType="dijit.form.NumberTextBox" style="width: 100px;" /></td>';
 			
 		}
-		template+='<td width="100px" > <input type="text" required="true" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" style="width: 100px;"  /><label id="subsub"></label></td>';
+		template+='<td width="100px" > <input type="text" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" style="width: 100px;"  /><label id="subsub"></label></td>';
 		template+='<td width="100px" ><select dojoType="dijit.form.FilteringSelect" id="status_'+col+'" name="status_'+col+'" style="width: 100px;" ><option value="1">Active</option><option value="0">Deactive</option></select></td>';			
 		
 	tmp='<tr id="row'+col+'">';
