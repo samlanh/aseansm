@@ -495,6 +495,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	return $db->fetchAll($sql);
     }
     
+   
     function getGradeAllBac(){
     	$db=$this->getAdapter();
     	$sql="SELECT major_id AS id,major_enname AS `name` FROM rms_major WHERE dept_id IN(2,3,4) AND is_active=1 ";
