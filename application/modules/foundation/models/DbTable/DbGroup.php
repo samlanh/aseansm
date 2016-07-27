@@ -156,7 +156,7 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		`g`.`id`,
 		`g`.`group_code`    AS `group_code`,
 		(select CONCAT(from_academic,'-',to_academic,'(',generation,')') from rms_tuitionfee where rms_tuitionfee.id=g.academic_year) as academic,
-		`g`.`semester` AS `semester`,
+		
 		(SELECT en_name
 		 FROM `rms_dept`
 		 WHERE (`rms_dept`.`dept_id`=`g`.`degree`)),
@@ -168,6 +168,7 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		WHERE ((`rms_view`.`type` = 4)
 		AND (`rms_view`.`key_code` = `g`.`session`))
 		LIMIT 1) AS `session`,
+		`g`.`semester` AS `semester`,
 		(SELECT
 		`r`.`room_name`
 		FROM `rms_room` `r`

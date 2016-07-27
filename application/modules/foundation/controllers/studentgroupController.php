@@ -32,7 +32,7 @@ class Foundation_StudentGroupController extends Zend_Controller_Action {
 			else{
 				$result = Application_Model_DbTable_DbGlobal::getResultWarning();
 			}
-			$collumns = array("GROUP_ID","YEARS","SEMESTER","DEGREE","GRADE","SESSION","ROOM_NAME","START_DATE","END_DATE","NOTE","STATUS","AMOUNT_STUDENT","REMAIN_STUDENT");
+			$collumns = array("GROUP_ID","ACADEMIC_YEAR","DEGREE","GRADE","SESSION","SEMESTER","ROOM_NAME","START_DATE","END_DATE","NOTE","STATUS","AMOUNT_STUDENT","REMAIN_STUDENT");
 			$link=array(
 					'module'=>'foundation','controller'=>'studentgroup','action'=>'edit',
 			);
