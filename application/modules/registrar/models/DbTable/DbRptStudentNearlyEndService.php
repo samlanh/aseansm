@@ -29,17 +29,24 @@ class Registrar_Model_DbTable_DbRptStudentNearlyEndService extends Zend_Db_Table
 				  rms_student as s
 				WHERE spd.`is_start` = 1
 				  AND s.stu_id=sp.student_id 
-				  AND ( DATEDIFF(spd.`validate`, NOW() ) < 7 
-				  AND DATEDIFF(spd.`validate`, NOW()) <= 365 )
 				  AND sp.id=spd.`payment_id`
 				  AND spd.`service_id`=pn.`service_id` ";
     	
-     	$order=" ORDER by spd.`validate` ASC ";
-//      	$from_date =(empty($search['start_date']))? '1': " sp.create_date >= '".$search['start_date']." 00:00:00'";
-//      	$to_date = (empty($search['end_date']))? '1': " sp.create_date <= '".$search['end_date']." 23:59:59'";
-//      	$where = " AND ".$to_date;
-     	$where="";
+    	$where=" ";
      	
+    	$order=" ORDER by spd.`validate` DESC ";
+     	
+    	$str_next = '+1 week';
+     	$search['end_date']=date("Y-m-d", strtotime($search['end_date'].$str_next));
+     	
+     	//$where .= " and DATEDIFF(spd.validate,".$search['end_date'].") <= 7 ";
+     	
+      	//$from_date =(empty($search['start_date']))? '1': " sp.create_date >= '".$search['start_date']." 00:00:00'";
+      	$to_date = (empty($search['end_date']))? '1': " spd.validate <= '".$search['end_date']." 23:59:59'";
+      	
+      	$where .= " AND ".$to_date;
+     	
+      	
     		if(!empty($search['adv_search'])){
     			$s_where = array();
     			$s_search = addslashes(trim($search['adv_search']));
@@ -57,7 +64,7 @@ class Registrar_Model_DbTable_DbRptStudentNearlyEndService extends Zend_Db_Table
     			$where.=" AND spd.service_id=".$search['service'];
     		}
     		
-//     		echo $sql.$where;
+    		//echo $sql.$where;
     	return $db->fetchAll($sql.$where.$order);
     }
     

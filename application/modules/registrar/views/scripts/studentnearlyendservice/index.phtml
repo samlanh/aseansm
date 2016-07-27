@@ -3,6 +3,7 @@
 	$this->headTitle('Report Student Nearly End Service'); 
 	echo $this->headTitle(''); 
 	$frm =  $this->form_search;
+	//echo $this->search['start_date'];
 	
 ?>	
 <div style="width: 28cm;margin: 0 auto;">
@@ -25,8 +26,11 @@
 			 <td> <?php echo $frm->getElement("study_year");?></td>
 			 <td> <?php echo $frm->getElement("service");?></td>
 			<!--<td> <?php //echo $frm->getElement("session");?></td> -->
-			 <td> <input dojoType="dijit.form.DateTextBox" class="fullside" onchange="CalculateDate();" id="start_date" name="start_date" value="<?php  if(empty($this->adv_search['start_date'])){echo date('Y-m-d');}else   echo $this->adv_search['start_date']; ?>"  type="text"></td>
-		     <td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="end_date" name="end_date" value="<?php if(empty($this->adv_search['end_date'])){ echo date('Y-m-d');}else echo $this->adv_search['end_date'];?>" type="text"></td>
+			
+			 <td> <input dojoType="dijit.form.DateTextBox" class="fullside" onchange="CalculateDate();" id="start_date" name="start_date" value="<?php echo date('Y-m-d',strtotime($this->search['start_date'])); ?>"  type="text"></td>
+		     
+		     <td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="end_date" name="end_date" value="<?php echo date('Y-m-d',strtotime($this->search['end_date'])); ?>" type="text"></td>
+			 
 			 <td> <button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
 		</tr>
 	</table>
