@@ -176,7 +176,7 @@ class Foundation_Model_DbTable_DbGroup extends Zend_Db_Table_Abstract
 		`g`.`expired_date`,
 		`g`.`note`,
 		(select name_en from rms_view where rms_view.type=9 and key_code=g.is_pass) as status,
-		(SELECT COUNT(gds.`stu_id`) FROM `rms_group_detail_student` as gds WHERE gds.`group_id`=`g`.`id` and is_pass=0 GROUP BY gds.group_id)AS Num_Student
+		(SELECT COUNT(gds.`stu_id`) FROM `rms_group_detail_student` as gds WHERE gds.`group_id`=`g`.`id` GROUP BY gds.group_id)AS Num_Student
 		FROM rms_group g where g.degree IN (2,3,4)";
 		
 		$order = " ORDER BY `g`.`id` DESC " ;	
