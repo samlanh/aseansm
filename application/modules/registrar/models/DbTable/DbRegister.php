@@ -72,7 +72,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 						'year'=>$data['study_year'],
 						'degree'		=>$data['dept'],
 						'grade'			=>$data['grade'],
-						'time'=>$data['time'],
+						'time'=>$data['study_hour'],
 						'session'=>$data['session'],
 						'payment_term'=>$data['payment_term'],
 						'tuition_fee'=>$data['tuitionfee'],
@@ -191,7 +191,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				$arr=array(
 						'student_id'=>$data['id'],
 						'receipt_number'=>$data['reciept_no'],
-						'time'=>$data['time'],
+						'time'=>$data['study_hour'],
 // 						'end_hour'=>$data['to_time'],
 						'payment_term'=>$data['payment_term'],
 						'tuition_fee'=>$data['tuitionfee'],
@@ -307,9 +307,9 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	if(!empty($search['study_year'])){
     		$where.=" AND sp.year=".$search['study_year'];
     	}
-    	if(!empty($search['time'])){
-    		$where.=" AND sp.time=".$search['time'];
-    	}
+//     	if(!empty($search['time'])){
+//     		$where.=" AND sp.time=".$search['time'];
+//     	}
     	if(!empty($search['session'])){
     		$where.=" AND sp.session=".$search['session'];
     	}
@@ -335,11 +335,11 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	$order=' ORDER BY id DESC';
     	return $db->fetchAll($sql.$order);
     }
-    function getPaymentTerm($generat,$payment_term,$grade,$time,$session){
+    function getPaymentTerm($generat,$payment_term,$grade,$session){
     	$pay=$payment_term-1;
     	$db = $this->getAdapter();
     	$sql="SELECT tfd.id,tfd.tuition_fee FROM rms_tuitionfee AS tf,rms_tuitionfee_detail AS tfd WHERE tf.id = fee_id
-    	AND tf.time=$time AND tfd.fee_id=$generat AND tfd.class_id=$grade AND tfd.payment_term=$pay AND tfd.session=$session LIMIT 1";
+    	 AND tfd.fee_id=$generat AND tfd.class_id=$grade AND tfd.payment_term=$pay AND tfd.session=$session LIMIT 1";
     	return $db->fetchRow($sql);
     }
     function getBalance($serviceid,$studentid){
@@ -397,7 +397,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     		$shortcut=$db->fetchOne($sql);
     		$pre=$shortcut;
     	}
-    	for($i = $acc_no;$i<5;$i++){
+    	for($i = $acc_no;$i<3;$i++){
     		$pre.='0';
     	}
     	return $pre.$new_acc_no;

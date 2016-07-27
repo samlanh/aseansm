@@ -26,6 +26,7 @@
 	    	dijit.byId('grade').attr('value','');
 	    	getallModel(dept_id,a=''); 
 	    	getStudentNo(dept_id);
+	    	setHourDefaul();
 	    	 
 	    }
 	}, "dept");
@@ -101,7 +102,7 @@
 		generat=dijit.byId('study_year').get('value');
 		payment_term=dijit.byId('payment_term').get('value');
 		grade=dijit.byId('grade').get('value');
-		time=dijit.byId('time').get('value');
+		//time=dijit.byId('time').get('value');
 		session=dijit.byId('session').get('value');
 		student_type=dijit.byId('student_type').get('value');
 		if(student_type==3){
@@ -110,32 +111,33 @@
 				getBalancePrice(1,old_studens);
 			}else
 			{
-				if(generat!='' && payment_term !='' && grade !='' && time !='' && session !=''){
-					getPaymentTerms(generat,payment_term,grade,time,session);
+				if(generat!='' && payment_term !='' && grade !='' && session !=''){
+					getPaymentTerms(generat,payment_term,grade,session);
 				}
 			}
 		}else{
-			if(generat!='' && payment_term !='' && grade !='' && time !='' && session !=''){
-				getPaymentTerms(generat,payment_term,grade,time,session);
+			if(generat!='' && payment_term !='' && grade !='' && session !=''){
+				getPaymentTerms(generat,payment_term,grade,session);
 			}
 		}
 		getDateTerm();
+		
 	}
 	function paymentTerms(){
 		generat=dijit.byId('study_year').get('value');
 		payment_term=dijit.byId('payment_term').get('value');
 		//payment_term=payment_term-1;
 		grade=dijit.byId('grade').get('value');
-		time=dijit.byId('time').get('value');
+		//time=dijit.byId('time').get('value');
 		session=dijit.byId('session').get('value');
-		if(generat!='' && payment_term !='' && grade !='' && time !='' && session !=''){
-			getPaymentTerms(generat,payment_term,grade,time,session);
+		if(generat!='' && payment_term !='' && grade !='' && session !=''){
+			getPaymentTerms(generat,payment_term,grade,session);
 			
 		}
 	}
 	var payment_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 	var url_getpaymentterm = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-payment-term')); ?>';
-	function getPaymentTerms(generat,payment_term,grade,time,session){//time (full/part time)
+	function getPaymentTerms(generat,payment_term,grade,session){//time (full/part time)
 		dijit.byId('tuitionfee').attr('value',0);
     	dijit.byId('total').attr('value',0);
     	dijit.byId('books').attr('value',0);
@@ -145,7 +147,7 @@
 					'generat_id':generat,
 					'pay_id':payment_term,
 					'grade_id':grade,
-					'time':time,
+					//'time':time,
 					'session':session
 					},
 				handleAs:"json",
@@ -417,10 +419,11 @@ fieldset{  background:none;}
 							<td><?php echo $register->getElement('session');?></td>
 							<td style="white-space: nowrap;"><?php echo $tr->translate("TIME");?></td>
 							<td>
-								<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside"  id="time" name="time" type="text" onchange="paymentTerm();">								
-										<option value="2"><?php echo $tr->translate("FULL_TIME");?></option>
-										<option value="1"><?php echo $tr->translate("PART_TIME");?></option>
-								</select>
+							    <input dojoType="dijit.form.TextBox"  class="fullside" id="study_hour" name="study_hour"  type="text">
+							<!--	<select dojoType="dijit.form.FilteringSelect" required="true" class="fullside"  id="time" name="time" type="text" onchange="paymentTerm();">								
+										<option value="2"><?php //echo $tr->translate("FULL_TIME");?></option>
+										<option value="1"><?php //echo $tr->translate("PART_TIME");?></option>
+								</select>-->
 							</td>
 					     </tr>
 						<tr>
@@ -496,7 +499,7 @@ function printSave(){
 		//dojo.byId("lb_en_name").innerHTML = dijit.byId("en_name").get('value');
 		dojo.byId("lb_sex").innerHTML = dijit.byId("sex").attr('displayedValue');
 		dojo.byId("lb_session").innerHTML = dijit.byId('session').attr('displayedValue');
-		dojo.byId("lb_hour").innerHTML = dijit.byId('time').attr('displayedValue');
+		dojo.byId("lb_hour").innerHTML = dijit.byId('study_hour').attr('displayedValue');
 		//var mkh = new Array('មករា', 'កុម្ភៈ', 'មីនា', 'មេសា', 'ឧសភា', 'មិថុនា', 'កក្កដា', 'សីហា', 'កញ្ញា', 'តុលា', 'វិច្ឆិកា', 'ធ្នូរ');
 		dojo.byId("lb_dept").innerHTML = dijit.byId('dept').attr('displayedValue');
 		dojo.byId("lb_grade").innerHTML = dijit.byId("grade").attr('displayedValue');
@@ -553,7 +556,7 @@ function printSave(){
 					width: 110px;	
 				}
 				.label{ font-weight: bold;font-size: 22px;}
-				.value{ border: 1px solid rgba(14, 0, 107, 1); height: 25px; padding: 0 2px;width: 98%; display: block;
+				.value{ font:bold 12px 'Khmer OS Battambang';border: 1px solid rgba(14, 0, 107, 1); height: 25px; padding: 0 2px;width: 98%; display: block;
 						margin-top: -25px; line-height: 25px;}
 				.values{ border: 1px solid rgba(14, 0, 107, 1);; height: 25px; padding: 0 10px;display: block;
 						line-height: 25px;}
@@ -570,7 +573,7 @@ function printSave(){
 				    </td>
 				</tr>
 				<tr>
-				    <td class="one khmerbold" valign="middle">អត្តលេខសិស្ស<div class="h">Student ID</div> </td><td width="25%"><strong> &nbsp;<label id="lb_stu_id" class="value"></label></strong></td>
+				    <td class="one khmerbold" valign="middle">អត្តលេខសិស្ស<div class="h">Student ID</div> </td><td width="25%"><strong> &nbsp;<label id="lb_stu_id" class="value one khmerbold"></label></strong></td>
 				    <td></td><td ></td>
 				    <td> </td><td ></td>
 				    <td class="one khmerbold">លេខបង្កាន់ដៃ<div class="h">Receipt No</div></td><td width="25%"><strong>&nbsp;<label id="lb_receipt_no" class="value"></label></strong></td>
@@ -632,6 +635,22 @@ function printSave(){
 </div>
 
 <script>
+//set hour defuale
+function setHourDefaul(){
+	dept=dijit.byId('dept').get('value');
+	session=dijit.byId('session').get('value');
+	if(dept==1 && session==1){
+		dijit.byId('study_hour').attr('value','7:30AM - 10:50AM');
+	}else if(dept==1 && session==2){
+		dijit.byId('study_hour').attr('value','1:30PM - 4:50PM');
+	}else if(session==1){
+		dijit.byId('study_hour').attr('value','7:00AM - 11:00AM');
+	}else if(session==2){
+		dijit.byId('study_hour').attr('value','1:00PM - 5:00PM');
+	}else {
+		dijit.byId('study_hour').attr('value','');
+	}
+}
 //save daata when sub button print 
 function printSubmit(){
 	 $('#office_receipt').submit();
