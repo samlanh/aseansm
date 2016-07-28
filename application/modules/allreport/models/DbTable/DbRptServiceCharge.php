@@ -18,7 +18,11 @@ class Allreport_Model_DbTable_DbRptServiceCharge extends Zend_Db_Table_Abstract
     	if(empty($search)){
     		return $db->fetchAll($sql.$order);
     	}
-    	$s=$search['txtsearch'];
+    	
+    	if(!empty($search['year'])){
+    		$where.=" AND id = ".$search['year'] ;
+    	}
+    	
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
     		$s_search = addslashes(trim($search['txtsearch']));
@@ -60,7 +64,11 @@ class Allreport_Model_DbTable_DbRptServiceCharge extends Zend_Db_Table_Abstract
     	return $db->fetchAll($sql);
     }
 
-    
+    function getAllYearService(){
+    	$db=$this->getAdapter();
+    	$sql=" select CONCAT(from_academic,'-',to_academic,'(',generation,')')as year ,id from rms_servicefee ";
+    	return $db->fetchAll($sql);
+    }	
     
     
 }

@@ -275,18 +275,22 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 			$_data=$this->getRequest()->getPost();
 			$search = array(
 					'txtsearch' => $_data['txtsearch'],
-					//'searchby' => $_data['searchby'],
+					'year' => $_data['year'],
 			);
 		}
 		else{
 			$search=array(
 					'txtsearch' =>'',
+					'year' =>'',
 			);
 		}
 		$db = new Allreport_Model_DbTable_DbRptFee();
 		$group= new Allreport_Model_DbTable_DbRptFee();
 		$rs_rows = $group->getAllTuitionFee($search);
 	
+		$year = $db->getAllYearFee();
+		$this->view->row = $year;
+		
 		$model = new Application_Model_DbTable_DbGlobal();
 		$row=0;$indexterm=1;$key=0;
 		if(!empty($rs_rows)){
@@ -347,17 +351,21 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 			$_data=$this->getRequest()->getPost();
 			$search = array(
 					'txtsearch' => $_data['txtsearch'],
-					//'searchby' => $_data['searchby'],
+					'year' => $_data['year'],
 			);
 		}
 		else{
 			$search=array(
 					'txtsearch' =>'',
+					'year' =>'',
 			);
 		}
 	
 		$db = new Allreport_Model_DbTable_DbRptServiceCharge();
 		$service= $db->getAllServiceFee($search);
+		$year = $db->getAllYearService();
+		$this->view->row = $year;
+		//print_r($year);exit();
 	
 		$model = new Application_Model_DbTable_DbGlobal();
 		$row=0;$indexterm=1;$key=0;$rs_rows=array();
