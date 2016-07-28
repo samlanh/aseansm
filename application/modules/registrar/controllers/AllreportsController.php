@@ -16,11 +16,11 @@ class Registrar_AllreportsController extends Zend_Controller_Action {
     		}
     		else{
     			$search = array(
-    					'adv_search' 	=>'',
-    					'service'		=>-1,
-    					'study_year' 	=>'',
-    					'start_date'	=> date('Y-m-d'),
-    					'end_date'		=>date('Y-m-d'),
+    					'adv_search' =>'',
+    					'study_year' =>'',
+    					'service'=>'',
+    					'start_date'=> date('Y-m-d'),
+    					'end_date'=>date('Y-m-d'),
     			);
     		}
     		
