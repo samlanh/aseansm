@@ -30,7 +30,7 @@ class Registrar_Model_DbTable_DbRptStudentPaymentLate extends Zend_Db_Table_Abst
 				  AND sp.id=spd.`payment_id`
 				  AND spd.`service_id`=pn.`service_id`";
     	
-     	$order=" ORDER by sp.receipt_number ASC ";
+     	$order=" ORDER by spd.validate DESC ";
 //      	$from_date =(empty($search['start_date']))? '1': " sp.create_date >= '".$search['start_date']." 00:00:00'";
      	$to_date = (empty($search['end_date']))? '1': " spd.validate <= '".$search['end_date']." 23:59:59'";
      	$where = " AND ".$to_date;
@@ -48,10 +48,10 @@ class Registrar_Model_DbTable_DbRptStudentPaymentLate extends Zend_Db_Table_Abst
     		if(!empty($search['service']) AND $search['service']>0){
     			$where.= " AND spd.service_id = ".$search['service'];
     		}
-    		if($search['study_year']>0){
-    			$where.= " AND spd.service_id = ".$search['study_year'];
-    		}
-//      		echo $sql.$where;
+//     		if($search['study_year']>0){
+//     			$where.= " AND spd.service_id = ".$search['study_year'];
+//     		}
+     		echo $sql.$where;
     	return $db->fetchAll($sql.$where.$order);
     }
     

@@ -21,9 +21,8 @@
 	<table width="100%">	
 		<tr> 
 			 <td><input dojoType="dijit.form.TextBox" class="fullside" id="adv_search" name="adv_search" value="<?php echo $this->search['adv_search']?>" placeholder="Search" type="text" ></td>
-			 <td> <?php echo $frm->getElement("study_year");?></td>
 			 <td> <?php echo $frm->getElement("service");?></td>
-			 <td><input dojoType="dijit.form.DateTextBox" class="fullside" id="end_date" name="end_date" value="<?php  if(empty($this->adv_search['end_date'])){echo date('Y-m-d');}else   echo $this->adv_search['end_date']; ?>"  type="text"></td>
+			 <td><input dojoType="dijit.form.DateTextBox" class="fullside" id="end_date" name="end_date" value="<?php echo $this->search['end_date']; ?>"  type="text"></td>
 			 <td> <button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
 		</tr>
 	</table>

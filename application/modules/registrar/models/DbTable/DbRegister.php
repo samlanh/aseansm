@@ -283,7 +283,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 		       ,sp.receipt_number,sp.payment_term,
  		       sp.tuition_fee,sp.discount_percent, sp.total,sp.paid_amount,
 		       sp.balance_due,sp.create_date
- 			   FROM rms_student AS s,rms_student_payment AS sp WHERE s.stu_id=sp.student_id AND s.stu_type IN (1,3) AND sp.user_id=".$user_id;
+ 			   FROM rms_student AS s,rms_student_payment AS sp WHERE sp.payfor_type=1 and s.stu_id=sp.student_id AND s.stu_type IN (1,3) AND sp.user_id=".$user_id;
     	
     	$where=" ";
     	
