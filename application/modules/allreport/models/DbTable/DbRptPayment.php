@@ -117,7 +117,7 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     	type,fee,qty,subtotal,
     	(SELECT title FROM `rms_program_name` WHERE `rms_program_name`.`service_id`= rms_student_paymentdetail.service_id LIMIT 1) as service,
     	(SELECT `name_en` FROM `rms_view` WHERE  `type`=8 AND key_code= payment_term LIMIT 1)as payment_term,
-    	amount,
+    	subtotal,paidamount,
     	(SELECT `total_payment` FROM `rms_student_payment` WHERE id= payment_id LIMIT 1) as total_payment,
     	(SELECT `paid_amount` FROM `rms_student_payment` WHERE id= payment_id LIMIT 1) as paid_amount,
     	(SELECT `balance_due` FROM `rms_student_payment` WHERE id= payment_id LIMIT 1) as balance_due,

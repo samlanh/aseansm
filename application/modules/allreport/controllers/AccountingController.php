@@ -300,6 +300,7 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 	
 						$rs_rows[$key]['status'] = Application_Model_DbTable_DbGlobal::getAllStatus($payment_tran['status']);
 						$rs_rows[$key]['class'] = $payment_tran['class'];
+						$rs_rows[$key]['session'] = $payment_tran['session'];
 						$rs_rows[$key]['remark'] = $payment_tran['remark'];
 						$rs_rows[$key]['quarter'] = $payment_tran['tuition_fee'];
 						$key_old=$key;
