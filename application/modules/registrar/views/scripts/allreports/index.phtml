@@ -20,12 +20,12 @@
       </td>
 	</tr>
 	<tr> 
-		 <td><input dojoType="dijit.form.TextBox" class="fullside" id="adv_search" name="adv_search" value="<?php echo $this->adv_search['adv_search']?>" placeholder="Search" type="text" ></td>
+		 <td><input dojoType="dijit.form.TextBox" class="fullside" id="adv_search" name="adv_search" value="<?php echo $this->search['adv_search']?>" placeholder="Search" type="text" ></td>
 		 <td> <?php echo $frm->getElement("study_year");?></td>
 		 <td> <?php echo $frm->getElement("service");?></td>
 		<!--<td> <?php //echo $frm->getElement("session");?></td> -->
-		 <td> <input dojoType="dijit.form.DateTextBox" class="fullside" onchange="CalculateDate();" id="start_date" name="start_date" value="<?php  if(empty($this->adv_search['start_date'])){echo date('Y-m-d');}else   echo $this->adv_search['start_date']; ?>"  type="text"></td>
-	     <td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="end_date" name="end_date" value="<?php if(empty($this->adv_search['end_date'])){ echo date('Y-m-d');}else echo $this->adv_search['end_date'];?>" type="text"></td>
+		 <td> <input dojoType="dijit.form.DateTextBox" class="fullside" onchange="CalculateDate();" id="start_date" name="start_date" value="<?php  echo $this->search['start_date']; ?>"  type="text"></td>
+	     <td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="end_date" name="end_date" value="<?php echo $this->search['end_date'];?>" type="text"></td>
 		 <td> <button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
 	</tr>
 	<tr>
@@ -84,8 +84,9 @@
 											<th>&nbsp;Remark&nbsp;</th>
 										  </tr>
 										  <tr></tr>
-												<style> td{padding:0 3px; }</style>
-												<?php $ser_id=new Registrar_Model_DbTable_DbReportStudentByuser();?>
+										 
+										 <style> td{padding:0 3px; }</style>
+										 <?php $ser_id=new Registrar_Model_DbTable_DbReportStudentByuser();?>
 										 <?php $i=0; $total=0;$total_paid=0;$total_balance=0; if (!empty($this->row)){  foreach($this->row as $rs){ $i++;
 // 										 	if($rs['type']==1){
 // 										 		$ser_type="Registration Fee Service";
@@ -109,7 +110,7 @@
 										    <td>$ <?php echo number_format($rs['subtotal'],2); ?></td>
 										    <td>$ <?php echo number_format($rs['paidamount'],2); ?></td>
 										    <td>$ <?php echo number_format($rs['balance'],2);  ?></td>
-										    <td><?php echo date('d-m-Y', strtotime($rs['start_date'])); ?></td>
+										    <td><?php echo date('d-M-Y', strtotime($rs['start_date'])); ?></td>
 										    <td><?php $user=$rs['user_id'];if( $user==$user_id )echo $session_user->last_name." ".$session_user->first_name; ?></td>
 										   	<td><?php echo $rs['note']; ?></td>
 										  </tr>
