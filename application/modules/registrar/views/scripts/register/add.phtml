@@ -503,14 +503,14 @@ function printSave(){
 		//var mkh = new Array('មករា', 'កុម្ភៈ', 'មីនា', 'មេសា', 'ឧសភា', 'មិថុនា', 'កក្កដា', 'សីហា', 'កញ្ញា', 'តុលា', 'វិច្ឆិកា', 'ធ្នូរ');
 		dojo.byId("lb_dept").innerHTML = dijit.byId('dept').attr('displayedValue');
 		dojo.byId("lb_grade").innerHTML = dijit.byId("grade").attr('displayedValue');
-		dojo.byId("lb_tuitionfee").innerHTML ="$"+dijit.byId('tuitionfee').get('value').toFixed(2);
+		dojo.byId("lb_tuitionfee").innerHTML ="$ "+dijit.byId('tuitionfee').get('value').toFixed(2);
 		dojo.byId("lb_payment_term").innerHTML = dijit.byId("payment_term").attr('displayedValue');
 		dojo.byId("lb_discount").innerHTML = dijit.byId("discount").get('value')+"%";
-		dojo.byId("lb_remark").innerHTML ="$"+ dijit.byId('remark').attr('value').toFixed(2);
-		dojo.byId("lb_total").innerHTML ="$"+dijit.byId('total').attr('value');
-		dojo.byId("lb_books").innerHTML = "$"+dijit.byId("books").get('value').toFixed(2);
-		dojo.byId("lb_addmin_fee").innerHTML ="$"+dijit.byId("addmin_fee").get('value').toFixed(2);
-		dojo.byId("lb_remaining").innerHTML = "$"+dijit.byId("remaining").get('value');
+		dojo.byId("lb_remark").innerHTML ="$ "+ dijit.byId('remark').attr('value').toFixed(2);
+		dojo.byId("lb_total").innerHTML ="$ "+dijit.byId('total').attr('value');
+		dojo.byId("lb_books").innerHTML = "$ "+dijit.byId("books").get('value').toFixed(2);
+		dojo.byId("lb_addmin_fee").innerHTML ="$ "+dijit.byId("addmin_fee").get('value').toFixed(2);
+		dojo.byId("lb_remaining").innerHTML = "$ "+dijit.byId("remaining").get('value');
 		
 		 dojo.byId("lb_note").innerHTML = dijit.byId("not").get('value');
 		 //dojo.byId("lb_char").innerHTML = dijit.byId("char_price").get('value');
@@ -557,7 +557,9 @@ function printSave(){
 				}
 				.label{ font-weight: bold;font-size: 22px;}
 				.value{ font:bold 12px 'Khmer OS Battambang';border: 1px solid rgba(14, 0, 107, 1); height: 25px; padding: 0 2px;width: 98%; display: block;
-						margin-top: -25px; line-height: 25px;}
+						margin-top: -25px; line-height: 25px;
+					    text-align: center;
+						}
 				.values{ border: 1px solid rgba(14, 0, 107, 1);; height: 25px; padding: 0 10px;display: block;
 						line-height: 25px;}
 				.h{ margin-top: -8px;/*margin-left:4px;*/}
@@ -585,8 +587,8 @@ function printSave(){
 				</tr>
 				<tr>
 				    <td class="one khmerbold">វេនសិក្សា <div class="h">Session</div></td><td width="25%"><strong> &nbsp;<label id="lb_session" class="value"></label></strong></td>
-				    <td class="one khmerbold">&nbsp;&nbsp;ម៉ោងសិក្សា <div class="h" style="margin-left:7px !important;">Study Hour</div></td><td width="25%"><strong> &nbsp;<label id="lb_hour" class="value"></label></strong></td>
-				    <td class="one khmerbold" valign="middle">&nbsp;&nbsp;កម្រិត&nbsp;/&nbsp;Degree </td><td width="25%"><strong>&nbsp;<label id="lb_dept" class="value"></label></strong></td>
+				    <td class="one khmerbold">&nbsp;&nbsp;ម៉ោងសិក្សា <div class="h" style="margin-left:7px !important;">Study Hour</div></td><td width="25%"><strong> &nbsp;<label id="lb_hour" class="value" style="font-size: 11px;white-space:nowrap;"></label></strong></td>
+				    <td class="one khmerbold" valign="middle">&nbsp;&nbsp;កម្រិត <div class="h" style="margin-left:7px !important;">Degree</div> </td><td width="25%"><strong>&nbsp;<label id="lb_dept" class="value" style="font-size: 11px;white-space:nowrap;"></label></strong></td>
 				    <td class="one khmerbold" valign="middle">&nbsp;&nbsp;ថ្នាក់ទី&nbsp;/&nbsp;Grade </td><td width="25%"><strong>&nbsp;<label id="lb_grade" class="value"></label></strong></td>
 				</tr>
 				<tr>
@@ -622,7 +624,7 @@ function printSave(){
 				</tr>
 				<tr><td colspan="8" style="height:15px;"></td></tr>
 				<tr>
-				    <td colspan="8" class="one khmerbold">&nbsp;បញ្ជាក់ៈទឹកប្រាក់ដែលបង់ហើយ  មិនអាចផ្ទេរ ឬ ដកវិញបានទែ  Note: All fees are not transferable or refundable.</td>
+				    <td colspan="8" class="one khmerbold">&nbsp;បញ្ជាក់ៈទឹកប្រាក់ដែលបង់ហើយ  មិនអាចផ្ទេរ ឬ ដកវិញបានទេ  Note: All fees are not transferable or refundable.</td>
 				</tr>
 			</table>
 		</div>

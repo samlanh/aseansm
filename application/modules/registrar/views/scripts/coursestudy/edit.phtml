@@ -485,11 +485,11 @@ function printSave(){
 		 dojo.byId("lb_time_study").innerHTML = dijit.byId("from_time").attr('displayedValue')+"-"+dijit.byId("to_time").attr('displayedValue');
 		 dojo.byId("lb_room").innerHTML = dijit.byId("room").attr('displayedValue');
 		 dojo.byId("lb_note").innerHTML = dijit.byId("not").get('value');
-		 dojo.byId("lb_course_cost").innerHTML ="$"+dijit.byId("tuitionfee").get('value').toFixed(2);
+		 dojo.byId("lb_course_cost").innerHTML ="$ "+dijit.byId("tuitionfee").get('value').toFixed(2);
 		 dojo.byId("lb_discount").innerHTML =dijit.byId("discount").get('value')+"%";
-		 dojo.byId("lb_total").innerHTML ="$"+dijit.byId("total").get('value');
-		 dojo.byId("lb_book").innerHTML ="$"+dijit.byId("books").get('value').toFixed(2);
-		 dojo.byId("lb_balance").innerHTML ="$"+dijit.byId("remaining").get('value');
+		 dojo.byId("lb_total").innerHTML ="$ "+dijit.byId("total").get('value');
+		 dojo.byId("lb_book").innerHTML ="$ "+dijit.byId("books").get('value').toFixed(2);
+		 dojo.byId("lb_balance").innerHTML ="$ "+dijit.byId("remaining").get('value');
 			dijit.byId("terms").show();	
 	
 }
@@ -520,7 +520,9 @@ function printSave(){
 				}
 				.label{ font-weight: bold;font-size: 22px;}
 				.value{ border: 1px solid rgba(14, 0, 107, 1); height: 25px; padding: 0 2px;width: 98%; display: block;
-						margin-top: -25px; line-height: 25px;}
+						margin-top: -25px; line-height: 25px;
+				        font:bold 12px 'Khmer OS Battambang'; 
+					   }
 				.values{ border: 1px solid rgba(14, 0, 107, 1);; height: 25px; padding: 0 10px;display: block;
 						line-height: 25px;}
 				.h{ margin-top: -5px;margin-left:4px;}
