@@ -26,15 +26,17 @@ class Allreport_Model_DbTable_DbRptStudentNearlyEndService extends Zend_Db_Table
 				  `rms_student_payment` AS sp,
 				  `rms_program_name` AS pn
 				WHERE spd.`is_start` = 1 
-				  AND DATEDIFF(spd.`validate`, NOW()) <= 7 
-				  AND DATEDIFF(spd.`validate`, NOW()) >= 1 
 				  AND sp.id=spd.`payment_id`
 				  AND spd.`service_id`=pn.`service_id`";
     	
      	$order=" ORDER by sp.receipt_number ASC ";
-     	$from_date =(empty($search['start_date']))? '1': "sp.create_date >= '".$search['start_date']." 00:00:00'";
-     	$to_date = (empty($search['end_date']))? '1': "sp.create_date <= '".$search['end_date']." 23:59:59'";
-     	$where = " AND ".$from_date." AND ".$to_date;
+     	//$from_date =(empty($search['start_date']))? '1': "sp.create_date >= '".$search['start_date']." 00:00:00'";
+     	$where=" ";
+     	$str_next = '+1 week';
+     	$search['end_date']=date("Y-m-d", strtotime($search['end_date'].$str_next));
+     	
+     	$to_date = (empty($search['end_date']))? '1': "spd.validate <= '".$search['end_date']." 23:59:59'";
+     	$where .= " AND ".$to_date;
      	
     		if(!empty($search['txtsearch'])){
     			$s_where = array();

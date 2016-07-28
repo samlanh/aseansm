@@ -27,28 +27,30 @@
 											<td colspan="3">
 												<table cellpadding="5"​ style="margin:0 auto;border: 1px solid #000;width:100%; border-collapse: collapse;"  border="1" >
 													<tr style="font-size:11px; height: 20px;border: 1px solid #000;" align="center" >
-														<th style="border: 1px solid #000;">No.</th>
-														<th style="border: 1px solid #000;">Academic</th>
-														<th style="border: 1px solid #000;">Generation</th>
-														<th style="border: 1px solid #000;">Grade</th>
-														<th style="border: 1px solid #000;">Time</th>
-														<th style="border: 1px solid #000;">Quarter</th>
-														<th style="border: 1px solid #000;">Semester</th>
-														<th style="border: 1px solid #000;">Year</th>
-														<th style="border: 1px solid #000;">Note</th>
+														<td style="border: 1px solid #000;">No.</td>
+														<td style="border: 1px solid #000;">Academic</td>
+														<td style="border: 1px solid #000;">Generation</td>
+														
+														<td style="border: 1px solid #000;">Grade</td>
+														<td style="border: 1px solid #000;">Session</td>
+														<td style="border: 1px solid #000;">Time</td>
+														<td style="border: 1px solid #000;">Quarter</td>
+														<td style="border: 1px solid #000;">Semester</td>
+														<td style="border: 1px solid #000;">Year</td>
+														<td style="border: 1px solid #000;">Note</td>
 													</tr>
 												<?php $i=0; foreach ($this->rs AS $row) { $i++;?>
 													<tr style="font-size:11px; height: 20px;border: 1px solid #000;" align="center" >
-														<th style="border: 1px solid #000;"><?php echo $i;?></th>
-														<th style="border: 1px solid #000;"><?php echo $row['academic'];?></th>
-														<th style="border: 1px solid #000;"><?php echo $row['generation'];?></th>
-														<th align="left" style="border: 1px solid #000;">&nbsp;&nbsp;<?php echo $row['class'];?></th>	
-														<th style="border: 1px solid #000;"><?php echo $row['session'];?></th>
-														<th style="border: 1px solid #000;"><?php echo $row['time'];?></th>
-														<th style="border: 1px solid #000;"><?php echo $row['quarter'];?></th>
-														<th style="border: 1px solid #000;"><?php echo $row['semester'];?></th>
-														<th style="border: 1px solid #000;"><?php echo $row['year'];?></th>
-														<th style="border: 1px solid #000;"><?php echo $row['remark'];?></th>
+														<td style="border: 1px solid #000;"><?php echo $i;?></td>
+														<td style="border: 1px solid #000;"><?php echo $row['academic'];?></td>
+														<td style="border: 1px solid #000;"><?php echo $row['generation'];?></td>
+														<td align="left" style="border: 1px solid #000;">&nbsp;&nbsp;<?php echo $row['class'];?></td>	
+														<td style="border: 1px solid #000;"><?php echo $row['session'];?></td>
+														<td style="border: 1px solid #000;"><?php echo $row['time'];?></td>
+														<td style="border: 1px solid #000;"><?php echo $row['quarter'];?></td>
+														<td style="border: 1px solid #000;"><?php echo $row['semester'];?></td>
+														<td style="border: 1px solid #000;"><?php echo $row['year'];?></td>
+														<td style="border: 1px solid #000;"><?php echo $row['remark'];?></td>
 													</tr>
 												<?php }?>	
 												</table>	

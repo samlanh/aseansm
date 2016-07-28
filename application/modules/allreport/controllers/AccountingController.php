@@ -330,9 +330,11 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 				'academic'=> $rs['academic'],
 				'generation'=> $rs['generation'],
 				'class'=>'',
+				'session'=>'',
 				'quarter'=>'',
 				'semester'=>'',
 				'year'=>'',
+				
 				'time'=>$rs['time'],
 				'date'=>$rs['create_date'],
 				'status'=>''
