@@ -6,7 +6,9 @@
 	$registrar=$acl=$this->url(array('module'=>'allreport','controller'=>'receiptionist','action'=>'index'), null, true);
 	$accoutning=$acl=$this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'index'), null, true);
 	$fundation=$acl=$this->url(array('module'=>'allreport','controller'=>'foundation','action'=>'index'), null, true);
-	$allstudent=$acl=$this->url(array('module'=>'allreport','controller'=>'allstudent','action'=>'rpt-all-student'), null, true);
+	$allstudent=$acl=$this->url(array('module'=>'allreport','controller'=>'allstudent','action'=>'index'), null, true);
+	
+	//$allstudent=$acl=$this->url(array('module'=>'allreport','controller'=>'allstudent','action'=>'index'), null, true);
 	
 	/*--------------------URLs link display--------------------------*/
 		  $tr=Application_Form_FrmLanguages::getCurrentlanguage();
@@ -100,7 +102,7 @@
 						//'register'=>'<li><a href="">'.$tr->translate("KINDERGARTEN_REGISTER").'</a></li>',
 
 						//'studentstudy'=>'<li><a href="">'.$tr->translate("REGISTER").'</a></li>',
-						'gep'=>'<li><a href="">'.$tr->translate("GEP_REGISTER").'</a></li>',
+						//'gep'=>'<li><a href="">'.$tr->translate("GEP_REGISTER").'</a></li>',
 
 						'studentstudy'=>'<li><a href="">'.$tr->translate("GEP_REGISTER").'</a></li>',
 						//'gep'=>'<li><a href="">'.$tr->translate("GEP_REGISTER").'</a></li>',
