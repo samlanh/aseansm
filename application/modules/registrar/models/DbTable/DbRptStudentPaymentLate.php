@@ -4,14 +4,14 @@ class Registrar_Model_DbTable_DbRptStudentPaymentLate extends Zend_Db_Table_Abst
 {
 
     protected $_name = 'rms_tuitionfee';
-//     public function getUserId(){
-//     	$session_user=new Zend_Session_Namespace('auth');
-//     	return $session_user->user_id;
-    	 
-//     }
+    public function getUserId(){
+    	$session_user=new Zend_Session_Namespace('auth');
+    	return $session_user->user_id;
+    }
+    
     function getAllStudentPaymentLate($search){
     	$db=$this->getAdapter();
-    	
+    	$user=$this->getUserId();
     	$sql="SELECT 
 				  sp.`receipt_number` AS receipt,
 				  (select stu_code from rms_student where rms_student.stu_id=sp.student_id limit 1)AS code,
@@ -28,11 +28,12 @@ class Registrar_Model_DbTable_DbRptStudentPaymentLate extends Zend_Db_Table_Abst
 				  `rms_program_name` AS pn
 				WHERE spd.`is_start` = 1 
 				  AND sp.id=spd.`payment_id`
-				  AND spd.`service_id`=pn.`service_id`";
+				  AND spd.`service_id`=pn.`service_id`
+    			  and sp.user_id=".$user;
     	
      	$order=" ORDER by spd.validate DESC ";
 //      	$from_date =(empty($search['start_date']))? '1': " sp.create_date >= '".$search['start_date']." 00:00:00'";
-     	$to_date = (empty($search['end_date']))? '1': " spd.validate <= '".$search['end_date']." 23:59:59'";
+     	$to_date = (empty($search['end_date']))? '1': " spd.validate < '".$search['end_date']." 23:59:59'";
      	$where = " AND ".$to_date;
      	
     		if(!empty($search['adv_search'])){

@@ -4,14 +4,15 @@ class Registrar_Model_DbTable_DbRptStudentNearlyEndService extends Zend_Db_Table
 {
 
     protected $_name = 'rms_tuitionfee';
-//     public function getUserId(){
-//     	$session_user=new Zend_Session_Namespace('auth');
-//     	return $session_user->user_id;
-//     }
+    public function getUserId(){
+    	$session_user=new Zend_Session_Namespace('auth');
+    	return $session_user->user_id;
+    }
     function getAllStudentNearlyEndService($search){
     	$db=$this->getAdapter();
 //     	echo $end_date = $search['end_date'];
 //     	echo NOW();exit();
+		$user=$this->getUserId();
     	$sql="SELECT 
 				  sp.`receipt_number` AS receipt,
 				  s.stu_code AS code,
@@ -28,11 +29,14 @@ class Registrar_Model_DbTable_DbRptStudentNearlyEndService extends Zend_Db_Table
 				  `rms_program_name` AS pn,
 				  rms_student as s
 				WHERE spd.`is_start` = 1
+				  
 				  AND s.stu_id=sp.student_id 
 				  AND sp.id=spd.`payment_id`
-				  AND spd.`service_id`=pn.`service_id` ";
+				  AND spd.`service_id`=pn.`service_id` 
+    			  and sp.user_id = ".$user ;
     	
-    	$where=" ";
+    	
+    	$where="  ";
      	
     	$order=" ORDER by spd.`validate` DESC ";
      	
