@@ -9,30 +9,40 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     	return $session_user->user_id;
     	 
     }
-    function getAllTuitionFee($search=''){  
+    function getAllTuitionFee($search=null){  
     	$db=$this->getAdapter();
-    	$sql = "SELECT id,CONCAT(from_academic,' - ',to_academic) AS academic,generation,
-    		    (select name_en from `rms_view` where `rms_view`.`type`=7 and `rms_view`.`key_code`=`rms_tuitionfee`.`time`) AS time,
-	    		create_date ,status FROM `rms_tuitionfee` WHERE 1";
-    	$order=" ORDER BY id DESC ";
-    	$where = ' ';
-    	if(empty($search)){
-    		return $db->fetchAll($sql.$order);
-    	}
-    	if(!empty($search['year'])){
-    		$where.=" AND id=".$search['year'];
-    	}
-    	 
+    	$sql = "SELECT t.id,
+					  CONCAT(t.from_academic,' - ',t.to_academic) AS academic, t.generation,
+					  (SELECT name_en FROM `rms_view`  WHERE `rms_view`.`type` = 7 AND `rms_view`.`key_code` = t.time) AS `time`,
+					  t.create_date,  t.status 	FROM `rms_tuitionfee` AS t,rms_tuitionfee_detail AS td
+					 WHERE t.id = td.fee_id	";
+    	$where ="";
+    	$from_date =(empty($search['start_date']))? '1': " t.create_date >= '".$search['start_date']." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': " t.create_date <= '".$search['end_date']." 23:59:59'";
+    	$where = " AND ".$from_date." AND ".$to_date;
+    	
 	    if(!empty($search['txtsearch'])){
 	    	$s_where = array();
 	    	$s_search = addslashes(trim($search['txtsearch']));
 		 	$s_where[] = " CONCAT(from_academic,'-',to_academic) LIKE '%{$s_search}%'";
-	    	$s_where[] = " generation LIKE '%{$s_search}%'";
+	    	$s_where[] = " t.generation LIKE '%{$s_search}%'";
 // 	    	$s_where[] = " en_name LIKE '%{$s_search}%'";
 	    	$where .=' AND ( '.implode(' OR ',$s_where).')';
 	    }
-	    
-	   // print_r($sql.$where);
+	    if(!empty($search['study_year'])){
+	    	$where.=" AND t.id=".$search['study_year'];
+	    }
+	    if(!empty($search['time'])){
+	    	$where.=" AND t.time=".$search['time'];
+	    }
+	    if(!empty($search['grade'])){
+	    	$where.=" AND td.class_id=".$search['grade'];
+	    }
+	    if(!empty($search['session'])){
+	    	$where.=" AND td.session=".$search['session'];
+	    }
+	    $order=" GROUP BY t.from_academic,t.to_academic,t.generation,t.time ORDER BY t.id DESC  ";
+	    //print_r($sql.$where.$order);
     	return $db->fetchAll($sql.$where.$order);
     }
     function getFeebyOther($fee_id){
@@ -68,7 +78,7 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
 	    				'note'=>$_data['note'],
 	    				'time'=>$_data['time'],
 	    				'status'=>$_data['status'],
-	    				'create_date'=>date("d-m-Y"),
+	    				'create_date'=>date("Y-m-d"),
 	    				'user_id'=>$this->getUserId()
 	    				);
 	    		$fee_id = $this->insert($_arr);
@@ -111,7 +121,7 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     				'note'=>$_data['note'],
     				'status'=>$_data['status'],
     				'time'=>$_data['time'],
-    				'create_date'=>date("d-m-Y"),
+    				'create_date'=>date("Y-m-d"),
     				'user_id'=>$this->getUserId()
     		);
 //     		$fee_id = $this->insert($_arr);

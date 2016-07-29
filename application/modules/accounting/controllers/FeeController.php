@@ -9,22 +9,19 @@ class Accounting_FeeController extends Zend_Controller_Action {
     {
     	try{
     		if($this->getRequest()->isPost()){
-    			$_data = $this->getRequest()->getPost();
-    			$this->view->row_ace=$_data;
-    			$search = array(
-    					'txtsearch' => $_data['txtsearch'],
-    					'year' => $_data['year'],
-//     					'session' => $_data['session'],
-//     					'grade' => $_data['grade'],
-    			);
+    			$search = $this->getRequest()->getPost();
+    			$this->view->row_ace=$search;
     		}
     		else{
     			$search=array(
-    					'txtsearch' => '',
-    					'year' =>'',
-//     					'session' => '',
-//     					'grade' => '',
-    			);
+    							'txtsearch' => '',
+    							'study_year' => '',
+    							'degree' => '',
+    							'time'   =>'',
+    							'session'=>'',
+    							'grade'=>'',
+    							'start_date'=> date('Y-m-d'),
+    							'end_date'=>date('Y-m-d'));
     		}
     		$db = new Accounting_Model_DbTable_DbTuitionFee();
     		$service= $db->getAllTuitionFee($search);
@@ -95,6 +92,10 @@ class Accounting_FeeController extends Zend_Controller_Action {
     	$data=$this->view->rows_session=$db->getSession();
     	$data=$this->view->rows_year=$db->getAceYear();
     	$this->view->rows_grade=$db->getGrad();
+    	$form=new Registrar_Form_FrmSearchInfor();
+    	$form->FrmSearchRegister();
+    	Application_Model_Decorator::removeAllDecorator($form);
+    	$this->view->form_search=$form;
     	  
     }
     public function headAddRecordTuitionFee($rs,$key){
