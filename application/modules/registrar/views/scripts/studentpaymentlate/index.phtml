@@ -41,7 +41,7 @@
 											</td>
 											<td align="center" width="44%">
 												<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 16px;font-family:'Khmer MEF2';">របាយការណ៏​​ សិស្សបង់យឺត</strong><br />
-												<span style="font-weight: bold;font-size: 11px;">From &nbsp; <?php echo date("d-M-Y",strtotime($this->search['end_date']));?></span><br /><br />
+												<span style="font-weight: bold;font-size: 11px;"> On &nbsp; <?php echo date("d-M-Y",strtotime($this->search['end_date']));?></span><br /><br />
 											</td>
 											<td width="28%" align="right">
 												
@@ -60,11 +60,12 @@
 														<th style="border: 1px solid #000;">Service Name</th>
 														<th style="border: 1px solid #000;">Paid Date</th>
 														<th style="border: 1px solid #000;">Validate</th>
-														<th style="border: 1px solid #000;">Remain Days</th>
+														<th style="border: 1px solid #000;">Late Days</th>
 													</tr>
 												<?php $i=0;$totalpaid=0;$totalbalance=0; if(!empty($this->row)){foreach ($this->row AS $row) { $i++;
 													$date1=date_create($row['end']);
-													$date2=date_create(date('Y-m-d'));
+// 													$date2=date_create(date('Y-m-d'));
+													$date2=date_create($this->search['end_date']);
 													$diff=date_diff($date1,$date2);
 													$day=$diff->format("%R%a");
 // 													echo $diff->format('%R'); // use for point out relation: smaller/greater

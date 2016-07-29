@@ -25,10 +25,6 @@
 			 <td><input dojoType="dijit.form.TextBox" class="fullside" id="adv_search" name="adv_search" value="<?php echo $this->search['adv_search']?>" placeholder="Search" type="text" ></td>
 			 <td> <?php echo $frm->getElement("study_year");?></td>
 			 <td> <?php echo $frm->getElement("service");?></td>
-			<!--<td> <?php //echo $frm->getElement("session");?></td> -->
-			
-			 <td> <input dojoType="dijit.form.DateTextBox" class="fullside" onchange="CalculateDate();" id="start_date" name="start_date" value="<?php echo date('Y-m-d',strtotime($this->search['start_date'])); ?>"  type="text"></td>
-		     
 		     <td><input dojoType="dijit.form.DateTextBox" required="true" class="fullside" id="end_date" name="end_date" value="<?php echo date('Y-m-d',strtotime($this->search['end_date'])); ?>" type="text"></td>
 			 
 			 <td> <button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
@@ -49,7 +45,7 @@
 											</td>
 											<td align="center" width="44%">
 												<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 16px;font-family:'Khmer MEF2';">របាយការណ៏​​ សិស្សជិតដល់ថ្ងៃបង់លុយ</strong><br />
-												<span style="font-weight: bold;font-size: 11px;">From &nbsp;<?php echo date("d-M-Y",strtotime($this->search['start_date']));?> &nbsp;To&nbsp; <?php echo date("d-M-Y",strtotime($this->search['end_date']));?></span><br /><br />
+												<span style="font-weight: bold;font-size: 11px;">&nbsp; On &nbsp; <?php echo date("d-M-Y",strtotime($this->search['end_date']));?></span><br /><br />
 											</td>
 											<td width="28%" align="right">
 											</td>
@@ -72,7 +68,9 @@
 												<?php $i=0;$totalpaid=0;$totalbalance=0; if(!empty($this->row)){foreach ($this->row AS $row) { $i++;
 												
 													$date1=date_create($row['end']);
-													$date2=date_create(date('Y-m-d'));
+													//$date2=date_create(date('Y-m-d'));
+													$date2=date_create($this->search['end_date']);
+													
 													$diff=date_diff($date1,$date2);
 													$day=$diff->format("%R%a");
 												?>
