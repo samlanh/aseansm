@@ -36,7 +36,7 @@ class Registrar_Form_FrmSearchInfor extends Zend_Dojo_Form
 		$db_years=new Registrar_Model_DbTable_DbRegister();
 		$years=$db_years->getAllYears();
 		$opt = array(''=>$this->tr->translate("SELECT_YEAR"));
-		if(!empty($years))foreach($years AS $row) $opt[$row['id']]=$row['years'];
+		if(!empty($years))foreach($years AS $row) $opt[$row['id']]=$row['years'].' '.$row['time'];
 		$generation->setMultiOptions($opt);
 		$_session = new Zend_Dojo_Form_Element_FilteringSelect('session');
 		$_session->setAttribs(array(

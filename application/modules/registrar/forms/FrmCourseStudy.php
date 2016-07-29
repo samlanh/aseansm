@@ -139,7 +139,7 @@ Class Registrar_Form_FrmCourseStudy extends Zend_Dojo_Form {
 		$db_years=new Registrar_Model_DbTable_DbRegister();
         $years=$db_years->getAllYearsProgramFee();
         $opt = array(-1=>$this->tr->translate("SELECT_YEAR"));
-        if(!empty($years))foreach($years AS $row) $opt[$row['id']]=$row['years'];
+        if(!empty($years))foreach($years AS $row) $opt[$row['id']]=$row['years'].' '.$row['time'];
 		$generation->setMultiOptions($opt);
 		
 		$rs_metion_opt = Application_Model_DbTable_DbGlobal::getAllMention();
@@ -202,7 +202,7 @@ Class Registrar_Form_FrmCourseStudy extends Zend_Dojo_Form {
 		
 		$_db = new Application_Model_DbTable_DbGlobal();
 		$rows = $_db->getAllFecultyNamess(2);
-		$opt = '' ;//array(-1=>$this->tr->translate("SELECT_DEPT"));
+		$opt = array();//array(-1=>$this->tr->translate("SELECT_DEPT"));
 		if(!empty($rows))foreach($rows AS $row) $opt[$row['dept_id']]=$row['en_name'];
 		 
 		$_dept = new Zend_Dojo_Form_Element_FilteringSelect("dept");

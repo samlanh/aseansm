@@ -142,7 +142,7 @@ Class Registrar_Form_FrmStudentServicePayment extends Zend_Dojo_Form {
 		$db_years=new Registrar_Model_DbTable_DbStudentServicePayment();
 		$years=$db_years->getTuiTionFee();
         $opt = array(-1=>$this->tr->translate("SELECT_YEAR"));
-        if(!empty($years))foreach($years AS $row) $opt[$row['id']]=$row['years'];
+        if(!empty($years))foreach($years AS $row) $opt[$row['id']]=$row['years'].' '.$row['time'];
 		$generation->setMultiOptions($opt);
 		
 		
