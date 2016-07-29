@@ -110,14 +110,13 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 	function  rptSuspendserviceAction(){
 		try{
 			if($this->getRequest()->isPost()){
-				$_data=$this->getRequest()->getPost();
-				$search = array(
-						'txtsearch' => $_data['txtsearch'],
-				);
+				$search=$this->getRequest()->getPost();
 			}
 			else{
 				$search=array(
 						'txtsearch' => '',
+						'start_date'=>date('Y-m-d'),
+						'end_date'=>date('Y-m-d'),
 				);
 			}
 		$this->view->search = $search;
@@ -220,17 +219,24 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 				$search = array(
 						'txtsearch' => $data['txtsearch'],
 						'start_date'=> $data['from_date'],
-						'end_date'	=>$data['to_date']
+						'end_date'	=>$data['to_date'],
+						'service'	=>$data['service']
 				);
 			}else{
 				$search=array(
 						'txtsearch' =>'',
 						'start_date'=> date('Y-m-d'),
 						'end_date'	=>date('Y-m-d'),
+						'service'	=>''
 				);;
 			}
 			$db = new Allreport_Model_DbTable_DbRptStudentNearlyEndService();
 			$abc = $this->view->row = $db->getAllStudentNearlyEndService($search);
+			
+			$form=new Registrar_Form_FrmSearchInfor();
+			$form->FrmSearchRegister();
+			Application_Model_Decorator::removeAllDecorator($form);
+			$this->view->form_search=$form;
 			
 			$this->view->search = $search;
 			
@@ -247,19 +253,26 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 				$data=$this->getRequest()->getPost();
 				$search = array(
 						'txtsearch' => $data['txtsearch'],
-						'start_date'=> $data['from_date'],
-						'end_date'	=>$data['to_date']
+						//'start_date'=> $data['from_date'],
+						'end_date'	=>$data['to_date'],
+						'service'	=>$data['service'],
 				);
 			}else{
 				$search=array(
 						'txtsearch' =>'',
-						'start_date'=> date('Y-m-d'),
+						//'start_date'=> date('Y-m-d'),
 						'end_date'	=>date('Y-m-d'),
+						'service'	=>'',
 				);;
 			}
 			$db = new Allreport_Model_DbTable_DbRptStudentPaymentLate();
 			$abc = $this->view->row = $db->getAllStudentPaymentLate($search);
-				
+			
+			$form=new Registrar_Form_FrmSearchInfor();
+			$form->FrmSearchRegister();
+			Application_Model_Decorator::removeAllDecorator($form);
+			$this->view->form_search=$form;
+			
 			$this->view->search = $search;
 				
 		}catch(Exception $e){

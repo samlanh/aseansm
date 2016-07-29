@@ -38,6 +38,10 @@ class Allreport_Model_DbTable_DbRptStudentNearlyEndService extends Zend_Db_Table
      	$to_date = (empty($search['end_date']))? '1': "spd.validate <= '".$search['end_date']." 23:59:59'";
      	$where .= " AND ".$to_date;
      	
+     	if(!empty($search['service'])){
+     		$where .=" and spd.service_id=".$search['service'];
+     	}
+     	
     		if(!empty($search['txtsearch'])){
     			$s_where = array();
     			$s_search = addslashes(trim($search['txtsearch']));
