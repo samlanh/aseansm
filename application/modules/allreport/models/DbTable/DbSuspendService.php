@@ -28,6 +28,18 @@ class Allreport_Model_DbTable_DbSuspendService extends Zend_Db_Table_Abstract
 			FROM rms_suspendservicedetail,rms_suspendservice WHERE rms_suspendservicedetail.suspendservice_id=rms_suspendservice.id and suspend_status=1 ';
 			$where ='';
 			$order = ' ORDER BY rms_suspendservicedetail.id DESC ';
+			
+			$from_date =(empty($search['start_date']))? '1': "rms_suspendservice.define_date >= '".$search['start_date']." 00:00:00'";
+			$to_date = (empty($search['end_date']))? '1': "rms_suspendservice.define_date <= '".$search['end_date']." 23:59:59'";
+			$where .= " AND ".$to_date." and ".$from_date;
+			
+			if(!empty($search['service'])){
+				$where .=" and service_id = ".$search['service'];
+			}
+			if(!empty($search['study_year'])){
+				$where .=" and year = ".$search['study_year'];
+			}
+			
 			if (empty($search)){
 				return $db->fetchAll($sql.$order);
 			}

@@ -117,6 +117,8 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 						'txtsearch' => '',
 						'start_date'=>date('Y-m-d'),
 						'end_date'=>date('Y-m-d'),
+						'service'=>'',
+						'study_year'=>'',
 				);
 			}
 		$this->view->search = $search;
@@ -128,6 +130,10 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 			echo $e->getMessage();
 		}
 		
+		$form=new Registrar_Form_FrmSearchInfor();
+		$form->FrmSearchRegister();
+		Application_Model_Decorator::removeAllDecorator($form);
+		$this->view->form_search=$form;
 	}
 	function rptInvoiceAction(){
 	
@@ -164,15 +170,22 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 				$search = array(
 						'txtsearch' => $data['txtsearch'],
 						'start_date'=> $data['from_date'],
-                        'end_date'=>$data['to_date']
+                        'end_date'=>$data['to_date'],
+						'service'=>$data['service'],
 				);
 			}else{
 				$search=array(
 						'txtsearch' =>'',
 						'start_date'=> date('Y-m-d'),
 						'end_date'=>date('Y-m-d'),
+						'service'=>'',
 				);;
 			}
+			
+			$form=new Registrar_Form_FrmSearchInfor();
+			$form->FrmSearchRegister();
+			Application_Model_Decorator::removeAllDecorator($form);
+			$this->view->form_search=$form;
 			
 			$db = new Allreport_Model_DbTable_DbRptStudentBalance();
 			$this->view->rs = $db->getAllStudentBalance($search);
@@ -289,14 +302,22 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 			$search = array(
 					'txtsearch' => $_data['txtsearch'],
 					'year' => $_data['year'],
+					//'grade_all' => $_data['grade_all'],
 			);
 		}
 		else{
 			$search=array(
 					'txtsearch' =>'',
 					'year' =>'',
+					//'grade_all' =>'',
 			);
 		}
+		
+		$form=new Registrar_Form_FrmSearchInfor();
+		$form->FrmSearchRegister();
+		Application_Model_Decorator::removeAllDecorator($form);
+		$this->view->form_search=$form;
+		
 		$db = new Allreport_Model_DbTable_DbRptFee();
 		$group= new Allreport_Model_DbTable_DbRptFee();
 		$rs_rows = $group->getAllTuitionFee($search);

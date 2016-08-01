@@ -2,22 +2,25 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	$this->headTitle('Report Fee'); 
 	echo $this->headTitle(''); 
-	
+	$frm=$this->form_search;
 ?>	
 <div style="width: 28cm;margin: 0 auto;">
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'allreport','controller'=>'accounting','action'=>'rpt-fee')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-	<table>	
+	<table style="width: 60%">	
 		<tr>
 			<td>	
-				<input dojoType="dijit.form.TextBox" required="true"  id="txtsearch" name="txtsearch" placeholder="Search....." value="<?php echo $this->search['txtsearch'];?>" type="text">
+				<input dojoType="dijit.form.TextBox" required="true"  class="fullside" id="txtsearch" name="txtsearch" placeholder="Search....." value="<?php echo $this->search['txtsearch'];?>" type="text">
 			</td>	
 			<td>
 				<select class="fullside"   name="year" id="year" dojoType="dijit.form.FilteringSelect">
 					<option value=""> Select Year </option>
 					<?php if(!empty($this->row)){foreach ($this->row as $id ){?>
-						<option value="<?php echo $id['id']?>" <?php if($id['id']==$this->search['year']) echo 'selected="selected"' ?>><?php echo $id['year'];?></option>
+						<option value="<?php echo $id['id']?>" <?php if($id['id']==$this->search['year']) echo 'selected="selected"' ?>><?php echo $id['year'].' '.$id['time'];?></option>
 					<?php }}?>
 				</select>
+			</td>
+			<td>
+				<?php //echo $frm->getElement('grade_all')?>
 			</td>
 			<td>
 				<button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" name="search"  type="submit"><?php echo $tr->translate("SEARCH");?></button>

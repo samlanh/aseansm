@@ -11,13 +11,6 @@ class Allreport_Model_DbTable_DbRptStudentBalance extends Zend_Db_Table_Abstract
 //     }
     function getAllStudentBalance($search){
     	$db=$this->getAdapter();
-    	
-//     	$date_start = date_create($search['start_date']);
-//     	//$from_date=date_format($date_start, "d-M-Y");
-    	
-//     	$date_end = date_create($search['end_date']);
-    	//$to_date=date_format($date_end, "d-m-Y");
-    	
     	$sql = "select spd.id,spd.fee AS fee,spd.discount_fix AS discount,spd.subtotal AS payment,spd.paidamount AS paid,spd.is_complete AS complete,
     			spd.balance AS balance,spd.validate AS validate,spd.comment AS comment,sp.create_date AS paid_date,sp.receipt_number AS receipt,     
 				(select CONCAT(from_academic,' - ',to_academic) from rms_servicefee where rms_servicefee.id=sp.year limit 1)AS year,
@@ -30,12 +23,15 @@ class Allreport_Model_DbTable_DbRptStudentBalance extends Zend_Db_Table_Abstract
     	
      	$order=" ORDER by sp.receipt_number ASC ";
     	$where = '';
-     	//$where= " and sp.create_date between '$from_date' and '$to_date'";
      	
      	$from_date =(empty($search['start_date']))? '1': "sp.create_date >= '".$search['start_date']." 00:00:00'";
      	$to_date = (empty($search['end_date']))? '1': "sp.create_date <= '".$search['end_date']." 23:59:59'";
      	
      	$where = " AND ".$from_date." AND ".$to_date;
+     	
+     	if(!empty($search['service'])){
+     		$where .=" and spd.service_id = ".$search['service'];
+     	}
      	
     		if(!empty($search['txtsearch'])){
     			$s_where = array();
