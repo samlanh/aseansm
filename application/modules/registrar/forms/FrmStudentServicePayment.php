@@ -27,13 +27,14 @@ Class Registrar_Form_FrmStudentServicePayment extends Zend_Dojo_Form {
 		
 		$this->_khname = new Zend_Dojo_Form_Element_TextBox('kh_name');
 		$this->_khname->setAttribs(array(
-				'dojoType'=>$this->text,'class'=>'fullside','style'=>'width:250px;','readonly'=>'readonly',
+				'dojoType'=>$this->text,'class'=>'fullside','readonly'=>'readonly',
 		));
 		
 		$this->_enname = new Zend_Dojo_Form_Element_TextBox('en_name');
 		$this->_enname->setAttribs(array('dojoType'=>$this->tvalidate,
 				'required'=>'true',
 				'class'=>'fullside',
+				//'style'=>'width:288px',
 				'readonly'=>'readonly',));
 		
 		$this->_dob = new Zend_Dojo_Form_Element_DateTextBox('dob');
@@ -124,7 +125,7 @@ Class Registrar_Form_FrmStudentServicePayment extends Zend_Dojo_Form {
 				//'onkeyup'=>'CheckReceipt()'
 				'required'=>'true',
 				'readonly'=>'true',
-				'style'=>'color:red;width:250px;'
+				'style'=>'color:red;'
 				));
 		$reciept=new Registrar_Model_DbTable_DbRegister();
 		$opt=$reciept->getRecieptNo();
@@ -135,14 +136,13 @@ Class Registrar_Form_FrmStudentServicePayment extends Zend_Dojo_Form {
 				//'onkeyup'=>'CheckReceipt()'
 				'required'=>'false',
 				'class'=>'fullside',
-				'onchange'=>'getStudentName();',
 		));
 // 		$db_years=new Registrar_Model_DbTable_DbRegister();
 //         $years=$db_years->getAllYearsServiceFee();
 		$db_years=new Registrar_Model_DbTable_DbStudentServicePayment();
-		$years=$db_years->getTuiTionFee();
+		$years=$db_years->getYearService();
         $opt = array(-1=>$this->tr->translate("SELECT_YEAR"));
-        if(!empty($years))foreach($years AS $row) $opt[$row['id']]=$row['years'].' '.$row['time'];
+        if(!empty($years))foreach($years AS $row) $opt[$row['id']]=$row['years'];
 		$generation->setMultiOptions($opt);
 		
 		
@@ -150,7 +150,7 @@ Class Registrar_Form_FrmStudentServicePayment extends Zend_Dojo_Form {
 		$_studid->setAttribs(array('dojoType'=>$this->text,'class'=>'fullside','style'=>'color:red;','readonly'=>'true'));
 		
 		$_sex =  new Zend_Dojo_Form_Element_FilteringSelect('sex');
-		$_sex->setAttribs(array('dojoType'=>$this->filter,'class'=>'fullside','style'=>'width:250px;','readonly'=>'true'));
+		$_sex->setAttribs(array('dojoType'=>$this->filter,'class'=>'fullside','readonly'=>'true'));
 		$sex_opt = array(
 				1=>$this->tr->translate("MALE"),
 				2=>$this->tr->translate("FEMALE"));
@@ -254,6 +254,7 @@ Class Registrar_Form_FrmStudentServicePayment extends Zend_Dojo_Form {
 		$not = new Zend_Dojo_Form_Element_TextBox('not');
 		$not->setAttribs(array(
 				'dojoType'=>$this->text,
+				//'style'=>'width:288px;',
 				'class'=>'fullside',
 		));
 		
@@ -344,7 +345,7 @@ Class Registrar_Form_FrmStudentServicePayment extends Zend_Dojo_Form {
 		$_remark = $this->_remark;
 		
 		$_reciept_no = new Zend_Dojo_Form_Element_TextBox('reciept_no');
-		$_reciept_no->setAttribs(array('dojoType'=>$this->t_num,'class'=>'fullside','style'=>'width:250px;',
+		$_reciept_no->setAttribs(array('dojoType'=>$this->t_num,'class'=>'fullside','style'=>'',
 				//'onkeyup'=>'CheckReceipt()'
 				'dojoType'=>$this->t_num,
 				'required'=>'true',

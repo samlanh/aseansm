@@ -11,9 +11,9 @@
 	dojo.require("dojo.NodeList-manipulate");
 	dojo.require("dojo.data.ObjectStore");
 	dojo.require("dojo.store.Memory");
-	var student_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->rs));?> );
 	dojo.ready(function(){ 
 		addRow();
+		<?php /*?>
 		new dijit.form.FilteringSelect({
 		    store: student_store,
 		    autoComplete: true,                        
@@ -27,10 +27,25 @@
 		    	//dijit.byId('grade').attr('value','');
 		    	//getallModel(dept_id,a=''); 
 		    	//getStudentNo(dept_id);
+		    	setID(1);
 		    	getStudentInfo();getservicefee();
-		    	 
+		    	
 		    }
 		}, "studentid");
+
+		new dijit.form.FilteringSelect({
+		    store: student_store,
+		    autoComplete: true,                        
+		    required: true,
+		    id: "stu_name",
+		    name: "stu_name",           
+		    class: 'fullside',  
+		    placeHolder:"Selected Student name",          
+		    onChange: function() {  
+				setID(2);
+			}
+		}, "stu_name");
+		<?php */ ?>
 	});	
 
 </script>
@@ -50,46 +65,50 @@ fieldset{  background:none;}
     return false;
    }
 </script>
-<table  cellspacing="10" style="margin: 0 auto; width: 100%;">
+<table id="head_tbl"  cellspacing="10" style="margin: 0 auto; width: 100%;">
 	<tr>
 		<td>
 		<fieldset>
 					<legend align="center"><strong​ style="font-size: 18px;"><?php echo $tr->translate("ADD_STUDENT_SERVICE_PAYMENT");?></strong></legend>
-					<table style="margin: 0 auto; width: 100%;padding:10px;" cellspacing="7" >
+					<table style="margin: 0 auto; width: 100%;padding:10px;" cellspacing="7" cellpadding="10px" >
 						<tr>
-							<td style="width: 160px"><?php echo $tr->translate("ACADEMIC_YEAR");?></td>
-							<td><?php echo $register->getElement('study_year');?></td>
-							<td align="right"><?php echo $tr->translate("RECEIPT_NO");?></td>
-							<td align="center"><?php echo $register->getElement('reciept_no');?></td>
+							<td style="width: 12%"><?php echo $tr->translate("ACADEMIC_SERVICE");?></td>
+							<td style="width: 37%"><?php echo $register->getElement('study_year');?></td>
+							<td align="right" style="width: 12%"><?php echo $tr->translate("RECEIPT_NO");?></td>
+							<td align="center" style="width: 37%"><?php echo $register->getElement('reciept_no');?></td>
 						</tr>
 						<tr>
 							<td><?php echo $tr->translate("STUDENT_ID");?></td>
-							<td><input id="studentid"/>
-								<!-- <select class="fullside" name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();getservicefee();" >
-										<option value='-1'><?php echo $tr->translate("STUDENT_ID");?>សិស្ស</option>
-									<?php //if(!empty($this->rs))foreach ($this->rs as $row){?>
-										<option value="<?php //echo $row['stu_id']?>"><?php //echo $row['stu_code']?></option>
-									<?php// }?>
+							<td>
+								<select type="text" class="fullside" dojoType="dijit.form.FilteringSelect" name="studentid" id="studentid" onChange="getStudentInfo();setID(1);" >
+									<option value="1">Select Student ID</option>
+									<?php if(!empty($this->rs)){foreach ($this->rs as $rs){?>
+									<option value="<?php echo $rs['id']?>"><?php echo $rs['code']?></option>
+									<?php }}?>
 								</select>
-								 -->
-							</td>	
-							<td align="right"><?php echo $tr->translate("NAME_KH");?></td>
-							<td align="center"><?php echo $register->getElement('kh_name');?></td>
+							</td>
+							<td align="right"><?php echo $tr->translate("STUDENT_NAME");?></td>
+							<td align="center">
+								<select type="text" style="" class="fullside" dojoType="dijit.form.FilteringSelect" name="stu_name" id="stu_name" onChange="setID(2);" >
+									<option value="1">Select Student Name</option>
+									<?php if(!empty($this->row)){foreach ($this->row as $row){?>
+									<option value="<?php echo $row['id']?>"><?php echo $row['name']?></option>
+									<?php }}?>
+								</select>
+							</td>
 						</tr>
 						<tr>
-							<td><?php echo $tr->translate("NAME_EN");?></td>
-							<td><?php echo $register->getElement('en_name');?></td>
-							
-							<td align="right"><?php echo $tr->translate("SEX");?></td>
-							<td align="center"><?php echo $register->getElement('sex');?></td>
+							<td ><?php echo $tr->translate("NAME_KH");?></td>
+							<td ><?php echo $register->getElement('kh_name');?></td>
+							<td align="right"><?php echo $tr->translate("NAME_EN");?></td>
+							<td align="center"><?php echo $register->getElement('en_name');?></td>
 						</tr>
 						<tr>	
-						    <td><?php echo $tr->translate("NOT");?></td>
-							<td title='Ex: 20 or 10%' ><?php echo $register->getElement('not');?></td>	
-							<td align="right"><?php echo $tr->translate("CHAR_PRICE");?></td>
-							<td align="center" ><?php echo $register->getElement('char_price');?></td>
+							<td><?php echo $tr->translate("SEX");?></td>
+							<td ><?php echo $register->getElement('sex');?></td>
+						    <td align="right"><?php echo $tr->translate("NOT");?></td>
+							<td align="center"><?php echo $register->getElement('not');?></td>	
 						</tr>
-						
 						<tr>
 							<td colspan="4">
 								<table>
@@ -108,7 +127,6 @@ fieldset{  background:none;}
 								</table>
 							</td>
 						</tr>
-						
 						<tr>
 							<td colspan="4" align="left">
 									<input type="button" label="<?php echo $tr->translate('ADD_ROW');?>" dojoType="dijit.form.Button" 
@@ -350,34 +368,13 @@ function printSave(){
 
 
 <script>
-//ajax get student name by academic year
-var student_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
-var get_name = "<?php echo $this->url(array('module'=>'registrar','controller'=>'studentservicepayment','action'=>'get-student-name')); ?>";
-function getStudentName(){
-	study_year= dijit.byId('study_year').get('value');
-	dojo.xhrPost({
-		url:get_name,
-		content:{
-			'study_year':study_year
-			},
-		handleAs:"json",
-		load: function(data) {
-			if(data !=''){
-			student_stores  = getDataStorefromJSON('id','name', data);
-		    dijit.byId('studentid').set('store',student_stores);  
-			//dijit.byId("studentid").attr("value",data);
-			}else{
-				dijit.byId('studentid').set('store',student_store); 
-				dijit.byId('en_name').attr('value','');
-				dijit.byId('studentid').attr('value','');
-				dijit.byId('kh_name').attr('value','');
-				dijit.byId('sex').attr('value','');
-			}
-		},
-		error: function(err) {
-			//alert(err);
-		}
-	});
+
+function setID(type){
+	if(type==1){
+		dijit.byId('stu_name').attr('value',dijit.byId('studentid').get('value')); 
+	}else{
+		dijit.byId('studentid').attr('value',dijit.byId('stu_name').get('value')); 
+	}
 }
 function clearControll(){
 	dijit.byId('en_name').attr('value','');
@@ -631,12 +628,15 @@ function getservicefee(key){
 			studentid = dijit.byId('studentid').get('value');
 			services = dijit.byId('service_'+key).get('value');
 			term = dijit.byId('term_'+key).get('value');
+			year = dijit.byId('study_year').get('value');
+			//alert(year);
 			dojo.xhrPost({
 				url:url_service_fee,
 				content:{
 					'term':term,
 					'service':services,
 					'studentid':studentid,
+					'year':year,
 					},
 				handleAs:"json",
 				load: function(data) {

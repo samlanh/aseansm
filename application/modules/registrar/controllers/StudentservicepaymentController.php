@@ -8,7 +8,6 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     	header('content-type: text/html; charset=utf8');
     	$this->tr=Application_Form_FrmLanguages::getCurrentlanguage();
     	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
-    	
 	}
     public function indexAction()
     {
@@ -16,22 +15,19 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     		$db = new Registrar_Model_DbTable_DbStudentServicePayment();
     		    		if($this->getRequest()->isPost()){
     		    			$search=$this->getRequest()->getPost();
+    		    			//print_r($search);exit();
     						$this->view->adv_search=$search;
     		    		}
     		    		else{
     		    			$search = array(
     		    					'adv_search' => '',
-    		    					'study_year' => '',
-    		    					'grade' => '',
-    		    					'service' => '',
-    		    					'pay_term' => '',
-//     		    					'search_status' => -1,
+    		    					'year' => '',
     		    					'start_date'=> date('Y-m-d'),
     		    					'end_date'=>date('Y-m-d'));
     		    		}
     		$rs_rows= $db->getAllStudenTServicePayment($search);
     		$list = new Application_Form_Frmtable();
-    		$collumns = array("STUDENT_ID","NAME","SEX","ACADEMIC_YEAR","RECEIPT_NO","GRAND_TOTAL","DISCOUNT",
+    		$collumns = array("STUDENT_ID","NAME","SEX","ACADEMIC_SERVICE","RECEIPT_NO","GRAND_TOTAL","DISCOUNT",
     				          "TOTAL_PAYMENT","MONEY_RECEIVED","BALANCE","RETURN","DATE_PAY","USER");
     		$link=array(
     				'module'=>'registrar','controller'=>'studentservicepayment','action'=>'edit',
@@ -46,6 +42,10 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     	$form=$forms->FrmSearchRegister();
     	Application_Model_Decorator::removeAllDecorator($form);
     	$this->view->form_search=$form;
+    	
+    	$_db = new Registrar_Model_DbTable_DbStudentServicePayment();
+    	$this->view->year = $year = $_db->getYearService();
+    	
     }
     public function addAction()
     {
@@ -82,6 +82,7 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
        
        $db = new Registrar_Model_DbTable_DbStudentServicePayment();
        $this->view->rs = $db->getAllStudentCode();
+       $this->view->row = $db->getAllStudentName();
        
        $_model = new Application_Model_GlobalClass();
        $this->view->all_service = $_model->getAllServiceItemOption(2);
@@ -96,7 +97,7 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     	$id=$this->getRequest()->getParam('id');
     	if($this->getRequest()->isPost()){
     		$_data = $this->getRequest()->getPost();
-//     		$_data['id']=$id;
+     		$_data['id']=$id;
     		try {
     			$db = new Registrar_Model_DbTable_DbStudentServicePayment();
     			$db->updateStudentServicePayment($_data);
@@ -129,6 +130,7 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     	
     	$db = new Registrar_Model_DbTable_DbStudentServicePayment();
     	$this->view->rs = $db->getAllStudentCode();
+    	$this->view->row_name = $db->getAllStudentName();
     	
     	$db = new Application_Model_DbTable_DbGlobal();
     	$abc=$this->view->payment_term = $db->getAllPaymentTerm();
@@ -154,7 +156,7 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     	if($this->getRequest()->isPost()){
     		$data=$this->getRequest()->getPost();
     		$db = new Registrar_Model_DbTable_DbStudentServicePayment();
-    		$price = $db->getAllpriceByServiceTerm($data['studentid'],$data['service'],$data['term']);
+    		$price = $db->getAllpriceByServiceTerm($data['studentid'],$data['service'],$data['term'],$data['year']);
     		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
     		print_r(Zend_Json::encode($price));
     		exit();
@@ -165,7 +167,7 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     	if($this->getRequest()->isPost()){
     		$data=$this->getRequest()->getPost();
     		$db = new Registrar_Model_DbTable_DbStudentServicePayment();
-    		$price = $db->getAllpriceByServiceTermEdit($data['service'],$data['term']);
+    		$price = $db->getAllpriceByServiceTermEdit($data['service'],$data['term'],$data['year']);
     		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
     		print_r(Zend_Json::encode($price));
     		exit();
@@ -194,11 +196,11 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
     		exit();
     	}
     }
-    function getStudentNameAction(){
+    function getStudentIdAction(){
     	if($this->getRequest()->isPost()){
     		$data=$this->getRequest()->getPost();
     		$db = new Registrar_Model_DbTable_DbStudentServicePayment();
-    		$year = $db->getStudentName($data['study_year']);
+    		$year = $db->getStudentID($data['study_year'],$data['type']);
     		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
     		print_r(Zend_Json::encode($year));
     		exit();

@@ -347,12 +347,19 @@ fieldset{  background:none;}
 						<tr>
 							<td><?php echo $tr->translate("STUDENT_ID");?></td>
 							<td><div id="student_id"><?php echo $register->getElement('stu_id');?></div><div id="student_ids"><?php echo $register->getElement('old_studens');?></div></td>
-							<td><?php echo $tr->translate("NAME_KH");?></td>
-							<td><?php echo $register->getElement('kh_name');?></td>
+							<td style="width: 160px"><?php echo $tr->translate("STUDENT_NAME");?></td>
+							<td>
+								<div id="student_old_name"><?php echo $register->getElement('old_stu_name');?></div>
+								<div id="name_stu"><?php echo $register->getElement('stu_name');?></div>
+							</td>
 						</tr>
 						<tr>
+							<td><?php echo $tr->translate("NAME_KH");?></td>
+							<td><?php echo $register->getElement('kh_name');?></td>
 							<td><?php echo $tr->translate("NAME_EN");?></td>
 							<td><?php echo $register->getElement('en_name');?></td>
+						</tr>
+						<tr>
 							<td><?php echo $tr->translate("SEX");?></td>
 							<td><?php echo $register->getElement('sex');?></td>
 						</tr>
@@ -733,9 +740,13 @@ function changControll(){
 	 if(student_type==3){
 		 document.getElementById('student_id').style.display="none";
 		 document.getElementById('student_ids').style.display="block";
+		 document.getElementById('student_old_name').style.display="block";
+		 document.getElementById('name_stu').style.display="none";
 	}else{
-		document.getElementById('student_id').style.display="block";
-		document.getElementById('student_ids').style.display="none";
+		 document.getElementById('student_id').style.display="block";
+		 document.getElementById('student_ids').style.display="none";
+		 document.getElementById('student_old_name').style.display="none";
+		 document.getElementById('name_stu').style.display="block";
 	} 
 }
 ///get price balance where complete=0
@@ -786,10 +797,17 @@ function getBalancePrice(servce_id,student_id){
 			}
 		});
 }
+
+function setID(){
+	stu_id = dijit.byId('old_stu_name').get('value');
+	dijit.byId('old_studens').attr('value',stu_id);
+}
+
 ///get gep old student
 var url_getGepoldstudent = '<?php echo $this->url(array('module'=>'registrar','controller'=>'coursestudy','action'=>'get-gep-old-student')); ?>';
 function getGepOldStudentById(){
 	student_id=dijit.byId('old_studens').get('value');
+	dijit.byId('old_stu_name').attr('value',student_id);
 		dojo.xhrPost({
 			url:url_getGepoldstudent,
 			content:{

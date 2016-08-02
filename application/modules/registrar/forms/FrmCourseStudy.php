@@ -171,6 +171,21 @@ Class Registrar_Form_FrmCourseStudy extends Zend_Dojo_Form {
 		if(!empty($opt_gep))foreach($opt_gep AS $row) $opts[$row['stu_id']]=$row['stu_code'];
 		$old_studens->setMultiOptions($opts);
 		
+		
+		$old_studen_name =  new Zend_Dojo_Form_Element_FilteringSelect('old_stu_name');
+		$old_studen_name->setAttribs(array('dojoType'=>$this->filter,
+				'class'=>'fullside',
+				'Onchange'=>"setID();",
+		));
+		$opt_gep_name=$reciept->getAllGepOldStudentName();
+		$opts=array(-1=>$this->tr->translate("STUDENT_NAME"));
+		if(!empty($opt_gep_name))foreach($opt_gep_name AS $row) $opts[$row['stu_id']]=$row['name'];
+		$old_studen_name->setMultiOptions($opts);
+		
+		$_studname = new Zend_Dojo_Form_Element_TextBox('stu_name');
+		$_studname->setAttribs(array('dojoType'=>$this->text,'class'=>'fullside','style'=>'color:red;','readonly'=>'true'));
+		
+		
 		$_is_hold = new Zend_Form_Element_Checkbox('is_hold');
 		$_is_hold->setAttribs(array('dojoType'=>"dijit.form.CheckBox",
 				'class'=>'fullside',
@@ -387,7 +402,7 @@ Class Registrar_Form_FrmCourseStudy extends Zend_Dojo_Form {
 			$end_date->setValue($data['validate']);
 		}
 		$this->addElements(array(
-			  $parent,$student_type,$old_studens,$old_student,$room,$session,$ids,$id,$generation,$char_price,$end_date,$start_date,$not,$books,$addmin_fee,$remaining,$total, $_year_one,$_new_student,$_invoice_no, $_pay_date, $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,$metion,
+			  $parent,$student_type,$old_studens,$_studname,$old_studen_name,$old_student,$room,$session,$ids,$id,$generation,$char_price,$end_date,$start_date,$not,$books,$addmin_fee,$remaining,$total, $_year_one,$_new_student,$_invoice_no, $_pay_date, $_khname, $_enname,$_studid, $_sex,$_dob,$_degree,$metion,
 			  $_phone,$_dept,$_major,$_batch,$_year,$_session,$_term,$_fee,$_disc,$_paid,$_paid_kh,$_remark,$_is_hold ));
 		
 		return $this;

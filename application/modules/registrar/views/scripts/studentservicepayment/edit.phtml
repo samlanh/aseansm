@@ -12,7 +12,26 @@
 	dojo.require('dojox.form.BusyButton');
 	dojo.require("dojo.NodeList-manipulate");
 	
+dojo.ready(function(){
+	
+    	 dijit.byId('study_year').attr('value','<?php echo $this->row['year']?>');
+    	 initailize();
+    	 getStudentInfo();
+    	 dijitValue();
+		
+});
 
+	function dijitValue(){
+		 dijit.byId('reciept_no').attr('value','<?php echo $this->row['receipt_number']?>');
+		 dijit.byId('not').attr('value','<?php echo $this->row['note']?>');
+		 //dijit.byId('char_price').attr('value','<?php //echo $this->row['amount_in_khmer']?>');
+		 dijit.byId('total_balance').attr('value','<?php echo $this->row['balance_due']?>');
+		 dijit.byId('total_return').attr('value','<?php echo $this->row['return_amount']?>');
+		 dijit.byId('total_received').attr('value','<?php echo $this->row['receive_amount']?>');
+		 dijit.byId('grand_total').attr('value','<?php echo $this->row['total_payment']?>');
+		 //dijit.byId('time').attr('value','<?php echo $this->row['time']?>');
+	}
+		
 	var url_getstuno = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-stu-no')); ?>';
 	function getStudentNo(dept_id){
 			dojo.xhrPost({
@@ -23,7 +42,6 @@
 				handleAs:"json",
 				load: function(data) {
 					 dijit.byId('stu_id').attr('value',data);   
-
 				},
 				error: function(err) {
 					alert(err);
@@ -41,13 +59,7 @@
 	var payment_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 	var major_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode(array()));?> );
 
-	dojo.addOnLoad(function(){
-		   // document.musicPrefs.other.value="Afrobeat";
-			//getStudentBYId();
-		});
 
-		
-	
 	var url_getstu_info = '<?php echo $this->url(array('module'=>'global','controller'=>'globals','action'=>'get-studentinfo')); ?>';
 	function getStudentBYId(){
 		   student_id = dijit.byId("stu_id").get('value');
@@ -75,8 +87,13 @@
 				    }
 				});
 	}
+
+
 	
+
+
 </script>
+
 <style>
 select{ width:100%;}
 fieldset{  background:none;}
@@ -100,36 +117,42 @@ fieldset{  background:none;}
 					<legend align="center"><strong style="font-size: 18px;"><?php echo $tr->translate("EDIT_STUDENT_SERVICE_PAYMENT");?></strong></legend>
 					<table style="margin: 0 auto; width: 100%;padding:10px;" cellspacing="7" >
 						<tr>
-							<td style="width: 160px"><?php echo $tr->translate("YEARS");?></td>
-							<td><?php echo $register->getElement('study_year');?></td>
-							<td><?php echo $tr->translate("RECEIPT_NO");?></td>
-							<td><?php echo $register->getElement('reciept_no');?></td>
+							<td style="width: 12%"><?php echo $tr->translate("ACADEMIC_SERVICE");?></td>
+							<td style="width: 37%"><?php echo $register->getElement('study_year');?></td>
+							<td align="right" style="width: 12%"><?php echo $tr->translate("RECEIPT_NO");?></td>
+							<td style="width: 37%"><?php echo $register->getElement('reciept_no');?></td>
 						</tr>
 						<tr>
-							<td><?php echo $tr->translate("STUDENT_ID");?><input type="hidden" id="id" name="id" value="<?php echo $this->row['id'];?>" /></td>
+							<td><?php echo $tr->translate("STUDENT_ID");?></td>
 							<td>
-								<select class="fullside" name="studentid" id="studentid" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();" >
-									<?php if(!empty($this->rs))foreach ($this->rs as $row){?>
-										<option value="<?php echo $row['id']?>" <?php if($row['id']==$this->row['student_id']) echo 'selected="selected"';?>><?php echo $row['name']?></option>
-									<?php }?>
+								<select type="text" class="fullside" dojoType="dijit.form.FilteringSelect" name="studentid" id="studentid" onChange="getStudentInfo();setID(1);" >
+									<option value="1">Select Student ID</option>
+									<?php if(!empty($this->rs)){foreach ($this->rs as $rs){?>
+									<option value="<?php echo $rs['id']?>" <?php if($rs['id']==$this->row['student_id']) echo 'selected="selected"' ?>><?php echo $rs['code']?></option>
+									<?php }}?>
 								</select>
-							</td>	
-							<td><?php echo $tr->translate("NAME_KH");?></td>
-							<td><?php echo $register->getElement('kh_name');?></td>
+							</td>
+							<td align="right"><?php echo $tr->translate("STUDENT_NAME");?></td>
+							<td align="center">
+								<select type="text" style="" class="fullside" dojoType="dijit.form.FilteringSelect" name="stu_name" id="stu_name" onChange="setID(2);" >
+									<option value="1">Select Student Name</option>
+									<?php if(!empty($this->row_name)){foreach ($this->row_name as $row){?>
+									<option value="<?php echo $row['id']?>" <?php if($row['id']==$this->row['student_id']) echo 'selected="selected"' ?> ><?php echo $row['name']?></option>
+									<?php }}?>
+								</select>
+							</td>
 						</tr>
 						<tr>
-						   
-							<td><?php echo $tr->translate("NAME_EN");?></td>
-							<td><?php echo $register->getElement('en_name');?></td>
-							
-							<td><?php echo $tr->translate("SEX");?></td>
-							<td><?php echo $register->getElement('sex');?></td>
+						    <td><?php echo $tr->translate("NAME_KH");?></td>
+							<td><?php echo $register->getElement('kh_name');?></td>
+							<td align="right"><?php echo $tr->translate("NAME_EN");?></td>
+							<td ><?php echo $register->getElement('en_name');?></td>
 						</tr>
 						<tr>	
-						    <td><?php echo $tr->translate("NOT");?></td>
+							<td><?php echo $tr->translate("SEX");?></td>
+							<td><?php echo $register->getElement('sex');?></td>
+						    <td align="right"><?php echo $tr->translate("NOT");?></td>
 							<td title='Ex: 20 or 10%' ><?php echo $register->getElement('not');?></td>	
-							<td><?php echo $tr->translate("CHAR_PRICE");?></td>
-							<td title='Ex: 20 or 10%' ><?php echo $register->getElement('char_price');?></td>
 						</tr>
 						<tr>
 							<td colspan="4">
@@ -144,9 +167,7 @@ fieldset{  background:none;}
 										<td><input type="checkBox" dojoType="dijit.form.CheckBox" <?php foreach($hour as $row){if($row==7){echo "checked='checked'"; } } ?> value="04:30 pm" id="time7" name="time7" onclick="getValue();" />04:30 pm</td>
 										<td><input type="checkBox" dojoType="dijit.form.CheckBox" <?php foreach($hour as $row){if($row==8){echo "checked='checked'"; } } ?> value="05:00 pm" id="time8" name="time8" onclick="getValue();" />05:00 pm</td>
 										<td><input type="checkBox" dojoType="dijit.form.CheckBox" <?php foreach($hour as $row){if($row==9){echo "checked='checked'"; } } ?> value="05:30 pm" id="time9" name="time9" onclick="getValue();" />05:30 pm</td>
-										
 										<input type="hidden" id="time" name="time" value="<?php echo $this->row['time'];?>" />
-									
 									</tr>
 								</table>
 							</td>
@@ -603,16 +624,27 @@ function getStudentInfo(){
 				}
 			});
 }
+
+function setID(type){
+	if(type==1){
+		dijit.byId('stu_name').attr('value',dijit.byId('studentid').get('value')); 
+	}else{
+		dijit.byId('studentid').attr('value',dijit.byId('stu_name').get('value')); 
+	}
+}
+
 var url_service_fee = "<?php echo $this->url(array('module'=>'registrar','controller'=>'studentservicepayment','action'=>'get-price-edit')); ?>";
 function getservicefee(key,num){
 	//alert(key);
 			if(num==null){
 				services = dijit.byId('service_'+key).get('value');
 				term = dijit.byId('term_'+key).get('value');
+				year = dijit.byId('study_year').get('value');
 				dojo.xhrPost({
 					url:url_service_fee,
 					content:{
 						'term':term,
+						'year':year,
 						'service':services,
 						},
 					handleAs:"json",
@@ -629,11 +661,13 @@ function getservicefee(key,num){
 			}else{
 				services = dijit.byId('service_'+key).get('value');
 				term = dijit.byId('term_'+key).get('value');
+				year = dijit.byId('study_year').get('value');
 				dojo.xhrPost({
 				url:url_service_fee,
 					content:{
 						'term':term,
 						'service':services,
+						'year':year,
 						'studentid':studentid,
 						},
 					handleAs:"json",
@@ -650,19 +684,7 @@ function getservicefee(key,num){
 			}
 }
 
-dojo.ready(function(){
-	 initailize();
-	 getStudentInfo();
-	 dijit.byId('study_year').attr('value','<?php echo $this->row['year']?>');
-	 dijit.byId('reciept_no').attr('value','<?php echo $this->row['receipt_number']?>');
-	 dijit.byId('not').attr('value','<?php echo $this->row['note']?>');
-	 dijit.byId('char_price').attr('value','<?php echo $this->row['amount_in_khmer']?>');
-	 dijit.byId('total_balance').attr('value','<?php echo $this->row['balance_due']?>');
-	 dijit.byId('total_return').attr('value','<?php echo $this->row['return_amount']?>');
-	 dijit.byId('total_received').attr('value','<?php echo $this->row['receive_amount']?>');
-	 dijit.byId('grand_total').attr('value','<?php echo $this->row['total_payment']?>');
-	 //dijit.byId('time').attr('value','<?php echo $this->row['time']?>');
-});
+
 function initailize(){
 	<?php if(!empty($this->rows)){
 		foreach($this->rows as $row){

@@ -41,7 +41,7 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 					'paid_amount'		=>$data['total_received']-$data['total_return'],
 					'return_amount'		=>$data['total_return'],
 					'balance_due'		=>$data['total_balance'],
-					'amount_in_khmer'	=>$data['char_price'],
+					//'amount_in_khmer'	=>$data['char_price'],
 					'note'				=>$data['not'],
 					'time'				=>$data['time'],
 					'payfor_type'		=>3 ,
@@ -140,7 +140,7 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 					'paid_amount'		=>$data['total_received']-$data['total_return'],
 					'return_amount'		=>$data['total_return'],
 					'balance_due'		=>$data['total_balance'],
-					'amount_in_khmer'	=>$data['char_price'],
+					//'amount_in_khmer'	=>$data['char_price'],
 					'note'				=>$data['not'],
 					'time'				=>$data['time'],
 					//'create_date'		=>date("Y-m-d H:i:s"),
@@ -235,7 +235,7 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 			(select stu_code from rms_student where rms_student.stu_id=sp.student_id limit 1)AS code,
 	    	(select CONCAT(stu_khname,' - ',stu_enname) from rms_student where rms_student.stu_id=sp.student_id limit 1)AS name,
 	    	(select name_kh from rms_view where rms_view.type=2 and rms_view.key_code=(select sex from rms_student where rms_student.stu_id=sp.student_id limit 1) limit 1)AS sex,
-	    	(select CONCAT(from_academic,' - ',to_academic) from rms_servicefee where rms_servicefee.id=sp.year limit 1)AS year,
+	    	(select CONCAT(from_academic,' - ',to_academic,' (',generation,')') from rms_servicefee where rms_servicefee.id=sp.year limit 1)AS year,
 	    	receipt_number,
 	    	total,sp.discount_fix,total_payment,receive_amount,balance_due,return_amount,create_date,
 	    	(select CONCAT(last_name,' ',first_name) from rms_users where rms_users.id=sp.user_id) AS user
@@ -257,8 +257,8 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     		$s_where[] = " (select CONCAT(stu_khname,stu_enname) from rms_student where rms_student.stu_id=sp.student_id) LIKE '%{$s_search}%'";
     		$where .=' AND ( '.implode(' OR ',$s_where).')';
     	}
-    	if(!empty($search['study_year'])){
-    		$where.=" AND sp.year=".$search['study_year'];
+    	if(!empty($search['year'])){
+    		$where.=" AND sp.year=".$search['year'];
     	}
     	return $db->fetchAll($sql.$where.$order);
     }
@@ -349,11 +349,17 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     
     public function getAllStudentCode(){
     	$db = $this->getAdapter();
-    	$sql="SELECT stu_id as id,stu_code as name  FROM rms_student ORDER BY  stu_code DESC ";
+    	$sql="SELECT stu_id as id,stu_code as code  FROM rms_student ORDER BY  stu_code DESC ";
     	return $db->fetchAll($sql);
     	
     }
-    public function getAllpriceByServiceTerm($studentid,$serviceid,$termid){
+    public function getAllStudentName(){
+    	$db = $this->getAdapter();
+    	$sql="SELECT stu_id as id,CONCAT(stu_khname,' - ',stu_enname) as name  FROM rms_student ORDER BY  stu_code DESC ";
+    	return $db->fetchAll($sql);
+    	 
+    }
+    public function getAllpriceByServiceTerm($studentid,$serviceid,$termid,$year){
     	$db=$this->getAdapter();
     	
     	$sql="select rms_student_paymentdetail.id,rms_student_paymentdetail.validate,balance AS price_fee from rms_student_paymentdetail,rms_student_payment where rms_student_payment.id=rms_student_paymentdetail.payment_id and rms_student_paymentdetail.service_id=$serviceid and rms_student_payment.student_id=$studentid and is_complete=0 limit 1";                               
@@ -363,14 +369,14 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     		return $row;
     	}
     	else{
-    		$sql="select price_fee from rms_servicefee_detail where  rms_servicefee_detail.service_id=$serviceid and rms_servicefee_detail.payment_term=$termid limit 1";
+    		$sql="select price_fee from rms_servicefee_detail where  rms_servicefee_detail.service_id=$serviceid and rms_servicefee_detail.payment_term=$termid and service_feeid=$year limit 1";
     		return $db->fetchRow($sql);
     	}
     }
     
-    public function getAllpriceByServiceTermEdit($serviceid,$termid){
+    public function getAllpriceByServiceTermEdit($serviceid,$termid,$year){
     	$db=$this->getAdapter();
-    	$sql="select price_fee from rms_servicefee_detail where  rms_servicefee_detail.service_id=$serviceid and rms_servicefee_detail.payment_term=$termid limit 1";
+    	$sql="select price_fee from rms_servicefee_detail where  rms_servicefee_detail.service_id=$serviceid and rms_servicefee_detail.payment_term=$termid and service_feeid=$year limit 1";
     	return $db->fetchRow($sql);
     }
     
@@ -394,15 +400,19 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     	
     	echo $sql;
     }
-    function getStudentName($acacemic){
+    function getStudentID($acacemic,$type){
     	$db=$this->getAdapter();
-    	$sql="SELECT stu_id As id,stu_code As name  FROM rms_student  WHERE academic_year=$acacemic";
+    	if($type==1){
+    		$sql="SELECT stu_id As id,stu_code As name  FROM rms_student  WHERE academic_year=$acacemic";
+    	}else{
+    		$sql="SELECT stu_id As id,CONCAT(stu_khname,' - ',stu_khname) As name  FROM rms_student  WHERE academic_year=$acacemic";
+    	}
     	return $db->fetchAll($sql);
     }
-    function getTuiTionFee(){
+    function getYearService(){
     	$db=$this->getAdapter();
-    	$sql="SELECT id,CONCAT(from_academic,'-',to_academic,'(',generation,')') AS years,(select name_en from rms_view where type=7 and key_code=time) as time FROM rms_tuitionfee 
-							WHERE `status`= 1 GROUP BY from_academic,to_academic,generation,`time` ORDER BY id DESC";
+    	$sql="SELECT id,CONCAT(from_academic,'-',to_academic,' (',generation,')') AS years FROM rms_servicefee 
+							WHERE `status`= 1 GROUP BY from_academic,to_academic,generation ORDER BY id DESC";
     	return $db->fetchAll($sql);
     }
     

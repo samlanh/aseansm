@@ -422,6 +422,13 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	return $db->fetchAll($sql);
     }
     //select Gep old student by id 
+    function getAllGepOldStudentName(){
+    	$db=$this->getAdapter();
+    	$sql="SELECT s.stu_id As stu_id,CONCAT(s.stu_khname,'-',s.stu_enname) As name FROM rms_student AS s,rms_student_payment AS sp
+    	WHERE s.stu_id=sp.student_id  AND s.stu_type=2 AND sp.payfor_type=2";
+    	return $db->fetchAll($sql);
+    }
+    //select Gep old student by name
     function getGepOldStudent($stu_id){
     	$db=$this->getAdapter();
     	$sql="SELECT stu_id,stu_enname,stu_khname,sex,`session` As ses,degree,grade FROM rms_student 
@@ -436,6 +443,15 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	return $db->fetchAll($sql);
     }
     //select general  old student by id
+    
+    function getAllGerneralOldStudentName(){
+    	$db=$this->getAdapter();
+    	$sql="SELECT s.stu_id As stu_id,CONCAT(s.stu_enname,'-',s.stu_enname) as name FROM rms_student AS s,rms_student_payment AS sp
+    	WHERE s.stu_id=sp.student_id  AND s.stu_type=1 AND sp.payfor_type=1";
+    	return $db->fetchAll($sql);
+    }
+    //select general  old student by name
+    
     function getGeneralOldStudentById($stu_id){
     	$db=$this->getAdapter();
     	$sql="SELECT stu_id,stu_enname,stu_khname,sex,`session` As ses,degree,grade FROM rms_student
