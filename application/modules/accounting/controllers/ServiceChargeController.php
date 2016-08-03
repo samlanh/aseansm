@@ -15,20 +15,24 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
     			$_data = $this->getRequest()->getPost();
     			$search = array(
     					'txtsearch' => $_data['txtsearch'],
+    					'year' => $_data['year'],
     			);
  		}
     		else{
     			$search=array(
     					'txtsearch' =>'',
+    					'year' => '',
     			);
     		}
     		$db = new Accounting_Model_DbTable_DbServiceCharge();
     		$service= $db->getAllServiceFee($search);
+    		//print_r($service);exit();
     		$model = new Application_Model_DbTable_DbGlobal();
     		$row=0;$indexterm=1;$key=0;$rs_rows=array();
     		if(!empty($service)){
     			foreach ($service as $i => $rs) {
     				$rows = $db->getServiceFeebyId($rs['id']);
+    				//print_r(row);exit();
     				$fee_row=1;
     				if(!empty($rows))foreach($rows as $payment_tran){
     					if($payment_tran['payment_term']==1){
@@ -75,11 +79,15 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
     		Application_Form_FrmMessage::message("APPLICATION_ERROR");
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
     	}
+    	
     	$frm = new Global_Form_FrmSearchMajor();
     	$frm = $frm->frmSearchTutionFee();
     	Application_Model_Decorator::removeAllDecorator($frm);
     	$this->view->frm_search = $frm;
     	$this->view->adv_search = $search;
+    	
+    	$this->view->rows_year=$db->getAceYear();
+    	
     	
     }
     public function headAddRecordTuitionFee($rs,$key){

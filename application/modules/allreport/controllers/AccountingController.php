@@ -231,14 +231,14 @@ class Allreport_AccountingController extends Zend_Controller_Action {
 				$data=$this->getRequest()->getPost();
 				$search = array(
 						'txtsearch' => $data['txtsearch'],
-						'start_date'=> $data['from_date'],
+						//'start_date'=> $data['from_date'],
 						'end_date'	=>$data['to_date'],
 						'service'	=>$data['service']
 				);
 			}else{
 				$search=array(
 						'txtsearch' =>'',
-						'start_date'=> date('Y-m-d'),
+						//'start_date'=> date('Y-m-d'),
 						'end_date'	=>date('Y-m-d'),
 						'service'	=>''
 				);;

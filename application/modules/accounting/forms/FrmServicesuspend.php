@@ -147,7 +147,7 @@ Class Accounting_Form_FrmServicesuspend extends Zend_Dojo_Form {
 				//'onkeyup'=>'CheckReceipt()'
 				'required'=>'true',
 				'class'=>'fullside',
-				'onchange'=>'paymentTerm();',
+				'onchange'=>'getStudentID();',
 		));
 		$db_years=new Accounting_Model_DbTable_DbSuspendservice();
 		$years=$db_years->getAllYears();

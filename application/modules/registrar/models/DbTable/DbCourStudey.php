@@ -400,10 +400,31 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
     	$db=$this->getAdapter();
     	if($type==4){
     		$fee=$data['tuitionfee'];
+    		
+    		$subtotal=$data["tuitionfee"]-($data["tuitionfee"]*$data['discount']/100);
+    		$discount=$data['discount'];
+    		$paidamount=$data['books'];
+    		$paidamount=$paidamount-($data["remark"]+$data["addmin_fee"]);
+    		$balance= $data['total'] - $data['books'];
+    		
     	}elseif ($type==5){
     		$fee=$data['remark'];
+    		
+    		$subtotal = $data["remark"];
+    		$paidamount = $data['remark'];
+    		$discount = 0;
+    		$balance = 0;
+    		
+    		$comment="បង់រួច";
     	}elseif ($type==6){
     		$fee=$data['addmin_fee'];
+    		
+    		$subtotal = $data["addmin_fee"];
+    		$paidamount=$data['addmin_fee'];
+    		$discount=0;
+    		$balance=0;
+    		
+    		$comment="បង់រួច";
     	}
     	$arr=array(
     			'payment_id'=>$paymentid,
@@ -412,10 +433,10 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
     			'payment_term'=>$data['payment_term'],
     			'fee'=>$fee,
     			'qty'=>1,
-    			'subtotal'=>$data['total'],
-    			'paidamount'=>$data['books'],
-    			'balance'=>$data['remaining'],
-    			'discount_percent'=>$data['discount'],
+    			'subtotal'=>$subtotal,
+    			'paidamount'=>$paidamount,
+    			'balance'=>$balance,
+    			'discount_percent'=>$discount,
     			'discount_fix'=>0,
     			'note'=>$data['not'],
     			'start_date'=>$data['start_date'],

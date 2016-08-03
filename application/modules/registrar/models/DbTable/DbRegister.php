@@ -67,25 +67,25 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
 				}
 				$this->_name='rms_student_payment';
 				$arr=array(
-						'student_id'=>$id,
+						'student_id'	=>$id,
 						'receipt_number'=>$data['reciept_no'],
-						'year'=>$data['study_year'],
+						'year'			=>$data['study_year'],
 						'degree'		=>$data['dept'],
 						'grade'			=>$data['grade'],
-						'time'=>$data['study_hour'],
-						'session'=>$data['session'],
-						'payment_term'=>$data['payment_term'],
-						'tuition_fee'=>$data['tuitionfee'],
+						'time'			=>$data['study_hour'],
+						'session'		=>$data['session'],
+						'payment_term'	=>$data['payment_term'],
+						'tuition_fee'	=>$data['tuitionfee'],
 						'discount_percent'=>$data['discount'],
-						'other_fee'=>$data['remark'],
-						'admin_fee'=>$data['addmin_fee'],
-						'total'=>$data['total'],
-						'paid_amount'=>$data['books'],
-						'balance_due'=>$data['remaining'],
-						'note'=>$data['not'],
-						'student_type'=>$data['student_type'],
-						'create_date'=>	date('Y-m-d H:i:s'),
-						'payfor_type'=>1,
+						'other_fee'		=>$data['remark'],
+						'admin_fee'		=>$data['addmin_fee'],
+						'total'			=>$data['total'],
+						'paid_amount'	=>$data['books'],
+						'balance_due'	=>$data['remaining'],
+						'note'			=>$data['not'],
+						'student_type'	=>$data['student_type'],
+						'create_date'	=>date('Y-m-d H:i:s'),
+						'payfor_type'	=>1,
 						//'amount_in_khmer'=>$data['char_price'],
 						'user_id'=>$this->getUserId(),
 				);
@@ -469,10 +469,25 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	$db=$this->getAdapter();
     	    if($type==4){
     	    	$fee = $data["tuitionfee"];
+    	    	$subtotal=$data["tuitionfee"]-($data["tuitionfee"]*$data['discount']/100);
+    	    	$discount=$data['discount'];
+    	    	$paidamount=$data['books'];
+    	    	$paidamount=$paidamount-($data["remark"]+$data["addmin_fee"]);
+    	    	$balance= $data['total'] - $data['books'];
     	    }elseif($type==5){
     	    	$fee = $data["remark"];
+    	    	$subtotal = $data["remark"];
+    	    	$paidamount = $data['remark'];
+    	    	$discount = 0;
+    	    	$balance = 0;
+    	    	$comment="បង់រួច";
     	    }elseif($type==6){
     	    	$fee = $data["addmin_fee"];
+    	    	$subtotal = $data["addmin_fee"];
+    	    	$paidamount=$data['addmin_fee'];
+    	    	$discount=0;
+    	    	$balance=0;
+    	    	$comment="បង់រួច";
     	    }
     		$arr=array(
     				'payment_id'=>$paymentid,
@@ -481,10 +496,11 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     				'payment_term'=>$data['payment_term'],
     				'fee'=>$fee,
     				'qty'=>1,
-    				'subtotal'=>$data['total'],
-    				'paidamount'=>$data['books'],
-    				'balance'=>$data['remaining'],
-    				'discount_percent'=>$data['discount'],
+    				//'subtotal'=>$data['total'],
+    				'subtotal'=>$subtotal,
+    				'paidamount'=>$paidamount,
+    				'balance'=>$balance,
+    				'discount_percent'=>$discount,
     				'discount_fix'=>0,
     				'note'=>$data['not'],
     				'start_date'=>$data['start_date'],

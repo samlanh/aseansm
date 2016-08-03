@@ -151,7 +151,6 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 			 	$this->update($arr,$where);
 			    
 				$this->_name='rms_student_paymentdetail';
-				
 				$rows = $this->getServicePaymentDetail($data['id']);
 				
 				if(!empty($rows)){

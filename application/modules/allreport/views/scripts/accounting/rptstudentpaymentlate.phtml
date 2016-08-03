@@ -48,15 +48,15 @@
 											<td colspan="3">
 												<table cellpadding="5"​ style="margin:0 auto;border: 1px solid #000;width:100%; border-collapse: collapse;white-space: nowrap;"  border="1" >
 													<tr style="font-size:11px; height: 20px;border: 1px solid #000;" align="center" >
-														<th style="border: 1px solid #000;">&nbsp;N.o&nbsp;</th>
-														<th style="border: 1px solid #000;">&nbsp;Receipt No&nbsp;</th>
-														<th style="border: 1px solid #000;">Code</th>
-														<th style="border: 1px solid #000;">&nbsp;Student Name&nbsp;</th>
-														<th style="border: 1px solid #000;">&nbsp;Sex&nbsp;</th>
-														<th style="border: 1px solid #000;">Service Name</th>
-														<th style="border: 1px solid #000;">Paid Date</th>
-														<th style="border: 1px solid #000;">Validate</th>
-														<th style="border: 1px solid #000;">Late (Days)</th>
+														<td style="border: 1px solid #000;">&nbsp;No.&nbsp;</td>
+														<td style="border: 1px solid #000;">&nbsp;Receipt No.&nbsp;</td>
+														<td style="border: 1px solid #000;">Code</td>
+														<td style="border: 1px solid #000;">&nbsp;Student Name&nbsp;</td>
+														<td style="border: 1px solid #000;">&nbsp;Sex&nbsp;</td>
+														<td style="border: 1px solid #000;">Service Name</td>
+														<td style="border: 1px solid #000;">Paid Date</td>
+														<td style="border: 1px solid #000;">Validate</td>
+														<td style="border: 1px solid #000;">Late (Days)</td>
 														
 													</tr>
 												<?php $i=0;$totalpaid=0;$totalbalance=0; if(!empty($this->row)){foreach ($this->row AS $row) { $i++;
@@ -69,15 +69,15 @@
 // 													echo $diff->days;
 												?>
 													<tr style="font-size:10px; height: 20px;border: 1px solid #000;" align="center" >
-														<th style="border: 1px solid #000;"><?php echo $i;?></th>
-														<th style="border: 1px solid #000;"><?php echo $row['receipt'];?></th>
-														<th style="border: 1px solid #000;">&nbsp;<?php echo $row['code'];?>&nbsp;</th>
-														<th align="left" style="border: 1px solid #000;">&nbsp;<?php echo $row['name'];?></th>	
-														<th align="left" style="border: 1px solid #000;">&nbsp;<?php echo $row['sex'];?></th>
-														<th align="left" style="border: 1px solid #000;">&nbsp;<?php echo $row['service'];?></th>
-														<th style="border: 1px solid #000;">&nbsp;<?php echo date("d-M-Y",strtotime($row['start']));?>&nbsp;</th>
-														<th style="border: 1px solid #000;color: red;">&nbsp;<?php echo date("d-M-Y",strtotime($row['end']));?>&nbsp;</th>
-														<th align="center" style="border: 1px solid #000;color: red;">&nbsp;<?php echo abs($day);?> days</th>
+														<td style="border: 1px solid #000;"><?php echo $i;?></td>
+														<td style="border: 1px solid #000;"><?php echo $row['receipt'];?></td>
+														<td style="border: 1px solid #000;">&nbsp;<?php echo $row['code'];?>&nbsp;</td>
+														<td align="left" style="border: 1px solid #000;">&nbsp;<?php echo $row['name'];?></td>	
+														<td align="left" style="border: 1px solid #000;">&nbsp;<?php echo $row['sex'];?></td>
+														<td align="left" style="border: 1px solid #000;">&nbsp;<?php echo $row['service'];?></td>
+														<td style="border: 1px solid #000;">&nbsp;<?php echo date("d-M-Y",strtotime($row['start']));?>&nbsp;</td>
+														<td style="border: 1px solid #000;color: red;">&nbsp;<?php echo date("d-M-Y",strtotime($row['end']));?>&nbsp;</td>
+														<td align="center" style="border: 1px solid #000;color: red;font-weight: bold;">&nbsp;<?php echo abs($day);?> days</td>
  													</tr>
 												<?php }}?>	 
 												</table>	
@@ -91,13 +91,13 @@
 										</tr>
 										<tr >
 											<td align="center" width="25%">
-												<span style="font-weight: bold;font-size: 14px;">Verified by</span>
+												<span style=" font-size: 14px;">Verified by</span>
 											</td>
 											<td  width="50%">
 												&nbsp;
 											</td>
 											<td align="center"  width="25%">
-												<span style="font-weight: bold;font-size: 14px;text-align: right;">Prepared by</span>
+												<span style="font-size: 14px;text-align: right;">Prepared by</span>
 											</td>
 										</tr>
 										

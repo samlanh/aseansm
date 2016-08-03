@@ -27,7 +27,7 @@ Class Registrar_Form_FrmStudentServicePayment extends Zend_Dojo_Form {
 		
 		$this->_khname = new Zend_Dojo_Form_Element_TextBox('kh_name');
 		$this->_khname->setAttribs(array(
-				'dojoType'=>$this->text,'class'=>'fullside','readonly'=>'readonly',
+				'dojoType'=>$this->tvalidate,'class'=>'fullside','readonly'=>'readonly','required'=>'true',
 		));
 		
 		$this->_enname = new Zend_Dojo_Form_Element_TextBox('en_name');

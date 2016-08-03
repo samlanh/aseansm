@@ -9,10 +9,16 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
     }
     function getAllYears(){
     	$db = $this->getAdapter();
-    	$sql = "SELECT id,CONCAT(from_academic,'-',to_academic) AS years FROM rms_servicefee WHERE `status`=1";
+    	$sql = "SELECT id,CONCAT(from_academic,'-',to_academic,'(',generation,')') AS years FROM rms_tuitionfee WHERE `status`=1";
     	$order=' ORDER BY id DESC';
     	return $db->fetchAll($sql.$order);
     }
+//     function getAllYears(){
+//     	$db = $this->getAdapter();
+//     	$sql = "SELECT id,CONCAT(from_academic,'-',to_academic) AS years FROM rms_servicefee WHERE `status`=1";
+//     	$order=' ORDER BY id DESC';
+//     	return $db->fetchAll($sql.$order);
+//     }
     
     function getid($stu_id,$service_id){
     	$db = $this->getAdapter();
@@ -77,6 +83,7 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
    public function getIdEdit($suspendserviceid,$serviceid){
    	$db = $this->getAdapter();
    	$sql="select id from rms_student_paymentdetail where type=3 and suspendservice_id=".$suspendserviceid." and service_id=".$serviceid;
+   	echo $sql;
    	return $db->fetchOne($sql);
    }
    
@@ -87,7 +94,7 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
    		$arr = array(
    				'student_id'	=> $data['studentid'],
    				'suspend_no'	=> $data['suspend_no'],
-   				'define_date'	=>date("Y-m-d"),
+   				//'define_date'	=>date("Y-m-d"),
    				'year'			=> $data['study_year'],
    				'user_id'		=>$this->getUserId()
    		);
@@ -100,42 +107,23 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
    		
    		$ids = explode(',', $data['identity']);
    		
-//    		foreach ($ids as $j){
-   			
-//    			$idedit = $this->getIdEdit($data['id'],$data['service_'.$j]);
-   			
-//    			if($data['status_'.$j]==0){
-//    				$this->_name = 'rms_student_paymentdetail';
-//    				$array=array(
-//    						'is_suspend'	=> 3,
-//    						'is_start'		=>1,
-//    				);
-//    				$where=" id=".$idedit;
-//    				$this->update($array, $where);
-//    			}else{
-//    				$this->_name = 'rms_student_paymentdetail';
-//    				$array=array(
-//    						'is_suspend'	=> $data['type_'.$j],
-//    						'is_start'		=>0,
-//    				);
-//    				$where=" id=".$idedit;
-//    				$this->update($array, $where);
-//    			}
-//    		}
-   		
-   		
    		foreach ($ids as $i){
    			$idedit = $this->getIdEdit($data['id'],$data['service_'.$i]);
+   			
+   			echo $idedit; 
+   			
    			if($data['status_'.$i]==0){
+   				
    				$this->_name = 'rms_student_paymentdetail';
-   				//print_r($idedit);exit();
 					$array=array(
 						'is_suspend'	=> 3,
 						'is_start'		=>1,
 						);
    				$where=" id=".$idedit;
    				$this->update($array, $where);
+   				
    			}else{
+   				
    				$this->_name = 'rms_student_paymentdetail';
 //    				print_r($id);exit();
    				$array=array(
@@ -144,6 +132,7 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
    				);
    				$where=" id=".$idedit;
    				$this->update($array, $where);
+   				
    			}
    			
    			$this->_name = 'rms_suspendservicedetail';
@@ -159,10 +148,7 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
 	   					'suspend_status'	=> $data['status_'.$i],
 	   			);
 	   			$this->insert($_arr);
-   			
-   			
    		}
-
    		$db->commit();
    	}catch (Exception $e){
    		echo $e->getMessage();
@@ -228,12 +214,28 @@ class Accounting_Model_DbTable_DbSuspendservice extends Zend_Db_Table_Abstract
    	$sql="select stu_enname,stu_khname,sex from rms_student where stu_id=$studentid limit 1";
    	return $db->fetchRow($sql);
    }
+   
    public function getAllStudentCode(){
    	$db = $this->getAdapter();
    	$sql="SELECT stu_id,stu_code  FROM rms_student ORDER BY  stu_code DESC ";
    	return $db->fetchAll($sql);
-   	 
    }
+   
+   function getStudentID($acacemic){
+   	$db=$this->getAdapter();
+   	$sql="SELECT stu_id As id,stu_code As name  FROM rms_student  WHERE academic_year=$acacemic";
+   	return $db->fetchAll($sql);
+   }
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
    
 }
 

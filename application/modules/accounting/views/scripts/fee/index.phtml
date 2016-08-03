@@ -4,6 +4,32 @@
 	$frm =  $this->form_search;
 ?>	
 
+<script type="text/javascript">
+	dojo.require("dojo.data.ObjectStore");
+	dojo.require("dojo.data.ItemFileWriteStore");  
+	dojo.require("dojo.store.Memory");
+	dojo.require("dojo.data.ObjectStore");
+	dojo.require('dojox.form.BusyButton');
+	var aca_year= getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->rows_year));?> );
+	var session  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->rows_session));?> );
+	var grade= getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->rows_grade));?> );
+	dojo.ready(function(){
+	new dijit.form.FilteringSelect({
+	    store: aca_year,
+	    autoComplete: true,                        
+	    required: false,
+	    id: "year",
+	    name: "year",           
+	    class: 'fullside',  
+	    placeHolder:"Selected Acdemice Year",          
+	    onChange: function() {  
+	    	 
+	    }
+	}, "year");
+	dijit.byId('year').attr('value','<?php echo $this->row_ace['year']?>');
+});
+</script>
+
 <form id="list" name="list" action="<?php echo $this->url(array('module'=>'accounting','controller'=>'fee','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post">
 	<table style="width:90%" style="width:100px;">
 						<tr> 

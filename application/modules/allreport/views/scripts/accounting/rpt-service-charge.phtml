@@ -51,27 +51,27 @@
 									<td colspan="3" >
 										<table cellpadding="5"​ style="margin:0 auto;width:100%;border: 1px solid #000; border-collapse: collapse;border: 1px solid #000;white-space: nowrap;"  border="1" >
 											<tr style="font-size:11px; height: 20px;" align="center" >
-												<th >No.</th>
-												<th >Academic</th>
-												<th >Generation</th>
-												<th>Service Name</th>
-												<th>Monthly</th>
-												<th >Quarter</th>
-												<th >Semester</th>
-												<th >Year</th>
-												<th >Note</th>
+												<td >No.</td>
+												<td >Academic</td>
+												<td >Generation</td>
+												<td>Service Name</td>
+												<td>Montdly</td>
+												<td >Quarter</td>
+												<td >Semester</td>
+												<td >Year</td>
+												<td >Note</td>
 											</tr>
 										<?php $i=0; foreach ($this->rs AS $row) { $i++;?>
 											<tr style="font-size:11px; height: 20px;" align="center" >
-												<th ><?php echo $i;?></th>
-												<th ><?php echo $row['academic'];?></th>
-												<th ><?php echo $row['generation'];?></th>
-												<th align="left">&nbsp;&nbsp;<?php echo $row['service_name'];?></th>	
-												<th ><?php echo $row['monthly'];?></th>
-												<th ><?php echo $row['quarter'];?></th>
-												<th ><?php echo $row['semester'];?></th>
-												<th ><?php echo $row['year'];?></th>
-												<th ><?php echo $row['remark'];?></th>
+												<td ><?php echo $i;?></td>
+												<td ><?php echo $row['academic'];?></td>
+												<td ><?php echo $row['generation'];?></td>
+												<td align="left">&nbsp;&nbsp;<?php echo $row['service_name'];?></td>	
+												<td ><?php echo $row['monthly'];?></td>
+												<td ><?php echo $row['quarter'];?></td>
+												<td ><?php echo $row['semester'];?></td>
+												<td ><?php echo $row['year'];?></td>
+												<td ><?php echo $row['remark'];?></td>
 											</tr>
 										<?php }?>	
 										</table>	

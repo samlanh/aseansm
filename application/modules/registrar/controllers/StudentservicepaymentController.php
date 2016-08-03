@@ -89,8 +89,6 @@ class Registrar_StudentservicepaymentController extends Zend_Controller_Action {
        
        //$session_user=new Zend_Session_Namespace('auth'); $username = $session_user->first_name;
        
-       
-       
     }
     public function editAction()
     {

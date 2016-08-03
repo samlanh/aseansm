@@ -29,6 +29,7 @@ class Allreport_Model_DbTable_DbRptExpectIncome extends Zend_Db_Table_Abstract
     		   ";
      	$order=" ORDER by sp.receipt_number ASC ";
     	//$where= " and sp.create_date between '$from_date' and '$to_date'";
+    	$where = '';
     		if(!empty($search['txtsearch'])){
     			$s_where = array();
     			$s_search = addslashes(trim($search['txtsearch']));

@@ -45,38 +45,38 @@
 											.padd tr th{  background-color: #ccc; }
 										</style>
 
-									<table class="padd" width="99%" border="1" align="center" style="white-space:nowrap;">
-										  <tr style="font-size:10px; height: 20px;" align="center">
-										    <th>&nbsp;N.o&nbsp;</th>
-										    <th>&nbsp;Reciept N.o&nbsp;</th>
-										    <th>&nbsp;Student ID&nbsp;</th>
-											<th>&nbsp;Khmer Name&nbsp;</th>
-											<th>&nbsp;English Name&nbsp;</th>
-											<th>&nbsp;Tuition Fee&nbsp;</th>
-											<th>&nbsp;Discount&nbsp;</th>
-											<th>&nbsp;Total&nbsp;</th>
-											<th>&nbsp;Recieved Amount&nbsp;</th>
-											<th>&nbsp;Paid Amount&nbsp;</th>
-											<th>&nbsp;Balance Due&nbsp;</th>
-											<th>&nbsp;Return Amount&nbsp;</th>
-											<th>&nbsp;Date Paid&nbsp;</th>
-											<th>&nbsp;User&nbsp;</th>
-											<th>&nbsp;Remark&nbsp;</th>
+									<table class="padd" width="99%" border="1" align="center" style="white-space:nowrap;font-family: 'Hanuman';">
+										  <tr style="font-size:12px; height: 20px;" align="center">
+										    <td>&nbsp;No.&nbsp;</td>
+										    <td>&nbsp;Student ID&nbsp;</td>
+											<td>&nbsp;Khmer Name&nbsp;</td>
+											<td>&nbsp;English Name&nbsp;</td>
+											<td>&nbsp;Reciept No.&nbsp;</td>
+											<td>&nbsp;Tuition Fee&nbsp;</td>
+											<td>&nbsp;Discount(%)&nbsp;</td>
+											<td>&nbsp;Total&nbsp;</td>
+											<td>&nbsp;Paid Amount&nbsp;</td>
+											<td>&nbsp;Recieved Amount&nbsp;</td>
+											<td>&nbsp;Balance Due&nbsp;</td>
+											<td>&nbsp;Return Amount&nbsp;</td>
+											<td>&nbsp;Date Paid&nbsp;</td>
+											<td>&nbsp;User&nbsp;</td>
+											<td>&nbsp;Remark&nbsp;</td>
 										  </tr>
 										  <tr></tr>
 												<style> td{padding:0 3px; }</style>
 										 <?php $i=0; $total=0;$paid=0;$balance=0; if (!empty($this->row)) { foreach($this->row as $rs){ $i++;?>
-										  <tr style="font-size:10px; height: 18px;"​ align="center">
+										  <tr style="font-size:11px; height: 18px;"​ align="center">
 										    <td><?php echo $i;?></td>
-										    <td><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['receipt_number']; ?></a></td>
 										    <td><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['stu_code']; ?></a></td>
 										    <td style=" white-space:nowrap; text-align:left"><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['kh_name']; ?></a></td>
 										    <td style=" white-space:nowrap; text-align:left"><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['en_name']; ?></a></td>
+										    <td><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['receipt_number']; ?></a></td>
 										    <td>$ <?php echo $rs['total']; if(empty($rs['tuition_fee'])){} ?></td>
-										    <td>$ <?php echo $rs['discount_fix']; if(empty($rs['discount_fix']))echo '0'; ?></td>
+										    <td> <?php echo $rs['discount_fix']; if(empty($rs['discount_fix']))echo '0'; ?></td>
 										    <td>$ <?php echo $rs['total_payment']; if(empty($rs['total']))echo '0.00'; ?></td>
-										    <td>$ <?php echo $rs['receive_amount']; if(empty($rs['receive_amount']))echo '0.00'; ?></td>
 										    <td>$ <?php echo $rs['paid_amount']; if(empty($rs['paid_amount']))echo '0.00'; ?></td>
+										    <td>$ <?php echo $rs['receive_amount']; if(empty($rs['receive_amount']))echo '0.00'; ?></td>
 										    <td>$ <?php echo $rs['balance_due']; if(empty($rs['balance_due']))echo '0.00'; ?></td>
 										    <td>$ <?php echo $rs['return_amount']; if(empty($rs['return_amount']))echo '0.00'; ?></td>
 										    <td><?php echo date('d-m-Y', strtotime($rs['create_date'])); ?></td>
@@ -116,6 +116,23 @@
 										  </table>
 									</td>
 								</tr>
+								<tr>
+											<td colspan="3">&nbsp;</td>
+										</tr>
+										<tr>
+											<td colspan="3">&nbsp;</td>
+										</tr>
+										<tr >
+											<td align="center" width="25%">
+												<span style=" font-size: 14px;">Verified by</span>
+											</td>
+											<td  width="50%">
+												&nbsp;
+											</td>
+											<td align="center"  width="25%">
+												<span style=" font-size: 14px;text-align: right;">Prepared by</span>
+											</td>
+										</tr>
 								<?php  }?>
 							</table>
 	</div>	

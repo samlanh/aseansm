@@ -17,8 +17,26 @@
 	dojo.require('dojox.form.BusyButton');
 	dojo.require("dojo.NodeList-manipulate");
 	
+	var student_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->rs));?> );
 	dojo.ready(function(){ 
-		 addRow();
+		addRow();
+		new dijit.form.FilteringSelect({
+		    store: student_store,
+		    autoComplete: true,                        
+		    required: true,
+		    id: "studentid",
+		    name: "studentid",           
+		    class: 'fullside',  
+		    placeHolder:"Selected Student id",          
+		    onChange: function() {  
+		    	//dept_id = dijit.byId('dept').get('value');
+		    	//dijit.byId('grade').attr('value','');
+		    	//getallModel(dept_id,a=''); 
+		    	//getStudentNo(dept_id);
+		    	getStudentInfo();
+		    	 
+		    }
+		}, "studentid");
 	});	
 
 	dojo.addOnLoad(function(){
@@ -53,13 +71,13 @@ fieldset{  background:none;}
 						</tr>
 						<tr>
 							<td><?php echo $tr->translate("STUDENT_ID");?></td>
-							<td>
-								<select class="fullside" name="studentid" id="studentid" placeholder="Select id" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();" >
-									<option value="-1"> </option>
-									<?php if(!empty($this->rs))foreach ($this->rs as $row){?>
-										<option value="<?php echo $row['stu_id']?>"><?php echo $row['stu_code']?></option>
-									<?php }?>
-								</select>
+							<td><input id="studentid" />
+<!-- 								<select class="fullside" name="studentid" id="studentid" placeholder="Select id" dojoType="dijit.form.FilteringSelect" onchange="getStudentInfo();" > -->
+<!-- 									<option value="-1"> </option> -->
+									<?php //if(!empty($this->rs))foreach ($this->rs as $row){?>
+										<option value="<?php //echo $row['stu_id']?>"><?php //echo $row['stu_code']?></option>
+									<?php //}?>
+<!-- 								</select> -->
 							</td>	
 							<td><?php echo $tr->translate("NAME_KH");?></td>
 							<td><?php echo $register->getElement('kh_name');?></td>
@@ -196,7 +214,47 @@ function deleteRecord(index) {
 		var strings = arrays.join(',');
 		$('#identity').val(strings);
 		dojo.query("#row"+index).remove();
-	}
+}
+
+var student_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
+var get_name = "<?php echo $this->url(array('module'=>'accounting','controller'=>'suspendservice','action'=>'get-student-id')); ?>";
+function getStudentID(){
+	study_year= dijit.byId('study_year').get('value');
+	dojo.xhrPost({
+		url:get_name,
+		content:{
+			'study_year':study_year
+			},
+		handleAs:"json",
+		load: function(data) {
+			if(data !=''){
+			student_stores  = getDataStorefromJSON('id','name', data);
+		    dijit.byId('studentid').set('store',student_stores);  
+			//dijit.byId("studentid").attr("value",data);
+			}else{
+				dijit.byId('studentid').set('store',student_store); 
+				dijit.byId('en_name').attr('value','');
+				dijit.byId('studentid').attr('value','');
+				dijit.byId('kh_name').attr('value','');
+				dijit.byId('sex').attr('value','');
+			}
+		},
+		error: function(err) {
+			//alert(err);
+		}
+	});
+}
+
+
+
+
+
+
+
+
+
+
+
 </script>
 
 

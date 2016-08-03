@@ -126,7 +126,7 @@ fieldset{  background:none;}
 							<td><?php echo $tr->translate("STUDENT_ID");?></td>
 							<td>
 								<select type="text" class="fullside" dojoType="dijit.form.FilteringSelect" name="studentid" id="studentid" onChange="getStudentInfo();setID(1);" >
-									<option value="1">Select Student ID</option>
+									<option value="-1">Select Student ID</option>
 									<?php if(!empty($this->rs)){foreach ($this->rs as $rs){?>
 									<option value="<?php echo $rs['id']?>" <?php if($rs['id']==$this->row['student_id']) echo 'selected="selected"' ?>><?php echo $rs['code']?></option>
 									<?php }}?>
@@ -135,7 +135,7 @@ fieldset{  background:none;}
 							<td align="right"><?php echo $tr->translate("STUDENT_NAME");?></td>
 							<td align="center">
 								<select type="text" style="" class="fullside" dojoType="dijit.form.FilteringSelect" name="stu_name" id="stu_name" onChange="setID(2);" >
-									<option value="1">Select Student Name</option>
+									<option value="-1">Select Student Name</option>
 									<?php if(!empty($this->row_name)){foreach ($this->row_name as $row){?>
 									<option value="<?php echo $row['id']?>" <?php if($row['id']==$this->row['student_id']) echo 'selected="selected"' ?> ><?php echo $row['name']?></option>
 									<?php }}?>
@@ -191,7 +191,7 @@ fieldset{  background:none;}
 								<table style="width:400px;border-collapse: collapse;" cellpadding="10" cellspacing="10" >
 									<tr>
 										<td ><?php echo $tr->translate("TOTAL_PAYMENT");?></td>
-										<td align="right"><input class="fullside" type="text" onkeyup="calculatBalanceAndReturn();" value="<?php //echo $this->row['total_payment'];?>"  required="true" name="grand_total" id="grand_total" dojoType="dijit.form.NumberTextBox" /></td>
+										<td align="right"><input class="fullside" type="text" onkeyup="calculatBalanceAndReturn();" value="<?php //echo $this->row['total_payment'];?>" name="grand_total" id="grand_total" dojoType="dijit.form.NumberTextBox" /></td>
 									</tr>
 									<tr>	
 										<td><?php echo $tr->translate("BOOKS");?></td>
@@ -492,7 +492,7 @@ function addRow() {
 		}
 			template+='<td width="47px" align="center"><img onclick="deleteRecord('+col+');calculateTotal('+col+');calculatePaidAmount('+col+');" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
 			template+='<td width="23%" align="center">'+no+'</td>';
-			template+='<td><select onchange="getservicefee('+col+');"  dojoType="dijit.form.FilteringSelect" id="service_'+col+'" name="service_'+col+'">'+service+'</select></td>';			
+			template+='<td><select onchange="getValidate('+col+');getservicefee('+col+');"  dojoType="dijit.form.FilteringSelect" id="service_'+col+'" name="service_'+col+'">'+service+'</select></td>';			
 			//template+='<td><select onchange="getservicefee('+col+');" dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'" style="width:120px;"><option value="1">Monthly</option><option value="2">Quarter</option><option value="3">Semester</option><option value="4">Yearly</option></select></td>';
 			template+='<td><select onchange="getservicefee('+col+');getValidate('+col+');" dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'" style="width:120px;">';
 				<?php foreach($this->payment_term as $key => $value){?>
@@ -500,15 +500,16 @@ function addRow() {
 				<?php }?>
 			template+='</select></td>';
 			column = 0;
+			alert('line'+col);
 			template+='<td> <input type="text" required="true" onkeyup="calculateTotal('+col+');" name="price_'+col+'" value="" id="price_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="subsub"></label></td>';
-			template+='<td> <input type="text" required="true" onkeyup="calculateTotal('+col+');getValidate('+col+');" name="qty_'+col+'" value="" id="qty_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="qty"></label></td>';
+			template+='<td> <input type="text" onkeyup="calculateTotal('+col+');getValidate('+col+');" name="qty_'+col+'" value="1" id="qty_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="qty"></label></td>';
 			//template+='<td> <input type="text" required="true" readonly="readonly" name="total_'+col+'" value="" id="total_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="qty"></label></td>';
-			template+='<td> <input type="text" required="true" onkeyup="calculateDiscount('+col+');" value="<?php echo 0;?>"  name="discount_'+col+'" id="discount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="subsub"></label></td>';
-			template+='<td> <input type="text" required="true" readonly="readonly" name="subtotal_'+col+'" value="" id="subtotal_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="qty"></label></td>';
+			template+='<td> <input type="text"  onkeyup="calculateDiscount('+col+');" value="<?php echo 0;?>"  name="discount_'+col+'" id="discount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="subsub"></label></td>';
+			template+='<td> <input type="text" readonly="readonly" name="subtotal_'+col+'" value="" id="subtotal_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="qty"></label></td>';
 			template+='<td> <input type="text" required="true" onkeyup="calculatePaidAmount('+col+');"  name="paidamount_'+col+'" id="paidamount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="paidamount"></label></td>';
-			template+='<td> <input type="text" required="true"  name="date_start_'+col+'" onchange="getValidate('+col+');" id="date_start_'+col+'" dojoType="dijit.form.DateTextBox" style="width:100px;" value="<?php echo date('Y-m-d')?>" /><label id="validate"></label></td>';
-			template+='<td> <input type="text" required="true"  name="validate_'+col+'" id="validate_'+col+'" dojoType="dijit.form.DateTextBox" style="width:100px;" /><label id="validate"></label></td>';
-			template+='<td> <input type="text" required="true" name="remark'+col+'" value="" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" style="width:170px;" /><label id="subsub"></label></td>';
+			template+='<td> <input type="text"   name="date_start_'+col+'" onchange="getValidate('+col+');" id="date_start_'+col+'" dojoType="dijit.form.DateTextBox" style="width:100px;" value="<?php echo date('Y-m-d')?>" /><label id="validate"></label></td>';
+			template+='<td> <input type="text"   name="validate_'+col+'" id="validate_'+col+'" dojoType="dijit.form.DateTextBox" style="width:100px;" /><label id="validate"></label></td>';
+			template+='<td> <input type="text"  name="remark'+col+'" value="" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" style="width:170px;" /><label id="subsub"></label></td>';
 		tmp='<tr id="row'+col+'">';
 		tmp+="</tr>";
 		dojo.query("#table_row").append(tmp);
@@ -541,8 +542,8 @@ function calculateDiscount(index,num){
 		//total = dijit.byId('total_'+index).get('value');
 		discount = dijit.byId('discount_'+index).get('value');
 		discount=isNaN(discount)?0:discount;
-		dijit.byId('subtotal_'+index).attr('value',total-discount);
-		dijit.byId('paidamount_'+index).attr('value',total-discount);
+		dijit.byId('subtotal_'+index).attr('value',total-(total*discount/100));
+		dijit.byId('paidamount_'+index).attr('value',total-(total*discount/100));
 		netTotal();
 	}
 	else{
@@ -555,7 +556,7 @@ function calculateDiscount(index,num){
 		//total = dijit.byId('total_'+index).get('value');
 		discount = dijit.byId('discount_'+index).get('value');
 		discount=isNaN(discount)?0:discount;
-		dijit.byId('subtotal_'+index).attr('value',total-discount);
+		dijit.byId('subtotal_'+index).attr('value',total-(total*discount/100));
 		//dijit.byId('paidamount_'+index).attr('value',total-discount);
 		netTotal(index,num);
 	}
@@ -707,29 +708,27 @@ function initailize(){
 		dojo.query("#head-title").append(temp);
 		title=1;
 	}
-		num=0;
-		num++;
-
+		
 		template+='<td width="47px" align="center"><img onclick="deleteRecord('+col+');calculateTotal('+col+');calculatePaidAmount('+col+');" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
 		template+='<td width="23%" align="center">'+no+'</td>';
 		template+='<td><select onchange="setValue('+col+');"  dojoType="dijit.form.FilteringSelect" id="service_'+col+'" name="service_'+col+'">'+service+'</select></td>';			
 		//template+='<td><select onchange="getservicefee('+col+');" dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'" style="width:120px;"><option value="1">Monthly</option><option value="2">Quarter</option><option value="3">Semester</option><option value="4">Yearly</option></select></td>';
-		template+='<td><select onchange="setValue('+col+');getValidate('+col+','+num+');" dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'" style="width:120px;">';
+		template+='<td><select onchange="setValue('+col+');getValidate('+col+');" dojoType="dijit.form.FilteringSelect" id="term_'+col+'" name="term_'+col+'" style="width:120px;">';
 			<?php foreach($this->payment_term as $key => $value){?>
 				template+='<option value="'+<?php echo $key?>+'"><?php echo $value;?></option>';
 			<?php }?>
 		template+='</select></td>';
 		column = 0;
 		
-		template+='<td> <input type="text" required="true" onkeyup="calculateTotal('+col+',1);" name="price_'+col+'" value="" id="price_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="subsub"></label></td>';
-		template+='<td> <input type="text" required="true" onkeyup="calculateTotal('+col+',1);getValidate('+col+');" name="qty_'+col+'" value="<?php //echo $this->row['qty'];?>" id="qty_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="qty"></label></td>';
+		template+='<td> <input type="text"  required="true" onkeyup="calculateTotal('+col+',1);" name="price_'+col+'" value="" id="price_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="subsub"></label></td>';
+		template+='<td> <input type="text"  onkeyup="calculateTotal('+col+',1);getValidate('+col+');" name="qty_'+col+'" value="<?php //echo $this->row['qty'];?>" id="qty_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="qty"></label></td>';
 		//template+='<td> <input type="text" required="true" readonly="readonly" name="total_'+col+'" value="<?php //echo $this->row['amount'];?>" id="total_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:100px;" /><label id="qty"></label></td>';
-		template+='<td> <input type="text" required="true" onkeyup="calculateDiscount('+col+',1);" value="<?php //echo $this->row['discount_fix'];?>"  name="discount_'+col+'" id="discount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="subsub"></label></td>';
-		template+='<td> <input type="text" required="true" readonly="readonly" name="subtotal_'+col+'" value="<?php //echo $this->row['total_payment'];?>" id="subtotal_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="qty"></label></td>';
-		template+='<td> <input type="text" required="true" onkeyup="calculatePaidAmount('+col+');"  name="paidamount_'+col+'" id="paidamount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="paidamount"></label></td>';
-		template+='<td> <input type="text" required="true"  name="date_start_'+col+'" onchange="getValidate('+col+','+num+');" id="date_start_'+col+'" dojoType="dijit.form.DateTextBox" style="width:100px;" value="" /><label id="validate"></label></td>';
-		template+='<td> <input type="text" required="true"  name="validate_'+col+'" id="validate_'+col+'" dojoType="dijit.form.DateTextBox" style="width:100px;" /><label id="validate"></label></td>';
-		template+='<td> <input type="text" required="true" name="remark'+col+'" value="<?php //echo $this->row['note1'];?>" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" style="width:170px;" /><label id="subsub"></label></td>';
+		template+='<td> <input type="text"  onkeyup="calculateDiscount('+col+',1);" value="<?php //echo $this->row['discount_fix'];?>"  name="discount_'+col+'" id="discount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="subsub"></label></td>';
+		template+='<td> <input type="text"  readonly="readonly" name="subtotal_'+col+'" value="<?php //echo $this->row['total_payment'];?>" id="subtotal_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="qty"></label></td>';
+		template+='<td> <input type="text"  required="true" onkeyup="calculatePaidAmount('+col+');"  name="paidamount_'+col+'" id="paidamount_'+col+'" dojoType="dijit.form.NumberTextBox" style="width:70px;" /><label id="paidamount"></label></td>';
+		template+='<td> <input type="text"  name="date_start_'+col+'" onchange="getValidate('+col+');" id="date_start_'+col+'" dojoType="dijit.form.DateTextBox" style="width:100px;" value="" /><label id="validate"></label></td>';
+		template+='<td> <input type="text"  name="validate_'+col+'" id="validate_'+col+'" dojoType="dijit.form.DateTextBox" style="width:100px;" /><label id="validate"></label></td>';
+		template+='<td> <input type="text"  name="remark'+col+'" value="<?php //echo $this->row['note1'];?>" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ" style="width:170px;" /><label id="subsub"></label></td>';
 	tmp='<tr id="row'+col+'">';
 	tmp+="</tr>";
 	dojo.query("#table_row").append(tmp);
@@ -783,22 +782,22 @@ function setValue(col){
 		
 }
 var no=0;
-function getValidate(key,num){
-	
+function getValidate(key){
+	//alert(key);
 	//amount_month=dijit.byId('duration').get('value');
 	 amount= dijit.byId('qty_'+key).get('value');
 	 start_date = dijit.byId("date_start_"+key).get('value');
 	 term = dijit.byId('term_'+key).get('value');
 	 //var dNow = new Date();
 	 //var localdate= (dNow.getMonth()+1) + '/' + dNow.getDate() + '/' + dNow.getFullYear();
-	 var epx_date="";
-	 
-	 
-	 //alert(no);
-	 if(no!=1){
+	 epx_date= '' ;
+		//alert(start_date);
+		alert(amount);
 		 if(term==1){
+			 //alert
 			 var a = new Date(start_date);
 			  mm = a.getMonth()+amount+1;
+			  alert(mm);
 	
 			 var dd = a.getDate();
 			  if(dd<10){
@@ -809,7 +808,7 @@ function getValidate(key,num){
 			 }
 			 var y = a.getFullYear();
 			 epx_date = y + '-' + mm + '-' + dd ;
-	
+			 dijit.byId('validate_'+key).attr('value',epx_date);
 			 //alert(epx_date);
 		 }
 		 else if(term==2){
@@ -825,7 +824,7 @@ function getValidate(key,num){
 			 }
 			 var y = a.getFullYear();
 			 epx_date = y + '-' + mm + '-' + dd ;
-	
+			 dijit.byId('validate_'+key).attr('value',epx_date);
 			 //alert(epx_date);
 		 }
 		 else if(term==3){
@@ -841,7 +840,7 @@ function getValidate(key,num){
 			 }
 			 var y = a.getFullYear();
 			 epx_date = y + '-' + mm + '-' + dd ;
-	
+			 dijit.byId('validate_'+key).attr('value',epx_date);
 			 //alert(epx_date);
 		 }
 		 else if(term==4){
@@ -857,16 +856,10 @@ function getValidate(key,num){
 			 }
 			 var y = a.getFullYear();
 			 var epx_date = y + '-' + mm + '-' + dd ;
-	
+			 dijit.byId('validate_'+key).attr('value',epx_date);
 			 //alert(epx_date);
-			 
 		 }
-		 dijit.byId('validate_'+key).attr('value',epx_date);
-	 }else{
-		no++;
-			//alert(no);
-	 }
-	  
+		 //alert(epx_date);
 }
 
 function getValue(){

@@ -38,7 +38,7 @@
 </style>
 <div style="border: 1px dotted #000;background: #fff; margin: 0 auto;min-height: 27cm;">
 		<div id="divPrint"  >
-			<table style="background:#fff; margin: 0 auto; width: 100%; padding: 1cm; ">
+			<table style="background:#fff; margin: 0 auto; width: 100%; padding: 1cm;">
 							<tr style="font-size: 13px;">
 								<td colspan="3" align="center">
 									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"><u>របាយការណ៏ប្រាក់ចំណូលពី ការបង់ប្រាក់របស់សិស្ស</u></strong><br />
@@ -62,26 +62,26 @@
 											table{ border-collapse:collapse; margin:0 auto;
 											border-color:#000; }
 											.padd tr td{  text-align:center}
-											.padd tr th{  background-color: #ccc; }
+											.padd tr th{  background-color: #e4e4e4; }
 										</style>
 
-									<table class="padd" width="99%" border="1" align="center" style="white-space:nowrap;">
-										  <tr style="font-size:10px; height: 20px;" align="center">
-										    <th>&nbsp;N.o&nbsp;</th>
-										    <th>&nbsp;Student ID&nbsp;</th>
-											<th>&nbsp;Khmer Name&nbsp;</th>
-											<th>&nbsp;English Name&nbsp;</th>
-											<th>&nbsp;Year&nbsp;</th>
-											<th>&nbsp;Reciept N.o&nbsp;</th>
-											<th>&nbsp;Servic Name&nbsp;</th>
-											<th>&nbsp;Tuition Fee&nbsp;</th>
-											<th>&nbsp;Discount&nbsp;</th>
-											<th>&nbsp;Total&nbsp;</th>
-											<th>&nbsp;Paid Amount&nbsp;</th>
-											<th>&nbsp;Balance Due&nbsp;</th>
-											<th>&nbsp;Date Paid&nbsp;</th>
-											<th>&nbsp;User&nbsp;</th>
-											<th>&nbsp;Remark&nbsp;</th>
+									<table class="padd" width="99%" border="1" align="center" style="white-space:nowrap;font-family: 'Hanuman';">
+										  <tr style="font-size:12px; height: 20px;" align="center">
+										    <td>&nbsp;No.&nbsp;</td>
+										    <td>&nbsp;Student ID&nbsp;</td>
+											<td>&nbsp;Khmer Name&nbsp;</td>
+											<td>&nbsp;English Name&nbsp;</td>
+											<td>&nbsp;Year&nbsp;</td>
+											<td>&nbsp;Reciept No.&nbsp;</td>
+											<td>&nbsp;Servic Name&nbsp;</td>
+											<td>&nbsp;Tuition Fee&nbsp;</td>
+											<td>&nbsp;Discount(%)&nbsp;</td>
+											<td>&nbsp;Total&nbsp;</td>
+											<td>&nbsp;Paid Amount&nbsp;</td>
+											<td>&nbsp;Balance Due&nbsp;</td>
+											<td>&nbsp;Date Paid&nbsp;</td>
+											<td>&nbsp;Remark&nbsp;</td>
+											<td>&nbsp;User&nbsp;</td>
 										  </tr>
 										  <tr></tr>
 										 
@@ -97,7 +97,7 @@
 // 										 	}
 										 
 										 ?>
-										  <tr style="font-size:10px; height: 18px;"​ class="hover">
+										  <tr style="font-size:11px; height: 18px;"​ class="hover">
 										    <td><?php echo $i;?></td>
 										    <td><a style=" text-decoration: none; color:#000;" ><?php echo $rs['stu_code']; ?></a></td>
 										    <td style=" white-space:nowrap; text-align:left"><a style=" text-decoration: none; color:#000;" ><?php echo $rs['stu_khname']; ?></a></td>
@@ -106,13 +106,13 @@
 										    <td><a style=" text-decoration: none; color:#000;" ><?php echo $rs['receipt_number']; ?></a></td>
 										    <td style="text-align:left"><?php echo $rs["service_id"] ?></td>
 										    <td>$ <?php echo number_format($rs['fee'],2); ?></td>
-										    <td>$ <?php echo number_format($rs['discount_fix'],2); ?></td>
+										    <td> <?php echo number_format($rs['discount_percent']); ?> %</td>
 										    <td>$ <?php echo number_format($rs['subtotal'],2); ?></td>
 										    <td>$ <?php echo number_format($rs['paidamount'],2); ?></td>
 										    <td>$ <?php echo number_format($rs['balance'],2);  ?></td>
 										    <td><?php echo date('d-M-Y', strtotime($rs['start_date'])); ?></td>
-										    <td><?php $user=$rs['user_id'];if( $user==$user_id )echo $session_user->last_name." ".$session_user->first_name; ?></td>
 										   	<td><?php echo $rs['note']; ?></td>
+										    <td><?php $user=$rs['user_id'];if( $user==$user_id )echo $session_user->last_name." ".$session_user->first_name; ?></td>
 										  </tr>
 										  <?php 
 										        $total = $rs['subtotal'] + $total;
@@ -144,6 +144,23 @@
 														<td colspan="2" style=" color:#F00; font-weight:bold;font-family: Arial Black; font-size: 10px;">$ <?php echo number_format($total_balance,2);?></td>
 										  		</tr>
 										  </table>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3">&nbsp;</td>
+								</tr>
+								<tr>
+									<td colspan="3">&nbsp;</td>
+								</tr>
+								<tr >
+									<td align="center" width="25%">
+										<span style=" font-size: 14px;">Verified by</span>
+									</td>
+									<td  width="50%">
+										&nbsp;
+									</td>
+									<td align="center"  width="25%">
+										<span style=" font-size: 14px;text-align: right;">Prepared by</span>
 									</td>
 								</tr>
 								<?php }?>

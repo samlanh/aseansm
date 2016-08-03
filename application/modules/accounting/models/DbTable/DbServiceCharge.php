@@ -9,6 +9,16 @@ class Accounting_Model_DbTable_DbServiceCharge extends Zend_Db_Table_Abstract
     	return $session_user->user_id;
     	 
     }
+    
+    function getAceYear(){
+    	$db=$this->getAdapter();
+    	$sql="SELECT id,CONCAT(from_academic,'-',to_academic,'(',generation,')') AS `name`
+    	FROM rms_servicefee WHERE `status`=1 ";
+    	$oder=" ORDER BY id DESC ";
+    	return $db->fetchAll($sql.$oder);
+    }
+    
+    
 	public function sqltuitionfee($search=''){
     	$sql = "SELECT p.service_id as id,p.`title` AS service_name,p.status,t.title as cate_name FROM `rms_program_name` AS p,`rms_program_type` AS t
 					WHERE t.id=p.ser_cate_id ";
@@ -30,25 +40,38 @@ class Accounting_Model_DbTable_DbServiceCharge extends Zend_Db_Table_Abstract
     }
     
     function getAllServiceFee($search){
+	
+    try{		
     	$db=$this->getAdapter();
-    	$sql = "SELECT id,CONCAT(from_academic,' - ',to_academic) AS academic,
-    		    generation,create_date ,status FROM `rms_servicefee` WHERE 1";
+    	$sql = "SELECT rms_servicefee.id,CONCAT(from_academic,' - ',to_academic) AS academic,
+    		    generation,create_date,status FROM rms_servicefee ";
     	$order=" ORDER BY id DESC ";
-    	$where = '';
+    	$where = ' where 1 ';
     	
     	if(empty($search)){
     		return $db->fetchAll($sql.$order);
     	}
+    	
+    	if(!empty($search['year'])){
+    		$where .=" AND id=".$search['year'];
+    	}
+    	
+    	$limit=" limit 1";
+    	
     	if(!empty($search['txtsearch'])){
     		$s_where = array();
     		$s_search = addslashes(trim($search['txtsearch']));
     		$s_where[] = " CONCAT(from_academic,'-',to_academic) LIKE '%{$s_search}%'";
     		$s_where[] = " generation LIKE '%{$s_search}%'";
-//     		$s_where[] = " kh_name LIKE '%{$s_search}%'";
+     		//$s_where[] = " (select title from rms_program_name where service_id=rms_servicefee_detail.service_id ) LIKE '%{$s_search}%'";
 //     		$s_where[] = " en_name LIKE '%{$s_search}%'";
     		$where .=' AND ( '.implode(' OR ',$s_where).')';
     	}
+    	//echo $sql.$where.$order;
     	return $db->fetchAll($sql.$where.$order);
+    }catch(Exception $e){
+    	echo $e->getMessage();
+    }
     }
     
     

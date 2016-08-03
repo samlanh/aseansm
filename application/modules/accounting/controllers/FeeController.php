@@ -90,6 +90,7 @@ class Accounting_FeeController extends Zend_Controller_Action {
     	$this->view->frm_search = $frm;
     	$this->view->adv_search = $search;
     	$data=$this->view->rows_session=$db->getSession();
+    	
     	$data=$this->view->rows_year=$db->getAceYear();
     	$this->view->rows_grade=$db->getGrad();
     	$form=new Registrar_Form_FrmSearchInfor();
