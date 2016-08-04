@@ -568,5 +568,11 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	}
     	return $pre.$new_acc_no;
     }
+    function getAllGradeGEP($grade_id){
+    	$db = $this->getAdapter();
+    	$sql = "SELECT CONCAT(major_enname,'-',major_khname) As name,major_id As id FROM rms_major WHERE dept_id=".$grade_id;
+    	$order=' ORDER BY id DESC';
+    	return $db->fetchAll($sql.$order);
+    }
 }
 
