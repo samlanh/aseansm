@@ -54,7 +54,7 @@
 											<td>&nbsp;Reciept No.&nbsp;</td>
 											<td>&nbsp;Tuition Fee&nbsp;</td>
 											<td>&nbsp;Discount(%)&nbsp;</td>
-											<td>&nbsp;Total&nbsp;</td>
+											<td>&nbsp;Sub Total&nbsp;</td>
 											<td>&nbsp;Paid Amount&nbsp;</td>
 											<td>&nbsp;Recieved Amount&nbsp;</td>
 											<td>&nbsp;Balance Due&nbsp;</td>
@@ -72,19 +72,19 @@
 										    <td style=" white-space:nowrap; text-align:left"><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['kh_name']; ?></a></td>
 										    <td style=" white-space:nowrap; text-align:left"><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['en_name']; ?></a></td>
 										    <td><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['receipt_number']; ?></a></td>
-										    <td>$ <?php echo $rs['total']; if(empty($rs['tuition_fee'])){} ?></td>
-										    <td> <?php echo $rs['discount_fix']; if(empty($rs['discount_fix']))echo '0'; ?></td>
-										    <td>$ <?php echo $rs['total_payment']; if(empty($rs['total']))echo '0.00'; ?></td>
-										    <td>$ <?php echo $rs['paid_amount']; if(empty($rs['paid_amount']))echo '0.00'; ?></td>
-										    <td>$ <?php echo $rs['receive_amount']; if(empty($rs['receive_amount']))echo '0.00'; ?></td>
-										    <td>$ <?php echo $rs['balance_due']; if(empty($rs['balance_due']))echo '0.00'; ?></td>
-										    <td>$ <?php echo $rs['return_amount']; if(empty($rs['return_amount']))echo '0.00'; ?></td>
-										    <td><?php echo date('d-m-Y', strtotime($rs['create_date'])); ?></td>
+										    <td>$ <?php echo $rs['tuition_fee']; if(empty($rs['tuition_fee'])){} ?></td>
+										    <td> <?php echo $rs['discount_percent']; ?></td>
+										    <td>$ <?php echo $rs['total'];?></td>
+										    <td>$ <?php echo $rs['paid_amount'];?></td>
+										    <td>$ <?php echo $rs['receive_amount'];?></td>
+										    <td>$ <?php echo $rs['balance_due'];?></td>
+										    <td>$ <?php echo $rs['return_amount']; if(empty($rs['return_amount']))echo '0'; ?></td>
+										    <td><?php echo date('d-M-Y', strtotime($rs['create_date'])); ?></td>
 										    <td><?php echo $rs['USER']; ?></td>
 										   	<td><?php echo $rs['note']; ?></td>
 										  </tr>
 										  <?php 
-										  		$total = $rs['total_payment'] + $total; 
+										  		$total = $rs['total'] + $total; 
 										  		$paid = $rs['paid_amount'] + $paid;
 										  		$balance=$rs['balance_due'] + $balance;
 										  ?> 
