@@ -421,7 +421,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     function getAllGepOldStudent(){
     	$db=$this->getAdapter();
     	$sql="SELECT s.stu_id As stu_id,s.stu_code As stu_code FROM rms_student AS s,rms_student_payment AS sp 
-    	      WHERE s.stu_id=sp.student_id  AND s.stu_type=2 AND sp.payfor_type=2";
+    	      WHERE s.stu_id=sp.student_id  AND s.stu_type=2 AND s.is_subspend=0 and s.status=1 ORDER BY stu_id DESC  ";
     	return $db->fetchAll($sql);
     }
     //select Gep old student by id 
@@ -442,7 +442,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     function getAllGerneralOldStudent(){
     	$db=$this->getAdapter();
     	$sql="SELECT s.stu_id As stu_id,s.stu_code As stu_code FROM rms_student AS s
-    	WHERE s.stu_type!=2 AND s.status=1 ORDER BY stu_id DESC ";
+    	WHERE s.stu_type!=2 AND s.status=1 and s.is_subspend=0 ORDER BY stu_id DESC ";
     	return $db->fetchAll($sql);
     }
     //select general  old student by id
