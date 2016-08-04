@@ -50,7 +50,7 @@ dojo.ready(function(){changControll();
 
 	
 	var grade_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
-	var url_dept = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-grade')); ?>';
+	var url_dept = '<?php echo $this->url(array('module'=>'registrar','controller'=>'coursestudy','action'=>'get-grade')); ?>';
 	function getallModel(dept_id){
 			dojo.xhrPost({
 				url:url_dept,
