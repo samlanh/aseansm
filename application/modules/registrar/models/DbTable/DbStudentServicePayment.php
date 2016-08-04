@@ -87,7 +87,7 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     						'balance'		=>$data['subtotal_'.$i]-$data['paidamount_'.$i],
     						'validate'		=>$data['validate_'.$i],
     						'start_date'	=>$data['date_start_'.$i],
-    						'discount_fix'	=>$data['discount_'.$i],
+    						'discount_percent'=>$data['discount_'.$i],
     						'note'			=>$data['remark'.$i],
     						'subtotal'		=>$data['subtotal_'.$i],
     						'type'			=>3,
@@ -108,7 +108,7 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     				}
     			}
     			$this->_name='rms_student_payment';
-    			$datadisc = array('discount_fix'=>$disc,
+    			$datadisc = array('discount_percent'=>$disc,
     						'total'=>$total);
     			$where=$this->getAdapter()->quoteInto("id=?", $id);
     			$this->update($datadisc, $where);
@@ -204,7 +204,7 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     						'balance'		=>$data['subtotal_'.$i]-$data['paidamount_'.$i],
     						'validate'		=>$data['validate_'.$i],
     						'start_date'	=>$data['date_start_'.$i],
-    						'discount_fix'	=>$data['discount_'.$i],
+    						'discount_percent'	=>$data['discount_'.$i],
     						'note'			=>$data['remark'.$i],
     						'subtotal'		=>$data['subtotal_'.$i],
     						'type'			=>3,
@@ -215,7 +215,7 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     				$this->insert($_arr);
     			}
     			$this->_name='rms_student_payment';
-    			$datadisc = array('discount_fix'=>$disc,
+    			$datadisc = array('discount_percent'=>$disc,
     					'total'=>$total);
     			$where=$this->getAdapter()->quoteInto("id=?", $data['id']);
     			$this->update($datadisc, $where);

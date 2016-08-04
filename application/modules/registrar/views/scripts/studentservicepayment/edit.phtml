@@ -191,7 +191,7 @@ fieldset{  background:none;}
 								<table style="width:400px;border-collapse: collapse;" cellpadding="10" cellspacing="10" >
 									<tr>
 										<td ><?php echo $tr->translate("TOTAL_PAYMENT");?></td>
-										<td align="right"><input class="fullside" type="text" onkeyup="calculatBalanceAndReturn();" value="<?php //echo $this->row['total_payment'];?>" name="grand_total" id="grand_total" dojoType="dijit.form.NumberTextBox" /></td>
+										<td align="right"><input class="fullside" type="text" onkeyup="calculatBalanceAndReturn();" value="<?php //echo $this->row['total_payment'];?>" readonly="readonly" name="grand_total" id="grand_total" dojoType="dijit.form.NumberTextBox" /></td>
 									</tr>
 									<tr>	
 										<td><?php echo $tr->translate("BOOKS");?></td>
@@ -583,7 +583,7 @@ function calculatePaidAmount(index,num){
 			//netTotal += Number($('#subtotal_'+rowIDArray[n]).val());
 			netPaidAmount += dijit.byId('paidamount_'+rowIDArray[n]).get('value');
 		}
-		dijit.byId('total_received').attr('value',netPaidAmount);
+		//dijit.byId('total_received').attr('value',netPaidAmount);
 		calculatBalanceAndReturn(index,num);
 }
 
@@ -747,7 +747,7 @@ function initailize(){
 	dijit.byId('qty_'+col).attr('value','<?php echo $row['qty']?>');
 	dijit.byId('validate_'+col).attr('value','<?php echo $row['validate']?>');
 	dijit.byId('date_start_'+col).attr('value','<?php echo $row['start_date']?>');
-	dijit.byId('discount_'+col).attr('value','<?php echo $row['discount_fix']?>');
+	dijit.byId('discount_'+col).attr('value','<?php echo $row['discount_percent']?>');
 	dijit.byId('remark'+col).attr('value','<?php echo $row['note']?>');
 	dijit.byId('paidamount_'+col).attr('value','<?php echo $row['paidamount']?>');
 	dijit.byId('subtotal_'+col).attr('value','<?php echo $row['subtotal']?>');
@@ -768,7 +768,7 @@ function setValue(col){
 			dijit.byId('price_'+col).attr('value','<?php echo $row['fee']?>');
 			dijit.byId('qty_'+col).attr('value','<?php echo $row['qty']?>');
 			dijit.byId('validate_'+col).attr('value','<?php echo $row['validate']?>');
-			dijit.byId('discount_'+col).attr('value','<?php echo $row['discount_fix']?>');
+			dijit.byId('discount_'+col).attr('value','<?php echo $row['discount_percent']?>');
 			dijit.byId('remark'+col).attr('value','<?php echo $row['note']?>');
 			dijit.byId('paidamount_'+col).attr('value','<?php echo $row['paidamount']?>');
 			dijit.byId('subtotal_'+col).attr('value','<?php echo $row['subtotal']?>');
@@ -792,12 +792,12 @@ function getValidate(key){
 	 //var localdate= (dNow.getMonth()+1) + '/' + dNow.getDate() + '/' + dNow.getFullYear();
 	 epx_date= '' ;
 		//alert(start_date);
-		alert(amount);
+		//alert(amount);
 		 if(term==1){
 			 //alert
 			 var a = new Date(start_date);
 			  mm = a.getMonth()+amount+1;
-			  alert(mm);
+			  //alert(mm);
 	
 			 var dd = a.getDate();
 			  if(dd<10){

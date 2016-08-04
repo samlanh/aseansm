@@ -263,7 +263,7 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
 		       sp.payment_term,
 		       sp.tuition_fee,sp.discount_percent,sp.total,sp.paid_amount,
 		       sp.balance_due,sp.create_date
- 			   FROM rms_student AS s,rms_student_payment AS sp WHERE s.stu_id=sp.student_id AND s.stu_type=2
+ 			   FROM rms_student AS s,rms_student_payment AS sp WHERE s.stu_id=sp.student_id AND s.stu_type=2 AND sp.payfor_type = 2 
     	       AND sp.user_id=$user_id";
     	
     	if(!empty($search['adv_search'])){
@@ -290,7 +290,7 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
     	}
     	//print_r($sql.$where);
     	$order=" ORDER By stu_id DESC ";
-//         echo $sql.$where.$order;
+         echo $sql.$where.$order;
     	return $db->fetchAll($sql.$where.$order);
     }
     function getStuentGepById($id){

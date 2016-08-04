@@ -318,6 +318,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     	}
     	//$order=" ORDER By stu_id DESC ";
     	$order=" ORDER BY sp.id DESC";
+    	//echo $sql.$where.$order;exit();
     	return $db->fetchAll($sql.$where.$order);
     }
     function getRegisterById($id){
