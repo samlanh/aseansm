@@ -6,18 +6,6 @@
 ?>	
 <div style="width: 28cm;margin: 0 auto;">
 <form  id='foundation_class' action="<?php echo $this->url(array('module'=>'registrar','controller'=>'studentpaymentlate','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
-	<table width="100%">
-	      <tr>
-		       <td>
-					<div class="menureport">
-										<ul>
-											<li class="preview"><a title="Preview" href="#" onclick="preview();"></a></li>
-											<li class="print"><a href="#" title="Print" onclick="doPrint();" ></a></li>
-										</ul>
-					</div>
-		      </td>
-		</tr>
-	</table>
 	<table width="100%">	
 		<tr> 
 			 <td><input dojoType="dijit.form.TextBox" class="fullside" id="adv_search" name="adv_search" value="<?php echo $this->search['adv_search']?>" placeholder="Search" type="text" ></td>
@@ -49,18 +37,18 @@
 										</tr>
 										<tr>
 											<td colspan="3">
-												<table cellpadding="5"​ style="margin:0 auto;border: 1px solid #000;width:100%; border-collapse: collapse;white-space: nowrap;font-family: 'Hanuman';"  border="1" >
-													<tr style="font-size:12px; height: 20px;border: 1px solid #000;" align="center" >
+												<table cellpadding="5"​ style="margin:0 auto;border: 1px solid #000;width:100%; border-collapse: collapse;white-space: nowrap;"  border="1" >
+													<tr style="font-size:11px; height: 20px;border: 1px solid #000;" align="center" >
 														<td style="border: 1px solid #000;">&nbsp;No.&nbsp;</td>
 														<td style="border: 1px solid #000;">Student Id</td>
 														<td style="border: 1px solid #000;">&nbsp;Student Name&nbsp;</td>
 														<td style="border: 1px solid #000;">&nbsp;Sex&nbsp;</td>
 														<td style="border: 1px solid #000;">&nbsp;Tel&nbsp;</td>
-														<td style="border: 1px solid #000;">&nbsp;Receipt No.&nbsp;</td>
+														<td style="border: 1px solid #000;">&nbsp;Receipt No&nbsp;</td>
 														<td style="border: 1px solid #000;">Service Name</td>
 														<td style="border: 1px solid #000;">Paid Date</td>
 														<td style="border: 1px solid #000;">Validate</td>
-														<td style="border: 1px solid #000;">Late Days</td>
+														<td style="border: 1px solid #000;">Remain Days</td>
 													</tr>
 												<?php $i=0;$totalpaid=0;$totalbalance=0; if(!empty($this->row)){foreach ($this->row AS $row) { $i++;
 													$date1=date_create($row['end']);

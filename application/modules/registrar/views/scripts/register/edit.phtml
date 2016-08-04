@@ -2,11 +2,8 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	echo $this->headTitle($tr->translate('SRMS_WUREGISTER')); 
 	$base_url = Application_Form_FrmMessage::getUrl("/");
-	//print_r($this->degree_row);exit();
-	//print_r($this->degree_row);
 ?>	
 <script type="text/javascript"  src="<?php echo $this->baseUrl();?>/js/jquery-1.8.3.min.js"></script>
-<!--<script type="text/javascript"  src="<?php //echo $this->baseUrl();?>/js/convertion.js"></script> -->
 <script type="text/javascript">
 	dojo.require("dojo.data.ItemFileWriteStore");  
 	dojo.require('dojox.form.BusyButton');
@@ -46,7 +43,6 @@
 	var grade_store  = getDataStorefromJSON('id','name', <?php print_r(array())?> );
 	var url_dept = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-grade')); ?>';
 	function getallModel(dept_id,a){
-		
 			dojo.xhrPost({
 				url:url_dept,
 				content:{
@@ -54,7 +50,6 @@
 					},
 				handleAs:"json",
 				load: function(data) {
-					//alert(data);
 					grade_store  = getDataStorefromJSON('id','name', data);
 				    dijit.byId('grade').set('store',grade_store);  
 				    dijit.byId('grade').attr('value','<?php echo $this->degree_row['grade']?>');
@@ -69,15 +64,16 @@
 	}
 	var url_getstuno = '<?php echo $this->url(array('module'=>'registrar','controller'=>'register','action'=>'get-stu-no')); ?>';
 	function getStudentNo(dept_id){
-			dojo.xhrPost({
+		if(dept_id==''){
+			return false;
+			}
+		dojo.xhrPost({
 				url:url_getstuno,
 				content:{
 					'dept_id':dept_id
 					},
 				handleAs:"json",
 				load: function(data) {
-					//alert(data);
-					//url_getstuno  = getDataStorefromJSON('id','name', data);
 					  dijit.byId('stu_id').attr('value',data);   
 
 				},
@@ -141,19 +137,9 @@
 					      dijit.byId('total').attr('value',data.tuition_fee);
 					      dijit.byId('books').attr('value',data.tuition_fee);
 				      }else {
-				    	/* dijit.byId('tuitionfee').attr('value','0'); 
-				    	 dijit.byId('total').attr('value','0'); 
-				    	 dijit.byId('discount').attr('value','0');
-				    	 dijit.byId('books').attr('value','0');
-					     dijit.byId('addmin_fee').attr('value','0');
-					     dijit.byId('remaining').attr('value','0');
-					     dijit.byId('remark').attr('value','0');
-					     dijit.byId('char_price').attr('value','0');*/
+				    	
 				      }
-				 /*     a = dojo.number.format(data.tuition_fee);
-					  money_khmer=read_money_in_khmer(a);
-					  dijit.byId('char_price').attr('value',money_khmer.trim()+'ដុល្លាគត់');
-					  */
+				 
 				},
 				error: function(err) {
 					//alert(err);
@@ -204,15 +190,7 @@
 				    	 dijit.byId('ids').attr('value','');
 				    	 dijit.byId('not').attr('value','');
 				    	 paymentTerms();
-				 /*   	 dijit.byId('tuitionfee').attr('value','0'); 
-				    	 dijit.byId('total').attr('value','0'); 
-				    	 dijit.byId('discount').attr('value','0');
-				    	 dijit.byId('books').attr('value','0');
-					     dijit.byId('addmin_fee').attr('value','0');
-					     dijit.byId('remaining').attr('value','0');
-					     dijit.byId('remark').attr('value','0');
-					     dijit.byId('char_price').attr('value','0');
-						     */
+				 
 				      }
 				},
 				error: function(err) {
@@ -290,9 +268,6 @@
 			//getTuitionFee();
 	});	
 
-	//value_invoice = '<?php //echo $this->invoice_num;?>';
-	//dijit.byId('reciept_no').attr('value',value_invoice);
-	//dijit.byId('reciept_no').set('readOnly',true);
 	}); 
 
 	var txtstudent_card = dojo.byId("stu_id"); 

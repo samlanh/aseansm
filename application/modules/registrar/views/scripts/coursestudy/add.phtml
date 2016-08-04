@@ -261,9 +261,6 @@
 			//getTuitionFee();
 	});	
 
-	//value_invoice = '<?php //echo $this->invoice_num;?>';
-	//dijit.byId('reciept_no').attr('value',value_invoice);
-	//dijit.byId('reciept_no').set('readOnly',true);
 	}); 
 
 	var txtstudent_card = dojo.byId("stu_id"); 
@@ -339,6 +336,11 @@ fieldset{  background:none;}
 <form id='office_receipt' action="<?php echo $this->url(array('module'=>'registrar','controller'=>'coursestudy','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 <script type="dojo/method" event="onSubmit">   
    if(this.validate()) {
+    year = dijit.byId('study_year').get('value');
+    if(year==-1){
+         dijit.byId("study_year").focus();
+         return false;
+    }
     return true;
    }else {
     return false;
