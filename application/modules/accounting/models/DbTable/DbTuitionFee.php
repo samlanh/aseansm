@@ -16,10 +16,7 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
 					  (SELECT name_en FROM `rms_view`  WHERE `rms_view`.`type` = 7 AND `rms_view`.`key_code` = t.time) AS `time`,
 					  t.create_date,  t.status 	FROM `rms_tuitionfee` AS t,rms_tuitionfee_detail AS td
 					 WHERE t.id = td.fee_id	";
-    	$where ="";
-    	$from_date =(empty($search['start_date']))? '1': " t.create_date >= '".$search['start_date']." 00:00:00'";
-    	$to_date = (empty($search['end_date']))? '1': " t.create_date <= '".$search['end_date']." 23:59:59'";
-    	$where = " AND ".$from_date." AND ".$to_date;
+    	$where =" ";
     	
 	    if(!empty($search['txtsearch'])){
 	    	$s_where = array();
@@ -29,20 +26,13 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
 // 	    	$s_where[] = " en_name LIKE '%{$s_search}%'";
 	    	$where .=' AND ( '.implode(' OR ',$s_where).')';
 	    }
-	    if(!empty($search['study_year'])){
-	    	$where.=" AND t.id=".$search['study_year'];
+	    if(!empty($search['year'])){
+	    	$where.=" AND t.id=".$search['year'];
 	    }
-	    if(!empty($search['time'])){
-	    	$where.=" AND t.time=".$search['time'];
-	    }
-	    if(!empty($search['grade'])){
-	    	$where.=" AND td.class_id=".$search['grade'];
-	    }
-	    if(!empty($search['session'])){
-	    	$where.=" AND td.session=".$search['session'];
-	    }
+	    
 	    $order=" GROUP BY t.from_academic,t.to_academic,t.generation,t.time ORDER BY t.id DESC  ";
-	    //print_r($sql.$where.$order);
+	    
+	    //echo ($sql.$where.$order);
     	return $db->fetchAll($sql.$where.$order);
     }
     function getFeebyOther($fee_id){
@@ -213,7 +203,7 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
     		return false;
     	}
-    	$where=$this->getAdapter()->quoteInto("id=?", $data['id']);
+    	$where=$this->getAdapter()->quoteInto("id=?", $_data['id']);
     	$this->update($_arr, $where);
     }
     function getSession(){
@@ -223,8 +213,8 @@ class Accounting_Model_DbTable_DbTuitionFee extends Zend_Db_Table_Abstract
     }
     function getAceYear(){
     	$db=$this->getAdapter();
-    	$sql="SELECT id,CONCAT(from_academic,'-',to_academic,'(',generation,')') AS `name`     
-                     FROM rms_tuitionfee WHERE `status`=1 ";
+    	$sql="SELECT id,CONCAT(from_academic,'-',to_academic,'(',generation,')',' ',(select name_en from rms_view where type=7 and key_code=time)) AS `name`     
+                     FROM rms_tuitionfee WHERE `status`=1 group by from_academic,to_academic,generation,time ";
         $oder=" ORDER BY id DESC ";
     	return $db->fetchAll($sql.$oder);
     }
