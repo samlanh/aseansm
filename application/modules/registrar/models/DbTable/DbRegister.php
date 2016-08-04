@@ -428,7 +428,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     function getAllGepOldStudentName(){
     	$db=$this->getAdapter();
     	$sql="SELECT s.stu_id As stu_id,CONCAT(s.stu_khname,'-',s.stu_enname) As name FROM rms_student AS s,rms_student_payment AS sp
-    	WHERE s.stu_id=sp.student_id  AND s.stu_type=2 AND sp.payfor_type=2";
+    	WHERE s.stu_id=sp.student_id  AND s.stu_type=2 AND s.is_subspend=0 and s.status=1 ORDER BY stu_id DESC ";
     	return $db->fetchAll($sql);
     }
     //select Gep old student by name
