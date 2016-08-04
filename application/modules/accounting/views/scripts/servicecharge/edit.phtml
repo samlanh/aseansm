@@ -201,13 +201,13 @@ function addRow() {
 			dojo.query("#head-title").append(temp);
 			title=1;
 		}
-			template+='<td width="47px"align="center"><img onclick="deleteRecord('+col+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
-			template+='<td width="6%" align="center">'+no+'</td>';
-			template+='<td><select dojoType="dijit.form.FilteringSelect" id="class_'+col+'" name="class_'+col+'">'+faculty+'</select></td>';			
+			template+='<td width="4%"align="center"><img onclick="deleteRecord('+col+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
+			template+='<td width="4%" align="center">'+no+'</td>';
+			template+='<td width="40%"><select dojoType="dijit.form.FilteringSelect" class="fullside" id="class_'+col+'" name="class_'+col+'">'+faculty+'</select></td>';			
 			
 			column = 0;
 			for(j=0;j<payment_term;j++){ column++;
-				template+='<td width="15%"><input type="text" required="true" id="fee'+col+'_'+column+'" name="fee'+col+'_'+column+'" dojoType="dijit.form.NumberTextBox" style="width: 100%;" /></td>';
+				template+='<td width="10%"><input type="text" required="true" id="fee'+col+'_'+column+'" name="fee'+col+'_'+column+'" dojoType="dijit.form.NumberTextBox" style="width: 100%;" /></td>';
 			}
 			template+='<td <input type="text" required="true" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ"style=""/><label id="subsub"></label></td>';
 		tmp='<tr id="row'+col+'">';
@@ -249,13 +249,13 @@ function initailize(){
 		dojo.query("#head-title").append(temp);
 		title=1;
 	}
-		template+='<td width="47px"align="center"><img onclick="deleteRecord('+col+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
-		template+='<td width="6%" align="center">'+no+'</td>';
-		template+='<td><select dojoType="dijit.form.FilteringSelect" id="class_'+col+'" name="class_'+col+'">'+faculty+'</select></td>';			
+		template+='<td width="4%"align="center"><img onclick="deleteRecord('+col+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
+		template+='<td width="4%" align="center">'+no+'</td>';
+		template+='<td width="40%"><select dojoType="dijit.form.FilteringSelect" class="fullside" id="class_'+col+'" name="class_'+col+'">'+faculty+'</select></td>';			
 		
 		column = 0;
 		for(j=0;j<payment_term;j++){ column++;
-			template+='<td width="15%"><input type="text" required="true" id="fee'+col+'_'+column+'" name="fee'+col+'_'+column+'" dojoType="dijit.form.NumberTextBox" style="width: 100%;" /></td>';
+			template+='<td width="10%"><input type="text" required="true" id="fee'+col+'_'+column+'" name="fee'+col+'_'+column+'" dojoType="dijit.form.NumberTextBox" style="width: 100%;" /></td>';
 			
 		}
 		template+='<td <input type="text" required="true" name="remark'+col+'" id="remark'+col+'" dojoType="dijit.form.TextBox" placeholder="ផ្សេងៗ"style=""/><label id="subsub"></label></td>';
@@ -270,11 +270,11 @@ function initailize(){
 	dojo.html.set(dojo.byId("row"+col),template , {
 	     parseContent: true,
 	});
-	dijit.byId('class_'+col).attr('value',<?php echo $row['service_id']?>);
-	dijit.byId('fee'+col+'_1').attr('value',<?php echo $row['monthly']?>);
-	dijit.byId('fee'+col+'_2').attr('value',<?php echo $row['quarter']?>);
-	dijit.byId('fee'+col+'_3').attr('value',<?php echo $row['semester']?>);
-	dijit.byId('fee'+col+'_4').attr('value',<?php echo $row['year']?>);
+	dijit.byId('class_'+col).attr('value','<?php echo $row['service_id']?>');
+	dijit.byId('fee'+col+'_1').attr('value','<?php echo $row['monthly']?>');
+	dijit.byId('fee'+col+'_2').attr('value','<?php echo $row['quarter']?>');
+	dijit.byId('fee'+col+'_3').attr('value','<?php echo $row['semester']?>');
+	dijit.byId('fee'+col+'_4').attr('value','<?php echo $row['year']?>');
 	dijit.byId('remark'+col).attr('value','<?php echo $row['note']?>');
 	<?php } }?>
 }

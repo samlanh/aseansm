@@ -210,7 +210,8 @@ class Accounting_ServiceChargeController extends Zend_Controller_Action {
 	
 				}
 				
-			   $this->view->rows =$rs_rows;
+			   $test = $this->view->rows =$rs_rows;
+			  // print_r($test);exit();
 			   
 	
 	}
