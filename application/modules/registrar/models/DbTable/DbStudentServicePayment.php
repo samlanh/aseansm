@@ -55,6 +55,7 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
 				$ids = explode(',', $data['identity']);
 				$disc = 0;
 				$total = 0;
+				$tuition_fee = 0 ;
     			foreach ($ids as $i){
     				
     				$payment_id = $this->getStudentPaymentStart($data['studentid'], $data['service_'.$i]);
@@ -68,8 +69,11 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     				$this->update($arr,$where);
     				
     				$disc=$disc+$data['discount_'.$i];
+    				
     				$total=$total+($data['price_'.$i]*$data['qty_'.$i]);
+    				
     				$complete=1;
+    				
     				if($data['subtotal_'.$i]-$data['paidamount_'.$i]>0){
     					$complete=0;
     					$status="មិនទាន់បង់";
@@ -108,8 +112,13 @@ class Registrar_Model_DbTable_DbStudentServicePayment extends Zend_Db_Table_Abst
     				}
     			}
     			$this->_name='rms_student_payment';
-    			$datadisc = array('discount_percent'=>$disc,
-    						'total'=>$total);
+    			$datadisc = array(
+    						'discount_percent'=>$disc,
+    						'total'=>$data['grand_total'],
+    						'tuition_fee'=>$total,
+    						//'tuition_fee'=>$data['grand_total'],
+    						
+    						);
     			$where=$this->getAdapter()->quoteInto("id=?", $id);
     			$this->update($datadisc, $where);
     			$db->commit();
