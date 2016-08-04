@@ -358,7 +358,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     function getAllYearsProgramFee(){
     	$db = $this->getAdapter();
     	$sql = "SELECT id,CONCAT(from_academic,'-',to_academic,'(',generation,')') AS years,(select name_en from rms_view where type=7 and key_code=time) as time FROM rms_tuitionfee
-    	        WHERE `status`=1 GROUP BY from_academic,to_academic,generation";
+    	        WHERE `status`=1 GROUP BY from_academic,to_academic,generation,time ";
     	$order=' ORDER BY id DESC';
     	return $db->fetchAll($sql.$order);
     }
@@ -366,7 +366,7 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     function getAllYears(){
     	$db = $this->getAdapter();
     	$sql = "SELECT id,CONCAT(from_academic,'-',to_academic,'(',generation,')') AS years , (select name_en from rms_view where type=7 and key_code=time) as time FROM rms_tuitionfee WHERE `status`=1 
-    	        GROUP BY from_academic,to_academic,generation";
+    	        GROUP BY from_academic,to_academic,generation,time";
     	$order=' ORDER BY id DESC';
     	return $db->fetchAll($sql.$order);
     }
@@ -439,16 +439,16 @@ class Registrar_Model_DbTable_DbRegister extends Zend_Db_Table_Abstract
     //select all Gerneral old student
     function getAllGerneralOldStudent(){
     	$db=$this->getAdapter();
-    	$sql="SELECT s.stu_id As stu_id,s.stu_code As stu_code FROM rms_student AS s,rms_student_payment AS sp
-    	WHERE s.stu_id=sp.student_id  AND s.stu_type=1 AND sp.payfor_type=1";
+    	$sql="SELECT s.stu_id As stu_id,s.stu_code As stu_code FROM rms_student AS s
+    	WHERE s.stu_type!=2 AND s.status=1 ORDER BY stu_id DESC ";
     	return $db->fetchAll($sql);
     }
     //select general  old student by id
     
     function getAllGerneralOldStudentName(){
     	$db=$this->getAdapter();
-    	$sql="SELECT s.stu_id As stu_id,CONCAT(s.stu_enname,'-',s.stu_enname) as name FROM rms_student AS s,rms_student_payment AS sp
-    	WHERE s.stu_id=sp.student_id  AND s.stu_type=1 AND sp.payfor_type=1";
+    	$sql="SELECT s.stu_id As stu_id,CONCAT(s.stu_enname,'-',s.stu_khname) as name FROM rms_student AS s
+    	WHERE s.stu_type!=2 ORDER BY stu_id DESC ";
     	return $db->fetchAll($sql);
     }
     //select general  old student by name
