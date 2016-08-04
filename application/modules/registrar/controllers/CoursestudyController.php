@@ -186,17 +186,6 @@ class Registrar_CoursestudyController extends Zend_Controller_Action {
     		exit();
     	}
     }
-    function getGradeAction(){
-    	if($this->getRequest()->isPost()){
-    		$data=$this->getRequest()->getPost();
-    		$db = new Registrar_Model_DbTable_DbRegister();
-    		$grade = $db->getAllGrade($data['dept_id']);
-    		//print_r($grade);exit();
-    		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
-    		print_r(Zend_Json::encode($grade));
-    		exit();
-    	}
-    }
     function getPaymentGepAction(){
     	if($this->getRequest()->isPost()){
     		$data=$this->getRequest()->getPost();
@@ -234,6 +223,17 @@ class Registrar_CoursestudyController extends Zend_Controller_Action {
     		$db = new Registrar_Model_DbTable_DbRegister();
     		$payment = $db->getBalance($data['servce_id'],$data['student_id']);
     		print_r(Zend_Json::encode($payment));
+    		exit();
+    	}
+    }
+    function getGradeAction(){
+    	if($this->getRequest()->isPost()){
+    		$data=$this->getRequest()->getPost();
+    		$db = new Registrar_Model_DbTable_DbRegister();
+    		$grade = $db->getAllGradeGEP($data['dept_id']);
+    		//print_r($grade);exit();
+    		//array_unshift($makes, array ( 'id' => -1, 'name' => 'បន្ថែមថ្មី') );
+    		print_r(Zend_Json::encode($grade));
     		exit();
     	}
     }
