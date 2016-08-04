@@ -52,7 +52,7 @@ class Registrar_Model_DbTable_DbRptStudentPaymentLate extends Zend_Db_Table_Abst
 //     		if($search['study_year']>0){
 //     			$where.= " AND spd.service_id = ".$search['study_year'];
 //     		}
-     		echo $sql.$where;
+     		//echo $sql.$where;
     	return $db->fetchAll($sql.$where.$order);
     }
     

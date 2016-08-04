@@ -290,7 +290,7 @@ class Registrar_Model_DbTable_DbCourStudey extends Zend_Db_Table_Abstract
     	}
     	//print_r($sql.$where);
     	$order=" ORDER By stu_id DESC ";
-         echo $sql.$where.$order;
+        //echo $sql.$where.$order;
     	return $db->fetchAll($sql.$where.$order);
     }
     function getStuentGepById($id){
