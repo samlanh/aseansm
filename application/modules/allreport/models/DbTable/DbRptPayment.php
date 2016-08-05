@@ -47,15 +47,12 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     public function getPaymentDetailByType($search){
     	$db = $this->getAdapter();
     	
-    	$date = date_create($search["start_date"]);
-    	$from_date = date_format($date, "d-m-Y");
-    	//print_r($search); exit();
-    
-    	$todate = date_create($search["end_date"]);
-    	$to_date = date_format($todate, "d-m-Y");
+    	$where = ' ' ;
     	
-    	$where = " AND create_date BETWEEN '$from_date' AND '$to_date'";
-    
+    	$from_date =(empty($search['start_date']))? '1': "create_date >= '".$search['start_date']." 00:00:00'";
+    	$to_date = (empty($search['end_date']))? '1': "create_date <= '".$search['end_date']." 23:59:59'";
+    	$where = " AND ".$from_date." AND ".$to_date;
+    	
     	$sql = 'SELECT * FROM v_getstudentpaymentdetail WHERE 1 ';
     	$order=" ORDER BY service_id DESC ";
     	
@@ -72,7 +69,7 @@ class Allreport_Model_DbTable_DbRptPayment extends Zend_Db_Table_Abstract
     		$s_where[] = " payment_term LIKE '%{$s_search}%'";
     		$where .=' AND ( '.implode(' OR ',$s_where).')';
     	}
-    	echo $sql.$where.$order;
+    	//echo $sql.$where.$order;
     	return $db->fetchAll($sql.$where.$order);
     }
     
