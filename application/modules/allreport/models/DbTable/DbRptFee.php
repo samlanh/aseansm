@@ -46,7 +46,7 @@ class Allreport_Model_DbTable_DbRptFee extends Zend_Db_Table_Abstract
     	//print_r($fee_id);exit();
     	$db = $this->getAdapter();
     	$sql = "select *,
-    	(SELECT major_enname FROM `rms_major` WHERE major_id=rms_tuitionfee_detail.class_id) as class,
+    	(SELECT CONCAT(major_enname,' - ',major_khname) FROM `rms_major` WHERE major_id=rms_tuitionfee_detail.class_id) as class,
     	(select name_en from rms_view where type=4 and key_code=session) as session
     	from rms_tuitionfee_detail where fee_id =".$fee_id." ORDER BY id";
     	return $db->fetchAll($sql);
