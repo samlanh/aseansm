@@ -81,6 +81,14 @@ h3{font-size:100%;}
 img{border:0px;}
 .right{float:right;}
 .left{float:left;}
+
+.hover:hover{
+	background-color: #ccc;
+}
+.head_table{
+	background-color: #ccc;
+	font-weight: bold;
+}
 .head-td{background:url('../images/tbheader-bg1.jpg') repeat-x scroll center top #F1F1F1;border:1px solid #CCC;color:#333;font-size:14px;font-weight:bold;line-height:30px;padding:2px 5px;text-align:center;cursor:pointer;}
 .dijitButtonText{font-size:12px !important;}
 ::-webkit-scrollbar{width:10px;}
