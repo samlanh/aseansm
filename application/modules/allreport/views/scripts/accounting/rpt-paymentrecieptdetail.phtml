@@ -26,7 +26,7 @@ table tr td strong{
 							</tr>
 							<tr>
 								<td width="25%" align="left">
-									<strong style=" line-height:18px; font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"> Student Name  : <?php echo $this->rr['en_name'].' / ';echo $this->rr['kh_name']?></strong><br />
+									<strong style=" line-height:18px; font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"><?php echo $tr->translate('STUDENT_NAME');?> : <?php echo $this->rr['en_name'].' / ';echo $this->rr['kh_name']?></strong><br />
 									<strong style=" line-height:18px; font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"> Sex  : <?php echo $this->rr['sex']?></strong><br />
 									<strong style=" line-height:18px; font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"> Student ID  : <?php echo $this->rr['stu_code']?></strong><br />
 								</td >
@@ -50,19 +50,19 @@ table tr td strong{
 
 									<table class="padd" width="99%" border="1" align="center" style="white-space:nowrap; padding: 0px; margin: 0px;">
 										  <tr style="font-size:10px; height: 20px;" align="center" >
-										    <th>&nbsp;N.o&nbsp;</th>
-											<th>&nbsp;Type Service&nbsp;</th>
-											<th>&nbsp;Payment Term&nbsp;</th>
-											<th>&nbsp;Fee&nbsp;</th>
-											<th>&nbsp;Qty&nbsp;</th>
-											<th>&nbsp;Discount(%)&nbsp;</th>
-											<th>&nbsp;Sub Total&nbsp;</th>
-											<th>&nbsp;Paid Amount&nbsp;</th>
+										    <th>&nbsp;<?php echo $tr->translate('N_O');?>&nbsp;</th>
+											<th>&nbsp;<?php echo $tr->translate('SERVICE_TYPE');?>&nbsp;</th>
+											<th>&nbsp;<?php echo $tr->translate('PAYMENT_TERM');?>&nbsp;</th>
+											<th>&nbsp;<?php echo $tr->translate('FEE');?>&nbsp;</th>
+											<th>&nbsp;<?php echo $tr->translate('QTY');?>&nbsp;</th>
+											<th>&nbsp;<?php echo $tr->translate('DISCOUND');?>&nbsp;</th>
+											<th>&nbsp;<?php echo $tr->translate('SUBTOTAL');?>&nbsp;</th>
+											<th>&nbsp;<?php echo $tr->translate('PAID_AMOUNT');?>&nbsp;</th>
 										  </tr>
 										  <tr></tr>
 											<style> td{padding:0 3px; }</style>
 										  <?php $i=0; $total=0; if(!empty($this->row)) foreach($this->row as $rs){ $i++;?>
-										  <tr style="font-size:10px;height: 15px;"​ >
+										  <tr class="hover" style="font-size:10px;height: 15px;"​ >
 										  <?php //$subtotal = $rs['fee']-$rs['discount_fix']; ?>
 										    <td><?php echo $i;?></td>
 										    <td align="left"><?php echo $rs['service'];?></td>
@@ -76,22 +76,22 @@ table tr td strong{
 										  <?php } ?>
 										  <tr style="font-size:10px;height: 25px;"​>
 										  	<td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff;" colspan="6"></td>
-										  	<th>Total Amount</th>
+										  	<th><?php echo $tr->translate('GRAND_TOTAL');?></th>
 										  	<td> <div style="color:red;">$ <?php echo $total;?></div></td>
 										  </tr>
 										  <tr style=" font-size:10px;height: 25px;"​>
 										  	<td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff;" colspan="6"></td>
-										  	<th>Paid Amount</th>
+										  	<th><?php echo $tr->translate('PAID_AMOUNT');?></th>
 										  	<td> <div style="color:red;">$ <?php echo $this->rr['paid_amount']; if(empty($this->rr['paid_amount'])) echo '0.00';?></div></td>
 										  </tr>
 										   <tr style="font-size:10px;height: 25px;"​>
 										  	<td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff;" colspan="6"></td>
-										  	<th>Balance Due</th>
+										  	<th><?php echo $tr->translate('BALANCE');?></th>
 										  	<td> <div style="color:red;">$ <?php echo $this->rr['balance_due']; if(empty($this->rr['balance_due'])) echo '0.00';?></div></td>
 										  </tr>
 										   <tr style="font-size:10px; height: 25px; "​>
 										  	<td style=" border-bottom: 1px solid #fff; border-left: 1px solid #fff;" colspan="6"></td>
-										  	<th>Return Amount</th>
+										  	<th><?php echo $tr->translate('RETURN');?></th>
 										  	<td> <div style="color:red;">$ <?php echo $this->rr['return_amount']; if(empty($this->rr['return_amount'])) echo '0.00';?></div></td>
 										  </tr>
 										</table>

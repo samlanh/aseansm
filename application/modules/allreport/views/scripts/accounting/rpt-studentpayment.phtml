@@ -24,12 +24,12 @@
 									<img style="width: 80%;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br /><br />
 								</td>
 								<td align="center" width="60%">
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"><u>របាយការណ៏ប្រាក់ចំណូលពី ការបង់ប្រាក់របស់សិស្ស</u></strong><br >
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"><?php echo $tr->translate('STUDENT_SERVICE_PAYMENT_REPORT');?></strong><br >
 								</td>
 								<td align="right" width="20%">&nbsp;</td>
 							</tr>
-							<tr>
-								<td colspan="3">
+							<tr> 
+								<td colspan="3" id="exportExcel" >
 									<style> th,td{ padding:0 1px;}</style>
 										<style type="text/css">
 											body{font-family: "Times New Roman",Arial; }
@@ -40,27 +40,27 @@
 										</style>
 
 									<table class="padd" width="99%" border="1" align="center" style="white-space:nowrap;font-family: 'Hanuman';">
-										  <tr style="font-size:12px; height: 20px;" align="center">
-										    <th>&nbsp;No.&nbsp;</th>
-										    <th>&nbsp;Student ID&nbsp;</th>
-											<th>&nbsp;Khmer Name&nbsp;</th>
-											<th>&nbsp;English Name&nbsp;</th>
-											<th>&nbsp;Reciept No.&nbsp;</th>
-											<th>&nbsp;Tuition Fee&nbsp;</th>
-											<th>&nbsp;Discount(%)&nbsp;</th>
-											<th>&nbsp;Sub Total&nbsp;</th>
-											<th>&nbsp;Paid Amount&nbsp;</th>
-											<th>&nbsp;Recieved Amount&nbsp;</th>
-											<th>&nbsp;Balance Due&nbsp;</th>
-											<th>&nbsp;Return Amount&nbsp;</th>
-											<th>&nbsp;Date Paid&nbsp;</th>
-											<th>&nbsp;User&nbsp;</th>
-											<th>&nbsp;Remark&nbsp;</th>
+										  <tr style="font-size:12px; height: 20px;background-color: #ccc;line-height: 30px;font-weight: bold;" align="center">
+										    <td>&nbsp;<?php echo $tr->translate('N_O');?>&nbsp;</td>
+										    <td>&nbsp;<?php echo $tr->translate('STUDENT_ID');?>&nbsp;</td>
+											<td>&nbsp;<?php echo $tr->translate('NAME_KH');?>&nbsp;</td>
+											<td>&nbsp;<?php echo $tr->translate('NAME_EN');?>&nbsp;</td>
+											<td>&nbsp;<?php echo $tr->translate('RECEIPT_NO');?>&nbsp;</td>
+											<td>&nbsp;<?php echo $tr->translate('TUITION_FEE');?>&nbsp;</td>
+											<td>&nbsp;<?php echo $tr->translate('DISCOUND');?>&nbsp;</td>
+											<td>&nbsp;<?php echo $tr->translate('SUBTOTAL');?>&nbsp;</td>
+											<td>&nbsp;<?php echo $tr->translate('PAID_AMOUNT');?>&nbsp;</td>
+											<td>&nbsp;<?php echo $tr->translate('RECEIVED_AMOUNT');?>&nbsp;</td>
+											<td>&nbsp;<?php echo $tr->translate('BALANCE');?>&nbsp;</td>
+											<td>&nbsp;<?php echo $tr->translate('RETURN');?>&nbsp;</td>
+											<td>&nbsp;<?php echo $tr->translate('PAID_DATE');?>&nbsp;</td>
+											<td>&nbsp;<?php echo $tr->translate('USER');?>&nbsp;</td>
+											<td>&nbsp;<?php echo $tr->translate('REMARK');?>&nbsp;</td>
 										  </tr>
 										  <tr></tr>
 												<style> td{padding:0 3px; }</style>
 										 <?php $i=0; $total=0;$paid=0;$balance=0;$receive_amount=-0;$return_amount=0; if (!empty($this->row)) { foreach($this->row as $rs){ $i++;?>
-										  <tr style="font-size:11px; height: 18px;"​ align="center">
+										  <tr class="hover" style="font-size:11px; height: 18px;"​ align="center">
 										    <td><?php echo $i;?></td>
 										    <td><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['stu_code']; ?></a></td>
 										    <td style=" white-space:nowrap; text-align:left"><a style=" text-decoration: none; color:#000;" href="<?php echo $this->url(array('controller'=>'accounting','action'=>'rpt-paymentrecieptdetail','id'=>$rs['id']));?>" target="blank"><?php echo $rs['kh_name']; ?></a></td>
@@ -98,23 +98,23 @@
 									<td colspan="3">
 											<table width="29.2%" border="1" align="right" style="margin-right:0.1%; white-space:nowrap;">
 												<tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
-										 				<th style="background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;Total&nbsp;</th>
+										 				<th style="background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;<?php echo $tr->translate('GRAND_TOTAL');?>&nbsp;</th>
 														<td colspan="2" style=" font-weight:bold;font-family: Arial Black; font-size: 10px;"><span style="color: red;">$ <?php echo number_format($total,2);?></span></td>
 										  		</tr>
 										  		<tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
-										 				<th style="background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;Total PaidAmount&nbsp;</th>
+										 				<th style="background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;<?php echo $tr->translate('GRAND_TOTAL_PAID_AMOUNT');?>&nbsp;</th>
 														<td colspan="2" style=" font-weight:bold;font-family: Arial Black; font-size: 10px;"><span style="color: red;">$ <?php echo number_format($paid,2);?></span></td>
 										  		</tr>
 										  		<tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
-										 				<th style="background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;Total Receive &nbsp;</th>
+										 				<th style="background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;<?php echo $tr->translate('GRAND_TOTAL_RECEIVED_AMOUNT');?>&nbsp;</th>
 														<td colspan="2" style=" font-weight:bold;font-family: Arial Black; font-size: 10px;"><span style="color: red;">$ <?php echo number_format($receive_amount,2);?></span></td>
 										  		</tr>
 										  		<tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
-										 				<th style="background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;Total BalanceDue&nbsp;</th>
+										 				<th style="background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;<?php echo $tr->translate('GRAND_TOTAL_BALANCE');?>&nbsp;</th>
 														<td colspan="2" style=" font-weight:bold;font-family: Arial Black; font-size: 10px;"> <span style="color: red;">$ <?php echo number_format($balance,2);?></span></td>
 										  		</tr>
 										  		<tr style="font-size:10px; color:#000; height: 23px;"​ align="center">
-										 				<th style="background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;Total Return &nbsp;</th>
+										 				<th style="background-color: #ccc; width: 38%; font-weight:bold;font-family: Arial Black; font-size: 10px;">&nbsp;<?php echo $tr->translate('GRAND_TOTAL_RETURN');?>&nbsp;</th>
 														<td colspan="2" style=" font-weight:bold;font-family: Arial Black; font-size: 10px;"><span style="color: red;">$ <?php echo number_format($return_amount,2);?></span></td>
 										  		</tr>
 										  </table>
@@ -128,13 +128,13 @@
 										</tr>
 										<tr >
 											<td align="center" width="25%">
-												<span style=" font-size: 14px;">Verified by</span>
+												<span style=" font-size: 14px;"><?php echo $tr->translate('VERIFIED_BY');?></span>
 											</td>
 											<td  width="50%">
 												&nbsp;
 											</td>
 											<td align="center"  width="25%">
-												<span style=" font-size: 14px;text-align: right;">Prepared by</span>
+												<span style=" font-size: 14px;text-align: right;"><?php echo $tr->translate('PREPARE_BY');?></span>
 											</td>
 										</tr>
 								<?php  }?>

@@ -39,29 +39,33 @@
 												<img style="width: 80%;" alt="<?php ?>" src="<?php echo $this->baseUrl().'/images/logo.png'?>"><br /><br >
 											</td>
 											<td width="50%"  align="center">
-												<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 16px;font-family:'Khmer MEF2';">របាយការណ៏​​ តំលៃសិក្សា</strong><br /><br >
+												<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 16px;font-family:'Khmer MEF2';"><?php echo $tr->translate('RPT_FEE')?></strong><br /><br >
 											</td>
 											<td width="25%" align="right">
 											</td>
 										</tr>
+										
+										<style>
+											table tr th{background-color: #ccc;}										
+										</style>
+										
 										<tr>
-											<td colspan="3">
+											<td colspan="3" id="exportExcel">
 												<table cellpadding="5"​ style="margin:0 auto;border: 1px solid #000;width:100%; border-collapse: collapse;"  border="1" >
-													<tr style="font-size:11px; height: 20px;border: 1px solid #000;" align="center" >
-														<td style="border: 1px solid #000;">No.</td>
-														<td style="border: 1px solid #000;">Academic</td>
-														<td style="border: 1px solid #000;">Generation</td>
-														
-														<td style="border: 1px solid #000;">Grade</td>
-														<td style="border: 1px solid #000;">Session</td>
-														<td style="border: 1px solid #000;">Time</td>
-														<td style="border: 1px solid #000;">Quarter</td>
-														<td style="border: 1px solid #000;">Semester</td>
-														<td style="border: 1px solid #000;">Year</td>
-														<td style="border: 1px solid #000;">Note</td>
+													<tr style="font-size:11px; height: 20px;border: 1px solid #000;background-color: #ccc;line-height: 30px;font-weight: bold;" align="center" >
+														<td style="border: 1px solid #000;"><?php echo $tr->translate('N_O')?></td>
+														<td style="border: 1px solid #000;"><?php echo $tr->translate('ACADEMIC_YEAR')?></td>
+														<td style="border: 1px solid #000;"><?php echo $tr->translate('GENERATION')?></td>
+														<td style="border: 1px solid #000;"><?php echo $tr->translate('GRADE')?></td>
+														<td style="border: 1px solid #000;"><?php echo $tr->translate('SESSION')?></td>
+														<td style="border: 1px solid #000;"><?php echo $tr->translate('TIME')?></td>
+														<td style="border: 1px solid #000;"><?php echo $tr->translate('QUARTER')?></td>
+														<td style="border: 1px solid #000;"><?php echo $tr->translate('SEMESTER')?></td>
+														<td style="border: 1px solid #000;"><?php echo $tr->translate('YEAR')?></td>
+														<td style="border: 1px solid #000;"><?php echo $tr->translate('NOTE')?></td>
 													</tr>
 												<?php $i=0; foreach ($this->rs AS $row) { $i++;?>
-													<tr style="font-size:11px; height: 20px;border: 1px solid #000;" align="center" >
+													<tr class="hover" style="font-size:11px; height: 20px;border: 1px solid #000;" align="center" >
 														<td style="border: 1px solid #000;"><?php echo $i;?></td>
 														<td style="border: 1px solid #000;"><?php echo $row['academic'];?></td>
 														<td style="border: 1px solid #000;"><?php echo $row['generation'];?></td>
@@ -85,13 +89,13 @@
 										</tr>
 										<tr >
 											<td align="center" width="25%">
-												<span style="font-weight: bold;font-size: 14px;">Verified by</span>
+												<span style="font-weight: bold;font-size: 14px;"><?php echo $tr->translate('VERIFIED_BY');?></span>
 											</td>
 											<td  width="50%">
 												&nbsp;
 											</td>
 											<td align="center"  width="25%">
-												<span style="font-weight: bold;font-size: 14px;text-align: right;">Prepared by</span>
+												<span style="font-weight: bold;font-size: 14px;text-align: right;"><?php echo $tr->translate('PREPARE_BY');?></span>
 											</td>
 										</tr>
 									</table>

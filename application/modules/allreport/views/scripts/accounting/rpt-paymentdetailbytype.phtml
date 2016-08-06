@@ -52,7 +52,7 @@
 							</tr>
 							<tr>
 								<td colspan="3"  align="center">
-									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"><u>របាយការណ៏ប្រាក់ចំណូលពី ការបង់ប្រាក់របស់សិស្ស</u></strong><br >
+									<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 13px;font-family:'Khmer MEF2';"><?php echo $tr->translate('STUDENT_PAYMENT_SERVICE_BY_TYPE_REPORT');?></strong><br >
 								</td>
 							</tr>
 							<tr>
@@ -91,15 +91,15 @@
 											   		</table>
 													<table border="1" align="right" style="margin-right: 6px;">
 														  <tr style="font-size:10px; color:#000; height: 18px;"​ align="center">
-														 			<th style=" border-bottom: 1px #000 solid; background-color: #ccc; width:146px; font-weight:bold; font-size: 10px;">&nbsp;Total&nbsp;</th>
+														 			<th style=" border-bottom: 1px #000 solid; background-color: #ccc; width:146px; font-weight:bold; font-size: 10px;">&nbsp;<?php echo $tr->translate('GRAND_TOTAL');?>&nbsp;</th>
 																	<td style=" border-bottom: 1px #000 solid; color:#F00; font-weight:bold; width:112px; font-size: 10px;">$ <?php echo number_format($total,2);?></td>
 														  </tr>
 														  <tr style="font-size:10px; color:#000; height: 18px;"​ align="center">
-																<th style=" border-bottom: 1px #000 solid; background-color: #ccc; font-size: 10px;">&nbsp;Total Paid&nbsp;</th>
+																<th style=" border-bottom: 1px #000 solid; background-color: #ccc; font-size: 10px;">&nbsp;<?php echo $tr->translate('PAID_AMOUNT');?>&nbsp;</th>
 																<td style=" border-bottom: 1px #000 solid; color:#F00; font-weight:bold; font-size: 10px;">$ <?php echo number_format($total_paid_amount,2);?></td>
 														  </tr>
 														  <tr style="font-size:10px; color:#000; height: 18px;"​ align="center">
-																<th style=" border-bottom: 1px #000 solid; background-color: #ccc; font-size: 10px;">&nbsp;Total Balance&nbsp;</th>
+																<th style=" border-bottom: 1px #000 solid; background-color: #ccc; font-size: 10px;">&nbsp;<?php echo $tr->translate('BALANCE');?>&nbsp;</th>
 																<td style=" border-bottom: 1px #000 solid; color:#F00; font-weight:bold; font-size: 10px;">$ <?php echo number_format($total_balance,2);?></td>
 														  </tr>
 													 </table>
@@ -110,25 +110,25 @@
 												
 											  <tr style="font-size:10px; color:#000; height: 23px; border-left:1px solid #fff; border-right:1px solid #fff; border-top: 1px solid #fff;"​ align="center">
 											    <td colspan="16" style="text-align:left">
-											    	<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 11px;font-family:'Khmer MEF2';" ><?php echo 'Service Name :'.$rs['service']; ?></strong>
+											    	<strong style="font-weight:bold;font-family: Arial Black;color:#000; font-size: 11px;font-family:'Khmer MEF2';" ><?php echo $tr->translate('SERVICE_NAME').' : '.$rs['service']; ?></strong>
 											    </td>
 											  </tr>
-											   <tr style="font-size:10px; height: 22px; align="center" >
-											    <th>&nbsp;No.&nbsp;</th>
-											    <th>&nbsp;Reciept No.&nbsp;</th>
-												<th>&nbsp;Khmer Name&nbsp;</th>
-												<th>&nbsp;English Name&nbsp;</th>
-												<th>&nbsp;Payment Term&nbsp;</th>
-												<th>&nbsp;Fee&nbsp;</th>
-												<th>&nbsp;Qty&nbsp;</th>
-												<th>&nbsp;Discount&nbsp;</th>
-												<th>&nbsp;Sub Total&nbsp;</th>
-												<th>&nbsp;Paid Amount&nbsp;</th>
-												<th>&nbsp;Receive Amount&nbsp;</th>
-												<th>&nbsp;Balance&nbsp;</th>
-												<th>&nbsp;Date Paid&nbsp;</th>
-												<th>&nbsp;User&nbsp;</th>
-												<th>&nbsp;Remark&nbsp;</th>
+											   <tr style="background-color: #ccc;line-height: 30px;font-weight: bold;font-size:10px; height: 22px; align="center" >
+												    <td>&nbsp;<?php echo $tr->translate('N_O');?>&nbsp;</td>
+												    <td>&nbsp;<?php echo $tr->translate('RECEIPT_NO');?>&nbsp;</td>
+													<td>&nbsp;<?php echo $tr->translate('NAME_KH');?>&nbsp;</td>
+													<td>&nbsp;<?php echo $tr->translate('NAME_EN');?>&nbsp;</td>
+													<td>&nbsp;<?php echo $tr->translate('PAYMENT_TERM');?>&nbsp;</td>
+													<td>&nbsp;<?php echo $tr->translate('FEE');?>&nbsp;</td>
+													<td>&nbsp;<?php echo $tr->translate('QTY');?>&nbsp;</td>
+													<td>&nbsp;<?php echo $tr->translate('DISCOUNT');?>&nbsp;</td>
+													<td>&nbsp;<?php echo $tr->translate('SUBTOTAL');?>&nbsp;</td>
+													<td>&nbsp;<?php echo $tr->translate('PAID_AMOUNT');?>&nbsp;</td>
+													<td>&nbsp;<?php echo $tr->translate('RECEIVED_AMOUNT');?>&nbsp;</td>
+													<td>&nbsp;<?php echo $tr->translate('BALANCE');?>&nbsp;</td>
+													<td>&nbsp;<?php echo $tr->translate('DATE_PAY');?>&nbsp;</td>
+													<td>&nbsp;<?php echo $tr->translate('USER');?>&nbsp;</td>
+													<td>&nbsp;<?php echo $tr->translate('REMARK');?>&nbsp;</td>
 											  </tr>
 											   <?php 
 											   		$total=0;
@@ -150,7 +150,7 @@
 										 	$total_receive_amount = $total_receive_amount + $rs['receive_amount'];
 										 	$total_balance = $total_balance + $rs['balance_due'];
 										 	 ?>
-										   <tr style="font-size:10px; color:#000; height: 18px; border-bottom: 1px solid #000;"​ align="center">
+										   <tr class="hover" style="font-size:10px; color:#000; height: 18px; border-bottom: 1px solid #000;"​ align="center">
 										  	<td><?php echo $i;?></td>
 										    <td ><?php echo $rs['receipt_number']; ?></td>
 										    <td style=" white-space:nowrap; text-align:left"><?php echo $rs['kh_name']; ?></td>
@@ -183,15 +183,15 @@
 										   </table>
 										   <table border="1" align="right" style="margin-right: 6px;">
 											  <tr style="font-size:10px; color:#000; height: 18px;"​ align="center">
-													<th style=" border-bottom: 1px #000 solid; background-color: #ccc; width:146px; font-size: 10px;">&nbsp;Total&nbsp;</th>
+													<th style=" border-bottom: 1px #000 solid; background-color: #ccc; width:146px; font-size: 10px;">&nbsp;<?php echo $tr->translate('GRAND_TOTAL');?>&nbsp;</th>
 													<td width="100px" style=" border-bottom: 1px #000 solid; color:#F00; width:112px; font-weight:bold; font-size: 10px;">$ <?php echo number_format($total,2);?></td>
 											  </tr>
 											  <tr style="font-size:10px; color:#000; height: 18px;"​ align="center">
-													<th style=" border-bottom: 1px #000 solid; background-color: #ccc; font-size: 10px;">&nbsp;Total Paid&nbsp;</th>
+													<th style=" border-bottom: 1px #000 solid; background-color: #ccc; font-size: 10px;">&nbsp;<?php echo $tr->translate('PAID_AMOUNT');?>&nbsp;</th>
 													<td width="100px" style=" border-bottom: 1px #000 solid; color:#F00; font-weight:bold; font-size: 10px;">$ <?php echo number_format($total_paid_amount,2);?></td>
 											  </tr>
 											  <tr style="font-size:10px; color:#000; height: 18px;"​ align="center">
-													<th style=" border-bottom: 1px #000 solid; background-color: #ccc; font-size: 10px;">&nbsp;Total Balance&nbsp;</th>
+													<th style=" border-bottom: 1px #000 solid; background-color: #ccc; font-size: 10px;">&nbsp;<?php echo $tr->translate('BALANCE');?>&nbsp;</th>
 													<td width="100px" style=" border-bottom: 1px #000 solid; color:#F00; font-weight:bold; font-size: 10px;">$ <?php echo number_format($total_balance,2);?></td>
 											  </tr>
 										 <?php }?>
@@ -209,9 +209,9 @@
 								<td>
 									<table border="1" align="right" style="  width:50%; margin-right:0.5%; white-space:nowrap;">
 										<tr style="font-size:10px; background:#ccc; height: 20px; align="center">
-											<th>&nbsp;Grand Total&nbsp;</th>
-											<th>&nbsp;Grand Total Paid Amount&nbsp;</th>
-											<th>&nbsp;Grand Total Balance&nbsp;</th>
+											<th>&nbsp;<?php echo $tr->translate('GRAND_TOTAL');?>&nbsp;</th>
+											<th>&nbsp;<?php echo $tr->translate('GRAND_TOTAL_PAID_AMOUNT');?>&nbsp;</th>
+											<th>&nbsp;<?php echo $tr->translate('GRAND_TOTAL_BALANCE');?>&nbsp;</th>
 										</tr>
 										<tr align="center" style=" height:18px; font-size:10px; padding: 1px;" >
 											<td><span style="color: red;">$ <?php echo number_format($grand_total,2)?></span></td>
